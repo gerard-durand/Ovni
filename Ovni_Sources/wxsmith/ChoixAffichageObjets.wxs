@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ChoixAffichageObjets">
+		<title>Choix des objets à afficher</title>
+		<size>269,200</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Choisir les objets à afficher</label>
+			<pos>64,8</pos>
+		</object>
+		<object class="wxCheckListBox" name="ID_CHECKLISTBOX1" variable="CheckListBox1" member="yes">
+			<content>
+				<item checked="1">Objet 1</item>
+			</content>
+			<pos>16,32</pos>
+			<size>240,128</size>
+			<handler function="OnCheckListBox1Toggled" entry="EVT_CHECKLISTBOX" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_Aucun" member="yes">
+			<label>Aucun</label>
+			<pos>16,168</pos>
+			<size>80,26</size>
+			<handler function="OnButton_AucunClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Tous" member="yes">
+			<label>Tous</label>
+			<pos>96,168</pos>
+			<size>80,26</size>
+			<handler function="OnButton_TousClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>176,168</pos>
+			<size>80,26</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ReperageFacette">
+		<title>Repérage d&apos;une facette</title>
+		<size>312,395</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Indice de la facette :</label>
+			<pos>8,59</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Indice/Numéro de l&apos;objet :</label>
+			<pos>8,11</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_IndiceFacette" member="yes">
+			<value>0</value>
+			<min>-2</min>
+			<pos>128,56</pos>
+			<size>98,21</size>
+			<handler function="OnSpinCtrl_IndiceFacetteChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_IndiceObjet" member="yes">
+			<value>0</value>
+			<pos>160,8</pos>
+			<size>80,21</size>
+			<handler function="OnSpinCtrl_IndiceObjetChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="Text_NumeroObjet" member="yes">
+			<value>nnn</value>
+			<pos>240,8</pos>
+			<size>64,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Nom :</label>
+			<pos>8,35</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="Text_NomObjet" member="yes">
+			<value>Texte</value>
+			<pos>48,32</pos>
+			<size>256,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Nombre de sommets :</label>
+			<pos>8,91</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="Text_NbSommets" member="yes">
+			<value>nnn</value>
+			<pos>144,88</pos>
+			<size>160,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX4" variable="CheckBox_VisuSommets" member="yes">
+			<label>Visualisation des sommets de la facette</label>
+			<pos>24,116</pos>
+			<handler function="OnCheckBox_VisuSommetsClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL3" variable="SpinCtrl_IndiceSommet" member="yes">
+			<value>0</value>
+			<min>-1</min>
+			<pos>40,136</pos>
+			<size>122,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_NumeroSommet" member="yes">
+			<pos>176,136</pos>
+			<size>128,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_VisuNormale" member="yes">
+			<label>Visualisation de la normale à la facette</label>
+			<pos>24,168</pos>
+			<handler function="OnCheckBox_VisuNormaleClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_VisuNormales_Sommets" member="yes">
+			<label>Visualisation des normales aux sommets</label>
+			<pos>24,192</pos>
+			<handler function="OnCheckBox_VisuNormales_SommetsClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_InvNormale" member="yes">
+			<label>Inverser la normale</label>
+			<pos>24,216</pos>
+			<size>264,23</size>
+			<handler function="OnButton_InvNormaleClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_DelFacette" member="yes">
+			<label>Supprimer la facette</label>
+			<pos>24,240</pos>
+			<size>152,23</size>
+			<handler function="OnButton_DelFacetteClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button_UndoDel" member="yes">
+			<label>Undo</label>
+			<pos>184,240</pos>
+			<size>104,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_UndoDelClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON5" variable="Button_Masquer" member="yes">
+			<label>Masquer la facette</label>
+			<pos>24,264</pos>
+			<size>264,23</size>
+			<handler function="OnButton_MasquerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON6" variable="Button_Permuter" member="yes">
+			<label>Permutation circulaire des sommets</label>
+			<pos>24,288</pos>
+			<size>264,23</size>
+			<handler function="OnButton_PermuterClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON7" variable="Button_CentrerRotation" member="yes">
+			<label>Centrer la rotation sur la facette</label>
+			<pos>24,312</pos>
+			<size>264,23</size>
+			<handler function="OnButton_CentrerRotationClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX3" variable="CheckBox_Laisser" member="yes">
+			<label>Laisser la facette affichée en quittant</label>
+			<pos>24,344</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON8" variable="Button_Reset" member="yes">
+			<label>Reset</label>
+			<pos>24,368</pos>
+			<size>104,23</size>
+			<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON9" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>184,368</pos>
+			<size>104,23</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText_Warning" member="yes">
+			<label>Supprimée</label>
+			<pos>232,58</pos>
+			<size>64,16</size>
+			<hidden>1</hidden>
+			<fg>#FF0000</fg>
+			<font>
+				<size>10</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>default</family>
+				<face>Arial</face>
+			</font>
+		</object>
+	</object>
+</wxsmith>

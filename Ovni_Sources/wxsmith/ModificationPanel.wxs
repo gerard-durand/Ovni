@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ModificationPanel">
+		<title>Modifications</title>
+		<centered>1</centered>
+		<size>214,495</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Ajout de points dans une arrête</label>
+			<pos>0,0</pos>
+			<size>216,16</size>
+			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<bg>#000000</bg>
+			<style>wxALIGN_CENTRE</style>
+		</object>
+		<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
+			<pos>0,16</pos>
+			<size>216,64</size>
+			<object class="wxToggleButton" name="ID_TOGGLEBUTTON1" variable="ToggleButton_Ajouter" member="yes">
+				<label>Ajouter sous le pointeur</label>
+				<pos>32,4</pos>
+				<size>152,24</size>
+				<handler function="OnToggleButton_AjouterToggle" entry="EVT_TOGGLEBUTTON" />
+			</object>
+			<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_NbSegments" member="yes">
+				<value>2</value>
+				<min>2</min>
+				<pos>88,32</pos>
+				<size>40,24</size>
+				<enabled>0</enabled>
+				<handler function="OnSpinCtrl_NbSegmentsChange" entry="EVT_SPINCTRL" />
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+				<label>segments</label>
+				<pos>136,35</pos>
+				<size>32,9d</size>
+				<style>wxALIGN_CENTRE|wxFULL_REPAINT_ON_RESIZE</style>
+			</object>
+			<object class="wxToggleButton" name="ID_TOGGLEBUTTON2" variable="ToggleButton_Diviser" member="yes">
+				<label>Diviser en</label>
+				<pos>16,32</pos>
+				<size>64,24</size>
+				<handler function="OnToggleButton_DiviserToggle" entry="EVT_TOGGLEBUTTON" />
+			</object>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Création de facettes</label>
+			<pos>0,78</pos>
+			<size>216,16</size>
+			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<bg>#000000</bg>
+			<style>wxALIGN_CENTRE</style>
+		</object>
+		<object class="wxPanel" name="ID_PANEL4" variable="Panel4" member="yes">
+			<pos>0,96</pos>
+			<size>216,144</size>
+			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+				<label>Avec le numéro de groupe</label>
+				<pos>8,2</pos>
+				<size>144,16</size>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+				<label>Avec le numéro de matériau</label>
+				<pos>8,22</pos>
+				<size>152,16</size>
+			</object>
+			<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_Groupe" member="yes">
+				<value>0</value>
+				<pos>168,0</pos>
+				<size>40,20</size>
+				<handler function="OnSpinCtrl_GroupeChange" entry="EVT_SPINCTRL" />
+			</object>
+			<object class="wxSpinCtrl" name="ID_SPINCTRL3" variable="SpinCtrl_Materiau" member="yes">
+				<value>0</value>
+				<max>15</max>
+				<pos>168,20</pos>
+				<size>40,20</size>
+				<handler function="OnSpinCtrl_MateriauChange" entry="EVT_SPINCTRL" />
+			</object>
+			<object class="wxToggleButton" name="ID_TOGGLEBUTTON4" variable="ToggleButton_CreerFacette" member="yes">
+				<label>Créer</label>
+				<pos>16,40</pos>
+				<size>88,24</size>
+				<handler function="OnToggleButton_CreerFacetteToggle" entry="EVT_TOGGLEBUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON4" variable="Button_Annuler" member="yes">
+				<label>Annuler la création en cours</label>
+				<pos>16,68</pos>
+				<size>184,24</size>
+				<enabled>0</enabled>
+				<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON5" variable="Button_SupprimerFacette" member="yes">
+				<label>Supprimer les facettes créées</label>
+				<pos>16,92</pos>
+				<size>184,24</size>
+				<enabled>0</enabled>
+				<handler function="OnButton_SupprimerFacetteClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON6" variable="Button_InverserNormale" member="yes">
+				<label>Inverser les normales</label>
+				<pos>16,116</pos>
+				<size>184,24</size>
+				<enabled>0</enabled>
+				<handler function="OnButton_InverserNormaleClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_FacettePlane" member="yes">
+				<label>Plane</label>
+				<pos>120,44</pos>
+				<enabled>0</enabled>
+				<handler function="OnCheckBox_FacettePlaneClick" entry="EVT_CHECKBOX" />
+			</object>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Souder deux points</label>
+			<pos>0,240</pos>
+			<size>216,16</size>
+			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<bg>#000000</bg>
+			<style>wxALIGN_CENTRE</style>
+		</object>
+		<object class="wxPanel" name="ID_PANEL6" variable="Panel6" member="yes">
+			<pos>0,256</pos>
+			<size>216,32</size>
+			<object class="wxToggleButton" name="ID_TOGGLEBUTTON3" variable="ToggleButton_Souder" member="yes">
+				<label>Souder</label>
+				<pos>16,4</pos>
+				<size>96,24</size>
+				<handler function="OnToggleButton_SouderToggle" entry="EVT_TOGGLEBUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON8" variable="Button_UndoSouder" member="yes">
+				<label>Undo</label>
+				<pos>112,4</pos>
+				<size>88,24</size>
+				<handler function="OnButton_UndoSouderClick" entry="EVT_BUTTON" />
+			</object>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>Divers</label>
+			<pos>0,288</pos>
+			<size>216,16</size>
+			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<bg>#000000</bg>
+			<style>wxALIGN_CENTRE</style>
+		</object>
+		<object class="wxPanel" name="ID_PANEL8" variable="Panel8" member="yes">
+			<pos>0,304</pos>
+			<size>216,152</size>
+			<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
+				<label>Tolérance d&apos;égalité %</label>
+				<pos>8,8</pos>
+				<size>128,16</size>
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_Tolerance" member="yes">
+				<value>0</value>
+				<pos>136,8</pos>
+				<size>72,20</size>
+				<style>wxTE_RIGHT</style>
+				<handler function="OnTextCtrl_ToleranceText" entry="EVT_TEXT" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON9" variable="Button_InverserTout" member="yes">
+				<label>Inverser toutes les normales</label>
+				<pos>16,32</pos>
+				<size>184,24</size>
+				<handler function="OnButton_InverserToutClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON10" variable="Button_Trianguler" member="yes">
+				<label>Trianguler la BDD</label>
+				<pos>16,56</pos>
+				<size>184,24</size>
+				<handler function="OnButton_TriangulerClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON11" variable="Button_RecalculerNormales" member="yes">
+				<label>Recalculer toutes les normales</label>
+				<pos>16,80</pos>
+				<size>184,24</size>
+				<handler function="OnButton_RecalculerNormalesClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON12" variable="Button_Simplification" member="yes">
+				<label>Simplification de la BDD</label>
+				<pos>16,104</pos>
+				<size>184,24</size>
+				<handler function="OnButton_SimplificationClick" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_Transparence" member="yes">
+				<label>Activer la transparence</label>
+				<pos>16,130</pos>
+				<size>176,14</size>
+				<handler function="OnCheckBox_TransparenceClick" entry="EVT_CHECKBOX" />
+			</object>
+		</object>
+		<object class="wxPanel" name="ID_PANEL10" variable="Panel10" member="yes">
+			<pos>0,464</pos>
+			<size>216,36</size>
+			<object class="wxButton" name="ID_BUTTON13" variable="Button_Quitter" member="yes">
+				<label>Quitter</label>
+				<pos>64,4</pos>
+				<size>88,24</size>
+				<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+			</object>
+		</object>
+		<object class="wxPanel" name="ID_PANEL9" variable="Panel9" member="yes">
+			<pos>0,456</pos>
+			<size>216,8</size>
+			<bg>wxSYS_COLOUR_BACKGROUND</bg>
+		</object>
+	</object>
+</wxsmith>

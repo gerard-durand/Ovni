@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ReperageGroupe">
+		<title>Repérage d&apos;un groupe</title>
+		<size>230,75</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Numéro du groupe :</label>
+			<pos>8,20</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
+			<value>Aucun</value>
+			<pos>128,16</pos>
+			<size>80,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
+			<label>Valider</label>
+			<pos>8,48</pos>
+			<size>96,23</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Quit" member="yes">
+			<label>Quitter</label>
+			<pos>128,48</pos>
+			<size>96,23</size>
+			<handler function="OnButton_QuitClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton1" member="yes">
+			<max>100</max>
+			<pos>208,16</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton1Change" entry="EVT_SPIN" />
+		</object>
+	</object>
+</wxsmith>

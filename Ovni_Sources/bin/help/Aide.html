@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Aide de l'Application OVNI</title>
+  </head>
+  <body>
+    <div style="text-align: center;">
+      <h2><b><i>Aide de l'Application OVNI</i></b></h2>
+      <br>
+    </div>
+    Lien vers les <a href="Menus.html">Menus</a>. <b><span style="color: red;"></span></b><br>
+    Lien vers <a href="About.html">à Propos de ...</a><br>
+    <h3><font color="blue"><i>Fonctions à la souris :</i></font></h3>
+    Touche gauche enfoncée et mouvements dans la zone du dessin : Rotations en X
+    et Y écran (l'effet réel obtenu dépend de la sélection du mode de rotation,
+    directe ou simulation de Trackball).<br>
+    Touche droite enfoncée dans la zone du dessin et mouvements en Y (verticaux)
+    : Zoom + et -. Avec, en plus, la touche <b>Shift </b> enfoncée, Zoom plus
+    rapide (Utile si pas de souris à molette).<br>
+    Molette du milieu : Zoom + et -. Avec, en plus, la touche <b>Shift (Maj) </b>
+    enfoncée, Zoom plus rapide. <br>
+    Touche du milieu (appui sur la molette) : activation/désactivation des
+    sélections individuelles (facette, objet, point). Par défaut, le mode de
+    sélection des facettes est activé.<br>
+    Touche du milieu (appui sur la molette) et glissement de la souris :
+    sélections multiples. Note : déselections uniquement individuelles.<br>
+    Les "Sliders" (ou curseurs) en bas de la fenêtre sont utilisés pour
+    effectuer des rotations autour des axes en X, Y et Z de la base de données.<br>
+    (remarque : les axes X et Y de la base de données ne correspondent pas
+    forcément aux axes X et Y de la fenêtre OpenGL : dépend de la sélection du
+    mode de rotation, directe ou simulation de Trackball).<br>
+    Un clic droit dans la fenêtre OpenGL permet d'accéder à certaines fonctions
+    via un menu contextuel.<br>
+    Certaines de ces fonctions bénéficient d'un <a name="raccourci"></a>raccourci
+    clavier (rappelé entre parenthèses dans ce menu).<br>
+    <ul>
+      <li><b>s</b> : remise à zéro des sélections (<b>s</b> ou <b>S</b>) ;</li>
+      <li><b>c</b> : centrer la rotation sur le barycentre de la sélection (<b>c</b>
+        <i>en minuscule</i>) ;</li>
+      <li><b>x</b> : extension automatique de la sélection (<b>x</b> ou <b>X</b>);</li>
+      <li><b>g</b> : permutation circulaire des modes de colorisation : groupes,
+        matériaux, pas de colorisation (<b>g</b> ou <b>G</b>);</li>
+      <li><b>suppr</b> : supprimer les facettes sélectionnées ;</li>
+      <li><b>suppr</b> du <b>pavé numérique</b> : masquer les facettes
+        sélectionnées ;</li>
+      <li><b>p</b> : changer le sens de parcours des facettes sélectionnées (<b>p</b>
+        ou <b>P</b>) ;</li>
+      <li><b>i</b> : inverser les normales des facettes sélectionnées (cette
+        option, <b>i</b> ou <b>I</b>, entraîne celle ci-dessus, <b>p</b>); </li>
+    </ul>
+    Note : les raccourcis clavier ne fonctionnent que si c'est la fenêtre OpenGL
+    qui est active (ou qui a le focus !). C'est normalement toujours le cas.
+    Néanmoins, il peut être utile de cliquer une fois dans cette fenêtre pour la
+    (ré)activer.<br>
+    <p> <b><font color="blue">Certaines icônes de la barre de menus permettent
+          d'accéder directement à des fonctions et menus fréquemment utilisés.</font></b>
+    </p>
+    <p><br>
+    </p>
+    <h3><font color="blue"><i>Fonctions à la souris en mode sélection :</i></font></h3>
+    <b>Facettes et/ou Points :</b><br>
+    Touche du milieu pour effectuer une sélection.<span style="text-decoration: line-through;"></span><br>
+    Une sélection multiple est obtenue en cliquant successivement sur les
+    différentes facettes, objets ou points (dépend du contexte de sélection).
+    Dans ce cas, un simple clic permet de sélectionner ou désélectionner.<br>
+    <span style="text-decoration: line-through;"></span>Touche du milieu
+    enfoncée pour effectuer une multi-sélection en déplaçant/glissant la souris.
+    <br>
+    <span style="text-decoration: line-through;"></span><br>
+    <br>
+    <b>Objets : </b><br>
+    On sélectionne un objet en cliquant dessus avec le bouton milieu de la
+    souris. Pour obtenir une sélection multiple d'objets, il suffit de cliquer
+    sur les autres objets. Le clic simple permet de sélectionner ou
+    déselectionner.<br>
+    <p> L'inversion des normales, les rotations, déplacements, suppressions et
+      masquages d'objets peuvent travailler sur une sélection multiple d'objets.
+    </p>
+    <p><br>
+    </p>
+    <h3><font color="blue"><i>Fonction à la souris pour la fusion de deux points
+          :</i></font></h3>
+    Touche du milieu pour sélectionner un point. Il faut d'abord sélectionner le
+    point à fusionner puis le point de destination. <br>
+    <br>
+    <h3><font color="blue"><i>Fonction à la souris pour l'ajout de points :</i></font></h3>
+    Une arête est en surbrillance lorsqu'elle est survolée par la souris. Une
+    fois que l'arête est en surbrillance, la touche du milieu permet de rajouter
+    un point sur l'arête, à l'endroit où se trouve le pointeur de la souris. Via
+    la boîte de dialogue "Modification" on peut aussi choisir de diviser cette
+    arête survolée en un nombre défini de segments.<br>
+    <br>
+    <h3><font color="blue"><i>Fonction à la souris pour la création de facettes
+          :</i></font></h3>
+    Touche du milieu pour sélectionner un point. Pour créer une facette, il
+    suffit de sélectionner, dans l'ordre, les points qui vont former la facette.
+    Une fois que tous les points ont été sélectionnés, il faut resélectionner le
+    premier point pour créer la facette. <i>Note</i> : de préférence,
+    sélectionner dans le sens trigonométrique (inverse des aiguilles d'une
+    montre) pour orienter correctement les normales.<br>
+    <br>
+    Voir aussi les <a href="Menus.html">Menus</a>.<br>
+    <h3 =""=""><font color="blue"><i>Fonctions au clavier :</i></font></h3>
+    <p> Les flèches du clavier (droite, gauche, haut et bas) sont utilisées pour
+      les déplacements en X et Y (écran).</p>
+    <p>Les flèches du clavier + la touche <b>Maj</b> (droite, gauche, haut et
+      bas) sont utilisées pour des rotations en X et Y (écran).</p>
+    Les flèches du clavier numériques (Keypad) sont utilisées pour les rotations
+    en X et Y écran (touches 6, 4, 8 et 2) ou en déplacements.<br>
+    Sur PC, l'action dépend de l'état de la touche de verrouillage du pavé
+    numérique&nbsp; ("Num Lock" ou "Verr num").<br>
+    Les touches <b>+</b> et <b>-</b> du pavé numérique peuvent aussi être
+    utilisées pour activer le Zoom.<br>
+    Les touches <b>Page up</b> et <b>Page down</b> ont la même action mais en
+    Zoom rapide (x20).<br>
+    <br>
+    La touche <b>r</b> (ou <b>R</b>) (ou Reset), restaure les valeurs
+    d'affichages à celles par défaut.<br>
+    <p> La touche <b>t</b> (ou <b>T</b>) est l'équivalent du menu
+      Préférences/Mode de Rotation à la souris. Elle permet de basculer du mode
+      de rotation directe des axes X, Y et Z de la bdd vers le mode "Trackball"
+      (et réciproquement).</p>
+    <p><b>C</b> : Affiche ou masque les curseurs (ou sliders)&nbsp; (en
+      majuscule);</p>
+    <p><b>m</b> : Affiche la matrice de transformation ;</p>
+    <p><b>M</b> : Change le mode facettes planes &lt;-&gt; Lissage de Gouraud.</p>
+    <br>
+    <br>
+    <p></p>
+    <p>Voir également, <a href="#raccourci">ci-dessus</a>, les fonctions à la
+      souris qui bénéficient d'un raccourci au clavier.</p>
+    <br>
+    <b>Note 1 :</b> Dans le mode direct, les mouvements en X et Y de la souris
+    n'agissent que sur les axes X et Z de la Bdd. La seule façon d'obtenir une
+    rotation autour de l'axe Y est d'activer le "Slider" Y en bas de l'écran.<br>
+    Dans le mode "Trackball" la bdd tourne autour des axes X et Y de l'écran
+    (positions initiale au moment du clic vec le bouton milieu de la souris). On
+    agit ainsi indirectement, via une transformation par projection, sur les 3
+    axes de la Bdd en combinant les rotations en X et Y écran.<br>
+    <b>Note 2 :</b> Les "Sliders" agissent toujours directement sur les axes X,
+    Y et Z de la Bdd.<br>
+    <b>Note 3 :</b> En mode "Trackball" les valeurs de rotation en Y ]90,270[ ne
+    peuvent être atteintes par des mouvements à la souris bien que ce soit
+    possible avec le Slider Y. C'est normal. Dans ce cas, les valeurs des angles
+    en X et Z compensent cette zone "interdite" des angles en Y.<br>
+    <span style="text-decoration: line-through;"></span><br>
+    <h3 =""=""><font color="blue"><i>Sauvegardes automatiques :</i></font></h3>
+    Une procédure de sauvegarde automatique se lance toutes les 5 minutes (par
+    défaut) quand la base de données en mémoire est modifiée. Elle crée un
+    fichier <b>Autosave.bdd</b> qui sera supprimé lors de la sortie normale de
+    l'application. En cas de crash, ce fichier reste sur le disque et sera
+    détecté au lancement suivant. On pourra ouvrir ce fichier, mais il faudra <b><font
+        color="red">impérativement</font></b> l'enregistrer sous un nouveau nom
+    si on souhaite le conserver.<br>
+    <br>
+  </body>
+</html>

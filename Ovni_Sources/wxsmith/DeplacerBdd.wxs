@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="DeplacerBdd">
+		<title>Déplacer la Bdd</title>
+		<size>256,199</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Déplacement de la Base de Données</label>
+			<pos>24,4</pos>
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+			<pos>0,24</pos>
+			<size>384,2</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Delta X :</label>
+			<pos>24,44</pos>
+			<fg>#FF0000</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Delta Y :</label>
+			<pos>24,76</pos>
+			<fg>#00DC00</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Delta Z :</label>
+			<pos>24,108</pos>
+			<fg>#0000FF</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_DeplX" member="yes">
+			<value>0</value>
+			<pos>96,40</pos>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_DeplY" member="yes">
+			<value>0</value>
+			<pos>96,72</pos>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_DeplZ" member="yes">
+			<value>0</value>
+			<pos>96,104</pos>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_Centrer" member="yes">
+			<label>Centrage Auto sur Min-Max de la Bdd</label>
+			<pos>8,136</pos>
+			<size>240,26</size>
+			<handler function="OnButton_CentrerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_OK" member="yes">
+			<label>Accepter</label>
+			<pos>8,168</pos>
+			<size>80,24</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Inverser" member="yes">
+			<label>Inverser</label>
+			<pos>88,168</pos>
+			<size>80,24</size>
+			<handler function="OnButton_InverserClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>168,168</pos>
+			<size>80,24</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="RotationPanel">
+		<title>Rotation</title>
+		<pos>30,30</pos>
+		<size>360,371</size>
+		<id_arg>0</id_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Pas angulaire en degrés</label>
+			<pos>8,12</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_PasAngulaire" member="yes">
+			<value>1.0</value>
+			<pos>152,8</pos>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_PasAngulaireText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_ValiderPas" member="yes">
+			<label>Valider</label>
+			<pos>272,8</pos>
+			<size>80,24</size>
+			<handler function="OnButton_ValiderPasClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
+			<label>Centre de Rotation</label>
+			<pos>2,40</pos>
+			<size>356,176</size>
+		</object>
+		<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox_Centre" member="yes">
+			<label></label>
+			<content>
+				<item>Barycentre de la sélection</item>
+				<item>Boîte englobante de la sélection</item>
+				<item>Point particulier à entrer (et valider) ci-dessous</item>
+			</content>
+			<default>-1</default>
+			<pos>32,56</pos>
+			<size>296,86</size>
+			<handler function="OnRadioBox_CentreSelect" entry="EVT_RADIOBOX" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>X :</label>
+			<pos>8,156</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_X" member="yes">
+			<value>0.0</value>
+			<pos>32,152</pos>
+			<size>72,24</size>
+			<enabled>0</enabled>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_XText" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Y :</label>
+			<pos>128,156</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_Y" member="yes">
+			<value>0.0</value>
+			<pos>152,152</pos>
+			<size>72,24</size>
+			<enabled>0</enabled>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_YText" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Z :</label>
+			<pos>248,156</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_Z" member="yes">
+			<value>0.0</value>
+			<pos>272,152</pos>
+			<size>80,24</size>
+			<enabled>0</enabled>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_ZText" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Angle de rotation en X :</label>
+			<pos>40,228</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Angle de rotation en Y :</label>
+			<pos>40,260</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>Angle de rotation en Z :</label>
+			<pos>40,292</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_ValiderPoint" member="yes">
+			<label>Valider</label>
+			<pos>104,184</pos>
+			<size>152,24</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_ValiderPointClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="TextCtrl_AngleX" member="yes">
+			<value>0</value>
+			<pos>200,224</pos>
+			<size>88,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_AngleXText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton_X" member="yes">
+			<min>-360</min>
+			<max>360</max>
+			<pos>288,224</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_XChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_XChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="TextCtrl_AngleY" member="yes">
+			<value>0</value>
+			<pos>200,256</pos>
+			<size>88,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_AngleYText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON2" variable="SpinButton_Y" member="yes">
+			<min>-360</min>
+			<max>360</max>
+			<pos>288,256</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_YChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_YChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl_AngleZ" member="yes">
+			<value>0</value>
+			<pos>200,288</pos>
+			<size>88,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_AngleZText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON3" variable="SpinButton_Z" member="yes">
+			<min>-360</min>
+			<max>360</max>
+			<pos>288,288</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_ZChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_ZChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Appliquer" member="yes">
+			<label>Appliquer</label>
+			<pos>40,336</pos>
+			<size>120,24</size>
+			<handler function="OnButton_AppliquerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button_Annuler" member="yes">
+			<label>Annuler</label>
+			<pos>200,336</pos>
+			<size>120,24</size>
+			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

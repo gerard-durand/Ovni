@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Aide de l'Application OVNI</title>
+  </head>
+  <body>
+    <div style="text-align: center;">
+      <h2><b><i>A propos d'OVNI</i></b></h2>
+      <br>
+    </div>
+    Lien vers les <a href="Menus.html">Menus</a>.<br>
+    Lien vers l'<a href="Aide.html">Aide</a>.<br>
+    <h3><i><b><font color="red">O</font><font color="blue">util de </font><font
+            color="red">V</font><font color="blue">isualisatio</font><font color="red">N
+            I</font><font color="blue">nteractif</font></b></i></h3>
+    OVNI a été développé à l'Onera afin d'éditer, modifier et corriger des bases
+    de données d'avions pour CRIRA au format SDM d'Oktal.<br>
+    Il peut importer d'autres formats de base de données comme les fichiers
+    WaveFront Obj (.obj), Autodesk (.3ds), Milkshape 3D texte (.m3d), Polygon
+    File de Niratam (.ply), Object File Format (.off) et Groupe 3D Onera (.g3d).<br>
+    Quelque soit le format importé, les fichiers seront enregistrés au format
+    SDM (.bdd), seul format connu de Crira.<br>
+    <br>
+    Il a d'abord été conçu sous la forme de projets tutorés par des élèves de
+    l'IUT d'informatique d'Arles (2005-2006), lors de stages effectués à l'Onera
+    de Salon de Provence<br>
+    <br>
+    <p><b>Versions précédentes avec <i>Tcl/Tk</i></b><br>
+    </p>
+    <p>Les versions précédentes d'Ovni utilisaient <i>Tcl/Tk</i> pour créer et
+      gérer l'interface graphique. Les fonctions utilisée dans Ovni mais ne
+      préexistant pas dans <i>Tcl/Tk</i> ont été écrites en C et sont appelées
+      depuis les scripts de <i>Tcl/Tk</i>.&nbsp; </p>
+    Pour cela, il était nécessaire d'utiliser des outils intermédiaires comme
+    une librairie dynamique Togl (.dll pour Windows ou .so pour Linux) et
+    mktclapp. <br>
+    <i>Togl</i> permet d'introduire et gérer une fenêtre OpenGL dans <i>Tcl/Tk</i>.
+    <br>
+    <i>Mktclapp </i>assemble les scripts <i>Tcl/Tk</i> et le code compilé
+    d'Ovni sous la forme d'un exécutable standard intégrant tout ce qu'il faut.
+    Sans mktclapp, on peut utiliser le code compilé sous forme d'une librairie
+    dynamique (Ovni.dll par exemple sous Windows), mais cela nécessite d'avoir
+    une installation Tcl/Tk complète et fonctionnelle, ce qui n'est pas
+    forcément le cas sur les différentes machines où on souhaite utiliser Ovni.<br>
+    <p> Ces outils n'ont pas changé depuis quelques années et, surtout, ne sont
+      plus maintenus par leurs auteurs respectifs. Des incompatibilités sont
+      apparues depuis les versions 8.6 de <i>Tcl/Tk</i>. </p>
+    <p><b><br>
+      </b></p>
+    <p><b>Version wxWidgets</b></p>
+    <p>Les incompatibilités avec les dernières version de Tcl/Tk et surtout
+      l'abandon de certains outils intermédiaires ont motivé la réécriture
+      d'Ovni en utilisant maintenant la librairie graphique wxWidgets. C'est une
+      bibliothèque maintenue régulièrement par de nombreux auteurs, et sous
+      licence GNU. Elle est utilisée dans de nombreux logiciels libre ou du
+      commerce. Elle est nativement supportée et intégrée à l'environnement de
+      développement <i>Code::Blocks</i>, qui existe sur la plupart des OS
+      actuels (Windows, Linux, OSX), compilée en C++ par gcc/g++ notamment. De
+      plus, il est possible de débuguer un exécutable via gdb, ce qui n'était
+      pas faisable dans la version utilisant <i>Tcl/Tk</i>. La réécriture de la
+      partie interface d'Ovni, s'est aussi accompagnée d'une migration de C vers
+      C++. C'est un travail qui a été commencé par un stagiaire à l'Onera de
+      Palaiseau, en 2015, mais non terminé faute de temps suffisant.</p>
+    <br>
+    Ovni est actuellement compilé sous Windows par gcc 8.1 et utilise wxWidgets
+    3.12. On utilise de préférence une compilation générant un exécutable
+    Windows en 64 bits. L'exécutable a été testé sous Window 7 et 10. On peut
+    toutefois se contenter d'une génération en 32 bits, sous réserve que, sur de
+    grosses bases de données, on risque d'avoir des soucis de gestion de
+    mémoire.<br>
+    <br>
+    Les versions précédentes, avec <i>Tcl/Tk</i>, ont aussi été générées pour
+    tourner sous Linux. C'est toujours possible avec cette nouvelle version,
+    mais n'a pu être testé : quelques ajustements seront sans doute à prévoir.<br>
+    <p><br>
+    </p>
+    <h3><i><u><font color="blue">Maintenance générale / Développements</font></u></i></h3>
+    Gérard DURAND<br>
+    <br>
+    <h3><i><u><font color="blue">Tuteurs Onera</font></u></i></h3>
+    Eric COIRO<br>
+    <p> Christian CHATELARD</p>
+    <p>Gérard DURAND</p>
+    <br>
+    <h3><i><u><font color="blue">Elèves ayant participé au projet</font></u></i></h3>
+    <i><b>à Salon de Provence (Versions Tcl/Tk)</b></i><br>
+    Jean-Baptiste BATTESTI<br>
+    Vincent DELPECH<br>
+    Axel FRANCOIS<br>
+    Lisiane LAGOUARDE<br>
+    Fabien PARDIGON<br>
+    Romaric SOURBE<br>
+    Vincent VIEULES<br>
+    <br>
+    <i><b>à Palaiseau (Version wxWidgets)</b></i><br>
+    Jordy DIAS<br>
+    <br>
+    <br>
+    <b>© Copyright ONERA 2005-2019</b>
+  </body>
+</html>

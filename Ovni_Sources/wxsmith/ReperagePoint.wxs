@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ReperagePoint">
+		<title>Repérage d&apos;un point</title>
+		<size>296,253</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Indice/Numéro de l&apos;objet :</label>
+			<pos>8,11</pos>
+			<size>136,16</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_IndicePoint" member="yes">
+			<value>0</value>
+			<min>-1</min>
+			<pos>112,56</pos>
+			<size>72,21</size>
+			<handler function="OnSpinCtrl_IndicePointChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Nom :</label>
+			<pos>8,35</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_IndiceObjet" member="yes">
+			<value>0</value>
+			<pos>152,8</pos>
+			<size>72,21</size>
+			<handler function="OnSpinCtrl_IndiceObjetChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="Text_NumeroObjet" member="yes">
+			<value>nnn</value>
+			<pos>224,8</pos>
+			<size>64,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Indice du point :</label>
+			<pos>8,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="Text_NomObjet" member="yes">
+			<value>Texte</value>
+			<pos>48,32</pos>
+			<size>240,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>X :</label>
+			<pos>8,92</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Y :</label>
+			<pos>8,116</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Z :</label>
+			<pos>8,140</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="Text_ValeurX" member="yes">
+			<value>xxx</value>
+			<pos>24,88</pos>
+			<size>128,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="Text_ValeurY" member="yes">
+			<value>yyy</value>
+			<pos>24,112</pos>
+			<size>128,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="Text_ValeurZ" member="yes">
+			<value>zzz</value>
+			<pos>24,136</pos>
+			<size>128,21</size>
+			<enabled>0</enabled>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_X" member="yes">
+			<pos>160,92</pos>
+			<handler function="OnCheckBox_XClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_Y" member="yes">
+			<pos>160,116</pos>
+			<handler function="OnCheckBox_YClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX3" variable="CheckBox_Z" member="yes">
+			<pos>160,140</pos>
+			<handler function="OnCheckBox_ZClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_ModifierX" member="yes">
+			<label>Modifier</label>
+			<pos>176,88</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_ModifierXClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_ModifierY" member="yes">
+			<label>Modifier</label>
+			<pos>176,112</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_ModifierYClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_ModifierZ" member="yes">
+			<label>Modifier</label>
+			<pos>176,136</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_ModifierZClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button_UndoX" member="yes">
+			<label>Undo</label>
+			<pos>232,88</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_UndoXClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON5" variable="Button_UndoY" member="yes">
+			<label>Undo</label>
+			<pos>232,112</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_UndoYClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON6" variable="Button_UndoZ" member="yes">
+			<label>Undo</label>
+			<pos>232,136</pos>
+			<size>56,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_UndoZClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON7" variable="Button_Centrer" member="yes">
+			<label>Centrer la rotation sur le point</label>
+			<pos>32,168</pos>
+			<size>232,23</size>
+			<handler function="OnButton_CentrerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX4" variable="CheckBox_Laisser" member="yes">
+			<label>Laisser l&apos;étoile affichée en quittant</label>
+			<pos>32,200</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON8" variable="Button_Reset" member="yes">
+			<label>Reset</label>
+			<pos>32,224</pos>
+			<size>88,23</size>
+			<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON9" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>176,224</pos>
+			<size>88,23</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

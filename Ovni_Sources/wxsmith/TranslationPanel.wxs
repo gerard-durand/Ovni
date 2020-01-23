@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="TranslationPanel">
+		<title>Translation</title>
+		<pos>30,30</pos>
+		<size>441,223</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Pas grossier</label>
+			<pos>8,12</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_PasGrossier" member="yes">
+			<value>0.20</value>
+			<pos>104,8</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_PasGrossierText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Pas fin</label>
+			<pos>256,12</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_PasFin" member="yes">
+			<value>0.01</value>
+			<pos>320,8</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_PasFinText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_Valider" member="yes">
+			<label>Valider la modification du Pas</label>
+			<pos>48,40</pos>
+			<size>336,24</size>
+			<handler function="OnButton_ValiderClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Translation en X</label>
+			<pos>8,92</pos>
+			<fg>#FF0000</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_XG" member="yes">
+			<value>0.0</value>
+			<pos>104,88</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_XGText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton_XG" member="yes">
+			<min>-10</min>
+			<max>10</max>
+			<pos>200,88</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_XGChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_XGChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Affiner en X</label>
+			<pos>248,92</pos>
+			<fg>#FF0000</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_XF" member="yes">
+			<value>0.000</value>
+			<pos>320,88</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON2" variable="SpinButton_XF" member="yes">
+			<min>-10</min>
+			<max>10</max>
+			<pos>416,88</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_XFChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_XFChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Translation en Y</label>
+			<pos>8,124</pos>
+			<fg>#008000</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="TextCtrl_YG" member="yes">
+			<value>0.0</value>
+			<pos>104,120</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON3" variable="SpinButton_YG" member="yes">
+			<min>-10</min>
+			<max>1000</max>
+			<pos>200,120</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_YGChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_YGChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Affiner en Y</label>
+			<pos>248,124</pos>
+			<fg>#008000</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="TextCtrl_YF" member="yes">
+			<value>0.000</value>
+			<pos>320,120</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON4" variable="SpinButton_YF" member="yes">
+			<min>-10</min>
+			<max>10</max>
+			<pos>416,120</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_YFChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_YFChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>Translation en Z</label>
+			<pos>8,156</pos>
+			<fg>#0000FF</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl_ZG" member="yes">
+			<value>0.0</value>
+			<pos>104,152</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON5" variable="SpinButton_ZG" member="yes">
+			<min>-10</min>
+			<max>10</max>
+			<pos>200,152</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_ZGChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_ZGChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
+			<label>Affiner en Z</label>
+			<pos>248,156</pos>
+			<fg>#0000FF</fg>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL8" variable="TextCtrl_ZF" member="yes">
+			<value>0.000</value>
+			<pos>320,152</pos>
+			<size>96,24</size>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxSpinButton" name="ID_SPINBUTTON6" variable="SpinButton_ZF" member="yes">
+			<min>-10</min>
+			<max>10</max>
+			<pos>416,152</pos>
+			<size>17,24</size>
+			<handler function="OnSpinButton_ZFChangeUp" entry="EVT_SPIN_UP" />
+			<handler function="OnSpinButton_ZFChangeDown" entry="EVT_SPIN_DOWN" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_OK" member="yes">
+			<label>OK</label>
+			<pos>104,192</pos>
+			<size>104,24</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Annuler" member="yes">
+			<label>Annuler</label>
+			<pos>232,192</pos>
+			<size>104,24</size>
+			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="ChangerEchelleBdd">
+		<title>Changer l&apos;échelle de la Bdd</title>
+		<size>304,119</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Changement d&apos;échelle de la Base de Données</label>
+			<pos>32,8</pos>
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+			<pos>0,32</pos>
+			<size>384,2</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Facteur à appliquer à la Bdd</label>
+			<pos>8,52</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_scale" member="yes">
+			<value>1</value>
+			<pos>184,48</pos>
+			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE2" variable="StaticLine2" member="yes">
+			<pos>0,80</pos>
+			<size>400,2</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
+			<label>Accepter</label>
+			<pos>8,88</pos>
+			<size>96,24</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Inverser" member="yes">
+			<label>Inverser</label>
+			<pos>104,88</pos>
+			<size>96,24</size>
+			<handler function="OnButton_InverserClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>200,88</pos>
+			<size>96,24</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

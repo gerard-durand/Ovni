@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="Cube">
+		<title>Ajout d&apos;un cube</title>
+		<size>400,151</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Arête du cube :</label>
+			<pos>88,3</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_Arete" member="yes">
+			<value>1.0</value>
+			<pos>184,0</pos>
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+			<pos>0,28</pos>
+			<size>400,2</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Coordonnées du centre du cube :</label>
+			<pos>112,32</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>X :</label>
+			<pos>8,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_X" member="yes">
+			<value>0.0</value>
+			<pos>24,56</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Y :</label>
+			<pos>136,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_Y" member="yes">
+			<value>0.0</value>
+			<pos>152,56</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Z :</label>
+			<pos>264,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_Z" member="yes">
+			<value>0.0</value>
+			<pos>280,56</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
+			<label>Accepter</label>
+			<pos>88,120</pos>
+			<size>88,23</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Annuler" member="yes">
+			<label>Annuler</label>
+			<pos>208,120</pos>
+			<size>88,23</size>
+			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Numéro de Groupe :</label>
+			<pos>8,91</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_Groupe" member="yes">
+			<value>0</value>
+			<pos>120,88</pos>
+			<size>72,21</size>
+			<handler function="OnSpinCtrl_GroupeChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>Numéro de Matériau :</label>
+			<pos>200,91</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_Materiau" member="yes">
+			<value>0</value>
+			<pos>320,88</pos>
+			<size>72,21</size>
+			<handler function="OnSpinCtrl_MateriauChange" entry="EVT_SPINCTRL" />
+		</object>
+	</object>
+</wxsmith>

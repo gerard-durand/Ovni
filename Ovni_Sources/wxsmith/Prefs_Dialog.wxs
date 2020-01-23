@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="Prefs_Dialog">
+		<title>Préférences de l&apos;application</title>
+		<hidden>1</hidden>
+		<id_arg>0</id_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
+		<object class="wxBoxSizer" variable="BoxSizer1" member="yes">
+			<orient>wxVERTICAL</orient>
+			<object class="sizeritem">
+				<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+					<label>Valeurs = coefficient par rapport à la diagonale de la boîte englobante </label>
+					<style>wxALIGN_CENTRE</style>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
+					<cols>2</cols>
+					<rows>2</rows>
+					<vgap>-2</vgap>
+					<hgap>0d</hgap>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+							<label>Longueur des axes</label>
+							<size>260,15</size>
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE1" variable="SpinCtrlDouble_axes" member="yes">
+							<value>0,25</value>
+							<max>1,000000</max>
+							<increment>0,010000</increment>
+							<size>80,23</size>
+							<handler function="OnSpinCtrlDouble_axesChange" entry="EVT_SPINCTRLDOUBLE" />
+						</object>
+						<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+							<label>Longueur des normales</label>
+							<size>132,16</size>
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE2" variable="SpinCtrlDouble_norm" member="yes">
+							<value>0,05</value>
+							<max>1,000000</max>
+							<increment>0,010000</increment>
+							<size>80,23</size>
+							<handler function="OnSpinCtrlDouble_normChange" entry="EVT_SPINCTRLDOUBLE" />
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+						<option>1</option>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>1</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE4" variable="StaticLine4" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer" variable="BoxSizer4" member="no">
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+							<label>Rayon de la source</label>
+							<size>260,15</size>
+						</object>
+						<flag>wxALL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE3" variable="SpinCtrlDouble_src" member="yes">
+							<value>0,03</value>
+							<max>1,000000</max>
+							<increment>0,010000</increment>
+							<size>80,23</size>
+							<handler function="OnSpinCtrlDouble_srcChange" entry="EVT_SPINCTRLDOUBLE" />
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+				</object>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>1</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE5" variable="StaticLine5" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_AntialiasingSoft" member="yes">
+					<label>Anti-aliasing géré par OpenGL</label>
+					<size>200,20</size>
+					<handler function="OnCheckBox_AntialiasingSoftClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE3" variable="StaticLine3" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX8" variable="CheckBox_1SeulObjet3D" member="yes">
+					<label>Forcer la lecture des fichiers .obj dans 1 seul Objet 3D</label>
+					<fg>wxSYS_COLOUR_BTNTEXT</fg>
+					<bg>wxSYS_COLOUR_MENUBAR</bg>
+					<handler function="OnCheckBox_1SeulObjet3DClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_LectureOptimisee" member="yes">
+					<label>Lecture optimisée des tableaux de points des fichiers de type .obj</label>
+					<handler function="OnCheckBox_LectureOptimiseeClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX3" variable="CheckBox_TestDecalage3DS" member="yes">
+					<label>Lecture du décalage éventuel des objets dans les fichiers .3ds</label>
+					<handler function="OnCheckBox_TestDecalage3DSClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE2" variable="StaticLine2" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX4" variable="CheckBox_Seuillage" member="yes">
+					<label>Calculs et visualisation avec seuillage des normales</label>
+					<handler function="OnCheckBox_SeuillageClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxALIGN_LEFT</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxFlexGridSizer" variable="FlexGridSizer3" member="no">
+					<cols>2</cols>
+					<rows>2</rows>
+					<vgap>-2</vgap>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText_Gouraud" member="yes">
+							<label>Seuil de comparaison des normales (degrés) :</label>
+							<size>260,15</size>
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE4" variable="SpinCtrlDouble_SeuilGouraud" member="yes">
+							<value>35,0</value>
+							<max>90,000000</max>
+							<increment>0,500000</increment>
+							<size>80,23</size>
+							<handler function="OnSpinCtrlDouble_SeuilGouraudChange" entry="EVT_SPINCTRLDOUBLE" />
+						</object>
+						<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText_Gouraud2" member="yes">
+							<label>Coefficient multiplicateur du 2ème angle :</label>
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE5" variable="SpinCtrlDouble_SeuilGouraud2" member="yes">
+							<value>1,6</value>
+							<max>3,000000</max>
+							<increment>0,100000</increment>
+							<size>80,23</size>
+							<handler function="OnSpinCtrlDouble_SeuilGouraud2Change" entry="EVT_SPINCTRLDOUBLE" />
+						</object>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>1</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX6" variable="CheckBox_RecNormales_Seuillees" member="yes">
+					<label>Enregistrement dans la Bdd des normales aux sommets seuillées</label>
+					<enabled>0</enabled>
+					<handler function="OnCheckBox_RecNormales_SeuilleesClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX5" variable="CheckBox_CalculNormales" member="yes">
+					<label>Calcul des normales aux sommets dès la lecture de la Bdd</label>
+					<handler function="OnCheckBox_CalculNormalesClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE6" variable="StaticLine6" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+					<label>Intervalle de temps des sauvegardes automatiques en minutes :</label>
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer" variable="BoxSizer5" member="no">
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
+							<label>0 &lt;=&gt; Pas de sauvegarde</label>
+							<size>255,15</size>
+						</object>
+						<flag>wxALL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_PasSvg" member="yes">
+							<value>0</value>
+							<size>78,23</size>
+							<maxsize>78,0</maxsize>
+							<handler function="OnSpinCtrl_PasSvgChange" entry="EVT_SPINCTRL" />
+						</object>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE7" variable="StaticLine7" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox_Triangulation" member="yes">
+					<label>Méthode de triangulation</label>
+					<content>
+						<item>Méthode 1     </item>
+						<item>Méthode 2     </item>
+						<item>Méthode 3 </item>
+					</content>
+					<default>1</default>
+					<style>wxRA_SPECIFY_ROWS</style>
+					<handler function="OnRadioBox_TriangulationSelect" entry="EVT_RADIOBOX" />
+				</object>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxRadioBox" name="ID_RADIOBOX2" variable="RadioBox_Trackball" member="yes">
+					<label>Mode de rotation à la souris</label>
+					<content>
+						<item>Directe           </item>
+						<item>Trackball</item>
+					</content>
+					<default>1</default>
+					<style>wxRA_SPECIFY_ROWS</style>
+					<handler function="OnRadioBox_TrackballSelect" entry="EVT_RADIOBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+				<option>1</option>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE8" variable="StaticLine8" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX7" variable="CheckBox_DisplayFps" member="yes">
+					<label>Affichage du nombre de frames OpenGL par secondes (fps)</label>
+					<checked>1</checked>
+					<handler function="OnCheckBox_DisplayFpsClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE10" variable="StaticLine10" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX9" variable="CheckBox_CreerBackup" member="yes">
+					<label>Créer un fichier backup *.bdd.bak lors des opérations Enregistrer</label>
+					<enabled>0</enabled>
+					<fg>wxSYS_COLOUR_BTNTEXT</fg>
+					<bg>wxSYS_COLOUR_MENUBAR</bg>
+					<handler function="OnCheckBox_CreerBackupClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX10" variable="CheckBox_SupprBackup" member="yes">
+					<label>Supprimer le fichier de backup *.bdd.bak en quittant Ovni</label>
+					<enabled>0</enabled>
+					<fg>wxSYS_COLOUR_BTNTEXT</fg>
+					<bg>wxSYS_COLOUR_MENUBAR</bg>
+					<handler function="OnCheckBox_SupprBackupClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE11" variable="StaticLine11" member="yes">
+					<size>380,1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticText" name="ID_STATICTEXT9" variable="StaticText9" member="yes">
+					<label>Répertoire des fichiers temporaires de travail</label>
+					<style>wxALIGN_CENTRE</style>
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer" variable="BoxSizer2" member="yes">
+					<object class="sizeritem">
+						<object class="wxTextCtrl" name="ID_TEXTCTRL10" variable="TextCtrl_WorkDir" member="yes">
+							<value>C:</value>
+							<size>294,21</size>
+							<style>wxTE_RIGHT</style>
+							<handler function="OnTextCtrl_WorkDirText" entry="EVT_TEXT" />
+						</object>
+						<flag>wxALL|wxALIGN_BOTTOM</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxButton" name="ID_BUTTON1" variable="Button_tmp_rep" member="yes">
+							<label>...</label>
+							<size>40,23</size>
+							<handler function="OnButton_tmp_repClick" entry="EVT_BUTTON" />
+						</object>
+						<flag>wxBOTTOM|wxALIGN_BOTTOM</flag>
+						<border>5</border>
+					</object>
+				</object>
+				<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxStaticLine" name="ID_STATICLINE9" variable="StaticLine9" member="yes">
+					<size>10,-1</size>
+				</object>
+				<flag>wxALL|wxEXPAND</flag>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer" variable="BoxSizer3" member="no">
+					<object class="sizeritem">
+						<object class="wxButton" name="ID_BUTTON2" variable="Button_Reset" member="yes">
+							<label>Reset</label>
+							<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
+						</object>
+						<flag>wxALL|wxALIGN_BOTTOM</flag>
+						<border>5</border>
+						<option>1</option>
+					</object>
+					<object class="sizeritem">
+						<object class="wxButton" name="ID_BUTTON3" variable="Button_OK" member="yes">
+							<label>OK</label>
+							<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+						</object>
+						<flag>wxALL|wxALIGN_BOTTOM</flag>
+						<border>5</border>
+						<option>1</option>
+					</object>
+				</object>
+				<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL</flag>
+				<border>5</border>
+			</object>
+		</object>
+	</object>
+</wxsmith>

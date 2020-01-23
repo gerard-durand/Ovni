@@ -1,0 +1,54 @@
+Bug connu (mais hélas non corrigé !)
+Plantages aléatoires sous Windows (Tcl, OpenGL ???)
+Sur certaines bdd, on obtient des effets de transparence non voulus. Il s'agit pour la plupart d'une inadaptation entre les échelles, le clipping, la profondeur du Z-Buffer (la bdd est en cm ou autre et non en m ...). Il suffit d'appliquer un facteur d'échelle de 0.1 ou 0.01, puis un Zoom automatique pour que les choses rentrent dans l'ordre. Semble maintenant corrigé...
+
+version 3 beta 12.
+Lecture intégrée des fichiers de type 3ds et Wavefront .obj
+Calcul et utilisation des normales aux sommets. Activation/Désactivation par la touche m (lissage de gouraud). Attention, cette option nécessite des changements profonds dans divers endroits du code. Tout n'a pas encore été revu donc plantages en perspectives... (ou dans le meilleur des cas, ça ne fait pas ce que ça devrait!!!). Pour moduler le lissage, on peut utiliser un critère dans "Préférences" qui utilise le produit scalaire des normales aux sommets avec la normale à la facette. C'est un nombre entre 0 et 1 (une valeur absolue de cosinus). Si =0 on prend inconditionellement les normales à chaque sommet, si =1 c'est inconditionellement la normale à la facette qui est affectée à chaque sommet. Pour les fichiers 3ds et .bdd, on calcule les normales aux sommets en entrée de programme (peut être long), par contre les normales aux facettes sont lues directement dans le fichier, éventuellement recalculées.  Pour les fichiers .obj, c'est le contraire : les normales aux sommets sont lues et les normales aux centres des facettes recalculées.
+
+version 3 beta 11.
+Lecture de fichiers MilkShape 3D Ascii (Enregistrés en .txt par MilkShape et renommés en .m3d). Utilisés pour récupérer des fichiers au format .3ds, exportés en .txt par MilkShape. On peut aussi utiliser un petit utilitaire, 3ds2m3d, adapté d'un 3ds2m (exemple de lib3ds sourceforge).
+Lecture directe de fichiers au format 3ds. Nécessite la compilation de la librairie lib3ds.a et une modification du makefile.
+
+version 3 beta 10.
+Remise en route du mode permettant de tracer en vert les facettes mal orientées (fonction qui existait dans la V2 mais avait disparu lors de la réécriture en v3).
+Touche V au clavier pour switcher entre 2 modes de présentation des facettes mal orientées : soit en vert (<=> v2) soit non tracées (<=> v3 avant la beta 9).
+Gestion spécifique des caractères accentués dans les fenêtres "Console" sous Windows (obtenus via des printf)
+On peut maintenant supprimer un ensemble de facettes sélectionnées et non plus seulement une par une (le UNDO fonctionne).
+Synchronisation des fenêtres "Repérage Facettes" et "Outils/Sélections et déplacements".
+Menu préférences (seulement 2 choix de paramètres à ajuster pour l'instant).
+
+Version 3 beta 9.
+La fonction Souder 2 points peut maintenant travailler sur des points appartenant à des objets différents. Dans ce cas, elle se "contente" d'égaliser les coordonnées, alors que dans un même objet c'est physiquement le même point qui est utilisé (et le premier point supprimé).
+Possibilité d'entrer le nom de fichier de la bdd sur la ligne de commande. Sous windows, possibilité en plus de lancer l'application par un double clic sur un fichier .bdd ou .ply (voir dans Note_3.9.txt comment installer cette possibilité).
+Fonction de simplification des bdd améliorée (supprime les points non utilisés par des facettes).
+Sélection Manuelle de facettes (par numéros, groupes de numéros). Fonction à améliorer car il reste une incompatibilité avec la sélection à la souris !
+
+Version 3 beta 8.
+Matérialisation de la source de lumière (petite sphère jaune)
+Possibilité de supprimer de la sélection des points, facettes ou objet déjà sélectionnés à la souris. (par CTRL Clic bouton 2)
+Quelques bugs corrigés de ci, de là.
+Sauvegarde automatique toute les 5 minutes avec proposition d'ouverture du fichier sauvegardé s'il y a eu plantage la fois précédente.
+
+Version 3 beta 7.
+Réécriture de la fonction Mise à l'échelle d'un objet.
+Sélection manuelle d'objets
+Traitement en bloc de plusieurs objets (masquage, suppression, inversion de normales, affectation de numéro de groupe, translation, rotation, mise à l'échelle).
+
+Comme il y a pas mal de modifications, 1 changement de nom et des suppressions de fichiers non utilisés, j'ai préféré, pour cette fois, faire une mise à jour complète plutôt qu'incrémentale.
+
+Une manip a essayer absolument pour découvrir quelques nouvelles fonctionalités (et pour le fun !) :
+Ouvrir le fichier puma_grp.bdd (celui dans le zip).
+Menu : Outils/Sélection et déplacement
+Cliquer sur Objet en haut.
+Cliquer sur Sélection manuelle.
+Sélectionner 8-Pales et 11-Mat (et éventuellement 7-radar)
+Cliquer sur Quitter (mais non obligatoire)
+Dans la fenêtre Outils, cliquer sur Rotation.
+éventuellement entrer 10.0 comme pas angulaire et valider.
+Cliquer à l'intérieur de la fenêtre Angle de rotation en Z (comme pour changer le 0 en autre chose).
+Appuyer en continu sur la flèche haut du clavier (ou bas pour aller dans l'autre sens, ou sur les petites flèches de la fenêtre Z, mais c'est moins rapide !!!).
+Enjoy it !!!!
+
+Pour quitter sans modifier la bdd, cliquer sur Annuler dans la fenêtre Rotation.
+On peut faire de même avec Translation et Mise à l'échelle (mais c'est moins fun!).

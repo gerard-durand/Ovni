@@ -1,0 +1,38 @@
+Peut ouvrir un fichier passé en ligne de commande (Windows et Sun). Attention s'il y a des espaces dans le nom: il faut alors encadrer ce nom par des ".
+
+Sous Windows 2000 (cf XP ci-dessous) on peut gérer l'association des fichiers .bdd et .ply
+-----------------
+Pour cela :
+Dans l'explorateur :
+Menus Outils, Options des dossiers, Type de Fichiers
+Cliquer sur Nouveau
+Mettre bdd dans la fenêtre Extension puis Cliquer OK
+Cliquer sur Avancée (en bas). Entrer Bdd Crira dans la fenêtre du haut (à la place d'un FT00...)
+Cliquer OK
+
+Cliquer Modifier
+La fenêtre Ouvrir avec est affichée.
+Cliquer sur Autres.
+En parcourant la structure des répertoires, entrer Application_1_V4.exe (double clic)
+Dans Ouvrir avec apparaît "Visualisation de Bdd Crira.
+Cliquer sur OK
+Fermer.
+Les fichiers .bdd ont maintenant une icône et peuvent s'ouvrir par double clic.
+
+Même procédure pour l'extension ply, sauf que cette fois "Visualisation de Bdd Crira" est en principe disponible dans la fenêtre "Ouvrir avec". Si elle n'y est pas, faire comme précédemment. Si l'association ne fonctionne pas, il suffit de recommencer mais en gardant les valeurs qui sont déjà correctes.
+
+Sous Windows XP (avec droits d'administrateurs)
+-----------------------------------------------
+Outils, Options des dossiers, type de fichiers
+Nouveau
+bdd, OK
+Avancé
+En haut mettre Fichier Bdd Crira
+Icone : choisir M2000.ico ou Celle de Application_1_V4.exe
+en dessous, Modifier
+Commande : open
+Parcourir, Cliquer aur Application_1_V4.exe et ajouter à la fin "%1" ce qui doit donner quelquechose comme :
+"C:\Mes programmes en C\...\Application_1_V4.exe" "%1"
+Le chemin exact dépend de l'installation. Ne pas oublier les doubles quotes.
+fermer et normalement c'est bon.
+

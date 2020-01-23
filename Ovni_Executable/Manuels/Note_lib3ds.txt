@@ -1,0 +1,45 @@
+Construction de la librairie lib3ds.a sur Sun Solaris ou Linux. (à ne faire qu'une fois et si les versions fournies ne fonctionnent pas).
+
+Créer un répertoire lib3ds_test (sur votre home par exemple, en tous cas en dehors du répertoire de l'application).
+Y placer le fichier lib3ds-1.2.0.tar.gz.
+Le décompresser,le dé-"tar"er. Un répertoire lib3ds-1.2.0 est créé.
+Se placer dans ce répertoire et y ouvrir une fenêtre Terminal.
+On peut suivre les indications de INSTALL mais ce qui suit est suffisant :
+Taper ./configure
+à la fin taper :
+make
+Vérifier éventuellement quel est le compilateur qui a été utilisé (gcc ou cc).
+Il vaut peut-être mieux que ce soit le même que celui du makefile de l'application, bien que cela semble fonctionner si l'appli est compilée avec CC et la librairie avec gcc!!!). Mais pour forcer la compilation avec cc, il faut se plonger dans les fichiers de configuration ....
+Recopier ensuite la librairie lib3ds.a qui est dans lib3ds-1.2.0/lib3ds dans le sous-répertoire lib3ds de l'application (celui-ci ne contient normalement que des fichiers .h).
+
+Dans tools on trouve des exécutables des exemples, 3ds2m et 3dsdump, qui sont des applications consoles simples permettant de décoder des fichiers 3ds.
+
+Nouvelle version lib3ds-1.3.0 dans un fichier zip
+Procéder comme pour la version 1.2 sauf qu'ici, un double clic sur le fichier zip crée le répertoire lib3ds-1.3.0.
+Ensuite la procédure est a priori la même :
+Se placer dans ce répertoire et y ouvrir une fenêtre Terminal.
+Taper ./configure
+à la fin taper :
+make
+Mais là,... Erreurs ! ne trouve pas stdint.h ???? du moins avec cc.
+
+Recopier le fichier stdint du sous-répertoire lib3ds de l'application OVNI dans lib3ds-1.3.0 puis relancer le make.
+Recopier ensuite la librairie lib3ds.a qui est dans lib3ds-1.3.0/lib3ds/.libs (répertoire caché) dans le sous-répertoire lib3ds de l'application (celui-ci ne contient normalement que des fichiers .h et une version précompilée de cette librairie).
+
+Faire un make complet de l'application (après suppression de app1 et tous les .o).
+S'il y a une erreur, c'est que le contenu de stdint.h est en trop.
+Editer alors types.h dans lib3ds et commenter la ligne #include <stdint.h> en ajoutant // au début.
+Là, ça devrait passer...
+
+Nouvelle version lib3ds-20080909 : c'est la version V2.0
+Dézipper lib3ds-20080909.zip dans un répertoire de travail.
+Se placer dans le sous répertoire lib3ds-20080909
+taper ./configure
+Eventuellement éditer le Makefile généré pour vérifier que le compilateur C choisi est bien le bon : gcc sous Linux ou cc sous Solaris.
+Attention, sous Sun Solaris mais pas sous Linux, il peut manquer stdint.h. Recopier alors celui fourni dans le sous répertoire Special d'OVNI dans lib3ds-20080909.
+puis taper make
+Si tout va bien, on trouvera les librairies résultantes dans lib3ds-20080909/src/.libs (répertoire caché).
+Copier lib3ds.a et lib3ds.h (de src) dans le sous-répertoire lib3ds d'OVNI.
+Vérification :
+se placer dans examples/cube lancer ./cube => doit créer cube.3ds
+recopier cube.3ds dans examples/3dsdump puis y lancer ./3dsdump cube.3ds => décodage de la structure de cube.3ds à l'écran.

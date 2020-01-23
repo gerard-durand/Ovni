@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="PositionSource">
+		<title>Position de la Source de Lumière</title>
+		<size>238,168</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText1" member="yes">
+			<label>En coordonnées Écran (œuil)</label>
+			<pos>40,8</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="Pos_X" member="yes">
+			<label>X :</label>
+			<pos>60,35</pos>
+			<fg>#FF0000</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="Pos_Y" member="yes">
+			<label>Y :</label>
+			<pos>60,59</pos>
+			<fg>#00DC00</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="Pos_Z" member="yes">
+			<label>Z :</label>
+			<pos>60,83</pos>
+			<fg>#0000FF</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="Pos_W" member="yes">
+			<label>W :</label>
+			<pos>60,107</pos>
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE1" variable="SpinCtrlDouble_PosX" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,500000</increment>
+			<pos>88,32</pos>
+			<size>96,23</size>
+			<handler function="OnSpinCtrlDouble_PosXChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE2" variable="SpinCtrlDouble_PosY" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,500000</increment>
+			<pos>88,56</pos>
+			<size>96,23</size>
+			<handler function="OnSpinCtrlDouble_PosYChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE3" variable="SpinCtrlDouble_PosZ" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,500000</increment>
+			<pos>88,80</pos>
+			<size>96,23</size>
+			<handler function="OnSpinCtrlDouble_PosZChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE4" variable="SpinCtrlDouble_PosW" member="yes">
+			<value>0</value>
+			<max>1,000000</max>
+			<increment>0,010000</increment>
+			<pos>88,104</pos>
+			<size>96,23</size>
+			<handler function="OnSpinCtrlDouble_PosWChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Quitter" member="yes">
+			<label>Quitter</label>
+			<pos>128,136</pos>
+			<size>80,24</size>
+			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_Defaut" member="yes">
+			<label>Défaut</label>
+			<pos>32,136</pos>
+			<size>80,24</size>
+			<handler function="OnButton_DefautClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

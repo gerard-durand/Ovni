@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="Aide_html">
+		<title>Aide Html</title>
+		<size>640,480</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxFULL_REPAINT_ON_RESIZE</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<handler function="OnResize" entry="EVT_SIZE" />
+		<object class="wxHtmlWindow" name="ID_HTMLWINDOW1" variable="HtmlWindow_Aide" member="yes">
+			<url>file://../help/Aide.html</url>
+			<pos>8,8</pos>
+			<size>624,432</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
+			<label>Quitter</label>
+			<pos>544,448</pos>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

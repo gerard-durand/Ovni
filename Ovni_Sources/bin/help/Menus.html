@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Aide de l'Application OVNI</title>
+  </head>
+  <body>
+    <div style="text-align: center;">
+      <h2><b><i>Les Menus</i></b></h2>
+    </div>
+    <br>
+    Lien vers l' <a href="Aide.html">Aide</a>.<br>
+    Lien vers <a href="About.html">à Propos de ...</a><br>
+    <h3><font color="blue"><i>Fichier :</i></font></h3>
+    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (Oktal), .ply (Polygon file de
+    Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D Ascii), .g3d
+    (Format Onera G3D), .off (Object File Format de chez DEC). Quanu un fichier
+    a été ouvert, son extension devient celle proposée par défaut.<br>
+    <b>Fusionner</b> : Pour fusionner la bdd courante avec un autre fichier de
+    bdd. Les objets restent indépendants.<br>
+    <b>Enregistrer</b> : Enregistre avec le nom courant (seulement en .bdd,
+    format Oktal).<br>
+    <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd
+    seulement).<br>
+    <b>Propriétés</b> : Affiche le nombre d'objets, de points, de facettes,
+    d'arêtes, de groupes de toute la Bdd, quelques statistiques de nombres de
+    points par facette ainsi que les dimensions de la boîte englobante.<br>
+    <b>Préférences</b> : Permet de modifier/ajuster certains paramètres. Ces
+    valeurs sont stockées dans un fichier Ovni.ini et réutilisées au lancement
+    suivant.<br>
+    L'option de gestion d'antialiasing par OpenGL est utile si la carte
+    graphique ne gère pas seule par hardware cette fonction, via le driver.
+    Toutefois, ne fonctionne correctement que sur des segments, pas sur les
+    bords de polygones.<br>
+    <b>Hardware 3D</b> : Affiche les caractéristiques du Hardware (carte
+    graphique) supportant OpenGL.<br>
+    <b>Quitter</b> : Pour sortir d'Ovni.<br>
+    <br>
+    <h3><font color="blue"><i>Affichage :</i></font></h3>
+    <b>Points / Filaire / Plein</b> : Pour sélectionner le mode de
+    représentation. <b>Dans cette version le mode Plein est actif par défaut. </b><b><font
+        color="blue">Ces fonctions sont directement accessibles via des icônes
+        de la barre de menus.</font></b><br>
+    <b>Axes et Boîte englobante</b> : Pour afficher ou supprimer l'affichage des
+    axes et/ou de la boîte englobante.<b>Ces fonctions sont directement
+      accessibles via des icônes de la barre de menus.</b><br>
+    <b>Source de lumière</b> : Pour matérialiser la position de la source de
+    lumière. <b><font color="blue">Cette fonction est directement accessible
+        via une icône de la barre de menus.</font></b><br>
+    <b>Origine</b> : vue originale.<br>
+    <b>Vue de face</b> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Projection
+    X-Z, correspond à une vue de face en standard dans Crira<br>
+    <b>Vue de profil</b> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Projection Y-Z,
+    correspond à une vue de profil en standard dans Crira<br>
+    <b>Vue de dessus Z</b> : Projection X-Y, correspond à une vue de dessus en
+    standard dans Crira<br>
+    <b>Position observateur</b> : permet d'entrer la position angulaire en
+    Azimut et en Site de l'observateur. Cette fonction force l'angle de rotation
+    en Y à 0.<br>
+    <b>Zoom Spécifique</b> : En plus de la position angulaire, permet d'entrer
+    une distance de visée et un angle de champ de vue (°). La donnée de distance
+    est exprimée en multiple de la diagonale de la boîte englobante.<br>
+    <b>Centre de Rotation</b> : Modification manuelle du centre de rotation de
+    la visualisation.<br>
+    <b>Position de la source</b> : Modification manuelle de la position de la
+    source de lumière (en coordonnées homogènes x,y,z,w : rappel :
+    0&lt;=w&lt;=1, w=0 =&gt; infini, w=1 =&gt; x,y,z valeurs réelles).<br>
+    <br>
+    <h3><font color="blue"><i>Primitive :</i></font></h3>
+    Construction d'objets simples (cône, cube, cylindre, ellipsoïde, facette,
+    sphère, icosaèdre...)<br>
+    <i><b>Note :</b></i> un icosaèdre est composé de triangles. Chaque triangle
+    peut être subdivisé en 4 sous-triangles. Les sommets intermédiaires créés au
+    milieu de chaque arête sont alors ramenés sur une sphère. On obtient ainsi
+    une sphère plus homogène que via la sphère de base, utilisant des méridiens
+    et des parallèles. Le nombre de subdivisions est limité à 8 car au-delà le
+    nombre de facettes total devient trop important, long à créer par une
+    procédure récurssive et difficile à gérer.<br>
+    Les primitives créées peuvent être supprimées une à une dans l'ordre inverse
+    de leur création.<br>
+    <br>
+    <h3><font color="blue"><i>Repérage :</i></font></h3>
+    <b>Point</b> : Pour repérer un point particulier par une étoile. Les
+    coordonnées du point sélectionné s'affichent. Il est possible de les
+    modifier en cochant la case à droite de la valeur à changer pour activer les
+    entrées. Modifier alors la valeur numérique et cliquer sur le bouton
+    "Modifier" pour effectuer le changement. Le bouton "Undo" devient alors
+    actif pour permettre de revenir en arrière.<br>
+    <br>
+    <b>Facette</b> : Pour repérer une facette particulière par une couleur
+    <ul>
+      Il est possible alors de visualiser et parcourir les sommets de la
+      facette, d'inverser la normale, de faire une permutation circulaire des
+      sommets (utile pour certains calculs de normales : facettes très
+      allongées...), de masquer cette facette (la bdd n'est pas modifiée) ou de
+      la supprimer (la bdd est alors modifiée)<br>
+      Note : Si la fenêtre Outils/Sélection et déplacement est ouverte, les
+      indications sont synchronisées.
+    </ul>
+    <b>Groupe</b> : Pour repérer un groupe de facettes par une couleur. Si cette
+    fonction est utilisée simultanément avec l'Outil "Sélection et Déplacement",
+    la couleur du groupe sélectionné reste affichée pendant certaines opérations
+    de sélection de facettes : permet ainsi de construire plus facilement un
+    groupe donné<span style="text-decoration: line-through;"> </span>.<br>
+    <b>Matériau</b> : Pour repérer un groupe de facettes du même matériau par
+    une couleur (n'est valable que pour certaines bdd possédant le mot clé
+    correspondant. Sinon Groupe &lt;=&gt; Matériau<br>
+    <b>Objet</b> : Pour repérer un objet particulier par une couleur<br>
+    <b>Sens des Normales</b> : Swith ON/OFF colorisant en bleu des facettes
+    "correctement orientées" et en rouge les facettes dont la normale est à
+    l'envers [en fait c'est le sens de parcours des points qui est soit dans les
+    sens des aiguilles d'une montre (GL_CW) soit dans le sens contraire
+    (GL_CCW)]<br>
+    <span style="text-decoration: line-through; color: red;"> </span><br>
+    <span style="text-decoration: line-through;"> </span><b>Couleurs groupes</b>
+    : Colorise les facettes par leur numéro de groupe.&nbsp;<br>
+    <b>Couleurs matériaux</b> : Colorise les facettes par leur numéro de
+    matériau<br>
+    <br>
+    <h3><font color="blue"><i>Image :</i></font></h3>
+    <b>Enregistrer image</b> : Enregistre au format .jpg, .png ou .ppm l'image
+    de la fenêtre OpenGL.<br>
+    <br>
+    <br>
+    <h3><font color="blue"><i>Outils :</i></font></h3>
+    <b>Sélection et déplacement</b> : Dialogue interactif permettant de
+    sélectionner soit des points, des facettes, ou un objet. Ce dialogue permet
+    aussi de déplacer la sélection, ou encore d'effectuer, via le bouton
+    "Manipulations de l'objet", la translation, la rotation, la création par
+    symétrie d'un objet ou encore, directement, le masquage ou la suppression
+    d'un objet/facette.<br>
+    La plupart des fonctions ont un UNDO, <b>sauf la suppression d'un groupe de
+      facettes</b><br>
+    Tout comme dans Repérage, on peut effectuer une permutation circulaire de
+    l'ordre des sommets (utile sur certaines facettes très allongées ou ayant
+    des points alignés ou presque alignés).<br>
+    La sélection des objets ou des facettes peut être à la souris ou manuelle.
+    Dans ce dernier cas, l'entrée des numéros de facettes se fait dans une
+    fenêtre en entrant le/les numéro(s) au clavier. Pour les numéros de facettes
+    la syntaxe est la suivante : <br>
+    Les entrées sont séparées par une virgule ou un espace. Si 2 nombres n1 et
+    n2 sont séparés par le signe -, c'est comme si on entrait tous les entiers
+    entre ces 2 nombres (n2&gt;n1). <b><br>
+      Exemple : 1 2 3-6 10,15 &lt;=&gt; 1 2 3 4 5 6 10 15</b><br>
+    Un bouton permet d'ouvrir directement la fenêtre "Repérage Facette" (plutôt
+    que de passer par les menus). Les indications des 2 fenêtres ouvertes sont
+    alors synchrones.<br>
+    <b><font color="blue">Cette fonction est directement accessible via une
+        icône de la barre de menus.</font></b><br>
+    <br>
+    <b>Modifications</b> : Dialogue interactif permettant d'apporter des
+    modifications à un objet de la cellule. Il y est possible d'ajouter des
+    points à la cellule soit directement par un clic sur une arête, soit en
+    divisant une arête en plusieurs sous-segments de même longueur.<br>
+    La fonction "Souder 2 points" peut travailler sur des points du même objet
+    ou sur des points de 2 objets différents. Le premier point cliqué est celui
+    qu'on veut déplacer. Le second point cliqué est celui sur lequel se fait la
+    "soudure".<br>
+    La fonction "Trianguler la bdd" permet de transformer une base de données
+    avec des facettes quelconques en une base n'ayant que des facettes
+    triangulaires. 3 Méthodes de triangulation sont possibles et proposées via
+    la boîte de dialogue "Préférences" : <br>
+    La méthode 1 (ou en V) triangule à partir du premier point qui est la pointe
+    commune de chaque V. On obtient ainsi des triangles avec les sommets 1,2,3
+    puis 1,3,4, puis 1,4,5, ... 1,n-1,n pour une facette à n sommets.<br>
+    La méthode 2 (ou en Z) triangule en alternant le choix des sommets sur les
+    côtés du polygone définis par la succession des sommets 1,2,3,...ou n, n-1,
+    n-2... Les facettes sont définies par les points 1,2,3 puis 1,3,n puis
+    n,3,4, puis n,4,n-1 ...<br>
+    La méthode 3 (ou en étoile) crée d'abord un point au centre de la facette,
+    puis se sert de ce nouveau point comme point de départ de la triangulation,
+    comme dans la méthode 1. Cette méthode évite l'écueil des points originaux
+    alignés, mais crée beaucoup plus de triangles que les 2 autres méthodes.<br>
+    <b><font color="blue">Cette fonction est directement accessible via une
+        icône de la barre de menus.</font></b><br>
+    <br>
+    <b>Choix des éléments à afficher</b> : Une boîte de dialogue permet de
+    choisir quels sont les objets à afficher ou masquer<br>
+    <b>Afficher les élements masqués</b> : Réaffiche tous les éléments masqués,
+    facettes et objets<br>
+    <b>Restituer les objets supprimés</b>: Restituer tous les objets qui ont été
+    marqués comme étant supprimés de la bdd en mémoire (la suppression n'est
+    effective qu'à l'enregistrement sur fichier)<br>
+    <br>
+    <h3><font color="blue"><i>Transformations :</i></font></h3>
+    Ces transformations affectent la base de données entière de l'avion (en
+    mémoire). Il faudra passer par le menu "Enregistrer" pour les sauvegarder.<br>
+    <b>X =&gt; -X</b> : change le signe des coordonnées en X<br>
+    <b>Y =&gt; -Y</b> : change le signe des coordonnées en Y<br>
+    <b>Z =&gt; -Z</b> : change le signe des coordonnées en Z<br>
+    <b>X &lt;=&gt; Y</b> : interverti les coordonnées X et Y<br>
+    <b>X &lt;=&gt; Z</b> : interverti les coordonnées X et Z<br>
+    <b>Y &lt;=&gt; Z</b> : interverti les coordonnées Y et Z<br>
+    <b>X =&gt; Y =&gt; Z =&gt; X</b> : Permutation circulaire des coordonnées X,
+    Y et Z<br>
+    <b>Inverser les normales</b> : Inverse toutes les normales de la bdd.<br>
+    <b>Déplacer </b>: Active un menu pour déplacer la Bdd suivant les 3 axes
+    (Valeurs DX, DY et DZ). Possibilité d'annuler le déplacement précédent en
+    activant le bouton "Inverser".<br>
+    <b>Facteur d'échelle </b>: Active un menu pour appliquer un facteur
+    d'échelle global sur la bdd. Possibilité d'annuler ce facteur en activant le
+    bouton "Inverser".<br>
+    <br>
+    <h3><font color="blue"><i>Options :</i></font></h3>
+    <b>Sous-menu :</b><br>
+    <b>Couleurs des groupes :</b> pour modifier les 2 composantes de la lumière
+    (Ambiante et Diffuse) de chacun des groupes<br>
+    <b>Relire une palette :</b> Relire un fichier de palette de couleurs pour
+    les groupes<br>
+    <b>Enregistrer la palette :</b> Enregistrer la palette de couleurs courante
+    pour les groupes<br>
+    <b>Zoom automatique :</b> Calcul d'un Zoom automatique en fonction des
+    coordonnées Min et Max<br>
+    <b>Centrage automatique :</b> Calcul d'un nouveau centre de rotation (milieu
+    des min et max en X et Y).<br>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="CentreRotation">
+		<title>Centre de Rotation</title>
+		<size>200,166</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Centre de Rotation</label>
+			<pos>48,8</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>X :</label>
+			<pos>24,44</pos>
+			<fg>#FF0000</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Y :</label>
+			<pos>24,68</pos>
+			<fg>#00DC00</fg>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Z :</label>
+			<pos>24,92</pos>
+			<fg>#0000FF</fg>
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE1" variable="SpinCtrlDouble_X" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,100000</increment>
+			<pos>56,40</pos>
+			<size>120,23</size>
+			<handler function="OnSpinCtrlDouble_XChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE2" variable="SpinCtrlDouble_Y" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,100000</increment>
+			<pos>56,64</pos>
+			<size>120,23</size>
+			<handler function="OnSpinCtrlDouble_YChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE3" variable="SpinCtrlDouble_Z" member="yes">
+			<value>0</value>
+			<min>-100,000000</min>
+			<increment>0,100000</increment>
+			<pos>56,88</pos>
+			<size>120,23</size>
+			<handler function="OnSpinCtrlDouble_ZChange" entry="EVT_SPINCTRLDOUBLE" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_Defs" member="yes">
+			<label>Défaut</label>
+			<pos>8,136</pos>
+			<size>88,24</size>
+			<handler function="OnButton_DefsClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_OK" member="yes">
+			<label>OK</label>
+			<pos>104,136</pos>
+			<size>88,24</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

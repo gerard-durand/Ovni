@@ -1,0 +1,32 @@
+//aaaa ICON "wx/msw/std.ico"
+avion ICON "M2000.ico"
+#include "wx/msw/wx.rc"
+
+#include <windows.h> // include for version info constants
+#include "version.h"
+
+1 VERSIONINFO
+FILEVERSION RC_FILEVERSION
+PRODUCTVERSION RC_FILEVERSION
+FILETYPE VFT_APP
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040C04E4"
+        {
+            VALUE "CompanyName", "Onera"
+            VALUE "FileVersion", RC_FILEVERSION_STRING
+            VALUE "FileDescription", "Visualisation de Bdd Crira-wxWidgets 32bits"
+            VALUE "InternalName", "OVNI"
+            VALUE "LegalCopyright", "Onera"
+            VALUE "LegalTrademarks", ""
+            VALUE "OriginalFilename", "Ovni version wxWidgets"
+            VALUE "ProductName", "Visualisation Bdd Crira-wxWidgets"
+            VALUE "ProductVersion", "V5 - Alpha"
+        }
+    }
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x040C, 1252
+    }
+}

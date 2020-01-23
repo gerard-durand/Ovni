@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="Cone">
+		<title>Ajout d&apos;un cône</title>
+		<size>466,220</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Longueur :</label>
+			<pos>152,11</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_Longueur" member="yes">
+			<value>2.0</value>
+			<pos>224,8</pos>
+			<size>96,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Rayon du cercle de base :</label>
+			<pos>80,35</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_Rayon" member="yes">
+			<value>1.0</value>
+			<pos>224,32</pos>
+			<size>96,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Coordonnées du centre du cône : X:</label>
+			<pos>4,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_X" member="yes">
+			<value>0.0</value>
+			<pos>192,56</pos>
+			<size>72,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Y :</label>
+			<pos>272,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_Y" member="yes">
+			<value>0.0</value>
+			<pos>288,56</pos>
+			<size>72,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Z :</label>
+			<pos>368,59</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="TextCtrl_Z" member="yes">
+			<value>0.0</value>
+			<pos>384,56</pos>
+			<size>72,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>Nombre de points générateurs du cercle :</label>
+			<pos>4,83</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="TextCtrl_NbPoints" member="yes">
+			<value>16</value>
+			<pos>224,80</pos>
+			<size>96,21</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>Numéro de Groupe :</label>
+			<pos>4,107</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_Groupe" member="yes">
+			<value>0</value>
+			<pos>120,104</pos>
+			<size>96,21</size>
+			<handler function="OnSpinCtrl_GroupeChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
+			<label>Numéro de Matériau :</label>
+			<pos>232,107</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_Materiau" member="yes">
+			<value>0</value>
+			<pos>360,104</pos>
+			<size>96,21</size>
+			<handler function="OnSpinCtrl_MateriauChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
+			<label>Accepter</label>
+			<pos>120,192</pos>
+			<size>96,23</size>
+			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button_Annuler" member="yes">
+			<label>Annuler</label>
+			<pos>232,192</pos>
+			<size>96,23</size>
+			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_FermerCone" member="yes">
+			<label>Fermer le cône à sa base</label>
+			<pos>8,168</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT9" variable="StaticText9" member="yes">
+			<label>Nombre de secteurs</label>
+			<pos>4,139</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL3" variable="SpinCtrl_NbSecteurs" member="yes">
+			<value>1</value>
+			<min>1</min>
+			<max>20</max>
+			<pos>120,136</pos>
+			<size>96,21</size>
+			<handler function="OnSpinCtrl_NbSecteursChange" entry="EVT_SPINCTRL" />
+		</object>
+	</object>
+</wxsmith>
