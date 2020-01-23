@@ -40,6 +40,8 @@
 #include <wx/wfstream.h>
 #include "Interface.h"*/
 
+#include "version.h"
+
 //using namespace std;  // N'a pas l'air utile ici vu qu'on utilise explicitement std::
 
 //helper functions
@@ -79,9 +81,25 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
     wxbuild << _T(" et en mode debug");
 #endif // DEBUG
 
+    wxbuild << _T("\nBuild : ") << AutoVersion::FULLVERSION_STRING ;
+    static const char RELEASE_SHORT[] = "r";
+    if (AutoVersion::STATUS_SHORT[0] != RELEASE_SHORT[0]) {
+            wxbuild << AutoVersion::STATUS_SHORT;
+    }
+    wxbuild << _T(", code source du ") << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR ;
+
+    wxStructStat structStat;
+    wxFileName f(wxStandardPaths::Get().GetExecutablePath());
+    wxStat(f.GetFullName(), &structStat);
+    wxDateTime last_modified_time(structStat.st_mtime);
+    wxString DateCompilation = last_modified_time.Format(wxT("%d/%m/%Y à %H:%M:%S"));
+    wxbuild << _T("\nDate de compilation : ") << DateCompilation;
+
     wxbuild << _T("\nVersion de gcc : ") << _T(__VERSION__);
+
     return wxbuild;
 }
+
 const long OvniFrame::ID_BUTTON7  = wxNewId();
 const long OvniFrame::ID_BUTTON8  = wxNewId();
 const long OvniFrame::ID_BUTTON9  = wxNewId();
@@ -709,6 +727,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     SetIcon(wxICON(avion)); // Pour afficher l'icône des fenètres : barre de tâche, en haut des fenètres,... Utile ou déjà fait en partie ? à ne faire que sous Windows ?
 #endif
 
+    wxString Version = AutoVersion::FULLVERSION_STRING ;
+    this->SetTitle(this->GetTitle() + _T(" ") + Version.BeforeLast(_T('.')));   // On récupère le titre de la fenêtre et on y ajoute le numéro
+                                                                                // de version : éliminer le dernier champ
     if (verbose) {
         printf("OvniFrame::OvniFrame : nb args  : %d\n",arg_c);
         printf("OvniFrame::OvniFrame : commande : %s\n",(const char *)par_0.mb_str());

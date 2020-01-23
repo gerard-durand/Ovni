@@ -89,8 +89,8 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-m64" />
 					<Add option="-std=gnu++11" />
+					<Add option="-m64" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DFREEGLUT_STATIC" />
 					<Add option="-DwxUSE_UNICODE" />

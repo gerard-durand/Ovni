@@ -22,7 +22,7 @@ FILETYPE VFT_APP
             VALUE "LegalTrademarks", ""
             VALUE "OriginalFilename", "Ovni version wxWidgets"
             VALUE "ProductName", "Visualisation Bdd Crira-wxWidgets"
-            VALUE "ProductVersion", "V5 - Alpha"
+            VALUE "ProductVersion", "V5 - Beta"
         }
     }
     BLOCK "VarFileInfo"
