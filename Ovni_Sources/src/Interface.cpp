@@ -2503,7 +2503,7 @@ void BddInter::LoadOBJ()
 
                 this->N_elements = nb_norm;
 //                if (nb_norm == 0) this->N_elements = nb_p ;  // Pas de normales dans le fichier => il faudra les calculer
-                if (nb_norm != 0) this->makevecteur();
+//                if (nb_norm != 0) this->makevecteur();
                 this->makevecteur();
                 this->Objetlist[indiceObjet_courant].Nb_vecteurs = this->N_elements; // Ici toutes les normales aux sommets
             }
@@ -2536,6 +2536,7 @@ void BddInter::LoadOBJ()
                     nnorm++;
                     sscanf(s1+3,"%f%f%f", &vx,&vy,&vz);
                     this->str.clear();
+                    this->N_elements = nnorm;
                     this->Setxyz(vx,vy,vz);
                     this->make1vecteur();
                     continue;

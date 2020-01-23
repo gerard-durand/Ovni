@@ -1578,7 +1578,7 @@
 #if defined(_MSC_VER) && _MSC_VER >= 1600
     #define wxUSE_GRAPHICS_DIRECT2D wxUSE_GRAPHICS_CONTEXT
 #else
-    #define wxUSE_GRAPHICS_DIRECT2D 0
+    #define wxUSE_GRAPHICS_DIRECT2D 1   // Modif GD pour CB 11701 et +
 #endif
 
 // ----------------------------------------------------------------------------
