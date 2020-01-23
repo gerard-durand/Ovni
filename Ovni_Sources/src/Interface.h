@@ -877,7 +877,7 @@ public :
     MODE  modeGL;
     Sommetmemory *Smemory;
     unsigned int indiceObjet_courant;
-    std::vector<Object>              Objetlist;
+    std::vector<Object> Objetlist;
 
     int type=0;
     int type_new=-1;
@@ -1177,8 +1177,9 @@ private :
 //read BDD
     void LoadBDD();
     void Load3DS();
-    int  compter_nodes (Lib3dsNode *, Lib3dsFile *);
-    int  decoder_node  (Lib3dsNode *, Lib3dsFile *);
+    int  compter_nodes (Lib3dsNode *);//, Lib3dsFile *);
+    int  decoder_node  (Lib3dsNode *);//, Lib3dsFile *);
+    void Affiche_Matrice(float Mat4x4[4][4]);
     void LoadG3D();
     void LectureXML_G3d (FILE *);
     void LoadOBJ();

@@ -48,6 +48,8 @@ const char *initJ="Suppr_Backup=";
 
 
 FILE* f;
+static Lib3dsFile *f3ds=0;
+
 #define XML_FMT_INT_MOD "l"
 #define BUFFSIZE        8192
 
@@ -534,7 +536,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",init4,antialiasing_soft);
         fprintf(f_init,"%s%d\n",init5,Forcer_1_Seul_Objet);
         fprintf(f_init,"%s%d\n",init6,lect_obj_opt);
-//        fprintf(f_init,"%s%d\n",init7,test_decalage3ds);            // Ne pas stocker tant que ce n'est pas suffisament fiable
+        fprintf(f_init,"%s%d\n",init7,test_decalage3ds);            // Ne pas stocker tant que ce n'est pas suffisament fiable
         fprintf(f_init,"%s%d\n",init8,test_seuil_gouraud);
         fprintf(f_init,"%s%f\n",init9,angle_Gouraud);
         fprintf(f_init,"%s%f\n",initA,fmult_Gouraud);
@@ -3398,7 +3400,7 @@ void BddInter::LoadOFF()
 
 void BddInter::Load3DS()
 {
-    Lib3dsFile *f3ds=0;
+//    static Lib3dsFile *f3ds=0;
 /*
  *  Lecture d'un Fichier de polygones au format Autodesk 3DS
  *  Identifie éventuellement plusieurs objets, crée des normales.
@@ -3464,7 +3466,7 @@ void BddInter::Load3DS()
 // Appel de compter_nodes plutôt que faire nb_objets = nnodes
     o_3ds=0;
     for (node=f3ds->nodes; node!=NULL; node=node->next) {   // Pas forcément utile car objets construits au fur et à mesure
-        compter_nodes(node, f3ds);
+        compter_nodes(node);//, f3ds);
     }
     printf("sortie de compter_nodes : o_3ds = %d\n",o_3ds);
     if (o_3ds != nnodes) {
@@ -3490,8 +3492,8 @@ void BddInter::Load3DS()
 // Seconde analyse des objets avec appel récursif des nodes
     o_3ds      = 0 ; //indiceObjet_courant = o_3ds;
     nb_mat_3ds = 0 ;
-    for (node=f3ds->nodes; node!=NULL; node=node->next) {
-        decoder_node(node, f3ds);
+    for (node = f3ds->nodes; node != NULL; node = node->next) {
+        decoder_node(node);//, f3ds);
     }
 
 //    numObjet_suiv += ((o_3ds+10)/10)*10 ; // Pour arrondir à la dizaine supérieure
@@ -3520,12 +3522,12 @@ void BddInter::Load3DS()
 
 }
 
-int BddInter::compter_nodes (Lib3dsNode *node, Lib3dsFile *f)
+int BddInter::compter_nodes (Lib3dsNode *node) //, Lib3dsFile *f)
 {
     Lib3dsNode *p ;
 
-    for (p=node->childs; p!=0 ; p=p->next) {
-        compter_nodes(p, f) ;
+    for (p = node->childs; p != 0 ; p = p->next) {
+        compter_nodes(p);//, f) ;
     }
 
     if (node->type == LIB3DS_NODE_MESH_INSTANCE) {
@@ -3569,13 +3571,22 @@ char * BddInter::Lire_chaine( char s1 [])
     return (cptr) ;
 }
 
-int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
+void BddInter::Affiche_Matrice(float M[4][4]) {
+    int i,j;
+    for (i=0;i<4;i++) {
+        for (j=0;j<4;j++) printf("%12.5f ",M[j][i]);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
 {
 /*
  *  Lecture d'un Fichier de polygones au format Autodesk 3DS
  *  Identifie éventuellement plusieurs objets, crée des normales aux barycentres des facettes.
  *  Une création de groupes faite ?????????????????????????????????
- *  Utilise la librairie libs3d (d'après l'exemple 3ds2m ou 3Dsplay, mais quelques soucis, voir ci-dessus ! )
+ *  Utilise la librairie lib3ds (d'après l'exemple 3ds2m ou 3Dsplay, mais quelques soucis, voir ci-dessus ! )
  */
     char nom_obj[80];
     int im;
@@ -3586,6 +3597,7 @@ int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
     int num_mat ;
     int index;
     float matrice[4][4], inv_matrice[4][4] ;
+    float matrice_w[4][4];
     Object *objet_courant;
     Face1  *facette_courante;
 
@@ -3600,10 +3612,12 @@ int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
 
     Numeros.resize(3);
 
+//    assert(file);    // Vérifie que f est OK ... déjà fait avant, donc ne sert pas à grand chose !
+
     {
         Lib3dsNode *p ;
-        for (p=node->childs; p!=0 ; p=p->next) {
-            decoder_node(p, f) ;   // indiceObjet ne sert pas ?
+        for (p = node->childs; p != 0 ; p = p->next) {
+            decoder_node(p);//, file) ;
         }
     }
 
@@ -3614,27 +3628,19 @@ int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
             return (0);
         }
 
-        index = lib3ds_file_mesh_by_name(f, n->instance_name);
+        index = lib3ds_file_mesh_by_name(f3ds, n->instance_name);
         if( index < 0 )
-            index = lib3ds_file_mesh_by_name(f, node->name);
+            index = lib3ds_file_mesh_by_name(f3ds, node->name);    // 2ème essai, si pas trouvé par instance_name
         if (index < 0) {
-            return (0);
+            return (0);                                         // Si toujours pas trouvé, sortir
         }
 
-        mesh = f->meshes[index];
+        mesh = f3ds->meshes[index];
+
+        printf("user_id : %d\n",mesh->user_id);
 
         strcpy(nom_obj, Lire_chaine(mesh->name)) ;
 //        printf("Objet :%4d, Nom : %s\n",o,nom_obj);
-
-        lib3ds_matrix_copy(matrice,mesh->matrix);
-//        Affiche_Matrice(matrice);
-//        printf("%f %f %f \n", n->pivot[0], n->pivot[1], n->pivot[2]);
-        lib3ds_matrix_translate(matrice, -n->pivot[0], -n->pivot[1], -n->pivot[2]);
-//        Affiche_Matrice(matrice);
-        lib3ds_matrix_copy(inv_matrice,mesh->matrix);
-        lib3ds_matrix_inv(inv_matrice);
-        lib3ds_matrix_mult(matrice,matrice,inv_matrice);
-//        Affiche_Matrice(matrice);
 
         wxString wx_num_obj;
         wx_num_obj.Printf(_T("%d "),(int)Objetlist.size());
@@ -3664,15 +3670,37 @@ int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
         printf("Objet :%4d, Nom : %s\n",o,nom_obj);
 //        indiceObjet_courant = o;
 
-        // Récupération du nombre de points
-//        nb_p = mesh->nvertices ;
         str.clear();
         N_elements = nb_p;
         makesommet();
         objet_courant = &(this->Objetlist[o]) ;
         objet_courant->Nb_sommets = nb_p ;
 
-        // Lecture des points
+        if (test_decalage3ds) {
+            printf("\nObjet : Nom : %s\n",nom_obj);
+            lib3ds_matrix_copy(inv_matrice,mesh->matrix);
+//            Affiche_Matrice(inv_matrice);
+            lib3ds_matrix_inv(inv_matrice);
+//            Affiche_Matrice(inv_matrice);
+//            lib3ds_matrix_copy(matrice_w,node->matrix);                         // Initialement mesh. Test avec node ???
+            Affiche_Matrice(node->matrix);
+            lib3ds_matrix_copy(matrice_w,  mesh->matrix);
+//            lib3ds_matrix_mult(matrice,matrice_w,inv_matrice_inv);    // Est ça ou (matrice,inv_matrice,matrice_w)
+//            Affiche_Matrice(matrice_w);
+            printf("pivot : %f %f %f \n", n->pivot[0], n->pivot[1], n->pivot[2]);
+//            printf("diff  : %f %f %f \n", matrice_w[3][0] +n->pivot[0], matrice_w[3][1] +n->pivot[1], matrice_w[3][2] +n->pivot[2]);
+            lib3ds_matrix_translate(matrice_w, -n->pivot[0], -n->pivot[1], -n->pivot[2]);
+//            Affiche_Matrice(matrice_w);
+            lib3ds_matrix_mult(matrice,matrice_w,inv_matrice);
+//            lib3ds_matrix_mult(matrice,inv_matrice,matrice_w);
+//            Affiche_Matrice(matrice);
+//            lib3ds_matrix_translate(matrice, -n->pivot[0], -n->pivot[1], -n->pivot[2]);
+/*             matrice[3][0] -= n->pivot[0];    // lib3ds_matrix_translate ne fait pas comme ça
+             matrice[3][1] -= n->pivot[1];
+             matrice[3][2] -= n->pivot[2];*/
+        }
+
+        // Lecture et transformation des points
         for (i = 0 ; i < nb_p ; i++) {
             if (test_decalage3ds) {
                 lib3ds_vector_copy(pos2, mesh->vertices[i]);
@@ -3734,7 +3762,7 @@ int BddInter::decoder_node (Lib3dsNode *node, Lib3dsFile *f)
 //            printf("i= %d, material= %d\n",i,mesh->faces[i].material);
 
             if (mesh->faces[i].material >= 0) {
-                mat3ds = f->materials[mesh->faces[i].material];
+                mat3ds = f3ds->materials[mesh->faces[i].material];
                 strcpy(nom_mat_tmp,mat3ds->name);
             } else {
                 sprintf(nom_mat_tmp,"Mat_Null"); // Forcer un nom de matériau

@@ -1,3 +1,6 @@
+#ifndef HEADER_1BDEA58C667FA649
+#define HEADER_1BDEA58C667FA649
+
 /***************************************************************
  * Name:      OvniMain.h
  * Purpose:   Defines Application Frame
@@ -76,13 +79,16 @@ class OvniFrame: public wxFrame
          wxButton* Button_ZoomMoins;
          wxButton* Button_ZoomPlus;
          wxGLCanvas* GLCanvas;
-         wxMenu* Menu1;
          wxMenu* Menu2;
+         wxMenu* MenuFile;
          wxMenu* Menu_Affichage;
+         wxMenu* Menu_Aide;
+         wxMenu* Menu_Options;
          wxMenu* Menu_Outils;
          wxMenu* Menu_Primitive;
          wxMenu* Menu_Reperage;
          wxMenu* Menu_Transformations;
+         wxMenuBar* MenuBar_Globale;
          wxMenuItem* Inverse_All_Selected_Normales;
          wxMenuItem* Inverser_Toutes_les_Normales;
          wxMenuItem* MenuItem24;
@@ -92,10 +98,12 @@ class OvniFrame: public wxFrame
          wxMenuItem* MenuItem28;
          wxMenuItem* MenuItem3;
          wxMenuItem* MenuItem9;
+         wxMenuItem* MenuItem_About;
          wxMenuItem* MenuItem_Aide;
          wxMenuItem* MenuItem_ImageJpeg;
          wxMenuItem* MenuItem_ImagePng;
          wxMenuItem* MenuItem_ImagePpm;
+         wxMenuItem* MenuItem_Quitter;
          wxMenuItem* Menu_Affichage_Axes;
          wxMenuItem* Menu_Affichage_Boite;
          wxMenuItem* Menu_Affichage_Filaire;
@@ -268,6 +276,8 @@ class OvniFrame: public wxFrame
         void ReperagePoint_activer();
         void ReperageFacette_activer();
 
+        wxMenuItem* Menu_ReOpen3ds; // Pour réouvrir spécifiquement un fichier 3ds en changeant le mode de décalage
+
     private:
         //(*Handlers(OvniFrame)
         void OnQuit(wxCommandEvent& event);
@@ -377,6 +387,7 @@ class OvniFrame: public wxFrame
         void OnMenu_ZoomSpecifiqueSelected(wxCommandEvent& event);
         void OnMenuItem_HelpSelected(wxCommandEvent& event);
         void OnMenuItem_AideSelected(wxCommandEvent& event);
+        void OnMenu_ReOpen3dsSelected(wxCommandEvent& event);
         //*)
 
         void Lire_Image(int &, int &);
@@ -490,6 +501,9 @@ class OvniFrame: public wxFrame
 		static const long ID_STATUSBAR1;
 		static const long ID_TIMER1;
 		//*)
+
+        static const long idReopenFile3ds;
+
         wxString str;
 
         //opengl methods
@@ -506,3 +520,5 @@ class OvniFrame: public wxFrame
 };
 
 #endif // OVNIMAIN_H
+#endif // header guard
+

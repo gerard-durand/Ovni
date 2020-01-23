@@ -81,6 +81,8 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
     wxbuild << _T(" et en mode debug");
 #endif // DEBUG
 
+// Ajout des informations stockées dans version.h
+
     wxbuild << _T("\nBuild : ") << AutoVersion::FULLVERSION_STRING ;
     static const char RELEASE_SHORT[] = "r";
     if (AutoVersion::STATUS_SHORT[0] != RELEASE_SHORT[0]) {
@@ -88,13 +90,16 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
     }
     wxbuild << _T(", code source du ") << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR ;
 
+// Récupération de la date et de l'heure de la compilation
+
     wxStructStat structStat;
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());
     wxStat(f.GetFullName(), &structStat);
     wxDateTime last_modified_time(structStat.st_mtime);
-    wxString DateCompilation = last_modified_time.Format(wxT("%d/%m/%Y à %H:%M:%S"));
+    wxString DateCompilation = last_modified_time.Format(wxT("%d/%m/%Y à %H:%M")); // pas besoin des secondes ! :%S
     wxbuild << _T("\nDate de compilation : ") << DateCompilation;
 
+// Numéro de version du compilateur
     wxbuild << _T("\nVersion de gcc : ") << _T(__VERSION__);
 
     return wxbuild;
@@ -215,6 +220,8 @@ const long OvniFrame::ID_POPUP_PARCOURS_I= wxNewId();
 const long OvniFrame::ID_POPUP_NORM_F    = wxNewId();
 const long OvniFrame::ID_POPUP_NORM_S    = wxNewId();
 
+const long OvniFrame::idReopenFile3ds    = wxNewId();       // Fait manuellement car non créé via wxSmith
+
 BEGIN_EVENT_TABLE(OvniFrame,wxFrame)
     //(*EventTable(OvniFrame)
     //*)
@@ -223,12 +230,6 @@ END_EVENT_TABLE()
 OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
     //(*Initialize(OvniFrame)
-    wxMenu* MenuFile;
-    wxMenu* Menu_Aide;
-    wxMenuBar* MenuBar1;
-    wxMenuItem* MenuItem1;
-    wxMenuItem* MenuItem2;
-
     Create(parent, wxID_ANY, _T("OVNI Version wxWidgets"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxFULL_REPAINT_ON_RESIZE, _T("wxID_ANY"));
     Hide();
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -278,7 +279,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer2->SetSizeHints(Panel_Sliders);
     BoxSizer1->Add(Panel_Sliders, 0, wxALL|wxEXPAND, 0);
     SetSizer(BoxSizer1);
-    MenuBar1 = new wxMenuBar();
+    MenuBar_Globale = new wxMenuBar();
     MenuFile = new wxMenu();
     Menu_Open = new wxMenuItem(MenuFile, idOpenFile, _T("Ouvrir"), _T("Ouvrir un fichier de bdd"), wxITEM_NORMAL);
     MenuFile->Append(Menu_Open);
@@ -304,9 +305,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Hardware3D = new wxMenuItem(MenuFile, idHardware, _T("Hardware 3D"), _T("Affiche les caractéristiques de la carte 3D"), wxITEM_NORMAL);
     MenuFile->Append(Menu_Hardware3D);
     MenuFile->AppendSeparator();
-    MenuItem1 = new wxMenuItem(MenuFile, idMenuQuit, _T("Quitter\tAlt-F4"), _T("Quitte l\'application"), wxITEM_NORMAL);
-    MenuFile->Append(MenuItem1);
-    MenuBar1->Append(MenuFile, _T("&Fichier"));
+    MenuItem_Quitter = new wxMenuItem(MenuFile, idMenuQuit, _T("Quitter\tAlt-F4"), _T("Quitte l\'application"), wxITEM_NORMAL);
+    MenuFile->Append(MenuItem_Quitter);
+    MenuBar_Globale->Append(MenuFile, _T("&Fichier"));
     Menu_Affichage = new wxMenu();
     Menu_Affichage_Points = new wxMenuItem(Menu_Affichage, menu_Affichage_Points, _T("Points"), _T("Affiche les points"), wxITEM_CHECK);
     Menu_Affichage->Append(Menu_Affichage_Points);
@@ -342,7 +343,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Affichage->Append(Menu_CentreRotation);
     Menu_PositionSource = new wxMenuItem(Menu_Affichage, ID_MENUITEM8, _T("Position de la source"), _T("Coordonnées de la source de lumière"), wxITEM_NORMAL);
     Menu_Affichage->Append(Menu_PositionSource);
-    MenuBar1->Append(Menu_Affichage, _T("Affichage"));
+    MenuBar_Globale->Append(Menu_Affichage, _T("Affichage"));
     Menu_Primitive = new wxMenu();
     Menu_AjouteCone = new wxMenuItem(Menu_Primitive, ID_MENUITEM32, _T("Cône"), wxEmptyString, wxITEM_NORMAL);
     Menu_Primitive->Append(Menu_AjouteCone);
@@ -361,7 +362,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Primitive->AppendSeparator();
     Menu_SupprimerDerniere = new wxMenuItem(Menu_Primitive, ID_MENUITEM39, _T("Supprimer la dernière"), _T("Pour supprimer la dernière primitive ajoutée"), wxITEM_NORMAL);
     Menu_Primitive->Append(Menu_SupprimerDerniere);
-    MenuBar1->Append(Menu_Primitive, _T("Primitive"));
+    MenuBar_Globale->Append(Menu_Primitive, _T("Primitive"));
     Menu_Reperage = new wxMenu();
     Menu_ReperagePoint = new wxMenuItem(Menu_Reperage, ID_MENUITEM9, _T("Point"), wxEmptyString, wxITEM_NORMAL);
     Menu_Reperage->Append(Menu_ReperagePoint);
@@ -385,7 +386,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Reperage->Append(Menu_Reperage_Couleurs_Groupes);
     Menu_Reperage_Couleurs_Materiaux = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_materiaux, _T("Couleurs matériaux"), wxEmptyString, wxITEM_CHECK);
     Menu_Reperage->Append(Menu_Reperage_Couleurs_Materiaux);
-    MenuBar1->Append(Menu_Reperage, _T("Repérage"));
+    MenuBar_Globale->Append(Menu_Reperage, _T("Repérage"));
     Menu2 = new wxMenu();
     MenuItem_ImageJpeg = new wxMenuItem(Menu2, ID_MENUITEM50, _T("Enregistrer au format jpeg"), wxEmptyString, wxITEM_NORMAL);
     Menu2->Append(MenuItem_ImageJpeg);
@@ -393,7 +394,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu2->Append(MenuItem_ImagePng);
     MenuItem_ImagePpm = new wxMenuItem(Menu2, ID_MENUITEM48, _T("Enregistrer au format ppm"), wxEmptyString, wxITEM_NORMAL);
     Menu2->Append(MenuItem_ImagePpm);
-    MenuBar1->Append(Menu2, _T("Image"));
+    MenuBar_Globale->Append(Menu2, _T("Image"));
     Menu_Outils = new wxMenu();
     Menu_RAZ_SelectionFacettes = new wxMenuItem(Menu_Outils, ID_MENUITEM40, _T("RAZ de sélection de facettes"), wxEmptyString, wxITEM_NORMAL);
     Menu_Outils->Append(Menu_RAZ_SelectionFacettes);
@@ -414,7 +415,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Outils->Append(Outils_Supprimer_Masques);
     Outils_UnDelete = new wxMenuItem(Menu_Outils, ID_MENUITEM31, _T("Restituer les éléments supprimés"), wxEmptyString, wxITEM_NORMAL);
     Menu_Outils->Append(Outils_UnDelete);
-    MenuBar1->Append(Menu_Outils, _T("Outils"));
+    MenuBar_Globale->Append(Menu_Outils, _T("Outils"));
     Menu_Transformations = new wxMenu();
     MenuItem3 = new wxMenuItem(Menu_Transformations, ID_MENUITEM17, _T("X => - X"), wxEmptyString, wxITEM_NORMAL);
     Menu_Transformations->Append(MenuItem3);
@@ -442,27 +443,27 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Transformations->Append(Menu_DeplacerBdd);
     Menu_FacteurEchelleBdd = new wxMenuItem(Menu_Transformations, ID_MENUITEM26, _T("Facteur d\'échelle"), wxEmptyString, wxITEM_NORMAL);
     Menu_Transformations->Append(Menu_FacteurEchelleBdd);
-    MenuBar1->Append(Menu_Transformations, _T("Transformations"));
-    Menu1 = new wxMenu();
-    Menu_CouleurDesGroupes = new wxMenuItem(Menu1, ID_MENUITEM43, _T("Couleurs des groupes"), wxEmptyString, wxITEM_NORMAL);
-    Menu1->Append(Menu_CouleurDesGroupes);
-    Menu_RelirePalette = new wxMenuItem(Menu1, ID_MENUITEM44, _T("Relire une palette"), wxEmptyString, wxITEM_NORMAL);
-    Menu1->Append(Menu_RelirePalette);
-    Menu_EnregistrerPalette = new wxMenuItem(Menu1, ID_MENUITEM45, _T("Enregistrer la palette"), wxEmptyString, wxITEM_NORMAL);
-    Menu1->Append(Menu_EnregistrerPalette);
-    Menu1->AppendSeparator();
-    Menu_ZoomAuto = new wxMenuItem(Menu1, ID_MENUITEM46, _T("Zoom automatique"), wxEmptyString, wxITEM_NORMAL);
-    Menu1->Append(Menu_ZoomAuto);
-    Menu_CentrageAuto = new wxMenuItem(Menu1, ID_MENUITEM47, _T("Centrage automatique"), wxEmptyString, wxITEM_NORMAL);
-    Menu1->Append(Menu_CentrageAuto);
-    MenuBar1->Append(Menu1, _T("Options"));
+    MenuBar_Globale->Append(Menu_Transformations, _T("Transformations"));
+    Menu_Options = new wxMenu();
+    Menu_CouleurDesGroupes = new wxMenuItem(Menu_Options, ID_MENUITEM43, _T("Couleurs des groupes"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Options->Append(Menu_CouleurDesGroupes);
+    Menu_RelirePalette = new wxMenuItem(Menu_Options, ID_MENUITEM44, _T("Relire une palette"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Options->Append(Menu_RelirePalette);
+    Menu_EnregistrerPalette = new wxMenuItem(Menu_Options, ID_MENUITEM45, _T("Enregistrer la palette"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Options->Append(Menu_EnregistrerPalette);
+    Menu_Options->AppendSeparator();
+    Menu_ZoomAuto = new wxMenuItem(Menu_Options, ID_MENUITEM46, _T("Zoom automatique"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Options->Append(Menu_ZoomAuto);
+    Menu_CentrageAuto = new wxMenuItem(Menu_Options, ID_MENUITEM47, _T("Centrage automatique"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Options->Append(Menu_CentrageAuto);
+    MenuBar_Globale->Append(Menu_Options, _T("Options"));
     Menu_Aide = new wxMenu();
     MenuItem_Aide = new wxMenuItem(Menu_Aide, idMenuHelp, _T("Aide\tF1"), _T("Affiche une aide des commandes et des menus sous forme de fichier html"), wxITEM_NORMAL);
     Menu_Aide->Append(MenuItem_Aide);
-    MenuItem2 = new wxMenuItem(Menu_Aide, idMenuAbout, _T("A Propos"), _T("Affiche quelques informations sur la génération de l\'application"), wxITEM_NORMAL);
-    Menu_Aide->Append(MenuItem2);
-    MenuBar1->Append(Menu_Aide, _T("Aide"));
-    SetMenuBar(MenuBar1);
+    MenuItem_About = new wxMenuItem(Menu_Aide, idMenuAbout, _T("A Propos"), _T("Affiche quelques informations sur la génération de l\'application"), wxITEM_NORMAL);
+    Menu_Aide->Append(MenuItem_About);
+    MenuBar_Globale->Append(Menu_Aide, _T("Aide"));
+    SetMenuBar(MenuBar_Globale);
     StatusBar1 = new wxStatusBar(this, ID_STATUSBAR1, 0, _T("ID_STATUSBAR1"));
     int __wxStatusBarWidths_1[1] = { -1 };
     int __wxStatusBarStyles_1[1] = { wxSB_NORMAL };
@@ -657,6 +658,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //    ID_POPUP_NORM_F_bis = ID_POPUP_NORM_F;
 //    ID_POPUP_NORM_S_bis = ID_POPUP_NORM_S;
 
+// Connexion manuelle pour la réouverture spécifique de fichiers 3ds (car non vréé via wxSmith)
+    Connect(idReopenFile3ds,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReOpen3dsSelected);
+
 // Affichage d'une aide lors du survol de boutons par la souris
     Button_Points->   SetToolTip(_T("Affichage des Points"));
     Button_Filaire->  SetToolTip(_T("Affichage des Arêtes"));
@@ -776,6 +780,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (Element->svg_time > 0) Timer_Save.Start(Element->svg_time*60000,false); // Lancer le timer si svg_time > 0
 
 //    printf("Sortie OvniFrame, wxSize x:%d y:%d\n",ClientSize->GetX(), ClientSize->GetY());
+
     if (verbose) printf("Sortie OvniFrame::OvniFrame\n");
 }
 
@@ -1276,9 +1281,20 @@ void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event
 
 void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 {
-    New_file = false;           // => le nom du fichier est déjà connu (via get_file)
-    Element->Numero_base = 0;   // Réinitialisation complète
+    New_file = false;                                   // => le nom du fichier est déjà connu (via get_file)
+    Element->Numero_base = 0;                           // Réinitialisation complète
     Ouvrir_Fichier();
+}
+
+void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
+{
+// Reopen spécifique pour fichiers 3ds
+    this->Element->test_decalage3ds = !this->Element->test_decalage3ds; // Inverser le test...
+                                                                        // Ici, on ne marque pas de changement du fichier init (ini_file_modified inchangé)
+    if (this->Element->MPrefs->IsShown()) {                             // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
+        this->Element->MPrefs->CheckBox_TestDecalage3DS->SetValue(this->Element->test_decalage3ds);
+    }
+    OnMenu_ReOpenSelected(event) ;
 }
 
 void OvniFrame::OnMenu_OpenSelected(wxCommandEvent& event)
@@ -1333,9 +1349,7 @@ void OvniFrame::Ouvrir_Fichier()
         Nom_Fichier = wxFileSelectorEx(_T("Choix du fichier 3D"), wxEmptyString, wxEmptyString, &FilterIndex, Selector);
         printf("FilterIndex apres : %d\n",FilterIndex);
 */
-
         Nom_Fichier = wxFileSelector(_T("Choix du fichier 3D"), FullPath, wxEmptyString, s_extdef, Selector);
-
     } else {
         Nom_Fichier = Element->get_file();
     }
@@ -1363,6 +1377,7 @@ void OvniFrame::Ouvrir_Fichier()
     if (!Nom_Fichier.IsEmpty()) {
 
         s_extdef = Nom_Fichier.AfterLast(_T('.'));
+        s_extdef = s_extdef.Lower();                            // Forcer l'extension en minuscules
 
         FullPath = Nom_Fichier.BeforeLast(wxFILE_SEP_PATH) + wxFILE_SEP_PATH; //wxFileName::GetPathSeparator();
 
@@ -1381,10 +1396,32 @@ void OvniFrame::Ouvrir_Fichier()
 ///        Element->Refresh();
 
         this->Menu_SensDesNormales->Enable() ;
-        this->Menu_ReOpen->Enable();            // Activer le menu "Réouvrir"
+        this->Menu_ReOpen->Enable();                // Activer le menu "Réouvrir"
+
+// Si c'est un fichier 3ds, proposer dans le menu de le réouvrir en changeant les test de décalage
+
+        if (s_extdef == _T("3ds")) {                    // Création d'une entrée de menu spécifique de réouverture pour les fichiers 3ds
+            if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
+                this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
+                                                      _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
+                this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
+                this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas
+            }
+            if (this->Element->test_decalage3ds)                // Proposer de réouvrir avec le test inverse de ce qui est en cours
+                this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds sans décalages"));
+            else
+                this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds avec décalages"));
+
+        } else { // Si ce n'est pas un fichier 3ds supprimer l'entrée de menu spécifique de réouverture
+            if (this->Menu_ReOpen3ds) { // mais seulement si elle existe !
+                this->MenuFile->Delete(this->Menu_ReOpen3ds);   // Suppression du menu (Remove, Destroy ou Delete ? semble donner la même chose)
+                this->Menu_ReOpen3ds = 0;                       // et RAZ du pointeur
+            }
+        }
+
 ///        this->Menu_Fusionner->Enable();         // Activer le menu "Fusionner"
-        this->Menu_Enregistrer->Enable();       // Activer le menu "Enregistrer"
-        this->Menu_Enregistrer_Sous->Enable();  // Activer le menu "Enregistrer sous..."
+        this->Menu_Enregistrer->Enable();                   // Activer le menu "Enregistrer"
+        this->Menu_Enregistrer_Sous->Enable();              // Activer le menu "Enregistrer sous..."
         Element->MPrefs->CheckBox_CreerBackup->Enable();    // Activer la case à cocher de création d'un fichier .bak
         if (Element->CreerBackup)
             Element->MPrefs->CheckBox_SupprBackup->Enable();// Activer la case à cocher de suppression du fichier .bak
