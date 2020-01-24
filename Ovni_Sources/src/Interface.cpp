@@ -3408,8 +3408,7 @@ void BddInter::Load3DS()
  *  Utilise la librairie libs3d (d'après l'exemple 3ds2m)
  */
     int im ;
-    Lib3dsMesh *mesh;
-    Lib3dsNode *p, *node;
+    Lib3dsNode *p, *node ;
     int meshes=0;
     int nnodes=0;
     int i;
@@ -3433,55 +3432,57 @@ void BddInter::Load3DS()
 
     /* Pas de nodes?  En fabriquer pour favoriser l'affichage (cf 3dsplay.c). */
     if( !f3ds->nodes ) {
+//        Lib3dsNode *node;
+
         sprintf(Message,"Création de Nodes, car ce fichier .3ds n'en a pas !\n") ;
         printf(utf8_To_ibm(Message)) ;
-//        printf("Creation de Nodes, car ce fichier .3ds n'en a pas !\n") ;
 
-        for (i = 0 ; i<f3ds->nmeshes; ++i) {
-            mesh = f3ds->meshes[i];
+        for (i = 0 ; i < f3ds->nmeshes; ++i) {
+            Lib3dsMesh *mesh = f3ds->meshes[i];
             node = lib3ds_node_new(LIB3DS_NODE_MESH_INSTANCE);
             strcpy(node->name, mesh->name);
             lib3ds_file_insert_node(f3ds, node, NULL);
         }
         sprintf(Message,"%d meshes lus et autant de nodes créés\n",f3ds->nmeshes);
         printf(utf8_To_ibm(Message)) ;
-//        printf("%d meshes lus et autant de nodes crees\n",f3ds->nmeshes);
     }
 
-    for (node=f3ds->nodes ; node!=NULL ; node=node->next ) {
-        nnodes++;                               // Compter le nombre de nodes (noeuds)
-        printf("Node : %s\n",node->name);
-        for (p=node->childs ; p!=NULL ; p=p->next) {
-            nnodes++;
-            printf("Node : %s\n",p->name);
-        }
-        /*       if (nnode) {
-                    if (strcmp(nnode, p->name)!=0) {
-                        continue;
-                    }
-                }*/
-    }
-    printf("Nodes : %d\n",nnodes);
+    lib3ds_file_eval(f3ds, 0.0f);   // Indispensable pour configurer proprement les matrices des nodes
+
+    // Code pas très utile ! Sert juste à vérifier 2 méthodes de comptage qui ne donnent pas toujours la même chose !
+//    for (node=f3ds->nodes ; node!=NULL ; node=node->next ) {
+//        nnodes++;                               // Compter le nombre de nodes (noeuds)
+//        printf("Node : %s\n",node->name);
+//        for (p=node->childs ; p!=NULL ; p=p->next) {
+//            nnodes++;
+//            printf("Node : %s\n",p->name);
+//        }
+//        /*       if (nnode) {
+//                    if (strcmp(nnode, p->name)!=0) {
+//                        continue;
+//                    }
+//                }*/
+//    }
+//    printf("Nodes : %d\n",nnodes);
 
 // Appel de compter_nodes plutôt que faire nb_objets = nnodes
     o_3ds=0;
-    for (node=f3ds->nodes; node!=NULL; node=node->next) {   // Pas forcément utile car objets construits au fur et à mesure
-        compter_nodes(node);//, f3ds);
+    for (p = f3ds->nodes; p != 0; p = p->next) {   // Pas forcément utile car objets construits au fur et à mesure
+        compter_nodes(p);
     }
     printf("sortie de compter_nodes : o_3ds = %d\n",o_3ds);
-    if (o_3ds != nnodes) {
-        sprintf(Message,"Nombre de nodes retenus : %d, différent du nombre initial : %d\n",o_3ds,nnodes);
-        printf(utf8_To_ibm(Message)) ;
-//        printf("Nombre de nodes retenus : %d, different du nombre initial : %d\n",o_3ds,nnodes);
-    }
+//    if (o_3ds != nnodes) {
+//        sprintf(Message,"Nombre de nodes retenus : %d, différent du nombre initial : %d\n",o_3ds,nnodes);
+//        printf(utf8_To_ibm(Message)) ;
+////        printf("Nombre de nodes retenus : %d, different du nombre initial : %d\n",o_3ds,nnodes);
+//    }
 //    cel->nb_objet = o_3ds ; //meshes;
     meshes=o_3ds;
     printf("%d objets\n",meshes);
 
     if (meshes == 0) {
- //       sprintf(Message,
-        printf("Erreur dans le fichier 3DS : ne contient pas d'objets (meshes)\n") ;
-//        printf(utf8_To_ibm(Message)) ;
+        sprintf(Message,"Erreur dans le fichier 3DS : ne contient pas d'objets (meshes)\n") ;
+        printf(utf8_To_ibm(Message)) ;
 #ifdef WIN32
         system("pause") ;
 #endif
@@ -3492,8 +3493,8 @@ void BddInter::Load3DS()
 // Seconde analyse des objets avec appel récursif des nodes
     o_3ds      = 0 ; //indiceObjet_courant = o_3ds;
     nb_mat_3ds = 0 ;
-    for (node = f3ds->nodes; node != NULL; node = node->next) {
-        decoder_node(node);//, f3ds);
+    for (p = f3ds->nodes; p != 0; p = p->next) {
+        decoder_node(p);
     }
 
 //    numObjet_suiv += ((o_3ds+10)/10)*10 ; // Pour arrondir à la dizaine supérieure
@@ -3505,13 +3506,10 @@ void BddInter::Load3DS()
         for (im=0; im < nb_mat_3ds ; im++) {
             sprintf(Message,"%4d %s\n",im+1, tab_mat[im]);
             printf(utf8_To_ibm(Message));
-//            printf("%4d %s\n",im+1, tab_mat[im]);
         }
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf(utf8_To_ibm(Message));
-//    printf("\nFin de la lecture des donnees.\n");
-//    printf("%s",Message);
 
     lib3ds_file_free(f3ds);
 
@@ -3522,12 +3520,12 @@ void BddInter::Load3DS()
 
 }
 
-int BddInter::compter_nodes (Lib3dsNode *node) //, Lib3dsFile *f)
+int BddInter::compter_nodes (Lib3dsNode *node)
 {
     Lib3dsNode *p ;
 
     for (p = node->childs; p != 0 ; p = p->next) {
-        compter_nodes(p);//, f) ;
+        compter_nodes(p);
     }
 
     if (node->type == LIB3DS_NODE_MESH_INSTANCE) {
@@ -3592,8 +3590,6 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
     int im;
     unsigned int i,k, nfac, npoint, nb_fac, nb_p, nb_mat,found ;
     unsigned int o=0;		            // pour compter le nombre d'objets
-//    struct point3d np, point_new ;
-//    struct point4d point_offset ;
     int num_mat ;
     int index;
     float matrice[4][4], inv_matrice[4][4] ;
@@ -3624,6 +3620,7 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
     if (node->type == LIB3DS_NODE_MESH_INSTANCE) {
 
         n = (Lib3dsMeshInstanceNode*)node;
+
         if (strcmp(node->name,"$$$DUMMY") == 0) {
             return (0);
         }
@@ -3637,7 +3634,7 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
 
         mesh = f3ds->meshes[index];
 
-        printf("user_id : %d\n",mesh->user_id);
+//        printf("user_id : %d\n",mesh->user_id);
 
         strcpy(nom_obj, Lire_chaine(mesh->name)) ;
 //        printf("Objet :%4d, Nom : %s\n",o,nom_obj);
@@ -3682,12 +3679,12 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
 //            Affiche_Matrice(inv_matrice);
             lib3ds_matrix_inv(inv_matrice);
 //            Affiche_Matrice(inv_matrice);
-//            lib3ds_matrix_copy(matrice_w,node->matrix);                         // Initialement mesh. Test avec node ???
-            Affiche_Matrice(node->matrix);
-            lib3ds_matrix_copy(matrice_w,  mesh->matrix);
-//            lib3ds_matrix_mult(matrice,matrice_w,inv_matrice_inv);    // Est ça ou (matrice,inv_matrice,matrice_w)
+            lib3ds_matrix_copy(matrice_w,node->matrix);
 //            Affiche_Matrice(matrice_w);
-            printf("pivot : %f %f %f \n", n->pivot[0], n->pivot[1], n->pivot[2]);
+//            lib3ds_matrix_copy(matrice_w,  mesh->matrix);
+//            lib3ds_matrix_mult(matrice,matrice_w,inv_matrice);    // Est ça ou (matrice,inv_matrice,matrice_w)
+//            Affiche_Matrice(matrice_w);
+//            printf("pivot : %f %f %f \n", n->pivot[0], n->pivot[1], n->pivot[2]);
 //            printf("diff  : %f %f %f \n", matrice_w[3][0] +n->pivot[0], matrice_w[3][1] +n->pivot[1], matrice_w[3][2] +n->pivot[2]);
             lib3ds_matrix_translate(matrice_w, -n->pivot[0], -n->pivot[1], -n->pivot[2]);
 //            Affiche_Matrice(matrice_w);

@@ -1,5 +1,5 @@
-#ifndef HEADER_1BDEA58C667FA649
-#define HEADER_1BDEA58C667FA649
+#ifndef OVNIMAIN_H
+#define OVNIMAIN_H
 
 /***************************************************************
  * Name:      OvniMain.h
@@ -9,9 +9,6 @@
  * Copyright: Gerard Durand ()
  * License:
  **************************************************************/
-
-#ifndef OVNIMAIN_H
-#define OVNIMAIN_H
 
 //(*Headers(OvniFrame)
 #include <wx/button.h>
@@ -520,5 +517,4 @@ class OvniFrame: public wxFrame
 };
 
 #endif // OVNIMAIN_H
-#endif // header guard
 
