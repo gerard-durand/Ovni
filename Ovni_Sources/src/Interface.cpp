@@ -3578,7 +3578,7 @@ void BddInter::Affiche_Matrice(float M[4][4]) {
     printf("\n");
 }
 
-int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
+int BddInter::decoder_node (Lib3dsNode *node)
 {
 /*
  *  Lecture d'un Fichier de polygones au format Autodesk 3DS
@@ -3613,7 +3613,7 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
     {
         Lib3dsNode *p ;
         for (p = node->childs; p != 0 ; p = p->next) {
-            decoder_node(p);//, file) ;
+            decoder_node(p);
         }
     }
 
@@ -3627,9 +3627,9 @@ int BddInter::decoder_node (Lib3dsNode *node) //, Lib3dsFile *file)
 
         index = lib3ds_file_mesh_by_name(f3ds, n->instance_name);
         if( index < 0 )
-            index = lib3ds_file_mesh_by_name(f3ds, node->name);    // 2ème essai, si pas trouvé par instance_name
+            index = lib3ds_file_mesh_by_name(f3ds, node->name);     // 2ème essai, si pas trouvé par instance_name
         if (index < 0) {
-            return (0);                                         // Si toujours pas trouvé, sortir
+            return (0);                                             // Si toujours pas trouvé, sortir
         }
 
         mesh = f3ds->meshes[index];

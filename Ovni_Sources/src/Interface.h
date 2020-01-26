@@ -905,8 +905,8 @@ public :
     }
 
     float   x_min, x_max, y_min, y_max, z_min, z_max;
-    bool    AfficherNormaleFacette = false ;
-    bool    AfficherNormalesSommets= false ;
+    bool    AfficherNormaleFacette  = false ;
+    bool    AfficherNormalesSommets = false ;
     bool    centrageRotAuto = true;
 
 // Valeurs par défaut
@@ -918,19 +918,19 @@ public :
     float   angle_Gouraud_def = 35.0f;
     float   fmult_Gouraud_def =  1.6f;
     int     svg_time_def      = 5;                  // en minutes
-    bool    test_seuil_gouraud_def = false;
+    bool    test_seuil_gouraud_def  = false;
 
     bool    antialiasing_soft_def   = false;
-    bool    Forcer_1_Seul_Objet_def = false;    // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
-    bool    lect_obj_opt_def        = false;    // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
-    bool    test_decalage3ds_def    = false;    // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
+    bool    Forcer_1_Seul_Objet_def = false;        // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
+    bool    lect_obj_opt_def        = false;        // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
+    bool    test_decalage3ds_def    = true;         // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
     bool    CalculNormalesLectureBdd_def = false;   // Pour forcer le calcul (recalcul) des normales dès la lecture du fichier
     bool    Enr_Normales_Seuillees_def   = false;
-    bool    reset_zoom  = true;
-    bool    bdd_modifiee= false;                    // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
-    bool    creation_facette=false;                 // Pour traiter différement le sélection de points en mode de création de facettes
-    bool    CreerBackup_def=false;                  // Pour renommer l'original d'un fichier de bdd en .bak
-    bool    SupprBackup_def=false;                  // Pour supprimer le .bak en sortie de programme
+    bool    reset_zoom              = true;
+    bool    bdd_modifiee            = false;        // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
+    bool    creation_facette        = false;        // Pour traiter différement le sélection de points en mode de création de facettes
+    bool    CreerBackup_def         = false;        // Pour renommer l'original d'un fichier de bdd en .bak
+    bool    SupprBackup_def         = false;        // Pour supprimer le .bak en sortie de programme
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
