@@ -631,22 +631,22 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     bool test;
-    wxString Message;
+    wxString wxMessage;
 
     test = false;
     if (Element->mode_selection == Element->selection_objet) {
         if (Element->listeObjets.empty()) {
-            test    = true;
-            Message = _T("Aucun Objet sélectionné !");
+            test      = true;
+            wxMessage = _T("Aucun Objet sélectionné !");
         }
     } else if (Element->mode_selection == Element->selection_facette) {
         if (Element->ToSelect.ListeSelect.empty()) {
-            test    = true;
-            Message = _T("Aucune Facette sélectionnée !");
+            test      = true;
+            wxMessage = _T("Aucune Facette sélectionnée !");
         }
     }
     if (test) {
-        wxMessageDialog *query = new wxMessageDialog(NULL, Message, _T("Avertissement"),
+        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
                                                  wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
         query->ShowModal();
         query->Destroy();

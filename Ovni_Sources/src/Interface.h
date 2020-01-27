@@ -34,7 +34,6 @@
 
 class BddInter;
 class OvniFrame;
-//typedef class ModificationPanel;
 class CentreRotation;
 class ChangerEchelleBdd;
 class ChoixAffichageObjets;
@@ -89,7 +88,7 @@ char *utf8_To_ibm (char *) ;
 class Object {
     wxCharBuffer name;
     wxString wxname;
-    int value;              // Numéro de l'objet
+    int value;                  // Numéro de l'objet
 public:
     bool afficher = true;
 //    bool show    = true;    // Utilisé ???
@@ -115,6 +114,8 @@ public:
     std::vector<Vecteur1>   Vecteurlist;
     std::vector<Points>     Pointslist;
     std::vector<Aretes>     Areteslist;
+
+// Méthodes, fonctions de la classe Object
 
     Object() {
     }
@@ -208,6 +209,8 @@ public:
     GLfloat color[3];
     int  Nb_Sommets_L=0;        // Nombre de sommets en luminances (équivallent de Nb_Sommets_F pour les sommets de facettes)
     std::vector<int> L_sommets; // Numéros des normales aux sommets
+
+// Méthodes, fonctions de la classe Face1 (traitements d'une facette)
 
     Face1() {
     }
@@ -327,6 +330,9 @@ public:
     bool show;
     bool selected;
 //    GLfloat color[3];
+
+// Méthodes, fonctions de la classe Sommet1 (traitements d'un sommet)
+
     Sommet1() {
         NNumber=-1;
     }
@@ -386,6 +392,9 @@ public:
     std::vector<float> point;   // Coordonnées de la normale en x, y et z
     int toshow = 0;             // init GD
     bool show  = false;         // init GD
+
+// Méthodes, fonctions de la classe Normale1 (traitements d'une normale au barycentre)
+
     Normale1() {
     }
     void initNormale1() {
@@ -440,6 +449,9 @@ public:
     int Numero;     // Numéro de la facette
     int toshow;
     bool show;
+
+// Méthodes, fonctions de la classe Aspect_face1 (traitements du numéro de matériau et/ou de groupe d'une facette)
+
     Aspect_face1() {
         show=true;
     }
@@ -509,6 +521,9 @@ public:
     std::vector<int> L_sommets; // Numéros des normales aux sommets
     int toshow;
     bool show;
+
+// Méthodes, fonctions de la classe Luminance1 (traitements d'une Luminance <=> facette)
+
     Luminance1() {
     }
     Luminance1(std::vector<wxString>wxStringlist) {
@@ -565,6 +580,9 @@ public:
     std::vector<float> point;   // Coordonnées en x, y et z de cette normale
     int  toshow;
     bool show;
+
+// Méthodes, fonctions de la classe Vecteur1 (traitements d'un Vecteur pour les normales aux sommets)
+
     Vecteur1() {
 //        NNumber=-1;
     }
@@ -1061,8 +1079,10 @@ public :
     wxString Fichier_Autosvg = _T("Autosave.bdd");  // Nom du fichier de sauvegarde automatique utilisé via le wxTimer
     bool exists_Autosave = false;                   // Sera mis à true par la première sauvegarde automatique
 
+    Lib3dsFile *f3ds=0;                             // Spécifique aux fichier de type 3ds
     int o_3ds;                                                  // A PLACER AILLEURS !!!
     int nb_mat_3ds = 0;
+
     char *Lire_chaine(char *);
     #define nb_mat_max 4000
     char *tab_mat[nb_mat_max];

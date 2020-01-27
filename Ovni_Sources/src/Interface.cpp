@@ -15,11 +15,10 @@
 #include "OvniMain.h"
 #include <time.h>
 
-const float to_Deg=180.0f/M_PI;
-const float to_Rad=1.0f/to_Deg;
-//const float pas_deg=to_Deg/10.   // 1/10eme de radian
-const float pas_deg=5.0f;
-const float pas_rad=pas_deg/to_Deg;
+const float to_Deg = 180.0f/M_PI;
+const float to_Rad = 1.0f/to_Deg;
+const float pas_deg= 5.0f;
+const float pas_rad= pas_deg/to_Deg;
 
 static char Message[1024];
 
@@ -42,21 +41,21 @@ const char *initD="Temps_sauveg=";
 const char *initE="Methode_triangles=";
 const char *initF="Mode_Trackball=";
 const char *initG="View_OpenGL_FPS=";
-const char *initH="Rep_travail=";           // Répertoire où est le fichier Bdd (pas Ovni.exe !)
+const char *initH="Rep_travail=";       // Répertoire où est le fichier Bdd (pas Ovni.exe !)
 const char *initI="Creer_Backup=";
 const char *initJ="Suppr_Backup=";
 
-
-FILE* f;
-static Lib3dsFile *f3ds=0;
+FILE* f;                                // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
 #define XML_FMT_INT_MOD "l"
 #define BUFFSIZE        8192
 
 char XML_Buff[BUFFSIZE];
-int XML_Depth;
-int i_objetXML_courant=0;               // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
-char s1[666]; //,buffer[1000] ;			// chaines de caractères
+int  XML_Depth;
+int  i_objetXML_courant=0;              // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
+
+char s1[666]; //,buffer[1000] ;			// chaines de caractères. Déclarée ici car utilisée aussi dans la lecture des fichiers G3D (hors BddInter)
+
 unsigned int codegroupe,codemateriau;
 
 BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
@@ -92,12 +91,12 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wx
     beta   = 0.0;
     gamma  = 0.0;
     modeGL = standard; //11;
-    objet_under_mouse=-1;
-    face_under_mouse =-1;
-    point_under_mouse=-1;
-    line_under_mouse =-1;
-    undo_memory = 0;
-    OK_ToSave   = false;
+    objet_under_mouse = -1;
+    face_under_mouse  = -1;
+    point_under_mouse = -1;
+    line_under_mouse  = -1;
+    undo_memory       = 0;
+    OK_ToSave         = false;
 
     centreRot.resize(3);    // Init vecteur à 3 composantes : x, y et z
     centre_auto.resize(3);  // Idem
@@ -331,7 +330,7 @@ void BddInter::Ouvrir_ini_file()
     char *Lu, *p_txt_wrk;
     int icmp, ibool, len ;
 
-    f_init=fopen(fichier_init,"r") ; // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
+    f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != NULL) {
         while ((Lu= fgets(Message,300,f_init)) != NULL) {
             len = strlen(init1);
@@ -1035,8 +1034,8 @@ void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
     int signe = event.GetWheelRotation();
     bool Touche_Maj  = event.ShiftDown();
     OnMouseZoom(event, signe, Touche_Maj);
-    m_gldata.BeginX = event.GetX();
-    m_gldata.BeginY = event.GetY();
+    m_gldata.BeginX  = event.GetX();
+    m_gldata.BeginY  = event.GetY();
 //    printf("Mouseweelmoved\n");
 ///    event.Skip();                // N'a pas l'air utile
 }
@@ -1105,7 +1104,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     bool  Touche_Maj;
     Face1   *Facette;
     Sommet1 *Sommet;
-    wxString Message;
+    wxString wxMessage;
 
     wxMouseEvent event_mouse;
     wxCommandEvent cmd_event;
@@ -1244,8 +1243,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (Nb_Valeurs > 0) {    // Ne rien faire si nul !
             X_m /= Nb_Valeurs; Y_m /= Nb_Valeurs; Z_m /= Nb_Valeurs;
-//            centreRot[0] = X_m ; centreRot[1] = Y_m ; centreRot[2] = Z_m;
-            centreRot = {X_m, Y_m, Z_m};
+            centreRot = {X_m, Y_m, Z_m};    // <=> centreRot[0] = X_m ; centreRot[1] = Y_m ; centreRot[2] = Z_m;
             centrageRotAuto = false;
         } else {
             centreRot = centre_auto;
@@ -1444,9 +1442,9 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                                     if (Numeros_nn != NumerosJ[nj]) continue ;      // Ne faire la suite (comparaison des normales) que si 1 point commun entre les facettes j et face
                                     if (compare_normales(objet,face,j)) {           // Test sur les normales
 //                                   printf("OK  %d\n",j);
-                                        if (!ToSelect.check_if_in_ListeSelect(objet,j)) {    // N'ajouter que si non déjà présent dans la Liste
+                                        if (!ToSelect.check_if_in_ListeSelect(objet,j)) {   // N'ajouter que si non déjà présent dans la Liste
                                             ToSelect.add_one(objet,j);
-                                            extend_auto = true;                     // Marquer qu'on a ajouté une facette dans la liste
+                                            extend_auto = true;                             // Marquer qu'on a ajouté une facette dans la liste
                                             colorface(objet,j);
                                         }
                                     }
@@ -1468,11 +1466,13 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (!extend_auto) {                                                 // La sélection n'a pas été modifiée : afficher un message
 //            printf("Extension automatique : limite atteinte\n");
             if (ToSelect.ListeSelect.size() == 0)
-                Message = _T("La sélection de facettes est vide. Pas d'extension possible");
-            else
-                Message = _T("L'extension automatique de la sélection a atteind sa limite :\npas ou plus de points communs avec les facettes voisines");
-//            wxMessageBox(Message,_T("Avertissement"),wxOK); // Idem ci-dessous + alerte sonore
-            wxMessageDialog *query = new wxMessageDialog(NULL, Message, _T("Avertissement"),
+                wxMessage = _T("La sélection de facettes est vide. Pas d'extension possible");
+            else {
+                wxMessage = _T("L'extension automatique de la sélection a atteind sa limite :\n");
+                wxMessage+= _T("pas ou plus de points communs avec les facettes voisines");
+            }
+//            wxMessageBox(wxMessage,_T("Avertissement"),wxOK); // Idem ci-dessous + alerte sonore
+            wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
                                                          wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
             query->ShowModal();
             query->Destroy();
@@ -1752,8 +1752,8 @@ void BddInter::create_bdd() {
         wxNomsFichiers += _T(" + ") + wxFileNameFromPath(get_file());       // Concaténer avec le nom du/des fichier(s) précédent(s)
     }
     indice_premierObjet = this->Objetlist.size();   // Utile pour les fusions
-    wxString str_nom=this->file;
-    str_nom.MakeLower();    // Force le nom à être en minuscules (simplifie les tests ci-dessous)
+    wxString str_nom = this->file;
+    str_nom.MakeLower();    // Force le nom à être en minuscules (simplifie les tests de détection d'extension ci-dessous)
 
     wxCharBuffer buffer=str_nom.mb_str();
     printf("Chargement de : %s\n",buffer.data());
@@ -1777,7 +1777,7 @@ void BddInter::create_bdd() {
     printf("create_bdd : type=%d\n",type);
 
     wxFileInputStream stream(str_nom);
-    if(type!=-1) {
+    if(type != -1) {
         switch(type) {
         case 0:
             printf("\nChargement d'un fichier .dxf !!!\n");
@@ -1884,8 +1884,10 @@ void BddInter::create_bdd() {
             for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
                 if (Normales_sommets_presentes) {
                     if (i == 0) {
-                        wxString Message = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\nLe calcul refait à la lecture du fichier va les remplacer...\nEst-ce bien que vous voulez ?");
-                        wxMessageDialog *query = new wxMessageDialog(NULL,Message, _T("Question"),
+                        wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
+                        wxMessage         += _T("Le calcul refait à la lecture du fichier va les remplacer...\n");
+                        wxMessage         += _T("Est-ce bien ce que vous voulez ?");
+                        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question"),
                                                  wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
                         if (query->ShowModal() == wxID_YES) Forcer_calcul = true;
                         query->Destroy();
@@ -1931,7 +1933,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
     BddInter *Element=(BddInter *)data;
     float vx,vy,vz;
     char *cptr;
-    int valp[500];  // Attention, stockage provisoire limité à 500 valeurs (nb sommets ou normales / facette)
+//    int valp[500];  // Attention, stockage provisoire limité à 500 valeurs (nb sommets ou normales / facette)
     int val_id=0 ;
     static int nb_val_id=0;
     char sc[100];
@@ -2098,7 +2100,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     while (*cptr == ' ') cptr++ ;                       // Eliminer les blancs de tête
                     do {
                         i1++;
-                        sscanf(cptr,"%d",&valp[i1]) ;                   // Stockage provisoire, mais valp ne sert plus ici
+//                        sscanf(cptr,"%d",&valp[i1]) ;                   // Stockage provisoire, mais valp ne sert plus ici
                         while (*cptr >= '0' && *cptr <= '9') cptr++ ;   // Passer les chiffres
                         while (*cptr == ' ') cptr++ ;                   // Passer les blancs
                         nc=sscanf(cptr,"%s",sc) ;
@@ -2125,7 +2127,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     while (*cptr == ' ') cptr++ ;                       // Eliminer les blancs de tête
                     do {
                         i1++;
-                        sscanf(cptr,"%d",&valp[i1]) ;                   // Stockage provisoire
+ //                       sscanf(cptr,"%d",&valp[i1]) ;                   // Stockage provisoire
                         while (*cptr >= '0' && *cptr <= '9') cptr++ ;   // Passer les chiffres
                         while (*cptr == ' ') cptr++ ;                   // Passer les blancs
                         nc=sscanf(cptr,"%s",sc) ;
@@ -2323,8 +2325,8 @@ void BddInter::LoadOBJ()
  *  NOTE : la lecture se fait en 3 passes car les numéros de sommets peuvent être utilisés dans des objets/facettes avant d'être définis.
  *         Tous les sommets de tous les objets vont être définis dans le premier objet. Le tri et l'optimisation seront fait plus tard.
  */
-    FILE* f;
-    char s1[666],sc[100];//,buffer[1000] ;			//chaines de caractères
+//    FILE* f;                                      // Déjà déclaré au niveau général, donc autant l'utiliser
+    char sc[100];//,s1[666],buffer[1000] ;			//chaines de caractères
     char nom_obj[512];
     char newline='\\' ;
     unsigned int i, n, nfac, nfac_t, npoint, nb_fac, nb_p, nb_mat,found, first, npoint_courant ;
@@ -2769,6 +2771,7 @@ void BddInter::LoadOBJ()
                 printf("Optimisation du fichier .obj : a faire ...\n");
                 // Le but est d'éliminer dans chaque objet tous les points et vecteurs inutiles et renuméroter en conséquence
                 // les numéros de sommets utilisés dans les facettes et les luminances
+                // En attendant, lancer une simplification de Bdd peut faire le job
 
             } ; // Fin du mode lecture optimisée
 
@@ -2796,8 +2799,8 @@ void BddInter::LoadM3D()
  *  Identifie éventuellement plusieurs objets, crée des normales.
  *  Une création de groupes faite ?????????????????????????????????
  */
-    FILE* f;
-    char s1[666] ;			//chaînes de caractères
+//    FILE* f;              // Déjà déclaré au niveau général, donc autant l'utiliser
+//    char s1[666] ;			//chaînes de caractères
     char nom_obj[80];
     int sommet[3] ;
     int normal[3] ;
@@ -2977,8 +2980,8 @@ void BddInter::LoadPLY()
 *  Identifie éventuellement plusieurs objets, crée des normales.
 *  Une création de groupes faite (d'après les infos de materi)
 */
-    FILE* f;
-    char s1[666],ident[80] ;			//chaînes de caractères
+//    FILE* f;                  // Déjà déclaré au niveau général, donc autant l'utiliser
+    char ident[80] ;			//chaînes de caractères  s1[666],
     char nom_obj[80], nom_prec[80] ;
     char *cptr ;
     int i0, n_OK, ittem ;
@@ -2988,7 +2991,7 @@ void BddInter::LoadPLY()
     bool i_warn  = false ;
     int id1, id2, id3 ;
     int o=0;		            // pour compter le nombre d'objets
-//    struct point3d np ;
+
     int o_dim=51, o_inc=10 ;
     int *o_nfac, *o_npoint ;
     int code_facette=0;     //flag pour tester s'il y a des facettes dégénérées (< 3 points)
@@ -3288,8 +3291,8 @@ void BddInter::LoadOFF()
  *  Lecture d'un Fichier de polygones au format OFF
  *  Un seul objet, crée les normales aux barycentres.
  */
-    FILE* f;
-    char s1[666] ;			//chaine de caractères pour la lecture des 2 1ères lignes du fichier (et éventuellement des fins de lignes dans la partie lecture des facettes !)
+//    FILE* f;              // Déjà déclaré au niveau général, donc autant l'utiliser
+//    char s1[666] ;			//chaine de caractères pour la lecture des 2 1ères lignes du fichier (et éventuellement des fins de lignes dans la partie lecture des facettes !)
     char nom_obj[80];
     int n;
     unsigned int i, nfac, npoint, nb_fac, nb_p, nsommets ;
@@ -3405,7 +3408,7 @@ void BddInter::Load3DS()
  *  Lecture d'un Fichier de polygones au format Autodesk 3DS
  *  Identifie éventuellement plusieurs objets, crée des normales.
  *  Une création de groupes faite ?????????????????????????????????
- *  Utilise la librairie libs3d (d'après l'exemple 3ds2m)
+ *  Utilise la librairie lib3ds (d'après l'exemple 3ds2m et 3dsplay)
  */
     int im ;
     Lib3dsNode *p, *node ;
@@ -3537,35 +3540,35 @@ int BddInter::compter_nodes (Lib3dsNode *node)
     return (1);
 }
 
-char * BddInter::Lire_chaine( char s1 [])
+char * BddInter::Lire_chaine( char st [])
 {
 // élimine les blancs de début et de fin de chaîne
 
     char *cptr;          //Pointeur de chaîne de caractères
     char c ;
 
-    cptr = strrchr(s1,'\n') ; // élimination du terminateur de ligne.
+    cptr = strrchr(st,'\n') ; // élimination du terminateur de ligne.
     if (cptr != NULL) {
         *cptr = '\0' ;
     }
-    cptr = strrchr(s1,'\r') ; // élimination d'un éventuel cr.
+    cptr = strrchr(st,'\r') ; // élimination d'un éventuel cr.
     if (cptr != NULL) {
         *cptr = '\0' ;
     }
-    c     = s1[0] ;
-    s1[0] = 'x'   ;                         // Pour limiter le -- dans le while suivant
-    cptr = strchr(s1,'\0') ;                // Pointe la fin de chaîne
+    c     = st[0] ;
+    st[0] = 'x'   ;                         // Pour limiter le -- dans le while suivant
+    cptr = strchr(st,'\0') ;                // Pointe la fin de chaîne
 	while(*--cptr == ' ') {*cptr = '\0' ;}  // élimine les blancs de fin de chaîne.
-    cptr = s1 ;                             // Pointe le début de chaîne
-    s1[0] = c ;                             // Restituer le caractère
+    cptr = st ;                             // Pointe le début de chaîne
+    st[0] = c ;                             // Restituer le caractère
     while(*cptr != '\0') {
         if (*cptr == '\t') *cptr = ' ' ;    // Remplace les tab par des espaces dans la chaîne
         cptr++ ;
     }
-    cptr = s1 ;
+    cptr = st ;
 	while(*cptr == ' ')  {cptr++ ;}         // élimine les blancs de début de chaîne.
     if (*cptr == '\0')
-        cptr = strcpy(s1, " ") ;              // Laisser au moins un blanc
+        cptr = strcpy(st, " ") ;            // Laisser au moins un blanc
     return (cptr) ;
 }
 
@@ -6532,7 +6535,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
                             if (ToSelect.ListeSelect.size() != 0) { // Sinon en mode Release (mais pas en Debug !), s'affiche 2 fois !!!
 
-                                wxMessageDialog *query = new wxMessageDialog(NULL, _T("Tous les points ne sont pas dans le même objet.\nPas encore opérationnel !"), _T("Avertissement"),
+                                wxMessageDialog *query = new wxMessageDialog(NULL, _T("Tous les points ne sont pas dans le même objet.\nPas encore opérationnel !"),
+                                                             _T("Avertissement"),
                                                              wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
                                 query->ShowModal();
                                 query->Destroy();

@@ -758,12 +758,12 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
     if (wxFileExists(Fichier_svg)) {
         // Un fichier Autosave.bdd existe
-        wxString Message = _T("Un fichier de sauvegarde automatique ") + Element->Fichier_Autosvg + _T(" existe dans le répertoire de travail.\n\n");
-        Message += _T("Voulez-vous l'utiliser ?\n\n");
-        Message += _T("  *  Si Oui, il vaut mieux l'\"Enregistrer sous ...\" un autre nom dès que possible car elle\n");
-        Message += _T("  *  sera écrasée à la prochaine sauvegarde automatique ou supprimée en sortie !");
+        wxString wxMessage = _T("Un fichier de sauvegarde automatique ") + Element->Fichier_Autosvg + _T(" existe dans le répertoire de travail.\n\n");
+        wxMessage         += _T("Voulez-vous l'utiliser ?\n\n");
+        wxMessage         += _T("  *  Si Oui, il vaut mieux l'\"Enregistrer sous ...\" un autre nom dès que possible car elle\n");
+        wxMessage         += _T("  *  sera écrasée à la prochaine sauvegarde automatique ou supprimée en sortie !");
 
-        wxMessageDialog *query = new wxMessageDialog(NULL,Message, _T("Sauvegarde automatique existante..."),
+        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Sauvegarde automatique existante..."),
                                         wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
 
         int retour_Show = query->ShowModal();
@@ -876,16 +876,16 @@ bool OvniFrame::OnBdd_modifiee() {
         if (ok <= 0) return(true);                      // Idem car là aussi, il ne reste rien !
     }
     if (Element->bdd_modifiee) {
-        wxString Message =  _T("La Base de Données 3D a été modifiée.\nVoulez-vous :\n");
-        Message += _T("    1 : l'enregistrer puis Quitter . . . . . . . . . (Oui)\n");
+        wxString wxMessage = _T("La Base de Données 3D a été modifiée.\nVoulez-vous :\n");
+        wxMessage         += _T("    1 : l'enregistrer puis Quitter . . . . . . . . . (Oui)\n");
 #if wxCHECK_VERSION(3,0,0)
-        Message += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Quitter)\n");
+        wxMessage         += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Quitter)\n");
 #else
-        Message += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Non)\n");
+        wxMessage         += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Non)\n");
 #endif // wxCHECK_VERSION
-        Message += _T("    3 : ne pas l'enregistrer ni Quitter Ovni (Annuler) ?");
+        wxMessage         += _T("    3 : ne pas l'enregistrer ni Quitter Ovni (Annuler) ?");
 
-        wxMessageDialog *query = new wxMessageDialog(NULL,Message, _T("Question..."),
+        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question..."),
                                         wxYES_NO | wxYES_DEFAULT | wxCANCEL | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
 #if wxCHECK_VERSION(3,0,0)
         query->SetYesNoCancelLabels(_T("Oui"),_T("Quitter"),_T("Annuler"));
@@ -902,8 +902,9 @@ bool OvniFrame::OnBdd_modifiee() {
 
 void OvniFrame::OnPal_modifiee() {
     if (Element->pal_file_modified) {
-        wxString Message = _T("Le fichier de palette des couleurs a été modifié.\nVoulez-vous l'enregistrer avant de Quitter ?");
-        wxMessageDialog *query = new wxMessageDialog(NULL,Message, _T("Question..."),
+        wxString wxMessage = _T("Le fichier de palette des couleurs a été modifié.\n");
+        wxMessage         += _T("Voulez-vous l'enregistrer avant de Quitter ?");
+        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question..."),
                                         wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
 
         wxCommandEvent event_cmd;
