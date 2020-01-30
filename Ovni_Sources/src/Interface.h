@@ -1199,6 +1199,7 @@ private :
     void Load3DS();
     int  compter_nodes (Lib3dsNode *);//, Lib3dsFile *);
     int  decoder_node  (Lib3dsNode *);//, Lib3dsFile *);
+    int  mesh_count_smoothing(Lib3dsMesh *);
     void Affiche_Matrice(float Mat4x4[4][4]);
     void LoadG3D();
     void LectureXML_G3d (FILE *);

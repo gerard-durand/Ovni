@@ -3523,6 +3523,22 @@ void BddInter::Load3DS()
 
 }
 
+int BddInter::mesh_count_smoothing(Lib3dsMesh *mesh)
+{
+    int i;
+    int compteur_smoothing = 0;
+
+    if (!mesh->nfaces) {
+        return (0);
+    }
+
+    for (i = 0; i < mesh->nfaces; ++i) {
+        Lib3dsFace *f = &mesh->faces[i];
+        if (f->smoothing_group) compteur_smoothing++;
+    }
+    return (compteur_smoothing);
+}
+
 int BddInter::compter_nodes (Lib3dsNode *node)
 {
     Lib3dsNode *p ;
@@ -3672,9 +3688,25 @@ int BddInter::decoder_node (Lib3dsNode *node)
 
         str.clear();
         N_elements = nb_p;
-        makesommet();
+        makesommet();       // Construire les sommets
         objet_courant = &(this->Objetlist[o]) ;
         objet_courant->Nb_sommets = nb_p ;
+
+        N_elements = 3*mesh->nfaces;
+        makevecteur();  // Ici 3 vecteurs par facette. On ne tient pas compte des vecteurs communs à plusieurs facettes
+        objet_courant->Nb_vecteurs = N_elements;
+
+// Allocation de mémoire pour le calcul des normales aux sommets
+        float (*normal_S)[3] = (float(*)[3])malloc(3 * 3 * sizeof(float) * mesh->nfaces);
+// Calcul des normales aux sommets par la fonction de la lib3ds
+        lib3ds_mesh_calculate_vertex_normals(mesh, normal_S);
+        int compteur_smoothing = mesh_count_smoothing(mesh);
+// Allocation de mémoire pour le calcul des normales au barycentre des facettes
+        float (*normal_B)[3] = (float(*)[3])malloc(3 * sizeof(float) * mesh->nfaces);
+// Calcul des normales aux barycentres par la fonction de la lib3ds
+        lib3ds_mesh_calculate_face_normals(mesh, normal_B);
+
+// Dans lib3ds, il y a aussi lib3ds_mesh_calculate_face_normals (à voir ...)
 
         if (test_decalage3ds) {
             printf("\nObjet : Nom : %s\n",nom_obj);
@@ -3695,9 +3727,6 @@ int BddInter::decoder_node (Lib3dsNode *node)
 //            lib3ds_matrix_mult(matrice,inv_matrice,matrice_w);
 //            Affiche_Matrice(matrice);
 //            lib3ds_matrix_translate(matrice, -n->pivot[0], -n->pivot[1], -n->pivot[2]);
-/*             matrice[3][0] -= n->pivot[0];    // lib3ds_matrix_translate ne fait pas comme ça
-             matrice[3][1] -= n->pivot[1];
-             matrice[3][2] -= n->pivot[2];*/
         }
 
         // Lecture et transformation des points
@@ -3715,8 +3744,11 @@ int BddInter::decoder_node (Lib3dsNode *node)
             make1sommet();
         }
 
-// Pour la récupération des normales aux sommets plus tard ....
-//        cel->tab_objet[o].nb_norml = 0 ;         // Nombre de normales aux sommets de l'objet
+// Modification éventuelle de matrice de transformation
+        if (test_decalage3ds) { // Pour la rotation des normales : matrice de rotation pure ! => ne garder que [0], [1] et [2] dans les 2 dimensions
+            matrice[0][3] = matrice[3][0] =  matrice[1][3] = matrice[3][1] =  matrice[2][3] = matrice[3][2] = 0.;
+            matrice[3][3] = 1;
+        }
 
         // Récupération du nombre de facettes
         nb_fac = mesh->nfaces ;
@@ -3726,10 +3758,12 @@ int BddInter::decoder_node (Lib3dsNode *node)
         str.clear();
         N_elements = nb_fac;
         makeface();
+        makeluminance();
         makenormale();
         makeaspect_face();
 
         // Lecture des facettes
+        int n_vect=1;   // Numéro du 1er vecteur calculé
         for (i=0; i < nb_fac; ++i) {
             nfac = i+1 ;
 
@@ -3743,18 +3777,29 @@ int BddInter::decoder_node (Lib3dsNode *node)
             str.clear();
             make1face();
 
-        // Calcul de la normale au barycentre de la facette
-            xyz_point = objet_courant->Sommetlist[N0].getPoint();
-            Vector3D P1(xyz_point[0],xyz_point[1],xyz_point[2]);
-            xyz_point = objet_courant->Sommetlist[N1].getPoint();
-            Vector3D P2(xyz_point[0],xyz_point[1],xyz_point[2]);
-            xyz_point = objet_courant->Sommetlist[N2].getPoint();
-            Vector3D P3(xyz_point[0],xyz_point[1],xyz_point[2]);
-            P1 -= P3;
-            P2 -= P3;
-            Vector3D Vn = P1.crossProduct(P2);
-            Vn.normalize();
-            this->N_elements=nfac; this->Setxyz(Vn.X,Vn.Y,Vn.Z); this->make1normale();
+// Calcul de la normale au barycentre de la facette via lib3ds_mesh_calculate_face_normals
+            lib3ds_vector_copy(this->xyz, normal_B[i]);
+            if (test_decalage3ds) {
+                lib3ds_vector_transform(this->xyz, matrice, normal_B[i]);
+            }
+            this->N_elements=nfac; this->make1normale();
+
+// Normales aux sommets
+            for (int nn = 0; nn<3 ; nn++) {
+                int nnp = 3*i + nn;
+                lib3ds_vector_copy(this->xyz, normal_S[nnp]);
+                if (test_decalage3ds) {
+                    lib3ds_vector_transform(this->xyz, matrice, normal_S[nnp]); // On prend les normales qui ont été calculées, même si = normal_B correspondante
+                }
+                this->N_elements = n_vect++;
+                str.clear();
+                this->make1vecteur();
+            }
+            this->N_elements = nfac;
+            Numeros[0]=Numeros[1]=Numeros[2] = 3*i+1;  Numeros[1] += 1 ; Numeros[2] += 2;
+            Set_numeros(Numeros);
+            str.clear();
+            make1luminance();
 
 // Identification des matériaux (s'il y en a)
             num_mat = -123 ;
@@ -3797,12 +3842,20 @@ int BddInter::decoder_node (Lib3dsNode *node)
             facette_courante = &(objet_courant->Facelist[i]);
             facette_courante->groupe     = num_mat;
             facette_courante->codmatface = num_mat;
-            facette_courante->afficher   = true;                    // Pour afficher la facette
+            facette_courante->afficher   = true;       // Pour afficher la facette
             facette_courante->deleted    = false;
-            facette_courante->flat       = true ;    // PROVISOIRE
+            facette_courante->flat       = false;      // En réalité, la facette peut être plane : les 3 normales calculées aux sommets = normale au barycentre/
         }
 
-        objet_courant->flat     = true;
+// Désallocation de la mémoire de calcul des normales
+        free(normal_S);
+        free(normal_B);
+
+        if (compteur_smoothing)
+            objet_courant->flat = false;    // Si compteur_smoothing != 0, les normales aux sommets sont utilisables car != normales aux barycentres
+        else
+            objet_courant->flat = true;     // Objet sans normales aux sommets => forcer les facettes planes de cet objet
+
         objet_courant->afficher = true;
         objet_courant->deleted  = false;
     }
