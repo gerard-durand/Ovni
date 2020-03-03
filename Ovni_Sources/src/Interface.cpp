@@ -44,6 +44,7 @@ const char *initG="View_OpenGL_FPS=";
 const char *initH="Rep_travail=";       // Répertoire où est le fichier Bdd (pas Ovni.exe !)
 const char *initI="Creer_Backup=";
 const char *initJ="Suppr_Backup=";
+const char *initK="Msg_Warning=";
 
 FILE* f;                                // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -57,6 +58,8 @@ int  i_objetXML_courant=0;              // Utilisé seulement en lecture de fich
 char s1[666]; //,buffer[1000] ;			// chaines de caractères. Déclarée ici car utilisée aussi dans la lecture des fichiers G3D (hors BddInter)
 
 unsigned int codegroupe,codemateriau;
+int message_multi_sample_actif = 0;
+bool msg_warning = true ;               // Si false, certains messages de Warning ne seront pas affichés
 
 BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_SIZE(BddInter::OnSize)
@@ -516,6 +519,16 @@ void BddInter::Ouvrir_ini_file()
                 else SupprBackup = true ;
                 continue;   // Passer au while suivant
             }
+            len = strlen(initK);
+            icmp=strncmp(initK,Message,len) ;                   // Test sur 17ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de msg_warning
+                if (ibool == 0)
+                     msg_warning = false;
+                else msg_warning = true ;
+                continue;   // Passer au while suivant
+            }
         }
     }
     ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
@@ -546,10 +559,11 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initF,m_gldata.mode_Trackball);
         fprintf(f_init,"%s%d\n",initG,viewFps);
         fprintf(f_init,"%s%s\n",initH,(const char *)wxWorkDir.utf8_str());//mb_str());  // Convertir en utf8 pour enregistrer dans le fichier (accents conservés)
-                // Note : si mb_str() il faut FromAscii() dans Ouvrir_ini_file mais alors pb avec wxWidgets 3.11 alors que c'est OK en 2.8.12 !
+                // Note : si mb_str() il faut FromAscii() dans Ouvrir_ini_file mais alors pb avec wxWidgets 3.11 et + alors que c'est OK en 2.8.12 !
 
         fprintf(f_init,"%s%d\n",initI,CreerBackup);
         fprintf(f_init,"%s%d\n",initJ,SupprBackup);
+        fprintf(f_init,"%s%d\n",initK,msg_warning);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -608,6 +622,7 @@ void BddInter::OnPaint( wxPaintEvent& event ) {
     float quat[4];
 //    float inverse_modelview[16];
     GLfloat m[4][4];
+    int multi_s = 0;
 
     // must always be here
     wxPaintDC dc(this);
@@ -663,6 +678,40 @@ void BddInter::OnPaint( wxPaintEvent& event ) {
 //glGetFloatv(GL_MODELVIEW_MATRIX,inverse_modelview);
 ///    glPopMatrix();
     }
+//glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+    glGetIntegerv(GL_SAMPLE_BUFFERS, &multi_s); // On pourrait aussi tester glGetIntegerv(GL_SAMPLES, &multi_s) en plus, mais ne semble pas nécessaire !
+    if (multi_s != 0) {                         // Ne pas activer/désactiver GL_MULTISAMPLE si ce n'est pas disponible (dans ce cas multi_s est nul !
+        if (antialiasing_soft) {
+            glEnable(GL_MULTISAMPLE);
+//            glEnable(GL_DEPTH);
+            if (verbose) printf("antialiasing On,  ");
+        } else {
+            glDisable(GL_MULTISAMPLE);
+//            glDisable(GL_DEPTH);
+            if (verbose) printf("antialiasing Off, ");
+        }
+    } else {
+        if (antialiasing_soft) {
+            message_multi_sample_actif += 1;
+            if ((message_multi_sample_actif == 2) && msg_warning) {  // à ne faire qu'une seule fois par session, mais pas trop tôt !
+                wxString wxMessage = _T("Le driver de la carte graphique n'active pas l'option GL_MULTISAMPLE.\n");
+                wxMessage         += _T("OpenGL ne peut donc pas traiter l'antialiasing des polygones.\n\n");
+                wxMessage         += _T("Pour ne plus afficher ce message mettre Msg_Warning=0 dans Ovni.ini");
+                wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
+                                                             wxOK | wxICON_QUESTION );
+                query->ShowModal();
+                query->Destroy();
+            }
+        }
+    }
+    if (verbose) printf("glIsEnabled : %d\n", glIsEnabled(GL_MULTISAMPLE));
+    if (verbose) {
+        glGetIntegerv(GL_SAMPLE_BUFFERS,  &multi_s);
+        printf("GL_SAMPLE_BUFFERS = %d\n", multi_s);
+        glGetIntegerv(GL_SAMPLES, &multi_s);
+        printf("GL_SAMPLES        = %d\n", multi_s);
+    }
+
 
     if (type != -1) {
         switch(type_new) {      // A vérifier, mais type_new fait souvent double emploi avec type => en particulier dans les primitives, il faut entrer les mêmes valeurs !
@@ -1541,6 +1590,16 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         wxTheApp->ExitMainLoop();
         break;
 
+    case 'a':               // Bascule du mode Antialiasing OpenGL
+    case 'A':
+        antialiasing_soft = !antialiasing_soft;
+        if (MPrefs->IsShown()) {
+            MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft); // Modifier la case à cocher si le dialogue Préférences est affiché
+        }
+        Refresh();
+        ini_file_modified = true;   // Enregistrer ce changement dans le fichier init
+        break;
+
     case 'J':
         // Touche J pour divers tests provisoires ... A supprimer donc !
 //        if (!ToSelect.check_if_in_ListeSelect(1,85)) {
@@ -1633,7 +1692,7 @@ void BddInter::ResetProjectionMode() {
 
 #if wxCHECK_VERSION(3,0,0)
     {
-        SetCurrent(* m_glRC);
+        SetCurrent(*m_glRC);
 #else
 #ifndef __WXMOTIF__
     if ( GetContext() )
@@ -5080,6 +5139,9 @@ void BddInter::drawOpenGL() {
             glDepthMask(GL_FALSE);
             glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
         }
+//        if (antialiasing_soft) {
+//            glEnable(GL_MULTISAMPLE); // Insuffisant ici !
+//        }
         glInitNames();
 
 // C'est ici qu'on revient pour le second passage en mode de visualisation du "Sens des normales"
@@ -5295,7 +5357,6 @@ Boucle:
 
                             lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
                             // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
-
                             for(k=0; k<NumerosSommets.size(); k++) {
                                 if (lissage_Gouraud) {
                                     // Facette non plane => utiliser le lissage de Gouraud (et donc les normales aux sommets)
@@ -5361,6 +5422,10 @@ Boucle:
             glDepthMask(GL_TRUE);
             glDisable(GL_BLEND);
         }
+//        if (antialiasing_soft) {
+//            glDisable(GL_MULTISAMPLE);  // Ajout 02/2020 mais insuffisant ici !
+//        }
+
         glEndList();
         SetPosObs(reset_zoom);
         ResetProjectionMode();
@@ -5695,7 +5760,7 @@ void BddInter::showAllLines() {
                         glColor3fv(blanc); // cyan +clair
                     }
                     if (antialiasing_soft) {
-                        glLineWidth(1.75); // Augmenter la largeur de ligne
+                        glLineWidth(1.05); // Augmenter un peu la largeur de ligne. Initialement 1.75
                         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
                         glEnable(GL_LINE_SMOOTH);
                         glEnable(GL_BLEND);

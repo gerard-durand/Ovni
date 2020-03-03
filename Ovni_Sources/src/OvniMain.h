@@ -273,7 +273,7 @@ class OvniFrame: public wxFrame
         void ReperagePoint_activer();
         void ReperageFacette_activer();
 
-        wxMenuItem* Menu_ReOpen3ds; // Pour réouvrir spécifiquement un fichier 3ds en changeant le mode de décalage
+        wxMenuItem* Menu_ReOpen3ds=nullptr; // Pour réouvrir spécifiquement un fichier 3ds en changeant le mode de décalage
 
     private:
         //(*Handlers(OvniFrame)

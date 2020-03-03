@@ -14,6 +14,7 @@
 #include "wx/txtstrm.h"
 #include "trackball.h"
 #include <GL/glut.h>
+//#include <GL/glext.h>       // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer
 //#include <GL/gl.h>        // Pas utile car fait dans glut.h
 //#include <GL/glu.h>       // Idem
 #include "GLCanvas.h"
@@ -31,6 +32,17 @@
 #define groupe_def      -123
 #define codmatface_def  -234
 #define maxGroupes 16
+
+#ifndef GL_MULTISAMPLE                  // pour éviter le include de glew.h et GL_MULTISAMPLE_ARB, sinon GL_MULTISAMPLE existe dans gl.h mais n'est pas activé sous Windows !
+    #define GL_MULTISAMPLE      0x809D  // il faudrait glext.h et aussi peut-être glext.dll, mais en 64 bits !
+#endif
+#ifndef GL_SAMPLE_BUFFERS
+    #define GL_SAMPLE_BUFFERS   0x80A8
+#endif // GL_SAMPLE_BUFFERS
+#ifndef GL_SAMPLES
+    #define GL_SAMPLES          0x80A9
+#endif // GL_SAMPLES
+
 
 class BddInter;
 class OvniFrame;

@@ -7,6 +7,8 @@
  * License:
  **************************************************************/
 
+//#include <GL/glew.h>    // Pour test
+
 #include "OvniMain.h"
 #include "OvniApp.h"
 #include <wx/settings.h>
@@ -249,6 +251,10 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     	WX_GL_DOUBLEBUFFER,
     	WX_GL_DEPTH_SIZE,      16,
     	WX_GL_STENCIL_SIZE,    0,
+    #if wxCHECK_VERSION(3,0,0)
+    	WX_GL_SAMPLE_BUFFERS,  1,
+    	WX_GL_SAMPLES,         4,
+    #endif // wxCHECK_VERSION
     	0, 0 };
     #if wxCHECK_VERSION(3,0,0)
     	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
@@ -684,6 +690,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     int argc=1;
     char *argv=(char*)"Ovni";
     glutInit(&argc,&argv);
+//    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);   // Ajout 02/2020 pour test : serait déjà fait dans wxGLCanvas ?
     InitBoutons();
 //    wxPrefs_pos=wxDefaultPosition;
 //    wxModificationPanel_pos= wxDefaultPosition;
@@ -1416,7 +1423,7 @@ void OvniFrame::Ouvrir_Fichier()
         } else { // Si ce n'est pas un fichier 3ds supprimer l'entrée de menu spécifique de réouverture
             if (this->Menu_ReOpen3ds) { // mais seulement si elle existe !
                 this->MenuFile->Delete(this->Menu_ReOpen3ds);   // Suppression du menu (Remove, Destroy ou Delete ? semble donner la même chose)
-                this->Menu_ReOpen3ds = 0;                       // et RAZ du pointeur
+                this->Menu_ReOpen3ds = nullptr;                 // et RAZ du pointeur
             }
         }
 
