@@ -2382,7 +2382,7 @@ void BddInter::LoadOBJ()
  *  Lecture d'un Fichier de polygones au format Wavefront OBJ
  *  Identifie éventuellement plusieurs objets, crée des normales.
  *  NOTE : la lecture se fait en 3 passes car les numéros de sommets peuvent être utilisés dans des objets/facettes avant d'être définis.
- *         Tous les sommets de tous les objets vont être définis dans le premier objet. Le tri et l'optimisation seront fait plus tard.
+ *         Tous les sommets de tous les objets vont être définis dans le premier objet. Le tri et l'optimisation seront faits plus tard.
  */
 //    FILE* f;                                      // Déjà déclaré au niveau général, donc autant l'utiliser
     char sc[100];//,s1[666],buffer[1000] ;			//chaines de caractères
@@ -2405,7 +2405,7 @@ void BddInter::LoadOBJ()
     unsigned int num_min, num_max, num_tot, num_cur ;
     unsigned int *full_ind_sommets=NULL, *new_ind_sommets=NULL, *inv_ind_sommets=NULL, *p_uint ;
     int indice, num_min1, num_min2;
-    int indice_max;
+    int indice_min,indice_max;
     unsigned norm_point_fac_existe, nb_normp_fac;
     int compt=0, speed=200 ;
 
@@ -2812,6 +2812,7 @@ void BddInter::LoadOBJ()
 //! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
 //! ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
 //!             pour éviter de dupliquer ces (gros) tableaux.
+//!             Si lecture optimisée des fichiers .obj, on éliminera ces vecteurs à la fin du traitement.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
             for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) {
@@ -2826,11 +2827,94 @@ void BddInter::LoadOBJ()
                 for (i=0; i<this->Objetlist[o].Nb_facettes; i++) Calcul_Normale_Barycentre(o,i);
             }
 
+            // Optimisation du fichier .obj à la lecture : élimination des sommets et vecteurs non utilisés objet par objet
+
             if (lect_obj_opt && !Forcer_1_Seul_Objet && (Nb_objets > 1)) {
-                printf("Optimisation du fichier .obj : a faire ...\n");
+                printf("Optimisation du fichier .obj : Traitement des sommets de facettes\n");
                 // Le but est d'éliminer dans chaque objet tous les points et vecteurs inutiles et renuméroter en conséquence
                 // les numéros de sommets utilisés dans les facettes et les luminances
-                // En attendant, lancer une simplification de Bdd peut faire le job
+                // Lancer après coup une simplification de Bdd peut aussi faire le job
+                Object * objet_courant;
+                Face1 *  facette_courante;
+                for (o=indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {
+                    objet_courant = &(this->Objetlist[o]);
+                    if (objet_courant->Nb_facettes <= 0) continue;                      // Passer à l'objet suivant, rien à faire sur cet objet (pas de facettes)
+                    indice_max = -1;
+                    indice_min = objet_courant->Nb_sommets;                             // On traite d'abord les sommets de facettes
+                    for (i=0; i<objet_courant->Nb_facettes; i++) {                      // Recherche des numéros de sommets min et max utilisés dans l'objet
+                        facette_courante = &(objet_courant->Facelist[i]);
+                        for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
+                            int numero_sommet = facette_courante->F_sommets[j];
+                            indice_min = std::min(indice_min, numero_sommet);
+                            indice_max = std::max(indice_max, numero_sommet);
+                        }
+                    }
+                    printf("Objet %3d,  indice_min=%5d,  indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
+                    // Diminuer la taille du tableau des sommets en enlevant le début -> indice_min-1 et la fin à partir de indice_max+1
+//                    if (indice_max < (int)objet_courant->Nb_sommets)        // Effacer d'abord la fin
+//                        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+indice_max,objet_courant->Sommetlist.end());
+                    objet_courant->Sommetlist.resize(indice_max);                   // Effacer d'abord la fin : un resize suffit <=> ligne précédente !
+                    if (indice_min > 1)                                             // Puis le début
+                        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin(),objet_courant->Sommetlist.begin()+indice_min-1);
+                    objet_courant->Nb_sommets = indice_max - indice_min +1;         // Mettre à jour Nb_sommets
+                    if (objet_courant->Nb_sommets != objet_courant->Sommetlist.size()) printf("Oups tailles != Nb_sommets\n");  // Au cas où ...
+                    // Changer les numéros de sommets des facettes
+                    indice_min--;
+                    for (i=0; i<objet_courant->Nb_facettes; i++) {
+                        facette_courante = &(objet_courant->Facelist[i]);
+                        for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
+                            facette_courante->F_sommets[j] -= indice_min;           // Renumérotation des sommets utilisés dans chaque facette
+                        }
+                    }
+                }
+
+                bool msg_optim = true;
+
+                for (o=indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {
+                    objet_courant = &(this->Objetlist[o]);
+                    if (objet_courant->Nb_facettes <= 0) continue;                  // Passer à l'objet suivant, rien à faire sur cet objet (pas de facettes)
+                    indice_max = -1;
+                    indice_min = objet_courant->Nb_vecteurs;                        // On traite maintenant les normales aux sommets de facettes
+                    objet_courant->Nb_vecteurs = 0;                                 // Réinitialiser Nb_vecteurs
+                    if (objet_courant->Facelist[0].Nb_Sommets_L == 0) {
+                        objet_courant->Nb_luminances = 0;                           // et Nb_luminances par précaution ici !
+                        continue;                                                   // Passer à l'objet suivant car pas de normales aux sommets des facettes
+                    }
+                    for (i=0; i<objet_courant->Nb_facettes; i++) {
+                        facette_courante = &(objet_courant->Facelist[i]);
+                        for (int j=0; j < facette_courante->Nb_Sommets_L; j++) {
+                            int numero_sommet = facette_courante->L_sommets[j];
+                            indice_min = std::min(indice_min, numero_sommet);
+                            indice_max = std::max(indice_max, numero_sommet);
+                        }
+                    }
+                    if (msg_optim) {    // Ne faire que si besoin et une fois seulement
+                        printf("Optimisation du fichier .obj : Traitement des normales aux sommets de facettes\n");
+                        msg_optim = false;
+                    }
+                    printf("Objet %3d,  indice_min=%5d,  indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
+                    // Diminuer la taille du tableau des vecteurs en enlevant le début et la fin comme pour les sommets
+                    objet_courant->Vecteurlist.resize(indice_max);          // Effacer d'abord la fin : un resize suffit
+                    if (indice_min > 1)                                     // Puis le début
+                        objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin(),objet_courant->Vecteurlist.begin()+indice_min-1);
+                    objet_courant->Nb_vecteurs = indice_max - indice_min +1; // Mettre à jour Nb_vecteurs
+                    if (objet_courant->Nb_vecteurs != objet_courant->Vecteurlist.size()) printf("Oups tailles != Nb_vecteurs\n");
+                    // Changer les numéros de sommets des facettes
+                    indice_min--;
+                    for (i=0; i<objet_courant->Nb_facettes; i++) {
+                        facette_courante = &(objet_courant->Facelist[i]);
+                        for (int j=0; j < facette_courante->Nb_Sommets_L; j++) {
+                            facette_courante->L_sommets[j] -= indice_min;
+                        }
+                    }
+                }
+                if (PremierObjet->Nb_facettes == 0) {   // Cet objet est en fait vide, pas de facettes, seulement des sommets et des vecteurs
+                    // éliminer les sommets et vecteurs du 1er objet (objet 0 si 1 seule Bdd) car ne servira plus.
+                    PremierObjet->Sommetlist.resize(0);
+                    PremierObjet->Vecteurlist.resize(0);
+                    PremierObjet->Nb_sommets = PremierObjet->Nb_vecteurs = 0;
+                    PremierObjet->deleted    = true;    // Ceinture et bretelles !!!! :-)
+                }
 
             } ; // Fin du mode lecture optimisée
 
@@ -5840,6 +5924,7 @@ void BddInter::fghCircleTable_local(double **sint,double **cost,const int n)
 
 /*
  * Draws a solid sphere (Copie locale de glutSolidSphere dans freeglut_geometry.c 2.8.1) : lignes 167 ...
+ * Raison : dans Freeglut 3.x la fonction intégrée correspondante plante dans Ovni. Pourquoi ???
  */
 void BddInter::glutSolidSphere_local(GLdouble radius, GLint slices, GLint stacks)
 {
@@ -8054,6 +8139,7 @@ void BddInter::Simplification_BDD()
 //        printf("Nombre de sommets avant le traitement   : %u\n",nb_points);
         tabPoints.resize(nb_points);                                // Il ne devrait pas y en avoir plus !
         nbface = objet_courant->Nb_facettes;
+        if (nbface <= 0) continue;
 
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
         int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;      // -1 pour passer d'un numéro de sommet à un indice de sommet
@@ -8331,11 +8417,17 @@ void BddInter::Simplification_BDD()
         printf("Aucun changement dans la BDD\n");
     } else {
         if (nbp_changes != 0) {
-            sprintf(Message,"%4d points ont été supprimés dans la BDD\n",  nbp_changes);
+            if (nbp_changes == 1)
+                sprintf(Message,"%4d point a été supprimé dans la BDD\n",      nbp_changes);
+            else
+                sprintf(Message,"%4d points ont été supprimés dans la BDD\n",  nbp_changes);
             printf(utf8_To_ibm(Message));
         }
         if (nbv_changes != 0) {
-            sprintf(Message,"%4d vecteurs ont été supprimés dans la BDD\n",nbv_changes);
+            if (nbv_changes == 1)
+                sprintf(Message,"%4d vecteur a été supprimé dans la BDD\n",    nbv_changes);
+            else
+                sprintf(Message,"%4d vecteurs ont été supprimés dans la BDD\n",nbv_changes);
             printf(utf8_To_ibm(Message));
         }
      }
