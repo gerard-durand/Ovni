@@ -1191,7 +1191,7 @@ public :
 
     void TracerBoite(double, double, double, double, double, double);
 
-    void Forcer_OnPaint(wxPaintEvent& event);
+//    void Forcer_OnPaint(wxPaintEvent& event);
 
 
 protected:
@@ -1216,6 +1216,8 @@ private :
     void LoadG3D();
     void LectureXML_G3d (FILE *);
     void LoadOBJ();
+    void Optimiser_Obj_Sommets (Object *, int, bool &);
+    void Optimiser_Obj_Vecteurs(Object *, int);
     void LoadPLY();
     void LoadOFF();
     void LoadM3D();

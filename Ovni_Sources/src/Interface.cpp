@@ -98,7 +98,7 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wx
     face_under_mouse  = -1;
     point_under_mouse = -1;
     line_under_mouse  = -1;
-    undo_memory       = 0;
+    undo_memory       =  0;
     OK_ToSave         = false;
 
     centreRot.resize(3);    // Init vecteur à 3 composantes : x, y et z
@@ -116,11 +116,11 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wx
     Ouvrir_ini_file();          // Lire dans le fichier .ini les valeurs éventuellement modifiées / défaut
     pal_file_modified = false;  // Fichier palette non lu, donc par défaut, non modifié !
 
-    Smemory=nullptr;
+    Smemory = nullptr;
     selectBuffer = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
-    this->type=-1;
-    this->m_loaded=false;
-    this->MAIN_b=dynamic_cast<OvniFrame*>((this->GetParent())->GetParent());   // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
+    this->type     = -1;
+    this->m_loaded = false;
+    this->MAIN_b   = dynamic_cast<OvniFrame*>((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
 //    wxSize ClientSize = this->GetSize();
 //    printf("BddInter::BddInter ClientSize X/Y %d %d\n",ClientSize.x,ClientSize.y);
     //W=ClientSize.x;
@@ -188,28 +188,28 @@ void BddInter::ResetData() {
     int ival;
 
     if (verbose) printf("Entree de BddInter::ResetData\n");
-    m_gldata.BeginX= 0;
-    m_gldata.BeginY= 0;
-    len_axe        = len_axe_def;
-    len_normales   = len_normales_def;
-    ray_sun        = ray_sun_def;
-    angle_Gouraud  = angle_Gouraud_def;
-    fmult_Gouraud  = fmult_Gouraud_def;
-    seuil_Gouraud  = cos(angle_Gouraud*to_Rad);
+    m_gldata.BeginX = 0;
+    m_gldata.BeginY = 0;
+    len_axe         = len_axe_def;
+    len_normales    = len_normales_def;
+    ray_sun         = ray_sun_def;
+    angle_Gouraud   = angle_Gouraud_def;
+    fmult_Gouraud   = fmult_Gouraud_def;
+    seuil_Gouraud   = cos(angle_Gouraud*to_Rad);
     if (angle_Gouraud >= 179.9) seuil_Gouraud = -1.0f;
-    angle_Gouraud2 = angle_Gouraud*fmult_Gouraud;
-    seuil_Gouraud2 = cos(angle_Gouraud2*to_Rad);
+    angle_Gouraud2  = angle_Gouraud*fmult_Gouraud;
+    seuil_Gouraud2  = cos(angle_Gouraud2*to_Rad);
     if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
-    tolerance      = tolerance_def;
-    svg_time       = svg_time_def;
+    tolerance       = tolerance_def;
+    svg_time        = svg_time_def;
 
-    m_gldata.rotx  = 0.0f;
-    m_gldata.roty  = 0.0f;
-    m_gldata.rotz  = 0.0f;
+    m_gldata.rotx   = 0.0f;
+    m_gldata.roty   = 0.0f;
+    m_gldata.rotz   = 0.0f;
     m_gldata.fmult_diag = fmult_diag_def;
-    reset_zoom     = true;
+    reset_zoom      = true;
     SetPosObs(reset_zoom);
-    mode_selection = selection_facette;
+    mode_selection  = selection_facette;
 
     m_gldata.mode_Trackball = mode_Trackball_def;
     printf("ResetData : Mode Trackball : %d\n",m_gldata.mode_Trackball);
@@ -234,7 +234,7 @@ void BddInter::ResetData() {
         sprintf(Message,"ResetData : Répertoire de travail :\n%s\n",(const char*)wxWorkDir.utf8_str());
         printf(utf8_To_ibm(Message));
     }
-    if (MPrefs  != nullptr) {
+    if (MPrefs != nullptr) {
         MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft);
         MPrefs->CheckBox_TestDecalage3DS->SetValue(test_decalage3ds);
         MPrefs->CheckBox_1SeulObjet3D->SetValue(Forcer_1_Seul_Objet);
@@ -336,29 +336,29 @@ void BddInter::Ouvrir_ini_file()
     f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != NULL) {
         while ((Lu= fgets(Message,300,f_init)) != NULL) {
-            len = strlen(init1);
-            icmp=strncmp(init1,Message,len) ;                   // Test sur 1er mot clé
+            len = strlen( init1);
+            icmp= strncmp(init1,Message,len) ;                  // Test sur 1er mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%f",&len_axe) ;               // Récupère la valeur de len_axe
                 continue;   // Passer au while suivant
             }
-            len = strlen(init2);
-            icmp=strncmp(init2,Message,len) ;                   // Test sur 2ème mot clé
+            len = strlen( init2);
+            icmp= strncmp(init2,Message,len) ;                  // Test sur 2ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%f",&len_normales) ;          // Récupère la valeur des longueurs de normales
                 continue;   // Passer au while suivant
             }
-            len = strlen(init3);
-            icmp=strncmp(init3,Message,len) ;                   // Test sur 3ème mot clé
+            len = strlen( init3);
+            icmp= strncmp(init3,Message,len) ;                  // Test sur 3ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%f",&ray_sun) ;               // Récupère la valeur de dia_sun
                 continue;   // Passer au while suivant
             }
-            len = strlen(init4);
-            icmp=strncmp(init4,Message,len) ;                   // Test sur 4ème mot clé
+            len = strlen( init4);
+            icmp= strncmp(init4,Message,len) ;                  // Test sur 4ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de antialiasing_soft (Gestion par OpenGL ou Hard)
@@ -367,8 +367,8 @@ void BddInter::Ouvrir_ini_file()
                 else antialiasing_soft = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(init5);
-            icmp=strncmp(init5,Message,len) ;                   // Test sur 5ème mot clé
+            len = strlen( init5);
+            icmp= strncmp(init5,Message,len) ;                  // Test sur 5ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de Forcer_1_Seul_Objet
@@ -377,8 +377,8 @@ void BddInter::Ouvrir_ini_file()
                 else Forcer_1_Seul_Objet = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(init6);
-            icmp=strncmp(init6,Message,len) ;                   // Test sur 6ème mot clé
+            len = strlen( init6);
+            icmp= strncmp(init6,Message,len) ;                  // Test sur 6ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de lect_obj_opt
@@ -387,8 +387,8 @@ void BddInter::Ouvrir_ini_file()
                 else lect_obj_opt = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(init7);
-            icmp=strncmp(init7,Message,len) ;                   // Test sur 7ème mot clé
+            len = strlen( init7);
+            icmp= strncmp(init7,Message,len) ;                  // Test sur 7ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de test_decalage3ds
@@ -397,8 +397,8 @@ void BddInter::Ouvrir_ini_file()
                 else test_decalage3ds = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(init8);
-            icmp=strncmp(init8,Message,len) ;                   // Test sur 8ème mot clé
+            len = strlen( init8);
+            icmp= strncmp(init8,Message,len) ;                  // Test sur 8ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de test_seuil_gouraud
@@ -407,8 +407,8 @@ void BddInter::Ouvrir_ini_file()
                 else test_seuil_gouraud = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(init9);
-            icmp=strncmp(init9,Message,len) ;                   // Test sur 9ème mot clé
+            len = strlen( init9);
+            icmp= strncmp(init9,Message,len) ;                  // Test sur 9ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%f",&angle_Gouraud) ;         // Récupère la valeur de angle_Gouraud
@@ -420,8 +420,8 @@ void BddInter::Ouvrir_ini_file()
                 if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initA);
-            icmp=strncmp(initA,Message,len) ;                   // Test sur 10ème mot clé
+            len = strlen( initA);
+            icmp= strncmp(initA,Message,len) ;                  // Test sur 10ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%f",&fmult_Gouraud) ;         // Récupère la valeur de fmult_Gouraud
@@ -430,8 +430,8 @@ void BddInter::Ouvrir_ini_file()
                 if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initB);
-            icmp=strncmp(initB,Message,len) ;                   // Test sur 11ème mot clé
+            len = strlen( initB);
+            icmp= strncmp(initB,Message,len) ;                  // Test sur 11ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de Enr_Normales_Seuillees
@@ -440,8 +440,8 @@ void BddInter::Ouvrir_ini_file()
                 else Enr_Normales_Seuillees = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initC);
-            icmp=strncmp(initC,Message,len) ;                   // Test sur 12ème mot clé
+            len = strlen( initC);
+            icmp= strncmp(initC,Message,len) ;                  // Test sur 12ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de CalculNormalesLectureBdd (forcer le calcul des normales aux sommets dès la lecture)
@@ -450,8 +450,8 @@ void BddInter::Ouvrir_ini_file()
                 else CalculNormalesLectureBdd = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initD);
-            icmp=strncmp(initD,Message,len) ;                   // Test sur 13ème mot clé
+            len = strlen( initD);
+            icmp= strncmp(initD,Message,len) ;                  // Test sur 13ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&svg_time) ;              // Récupère la valeur de svg_time
@@ -463,22 +463,22 @@ void BddInter::Ouvrir_ini_file()
                 }*/
                 continue;   // Passer au while suivant
             }
-            len = strlen(initE);
-            icmp=strncmp(initE,Message,len) ;                   // Test sur 14ème mot clé
+            len = strlen( initE);
+            icmp= strncmp(initE,Message,len) ;                  // Test sur 14ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&methode_Triangulation) ; // Récupère la valeur de mode_Triangulation
                 continue;   // Passer au while suivant
             }
-            len = strlen(initF);
-            icmp=strncmp(initF,Message,len) ;                   // Test sur 15ème mot clé
+            len = strlen( initF);
+            icmp= strncmp(initF,Message,len) ;                  // Test sur 15ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&m_gldata.mode_Trackball) ;// Récupère la valeur de mode_Trackball
                 continue;   // Passer au while suivant
             }
             len = strlen(initG);
-            icmp=strncmp(initG,Message,len) ;                   // Test sur 16ème mot clé
+            icmp= strncmp(initG,Message,len) ;                  // Test sur 16ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de viewFps
@@ -487,8 +487,8 @@ void BddInter::Ouvrir_ini_file()
                 else viewFps = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initH);
-            icmp=strncmp(initH,Message,len) ;                   // Test sur 16ème mot clé
+            len = strlen( initH);
+            icmp= strncmp(initH,Message,len) ;                  // Test sur 16ème mot clé
             if (!icmp) {
                 p_txt_wrk = Lire_chaine(&Message[len]) ;
                 sprintf(Message,"%s",p_txt_wrk) ;               // Récupère le répertoire de travail
@@ -499,8 +499,8 @@ void BddInter::Ouvrir_ini_file()
                 printf(utf8_To_ibm(Message));
                 continue;   // Passer au while suivant
             }
-            len = strlen(initI);
-            icmp=strncmp(initI,Message,len) ;                   // Test sur 16ème mot clé
+            len = strlen( initI);
+            icmp= strncmp(initI,Message,len) ;                  // Test sur 16ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de viewFps
@@ -509,8 +509,8 @@ void BddInter::Ouvrir_ini_file()
                 else CreerBackup = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initJ);
-            icmp=strncmp(initJ,Message,len) ;                   // Test sur 16ème mot clé
+            len = strlen( initJ);
+            icmp= strncmp(initJ,Message,len) ;                  // Test sur 16ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de viewFps
@@ -519,8 +519,8 @@ void BddInter::Ouvrir_ini_file()
                 else SupprBackup = true ;
                 continue;   // Passer au while suivant
             }
-            len = strlen(initK);
-            icmp=strncmp(initK,Message,len) ;                   // Test sur 17ème mot clé
+            len = strlen( initK);
+            icmp= strncmp(initK,Message,len) ;                  // Test sur 17ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de msg_warning
@@ -604,23 +604,14 @@ void BddInter::Resize() {
     if (verbose) printf("Sortie BddInter::Resize\n");
 }
 
-void BddInter::Forcer_OnPaint( wxPaintEvent& event ) {
-    OnPaint(event);
-}
+//void BddInter::Forcer_OnPaint( wxPaintEvent& event ) {    // Ne sert plus : il suffit de faire Update()
+//    OnPaint(event);
+//}
 
 //void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) ) {
-void BddInter::OnPaint( wxPaintEvent& event ) {
-//    float q[4],a[3];
-//    bool slider=false;
-//    float angle;
-//    float q;
-//    float x1,y1,z1;
-//    float cx,cy,cz;
-//    float sx,sy,sz;
-//    int x3,y3,z3;
-//    float axis[3];
+void BddInter::OnPaint( wxPaintEvent& event )
+{
     float quat[4];
-//    float inverse_modelview[16];
     GLfloat m[4][4];
     int multi_s = 0;
 
@@ -675,10 +666,8 @@ void BddInter::OnPaint( wxPaintEvent& event ) {
         glRotatef(m_gldata.rotz,0.,0.,1.) ;
         glTranslatef(-centreRot[0],-centreRot[1],-centreRot[2]);
 
-//glGetFloatv(GL_MODELVIEW_MATRIX,inverse_modelview);
-///    glPopMatrix();
     }
-//glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+
     glGetIntegerv(GL_SAMPLE_BUFFERS, &multi_s); // On pourrait aussi tester glGetIntegerv(GL_SAMPLES, &multi_s) en plus, mais ne semble pas nécessaire !
     if (multi_s != 0) {                         // Ne pas activer/désactiver GL_MULTISAMPLE si ce n'est pas disponible (dans ce cas multi_s est nul !
         if (antialiasing_soft) {
@@ -760,7 +749,7 @@ void BddInter::CalculMatriceRot() {
     vset(a,0.,0.,1.);
     axis_to_quat(a, m_gldata.rotz*to_Rad,q);
     add_quats(q,quat,quat);
-    quat[2] *=-1.;                              // Pourquoi changer de signe seulement cette composante ?
+    quat[2] *=-1.;                                      // Pourquoi changer de signe seulement cette composante ?
 
     for (int i=0;i<4;i++) m_gldata.quat[i]=quat[i];
 
@@ -949,7 +938,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
                 if (MPosObs->IsShown()) {
                 // Même code que dans SetAngles (mais accès + direct)
-//                    // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
+                // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
                     val = convert_rotx_LSI();
                     MPosObs->SpinCtrl_LSI->SetValue(val);
 
@@ -1027,10 +1016,10 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     // Mettre l'attribut selected à false sur les 2 valeurs de points (par précaution)
 //                    if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
 //                    if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
-                    objet_under_mouse_old=objet_under_mouse=-1;
-                    face_under_mouse_old =face_under_mouse =-1;
-                    point_under_mouse_old=point_under_mouse=-1;
-                    line_under_mouse_old =line_under_mouse =-1;
+                    objet_under_mouse_old = objet_under_mouse = -1;
+                    face_under_mouse_old  = face_under_mouse  = -1;
+                    point_under_mouse_old = point_under_mouse = -1;
+                    line_under_mouse_old  = line_under_mouse  = -1;
                     m_gllist = -2;
                     Refresh();
                 }
@@ -1058,7 +1047,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
-                    if (letscheckthemouse(1,hits)) { //,selectBuffer)) {
+                    if (letscheckthemouse(1,hits)) {
                         m_gllist = 0;
                         searchMin_Max();
                         Refresh();
@@ -1204,32 +1193,32 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
 // Déplacement ou Rotation
 // Vers la droite
-    case WXK_RIGHT:         // Flèche droite ou 0x013c (défini dans defs.h, wxKeyCode : non unicode)
-    case WXK_NUMPAD_RIGHT:  // Flèche droite du Numpad (si Num Lock non enfoncé) ou 0x017a
+    case WXK_RIGHT:                 // Flèche droite ou 0x013c (défini dans defs.h, wxKeyCode : non unicode)
+    case WXK_NUMPAD_RIGHT:          // Flèche droite du Numpad (si Num Lock non enfoncé) ou 0x017a
     case 0x014a:
         OnKeyLeftRight(event, +1);
         test=2;
         break;
 
 // Vers la gauche
-    case WXK_LEFT:          // Flèche gauche ou 0x013a
-    case WXK_NUMPAD_LEFT:   // Flèche gauche du Numpad (si Num Lock non enfoncé) ou 0x0178
+    case WXK_LEFT:                  // Flèche gauche ou 0x013a
+    case WXK_NUMPAD_LEFT:           // Flèche gauche du Numpad (si Num Lock non enfoncé) ou 0x0178
     case 0x0148:
         OnKeyLeftRight(event, -1);
         test=2;
         break;
 
 // Vers le haut
-    case WXK_UP:            // Flèche haut ou 0x013b
-    case WXK_NUMPAD_UP:     // Flèche haut du Numpad (si Num Lock non enfoncé) ou 0x0179
+    case WXK_UP:                    // Flèche haut ou 0x013b
+    case WXK_NUMPAD_UP:             // Flèche haut du Numpad (si Num Lock non enfoncé) ou 0x0179
     case 0x014c:
         OnKeyUpDown(event, +1);
         test=2;
         break;
 
 // Vers le bas
-    case WXK_DOWN:          // Flèche bas ou 0x013d
-    case WXK_NUMPAD_DOWN:   // Flèche bas du Numpad (si Num Lock non enfoncé) ou 0x017b
+    case WXK_DOWN:                  // Flèche bas ou 0x013d
+    case WXK_NUMPAD_DOWN:           // Flèche bas du Numpad (si Num Lock non enfoncé) ou 0x017b
     case 0x0146:
         OnKeyUpDown(event, -1);
         test=2;
@@ -1240,7 +1229,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (event.ShiftDown()) {    // C'est un 'C' majuscule
             MAIN_b->Toggle_Sliders(cmd_event);
-            if (MAIN_b->Panel_Sliders->IsShown()) {         // Tester si le Paneau des sliders est visible
+            if (MAIN_b->Panel_Sliders->IsShown()) {         // Tester si le Panneau des sliders est visible
                 MAIN_b->Button_Sliders->SetValue(true) ;    // Oui <=> Bouton enfoncé
             } else {
                 MAIN_b->Button_Sliders->SetValue(false) ;   // Non <=> Bouton relevé
@@ -1430,24 +1419,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
             CalculMatriceRot();
 
-/*            GLfloat m[4][4];
-            build_rotmatrix(m,m_gldata.quat);
-            CalculAngles(*m, m_gldata.rotx, m_gldata.roty, m_gldata.rotz);*/
         } else {
             printf("Mode Rotation directe\n");
             GLfloat m[4][4];
 
             // Calcul des rotations à partir de la matrice MODELVIEW
             glGetFloatv(GL_MODELVIEW_MATRIX, *m);
-/*            for (int i=0;i<4;i++) {
-                for (int j=0;j<4;j++) printf("%f ", m[i][j]); printf("\n");
-            }
-            printf("\n");
-            build_rotmatrix(m, m_gldata.quat);
-            for (int i=0;i<4;i++) {
-                for (int j=0;j<4;j++) printf("%f ", m[i][j]); printf("\n");
-            }
-            printf("\n"); */
             CalculAngles(*m, m_gldata.rotx, m_gldata.roty, m_gldata.rotz);
  //           printf("Angles xyz : %f %f %f\n",m_gldata.rotx, m_gldata.roty, m_gldata.rotz);
         }
@@ -1504,7 +1481,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 }
             }
         }
-//        this->ToSelect.select_to_selected();
         str.Printf(_T("%d"),(int)this->ToSelect.ListeSelect.size());
         MSelect->TextCtrl_Selection->SetValue(str); // Peut se faire dans tous les cas, même si SelectionPanel non affiché (MSelect->IsShown() est false)
 //        m_gllist = 0;
@@ -1590,8 +1566,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         wxTheApp->ExitMainLoop();
         break;
 
-    case 'a':               // Bascule du mode Antialiasing OpenGL
-    case 'A':
+    case 'A':               // Bascule du mode Antialiasing OpenGL
         antialiasing_soft = !antialiasing_soft;
         if (MPrefs->IsShown()) {
             MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft); // Modifier la case à cocher si le dialogue Préférences est affiché
@@ -1602,13 +1577,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
     case 'J':
         // Touche J pour divers tests provisoires ... A supprimer donc !
-//        if (!ToSelect.check_if_in_ListeSelect(1,85)) {
-//                printf("Ajout selection\n");
-//                colorface(1,85);
-//                ToSelect.add_one(1,85);
-//        }
-//        this->ToSelect.select_to_selected();
-////        m_gllist = 0;
         rectangle_selection = !rectangle_selection;
         Refresh();
         break;
@@ -1635,7 +1603,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             if (MPosObs->IsShown()) {
 //                    printf("Pos Obs est affiche\n");
             // Même code que dans SetAngles (mais accès + direct)
-//                // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
+            // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
                 int val = convert_rotx_LSI() ;
                 MPosObs->SpinCtrl_LSI->SetValue(val);
 
@@ -1731,23 +1699,23 @@ void BddInter::CalculAngles(float *m, float &alpha, float &beta, float &gamma) {
 
     sin_beta = m[8];
 ///    sin_beta = -m[2];
-    beta = asin(sin_beta)*to_Deg;                   // suffisant car -90 <= beta <= 90°
-    cos_beta = sqrt(1.0f-sin_beta*sin_beta);        // cos_beta est donc toujours >= 0
+    beta = asin(sin_beta)*to_Deg;                       // suffisant car -90 <= beta <= 90°
+    cos_beta = sqrt(1.0f-sin_beta*sin_beta);            // cos_beta est donc toujours >= 0
 
-    if (fabs(cos_beta) > 0.0005f) {                 // En fait <> 0. mais ici avec une certaine tolérance
+    if (fabs(cos_beta) > 0.0005f) {                     // En fait <> 0. mais ici avec une certaine tolérance
         // Signes changés / article ... + au lieu de -
-        alpha=atan2(-m[9],m[10])*to_Deg;            // en fait -m[9]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
-        gamma=atan2(-m[4],m[0] )*to_Deg;            // Idem
-///        alpha=atan2(+m[6],m[10])*to_Deg;            // en fait -m[6]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
-///        gamma=atan2(+m[1],m[0] )*to_Deg;            // Idem
-    } else {                                       // ici sin(beta) = 1 ou -1 (à epsilon près)
-        beta =( sin_beta < 0.0f ? -90.0f : +90.0f);// Forcer la valeur de beta
-        alpha=0.0f;                                // Cas dégénéré (Gimball lock => alpha et gamma sur le même axe)=> cos(alpha)=1.
-        gamma=atan2( m[1],m[5])*to_Deg;             // Signe changé / article ... - au lieu de +
+        alpha=atan2(-m[9],m[10])*to_Deg;                    // en fait -m[9]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
+        gamma=atan2(-m[4],m[0] )*to_Deg;                    // Idem
+///        alpha=atan2(+m[6],m[10])*to_Deg;                 // en fait -m[6]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
+///        gamma=atan2(+m[1],m[0] )*to_Deg;                 // Idem
+    } else {                                            // ici sin(beta) = 1 ou -1 (à epsilon près)
+        beta =( sin_beta < 0.0f ? -90.0f : +90.0f);         // Forcer la valeur de beta
+        alpha=0.0f;                                         // Cas dégénéré (Gimball lock => alpha et gamma sur le même axe)=> cos(alpha)=1.
+        gamma=atan2( m[1],m[5])*to_Deg;                     // Signe changé / article ... - au lieu de +
 ///        gamma=atan2(-m[4],m[5])*to_Deg;
     }
-    Clamp(alpha,0.0f,360.0f);                       // Recadrer les angles dans l'intervalle [0,360°[
-    Clamp(beta, 0.0f,360.0f);                       // Vu l'usage fait ici, un fmod avec décalage de 360 si valeurs négatives doit être suffisant.
+    Clamp(alpha,0.0f,360.0f);                           // Recadrer les angles dans l'intervalle [0,360°[
+    Clamp(beta, 0.0f,360.0f);                           // Vu l'usage fait ici, un fmod avec décalage de 360 si valeurs négatives doit être suffisant.
     Clamp(gamma,0.0f,360.0f);
 
 }
@@ -1755,12 +1723,12 @@ void BddInter::CalculAngles(float *m, float &alpha, float &beta, float &gamma) {
 void BddInter::Clamp(float &angle, const float vmin, const float vmax) {
 // Recadre les valeurs de angle dans l'intervalle [vmin, vmax[
 // ATTENTION : si vmin vmax mal entré, peut boucler à l'infini....
-    float ampl=vmax-vmin;
+    float ampl = vmax-vmin;
     while(angle <  vmin) {
-        angle+=ampl;
+        angle += ampl;
     }
     while(angle >= vmax) {
-        angle-=ampl;
+        angle -= ampl;
     }
 }
 
@@ -1802,15 +1770,15 @@ void BddInter::create_bdd() {
 
     if(verbose) printf("Entree de BddInter::create_bdd\n");
 
-    if (Numero_base == 0) {                                     // Ouvrir ou réouvrir un fichier
+    if (Numero_base == 0) {                                             // Ouvrir ou réouvrir un fichier
         clearall();                                                         // RAZ global
         wxNomsFichiers = wxFileNameFromPath(get_file());                    // N'extraire que le nom du fichier (pas le path !)
-    } else {                                                    // Fusion avec la bdd déjà en mémoire
+    } else {                                                            // Fusion avec la bdd déjà en mémoire
         Numero_base = this->Objetlist.rbegin()->GetValue();                 // Retourne la "value" du dernier objet de la liste
         Numero_base = ((Numero_base + 10)/10)*10;                           // Pour calculer un offset de numérotation et commencer à la dizaine supérieure
         wxNomsFichiers += _T(" + ") + wxFileNameFromPath(get_file());       // Concaténer avec le nom du/des fichier(s) précédent(s)
     }
-    indice_premierObjet = this->Objetlist.size();   // Utile pour les fusions
+    indice_premierObjet = this->Objetlist.size();                       // Utile pour les fusions
     wxString str_nom = this->file;
     str_nom.MakeLower();    // Force le nom à être en minuscules (simplifie les tests de détection d'extension ci-dessous)
 
@@ -1863,8 +1831,6 @@ void BddInter::create_bdd() {
             break;
         case 1:
             printf("\nChargement d'un fichier .bdd !!!\n");
-//            this->listeGroupes.clear();
-//            this->listeMateriaux.clear();
             this->LoadBDD();
 //            printf("Nb groupes   : %d\n",listeGroupes.size());
 //            for (int n : listeGroupes) std::cout << n << ' '; std::cout << '\n' ;
@@ -2272,7 +2238,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     }
 
     XML_SetElementHandler(p, start_XML_Element, end_XML_Element);
-    XML_SetUserData(p, this);//, cel) ;   // cel à remplacer par ???
+    XML_SetUserData(p, this);
 
     for (;;) {
 
@@ -2376,6 +2342,93 @@ void BddInter::LoadG3D()
     if(verbose) printf("Sortie de BddInter\n");
 }
 
+void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_optim)
+{
+    int i, j;
+    int indice_min, indice_max, numero_sommet;
+    int NbFacettes;
+    Face1 * facette_courante;
+
+    NbFacettes = objet_courant->Nb_facettes;
+
+    if (NbFacettes <= 0) return;    // Pas de facettes, sortir immédiatement car rien à faire sur cet objet
+
+    if (msg_optim) {
+        printf("Optimisation du fichier .obj : Traitement des sommets de facettes et des vecteurs\n");  // à n'écrire que la première fois
+        msg_optim = false;
+    }
+    indice_max = -1;
+    indice_min = objet_courant->Nb_sommets;                             // On traite d'abord les sommets de facettes
+    for (i=0; i<NbFacettes; i++) {                      // Recherche des numéros de sommets min et max utilisés dans l'objet
+        facette_courante = &(objet_courant->Facelist[i]);
+        for (j=0; j < facette_courante->Nb_Sommets_F; j++) {
+            numero_sommet = facette_courante->F_sommets[j];
+            indice_min = std::min(indice_min, numero_sommet);
+            indice_max = std::max(indice_max, numero_sommet);
+        }
+    }
+    printf("Objet %3d, Sommets  : indice_min=%5d, indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
+    // Diminuer la taille du tableau des sommets en enlevant le début -> indice_min-1 et la fin à partir de indice_max+1
+//                    if (indice_max < (int)objet_courant->Nb_sommets)              // Effacer d'abord la fin
+//                        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+indice_max,objet_courant->Sommetlist.end());
+    objet_courant->Sommetlist.resize(indice_max);                   // Effacer d'abord la fin : un resize suffit <=> ligne précédente !
+    if (indice_min > 1)                                             // Puis le début
+        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin(),objet_courant->Sommetlist.begin()+indice_min-1);
+    objet_courant->Nb_sommets = indice_max - indice_min +1;         // Mettre à jour Nb_sommets
+    if (objet_courant->Nb_sommets != objet_courant->Sommetlist.size()) printf("Oups tailles != Nb_sommets\n");  // Au cas où ...
+    // Changer les numéros de sommets des facettes
+    indice_min--;
+    for (i=0; i<NbFacettes; i++) {
+        facette_courante = &(objet_courant->Facelist[i]);
+        for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
+            facette_courante->F_sommets[j] -= indice_min;           // Renumérotation des sommets utilisés dans chaque facette
+        }
+    }
+}
+
+void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
+{
+    int i, j;
+    int indice_min, indice_max, numero_sommet;
+    int NbFacettes;
+    Face1 * facette_courante;
+
+    NbFacettes = objet_courant->Nb_facettes;
+
+    if (NbFacettes <= 0) return;    // Pas de facettes, sortir immédiatement car rien à faire sur cet objet
+
+    indice_max = -1;
+    indice_min = objet_courant->Nb_vecteurs;                        // On traite maintenant les normales aux sommets de facettes
+    objet_courant->Nb_vecteurs = 0;                                 // Réinitialiser Nb_vecteurs
+    if (objet_courant->Facelist[0].Nb_Sommets_L == 0) {
+        objet_courant->Nb_luminances = 0;                           // et Nb_luminances par précaution ici !
+        return;                                                     // Passer à l'objet suivant car pas de normales aux sommets des facettes
+    }
+    for (i=0; i<NbFacettes; i++) {
+        facette_courante = &(objet_courant->Facelist[i]);
+        for (j=0; j < facette_courante->Nb_Sommets_L; j++) {
+            numero_sommet = facette_courante->L_sommets[j];
+            indice_min = std::min(indice_min, numero_sommet);
+            indice_max = std::max(indice_max, numero_sommet);
+        }
+    }
+    printf("Objet %3d, Vecteurs : indice_min=%5d, indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
+
+    objet_courant->Vecteurlist.resize(indice_max);                  // Effacer d'abord la fin : un resize suffit
+    if (indice_min > 1)                                             // Puis le début
+        objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin(),objet_courant->Vecteurlist.begin()+indice_min-1);
+    objet_courant->Nb_vecteurs = indice_max - indice_min +1;        // Mettre à jour Nb_vecteurs
+    if (objet_courant->Nb_vecteurs != objet_courant->Vecteurlist.size()) printf("Oups tailles != Nb_vecteurs\n");
+    // Changer les numéros de sommets des facettes
+    indice_min--;
+    for (i=0; i<NbFacettes; i++) {
+        facette_courante = &(objet_courant->Facelist[i]);
+        for (j=0; j < facette_courante->Nb_Sommets_L; j++) {
+            facette_courante->L_sommets[j] -= indice_min;
+        }
+    }
+}
+
 void BddInter::LoadOBJ()
 {
 /*
@@ -2396,7 +2449,7 @@ void BddInter::LoadOBJ()
     int valp[100],valn[100] ;
 
     #define nb_mat_max 4000
-    char *tab_nom[nb_mat_max]; // Provisoire en attendant de mettre directement dans la stucture d'objet
+    char *tab_nom[nb_mat_max]; // Provisoire en attendant de mettre directement dans la structure d'objet
 
     int num_mat=-123 ;
 //    bool Forcer_1_Seul_Objet=false ; // mis un niveau au dessus ! Si false, on crée le nombre d'objets trouvés dans la bdd, si true, on met tout dans 1 seul objet
@@ -2812,102 +2865,41 @@ void BddInter::LoadOBJ()
 //! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
 //! ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
 //!             pour éviter de dupliquer ces (gros) tableaux.
-//!             Si lecture optimisée des fichiers .obj, on éliminera ces vecteurs à la fin du traitement.
+//!             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
-            for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) {
-//                this->Objetlist[o]->Sommetlist  = &(PremierObjet->Sommetlist);
-//                this->Objetlist[o].Vecteurlist = PremierObjet->Vecteurlist;
+            Face1  * facette_courante;
+            bool msg_optim = true;
+            for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) { // On ne commence que sur le 2ème objet les copies
+
                 objet_courant= &(this->Objetlist[o]);
                 objet_courant->Sommetlist  = PremierObjet->Sommetlist;
                 objet_courant->Vecteurlist = PremierObjet->Vecteurlist;
+
+                if (lect_obj_opt) { // Suite inutile c'est forcément le cas ... && !Forcer_1_Seul_Objet && (Nb_objets > 1)) {
+                    // Le but est d'éliminer dans chaque objet tous les points et vecteurs inutiles et renuméroter en conséquence
+                    // les numéros de sommets utilisés dans les facettes et les luminances
+                    // Lancer après coup une simplification de Bdd peut aussi faire le job
+                    Optimiser_Obj_Sommets (objet_courant, o, msg_optim);
+                    Optimiser_Obj_Vecteurs(objet_courant, o);
+                }
             }
 
             for (o=indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {
                 for (i=0; i<this->Objetlist[o].Nb_facettes; i++) Calcul_Normale_Barycentre(o,i);
             }
 
-            // Optimisation du fichier .obj à la lecture : élimination des sommets et vecteurs non utilisés objet par objet
+            // Optimisation du fichier .obj à la lecture : élimination des sommets et vecteurs non utilisés
+            // Cas particulier du 1er objet, celui contenant la liste des sommets et vecteurs de référence
 
             if (lect_obj_opt && !Forcer_1_Seul_Objet && (Nb_objets > 1)) {
-                printf("Optimisation du fichier .obj : Traitement des sommets de facettes\n");
-                // Le but est d'éliminer dans chaque objet tous les points et vecteurs inutiles et renuméroter en conséquence
-                // les numéros de sommets utilisés dans les facettes et les luminances
-                // Lancer après coup une simplification de Bdd peut aussi faire le job
-                Object * objet_courant;
-                Face1 *  facette_courante;
-                for (o=indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {
+
+                for (o=indice_premierObjet; o<=indice_premierObjet; o++) { // En fait, on ne passe qu'une seule fois dans cette boucle
                     objet_courant = &(this->Objetlist[o]);
-                    if (objet_courant->Nb_facettes <= 0) continue;                      // Passer à l'objet suivant, rien à faire sur cet objet (pas de facettes)
-                    indice_max = -1;
-                    indice_min = objet_courant->Nb_sommets;                             // On traite d'abord les sommets de facettes
-                    for (i=0; i<objet_courant->Nb_facettes; i++) {                      // Recherche des numéros de sommets min et max utilisés dans l'objet
-                        facette_courante = &(objet_courant->Facelist[i]);
-                        for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
-                            int numero_sommet = facette_courante->F_sommets[j];
-                            indice_min = std::min(indice_min, numero_sommet);
-                            indice_max = std::max(indice_max, numero_sommet);
-                        }
-                    }
-                    printf("Objet %3d,  indice_min=%5d,  indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
-                    // Diminuer la taille du tableau des sommets en enlevant le début -> indice_min-1 et la fin à partir de indice_max+1
-//                    if (indice_max < (int)objet_courant->Nb_sommets)        // Effacer d'abord la fin
-//                        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+indice_max,objet_courant->Sommetlist.end());
-                    objet_courant->Sommetlist.resize(indice_max);                   // Effacer d'abord la fin : un resize suffit <=> ligne précédente !
-                    if (indice_min > 1)                                             // Puis le début
-                        objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin(),objet_courant->Sommetlist.begin()+indice_min-1);
-                    objet_courant->Nb_sommets = indice_max - indice_min +1;         // Mettre à jour Nb_sommets
-                    if (objet_courant->Nb_sommets != objet_courant->Sommetlist.size()) printf("Oups tailles != Nb_sommets\n");  // Au cas où ...
-                    // Changer les numéros de sommets des facettes
-                    indice_min--;
-                    for (i=0; i<objet_courant->Nb_facettes; i++) {
-                        facette_courante = &(objet_courant->Facelist[i]);
-                        for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
-                            facette_courante->F_sommets[j] -= indice_min;           // Renumérotation des sommets utilisés dans chaque facette
-                        }
-                    }
+                    Optimiser_Obj_Sommets (objet_courant, o, msg_optim);
+                    Optimiser_Obj_Vecteurs(objet_courant, o);
                 }
 
-                bool msg_optim = true;
-
-                for (o=indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {
-                    objet_courant = &(this->Objetlist[o]);
-                    if (objet_courant->Nb_facettes <= 0) continue;                  // Passer à l'objet suivant, rien à faire sur cet objet (pas de facettes)
-                    indice_max = -1;
-                    indice_min = objet_courant->Nb_vecteurs;                        // On traite maintenant les normales aux sommets de facettes
-                    objet_courant->Nb_vecteurs = 0;                                 // Réinitialiser Nb_vecteurs
-                    if (objet_courant->Facelist[0].Nb_Sommets_L == 0) {
-                        objet_courant->Nb_luminances = 0;                           // et Nb_luminances par précaution ici !
-                        continue;                                                   // Passer à l'objet suivant car pas de normales aux sommets des facettes
-                    }
-                    for (i=0; i<objet_courant->Nb_facettes; i++) {
-                        facette_courante = &(objet_courant->Facelist[i]);
-                        for (int j=0; j < facette_courante->Nb_Sommets_L; j++) {
-                            int numero_sommet = facette_courante->L_sommets[j];
-                            indice_min = std::min(indice_min, numero_sommet);
-                            indice_max = std::max(indice_max, numero_sommet);
-                        }
-                    }
-                    if (msg_optim) {    // Ne faire que si besoin et une fois seulement
-                        printf("Optimisation du fichier .obj : Traitement des normales aux sommets de facettes\n");
-                        msg_optim = false;
-                    }
-                    printf("Objet %3d,  indice_min=%5d,  indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
-                    // Diminuer la taille du tableau des vecteurs en enlevant le début et la fin comme pour les sommets
-                    objet_courant->Vecteurlist.resize(indice_max);          // Effacer d'abord la fin : un resize suffit
-                    if (indice_min > 1)                                     // Puis le début
-                        objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin(),objet_courant->Vecteurlist.begin()+indice_min-1);
-                    objet_courant->Nb_vecteurs = indice_max - indice_min +1; // Mettre à jour Nb_vecteurs
-                    if (objet_courant->Nb_vecteurs != objet_courant->Vecteurlist.size()) printf("Oups tailles != Nb_vecteurs\n");
-                    // Changer les numéros de sommets des facettes
-                    indice_min--;
-                    for (i=0; i<objet_courant->Nb_facettes; i++) {
-                        facette_courante = &(objet_courant->Facelist[i]);
-                        for (int j=0; j < facette_courante->Nb_Sommets_L; j++) {
-                            facette_courante->L_sommets[j] -= indice_min;
-                        }
-                    }
-                }
                 if (PremierObjet->Nb_facettes == 0) {   // Cet objet est en fait vide, pas de facettes, seulement des sommets et des vecteurs
                     // éliminer les sommets et vecteurs du 1er objet (objet 0 si 1 seule Bdd) car ne servira plus.
                     PremierObjet->Sommetlist.resize(0);

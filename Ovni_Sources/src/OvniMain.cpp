@@ -44,9 +44,9 @@
 
 #include "version.h"
 
-//using namespace std;  // N'a pas l'air utile ici vu qu'on utilise explicitement std::
+//using namespace std;  // N'est pas utile ici vu qu'on utilise explicitement std::
 
-//helper functions
+//helper functions : diverses infos affichées dans le menu Aide / A propos ...
 enum wxbuildinfoformat {
     short_f, long_f
 };
@@ -107,6 +107,7 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
     return wxbuild;
 }
 
+// Constantes d'identification pour les menus avec états activé/non activé (non gérés par wxSmith)
 const long OvniFrame::ID_BUTTON7  = wxNewId();
 const long OvniFrame::ID_BUTTON8  = wxNewId();
 const long OvniFrame::ID_BUTTON9  = wxNewId();
@@ -122,6 +123,7 @@ const long OvniFrame::ID_BUTTON18 = wxNewId();
 const long OvniFrame::ID_BUTTON19 = wxNewId();
 const long OvniFrame::ID_BUTTON20 = wxNewId();
 
+// Constantes d'identifications gérées par wxSmith
 //(*IdInit(OvniFrame)
 const long OvniFrame::ID_STATICTEXT1 = wxNewId();
 const long OvniFrame::ID_BUTTON1 = wxNewId();
@@ -210,6 +212,8 @@ const long OvniFrame::idMenuAbout = wxNewId();
 const long OvniFrame::ID_STATUSBAR1 = wxNewId();
 const long OvniFrame::ID_TIMER1 = wxNewId();
 //*)
+
+// Constantes d'identifications pour le menu popup (clic droit à la souris)
 const long OvniFrame::ID_POPUP_RAZ       = wxNewId();
 const long OvniFrame::ID_POPUP_ETENDRE   = wxNewId();
 const long OvniFrame::ID_POPUP_CENTRER   = wxNewId();
@@ -231,6 +235,7 @@ END_EVENT_TABLE()
 
 OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
+    // Menus, boutons et autres contrôles gérés par wxSmith
     //(*Initialize(OvniFrame)
     Create(parent, wxID_ANY, _T("OVNI Version wxWidgets"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxFULL_REPAINT_ON_RESIZE, _T("wxID_ANY"));
     Hide();
@@ -995,7 +1000,7 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
 
     msg << _T("\nOpenGL Vendor:\t\t") ;
     get_glstring = (char *)glGetString(GL_VENDOR);
-    cptr=get_glstring;
+    cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
 
     msg << _T("\nOpenGL Version:\t\t") ;
@@ -1250,7 +1255,7 @@ void OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected(wxCommandEvent& event)
         Menu_Reperage_Couleurs_Groupes  ->Check(false);
         Menu_Reperage_Couleurs_Materiaux->Check(false);
     }
-    // Code de colorisation facette par facette à écrire, mais pas forcément ici !
+    // Code de colorisation facette par facette à écrire, mais pas forcément ici ! A l'usage, ne semble pas beaucoup servir !
     Element->m_gllist=0;
     Element->Refresh();
 }
@@ -1389,26 +1394,26 @@ void OvniFrame::Ouvrir_Fichier()
 
         FullPath = Nom_Fichier.BeforeLast(wxFILE_SEP_PATH) + wxFILE_SEP_PATH; //wxFileName::GetPathSeparator();
 
-        printf("Chargement fichier en cours...\n");
+        printf("Chargement du fichier en cours...\n");
 
         if (New_file) Element->set_file(Nom_Fichier);
         if (Element->Numero_base == 0) Element->set_firstFile(Nom_Fichier); // En cas de fusion, on conserve le nom du 1er fichier choisi
 
         Element->create_bdd();
 
-        Element->OK_ToSave      = true;                 // Le fichier ouvert peut être enregistré (ré-enregistré)
-        Element->OK_FichierCree = false;                // mais ne l'a pas encoré été !
+        Element->OK_ToSave      = true;                         // Le fichier ouvert peut être enregistré (ré-enregistré)
+        Element->OK_FichierCree = false;                        // mais ne l'a pas encoré été !
 //        if (verbose) printf("Ouvrir_fichier : avant Show\n");
 //        Element->Show(true);                                              // Inutile ?
 //        if (verbose) printf("Ouvrir_fichier : avant Refresh\n");
 ///        Element->Refresh();
 
         this->Menu_SensDesNormales->Enable() ;
-        this->Menu_ReOpen->Enable();                // Activer le menu "Réouvrir"
+        this->Menu_ReOpen->Enable();                            // Activer le menu "Réouvrir"
 
 // Si c'est un fichier 3ds, proposer dans le menu de le réouvrir en changeant les test de décalage
 
-        if (s_extdef == _T("3ds")) {                    // Création d'une entrée de menu spécifique de réouverture pour les fichiers 3ds
+        if (s_extdef == _T("3ds")) {                            // Création d'une entrée de menu spécifique de réouverture pour les fichiers 3ds
             if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
                 this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
                                                       _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
@@ -1435,8 +1440,8 @@ void OvniFrame::Ouvrir_Fichier()
             Element->MPrefs->CheckBox_SupprBackup->Enable();// Activer la case à cocher de suppression du fichier .bak
 
         if (Element->Numero_base != 0) {
-            Element->bdd_modifiee = true;       // On a fait une fusion => marquer la bdd comme modifiée
-            Menu_Enregistrer->Enable(false);    // On désactive "Enregistrer". Seul le choix "Enregistrer sous..." restera actif.
+            Element->bdd_modifiee = true;                   // On a fait une fusion => marquer la bdd comme modifiée
+            Menu_Enregistrer->Enable(false);                // On désactive "Enregistrer". Seul le choix "Enregistrer sous..." restera actif.
         }
 
         Element->Refresh(); // Le Refresh n'a de sens que si un fichier a été ouvert
@@ -1444,14 +1449,15 @@ void OvniFrame::Ouvrir_Fichier()
     } else {
 
         //wxMessageBox(_T("Fichier vide !"));
-        if (Element->Objetlist.size() == 0) {   // On a appuyé sur Annuler mais aucun objet n'est déjà présent
+        if (Element->Objetlist.size() == 0) {               // On a appuyé sur Annuler mais aucun objet n'est déjà présent
             Element->m_gllist=0;
-            Element->m_loaded=true;                 // Faire comme si un fichier avait été chargé !
-            wxPaintEvent cmdPaint;                  // Pour déclencher un évênement OnPaint qui affichera alors un fond bleu uniforme, vide d'objet
-            Element->BddInter::Forcer_OnPaint(cmdPaint);    // Note : inutile avec wxWidgets 2.8, mais pas avec 3.1 et +
-            this->Menu_Enregistrer_Sous->Enable();  // Activer tout de même le menu "Enregistrer sous..."
-        } else {                                // Objets(s) déjà affiché(s) => ne rien faire de plus...
-            Element->SetFocus();                    // Donner le focus à la fenètre OpenGL ici car on n'est pas passé dans drawOpenGL
+            Element->m_loaded=true;                             // Faire comme si un fichier avait été chargé !
+            Update();                                           // Avec wxWidgets 3.1.4 remplace les 2 lignes ci-dessous ! Marche aussi avec 3.1.3
+//            wxPaintEvent cmdPaint;                              // Pour déclencher un évênement OnPaint qui affichera alors un fond bleu uniforme, vide d'objet
+//            Element->BddInter::Forcer_OnPaint(cmdPaint);        // Note : inutile avec wxWidgets 2.8, mais pas avec 3.1 et +
+            this->Menu_Enregistrer_Sous->Enable();              // Activer tout de même le menu "Enregistrer sous..."
+        } else {                                            // Objets(s) déjà affiché(s) => ne rien faire de plus...
+            Element->SetFocus();                                // Donner le focus à la fenètre OpenGL ici car on n'est pas passé dans drawOpenGL
         }
     }
 
@@ -1460,8 +1466,8 @@ void OvniFrame::Ouvrir_Fichier()
 ///    this->GLCanvas->Show(true);
     //Element->Show(true);
 
-    this->Menu_Fusionner->Enable();         // Activer le menu "Fusionner"
-///    Element->Refresh();              // Pas utile ici !
+    this->Menu_Fusionner->Enable();                         // Activer le menu "Fusionner"
+///    Element->Refresh();                                  // Pas utile ici !
 
     wxSpinEvent cmd_spin;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);  // Initialiser la valeur du spinbutton
@@ -1483,9 +1489,7 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
     if (Element->verbose) printf("Entree OnMenu_Preferences : m_gllist=%d\n",Element->m_gllist);
 
     Preferences_Panel->SpinCtrlDouble_axes->SetValue(Element->len_axe);
-
     Preferences_Panel->SpinCtrlDouble_norm->SetValue(Element->len_normales);
-
     Preferences_Panel->SpinCtrlDouble_src ->SetValue(Element->ray_sun);
 
     Preferences_Panel->CheckBox_AntialiasingSoft->SetValue(Element->antialiasing_soft);
@@ -1499,7 +1503,7 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 
     Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(Element->test_decalage3ds);
 
-    Preferences_Panel->CheckBox_CalculNormales->SetValue(Element->CalculNormalesLectureBdd);
+    Preferences_Panel->CheckBox_CalculNormales ->SetValue(Element->CalculNormalesLectureBdd);
 
     chkB = Element->test_seuil_gouraud;
     Preferences_Panel->CheckBox_Seuillage->SetValue(chkB);
@@ -1698,6 +1702,8 @@ void OvniFrame::Toggle_Sliders(wxCommandEvent& event)
 
 void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 {
+    // Pour afficher ou masquer l'espace réservé aux Sliders
+
     int New_y_size;
 
     if (verbose) printf("\nEntree OvniFrame::OnButton_SlidersToggle\n");
@@ -1771,12 +1777,12 @@ void OvniFrame::OnButton_ModifsToggle(wxCommandEvent& event)
     if (Element != nullptr) {
         str.Printf(_T("%7.1e"),Element->tolerance);
         Modifications_Panel->TextCtrl_Tolerance->SetValue(str);
-        if (toggle_modif==true) {
-            toggle_modif=false;
+        if (toggle_modif == true) {
+            toggle_modif  = false;
             Modifications_Panel->Hide();
             Modifications_Panel->Refresh();
         } else {
-            toggle_modif=true;
+            toggle_modif  = true;
             Modifications_Panel->Show();
             Modifications_Panel->Refresh();
         }
@@ -1802,6 +1808,7 @@ void OvniFrame::OnMenu_SensDesNormalesSelected(wxCommandEvent& event)
 
 void OvniFrame::OnModifsXYZ()
 {
+    // focntions à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
         Element->m_gllist = 0;
         Element->searchMin_Max();
         Element->Refresh();
@@ -1809,6 +1816,7 @@ void OvniFrame::OnModifsXYZ()
 
 void OvniFrame::OnMenu_XminusX(wxCommandEvent& event)
 {
+    // Changer X en -X
     if (Element != nullptr) {
         Element->InverseX();
         OnModifsXYZ();
@@ -1817,6 +1825,7 @@ void OvniFrame::OnMenu_XminusX(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_YminusY(wxCommandEvent& event)
 {
+    // Changer Y en -Y
     if (Element != nullptr) {
         Element->InverseY();
         OnModifsXYZ();
@@ -1825,6 +1834,7 @@ void OvniFrame::OnMenu_YminusY(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ZminusZ(wxCommandEvent& event)
 {
+    // Changer Z en -Z
     if (Element != nullptr) {
         Element->InverseZ();
         OnModifsXYZ();
@@ -1833,6 +1843,7 @@ void OvniFrame::OnMenu_ZminusZ(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_XtoY(wxCommandEvent& event)
 {
+    // Permuter les X et les Y
     if (Element != nullptr) {
         Element->XtoY();
         OnModifsXYZ();
@@ -1841,6 +1852,7 @@ void OvniFrame::OnMenu_XtoY(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_XtoZ(wxCommandEvent& event)
 {
+    // Permuter les X et les Z
     if (Element != nullptr) {
         Element->XtoZ();
         OnModifsXYZ();
@@ -1849,6 +1861,7 @@ void OvniFrame::OnMenu_XtoZ(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_YtoZ(wxCommandEvent& event)
 {
+    // Permuter les Y et les Z
     if (Element != nullptr) {
         Element->YtoZ();
         OnModifsXYZ();
@@ -1857,6 +1870,7 @@ void OvniFrame::OnMenu_YtoZ(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_XtoYtoZ(wxCommandEvent& event)
 {
+    // Permutation circulaire sur les X, Y et Z
     if (Element != nullptr) {
         Element->XtoYtoZ();
         OnModifsXYZ();
@@ -1865,6 +1879,7 @@ void OvniFrame::OnMenu_XtoYtoZ(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected(wxCommandEvent& event)
 {
+    // Inverser les normales sélectionnées
     if (Element != nullptr) {
         Element->Inverse_Selected_Normales();
         Element->m_gllist = 0;
@@ -1874,6 +1889,7 @@ void OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected(wxCommandEvent& eve
 
 void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
 {
+    // Inverser le sens de parcours des facettes sélectionnées
     if (Element != nullptr) {
         Element->Inverser_Parcours_Selected();
         Element->m_gllist = 0;
@@ -1883,6 +1899,7 @@ void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_Inverser_Toutes_les_NormalesSelected(wxCommandEvent& event)
 {
+    // Inverser toutes les normales
     if (Element != nullptr) {
         Element->Inverser_Toutes_les_Normales();
         Element->m_gllist = 0;
@@ -1965,6 +1982,8 @@ void OvniFrame::Redisplay_Proprietes(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ProprietesSelected(wxCommandEvent& event)
 {
+    // Affichages obtenus via le menu Propriétés de la Bdd
+
     wxString String_local;
     unsigned int taille;
 
@@ -2034,9 +2053,6 @@ void OvniFrame::OnMenu_ProprietesSelected(wxCommandEvent& event)
 
 void OvniFrame::SetAngles()
 {
-//    Element->alpha = Element->m_gldata.rotx;
-//    Element->beta  = Element->m_gldata.roty;
-//    Element->gamma = Element->m_gldata.rotz;
     Slider_x->SetValue(lround(Element->m_gldata.rotx));
     Slider_y->SetValue(lround(Element->m_gldata.roty));
     Slider_z->SetValue(lround(Element->m_gldata.rotz));
@@ -2372,7 +2388,7 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
     bool test_delete = false;   // si false, objet marqué comme deleted, si true, tentative de destruction et de récupération de mémoire
 
     int indiceObjet = Element->Objetlist.size() -1;
-    if (indiceObjet < 0) {  // Il ne reste rien !
+    if (indiceObjet < 0) {      // Il ne reste rien !
         Element->OK_ToSave = false;
         return;
     }
@@ -2444,7 +2460,7 @@ void OvniFrame::OnMenu_RAZ_SelectionFacettesSelected(wxCommandEvent& event)
 // Efface la sélection de facettes effectuée à la souris <=> Touche S au clavier !
     wxKeyEvent key_event;
     key_event.m_keyCode = 'S';
-    Element->OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier
+    Element->OnKeyDown(key_event);              // Simule une pression sur la touche S au clavier
 }
 
 void OvniFrame::OnPopup_Centrer_sur_SelectionSelected(wxCommandEvent& event)
@@ -2452,7 +2468,7 @@ void OvniFrame::OnPopup_Centrer_sur_SelectionSelected(wxCommandEvent& event)
 // Centre la rotation sur la sélection de facettes effectuée à la souris <=> Touche C au clavier !
     wxKeyEvent key_event;
     key_event.m_keyCode = 'C';
-    Element->OnKeyDown(key_event);   // Simule une pression sur la touche C au clavier
+    Element->OnKeyDown(key_event);              // Simule une pression sur la touche C au clavier
 }
 
 void OvniFrame::OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event)
@@ -2460,7 +2476,7 @@ void OvniFrame::OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event)
 // Étendre la sélection de facettes effectuée à la souris <=> Touche X au clavier !
     wxKeyEvent key_event;
     key_event.m_keyCode = 'X';
-    Element->OnKeyDown(key_event);   // Simule une pression sur la touche X au clavier
+    Element->OnKeyDown(key_event);              // Simule une pression sur la touche X au clavier
 }
 
 
@@ -2468,8 +2484,8 @@ void OvniFrame::OnMenu_SupprimerFacettesSelected(wxCommandEvent& event)
 {
 // Efface la sélection de facettes effectuée à la souris <=> Touche S au clavier !
     wxKeyEvent key_event;
-    key_event.m_keyCode = WXK_DELETE;   // Touche Suppr principale
-    Element->OnKeyDown(key_event);      // Simule une pression sur la touche Suppr au clavier
+    key_event.m_keyCode = WXK_DELETE;           // Touche Suppr principale
+    Element->OnKeyDown(key_event);              // Simule une pression sur la touche Suppr au clavier
 }
 
 void OvniFrame::OnMenu_MasquerFacettesSelected(wxCommandEvent& event)
@@ -2485,7 +2501,7 @@ void OvniFrame::OnGLCanvasRightUp(wxMouseEvent& event)
 // Ne sert pas ???
 
 //    printf("This : %d\n",this);
-    printf("Right clic OvniFrame::OnGLCanvasRightUp\n");
+    printf("Right clic OvniFrame::OnGLCanvasRightUp\n");    // print pour voir quand cet évênement se produit
 //    if (this == nullptr)
 //        PopupMenu(&My_popupmenu);
 //    else this->PopupMenu(&My_popupmenu);
@@ -2811,20 +2827,20 @@ void OvniFrame::Lire_Image(int &largeur, int &hauteur)
 void OvniFrame::OnTimer_SaveTrigger(wxTimerEvent& event)
 {
     wxString Fichier_svg;
-    if (Element->bdd_modifiee) {        // Sauvegarde automatique inutile si la bdd n'a pas changé
+    if (Element->bdd_modifiee) {                    // Sauvegarde automatique inutile si la bdd n'a pas changé
         printf("Sauvegarde automatique ...\n");
         Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
 //        printf("Enregistrement dans : %s\n",(const char *)Fichier_svg.mb_str()) ;
         Element->SaveTo(Fichier_svg);
-        Element->bdd_modifiee = true;   // Garder/Forcer la valeur à true car on a enregistré la sauvegarde sous un autre nom (Autosave.bdd)
-                                        // et peut-être ailleurs que dans le répertoire d'origine du fichier bdd initial
-        Element->exists_Autosave = true;// Marquer que le fichier Autosave a été créé ici ! Mais ne détecte pas s'il y a eu une erreur dans SaveTo !
+        Element->bdd_modifiee = true;               // Garder/Forcer la valeur à true car on a enregistré la sauvegarde sous un autre nom (Autosave.bdd)
+                                                    // et peut-être ailleurs que dans le répertoire d'origine du fichier bdd initial
+        Element->exists_Autosave = true;            // Marquer que le fichier Autosave a été créé ici ! Mais ne détecte pas s'il y a eu une erreur dans SaveTo !
     }
 }
 
 void OvniFrame::OnMenu_ZoomSpecifiqueSelected(wxCommandEvent& event)
 {
-    Element->m_gldata.roty = 0 ;            // en toute rigueur, forcer cette valeur à 0
+    Element->m_gldata.roty = 0 ;                    // en toute rigueur, forcer cette valeur à 0
     ZoomSpecifique_Panel->StaticText_Warning->Hide();
     float val = Element->m_gldata.zoom;
     wxString str_loc;
@@ -2833,7 +2849,7 @@ void OvniFrame::OnMenu_ZoomSpecifiqueSelected(wxCommandEvent& event)
     val = -(Element->m_gldata.posz +Element->centreRot[2])/Element->diagonale_save;
     str_loc.Printf(_T("%4.3f"),val);
     ZoomSpecifique_Panel->TextCtrl_Distance->SetLabel(str_loc);
-    ZoomSpecifique_Panel->Show();           // Afficher d'abord, sinon SetAngles ne modifie pas les valeurs Site Azimut !
+    ZoomSpecifique_Panel->Show();                   // Afficher d'abord, sinon SetAngles ne modifie pas les valeurs Site Azimut !
     SetAngles();
 }
 
