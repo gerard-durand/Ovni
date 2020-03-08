@@ -30,8 +30,9 @@
     suivant.<br>
     L'option de gestion d'antialiasing par OpenGL est utile si la carte
     graphique ne gère pas seule par hardware cette fonction, via le driver.
-    Toutefois, ne fonctionne correctement que sur des segments, pas sur les
-    bords de polygones.<br>
+    Fonctionne correctement sur des segments dans tous les cas. Sur les
+    bords de polygones, le fonctionnement n'écessite que le driver de la carte
+    graphique supporte l'option GL_MULTISAMPLE d'OpenGL.<br>
     <b>Hardware 3D</b> : Affiche les caractéristiques du Hardware (carte
     graphique) supportant OpenGL.<br>
     <b>Quitter</b> : Pour sortir d'Ovni.<br>
