@@ -530,8 +530,10 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
         }
+        ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
+    } else {
+        ini_file_modified = true;       // Contenu du fichier ini_file à créer car n'existait pas !
     }
-    ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
 }
 
 void BddInter::Stocker_ini_file()
