@@ -21,10 +21,8 @@
 #include <wx/filename.h>
 #include <wx/filefn.h>
 #include <wx/stdpaths.h>
-//#include <iostream>
 #include <iomanip>
 #include <fstream>
-//#include <sstream>
 
 //(*InternalHeaders(OvniFrame)
 #include <wx/intl.h>
@@ -33,14 +31,6 @@
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/tglbtn.h>
-/*#include <GL/glut.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-
-#include <iostream>
-#include <stdio.h>
-#include <wx/wfstream.h>
-#include "Interface.h"*/
 
 #include "version.h"
 
@@ -695,6 +685,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     int argc=1;
     char *argv=(char*)"Ovni";
     glutInit(&argc,&argv);
+//    glutSetOption(GLUT_MULTISAMPLE,4);    // à faire avant tracé de fenêtre Glut, mais fait aussi dans wxGLCanvas
 //    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);   // Ajout 02/2020 pour test : serait déjà fait dans wxGLCanvas ?
     InitBoutons();
 //    wxPrefs_pos=wxDefaultPosition;
@@ -753,11 +744,11 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 
     if (Element == nullptr) {
         if (verbose) printf("Creation de BddInter Element\n");
-        Element=new BddInter(dynamic_cast<wxWindow*>(this->GLCanvas), wxID_ANY, wxDefaultPosition,
+        Element=new BddInter(dynamic_cast<wxWindow*>(this->GLCanvas), wxID_ANY, GLCanvasAttributes_1, wxDefaultPosition,
             wxSize(1, 1), wxSUNKEN_BORDER, verbose); // Taille minimale (1 pixel) car sera ajusté par la suite (+ évite une zone blanche si pas de fichier sélectionné !)
 //          wxSize(300, 300), wxSUNKEN_BORDER);
 ///        this->GLCanvas = dynamic_cast<wxGLCanvas*>(Element); // Les this->GLCanvas commentés par /// ne semblent pas servir à quelque chose !!!
-//        this->GLCanvas->SetSize(wxSize(860, 600));
+//        this->GLCanvas->SetSize(wxSize(860, 600));    // Sera fait plus tard ...
         Element->Numero_base = 0;
     }
 
@@ -810,24 +801,12 @@ OvniFrame::~OvniFrame() {
 }
 
 void OvniFrame::InitOpenGL(void) {
-    if (verbose) printf("Entree OvniFrame::InitOpenGL\n");
+    if (verbose) printf("Entree OvniFrame::InitOpenGL\n");  // Ne semble plus très utile ... à voir ... et peu-être intégrer ailleurs
     //create opengl context
     m_glcontext = new wxGLContext(GLCanvas);
     //bind the context to the widget
     m_glcontext->SetCurrent(*GLCanvas);
 
-    //misc init
-/*    ResizeOpenGL(1,1);
-    glShadeModel(GL_SMOOTH);						// Enables Smooth Shading
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);					// Black Background
-
-    //depth buffer
-    glClearDepth(1.0f);							// Depth Buffer Setup
-	glEnable(GL_DEPTH_TEST);						// Enables Depth Testing
-	glDepthFunc(GL_LEQUAL);							// The Type Of Depth Test To Do
-
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// Really Nice Perspective Calculations
-*/
     if (verbose) printf("Sortie OvniFrame::InitOpenGL\n");
 }
 
@@ -846,14 +825,7 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
     if (ih <= 0) ih = 1;
 //    printf("test x %d y %d\n",iw,ih);
     glViewport(0, 0, iw, ih);
-    /*glMatrixMode(GL_PROJECTION);				// Select The Projection Matrix
-	glLoadIdentity();							// Reset The Projection Matrix
 
-	// Calculate The Aspect Ratio Of The Window
-	//gluPerspective(45.0f,(GLfloat)iw/(GLfloat)ih,0.1f,100.0f);
-
-	glMatrixMode(GL_MODELVIEW);					// Select The Modelview Matrix
-	glLoadIdentity();							// Reset The Modelview Matrix*/
 	Element->Resize();
     if (verbose) printf("Sortie OvniFrame::ResizeOpenGL\n");
 }
@@ -871,7 +843,7 @@ void OvniFrame::InitBoutons(void)
     Slider_x->Enable();
     Slider_y->Enable();
     Slider_z->Enable();
-//    BoxSizer2->Show(true);
+
     Panel_Sliders->Update();            // à ce niveau, pas encore affichés, donc ne sert à pas grand chose (idem 3 lignes Panel_Sliders)
     Panel_Sliders->Show(true);          // => Sliders affichés
     Panel_Sliders->Refresh(true);
@@ -1473,7 +1445,7 @@ void OvniFrame::Ouvrir_Fichier()
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);  // Initialiser la valeur du spinbutton
     Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);         // Simuler un clic pour déclencher le timer de sauvegardes automatiques
 
-    if (verbose) printf("Sortie BddInter::Ouvrir_Fichier\n");
+    if (verbose) printf("Sortie OvniFrame::Ouvrir_Fichier\n");
 }
 
 void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
@@ -1708,16 +1680,10 @@ void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 
     if (verbose) printf("\nEntree OvniFrame::OnButton_SlidersToggle\n");
     const wxSize ClientSize_Pa = Panel1->GetSize();
-//    printf("Panel1   : xP=%d yP=%d\n",ClientSizeP.x,ClientSizeP.y);
 
     const wxSize ClientSize_Sl = Panel_Sliders->GetSize();
-//    printf("Sliders  : xS=%d yS=%d\n",ClientSizeS.x,ClientSizeS.y);
 
     const wxSize ClientSize_GL = GLCanvas->GetSize();
-//    printf("GLCanvas : xG=%d yG=%d\n",ClientSize.x,ClientSize.y);
-
-//    const wxSize ClientSizeT= BoxSizer1->GetSize();
-//    printf("BoxSizer1: xT=%d yT=%d\n",ClientSizeT.x,ClientSizeT.y);
 
     if (Panel_Sliders->IsShown()) {
         Panel_Sliders->Hide();
@@ -1808,7 +1774,7 @@ void OvniFrame::OnMenu_SensDesNormalesSelected(wxCommandEvent& event)
 
 void OvniFrame::OnModifsXYZ()
 {
-    // focntions à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
+    // fonctions à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
         Element->m_gllist = 0;
         Element->searchMin_Max();
         Element->Refresh();
@@ -2506,12 +2472,6 @@ void OvniFrame::OnGLCanvasRightUp(wxMouseEvent& event)
 //        PopupMenu(&My_popupmenu);
 //    else this->PopupMenu(&My_popupmenu);
 }
-
-//void OvniFrame::OnGLCanvasRightUp_public(wxMouseEvent& event) {
-//    printf("This : %d\n",ptr);
-//    ptr_this = ptr;
-//    OnGLCanvasRightUp(event) ;
-//}
 
 void OvniFrame::OnPopup_Afficher_NormalesSommetsSelected(wxCommandEvent& event)
 {

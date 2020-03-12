@@ -70,19 +70,16 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved)
 END_EVENT_TABLE()
 
+BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
 #if wxCHECK_VERSION(3,0,0)
-
-BddInter::BddInter(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
-    wxGLCanvas(parent, id, NULL, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name) {
-
+    wxGLCanvas(parent, id, AttribList, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
+{
 // Explicitly create a new rendering context instance for this canvas.
     m_glRC = new wxGLContext(this);
 
 #else
-
-BddInter::BddInter(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
-    wxGLCanvas(parent, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name) {
-
+    wxGLCanvas(parent, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name, AttribList)
+{
 #endif // wxCHECK_VERSION
 
     verbose = main_verbose; // On recopie dans verbose la valeur transmise depuis OvniMain (ou on utilise la valeur par défaut soit false !)
@@ -532,7 +529,7 @@ void BddInter::Ouvrir_ini_file()
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
-        ini_file_modified = true;       // Contenu du fichier ini_file à créer car n'existait pas !
+        ini_file_modified = true;       // Contenu du fichier ini_file à créer car n'existait pas (sauf modifs ultérieures, ce sera avec les valeurs par défaut) !
     }
 }
 
@@ -712,7 +709,6 @@ void BddInter::OnPaint( wxPaintEvent& event )
             break;
         case 1:
             this->drawOpenGL();
-            //glTranslatef( m_gldata.posx, m_gldata.posy,m_gldata.posz );
             break;
         default:
             printf("\nType non gere pour l'instant !!!\n");
@@ -3412,7 +3408,6 @@ void BddInter::LoadPLY()
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf(utf8_To_ibm(Message));
-//    sprintf(Message,"\nFin de la lecture des donnees.\n");
 
 //******************************************************************************
 
@@ -4939,7 +4934,12 @@ void BddInter::InitGL() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        glIsEnabled(GL_NORMALIZE);
+        if (antialiasing_soft)
+            glEnable(GL_MULTISAMPLE);
+        else
+            glDisable(GL_MULTISAMPLE);
+
+        glEnable(GL_NORMALIZE);
 
 //Peut être utile, car l'affichage est plus rapide lorsque cette option est activée.
 //Cependant des trous sont visibles, à la place des faces arrières, pour les BDD erronnées.
@@ -5217,9 +5217,6 @@ void BddInter::drawOpenGL() {
             glDepthMask(GL_FALSE);
             glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
         }
-//        if (antialiasing_soft) {
-//            glEnable(GL_MULTISAMPLE); // Insuffisant ici !
-//        }
         glInitNames();
 
 // C'est ici qu'on revient pour le second passage en mode de visualisation du "Sens des normales"
@@ -5500,9 +5497,6 @@ Boucle:
             glDepthMask(GL_TRUE);
             glDisable(GL_BLEND);
         }
-//        if (antialiasing_soft) {
-//            glDisable(GL_MULTISAMPLE);  // Ajout 02/2020 mais insuffisant ici !
-//        }
 
         glEndList();
         SetPosObs(reset_zoom);
@@ -5590,6 +5584,7 @@ void BddInter::Inverse_Selected_Normales() {
     unsigned int i,j,k;
     int m;
     Face1*    Face_ij;
+    bool no_selected = true;
 
     for(i=0; i<this->Objetlist.size(); i++) {
         for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
@@ -5600,6 +5595,7 @@ void BddInter::Inverse_Selected_Normales() {
                     Face_ij->normale_b[1] *= -1;
                     Face_ij->normale_b[2] *= -1;
                     bdd_modifiee = true;
+                    no_selected  = false;
                     int base = Face_ij->F_sommets[0];
                     Face_ij->F_sommets[0] = Face_ij->F_sommets[Face_ij->F_sommets.size()-1];    // Puis le sens de parcours des points
                     for(k=1; k<(Face_ij->F_sommets.size()/2); k++) {
@@ -5612,6 +5608,8 @@ void BddInter::Inverse_Selected_Normales() {
             }
         }
     }
+
+    if (no_selected) Inverser_Toutes_les_Normales(); // Si aucune facette n'est sélectionnée, tout inverser
 
 //    m_gllist=0;   // Fait dans le OnMenu ...
 //    Refresh();

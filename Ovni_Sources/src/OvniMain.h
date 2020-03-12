@@ -265,10 +265,7 @@ class OvniFrame: public wxFrame
         static const long ID_POPUP_PARCOURS_I;
         static const long ID_POPUP_NORM_F;
         static const long ID_POPUP_NORM_S;
-//        void OnGLCanvasRightUp_public(wxMouseEvent& );
 
-//        static int arg_c;
-//        static wxString par_0, par_1;
         void ReperageObjet_activer();
         void ReperagePoint_activer();
         void ReperageFacette_activer();
@@ -506,7 +503,7 @@ class OvniFrame: public wxFrame
         //opengl methods
         wxGLContext* m_glcontext;
         void InitOpenGL(void);
-//        void ResizeOpenGL(int iWidth, int iHeight);
+//        void ResizeOpenGL(int iWidth, int iHeight);   // Déplacé en public pour tests
         void InitBoutons(void);
         unsigned char *pixelsRGB;
 

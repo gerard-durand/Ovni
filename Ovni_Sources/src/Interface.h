@@ -13,8 +13,8 @@
 #include "wx/wfstream.h"
 #include "wx/txtstrm.h"
 #include "trackball.h"
-#include <GL/glut.h>
-//#include <GL/glext.h>       // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer
+#include <GL/freeglut.h>
+//#include <GL/glext.h>       // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
 //#include <GL/gl.h>        // Pas utile car fait dans glut.h
 //#include <GL/glu.h>       // Idem
 #include "GLCanvas.h"
@@ -1082,6 +1082,7 @@ public :
     wxFileInputStream input(wxString file);
 
     BddInter(wxWindow *parent, wxWindowID id = wxID_ANY,
+             const int* attrilist = NULL,
              const wxPoint& pos = wxDefaultPosition,
              const wxSize& size = wxDefaultSize, long style = 0, bool main_verbose = false,
              const wxString& name = wxT("TestGLCanvas"));
