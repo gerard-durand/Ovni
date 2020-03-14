@@ -45,6 +45,7 @@ const char *initH="Rep_travail=";       // Répertoire où est le fichier Bdd (p
 const char *initI="Creer_Backup=";
 const char *initJ="Suppr_Backup=";
 const char *initK="Msg_Warning=";
+const char *initL="Raz_Selection_F=";
 
 FILE* f;                                // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -199,6 +200,7 @@ void BddInter::ResetData() {
     if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
     tolerance       = tolerance_def;
     svg_time        = svg_time_def;
+    Raz_Selection_F = Raz_Selection_F_def;
 
     m_gldata.rotx   = 0.0f;
     m_gldata.roty   = 0.0f;
@@ -526,6 +528,16 @@ void BddInter::Ouvrir_ini_file()
                 else msg_warning = true ;
                 continue;   // Passer au while suivant
             }
+            len = strlen( initL);
+            icmp= strncmp(initL,Message,len) ;                  // Test sur 18ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de Raz_Selection_F
+                if (ibool == 0)
+                     Raz_Selection_F = false;
+                else Raz_Selection_F = true ;
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
@@ -563,6 +575,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initI,CreerBackup);
         fprintf(f_init,"%s%d\n",initJ,SupprBackup);
         fprintf(f_init,"%s%d\n",initK,msg_warning);
+        fprintf(f_init,"%s%d\n",initL,Raz_Selection_F);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -810,6 +823,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             long ID_POPUP_UNDELETE   = MAIN_b->ID_POPUP_UNDELETE;
             long ID_POPUP_INVERSER_N = MAIN_b->ID_POPUP_INVERSER_N;
             long ID_POPUP_PARCOURS_I = MAIN_b->ID_POPUP_PARCOURS_I;
+            long ID_POPUP_RAZ_SELECT = MAIN_b->ID_POPUP_RAZ_SELECT;
             long ID_POPUP_NORM_F     = MAIN_b->ID_POPUP_NORM_F;
             long ID_POPUP_NORM_S     = MAIN_b->ID_POPUP_NORM_S;
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
@@ -822,31 +836,54 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             else
                 Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, _T("RAZ de sélection des facettes\t(s)"), wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_RAZ);
+
             wxMenuItem * Popup_Centrer;
             if (this->ToSelect.ListeSelect.size() > 0)
                 Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, _T("Centrer la rotation sur la sélection\t(c)"), wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, _T("Recentrer sur la rotation par défaut\t(c)"), wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Centrer);
+
             wxMenuItem * Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, _T("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Etendre);
             if (this->ToSelect.ListeSelect.size() == 0) Popup_Etendre->Enable(false);
+
             My_popupmenu.AppendSeparator();
+
             wxMenuItem * Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, _T("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Masquer);
-            wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  _T("Supprimer les facettes sélectionnées\t(Suppr)"), wxEmptyString, wxITEM_NORMAL);
+
+            wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  _T("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Delete);
+
             My_popupmenu.AppendSeparator();
-            wxMenuItem * Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, _T("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
+
+            wxMenuItem * Popup_Inverser ;
+            if (this->ToSelect.ListeSelect.size() > 0)
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, _T("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
+            else
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, _T("Inverser toutes les normales\t(i)"),        wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Inverser);
+
             wxMenuItem * Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, _T("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Reverse);
+
+            wxMenuItem * Popup_Raz_Select;
+            if (this->Raz_Selection_F)
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, _T("Désactiver la désélection automatique\t(z)"), wxEmptyString, wxITEM_NORMAL);
+            else
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, _T("Activer la désélection automatique\t(z)"),    wxEmptyString, wxITEM_NORMAL);
+            My_popupmenu.Append(Popup_Raz_Select);
+
+            My_popupmenu.AppendSeparator();
+
             wxMenuItem * Popup_Afficher_Normales;
             if (AfficherNormaleFacette)
-                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Ne pas afficher les normales aux barycentres"),  wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Ne pas afficher les normales aux barycentres"), wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Afficher les normales aux barycentres"),         wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Afficher les normales aux barycentres"),        wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Afficher_Normales);
+
             wxMenuItem * Popup_Afficher_NormalesSommets;
             if (AfficherNormalesSommets)
                 Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, _T("Ne pas afficher les normales aux sommets"),  wxEmptyString, wxITEM_NORMAL);
@@ -862,7 +899,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 My_popupmenu.Append(Popup_Demasquer);
             }
             if (Elements_Supprimes) {   // S'il y a au moins une facette supprimée, proposer de les restituer
-                wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE, _T("Restituer les facettes supprimées"), wxEmptyString, wxITEM_NORMAL);
+                wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE, _T("Restituer les facettes supprimées"),  wxEmptyString, wxITEM_NORMAL);
                 My_popupmenu.Append(Popup_Undelete);
             }
             PopupMenu(&My_popupmenu, mouse_position.x, mouse_position.y);
@@ -1142,8 +1179,9 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     Sommet1 *Sommet;
     wxString wxMessage;
 
-    wxMouseEvent event_mouse;
+    wxMouseEvent   event_mouse;
     wxCommandEvent cmd_event;
+    wxKeyEvent     key_event;
 
     long evkey = event.GetKeyCode();    // pas de différence entre une minuscule et une majuscule à ce niveau
     if (evkey == 0) {
@@ -1296,7 +1334,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         printf("X   : %f\n",m_gldata.posx) ;
         printf("Y   : %f\n",m_gldata.posy) ;
         printf("Z   : %f\n",m_gldata.posz) ;
-        printf("Centre de rotation :\n") ;
+        printf("Centre de rotation :\n")   ;
         printf("X   : %f\n",centreRot[0])  ;
         printf("Y   : %f\n",centreRot[1])  ;
         printf("Z   : %f\n",centreRot[2])  ;
@@ -1326,6 +1364,11 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     case 'I':
 // ou    case 'i':
         Inverse_Selected_Normales();
+        if (Raz_Selection_F) {
+            key_event.m_keyCode = 'S';
+            OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
+            break;  // m_gllist = 0; et Refresh() déjà fait via 'S'
+        }
         m_gllist = 0;
         Refresh();
         break;
@@ -1359,6 +1402,11 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     case 'P':
 // ou    case 'p':
         Inverser_Parcours_Selected();
+        if (Raz_Selection_F) {
+            key_event.m_keyCode = 'S';
+            OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
+            break;  // m_gllist = 0; et Refresh() déjà fait via 'S'
+        }
         m_gllist = 0;
         Refresh();
         break;
@@ -1564,14 +1612,19 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         wxTheApp->ExitMainLoop();
         break;
 
-    case 'A':               // Bascule du mode Antialiasing OpenGL
+    case 'A':                                   // Bascule du mode Antialiasing OpenGL
         antialiasing_soft = !antialiasing_soft;
         if (MPrefs->IsShown()) {
             MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft); // Modifier la case à cocher si le dialogue Préférences est affiché
         }
         Refresh();
-        ini_file_modified = true;   // Enregistrer ce changement dans le fichier init
+        ini_file_modified = true;               // Enregistrer ce changement dans le fichier init
         break;
+
+    case 'Z':
+        Raz_Selection_F   = !Raz_Selection_F; // Inverse le mode de RAZ de sélection de facettes utilisé après une inversion de normales pour garder ou remettre à 0 la sélection
+        ini_file_modified = true;             // Enregistrer ce changement dans le fichier init
+        break ;
 
     case 'J':
         // Touche J pour divers tests provisoires ... A supprimer donc !

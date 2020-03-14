@@ -263,6 +263,7 @@ class OvniFrame: public wxFrame
         static const long ID_POPUP_UNDELETE;
         static const long ID_POPUP_INVERSER_N;
         static const long ID_POPUP_PARCOURS_I;
+        static const long ID_POPUP_RAZ_SELECT;
         static const long ID_POPUP_NORM_F;
         static const long ID_POPUP_NORM_S;
 
@@ -389,6 +390,7 @@ class OvniFrame: public wxFrame
         void OnPopup_Centrer_sur_SelectionSelected(wxCommandEvent& event);
         void OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event);
         void OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event);
+        void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);
         bool OnBdd_modifiee();
         void OnPal_modifiee();
 

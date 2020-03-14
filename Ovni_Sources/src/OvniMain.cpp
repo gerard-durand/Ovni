@@ -213,6 +213,7 @@ const long OvniFrame::ID_POPUP_DELETE    = wxNewId();
 const long OvniFrame::ID_POPUP_UNDELETE  = wxNewId();
 const long OvniFrame::ID_POPUP_INVERSER_N= wxNewId();
 const long OvniFrame::ID_POPUP_PARCOURS_I= wxNewId();
+const long OvniFrame::ID_POPUP_RAZ_SELECT= wxNewId();
 const long OvniFrame::ID_POPUP_NORM_F    = wxNewId();
 const long OvniFrame::ID_POPUP_NORM_S    = wxNewId();
 
@@ -655,6 +656,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_POPUP_PARCOURS_I,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Reverse_ParcoursSelected);
     Connect(ID_POPUP_NORM_F,    wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Afficher_NormalesSelected);
     Connect(ID_POPUP_NORM_S,    wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Afficher_NormalesSommetsSelected);
+    Connect(ID_POPUP_RAZ_SELECT,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Raz_Select_FSelected);
 
 //    ID_POPUP_NORM_F_bis = ID_POPUP_NORM_F;
 //    ID_POPUP_NORM_S_bis = ID_POPUP_NORM_S;
@@ -1860,6 +1862,14 @@ void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
         Element->Inverser_Parcours_Selected();
         Element->m_gllist = 0;
         Element->Refresh();
+    }
+}
+
+void OvniFrame::OnPopup_Raz_Select_FSelected(wxCommandEvent& event)
+{   // Inverser le flag Raz_Selection_F (<=> Touche clavier 'Z'
+    if (Element != nullptr) {
+        Element->Raz_Selection_F   = !(Element->Raz_Selection_F);
+        Element->ini_file_modified = true;                          // Ovni.ini à modifier
     }
 }
 

@@ -950,24 +950,25 @@ public :
     int     svg_time_def      = 5;                  // en minutes
     bool    test_seuil_gouraud_def  = false;
 
-    bool    antialiasing_soft_def   = false;
-    bool    Forcer_1_Seul_Objet_def = false;        // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
-    bool    lect_obj_opt_def        = false;        // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
-    bool    test_decalage3ds_def    = true;         // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
+    bool    antialiasing_soft_def        = false;
+    bool    Forcer_1_Seul_Objet_def      = false;   // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
+    bool    lect_obj_opt_def             = false;   // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
+    bool    test_decalage3ds_def         = true;    // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
     bool    CalculNormalesLectureBdd_def = false;   // Pour forcer le calcul (recalcul) des normales dès la lecture du fichier
     bool    Enr_Normales_Seuillees_def   = false;
-    bool    reset_zoom              = true;
-    bool    bdd_modifiee            = false;        // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
-    bool    creation_facette        = false;        // Pour traiter différement le sélection de points en mode de création de facettes
-    bool    CreerBackup_def         = false;        // Pour renommer l'original d'un fichier de bdd en .bak
-    bool    SupprBackup_def         = false;        // Pour supprimer le .bak en sortie de programme
+    bool    reset_zoom                   = true;
+    bool    bdd_modifiee                 = false;   // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
+    bool    creation_facette             = false;   // Pour traiter différement le sélection de points en mode de création de facettes
+    bool    CreerBackup_def              = false;   // Pour renommer l'original d'un fichier de bdd en .bak
+    bool    SupprBackup_def              = false;   // Pour supprimer le .bak en sortie de programme
+    bool    Raz_Selection_F_def          = false;   // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
                                                                 // sur M2000 et pour les autres Bdd donnera la même position sur l'écran
-    int     mode_Trackball_def=1;           // mode par défaut : 1 = Trackball, 0 = Rotation directe
-    int     methode_Triangulation_def=1;    // mode par défaut 0, 1 ou 2
-    float   fmult_diag_def = 10.0f;         // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
+    int     mode_Trackball_def=1;                   // mode par défaut : 1 = Trackball, 0 = Rotation directe
+    int     methode_Triangulation_def=1;            // mode par défaut 0, 1 ou 2
+    float   fmult_diag_def = 10.0f;                 // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
 
 // Valeurs de travail
     float   len_axe;
@@ -991,6 +992,8 @@ public :
     bool    CreerBackup              = CreerBackup_def;
     bool    SupprBackup              = SupprBackup_def;
     bool    OK_FichierCree           = false;
+    bool    Raz_Selection_F          = Raz_Selection_F_def;
+
     GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
     unsigned int nb_objets;
@@ -1082,10 +1085,12 @@ public :
     wxFileInputStream input(wxString file);
 
     BddInter(wxWindow *parent, wxWindowID id = wxID_ANY,
-             const int* attrilist = NULL,
-             const wxPoint& pos = wxDefaultPosition,
-             const wxSize& size = wxDefaultSize, long style = 0, bool main_verbose = false,
-             const wxString& name = wxT("TestGLCanvas"));
+             const int* AttribList = NULL,
+             const wxPoint& pos    = wxDefaultPosition,
+             const wxSize& size    = wxDefaultSize,
+             long style            = 0,
+             bool main_verbose     = false,
+             const wxString& name  = wxT("TestGLCanvas"));
     wxString wxWorkDir, wxOvniPath;     // Doit-on garder les 2 ? à l'usage semble être la même chose ! Pas sûr, notamment si OvniPath est protégé en écriture !
                                         // Peut-être créer aussi un wxBddPath pour conserver le dernier path d'accès à une bdd !
     wxString wxNomsFichiers;            // Pour assembler les noms des fichiers (sans Path). Utile en cas de fusion de Bdds.
@@ -1099,8 +1104,8 @@ public :
     char *Lire_chaine(char *);
     #define nb_mat_max 4000
     char *tab_mat[nb_mat_max];
-    bool ini_file_modified=false;
-    bool pal_file_modified=false;
+    bool ini_file_modified = false;     // Indicateur de modification du fichier Ovni.ini
+    bool pal_file_modified = false;     // Indicateur de modification du fichier de palette .pal
 
     wxString get_file();                // Fichier courant (égal à first_file pour le premier fichier ouvert ou si c'est le seul !)
     wxString get_firstFile();           // Premier fichier lu en cas de fusion
