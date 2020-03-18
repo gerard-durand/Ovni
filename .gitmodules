@@ -1,0 +1,3 @@
+[submodule "lib3ds"]
+	path = lib3ds
+	url = https://github.com/hoopoe/lib3ds
