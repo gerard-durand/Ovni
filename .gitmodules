@@ -1,3 +1,6 @@
 [submodule "lib3ds"]
 	path = lib3ds
 	url = https://github.com/hoopoe/lib3ds
+[submodule "freeglut"]
+	path = freeglut
+	url = https://github.com/dcnieho/FreeGLUT
