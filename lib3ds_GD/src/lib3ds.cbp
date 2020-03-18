@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="lib3ds" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="Debug Win32/lib3ds-2_0" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="Debug Win32" />
+				<Option object_output="Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DLIB3DS_EXPORTS" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+				</Compiler>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="Release Win32/lib3ds-2_0" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="Release Win32" />
+				<Option object_output="Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DLIB3DS_EXPORTS" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Debug x64 Statique">
+				<Option output="Debug Win64/3ds-2_0_64" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Debug Win64" />
+				<Option type="2" />
+				<Option compiler="gnu_gcc_compiler_64" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-W" />
+					<Add option="-O0" />
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DLIB3DS_EXPORTS" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+				</Linker>
+			</Target>
+			<Target title="Release x64 Statique">
+				<Option output="Release Win64/3ds-2_0_64" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Release Win64" />
+				<Option type="2" />
+				<Option compiler="gnu_gcc_compiler_64" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-m64" />
+					<Add option="-W" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DLIB3DS_EXPORTS" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m64" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="lib3ds.h" />
+		<Unit filename="lib3ds.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="lib3ds_atmosphere.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_background.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_camera.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_chunk.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_chunktable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_impl.h" />
+		<Unit filename="lib3ds_io.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_light.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_material.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_math.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_mesh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_quat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_shadow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_track.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_vector.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib3ds_viewport.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

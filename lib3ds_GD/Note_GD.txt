@@ -1,0 +1,6 @@
+Ce répertoire ne contient que des fichiers ajoutés ou modifiés par rapport au dépot d'origine lib3ds sur hoopoe.
+Utilisation :
+recopier lib3ds
+puis y ajouter/remplacer pas ce contenu.
+lib3ds.cbp : projet Code::Blocks de génération de la librairie. Chemin et compilateurs à adapter si-besoin.
+Pour Ovni, préférer la version Statique 64 bits.

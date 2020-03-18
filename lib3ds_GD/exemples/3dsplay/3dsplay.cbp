@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="3dsplay" />
+		<Option pch_mode="2" />
+		<Option compiler="gnu_gcc_compiler_64_81" />
+		<Build>
+			<Target title="Release Win64">
+				<Option output="3dsplay_64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release Win64" />
+				<Option type="1" />
+				<Option compiler="gnu_gcc_compiler_64_81" />
+				<Option use_console_runner="0" />
+				<Option parameters='&quot;A340-300 airbus_bmp3.3DS&quot;' />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-m64" />
+					<Add option="-W" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-L./ -lglu32 -lfreeglut -lopengl32" />
+					<Add library="../../src/Release Win64/lib3ds-2_0_64.a" />
+				</Linker>
+			</Target>
+			<Target title="Debug Win64">
+				<Option output="3dsplay_64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug Win64" />
+				<Option type="1" />
+				<Option compiler="gnu_gcc_compiler_64_81" />
+				<Option use_console_runner="0" />
+				<Option parameters='&quot;A340-300 airbus_bmp3.3DS&quot;' />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-W" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-L./ -lglu32 -lfreeglut -lopengl32" />
+					<Add library="../../src/Release Win64/lib3ds-2_0_64.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../../src" />
+			<Add directory="headers_png_jpeg" />
+		</Compiler>
+		<Linker>
+			<Add library="jpeg" />
+			<Add library="png" />
+			<Add library="zlib" />
+			<Add directory="libs_png_jpeg" />
+			<Add directory="C:/MinGW64/bin" />
+		</Linker>
+		<Unit filename="3dsplay.cpp" />
+		<Unit filename="LoadBMP.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LoadBMP.h" />
+		<Unit filename="LoadJPEG.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LoadJPEG.h" />
+		<Unit filename="LoadPNG.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LoadPNG.h" />
+		<Unit filename="tga.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tga.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
