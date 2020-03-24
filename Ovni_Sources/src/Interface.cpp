@@ -653,8 +653,7 @@ void BddInter::OnPaint( wxPaintEvent& event )
         return;
     }
     // Clear
-//    glClearColor( 0.3f, 0.4f, 0.6f, 1.0f );
-    glClearColor( 0.39f, 0.58f, 0.74f, 1.0f );  // Comme dans la version Tcl
+    glClearColor( 0.39f, 0.58f, 0.74f, 1.0f );  // Comme dans la version Tcl, sinon ( 0.3f, 0.4f, 0.6f, 1.0f ) dans la version originale de J.Dias
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     glMatrixMode(GL_MODELVIEW);
@@ -712,7 +711,6 @@ void BddInter::OnPaint( wxPaintEvent& event )
         glGetIntegerv(GL_SAMPLES, &multi_s);
         printf("GL_SAMPLES        = %d\n", multi_s);
     }
-
 
     if (type != -1) {
         switch(type_new) {      // A vérifier, mais type_new fait souvent double emploi avec type => en particulier dans les primitives, il faut entrer les mêmes valeurs !
@@ -1720,15 +1718,10 @@ void BddInter::ResetProjectionMode() {
         SetCurrent();
 #endif // wxCHECK_VERSION
 
-//        glViewport(0, 0, (GLint) w, (GLint) h);
         glMatrixMode(GL_PROJECTION);
-        //glTranslatef((GLdouble)dx,(GLdouble)dy,(GLdouble)dz);
         glLoadIdentity();
         gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
-//        gluPerspective(m_gldata.zoom, (GLfloat)w/h, m_gldata.zNear, m_gldata.zFar);
-        //glTranslatef( -dx, -dy, dz);
         glMatrixMode(GL_MODELVIEW);
-        //glLoadIdentity();
 
    }
     if (verbose) printf("Sortie ResetProjectionMode\n");
@@ -1916,7 +1909,7 @@ void BddInter::create_bdd() {
     }
     if (type > 0) {
         type_new = 1;
-        bdd_modifiee = false;   // Pas sûr que ce soit ici, surtout si on fusionne des bdd !
+        bdd_modifiee = false;   // Pas sûr que ce soit ici le meilleur endroit, surtout si on fusionne des bdd !
 
         bool Normales_sommets_presentes=false;
         unsigned int i;
@@ -2384,7 +2377,6 @@ void BddInter::LoadG3D()
         } else {
             sprintf(Message,"Fichier de type XML mais n'est pas du g3d Version 2\n") ;
             printf(utf8_To_ibm(Message)) ;
-//            printf("Fichier de type XML mais n'est pas du g3d Version 2\n") ;
             type = -1; // Erreur
         }
     }
@@ -2585,7 +2577,6 @@ void BddInter::LoadOBJ()
                     if (o == nb_mat_max) {
                       sprintf(Message,"ATTENTION : Trop d'objets dans ce fichier .obj augmenter nb_mat_max > %u\n",nb_mat_max);
                       printf(utf8_To_ibm(Message));
-//                        printf("ATTENTION : Trop d'objets dans ce fichier .obj augmenter nb_mat_max > %u\n",nb_mat_max);
 //                      --nb_mat ; // On utilisera le dernier indice pour tous les suivants...
 #ifdef WIN32
                         system("pause");
@@ -2959,7 +2950,7 @@ void BddInter::LoadOBJ()
                     PremierObjet->deleted    = true;    // Ceinture et bretelles !!!! :-)
                 }
 
-            } ; // Fin du mode lecture optimisée
+            }
 
 
 //****************************************
@@ -3151,7 +3142,6 @@ void BddInter::LoadM3D()
     fclose(f);
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf(utf8_To_ibm(Message));
-//    printf("\nFin de la lecture des donnees.\n");
     if(verbose) printf("Sortie de BddInter::LoadM3D\n");
 
 }
@@ -3447,7 +3437,7 @@ void BddInter::LoadPLY()
     free(o_nfac)   ; // Libérer la mémoire obtenue par malloc/realloc ...
     sprintf(Message,"Nombre de groupes identifiés : %d\n",nb_grp_ply) ;
     printf(utf8_To_ibm(Message)) ;
-//    printf("Nombre de groupes identifies : %d\n",nb_grp_ply) ;
+
     for (i=1 ; i<=nb_grp_ply ; i++) printf("%2d %8d\n",i,Groupe_ply[i]) ;
     free(o_npoint) ;
 
@@ -8609,8 +8599,8 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
     int m = Nb_Meridiens;
     int p = Nb_Paralleles;
     int Nb_facettes = 2*m*p;
-    int Nmp = m*p
-    ;
+    int Nmp = m*p;
+
     this->str.clear();
     this->N_elements = Nb_facettes;
     this->makeface();
@@ -8626,19 +8616,15 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
         this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
         this->make1face();
 
-        numero++;
-        i1 = 1 + Nmp;
-        i2 = i1 -i;
-        i1 = i1 +1;
-        i3 = i1 -i;
-        this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
-        this->make1face();
-
         // i+(m*j) = 1er de chaque parallele ; i+(m*j)+m = 1er du parallele suivant
         // m+(m*j) = dernier de chaque parallele ; m+(m*j)+m = dernier du parallele suivant
         for (j=0; j<p-1 ; j++) {
             // face haut droit
             numero++;
+/*     2---1
+         \ |
+           3
+*/
             i1 = 1  +i + (m*j);
             i2 = i1 +1;
             i3 = i1 +m;
@@ -8647,13 +8633,33 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
 
 			// face bas gauche
             numero++;
-            i1 = 1+ i + (m*j) +1;
-            i2 = i1 +m ;
-            i3 = i2 -1 ;
+/*     1
+       | \
+       2---3
+*/
+            i1 = i2;
+            i2 = i1 + m ;   // i3 inchangé
             this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
             this->make1face();
+
         }
+
+        // Sud
+        numero++;
+        i1 = Nmp +2;                                            // Pole Sud
+        this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i3,i2);  // récup des 2 derniers i2,i3 mais inverser le sens
+        this->make1face();
     }
+
+// Code spécifique pour la dernière série entre dernier et 1er méridien
+
+    // derniere face pole nord
+    numero++;
+    i1 = 1;
+    i2 = 2 ;
+    i3 = 1 + m ;
+    this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
+    this->make1face();
 
     for (j=0; j<p-1 ; j++) {
         // derniere face haut droit
@@ -8666,20 +8672,12 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
 
         // derniere face bas gauche
         numero++;
-        i1 = 2 + (m*j);
+        i1 = i2; //2 + (m*j);
         i2 = i1+ m ;
         i3 = 1 + m*(j+2);
         this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
         this->make1face();
     }
-
-    // derniere face pole nord
-    numero++;
-    i1 = 1;
-    i2 = 2 ;
-    i3 = 1+ m ;
-    this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
-    this->make1face();
 
     // derniere face pole sud
     numero++;

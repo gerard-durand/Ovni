@@ -65,6 +65,7 @@
 			<pos>40,136</pos>
 			<size>122,21</size>
 			<enabled>0</enabled>
+			<handler function="OnSpinCtrl_IndiceSommetChange" entry="EVT_SPINCTRL" />
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_NumeroSommet" member="yes">
 			<pos>176,136</pos>

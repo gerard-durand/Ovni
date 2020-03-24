@@ -54,8 +54,9 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-m64" />
 					<Add option="-std=gnu++11" />
+					<Add option="-m64" />
+					<Add option="-fpermissive" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DWXUSINGDLL" />
 					<Add directory="$(#wx3)/lib/gcc_dll64_8.1.0/mswu" />
@@ -285,8 +286,8 @@
 		<Unit filename="wxsmith/ZoomSpecifique.wxs" />
 		<Extensions>
 			<AutoVersioning>
-				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="src\version.h" />
+				<Scheme minor_max="20" build_max="20" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="1" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="src\version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>

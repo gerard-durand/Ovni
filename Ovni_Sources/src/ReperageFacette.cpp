@@ -89,6 +89,7 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceFacetteChange);
 	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceObjetChange);
 	Connect(ID_CHECKBOX4,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuSommetsClick);
+	Connect(ID_SPINCTRL3,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceSommetChange);
 	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormaleClick);
 	Connect(ID_CHECKBOX2,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormales_SommetsClick);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_InvNormaleClick);
