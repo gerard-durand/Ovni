@@ -186,29 +186,29 @@ void BddInter::ResetData() {
     int ival;
 
     if (verbose) printf("Entree de BddInter::ResetData\n");
-    m_gldata.BeginX = 0;
-    m_gldata.BeginY = 0;
-    len_axe         = len_axe_def;
-    len_normales    = len_normales_def;
-    ray_sun         = ray_sun_def;
-    angle_Gouraud   = angle_Gouraud_def;
-    fmult_Gouraud   = fmult_Gouraud_def;
-    seuil_Gouraud   = cos(angle_Gouraud*to_Rad);
-    if (angle_Gouraud >= 179.9) seuil_Gouraud = -1.0f;
-    angle_Gouraud2  = angle_Gouraud*fmult_Gouraud;
-    seuil_Gouraud2  = cos(angle_Gouraud2*to_Rad);
+    m_gldata.BeginX     = 0;
+    m_gldata.BeginY     = 0;
+    len_axe             = len_axe_def;
+    len_normales        = len_normales_def;
+    ray_sun             = ray_sun_def;
+    angle_Gouraud       = angle_Gouraud_def;
+    fmult_Gouraud       = fmult_Gouraud_def;
+    seuil_Gouraud       = cos(angle_Gouraud*to_Rad);
+    if (angle_Gouraud  >= 179.9) seuil_Gouraud  = -1.0f;
+    angle_Gouraud2      = angle_Gouraud*fmult_Gouraud;
+    seuil_Gouraud2      = cos(angle_Gouraud2*to_Rad);
     if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
-    tolerance       = tolerance_def;
-    svg_time        = svg_time_def;
-    Raz_Selection_F = Raz_Selection_F_def;
+    tolerance           = tolerance_def;
+    svg_time            = svg_time_def;
+    Raz_Selection_F     = Raz_Selection_F_def;
 
-    m_gldata.rotx   = 0.0f;
-    m_gldata.roty   = 0.0f;
-    m_gldata.rotz   = 0.0f;
+    m_gldata.rotx       = 0.0f;
+    m_gldata.roty       = 0.0f;
+    m_gldata.rotz       = 0.0f;
     m_gldata.fmult_diag = fmult_diag_def;
-    reset_zoom      = true;
+    reset_zoom          = true;
     SetPosObs(reset_zoom);
-    mode_selection  = selection_facette;
+    mode_selection      = selection_facette;
 
     m_gldata.mode_Trackball = mode_Trackball_def;
     printf("ResetData : Mode Trackball : %d\n",m_gldata.mode_Trackball);
@@ -1128,7 +1128,7 @@ void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
             m_gldata.rotz += signe*pas_deg;
             degres = fmod(m_gldata.rotz, 360) ;
             if (degres < 0) degres +=360;
-            m_gldata.rotz = degres; // Utile ou fait dans les sliders ?
+            m_gldata.rotz = degres;             // Utile ou fait dans les sliders ?
             Slider_z->SetValue(lround(degres));
         }
     } else {                                            // Sinon Déplacement
@@ -1153,7 +1153,7 @@ void BddInter::OnKeyUpDown(wxKeyEvent& event, int signe) {
             m_gldata.rotx -= signe*pas_deg;
             degres = fmod(m_gldata.rotx, 360) ;
             if (degres < 0) degres +=360;
-            m_gldata.rotx = degres; // Utile ou fait dans les sliders ?
+            m_gldata.rotx = degres;         // Utile ou fait dans les sliders ?
             Slider_x->SetValue(lround(degres));
         }
     } else {                                            // Sinon Déplacement
@@ -1854,16 +1854,16 @@ void BddInter::create_bdd() {
             printf("\nChargement d'un fichier .dxf !!!\n");
             printf("ATTENTION : pour le moment, le support des fichiers dxf n'est que partiel !\n");
             printf("            Visuel uniquement, notamment, pas de sauvegardes en format SDM .bdd\n");
-            m_renderer.Load(stream);        // lecture incompatible de BddInter !!
+            m_renderer.Load(stream);            // lecture incompatible de BddInter !!
             this->m_loaded = m_renderer.IsOk(); //true; // Récupère le m_loaded interne à m_renderer
-            this->m_gldata.zoom = 4;        // ces valeurs sont compatibles de penguin.dxf ! Pour généraliser, il faut récupérer des valeurs comme min et max en x, y et z
+            this->m_gldata.zoom = 4;            // ces valeurs sont compatibles de penguin.dxf ! Pour généraliser, il faut récupérer des valeurs comme min et max en x, y et z
             this->m_gldata.zoom_step = 0.5;
             this->m_gldata.posz = -150.;
             this->m_gldata.zNear= abs(this->m_gldata.posz) -10.;    // Objet recadré sur -5,+5 dans DXFRenderer::NormalizeEntities
             this->m_gldata.zFar = abs(this->m_gldata.posz) +10.;
             this->m_gldata.posx = 0.;
             this->m_gldata.posy = 0.;
-            centre_auto = {0.0f, 0.0f, 0.0f}; // <=> centre_auto[0] = centre_auto[1] = centre_auto[2] = 0.0;
+            centre_auto = {0.0f, 0.0f, 0.0f};   // <=> centre_auto[0] = centre_auto[1] = centre_auto[2] = 0.0;
             centreRot = centre_auto;
             diagonale_save = 10.*sqrt(3.);
             x_min = y_min = z_min = -5.;
@@ -8588,9 +8588,11 @@ void BddInter::genereNormalesFacettes(int indiceObjet, int Nb_facettes)
     }
 }
 
-void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
+void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles, bool New_typeSphere)
 {
     // D'après Facette_Sphere de sphere.c de la version Tcl
+    // Version modifiée pour générer, en option, un nouveau tracé de facettes plus homogène, sans direction privilégiée.
+    // Ce nouveau tracé fonctionne avec un nombre de // impair. Toutefois, la symétrie ne sera pas respectée si le nombre de méridiens n'est pas pair !
 
     int i, j, numero;
     int i1, i2, i3;
@@ -8599,7 +8601,9 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
     int m = Nb_Meridiens;
     int p = Nb_Paralleles;
     int Nb_facettes = 2*m*p;
-    int Nmp = m*p;
+    int Nmp  = m*p;
+    int sens = 1;
+    int sens1= 1;
 
     this->str.clear();
     this->N_elements = Nb_facettes;
@@ -8611,23 +8615,36 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
         // Nord
         numero++;
         i1 = 1;
-        i3 = 1+i;
-        i2 = i3+1;
+        i3 = 1 + i;
+        i2 = i3+ 1;
         this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
         this->make1face();
+
+        if (New_typeSphere) {
+            sens = sens1;
+            if ((i%2) == 0) sens = -sens1;  // En réinitialisant systématiquement à chaque fois, on peut avoir un nombre impair de //
+        }
 
         // i+(m*j) = 1er de chaque parallele ; i+(m*j)+m = 1er du parallele suivant
         // m+(m*j) = dernier de chaque parallele ; m+(m*j)+m = dernier du parallele suivant
         for (j=0; j<p-1 ; j++) {
             // face haut droit
             numero++;
+            i1 = 1  + i + (m*j);
+            i2 = i1 + 1;
+            if (sens > 0) {
 /*     2---1
          \ |
            3
 */
-            i1 = 1  +i + (m*j);
-            i2 = i1 +1;
-            i3 = i1 +m;
+                i3 = i1 + m;
+            } else {
+/*     2---1
+       | /
+       3
+*/
+                i3 = i2 + m;
+            }
             this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
             this->make1face();
 
@@ -8637,11 +8654,21 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
        | \
        2---3
 */
-            i1 = i2;
-            i2 = i1 + m ;   // i3 inchangé
+            if (sens > 0) {
+                i1 = i2;
+                i2 = i1 + m ;   // i3 inchangé
+            } else {
+/*         1
+         / |
+       2---3
+*/
+                i2 = i3;
+                i3 = i2 -1;
+            }
             this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
             this->make1face();
 
+            if (New_typeSphere) sens *= -1;
         }
 
         // Sud
@@ -8653,6 +8680,7 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
 
 // Code spécifique pour la dernière série entre dernier et 1er méridien
 
+    if (New_typeSphere) sens = -sens1;  // Ne fonctionne bien que si le nombre de méridiens est pair.
     // derniere face pole nord
     numero++;
     i1 = 1;
@@ -8666,24 +8694,34 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles)
         numero++;
         i1 = 1 + m + (m*j);
         i2 = 2 + (m*j);
-        i3 = i1+ m;
+        if (sens > 0) {
+            i3 = i1 + m;
+        } else {
+            i3 = i2 + m;
+        }
         this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
         this->make1face();
 
         // derniere face bas gauche
         numero++;
-        i1 = i2; //2 + (m*j);
-        i2 = i1+ m ;
-        i3 = 1 + m*(j+2);
+        if (sens > 0) {
+            i1 = i2; //2 + (m*j);
+            i2 = i1+ m ;
+            i3 = 1 + m*(j+2);
+        } else {
+            i2 = i3;
+            i3 = i1 + m;
+        }
         this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
         this->make1face();
+        if (New_typeSphere) sens *= -1;
     }
 
     // derniere face pole sud
     numero++;
-    i2 = 1 + (m*p) ;
-    i1 = i2+ 1;
-    i3 = i2-m +1;
+    i2 = 1  + (m*p) ;
+    i1 = i2 + 1;
+    i3 = i2 -m +1;
     this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
     this->make1face();
 

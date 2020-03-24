@@ -24,6 +24,7 @@ const long Sphere::ID_STATICTEXT7 = wxNewId();
 const long Sphere::ID_SPINCTRL1 = wxNewId();
 const long Sphere::ID_STATICTEXT8 = wxNewId();
 const long Sphere::ID_SPINCTRL2 = wxNewId();
+const long Sphere::ID_CHECKBOX1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Sphere,wxDialog)
@@ -37,8 +38,8 @@ Sphere::Sphere(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& s
 	Create(parent, id, _T("Ajout d\'une sphère"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(409,164));
 	Move(wxDefaultPosition);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Rayon :"), wxPoint(144,11), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	TextCtrl_Rayon = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(200,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Rayon :"), wxPoint(8,10), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	TextCtrl_Rayon = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(88,8), wxSize(112,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Centre de la sphère : X :"), wxPoint(5,43), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(128,40), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Y :"), wxPoint(208,43), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
@@ -57,6 +58,8 @@ Sphere::Sphere(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& s
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("Numéro de Matériau :"), wxPoint(208,107), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(328,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
 	SpinCtrl_Materiau->SetValue(_T("0"));
+	CheckBox_NewSphere = new wxCheckBox(this, ID_CHECKBOX1, _T("Nouveau tracé (alterné)"), wxPoint(232,12), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	CheckBox_NewSphere->SetValue(false);
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Sphere::OnButton_OKClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Sphere::OnButton_AnnulerClick);
@@ -111,7 +114,7 @@ void Sphere::genereSphere()
     printf("Nombre de paralleles : %d\n",Nb_Paralleles);
     int Nb_facettes = 2*Nb_Meridiens*Nb_Paralleles;
 
-    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles);
+    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
     Element->genereSommetsSphere (Nb_Meridiens, Nb_Paralleles, centre_primitive, rayon, 1.0, 1.0, 1.0);
     Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
     Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
@@ -138,6 +141,7 @@ void Sphere::OnButton_OKClick(wxCommandEvent& event)
     centre_primitive[2] = wxAtof(TextCtrl_Z->GetValue());
     Nb_Meridiens  = wxAtoi(TextCtrl_NbMeridiens ->GetValue());
     Nb_Paralleles = wxAtoi(TextCtrl_NbParalleles->GetValue());
+    New_typeSphere= CheckBox_NewSphere->GetValue();     // Nouveau tracé avec alternance si la case est cochée
     numeroGroupe  = SpinCtrl_Groupe  ->GetValue() ;     // Par précaution, mais déjà fait !
     numeroMateriau= SpinCtrl_Materiau->GetValue() ;     // idem
 

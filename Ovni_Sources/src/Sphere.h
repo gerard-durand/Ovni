@@ -3,6 +3,7 @@
 
 //(*Headers(Sphere)
 #include <wx/button.h>
+#include <wx/checkbox.h>
 #include <wx/dialog.h>
 #include <wx/spinctrl.h>
 #include <wx/stattext.h>
@@ -24,6 +25,7 @@ class Sphere: public wxDialog
 		//(*Declarations(Sphere)
 		wxButton* Button_Annuler;
 		wxButton* Button_OK;
+		wxCheckBox* CheckBox_NewSphere;
 		wxSpinCtrl* SpinCtrl_Groupe;
 		wxSpinCtrl* SpinCtrl_Materiau;
 		wxStaticText* StaticText1;
@@ -64,6 +66,7 @@ class Sphere: public wxDialog
 		static const long ID_SPINCTRL1;
 		static const long ID_STATICTEXT8;
 		static const long ID_SPINCTRL2;
+		static const long ID_CHECKBOX1;
 		//*)
 
 	private:
@@ -82,6 +85,7 @@ class Sphere: public wxDialog
 		float rayon;
 		int   Nb_Meridiens;
 		int   Nb_Paralleles;
+		bool  New_typeSphere;
 
 		void genereSphere();
 

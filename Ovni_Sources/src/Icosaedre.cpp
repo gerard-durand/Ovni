@@ -193,7 +193,8 @@ void Icosaedre::genereIcosaedre()
     int Nb_Paralleles= 2;
     int Nb_facettes  = 2*Nb_Meridiens*Nb_Paralleles;
 
-    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles);
+    bool New_typeSphere = false;
+    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
     genereSommets(Element, indiceObjet);
     Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
     Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);

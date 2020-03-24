@@ -9,11 +9,12 @@
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Rayon :</label>
-			<pos>144,11</pos>
+			<pos>8,10</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_Rayon" member="yes">
 			<value>1.0</value>
-			<pos>200,8</pos>
+			<pos>88,8</pos>
+			<size>112,23</size>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Centre de la sphère : X :</label>
@@ -91,6 +92,10 @@
 			<pos>328,104</pos>
 			<size>72,21</size>
 			<handler function="OnSpinCtrl_MateriauChange" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_NewSphere" member="yes">
+			<label>Nouveau tracé (alterné)</label>
+			<pos>232,12</pos>
 		</object>
 	</object>
 </wxsmith>

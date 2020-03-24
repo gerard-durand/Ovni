@@ -1185,7 +1185,7 @@ public :
     void genereLuminances(int, int ) ;
 
 // Fonctions communes Sphere - Ellipsoide
-    void genereFacettesSphere(int, int);
+    void genereFacettesSphere(int, int, bool);
     void genereSommetsSphere (int, int, float *, float, float, float, float);
     void genereNormalesSommetsSphere(int, int, float, float, float);
     void GenereNormale_1_Sommet(Object *, unsigned int , unsigned int );

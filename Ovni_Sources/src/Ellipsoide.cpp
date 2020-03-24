@@ -30,6 +30,7 @@ const long Ellipsoide::ID_STATICTEXT10 = wxNewId();
 const long Ellipsoide::ID_TEXTCTRL8 = wxNewId();
 const long Ellipsoide::ID_STATICTEXT11 = wxNewId();
 const long Ellipsoide::ID_TEXTCTRL9 = wxNewId();
+const long Ellipsoide::ID_CHECKBOX1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Ellipsoide,wxDialog)
@@ -43,8 +44,8 @@ Ellipsoide::Ellipsoide(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	Create(parent, id, _T("Ajout d\'un éllipsoïde"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(416,199));
 	Move(wxDefaultPosition);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Rayon :"), wxPoint(144,11), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	TextCtrl_Rayon = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(200,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Rayon :"), wxPoint(8,10), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	TextCtrl_Rayon = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(96,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Centre de l\'éllipsoïde : X :"), wxPoint(5,43), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(136,40), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Y :"), wxPoint(216,43), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
@@ -69,6 +70,8 @@ Ellipsoide::Ellipsoide(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	TextCtrl_CoefY = new wxTextCtrl(this, ID_TEXTCTRL8, _T("0.75"), wxPoint(216,136), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL8"));
 	StaticText11 = new wxStaticText(this, ID_STATICTEXT11, _T("Z :"), wxPoint(304,139), wxDefaultSize, 0, _T("ID_STATICTEXT11"));
 	TextCtrl_CoefZ = new wxTextCtrl(this, ID_TEXTCTRL9, _T("0.5"), wxPoint(336,136), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL9"));
+	CheckBox_NewSphere = new wxCheckBox(this, ID_CHECKBOX1, _T("Nouveau tracé (alterné)"), wxPoint(232,10), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	CheckBox_NewSphere->SetValue(false);
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Ellipsoide::OnButton_OKClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Ellipsoide::OnButton_AnnulerClick);
@@ -124,7 +127,7 @@ void Ellipsoide::genereEllipsoide()
     printf("Nombre de paralleles : %d\n",Nb_Paralleles);
     int Nb_facettes = 2*Nb_Meridiens*Nb_Paralleles;
 
-    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles);
+    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
     Element->genereSommetsSphere (Nb_Meridiens, Nb_Paralleles, centre_primitive, rayon, coefx, coefy, coefz);
     Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
     Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
@@ -151,6 +154,7 @@ void Ellipsoide::OnButton_OKClick(wxCommandEvent& event)
     centre_primitive[2] = wxAtof(TextCtrl_Z->GetValue());
     Nb_Meridiens  = wxAtoi(TextCtrl_NbMeridiens ->GetValue());
     Nb_Paralleles = wxAtoi(TextCtrl_NbParalleles->GetValue());
+    New_typeSphere= CheckBox_NewSphere->GetValue();     // Nouveau tracé avec alternance si la case est cochée
     numeroGroupe  = SpinCtrl_Groupe  ->GetValue() ;     // Par précaution, mais déjà fait !
     numeroMateriau= SpinCtrl_Materiau->GetValue() ;     // idem
     coefx = wxAtof(TextCtrl_CoefX->GetValue());

@@ -3,6 +3,7 @@
 
 //(*Headers(Ellipsoide)
 #include <wx/button.h>
+#include <wx/checkbox.h>
 #include <wx/dialog.h>
 #include <wx/spinctrl.h>
 #include <wx/stattext.h>
@@ -24,6 +25,7 @@ class Ellipsoide: public wxDialog
 		//(*Declarations(Ellipsoide)
 		wxButton* Button_Annuler;
 		wxButton* Button_OK;
+		wxCheckBox* CheckBox_NewSphere;
 		wxSpinCtrl* SpinCtrl_Groupe;
 		wxSpinCtrl* SpinCtrl_Materiau;
 		wxStaticText* StaticText10;
@@ -75,6 +77,7 @@ class Ellipsoide: public wxDialog
 		static const long ID_TEXTCTRL8;
 		static const long ID_STATICTEXT11;
 		static const long ID_TEXTCTRL9;
+		static const long ID_CHECKBOX1;
 		//*)
 
 	private:
@@ -94,6 +97,7 @@ class Ellipsoide: public wxDialog
 		float rayon;
 		int   Nb_Meridiens;
 		int   Nb_Paralleles;
+		bool  New_typeSphere;
 		float coefx, coefy, coefz;
 
 		void genereEllipsoide();
