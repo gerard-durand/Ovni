@@ -169,18 +169,9 @@ void Facette::genereFacette()
     Element->genereAttributsFacettes(indiceObjet, 1, numeroGroupe, numeroMateriau);
 
 // Luminance
-//    Element->genereLuminances(indiceObjet, 1);
     Element->Objetlist[indiceObjet].flat = true; // En fait serait de toutes façons plat avec les normales aux sommets ci-dessous
     Element->Objetlist[indiceObjet].Nb_vecteurs   = 0;
     Element->Objetlist[indiceObjet].Nb_luminances = 0;
-
-// Normales aux sommets : Une seule ici égale à la normale à la facette
-//    Element->str.clear();
-//    Element->N_elements = 1;
-//    Element->makevecteur();
-//    (Element->Objetlist.end()-1)->Nb_vecteurs = 1;
-//    Element->N_elements=1; Element->Setxyz( vn.X, vn.Y, vn.Z); Element->make1vecteur();
-//
 
     Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
     Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);

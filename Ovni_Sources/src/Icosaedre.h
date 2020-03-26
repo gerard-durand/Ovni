@@ -78,6 +78,7 @@ class Icosaedre: public wxDialog
 		void genereSommets(BddInter*, int);
         void genereNormalesSommets(BddInter* , unsigned int );
         void genereSubdivisions(int);
+
 		DECLARE_EVENT_TABLE()
 };
 

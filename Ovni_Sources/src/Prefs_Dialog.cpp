@@ -58,8 +58,6 @@ const long Prefs_Dialog::ID_BUTTON2 = wxNewId();
 const long Prefs_Dialog::ID_BUTTON3 = wxNewId();
 //*)
 
-//OvniFrame* MAIN;    // Si déclaré ici, fonctionne, mais MAIN n'est alors pas dans la class Prefs_Dialog
-
 BEGIN_EVENT_TABLE(Prefs_Dialog,wxDialog)
 	//(*EventTable(Prefs_Dialog)
 	//*)

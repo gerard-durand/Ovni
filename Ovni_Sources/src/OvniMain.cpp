@@ -913,7 +913,6 @@ void OvniFrame::OnQuit(wxCommandEvent& event) {
 void OvniFrame::OnAbout(wxCommandEvent& event) {
     wxString msg = wxbuildinfo(long_f);
     wxMessageBox(msg, _T("Ovni version wxWidgets...")); // <=> wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
-//    wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
 //    event.Skip();
 }
 
@@ -2388,18 +2387,6 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
             Element->Objetlist[indiceObjet].Facelist[j].F_sommets.pop_back();            // Supprimer les facettes
         Element->Objetlist[indiceObjet].Facelist.clear();
         Element->Objetlist[indiceObjet].Facelist.pop_back();
-
-//        for (unsigned int j=0; j<Element->Normale1list[indiceObjet].size(); j++)
-//            Element->Normale1list[indiceObjet][j].point.pop_back();        // Supprimer les normales aux facettes
-//        Element->Normale1list[indiceObjet].clear();
-//        Element->Normale1list[indiceObjet].pop_back();
-
-//        if (Element->Objetlist[indiceObjet].Luminancelist.size() >= 0) {
-//            for (unsigned int j=0; j<Element->Objetlist[indiceObjet].Luminancelist.size(); j++)
-//                Element->Objetlist[indiceObjet].Luminancelist[j].L_sommets.pop_back();      // Supprimer les sommets des vecteurs
-//            Element->Objetlist[indiceObjet].Luminancelist.clear();
-//            Element->Objetlist[indiceObjet].Luminancelist.pop_back();
-//        }
 
         if (Element->Objetlist[indiceObjet].Vecteurlist.size() >= 0) {
             for (unsigned int j=0; j<Element->Objetlist[indiceObjet].Vecteurlist.size(); j++)

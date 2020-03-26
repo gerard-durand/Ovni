@@ -115,7 +115,6 @@ void Icosaedre::genereSommets(BddInter* Element, int indiceObjet)
 {
 // Génère un icosaèdre, via des points sur une sphère de rayon donné
 // NOTE : cette figure peut servir de point de départ à une génération de sphère en subdivisant les arêtes de façon récursive
-//        RESTE à écrire ...
 //        intérêt :      moins de directions privilégiées / sphère classique
 //        inconvénient : plus de réels méridiens => plus de traitement par quartiers
 

@@ -156,16 +156,12 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
         bool groupes_egaux   = true;
         bool materiaux_egaux = true;
 
-//        objet = Element->ToSelect.Liste[0].objet;
-//        face  = Element->ToSelect.Liste[0].face_sommet;
         objet = Element->ToSelect.ListeSelect[0].objet;
         face  = Element->ToSelect.ListeSelect[0].face_sommet;
         int first_grp = Element->Objetlist[objet].Facelist[face].groupe;
         int first_mat = Element->Objetlist[objet].Facelist[face].codmatface;
 
         for (int i=1; i< len_liste; i++) {                  // boucle non utilisée si len_liste == 1
-//            objet = Element->ToSelect.Liste[i].objet;
-//            face  = Element->ToSelect.Liste[i].face_sommet;
             objet = Element->ToSelect.ListeSelect[i].objet;
             face  = Element->ToSelect.ListeSelect[i].face_sommet;
             if (Element->verbose) printf("%d %d %d %d %d\n", i, objet, face,
@@ -185,7 +181,6 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
         }
     }
 
-//    Element->ToSelect.select_to_selected(); // Utile pour une éventuelle "extension" automatique de la sélection
     Element->m_gllist = 0;
     Element->Refresh();
 }

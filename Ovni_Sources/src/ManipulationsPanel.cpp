@@ -133,7 +133,6 @@ void ManipulationsPanel::OnButton_TranslationClick(wxCommandEvent& event)
 
 void ManipulationsPanel::OnButton_RotationClick(wxCommandEvent& event)
 {
-//    ToDo();
     MAIN->Element->MRotation->Show();
 }
 
@@ -151,7 +150,6 @@ void ManipulationsPanel::OnCheckBox_XClick(wxCommandEvent& event)
         CreerBoiteObjet();
     } else Button_Creer->Disable();
     MAIN->Element->Refresh();
-//    ToDo();
 }
 
 void ManipulationsPanel::OnCheckBox_YClick(wxCommandEvent& event)
@@ -163,7 +161,6 @@ void ManipulationsPanel::OnCheckBox_YClick(wxCommandEvent& event)
         CreerBoiteObjet();
     } else Button_Creer->Disable();
     MAIN->Element->Refresh();
-//    ToDo();
 }
 
 void ManipulationsPanel::OnCheckBox_ZClick(wxCommandEvent& event)
@@ -175,7 +172,6 @@ void ManipulationsPanel::OnCheckBox_ZClick(wxCommandEvent& event)
         CreerBoiteObjet();
     } else Button_Creer->Disable();
     MAIN->Element->Refresh();
-//    ToDo();
 }
 
 void ManipulationsPanel::CreerBoiteObjet()

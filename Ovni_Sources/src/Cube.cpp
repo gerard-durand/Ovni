@@ -130,7 +130,6 @@ void Cube::genereLuminances(BddInter* Element, int indiceObjet)
     int Nb_facettes = 6 ;
     Element->str.clear();
     Element->N_elements = Nb_facettes;
-//    Element->Objetlist[indiceObjet].Nb_luminances = Nb_facettes;
     Element->makeluminance();
 
     for (int n=1; n <= 6; n++) {
@@ -198,12 +197,9 @@ void Cube::genereCube()
 
     genereFacettes(Element, indiceObjet);
     genereSommets(Element, indiceObjet);
-//    genereNormalesFacettes(Element, indiceObjet);
     Element->genereNormalesFacettes (indiceObjet, 6);
     Element->genereAttributsFacettes(indiceObjet, 6, numeroGroupe, numeroMateriau);
-//    genereLuminances(Element);
     Element->Objetlist[indiceObjet].flat = true; // En fait serait plat de toutes façons avec les normales aux sommets calculées
-//    genereNormalesSommets(Element);
 
 ////    forcer le nombre de Luminances à 0, mais ne suffit pas !
 //    Element->str.clear();

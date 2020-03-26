@@ -496,8 +496,6 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     Element->m_gllist = 0;
     Element->Refresh();
 
-//    ToDo(); //  OK sur 00_Ovni mais pas sur puma ! à vérifier toutefois !
-
     OnButton_AnnulerClick(event);
 }
 

@@ -457,14 +457,10 @@ void ReperageFacette::OnButton_InvNormaleClick(wxCommandEvent& event)
         for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
         objet_courant->Facelist[IndiceFacette].setFsommet(ReverseSommets);
         // Idem pour normales aux sommets
-//        if ((int)objet_courant->Nb_luminances > IndiceFacette) {
-//        if (objet_courant->Luminancelist[IndiceFacette].L_sommets.size() != 0) {  // doit être la même chose !!!
         if (objet_courant->Facelist[IndiceFacette].L_sommets.size() != 0) {  // doit être la même chose !!!
-//            NumerosSommets = objet_courant->Luminancelist[IndiceFacette].getLsommets();
             NumerosSommets = objet_courant->Facelist[IndiceFacette].getLsommets();
             ReverseSommets.clear();
             for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
-//            objet_courant->Luminancelist[IndiceFacette].setLsommet(ReverseSommets); // à supprimer ...
             objet_courant->Facelist[IndiceFacette].setLsommet(ReverseSommets);
         }
         Element->m_gllist = 0;

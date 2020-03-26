@@ -134,51 +134,6 @@ void Cone::genereSommets(BddInter* Element, int indiceObjet)
 
 }
 
-//void Cone::genereNormalesFacettes(BddInter* Element)
-//{
-//// N'est pas adapté à n_slices > 2
-//
-//// Revient au même si on utilise la fonction BddInter::genereNormalesFacettes
-//// ATTENTION : n'utilise que les 3 premiers points de chaque facette
-//
-//    int numero;
-//    std::vector<float> xyz_cercle, sommet_cone;
-//    std::vector<int>   NumerosSommets;
-//
-//    int indiceObjet = Element->Objetlist.size() -1;
-//
-//    // Normales aux facettes
-//    Element->str.clear();
-//    Element->N_elements = NbPoints;
-//    if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
-//    Element->makenormale();
-//
-//    sommet_cone = Element->Sommet1list[indiceObjet][NbPoints].getPoint();
-////    sommet_cone = Element->Sommet1list[indiceObjet][NbPoints+1].getPoint();
-//    Vector3D Sommet(sommet_cone[0],sommet_cone[1],sommet_cone[2]);
-//    numero = 1;
-//    for (int i=0; i<NbPoints; i++) {
-//        NumerosSommets = Element->Face1list[indiceObjet][i].getF_sommets();
-//        xyz_cercle = Element->Sommet1list[indiceObjet][NumerosSommets[0]-1].getPoint();
-////        xyz_cercle = Element->Sommet1list[indiceObjet][NumerosSommets[0]].getPoint();
-//        Vector3D P1(xyz_cercle[0],xyz_cercle[1],xyz_cercle[2]);
-//        xyz_cercle = Element->Sommet1list[indiceObjet][NumerosSommets[1]-1].getPoint();
-////        xyz_cercle = Element->Sommet1list[indiceObjet][NumerosSommets[1]].getPoint();
-//        Vector3D P2(xyz_cercle[0],xyz_cercle[1],xyz_cercle[2]);
-//        P1 -= Sommet;
-//        P2 -= Sommet;
-//        Vector3D Vn = P1.crossProduct(P2);
-//        Vn.normalize();
-//        Element->N_elements=numero; Element->Setxyz(Vn.X,Vn.Y,Vn.Z); Element->make1normale();
-//        numero++;
-//    }
-//    if (CheckBox_FermerCone->IsChecked()) {
-//        Element->N_elements=numero;
-//        Element->Setxyz(-1.,0.,0.);
-//        Element->make1normale();
-//    }
-//}
-
 void Cone::genereLuminances(BddInter* Element, int indiceObjet)
 {
     wxString str_loc;
@@ -187,8 +142,6 @@ void Cone::genereLuminances(BddInter* Element, int indiceObjet)
     Element->str.clear();
     Element->N_elements = NbPoints*n_slices;
     if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
-//    (Element->Objetlist.end()-1)->Nb_luminances = Element->N_elements;
-//    Element->Objetlist[indiceObjet].Nb_luminances = Element->N_elements;
     Element->makeluminance();
     numero= 1;
 
@@ -320,7 +273,6 @@ void Cone::genereCone()
 
     genereFacettes(Element, indiceObjet);
     genereSommets (Element, indiceObjet);
-//    genereNormalesFacettes(MAIN);
     Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
     Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
     genereLuminances(Element, indiceObjet);
