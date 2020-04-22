@@ -2791,7 +2791,11 @@ void BddInter::LoadOBJ()
                 if (!strncmp(s1,"usemtl ",7)) {         // Lecture du nom de matériau
                     for (i=0 ; i< nb_mat ; i++) {
                         if (!strncmp(s1+7,tab_mat[i],strlen(tab_mat[i]))) {
-                            num_mat = i+1;  // Le matériau est déjà dans la liste => rum_mat = rang dans le tableau pour commencer à 1
+                            num_mat = i+1;  // Le matériau est déjà dans la liste => num_mat = rang dans le tableau pour commencer à 1
+                            // Cas particulier où le nom est group_* (conversion en .obj par Ovni)
+                            if (!strncmp(s1+7,"group_",6)) {
+                                num_mat = atoi(s1+13);  // Dans ce cas, ce qu'il y a derrière "group_" est le numéro de groupe original
+                            }
                             break;
                         }
                     }
@@ -7022,34 +7026,49 @@ void BddInter::SaveTo(wxString str) {
 
     if(OK_ToSave) {
         int types=-1;
+        wxString local_str = str ;
+        local_str.MakeLower();                          // Forcer le nom de fichier à être en minuscules
 
-        buffer=str.utf8_str();
-        sprintf(Message,"Enregistrement de :\n%s\n",buffer.data());
-        printf(utf8_To_ibm(Message));
-        if(str.EndsWith(_T(".bdd"))||str.EndsWith(_T(".BDD"))) {
-            types=1;
-//        } else if(str.EndsWith(_T(".3ds"))||str.EndsWith(_T(".3DS"))) {
-//            types=2;
-        } else if(str.EndsWith(_T(".dxf"))) {   // Ne devrait jamais arriver !!!
-            types=0;
+        if (local_str.EndsWith(_T(".bdd"))) {           // Teste si l'extension est .bdd
+            types = 1;
+        } else if (local_str.EndsWith(_T(".obj"))) {    // Teste si l'extension est .obj
+            types = 2;
+        } else if (local_str.EndsWith(_T(".g3d"))) {    // Teste si l'extension est .g3d
+            types = 3;
+        } else if (local_str.EndsWith(_T(".dxf"))) {    // Ne devrait jamais arriver !!!
+            types = 0;
         }
+        if (types == -1) {
+            // Extension absente ou non reconnue => forcer l'ajout de .bdd (pas forcément utile car fait via le dialogue saveFileDialog dans OvniFrame::OnMenu_Enregistrer_Sous
+            str += _T(".bdd");
+            types = 1;
+        }
+
 //        printf("saving type                        %d\n",types);
 
-        if(types!=-1) {
+        if(types > 0) {
+            buffer = str.utf8_str();
+            sprintf(Message,"Enregistrement de :\n%s\n",buffer.data());
+            printf(utf8_To_ibm(Message));
             switch(types) {
-            case 0:
+            case 0:                         // En réserve, mais ne peut pas se produire ici !
                 //m_renderer.Save(stream);
                 break;
             case 1:
-//            case 2:
                 SaveBDD(str);
+                break;
+            case 2:
+                SaveOBJ(str);
+                break;
+            case 3:
+                SaveG3D(str);
                 break;
             default:
                 break;
             }
-        } else {
-            //wxMessageBox(_T("Type de fichier non valide!"),_T("Error"));
-        }
+        } /* else {
+            wxMessageBox(_T("Type de fichier non valide!"),_T("Error"));
+        }*/
 
     }
 }
@@ -7058,15 +7077,15 @@ void BddInter::SaveBDD(wxString str) {
     wxCharBuffer  buffer;
     std::vector<int>   numeros_Sommets;
     std::vector<float> xyz_sommet;
-    Vector3D      New_vecteur;
+    Vector3D           New_vecteur;
     std::vector<Vector3D> NewVecteurs;
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
-//    Luminance1*   Luminance_Face_ij=nullptr;
+
     Face1  *Luminance_Face_ij=nullptr;
     Object *objet_courant;
 
-    int compteur=0;
+    int compteur = 0;
     unsigned o,j,k ;
     int nouvel_indice;
     bool test_np;
@@ -7083,16 +7102,16 @@ void BddInter::SaveBDD(wxString str) {
     printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;      // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        if (this->Objetlist[o].deleted) continue ;          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
-        compteur=0;
+        compteur = 0;
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if(objet_courant->Sommetlist[j].show==true) {    // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
-                compteur++;                             // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+            if(objet_courant->Sommetlist[j].show==true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+                compteur++;                                 // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-                objet_courant->Sommetlist[j].Numero=compteur;
+                objet_courant->Sommetlist[j].Numero = compteur;
             }
         }
         myfile << "<OBJET> ";
@@ -7121,8 +7140,8 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(!objet_courant->Facelist[j].deleted) {    // Original de jdias sur .show, mais une facette masquée ne l'est qu'à l'affichage !
-                compteur++;                         // => on ne travaille que sur les facettes non supprimées !
+            if(!objet_courant->Facelist[j].deleted) {       // Original de jdias sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+                compteur++;                                 // => on ne travaille que sur les facettes non supprimées !
                 numeros_Sommets=objet_courant->Facelist[j].F_sommets;
                 myfile << "\t";
                 myfile << std::setw(5) << compteur;
@@ -7138,13 +7157,13 @@ void BddInter::SaveBDD(wxString str) {
 
         unsigned int compteur_facettes = compteur;   // A conserver car resert pour les normales, aspect_faces, luminances
 //        printf("\n Face end");
-        compteur=0;
+        compteur = 0;
         myfile << "\n\t<SOMMET>\t";
         myfile << compteur_sommets;
         myfile << "\n";
         myfile << "\n";
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if(objet_courant->Sommetlist[j].show==true) {        // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+            if(objet_courant->Sommetlist[j].show == true) {      // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
 //                compteur++;
                 xyz_sommet=objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t";
@@ -7158,7 +7177,7 @@ void BddInter::SaveBDD(wxString str) {
                 myfile << "\n";
             }
         }
-        compteur=0;
+        compteur = 0;
         myfile << "\n\t<NORMALE>\t";
         myfile << std::setw(5) << compteur_facettes;
         myfile << "\n";
@@ -7181,7 +7200,7 @@ void BddInter::SaveBDD(wxString str) {
             }
         }
 //        printf("\n aspectFace start %d",(int)this->Aspect_face1list[i].size());
-        compteur=0;
+        compteur = 0;
         myfile << "\n\t<ASPECT_FACE>\t";
         myfile << compteur_facettes ;
         myfile << "\n";
@@ -7205,18 +7224,14 @@ void BddInter::SaveBDD(wxString str) {
             }
         }
 //        printf("\n aspectFace end %d",(int)this->Aspect_face1list[i].size());
-        compteur=0;
+        compteur = 0;
         numeros_Sommets.clear();
-//        printf("\n luminancelist");
 //        if (test_seuil_gouraud && Enr_Normales_Seuillees) {
             nouvel_indice = objet_courant->Nb_vecteurs +1;
 //        }
         unsigned compteur_luminances = 0;
-//        for(j=0; j<objet_courant->Luminancelist.size(); j++) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-//            if(objet_courant->Luminancelist[j].show==true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
-            if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
-//                this->Luminancelist[i].value++;
+           if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
                 numeros_Sommets=objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
@@ -7228,16 +7243,11 @@ void BddInter::SaveBDD(wxString str) {
 
         myfile << "\n\t<LUMINANCE>\t";
         myfile << compteur_facettes;                    // Le nombre de luminances est égal au nombre de facettes
-//        printf("\n luminancelist");
         myfile << "\n";
         myfile << "\n";
-//        for(j=0; j<objet_courant->Luminancelist.size(); j++) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-//            if(this->Luminance1list[i][j].show==true) {
-//            if(objet_courant->Luminancelist[j].show==true && !objet_courant->Facelist[j].deleted) {
             if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {
                 compteur++;
-//                numeros_Sommets=objet_courant->Luminancelist[j].getLsommets();
                 numeros_Sommets=objet_courant->Facelist[j].getLsommets();
                 myfile << "\t";
                 myfile << std::setw(5) << compteur;
@@ -7245,7 +7255,6 @@ void BddInter::SaveBDD(wxString str) {
                 myfile << std::setw(2) << numeros_Sommets.size();
                 if (test_seuil_gouraud && Enr_Normales_Seuillees) {
                     NormaleFacette = objet_courant->Facelist[j].getNormale_b();
-//                    Luminance_Face_ij = &(objet_courant->Luminancelist[j]);
                     Luminance_Face_ij = &(objet_courant->Facelist[j]);
                 }
                 for(k=0; k<numeros_Sommets.size(); k++) {
@@ -7270,7 +7279,7 @@ void BddInter::SaveBDD(wxString str) {
                             }
                             if (!found) {   // Utiliser un nouvel indice, initialiser New_vecteur et le ranger dans NewVecteurs pour le moment;
                                 myfile << std::fixed << std::setw(5) << nouvel_indice++;
-                                New_vecteur.X= NormaleSommet[0] ; New_vecteur.Y= NormaleSommet[1] ; New_vecteur.Z= NormaleSommet[2] ;
+                                New_vecteur.X = NormaleSommet[0] ; New_vecteur.Y = NormaleSommet[1] ; New_vecteur.Z = NormaleSommet[2] ;
                                 NewVecteurs.push_back(New_vecteur);
                             }
                         } else { // Test_np est faux => enregistrer les numéros de sommets existants tels que !
@@ -7332,6 +7341,498 @@ void BddInter::SaveBDD(wxString str) {
 
     strftime (buffer_time,10,"%H:%M:%S",timeinfo);
     printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
+    bdd_modifiee = false ;
+}
+
+void BddInter::SaveOBJ(wxString str) {
+
+// A vérifier ...
+
+    wxCharBuffer  buffer;
+    std::vector<int>   numeros_Sommets;
+    std::vector<int>   numeros_Sommets_L;
+    std::vector<float> xyz_sommet;
+    Vector3D           New_vecteur;
+    std::vector<Vector3D> NewVecteurs;
+    std::vector<float> NormaleFacette;
+    std::vector<float> NormaleSommet;
+
+    Face1  *Luminance_Face_ij=nullptr;
+    Object *objet_courant;
+
+    int compteur = 0;
+    int offset_vertices = 0;
+    int offset_normales = 0;
+    unsigned o,j,k ;
+    int nouvel_indice;
+    bool test_np;
+    int last_groupe = codmatface_def;
+    int current_groupe;
+
+    buffer=str.mb_str();
+    std::ofstream myfile;
+    myfile.open (buffer.data());
+    if (!myfile.is_open()) {
+        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
+        wxMessageBox(Msg,_T("Avertissement"));
+        return;
+    }
+
+    printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
+    myfile << "# Fichier Wavefront obj créé par Ovni\n";
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        objet_courant = &(this->Objetlist[o]);
+        compteur = 0;
+        NewVecteurs.clear();
+        unsigned int compteur_sommets = 0;
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+                compteur++;                                         // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+                compteur_sommets++;
+                objet_courant->Sommetlist[j].Numero = compteur;
+            }
+        }
+        myfile << "\ng ";
+        myfile << objet_courant->GetName();                         // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
+//        wxString mystring = objet_courant->GetwxName();
+//        wxCharBuffer buffer = mystring.ToUTF8();
+//        myfile << buffer.data();
+        myfile << "\n";
+
+        myfile << "# " << compteur_sommets << " Sommets\n";
+
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                myfile << "v";
+                for(k=0; k<xyz_sommet.size(); k++) {
+                    myfile << " ";
+                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
+                }
+                myfile << "\n";
+            }
+        }
+
+//        compteur = 0;
+        numeros_Sommets.clear();
+//        if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+            nouvel_indice = objet_courant->Nb_vecteurs +1 + offset_normales ;   // Indice de départ pour stocker les nouvelles normales seuillées
+//        }
+        unsigned compteur_luminances = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
+                numeros_Sommets=objet_courant->Facelist[j].getLsommets();
+                compteur_luminances += numeros_Sommets.size();
+            }
+            // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
+            if (compteur_luminances != 0) break;
+        }
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(!objet_courant->Facelist[j].deleted) {   // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+                compteur++;                             // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+            }
+        }
+
+        myfile << "\n# " << compteur << " Elements\n";
+
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {
+                current_groupe = objet_courant->Facelist[j].getGroupe();
+                if (current_groupe != last_groupe) {
+                    myfile << "usemtl group_";
+                    if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
+                    myfile << current_groupe << "\n";
+                    last_groupe = current_groupe;
+                }
+//                compteur++;
+                numeros_Sommets  = objet_courant->Facelist[j].F_sommets;
+                myfile << "f";
+                if (compteur_luminances != 0) {                         // Il y des des normales aux sommets
+                    numeros_Sommets_L= objet_courant->Facelist[j].getLsommets();
+                    if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                        NormaleFacette = objet_courant->Facelist[j].getNormale_b();
+                        Luminance_Face_ij = &(objet_courant->Facelist[j]);
+                    }
+                }
+                for(k=0; k<numeros_Sommets.size(); k++) {
+                    myfile << " ";
+                    myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices);
+                    if (compteur_luminances != 0) {                     // Il y des des normales aux sommets
+                        if (numeros_Sommets_L.size() == 0) continue;    // Si pas de normales aux sommets sur cette facette en particulier, passer à la suivante
+                        myfile << "//";                                 // le champ entre les 2 / est réservé aux textures. Non utilisé dans Ovni
+                        if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                            NormaleSommet = objet_courant->Vecteurlist[Luminance_Face_ij->L_sommets[k]-1].point;
+                            test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                            if (test_np) {
+                            // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
+                                int  test  = 0;
+                                bool found = false;
+                                for (unsigned int jj=0; jj < NewVecteurs.size(); jj++) {
+                                    test   = 0;
+                                    if (NormaleSommet[0] == NewVecteurs[jj].X) test ++;
+                                    if (NormaleSommet[1] == NewVecteurs[jj].Y) test ++;
+                                    if (NormaleSommet[2] == NewVecteurs[jj].Z) test ++;
+                                    if (test == 3) {    // 3 coordonnées identiques => existe déjà => utiliser le numéro de l'existant
+                                        myfile << objet_courant->Nb_vecteurs + 1 +jj + offset_normales;
+                                        found = true;
+                                        break;  // Abandon de l'exploration du for jj
+                                    }
+                                }
+                                if (!found) {   // Utiliser un nouvel indice, initialiser New_vecteur et le ranger dans NewVecteurs pour le moment;
+                                    myfile << nouvel_indice++;
+                                    New_vecteur.X = NormaleSommet[0] ; New_vecteur.Y = NormaleSommet[1] ; New_vecteur.Z = NormaleSommet[2] ;
+                                    NewVecteurs.push_back(New_vecteur);
+                                }
+                            } else { // Test_np est faux => enregistrer les numéros de sommets existants tels que !
+                                myfile << numeros_Sommets_L[k] + offset_normales;
+                            }
+                        } else { // Pas d'enregistrement de normales seuillées.
+                            myfile << numeros_Sommets_L[k] + offset_normales;
+                        }
+                    }
+                }
+                myfile << "\n";
+            }
+        }
+
+        int NbVecteurs = objet_courant->Vecteurlist.size();         // mieux mais soucis possibles en cas de soudures !
+        NbVecteurs += NewVecteurs.size();
+
+        if (NbVecteurs != 0) {                                      // Enregistrer les normales aux sommets
+            myfile << "\n# " << NbVecteurs << " Normales aux sommets\n";
+
+            for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+    //            if(objet_courant->Vecteurlist[j].show==true) {    // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+                    NormaleSommet=objet_courant->Vecteurlist[j].point;
+                    myfile << "vn";
+                    for(k=0; k<3; k++) {
+                        myfile << " ";
+                        myfile << std::fixed << std::setprecision(8) << std::setw(11) << NormaleSommet[k];
+                    }
+                    myfile << "\n";
+    //            }
+            }
+            for (j=0; j<NewVecteurs.size(); j++) {
+                myfile << "vn";
+                myfile << " " << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].X;
+                myfile << " " << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].Y;
+                myfile << " " << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].Z;
+                myfile << "\n";
+            }
+            myfile << "\n";
+        }
+        offset_vertices += compteur_sommets;
+        offset_normales += NbVecteurs;
+
+    }
+    myfile.close();
+
+    wxString Nom = wxFileNameFromPath(str);
+    buffer = Nom.mb_str();
+
+// Déclarations pour récupérer l'heure actuelle
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer_time [10];
+
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+
+    strftime (buffer_time,10,"%H:%M:%S",timeinfo);
+    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
+    bdd_modifiee = false ;
+}
+
+void BddInter::SaveG3D(wxString str) {
+    // En cours d'écriture ...
+    wxCharBuffer  buffer;
+    std::vector<int>   numeros_Sommets;
+    std::vector<int>   numeros_Sommets_L;
+    std::vector<float> xyz_sommet;
+    Vector3D           New_vecteur;
+    std::vector<Vector3D> NewVecteurs;
+    std::vector<float> NormaleFacette;
+    std::vector<float> NormaleSommet;
+
+    Face1  *Luminance_Face_ij=nullptr;
+    Object *objet_courant;
+
+    int compteur = 0;
+    unsigned o,j,k ;
+    int nouvel_indice;
+    bool test_np;
+
+// Déclarations pour récupérer l'heure actuelle
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer_time [16];
+
+    buffer=str.mb_str();
+    std::ofstream myfile;
+    myfile.open (buffer.data());
+    if (!myfile.is_open()) {
+        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
+        wxMessageBox(Msg,_T("Avertissement"));
+        return;
+    }
+
+    printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
+
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    strftime (buffer_time,16,"%d/%m/%Y",timeinfo);              // date du jour courant (format à la française)
+
+    myfile << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";   // Marquer l'encodage comme UTF-8 plutôt que ISO-8859-1, sinon soucis possibles avec caractères accentués !
+    myfile << "<g3d version=\"2.0\">\n";
+	myfile << "\t<document version=\"1.0\" date=\"";
+	myfile << buffer_time ;
+	myfile << "\" auteur=\"ONERA\" commentaire=\"Fichier graphique\">\n";
+	myfile << "\t\t<source format=\"CRIRA\">\n";
+	myfile << "\t\t\t<entete>\n";
+	myfile << "\t\t\t\tFichier g3d créé par Ovni\n";
+	myfile << "\t\t\t</entete>\n";
+	myfile << "\t\t</source>\n";
+	myfile << "\t</document>\n";
+	unsigned int nb_mat = listeMateriaux.size();
+	if (nb_mat != 0) {
+        auto it = listeMateriaux.begin();
+        myfile << "\t<types_materiaux nbr=\"1\">\n";
+        myfile << "\t\t<type_materiau id=\"1\" nom=\"optique\" nbr=\"";
+        myfile << nb_mat << "\">\n";
+        for (j=0; j<nb_mat; j++,it++) {
+            myfile << "\t\t\t<materiau id=\"" << j+1 << "\" nom=\"materiau_";
+            if (*it == codmatface_def) {
+                myfile << "def";
+            } else {
+                if (*it < 10) myfile << "0";
+                myfile << *it ;
+            }
+            myfile << "\"/>\n";
+        }
+        myfile << "\t\t</type_materiau>\n";
+        myfile << "\t</types_materiaux>\n";
+	}
+	myfile << "\t<types_valeurs nbr=\"2\">\n";
+    myfile << "\t\t<type_valeur id=\"1\" nom=\"groupe\"/>\n";
+    myfile << "\t\t<type_valeur id=\"2\" nom=\"codmatface\"/>\n";
+	myfile << "\t</types_valeurs>\n";
+
+	compteur = 0;
+	for(o=0; o<this->Objetlist.size(); o++) {
+	    if (!this->Objetlist[o].deleted) compteur++ ;
+	}
+
+    myfile << "\t\t<objets nbr=\"" << compteur << "\">\n";
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        if (this->Objetlist[o].deleted) continue ;              // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        objet_courant = &(this->Objetlist[o]);
+        compteur = 0;
+        NewVecteurs.clear();
+        unsigned int compteur_sommets = 0;
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+                compteur++;                                     // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+                compteur_sommets++;
+                objet_courant->Sommetlist[j].Numero = compteur;
+            }
+        }
+
+        numeros_Sommets_L.clear();
+        nouvel_indice = objet_courant->Nb_vecteurs +1;          // Premier indice libre au-dessus de NB_vecteurs pour l'objet courant
+
+        unsigned compteur_luminances = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
+                numeros_Sommets_L=objet_courant->Facelist[j].getLsommets();
+                compteur_luminances += numeros_Sommets_L.size();
+            }
+            // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
+            if (compteur_luminances != 0) break;
+        }
+
+        myfile << "\t\t<objet id=\"";
+        myfile << objet_courant->GetValue();
+        myfile << "\" nom=\"";
+//        wxString mystring = objet_courant->GetwxName();                         // Récupère le nom wxString
+//        std::string stlstring = std::string(mystring.mb_str(wxConvUTF8));   // et convertion en UTF8
+//        myfile << stlstring;
+//        wxCharBuffer buffer = mystring.ToUTF8();                                // Revient au même que les 2 lignes précédentes
+//        myfile << buffer.data();                                                // mais écriture plus claire !
+        myfile << objet_courant->GetName();                                   // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
+        myfile << "\" unite=\"\">\n";
+        myfile << "\t\t\t<maillages nbr=\"1\">\n";
+        myfile << "\t\t\t\t<maillage lod=\"1\">\n";
+
+        compteur = 0;
+        myfile << "\t\t\t\t\t<sommets nbr=\"";
+        myfile << compteur_sommets;
+        myfile << "\">\n";
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+//                compteur++;
+                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                myfile << "\t\t\t\t\t\t<sommet id=\"";
+                myfile << objet_courant->Sommetlist[j].Numero;
+                myfile << "\" xyz=\"";
+                for(k=0; k<xyz_sommet.size(); k++) {
+                    myfile << "\t";
+                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
+                }
+                myfile << " \"/>\n";
+            }
+        }
+        myfile << "\t\t\t\t\t</sommets>\n";
+
+        compteur=0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(!objet_courant->Facelist[j].deleted) {           // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+                compteur++;                                     // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+            }
+        }
+
+        myfile << "\t\t\t\t\t<facettes nbr=\"";
+        myfile << compteur ; //this->Face1list[i].size();
+        myfile << "\">\n";
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(!objet_courant->Facelist[j].deleted) {           // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+                compteur++;                                     // => on ne travaille que sur les facettes non supprimées !
+                myfile << "\t\t\t\t\t\t<facette id=\"";
+                myfile << compteur;
+                myfile << "\">\n";
+
+                xyz_sommet=objet_courant->Facelist[j].getNormale_b();
+                myfile << "\t\t\t\t\t\t\t<normale_b xyz=\"";
+                for(k=0; k<xyz_sommet.size(); k++) {
+                    myfile << std::fixed << std::setprecision(8)<< std::setw(11) << xyz_sommet[k];
+                    myfile << " ";
+                }
+                myfile << "\"/>\n";
+
+                myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
+                numeros_Sommets=objet_courant->Facelist[j].F_sommets;
+                for(k=0; k<numeros_Sommets.size(); k++) {
+                    myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;
+                    myfile << " ";
+                }
+                myfile << "\"/>\n";
+
+                numeros_Sommets_L=objet_courant->Facelist[j].getLsommets();
+                if (numeros_Sommets_L.size() != 0) {
+                    if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                        NormaleFacette = objet_courant->Facelist[j].getNormale_b();
+                        Luminance_Face_ij = &(objet_courant->Facelist[j]);
+                    }
+                    myfile << "\t\t\t\t\t\t\t<normales_s ref=\"";
+                    for(k=0; k<numeros_Sommets_L.size(); k++) {
+                        if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                            NormaleSommet = objet_courant->Vecteurlist[Luminance_Face_ij->L_sommets[k]-1].point;
+                            test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                            if (test_np) {
+                            // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
+                                int test=0;
+                                bool found=false;
+                                for (unsigned int jj=0; jj < NewVecteurs.size(); jj++) {
+                                    test = 0;
+                                    if (NormaleSommet[0] == NewVecteurs[jj].X) test ++;
+                                    if (NormaleSommet[1] == NewVecteurs[jj].Y) test ++;
+                                    if (NormaleSommet[2] == NewVecteurs[jj].Z) test ++;
+                                    if (test == 3) {    // 3 coordonnées identiques => existe déjà => utiliser le numéro de l'existant
+                                        myfile << objet_courant->Nb_vecteurs+ 1 +jj;
+                                        found = true;
+                                        break;  // Abandon de l'exploration du for jj
+                                    }
+                                }
+                                if (!found) {   // Utiliser un nouvel indice, initialiser New_vecteur et le ranger dans NewVecteurs pour le moment;
+                                    myfile << nouvel_indice++;
+                                    New_vecteur.X = NormaleSommet[0] ; New_vecteur.Y = NormaleSommet[1] ; New_vecteur.Z = NormaleSommet[2] ;
+                                    NewVecteurs.push_back(New_vecteur);
+                                }
+                            } else { // Test_np est faux => enregistrer les numéros de sommets existants tels que !
+                                  myfile << numeros_Sommets_L[k];
+                            }
+                        } else { // Pas d'enregistrement de normales seuillées.
+                              myfile << numeros_Sommets_L[k];
+                        }
+                        myfile << " ";
+                    }
+                    myfile << "\"/>\n";
+                }
+
+                if(objet_courant->Facelist[j].getCodmatface() != codmatface_def) {
+                    myfile << "\t\t\t\t\t\t\t<materiaux ref=\"1 ";
+                    myfile << objet_courant->Facelist[j].getCodmatface();
+                    myfile << "\"/>\n";
+                }
+
+                myfile << "\t\t\t\t\t\t\t<valeurs val=\"2 ";
+                myfile << objet_courant->Facelist[j].getGroupe();
+                myfile << ".0\"/>\n";   // Ici, le format attend un flottant
+
+                myfile << "\t\t\t\t\t\t</facette>\n";
+            }
+        }
+        myfile << "\t\t\t\t\t</facettes>\n";
+
+//        unsigned int compteur_facettes = compteur;   // A conserver car resert pour les normales, aspect_faces, luminances
+
+        if (compteur_luminances != 0) {        // Pas de luminances => objet à facettes planes => pas de vecteurs => passer à l'objet suivant
+
+            compteur=0;
+            myfile << "\t\t\t\t\t<normales_s nbr=\"";
+    //        int NbVecteurs = objet_courant->Nb_vecteurs;
+            int NbVecteurs = objet_courant->Vecteurlist.size();     // mieux mais soucis en cas de soudures !
+            NbVecteurs += NewVecteurs.size();
+            myfile << NbVecteurs;
+            myfile << "\">\n";
+            for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+    //            if(objet_courant->Vecteurlist[j].show==true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+                    compteur++;
+                    NormaleSommet=objet_courant->Vecteurlist[j].point;
+                    myfile << "\t\t\t\t\t\t<normale_s id=\"";
+                    myfile << compteur;
+                    myfile << "\" xyz=\"";
+                    for(k=0; k<3; k++) {
+                        myfile << std::fixed << std::setprecision(8) << std::setw(11) << NormaleSommet[k];
+                        myfile << " ";
+                    }
+                    myfile << "\"/>\n";
+    //            }
+            }
+            for (j=0; j<NewVecteurs.size(); j++) {
+                compteur++;
+                myfile << "\t\t\t\t\t\t<normale_s id=\"";
+                myfile << compteur;
+                myfile << "\" xyz=\"";
+                myfile << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].X;
+                myfile << " ";
+                myfile << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].Y;
+                myfile << " ";
+                myfile << std::fixed << std::setprecision(8) << std::setw(11) << NewVecteurs[j].Z;
+                myfile << " \"/>\n";
+            }
+        myfile << "\t\t\t\t\t</normales_s>\n";
+        }
+        myfile << "\t\t\t\t</maillage>\n";
+		myfile << "\t\t\t</maillages>\n";
+		myfile << "\t\t</objet>\n";
+
+    }
+    myfile << "\t</objets>\n";
+    myfile << "</g3d>\n";
+    myfile.close();
+
+    wxString Nom = wxFileNameFromPath(str);
+    buffer = Nom.mb_str();
+
+
+    strftime (buffer_time,10,"%H:%M:%S",timeinfo);                          // Reprendre cette info déjà récupérée en début de SaveG3D
+    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data()); // on aurait pu faire directement (const char*)Nom.mb_str();
     bdd_modifiee = false ;
 }
 

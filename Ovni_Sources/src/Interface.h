@@ -1071,6 +1071,8 @@ public :
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
     void SaveTo(wxString);
     void SaveBDD(wxString);
+    void SaveOBJ(wxString);
+    void SaveG3D(wxString);
 
     bool show_light = false, show_box    = true, show_axes = true, show_plein = true;
     bool show_lines = false, show_points = false;
