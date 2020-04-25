@@ -3492,7 +3492,7 @@ void BddInter::LoadOFF()
     f=fopen(buffer.data(),"r");	//ouverture du fichier
     fgets(s1,160,f) ;
     if (strncmp(s1,"OFF",3)) {
-        printf("Fichier .off, mais pas de type Object File Format !\n");
+        printf("Fichier .off, mais pas de type Object File Format !\n");    // Doit obligatoirement commencer par OFF en 1ère ligne
         fclose(f);
         type = -1;
         return ;
@@ -3520,6 +3520,7 @@ void BddInter::LoadOFF()
 
         // Lecture du nombre de sommets et de facettes
         fgets(s1,100,f) ;
+        while (s1[0] == '#') fgets(s1,100,f);   // Sauter les lignes commençant par # ... Il faudrait aussi sauter les lignes blanches (vides ou que des espaces)
         sscanf(s1,"%d%d",&nb_p,&nb_fac) ;
 
         this->Objetlist[indiceObjet_courant].Nb_sommets = nb_p;
@@ -3531,7 +3532,9 @@ void BddInter::LoadOFF()
         str.clear();
         for (npoint = 1 ; npoint <= nb_p ; npoint++) {
             // Lecture des x, y et z
-            fscanf(f,"%f%f%f", &vx, &vy, &vz);
+            fgets(s1,100,f) ;
+            while (s1[0] == '#') fgets(s1,100,f);
+            sscanf(s1,"%f%f%f", &vx, &vy, &vz);
             this->N_elements = npoint;
             this->Setxyz(vx,vy,vz);
             this->make1sommet();
@@ -7035,6 +7038,8 @@ void BddInter::SaveTo(wxString str) {
             types = 2;
         } else if (local_str.EndsWith(_T(".g3d"))) {    // Teste si l'extension est .g3d
             types = 3;
+        } else if (local_str.EndsWith(_T(".off"))) {    // Teste si l'extension est .off
+            types = 4;
         } else if (local_str.EndsWith(_T(".dxf"))) {    // Ne devrait jamais arriver !!!
             types = 0;
         }
@@ -7062,6 +7067,9 @@ void BddInter::SaveTo(wxString str) {
                 break;
             case 3:
                 SaveG3D(str);
+                break;
+            case 4:
+                SaveOFF(str);
                 break;
             default:
                 break;
@@ -7111,7 +7119,7 @@ void BddInter::SaveBDD(wxString str) {
             if(objet_courant->Sommetlist[j].show==true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur++;                                 // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-                objet_courant->Sommetlist[j].Numero = compteur;
+                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base, mais important si soudures ?
             }
         }
         myfile << "<OBJET> ";
@@ -7391,7 +7399,7 @@ void BddInter::SaveOBJ(wxString str) {
             if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur++;                                         // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-                objet_courant->Sommetlist[j].Numero = compteur;
+                objet_courant->Sommetlist[j].Numero = compteur;     // Pourquoi ??? car modifie la base
             }
         }
         myfile << "\ng ";
@@ -7546,6 +7554,129 @@ void BddInter::SaveOBJ(wxString str) {
     bdd_modifiee = false ;
 }
 
+void BddInter::SaveOFF(wxString str) {
+
+// A vérifier ...
+
+    wxCharBuffer  buffer;
+    std::vector<int>   numeros_Sommets;
+    std::vector<float> xyz_sommet;
+
+    Object *objet_courant;
+
+    int compteur = 0;
+    int total_vertices = 0;
+    int total_facettes = 0;
+    int offset_vertices= -1;    // Dans ce format, on commence la numérotation des sommets à 0 et non 1 !
+    unsigned int compteur_sommets;
+    unsigned o,j,k ;
+    bool commentaires  = false; // Pour ajouter des commentaires (lignes commençant par #). Mais pose problèmes avec certain logiciels !
+
+    buffer=str.mb_str();
+    std::ofstream myfile;
+    myfile.open (buffer.data());
+    if (!myfile.is_open()) {
+        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
+        wxMessageBox(Msg,_T("Avertissement"));
+        return;
+    }
+    printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
+
+    myfile << "OFF\n";
+// ATTENTION : certain logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
+    if (commentaires) myfile << "# Fichier Object File Format off créé par Ovni\n";
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        objet_courant = &(this->Objetlist[o]);
+        compteur_sommets = 0;
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+                compteur_sommets++;
+            }
+        }
+        total_vertices += compteur_sommets;
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(!objet_courant->Facelist[j].deleted) {   // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+                compteur++;                             // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+            }
+        }
+
+        total_facettes += compteur;
+    }
+    myfile << total_vertices << " " << total_facettes << " 0\n";
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        objet_courant = &(this->Objetlist[o]);
+        if (commentaires) {
+// ATTENTION : certain logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
+            myfile << "# Objet initial : ";
+            myfile << objet_courant->GetName();                         // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
+//            wxString mystring = objet_courant->GetwxName();
+//            wxCharBuffer buffer = mystring.ToUTF8();
+//            myfile << buffer.data();
+            myfile << "\n";
+        }
+
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                for(k=0; k<xyz_sommet.size(); k++) {
+                    myfile << " ";
+                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
+                }
+                myfile << "\n";
+            }
+        }
+    }
+    for(o=0; o<this->Objetlist.size(); o++) {
+        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        objet_courant = &(this->Objetlist[o]);
+
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].show==true && !objet_courant->Facelist[j].deleted) {
+                numeros_Sommets  = objet_courant->Facelist[j].F_sommets;
+                myfile << numeros_Sommets.size();
+                for(k=0; k<numeros_Sommets.size(); k++) {
+                    myfile << " ";
+                    myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices);
+                }
+                myfile << "\n";
+            }
+        }
+
+        compteur_sommets = 0;
+        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            if(objet_courant->Sommetlist[j].show==true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+                compteur_sommets++;
+            }
+        }
+
+
+        offset_vertices += compteur_sommets;
+
+    }
+    myfile.close();
+
+    wxString Nom = wxFileNameFromPath(str);
+    buffer = Nom.mb_str();
+
+// Déclarations pour récupérer l'heure actuelle
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer_time [10];
+
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+
+    strftime (buffer_time,10,"%H:%M:%S",timeinfo);
+    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
+    bdd_modifiee = false ;
+}
+
 void BddInter::SaveG3D(wxString str) {
     // En cours d'écriture ...
     wxCharBuffer  buffer;
@@ -7637,7 +7768,7 @@ void BddInter::SaveG3D(wxString str) {
             if(objet_courant->Sommetlist[j].show==true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur++;                                     // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-                objet_courant->Sommetlist[j].Numero = compteur;
+                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base
             }
         }
 

@@ -1622,7 +1622,7 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     // Préparer l'enregistrement sous...
     wxString Nom_svg = Element->get_firstFile().BeforeLast('.');
     wxFileDialog saveFileDialog(this, _T("Enregistrer sous..."), _T(""), Nom_svg,
-                                _T("SDM Oktal (*.bdd)|*.bdd|Wavefront (*.obj)|*.obj|XML G3D   (*.g3d)|*.g3d"),
+                                _T("SDM Oktal (*.bdd)|*.bdd|Wavefront (*.obj)|*.obj|XML G3D   (*.g3d)|*.g3d|Object File Format (*.off)|*.off"),
                                 wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
         return; // L'utilisateur a changé d'idée finalement ...

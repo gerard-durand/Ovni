@@ -1072,6 +1072,7 @@ public :
     void SaveTo(wxString);
     void SaveBDD(wxString);
     void SaveOBJ(wxString);
+    void SaveOFF(wxString);
     void SaveG3D(wxString);
 
     bool show_light = false, show_box    = true, show_axes = true, show_plein = true;
