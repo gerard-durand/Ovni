@@ -800,6 +800,8 @@ bool OvniFrame::OnInit() {
 OvniFrame::~OvniFrame() {
     //(*Destroy(OvniFrame)
     //*)
+    Timer_Save.Stop();          // Arrêt du timer en sortie de programme (utile en cas de plantage car, apparemment, évite de le laisser actif après la sortie).
+    Timer_Save.Disconnect();    // et déconnexion de précaution
 }
 
 void OvniFrame::InitOpenGL(void) {
