@@ -313,6 +313,9 @@ public:
     void setNewSommet_F(int k,int new_s) {
         F_sommets[k] = new_s;
     };
+    void setNewSommet_L(int k,int new_s) {
+        L_sommets[k] = new_s;
+    };
     void deleteone(int toUp) {
         F_sommets.erase(F_sommets.begin()+toUp);
         Nb_Sommets_F--;

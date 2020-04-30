@@ -4830,12 +4830,13 @@ void BddInter::GenereTableauPointsFacettes(Object * objet)
     Face1*   Face_i;
 
     if (verbose) printf("Entree BddInter::GenereTableauPointsFacettes\n");
-    nb_p   = objet->Nb_sommets;
-    nb_fac = objet->Nb_facettes;
+    nb_p   = objet->Sommetlist.size();//Nb_sommets;
+    nb_fac = objet->Facelist.size(); //Nb_facettes;
     objet->Pointslist.clear();
     objet->Pointslist.resize(nb_p);
     for (i=0; i<nb_fac; i++) {
         Face_i = &(objet->Facelist[i]);
+        if (Face_i->deleted) continue;
         for (j=0; j<Face_i->F_sommets.size();j++) {
             indice_sommet = Face_i->F_sommets[j] -1;                                // <=> numero_sommet -1
             objet->Pointslist[indice_sommet].IndicesFacettes.push_back(i);      // numero_sommet-1 = indice du sommet, i=indice / i+1 = numéro de la facette
@@ -7173,7 +7174,7 @@ void BddInter::SaveBDD(wxString str) {
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {      // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 compteur++;
-                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t";
                 myfile << std::setw(5) << compteur;
 //                myfile << std::setw(5) << objet_courant->Sommetlist[j].Numero;
@@ -7196,7 +7197,7 @@ void BddInter::SaveBDD(wxString str) {
 //            if(this->Normale1list[i][j].show == true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
             if(objet_courant->Facelist[j].deleted) continue ;
             compteur++;
-            xyz_sommet=objet_courant->Facelist[j].getNormale_b();
+            xyz_sommet = objet_courant->Facelist[j].getNormale_b();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             for(k=0; k<xyz_sommet.size(); k++) {
@@ -7211,7 +7212,6 @@ void BddInter::SaveBDD(wxString str) {
         myfile << compteur_facettes ;
         myfile << "\n";
         myfile << "\n";
-//        for(j=0; j<compteur_facettes; j++) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue ;
             compteur++;
@@ -7240,7 +7240,7 @@ void BddInter::SaveBDD(wxString str) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
 //           if(objet_courant->Facelist[j].show == true &&
            if (!objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
-                numeros_Sommets=objet_courant->Facelist[j].getLsommets();
+                numeros_Sommets = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7263,7 +7263,7 @@ void BddInter::SaveBDD(wxString str) {
             }
             compteur++;
 //            if (compteur == 1) printf("\n");    // Bug : OK si souder et exe normal, mais enlever en mode Debug !!!!!
-            numeros_Sommets=objet_courant->Facelist[j].getLsommets();
+            numeros_Sommets = objet_courant->Facelist[j].getLsommets();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t";
@@ -7444,7 +7444,7 @@ void BddInter::SaveOBJ(wxString str) {
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].show == true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
-                numeros_Sommets=objet_courant->Facelist[j].getLsommets();
+                numeros_Sommets = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7468,7 +7468,7 @@ void BddInter::SaveOBJ(wxString str) {
                 myfile << current_groupe << "\n";
                 last_groupe = current_groupe;
             }
-//            compteur++;
+
             numeros_Sommets = objet_courant->Facelist[j].F_sommets;
             myfile << "f";
             if (compteur_luminances != 0) {                         // Il y des des normales aux sommets
@@ -7526,7 +7526,7 @@ void BddInter::SaveOBJ(wxString str) {
 
             for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
     //            if(objet_courant->Vecteurlist[j].show == true) {    // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
-                    NormaleSommet=objet_courant->Vecteurlist[j].point;
+                    NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "vn";
                     for(k=0; k<3; k++) {
                         myfile << " ";
@@ -7634,7 +7634,7 @@ void BddInter::SaveOFF(wxString str) {
 
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
-                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 for(k=0; k<xyz_sommet.size(); k++) {
                     myfile << " ";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
@@ -7649,7 +7649,7 @@ void BddInter::SaveOFF(wxString str) {
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].show == false || objet_courant->Facelist[j].deleted) continue;
-            numeros_Sommets  = objet_courant->Facelist[j].F_sommets;
+            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
             myfile << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
@@ -7786,7 +7786,7 @@ void BddInter::SaveG3D(wxString str) {
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].show == true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
-                numeros_Sommets_L=objet_courant->Facelist[j].getLsommets();
+                numeros_Sommets_L = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets_L.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7813,7 +7813,7 @@ void BddInter::SaveG3D(wxString str) {
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
 //                compteur++;
-                xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
                 myfile << objet_courant->Sommetlist[j].Numero;
                 myfile << "\" xyz=\"";
@@ -7845,7 +7845,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile << compteur;
             myfile << "\">\n";
 
-            xyz_sommet=objet_courant->Facelist[j].getNormale_b();
+            xyz_sommet = objet_courant->Facelist[j].getNormale_b();
             myfile << "\t\t\t\t\t\t\t<normale_b xyz=\"";
             for(k=0; k<xyz_sommet.size(); k++) {
                 myfile << std::fixed << std::setprecision(8)<< std::setw(11) << xyz_sommet[k];
@@ -7855,7 +7855,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile.flush();
 
             myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
-            numeros_Sommets=objet_courant->Facelist[j].F_sommets;
+            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;
                 myfile << " ";
@@ -7876,8 +7876,8 @@ void BddInter::SaveG3D(wxString str) {
                         test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
                         if (test_np) {
                         // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
-                            int test=0;
-                            bool found=false;
+                            int test = 0;
+                            bool found = false;
                             for (unsigned int jj=0; jj < NewVecteurs.size(); jj++) {
                                 test = 0;
                                 if (NormaleSommet[0] == NewVecteurs[jj].X) test ++;
@@ -7937,7 +7937,7 @@ void BddInter::SaveG3D(wxString str) {
             for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
     //            if(objet_courant->Vecteurlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                     compteur++;
-                    NormaleSommet=objet_courant->Vecteurlist[j].point;
+                    NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "\t\t\t\t\t\t<normale_s id=\"";
                     myfile << compteur;
                     myfile << "\" xyz=\"";
@@ -7973,7 +7973,6 @@ void BddInter::SaveG3D(wxString str) {
 
     wxString Nom = wxFileNameFromPath(str);
     buffer = Nom.mb_str();
-
 
     strftime (buffer_time,10,"%H:%M:%S",timeinfo);                          // Reprendre cette info déjà récupérée en début de SaveG3D
     printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data()); // on aurait pu faire directement (const char*)Nom.mb_str();
@@ -8161,17 +8160,22 @@ void BddInter::souderPoints(int objet, int point) {
     int toUp2=-1;
     int limit;
 
-    Face1 NewFace;
+    Face1   NewFace;
+    Object* objet_courant;
 
     int indice_objet_cible = objet; //-1 ; // -1 à cause de glPushName(i+1) dans showAllPoints
     int indice_point_cible = point; //-1 ; // -1 à cause de glPushName(j+1) dans showAllPoints
 
     Sommet1  NewSommet =this->Objetlist[indice_objet_cible].Sommetlist [indice_point_cible];
-    Vecteur1 NewVecteur=this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible];
-    Luminance1 NewLuminance;
-//    printf("1\n"); fflush(stdout);
     this->Objetlist[indice_objet_cible].Sommetlist .push_back(NewSommet);
-    this->Objetlist[indice_objet_cible].Vecteurlist.push_back(NewVecteur);
+
+    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
+        Vecteur1 NewVecteur=this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible];
+        this->Objetlist[indice_objet_cible].Vecteurlist.push_back(NewVecteur);
+        Luminance1 NewLuminance;
+    }
+//    printf("1\n"); fflush(stdout);
+
     int nouveau_sommet = this->Objetlist[indice_objet_cible].Sommetlist.size();
 
     int indice_objet_origine = Smemory->objet ; // -1 ; // -1 à cause de glPushName(i+1) dans showAllPoints
@@ -8186,35 +8190,41 @@ void BddInter::souderPoints(int objet, int point) {
     }
 //    printf("2\n"); fflush(stdout);
     //old
-    this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_origine].show = false;
-    this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible].show   = false;
+    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
+        this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_origine].show = false;
+        this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible].show   = false;
+    }
     this->Objetlist[indice_objet_origine].Sommetlist[indice_point_origine].show= false;
     this->Objetlist[indice_objet_origine].Sommetlist[indice_point_cible].show  = false;
     //new
     int new_indice = nouveau_sommet-1;
     this->Objetlist[indice_objet_origine].Sommetlist[new_indice].toshow = (undo_memory+1);
     this->Objetlist[indice_objet_origine].Sommetlist[new_indice].show   = true;
-    this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].toshow  = (undo_memory+1);
-    this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].show    = true;
+    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
+        this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].toshow  = (undo_memory+1);
+        this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].show    = true;
+    }
 //    printf("4 %d\n",undo_memory); fflush(stdout);
 //    printf("avant : %d",this->Sommetlist[indice_objet_origine].value);
     this->Objetlist[indice_objet_origine].Nb_sommets--;                                                                         // ???
 //    printf(", apres : %d\n",this->Sommetlist[indice_objet_origine].value);
 //    printf("avant : %d",this->Vecteurlist[indice_objet_origine].value);
 //    this->Vecteurlist[indice_objet_origine].value--;
-    this->Objetlist[indice_objet_origine].Nb_vecteurs--;
+    if (this->Objetlist[indice_objet_origine].Nb_vecteurs > 0) this->Objetlist[indice_objet_origine].Nb_vecteurs--;
 //    printf(", apres : %d\n",this->Vecteurlist[indice_objet_origine].value);
 //    fflush(stdout);
     if (indice_objet_cible == indice_objet_origine) {
         printf("Soudure interne dans un objet\n");
 //        fflush(stdout);
         for(i=0; i<this->Objetlist.size(); i++) {
-            limit = this->Objetlist[i].Facelist.size();
+            objet_courant = &(this->Objetlist[i]);
+
+            limit = objet_courant->Facelist.size();
             for(j=0; j<limit; j++) {
-                if(this->Objetlist[i].Facelist[j].show && !this->Objetlist[i].Facelist[j].deleted) {
+                if(objet_courant->Facelist[j].show && !objet_courant->Facelist[j].deleted) {
                     toUp1 = -1;
                     toUp2 = -1;
-                    NumerosSommets = this->Objetlist[i].Facelist[j].getF_sommets();
+                    NumerosSommets = objet_courant->Facelist[j].getF_sommets();
                     for(k=0; k<(int)NumerosSommets.size(); k++) {
                         if((NumerosSommets[k] == point+1) && (indice_objet_cible == (int)i)) {    // Ici point+1 car c'est un numéro de point qu'il faut
                             toUp1 = k;
@@ -8222,28 +8232,41 @@ void BddInter::souderPoints(int objet, int point) {
                             toUp2 = k;
                         }
                     }
-                    NewFace = Objetlist[i].Facelist[j];
-                    if (this->Objetlist[i].Facelist[j].toshow == 0) {
-                        this->Objetlist[i].Facelist[j].toshow = ((undo_memory*(-1))-1);
+                    if ((toUp1 == -1) && (toUp2 == -1)) continue;   // Sommet non modifié, passer à la facette suivante
+                    NewFace = objet_courant->Facelist[j];
+                    if (objet_courant->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0; // Par précaution
+                    if (objet_courant->Facelist[j].toshow == 0) {
+                        objet_courant->Facelist[j].toshow = ((undo_memory*(-1))-1);
                     }
-                    this->Objetlist[i].Facelist[j].show    = false;   // Attention ici le .show ne veut pas dire "non masqué" !!
-                    this->Objetlist[i].Facelist[j].deleted = true ;   // GD
+                    objet_courant->Facelist[j].show    = false;   // Attention ici le .show ne veut pas dire "non masqué" !!
+                    objet_courant->Facelist[j].deleted = true ;   // GD
                     NewFace.toshow = (undo_memory+1);
                     if((toUp1 != -1) && (toUp2 != -1)) {
                         NewFace.setNewSommet_F(toUp1, nouveau_sommet);
                         NewFace.setNewSommet_F(toUp2, nouveau_sommet);
                         NewFace.F_sommets.erase(NewFace.F_sommets.begin()+toUp2);
                         NewFace.Nb_Sommets_F--;
+                        if (NewFace.Nb_Sommets_L > 0) {
+                            NewFace.setNewSommet_L(toUp1, nouveau_sommet);
+                            NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+                            NewFace.L_sommets.erase(NewFace.L_sommets.begin()+toUp2);
+                        NewFace.Nb_Sommets_L--;
+                        }
                     } else if(toUp1 != -1) {
                         NewFace.setNewSommet_F(toUp1, nouveau_sommet);
+                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
                     } else if(toUp2 != -1) {
                         NewFace.setNewSommet_F(toUp2, nouveau_sommet);
+                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
                     }
-                    NewFace.Numero = this->Objetlist[i].Facelist.size();
-                    this->Objetlist[i].Facelist.push_back(NewFace);
-                    Calcul_Normale_Barycentre(i, this->Objetlist[i].Facelist.size()-1);
+                    NewFace.Numero = objet_courant->Facelist.size();
+                    objet_courant->Facelist.push_back(NewFace);
+                    Calcul_Normale_Barycentre(i, objet_courant->Facelist.size()-1);
                 }
             }
+            objet_courant->Nb_sommets = objet_courant->Sommetlist.size();
+            objet_courant->Nb_facettes= objet_courant->Facelist.size();
+            objet_courant->Nb_vecteurs= objet_courant->Vecteurlist.size();
         }
     } else {
         printf("Soudure entre 2 objets\n");
@@ -8253,12 +8276,14 @@ void BddInter::souderPoints(int objet, int point) {
         this->Objetlist[indice_objet_origine].Sommetlist .push_back(NewSommet2);
         this->Objetlist[indice_objet_origine].Vecteurlist.push_back(NewVecteur2);
         for(i=0; i<this->Objetlist.size(); i++) {
-            int limit = this->Objetlist[i].Facelist.size();
+            objet_courant = &(this->Objetlist[i]);
+
+            int limit = objet_courant->Facelist.size();
             for(j=0; j<limit; j++) {
-                if(this->Objetlist[i].Facelist[j].toshow > -1) {
+                if(objet_courant->Facelist[j].toshow > -1) {
                     toUp1 = -1;
                     toUp2 = -1;
-                    NumerosSommets=this->Objetlist[i].Facelist[j].getF_sommets();
+                    NumerosSommets = objet_courant->Facelist[j].getF_sommets();
                     for(k=0; k<(int)NumerosSommets.size(); k++) {
                         if((NumerosSommets[k] == point+1) && (indice_objet_cible == (int)i)) {
                             toUp1 = k;
@@ -8266,23 +8291,31 @@ void BddInter::souderPoints(int objet, int point) {
                             toUp2 = k;
                         }
                     }
-                    NewFace = Objetlist[i].Facelist[j];
-                    if (this->Objetlist[i].Facelist[j].toshow == 0) {
-                        this->Objetlist[i].Facelist[j].toshow = ((undo_memory*(-1))-1);
+                    if ((toUp1 == -1) && (toUp2 == -1)) continue;   // Sommet non modifié, passer à la facette suivante
+                    NewFace = objet_courant->Facelist[j];
+                    if (objet_courant->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0; // Par précaution
+                    if (objet_courant->Facelist[j].toshow == 0) {
+                        objet_courant->Facelist[j].toshow = ((undo_memory*(-1))-1);
                     }
-                    this->Objetlist[i].Facelist[j].show    = false;
-                    this->Objetlist[i].Facelist[j].deleted = true;    // GD
+                    objet_courant->Facelist[j].show    = false;
+                    objet_courant->Facelist[j].deleted = true;    // GD
                     NewFace.toshow = (undo_memory+1);
                     if(toUp1 != -1) {
                         NewFace.setNewSommet_F(toUp1, nouveau_sommet);
+                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
                     } else if(toUp2 != -1) {
                         NewFace.setNewSommet_F(toUp2, nouveau_sommet2);
+                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
                     }
-                    NewFace.Numero = this->Objetlist[i].Facelist.size();
-                    this->Objetlist[i].Facelist.push_back(NewFace);
-                    Calcul_Normale_Barycentre(i, this->Objetlist[i].Facelist.size()-1);
+                    NewFace.Numero = objet_courant->Facelist.size();
+                    objet_courant->Facelist.push_back(NewFace);
+                    Calcul_Normale_Barycentre(i, objet_courant->Facelist.size()-1);
                 }
             }
+            objet_courant->Nb_sommets = objet_courant->Sommetlist.size();
+            objet_courant->Nb_facettes= objet_courant->Facelist.size();
+            objet_courant->Nb_vecteurs= objet_courant->Vecteurlist.size();
+
 //            GenereTableauAretes(&(this->Objetlist[i])); regénérer les points facettes avant ....
         }
     }
@@ -8293,41 +8326,46 @@ void BddInter::souderPoints(int objet, int point) {
 
 void BddInter::UNDO_ONE() {
     unsigned int i,j ;
+    Object* objet_courant;
 
     if(undo_memory !=0 ) {
         for(i=0; i<this->Objetlist.size(); i++) {
-            for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-                if (this->Objetlist[i].Facelist[j].toshow == undo_memory) {
-                    this->Objetlist[i].Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
+            objet_courant = &(this->Objetlist[i]);
+            for(j=0; j<objet_courant->Facelist.size(); j++) {
+                if (objet_courant->Facelist[j].toshow == undo_memory) {
+                    objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;
-                } else if(this->Objetlist[i].Facelist[j].toshow == (-undo_memory)) {
-                    this->Objetlist[i].Facelist[j].show         = true;
-                    this->Objetlist[i].Facelist[j].deleted      = false;     // GD
-                    this->Objetlist[i].Facelist[j].toshow       = 0;
-                } else if((this->Objetlist[i].Facelist[j].toshow == undo_memory-1)) {
-                    this->Objetlist[i].Facelist[j].show         = true;
-                    this->Objetlist[i].Facelist[j].deleted      = false;     // GD
+                } else if(objet_courant->Facelist[j].toshow == (-undo_memory)) {
+                    objet_courant->Facelist[j].show         = true;
+                    objet_courant->Facelist[j].deleted      = false;     // GD
+                    objet_courant->Facelist[j].toshow       = 0;
+                } else if((objet_courant->Facelist[j].toshow == undo_memory-1)) {
+                    objet_courant->Facelist[j].show         = true;
+                    objet_courant->Facelist[j].deleted      = false;     // GD
                 }
             }
             bool vecteurs_presents = true;
-            if (this->Objetlist[i].Vecteurlist.size() == 0) vecteurs_presents = false;
-            for(j=0; j<this->Objetlist[i].Sommetlist.size(); j++) {
-                if (this->Objetlist[i].Sommetlist[j].toshow == undo_memory) {
-                    this->Objetlist[i].Sommetlist.erase(this->Objetlist[i].Sommetlist.begin()+j);
-                    if (vecteurs_presents) this->Objetlist[i].Vecteurlist.erase(this->Objetlist[i].Vecteurlist.begin()+j);
+            if (objet_courant->Vecteurlist.size() == 0) vecteurs_presents = false;
+            for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+                if (objet_courant->Sommetlist[j].toshow == undo_memory) {
+                    objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+j);
+                    if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
                     j--;
-                } else if(this->Objetlist[i].Sommetlist[j].toshow == -undo_memory) {
-                    this->Objetlist[i].Sommetlist[j].show    = true;
-                    this->Objetlist[i].Sommetlist[j].toshow  = 0;
+                } else if(objet_courant->Sommetlist[j].toshow == -undo_memory) {
+                    objet_courant->Sommetlist[j].show    = true;
+                    objet_courant->Sommetlist[j].toshow  = 0;
                     if (vecteurs_presents) {
-                        this->Objetlist[i].Vecteurlist[j].show   = true;
-                        this->Objetlist[i].Vecteurlist[j].toshow = 0;
+                        objet_courant->Vecteurlist[j].show   = true;
+                        objet_courant->Vecteurlist[j].toshow = 0;
                     }
-                } else if(((this->Objetlist[i].Sommetlist[j].toshow == undo_memory-1))) {
-                    this->Objetlist[i].Sommetlist[j].show    = true;
-                    if (vecteurs_presents) this->Objetlist[i].Vecteurlist[j].show   = true;
+                } else if(((objet_courant->Sommetlist[j].toshow == undo_memory-1))) {
+                    objet_courant->Sommetlist[j].show    = true;
+                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
             }
+            objet_courant->Nb_facettes = objet_courant->Facelist.size();
+            objet_courant->Nb_sommets  = objet_courant->Sommetlist.size();
+            objet_courant->Nb_vecteurs = objet_courant->Vecteurlist.size();
 //            GenereTableauAretes(&(this->Objetlist[i]));
         }
         undo_memory--;
