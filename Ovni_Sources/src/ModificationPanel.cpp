@@ -52,7 +52,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	//(*Initialize(ModificationPanel)
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(214,495));
-	Move(wxDefaultPosition);
+	Move(wxPoint(20,20));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arrête"), wxPoint(0,0), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
@@ -89,6 +89,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,256), wxSize(216,32), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
 	ToggleButton_Souder = new wxToggleButton(Panel6, ID_TOGGLEBUTTON3, _T("Souder"), wxPoint(16,4), wxSize(96,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON3"));
 	Button_UndoSouder = new wxButton(Panel6, ID_BUTTON8, _T("Undo"), wxPoint(112,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_UndoSouder->Disable();
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,288), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
@@ -105,7 +106,6 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
 	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,456), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
 	Panel9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
-	Center();
 
 	Connect(ID_TOGGLEBUTTON1,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_AjouterToggle);
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ModificationPanel::OnSpinCtrl_NbSegmentsChange);
@@ -204,6 +204,8 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
         for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
     }
     Hide();
+    // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actaliser GenereTableauPointsFacettes et GenereTableauAretes
+    // Mais cette opération est longue sur certaines grosses Bdd. Paut-être à faire en option.
     Element->Refresh();
 }
 

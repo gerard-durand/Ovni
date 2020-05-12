@@ -4830,15 +4830,15 @@ void BddInter::GenereTableauPointsFacettes(Object * objet)
     Face1*   Face_i;
 
     if (verbose) printf("Entree BddInter::GenereTableauPointsFacettes\n");
-    nb_p   = objet->Sommetlist.size();//Nb_sommets;
-    nb_fac = objet->Facelist.size(); //Nb_facettes;
+    nb_p   = objet->Sommetlist.size();  //Nb_sommets;
+    nb_fac = objet->Facelist.size();    //Nb_facettes;
     objet->Pointslist.clear();
     objet->Pointslist.resize(nb_p);
     for (i=0; i<nb_fac; i++) {
         Face_i = &(objet->Facelist[i]);
         if (Face_i->deleted) continue;
         for (j=0; j<Face_i->F_sommets.size();j++) {
-            indice_sommet = Face_i->F_sommets[j] -1;                                // <=> numero_sommet -1
+            indice_sommet = Face_i->F_sommets[j] -1;                            // <=> numero_sommet -1
             objet->Pointslist[indice_sommet].IndicesFacettes.push_back(i);      // numero_sommet-1 = indice du sommet, i=indice / i+1 = numéro de la facette
         }
     }
@@ -5323,7 +5323,8 @@ Boucle:
 
 //                    if (!Objet_i->flat && !Face_ij->flat) Luminance_Face_ij = &(Objet_i->Luminancelist[j]);
 
-                    if (Face_ij->afficher && Face_ij->show && !Face_ij->deleted) {  // Test sur show et afficher ???
+//                    if (Face_ij->afficher && Face_ij->show && !Face_ij->deleted) {  // Test sur show et afficher ???
+                    if (Face_ij->afficher && !Face_ij->deleted) {  // Test sur show et afficher ???
                         NormaleFacette.clear();
                         NumerosSommets.clear();
 //                      x++;
@@ -8153,178 +8154,162 @@ void BddInter::souderPoints(int objet, int point) {
 //            Or les premiers push_back sont faits sur indice_objet_cible ... Pas très logique.
 //        ... Peut-être conserver tel quel car gestion du Undo est plus simple ! Pas de distingo interne/externe
 
+//        05/2020 mieux. Faut-il traiter les vecteurs/luminances car très peu de chances qu'ils restent OK après une soudure !
+
     std::vector<int>NumerosSommets;
     unsigned int i;
     int j,k;
     int toUp1=-1;
     int toUp2=-1;
-    int limit;
+    int nb_Fac_initial;
 
     Face1   NewFace;
-    Object* objet_courant;
+    Object *objet_courant, *objet_origine, *objet_cible;
 
-    int indice_objet_cible = objet; //-1 ; // -1 à cause de glPushName(i+1) dans showAllPoints
-    int indice_point_cible = point; //-1 ; // -1 à cause de glPushName(j+1) dans showAllPoints
+    int indice_objet_cible   = objet;
+    int indice_point_cible   = point;
+    int numero_point_cible   = point +1;
 
-    Sommet1  NewSommet =this->Objetlist[indice_objet_cible].Sommetlist [indice_point_cible];
-    this->Objetlist[indice_objet_cible].Sommetlist .push_back(NewSommet);
+    // Récupération dans Smemory des numéros d'objet et de point du 1er clic : objet et point d'origine
+    int indice_objet_origine = Smemory->objet ;
+    int indice_point_origine = Smemory->sommet;
+    int numero_point_origine = Smemory->sommet +1;
 
-    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
-        Vecteur1 NewVecteur=this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible];
-        this->Objetlist[indice_objet_cible].Vecteurlist.push_back(NewVecteur);
-        Luminance1 NewLuminance;
+    objet_cible   = &(this->Objetlist[indice_objet_cible]);
+    objet_origine = &(this->Objetlist[indice_objet_origine]);
+
+    Sommet1  NewSommet = objet_cible->Sommetlist [indice_point_cible];      // Récupère le point cible dans l'objet cible
+    NewSommet.selected = false;
+    NewSommet.Numero   = objet_origine->Sommetlist.size() +1;               // Sommetlist pas encore agrandi, donc +1
+    objet_origine->Sommetlist.push_back(NewSommet);                         // Ajoute NewSommet en fin de liste origine (même si cible = origine !)
+
+    if (objet_cible->Nb_vecteurs > 0) {
+        Vecteur1 NewVecteur=objet_cible->Vecteurlist[indice_point_cible];   // Suppose que indice_points = indice_vecteurs ? Faux si plusieurs normales sur 1 sommet !
+        if (objet_origine->Nb_vecteurs > 0) {
+            NewVecteur.Numero = objet_origine->Vecteurlist.size() +1;
+            objet_origine->Vecteurlist.push_back(NewVecteur);               // Idem pour NewVecteur, mais il faudra le modifier car non adapté
+///            Luminance1 NewLuminance;                                                            // Non utilisé ? pour l'instant
+        }                                                                   // que fait-on si Nb_vecteurs dans cible = 0 mais pas dans origine : il faudrait en créer un ?
     }
 //    printf("1\n"); fflush(stdout);
 
-    int nouveau_sommet = this->Objetlist[indice_objet_cible].Sommetlist.size();
+    int nouveau_sommet = objet_origine->Sommetlist.size();
 
-    int indice_objet_origine = Smemory->objet ; // -1 ; // -1 à cause de glPushName(i+1) dans showAllPoints
-    int indice_point_origine = Smemory->sommet; // -1 ; // -1 à cause de glPushName(j+1) dans showAllPoints
+    if (objet_origine->Sommetlist[indice_point_origine].toshow==0) {
+        objet_origine->Sommetlist[indice_point_origine].toshow=(-undo_memory-1);
+    }
 
+    objet_origine->Sommetlist[indice_point_origine].show= false;
 
-    if (this->Objetlist[indice_objet_origine].Sommetlist[indice_point_origine].toshow==0) {
-        this->Objetlist[indice_objet_origine].Sommetlist[indice_point_origine].toshow=(-undo_memory-1);
-    }
-    if (this->Objetlist[indice_objet_cible].Sommetlist[indice_point_cible].toshow==0) {
-        this->Objetlist[indice_objet_cible].Sommetlist[indice_point_cible].toshow=(-undo_memory-1);
-    }
-//    printf("2\n"); fflush(stdout);
-    //old
-    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
-        this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_origine].show = false;
-        this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible].show   = false;
-    }
-    this->Objetlist[indice_objet_origine].Sommetlist[indice_point_origine].show= false;
-    this->Objetlist[indice_objet_origine].Sommetlist[indice_point_cible].show  = false;
-    //new
     int new_indice = nouveau_sommet-1;
-    this->Objetlist[indice_objet_origine].Sommetlist[new_indice].toshow = (undo_memory+1);
-    this->Objetlist[indice_objet_origine].Sommetlist[new_indice].show   = true;
-    if (this->Objetlist[indice_objet_cible].Nb_vecteurs > 0) {
-        this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].toshow  = (undo_memory+1);
-        this->Objetlist[indice_objet_cible].Vecteurlist[new_indice].show    = true;
-    }
-//    printf("4 %d\n",undo_memory); fflush(stdout);
-//    printf("avant : %d",this->Sommetlist[indice_objet_origine].value);
-    this->Objetlist[indice_objet_origine].Nb_sommets--;                                                                         // ???
-//    printf(", apres : %d\n",this->Sommetlist[indice_objet_origine].value);
-//    printf("avant : %d",this->Vecteurlist[indice_objet_origine].value);
-//    this->Vecteurlist[indice_objet_origine].value--;
-    if (this->Objetlist[indice_objet_origine].Nb_vecteurs > 0) this->Objetlist[indice_objet_origine].Nb_vecteurs--;
-//    printf(", apres : %d\n",this->Vecteurlist[indice_objet_origine].value);
-//    fflush(stdout);
+    objet_origine->Sommetlist[new_indice].toshow = (undo_memory+1);
+    objet_origine->Sommetlist[new_indice].show   = true;
+
+    nb_Fac_initial = objet_origine->Facelist.size();
+
     if (indice_objet_cible == indice_objet_origine) {
         printf("Soudure interne dans un objet\n");
 //        fflush(stdout);
-        for(i=0; i<this->Objetlist.size(); i++) {
-            objet_courant = &(this->Objetlist[i]);
 
-            limit = objet_courant->Facelist.size();
-            for(j=0; j<limit; j++) {
-                if(objet_courant->Facelist[j].show && !objet_courant->Facelist[j].deleted) {
-                    toUp1 = -1;
-                    toUp2 = -1;
-                    NumerosSommets = objet_courant->Facelist[j].getF_sommets();
-                    for(k=0; k<(int)NumerosSommets.size(); k++) {
-                        if((NumerosSommets[k] == point+1) && (indice_objet_cible == (int)i)) {    // Ici point+1 car c'est un numéro de point qu'il faut
-                            toUp1 = k;
-                        } else if((NumerosSommets[k] == Smemory->sommet +1) && (indice_objet_origine == (int)i)) {
-                            toUp2 = k;
-                        }
+        for(j=0; j<nb_Fac_initial; j++) {
+            if(objet_origine->Facelist[j].show && !objet_origine->Facelist[j].deleted) {
+                toUp1 = -1;
+                toUp2 = -1;
+                NumerosSommets = objet_origine->Facelist[j].getF_sommets();
+                for(k=0; k<(int)NumerosSommets.size(); k++) {
+                    if(NumerosSommets[k] == numero_point_cible) {
+                        toUp1 = k;
+                        if (verbose) printf("toUp1 = %d\n",toUp1);
+                    } else if(NumerosSommets[k] == numero_point_origine) {
+                        toUp2 = k;
+                        if (verbose) printf("toUp2 = %d\n",toUp2);
                     }
-                    if ((toUp1 == -1) && (toUp2 == -1)) continue;   // Sommet non modifié, passer à la facette suivante
-                    NewFace = objet_courant->Facelist[j];
-                    if (objet_courant->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0; // Par précaution
-                    if (objet_courant->Facelist[j].toshow == 0) {
-                        objet_courant->Facelist[j].toshow = ((undo_memory*(-1))-1);
-                    }
-                    objet_courant->Facelist[j].show    = false;   // Attention ici le .show ne veut pas dire "non masqué" !!
-                    objet_courant->Facelist[j].deleted = true ;   // GD
-                    NewFace.toshow = (undo_memory+1);
-                    if((toUp1 != -1) && (toUp2 != -1)) {
-                        NewFace.setNewSommet_F(toUp1, nouveau_sommet);
-                        NewFace.setNewSommet_F(toUp2, nouveau_sommet);
-                        NewFace.F_sommets.erase(NewFace.F_sommets.begin()+toUp2);
-                        NewFace.Nb_Sommets_F--;
-                        if (NewFace.Nb_Sommets_L > 0) {
-                            NewFace.setNewSommet_L(toUp1, nouveau_sommet);
-                            NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-                            NewFace.L_sommets.erase(NewFace.L_sommets.begin()+toUp2);
-                        NewFace.Nb_Sommets_L--;
-                        }
-                    } else if(toUp1 != -1) {
-                        NewFace.setNewSommet_F(toUp1, nouveau_sommet);
-                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
-                    } else if(toUp2 != -1) {
-                        NewFace.setNewSommet_F(toUp2, nouveau_sommet);
-                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-                    }
-                    NewFace.Numero = objet_courant->Facelist.size();
-                    objet_courant->Facelist.push_back(NewFace);
-                    Calcul_Normale_Barycentre(i, objet_courant->Facelist.size()-1);
                 }
+                if ((toUp1 == -1) && (toUp2 == -1)) continue;                   // Aucun sommet modifié dans cette facette, passer à la suivante
+                NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
+                if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
+                if (objet_origine->Facelist[j].toshow == 0) {
+                    objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
+                }
+                objet_origine->Facelist[j].show    = false;                     // Attention ici le .show ne veut pas dire "non masqué" !!
+                objet_origine->Facelist[j].deleted = true ;                     // GD. Marquer cette ancienne facette comme "deleted" A VERIFIER : mais du coup, .show <=> !deleted
+                NewFace.toshow = (undo_memory+1);
+                if((toUp1 != -1) && (toUp2 != -1)) {                            // Soudure interne dans une même facette
+                    NewFace.setNewSommet_F(toUp1, nouveau_sommet);
+                    NewFace.setNewSommet_F(toUp2, nouveau_sommet);
+                    NewFace.F_sommets.erase(NewFace.F_sommets.begin()+toUp2);   // dans ce cas, la facette comportera 1 sommet de moins
+                    NewFace.Nb_Sommets_F--;                                     // donc on actualise Nb_Sommets_F
+                    if (NewFace.Nb_Sommets_L > 0) {
+                        NewFace.setNewSommet_L(toUp1, nouveau_sommet);
+                        NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+                        NewFace.L_sommets.erase(NewFace.L_sommets.begin()+toUp2);                   // Idem pour les luminances
+                        NewFace.Nb_Sommets_L--;
+                    }
+                } else if(toUp1 != -1) {
+                    NewFace.setNewSommet_F(toUp1, nouveau_sommet);                                  // Remplacer l'ancien sommet par le nouveau
+                    if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
+                } else if(toUp2 != -1) {
+                    NewFace.setNewSommet_F(toUp2, nouveau_sommet);                                  // Idem
+                    if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+                }
+                NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
+                objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
+
+                Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
             }
-            objet_courant->Nb_sommets = objet_courant->Sommetlist.size();
-            objet_courant->Nb_facettes= objet_courant->Facelist.size();
-            objet_courant->Nb_vecteurs= objet_courant->Vecteurlist.size();
         }
     } else {
+// Note : peu différent de soudure interne, mais quelques cas n'ont pas lieu d'être ici => On préfère réécrire le code, maêm si c'est "presque" le même !
         printf("Soudure entre 2 objets\n");
-        Sommet1 NewSommet2  = this->Objetlist[indice_objet_cible].Sommetlist[indice_point_cible];
-        int nouveau_sommet2 = this->Objetlist[indice_objet_cible].Sommetlist.size();
-        Vecteur1 NewVecteur2= this->Objetlist[indice_objet_cible].Vecteurlist[indice_point_cible];
-        this->Objetlist[indice_objet_origine].Sommetlist .push_back(NewSommet2);
-        this->Objetlist[indice_objet_origine].Vecteurlist.push_back(NewVecteur2);
-        for(i=0; i<this->Objetlist.size(); i++) {
-            objet_courant = &(this->Objetlist[i]);
+//        fflush(stdout);
 
-            int limit = objet_courant->Facelist.size();
-            for(j=0; j<limit; j++) {
-                if(objet_courant->Facelist[j].toshow > -1) {
-                    toUp1 = -1;
-                    toUp2 = -1;
-                    NumerosSommets = objet_courant->Facelist[j].getF_sommets();
-                    for(k=0; k<(int)NumerosSommets.size(); k++) {
-                        if((NumerosSommets[k] == point+1) && (indice_objet_cible == (int)i)) {
-                            toUp1 = k;
-                        } else if((NumerosSommets[k] == Smemory->sommet +1) && (indice_objet_origine == (int)i)) {
-                            toUp2 = k;
-                        }
+        for(j=0; j<nb_Fac_initial; j++) {
+///           if(objet_origine->Facelist[j].toshow > -1) {                      // Test différent si entre 2 objets ????
+            if(objet_origine->Facelist[j].show && !objet_origine->Facelist[j].deleted) {
+//                toUp1 = -1;
+                toUp2 = -1;
+                NumerosSommets = objet_origine->Facelist[j].getF_sommets();
+                for(k=0; k<(int)NumerosSommets.size(); k++) {
+                    if(NumerosSommets[k] == numero_point_origine) {
+                        toUp2 = k;
+                        if (verbose) printf("toUp2 = %d\n",toUp2);
                     }
-                    if ((toUp1 == -1) && (toUp2 == -1)) continue;   // Sommet non modifié, passer à la facette suivante
-                    NewFace = objet_courant->Facelist[j];
-                    if (objet_courant->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0; // Par précaution
-                    if (objet_courant->Facelist[j].toshow == 0) {
-                        objet_courant->Facelist[j].toshow = ((undo_memory*(-1))-1);
-                    }
-                    objet_courant->Facelist[j].show    = false;
-                    objet_courant->Facelist[j].deleted = true;    // GD
-                    NewFace.toshow = (undo_memory+1);
-                    if(toUp1 != -1) {
-                        NewFace.setNewSommet_F(toUp1, nouveau_sommet);
-                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
-                    } else if(toUp2 != -1) {
-                        NewFace.setNewSommet_F(toUp2, nouveau_sommet2);
-                        if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-                    }
-                    NewFace.Numero = objet_courant->Facelist.size();
-                    objet_courant->Facelist.push_back(NewFace);
-                    Calcul_Normale_Barycentre(i, objet_courant->Facelist.size()-1);
                 }
-            }
-            objet_courant->Nb_sommets = objet_courant->Sommetlist.size();
-            objet_courant->Nb_facettes= objet_courant->Facelist.size();
-            objet_courant->Nb_vecteurs= objet_courant->Vecteurlist.size();
+//                if ((toUp1 == -1) && (toUp2 == -1)) continue;                 // Sommet non modifié, passer à la facette suivante
+                if (toUp2 == -1) continue;                                      // Aucun sommet modifié dans cette facette, passer à la suivante
+                NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
+                if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
+                if (objet_origine->Facelist[j].toshow == 0) {
+                    objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
+                }
+                objet_origine->Facelist[j].show    = false;
+                objet_origine->Facelist[j].deleted = true;                      // GD
+                NewFace.toshow = (undo_memory+1);
 
-//            GenereTableauAretes(&(this->Objetlist[i])); regénérer les points facettes avant ....
+                NewFace.setNewSommet_F(toUp2, nouveau_sommet);
+                if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+
+                NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
+                objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
+
+                Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
+            }
         }
     }
+    objet_origine->Nb_sommets = objet_origine->Sommetlist.size();   // Mis à jour des valeurs
+    objet_origine->Nb_facettes= objet_origine->Facelist.size();
+    objet_origine->Nb_vecteurs= objet_origine->Vecteurlist.size();
+
+    GenereTableauPointsFacettes(objet_origine);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
+    GenereTableauAretes(objet_origine);                             // Car peut-être long si beaucoup de facettes
+
     undo_memory++;
     MPanel->Button_UndoSouder->Enable();
     bdd_modifiee = true ;
 }
 
 void BddInter::UNDO_ONE() {
+// On va réactiver les facettes marquées .deleted (et/ou !.show), remettre en état les tableaux (vector en réalité) de facettes, sommets, vecteurs
     unsigned int i,j ;
     Object* objet_courant;
 
@@ -8334,7 +8319,7 @@ void BddInter::UNDO_ONE() {
             for(j=0; j<objet_courant->Facelist.size(); j++) {
                 if (objet_courant->Facelist[j].toshow == undo_memory) {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
-                    j--;
+                    j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Facelist[j].toshow == (-undo_memory)) {
                     objet_courant->Facelist[j].show         = true;
                     objet_courant->Facelist[j].deleted      = false;     // GD
@@ -8350,7 +8335,7 @@ void BddInter::UNDO_ONE() {
                 if (objet_courant->Sommetlist[j].toshow == undo_memory) {
                     objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+j);
                     if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
-                    j--;
+                    j--;    // 1 sommet effacé => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Sommetlist[j].toshow == -undo_memory) {
                     objet_courant->Sommetlist[j].show    = true;
                     objet_courant->Sommetlist[j].toshow  = 0;
@@ -8363,10 +8348,12 @@ void BddInter::UNDO_ONE() {
                     if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
             }
-            objet_courant->Nb_facettes = objet_courant->Facelist.size();
+            objet_courant->Nb_facettes = objet_courant->Facelist.size();    // Remettre à jour les Nb_*
             objet_courant->Nb_sommets  = objet_courant->Sommetlist.size();
             objet_courant->Nb_vecteurs = objet_courant->Vecteurlist.size();
-//            GenereTableauAretes(&(this->Objetlist[i]));
+
+            GenereTableauPointsFacettes(objet_courant);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
+            GenereTableauAretes(objet_courant);//
         }
         undo_memory--;
         if (undo_memory == 0) {

@@ -62,7 +62,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	//(*Initialize(SelectionPanel)
 	Create(parent, wxID_ANY, _T("Sélection - Déplacements"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(280,691));
-	Move(wxPoint(10,10));
+	Move(wxPoint(20,20));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
 		_T("Points           "),
