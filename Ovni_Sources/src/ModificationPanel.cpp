@@ -142,8 +142,8 @@ ModificationPanel::~ModificationPanel()
 
 void ModificationPanel::OnInit(wxInitDialogEvent& event)
 {
-    BddInter *Element = MAIN->Element;
     unsigned int o,i;
+    BddInter *Element  = MAIN->Element;
 
     old_modeGL         = (int)Element->modeGL;      // Pour pouvoir restituer l'état initial en quittant ModificationPanel
     old_mode_selection = Element->mode_selection;
@@ -304,10 +304,6 @@ void ModificationPanel::OnButton_UndoSouderClick(wxCommandEvent& event)
 
 void ModificationPanel::OnButton_InverserNormaleClick(wxCommandEvent& event)
 {
-//    MAIN->Element->Inverse_Selected_Normales();
-//    MAIN->Element->m_gllist = 0;
-//    MAIN->Element->Refresh();
-// <=>
     wxKeyEvent key_event;
     key_event.m_keyCode = 'I';
     MAIN->Element->OnKeyDown(key_event);   // Simule une pression sur la touche i au clavier => inverser les normales des facettes sélectionnées
@@ -338,7 +334,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
     Object   *objet_courant;
-    Face1    *facette_courante, *facette_nouvelle;
+    Face     *facette_courante, *facette_nouvelle;
     unsigned int o,i,j,k;
     unsigned int nb_facettes, nb_sommets, new_numero_facette, new_indice_facette;
     int jj, jj1, jj2, jj3, jj3v;

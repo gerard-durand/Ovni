@@ -181,7 +181,7 @@ void ManipulationsPanel::CreerBoiteObjet()
     unsigned int n_val, i, j, nb_fac;
     bool first;
     Object   *objet_courant;
-    Sommet1  *sommet_courant;
+    Sommet   *sommet_courant;
 
     x1b1=x2b1=y1b1=y2b1=z1b1=z2b1=0.0;
 
@@ -247,9 +247,9 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
 
     unsigned int n_val, i, j, nb_fac;
     Object   *objet_courant, *objet_nouveau;
-    Sommet1  *sommet_courant;
-    Vecteur1 *vecteur_courant;
-    Face1    *facette_courante;
+    Sommet   *sommet_courant;
+    Vecteur  *vecteur_courant;
+    Face     *facette_courante;
     unsigned int indiceObjet, new_numero, ns;
     int numero_max;
 

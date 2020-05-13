@@ -113,7 +113,6 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
             // Sélectionner la facatte "indice_facette" de l'Objet "objet"
             if (indice_facette < (int)Element->Objetlist[objet].Nb_facettes-1) {
                 // N'ajouter que si non déjà présent dans la Liste
-//                if (!Element->ToSelect.check_if_in_Liste(objet,indice_facette)) {
                 if (!Element->ToSelect.check_if_in_ListeSelect(objet,indice_facette)) {
                     if (Element->verbose) printf("objet %d, facette %d\n",objet,indice_facette);
                     Element->ToSelect.add_one(objet,indice_facette);

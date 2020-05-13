@@ -44,6 +44,7 @@
 #endif // GL_SAMPLES
 
 
+class Aide_html;
 class BddInter;
 class OvniFrame;
 class CentreRotation;
@@ -75,12 +76,11 @@ class RotationPanel;
 class ScalePanel;
 class Sphere;
 class ZoomSpecifique;
-class Aide_html;
 
-class Face1;
-class Sommet1;
-class Luminance1;
-class Vecteur1;
+class Face;
+class Sommet;
+class Luminance;
+class Vecteur;
 class Points;
 class Aretes;
 
@@ -103,7 +103,7 @@ class Object {
     int value;                  // Numéro de l'objet
 public:
     bool afficher = true;
-//    bool show    = true;    // Utilisé ???
+//    bool show    = true;      // Non utilisé ???
     bool deleted  = false;      // Objet à supprimer à l'enregistrement, mais toujours en mémoire
     bool selected = false;      // Objet sélectionné
     bool primitive= false;      // Si true, l'objet est une des primitives ajoutées
@@ -121,11 +121,11 @@ public:
     unsigned int  Nb_vecteurs;
     unsigned int  Nb_aretes;
     unsigned int  Nb_matrices;
-    std::vector<Face1>      Facelist;
-    std::vector<Sommet1>    Sommetlist;
-    std::vector<Vecteur1>   Vecteurlist;
-    std::vector<Points>     Pointslist;
-    std::vector<Aretes>     Areteslist;
+    std::vector<Face>    Facelist;
+    std::vector<Sommet>  Sommetlist;
+    std::vector<Vecteur> Vecteurlist;
+    std::vector<Points>  Pointslist;
+    std::vector<Aretes>  Areteslist;
 
 // Méthodes, fonctions de la classe Object
 
@@ -147,11 +147,11 @@ public:
     }
     Object(wxString& name, wxString& value) {
         initObject(name);
-        this->value  = wxAtoi(value);
+        this->value = wxAtoi(value);
     }
     Object(wxString& name, int& value) {
         initObject(name);
-        this->value  = value;
+        this->value = value;
     }
     int GetValue() {
         return this->value;
@@ -172,20 +172,6 @@ public:
     }
 };
 
-//class Face {
-//public:
-//    int value;
-//    Face(wxString& value) {
-//        this->value=wxAtoi(value);
-//    }
-//    Face(int& value) {
-//        this->value=value;
-//    }
-//    int GetValue() {
-//        return this->value;
-//    };
-//};
-
 class Points {                  // Est-ce utile que Points soit une classe ?
 public:
     std::vector<int> IndicesFacettes;
@@ -203,31 +189,31 @@ public:
     }
 };
 
-class Face1 {
+class Face {
 public:
-    bool afficher;              // true : afficher la facette, false : la masquer
-    bool deleted;               // Facette supprimée (en fait à supprimer à l'enregistrement, car toujours présente en mémoire)
-    bool selected;              // Facette sélectionnée si true
-    bool flat;                  // Si true, la facette est plane (pas de smooth)
-    int  Numero;                // Numéro de la facette
-    int  Nb_Sommets_F;          // Nombre de sommets de la facette (équivallent de Nb_Sommets_L pour Luminance1)
-    std::vector<float> normale_b ;   // Normale au barycentre de la facette
-    std::vector<int> F_sommets;      // Numéros des sommets composant la facette
-    int  groupe;                // Numéro de groupe de la facette
-    int  codmatface;            // Numéro de matériau de la facette
-    bool show;      // ATTENTION, différent de show pour les facettes. Utilisé dans souderPoints ... plutôt synonyme de !deleted !!!!
-    int  toshow;                // ?? Semble servir dans souder gotodivise et dans le undo général
-    int  Rtoshow;               // ?? N'est pas utilisé actuellement
+    bool afficher;                  // true : afficher la facette, false : la masquer
+    bool deleted;                   // Facette supprimée (en fait à supprimer à l'enregistrement, car toujours présente en mémoire)
+    bool selected;                  // Facette sélectionnée si true
+    bool flat;                      // Si true, la facette est plane (pas de smooth)
+    int  Numero;                    // Numéro de la facette
+    int  Nb_Sommets_F;              // Nombre de sommets de la facette (équivallent de Nb_Sommets_L pour Luminance)
+    std::vector<float> normale_b ;  // Normale au barycentre de la facette
+    std::vector<int> F_sommets;     // Numéros des sommets composant la facette
+    int  groupe;                    // Numéro de groupe de la facette
+    int  codmatface;                // Numéro de matériau de la facette
+//    bool show;                    // ATTENTION, différent de show pour les points. Utilisé dans souderPoints ... mais au final synonyme de !deleted !!!!
+    int  toshow;                    // ?? Semble servir dans souder gotodivise et dans le undo général
+//    int  Rtoshow;                 // ?? N'est pas utilisé actuellement
     GLfloat color[3];
-    int  Nb_Sommets_L=0;        // Nombre de sommets en luminances (équivallent de Nb_Sommets_F pour les sommets de facettes)
-    std::vector<int> L_sommets; // Numéros des normales aux sommets
+    int  Nb_Sommets_L=0;            // Nombre de sommets en luminances (équivallent de Nb_Sommets_F pour les sommets de facettes)
+    std::vector<int> L_sommets;     // Numéros des normales aux sommets
 
-// Méthodes, fonctions de la classe Face1 (traitements d'une facette)
+// Méthodes, fonctions de la classe Face (traitements d'une facette)
 
-    Face1() {
+    Face() {
     }
 
-    void initFace1() {
+    void initFace() {
         afficher= true;                     // Par défaut, afficher la facette
         deleted = false;                    // Par défaut, la facette n'est pas à supprimer
         selected= false;                    // Par défaut, la facette n'est pas sélectionnée
@@ -236,31 +222,31 @@ public:
         normale_b.resize(3);                // Une normale au barycentre a 3 composantes flottantes
         groupe     = groupe_def;            // Numéro de groupe
         codmatface = codmatface_def;        // Numéro de matériau (codmatface pour le format SDM)
-        show    = true;
+//        show    = true;                   // Ne sert plus, doublon de !deleted
         toshow  = 0;
-        Rtoshow = 0;
+//        Rtoshow = 0;
         F_sommets.clear();                  // RAZ du tableau des sommets de la facette
-        Nb_Sommets_F = 0;
+        Nb_Sommets_F = 0;                   // Nombre de sommets de la facette
         L_sommets.clear();                  // RAZ du tableau des sommets pour les normales aux sommets
-        Nb_Sommets_L = 0;
+        Nb_Sommets_L = 0;                   // Nombre de sommets pour les Luminances
     }
-    Face1(std::vector<wxString> wxStringlist) {
-        initFace1();
+    Face(std::vector<wxString> wxStringlist) {
+        initFace();
         Numero       = wxAtoi(wxStringlist[0]);
         Nb_Sommets_F = wxAtoi(wxStringlist[1]);
         for(int i=0; i<Nb_Sommets_F; i++) {
             F_sommets.push_back(wxAtoi(wxStringlist[i+2]));
         }
     }
-    Face1(int number, std::vector<int> NumerosSommets) {
-        initFace1();
+    Face(int number, std::vector<int> NumerosSommets) {
+        initFace();
         Numero       = number;
         Nb_Sommets_F = NumerosSommets.size();
         for(int i=0; i<Nb_Sommets_F; i++) {
             F_sommets.push_back(NumerosSommets[i]);
         }
     }
-    int getSize() {                         // Ne sert pas
+    int getSize() {                         // Ne sert pas ?
         return this->F_sommets.size();
     };
     int getNumero() {
@@ -276,7 +262,7 @@ public:
         return this->normale_b;
     };
     void setFsommet(std::vector<int> new_point) {
-        F_sommets = new_point;
+        F_sommets    = new_point;
         Nb_Sommets_F = F_sommets.size();
     }
     void setNormale_b(std::vector<float> new_normale) {
@@ -289,7 +275,7 @@ public:
         return this->L_sommets;
     };
     void setLsommet(std::vector<int> new_point) {
-        L_sommets = new_point;
+        L_sommets    = new_point;
         Nb_Sommets_L = L_sommets.size();
     }
     int getGroupe() {
@@ -322,21 +308,7 @@ public:
     };
 };
 
-//class Sommet {
-//public:
-//    int value;
-//    Sommet(wxString& value) {
-//        this->value=wxAtoi(value);
-//    }
-//    Sommet(int& value) {
-//        this->value=value;
-//    }
-//    int GetValue() {
-//        return this->value;
-//    };
-//};
-
-class Sommet1 {
+class Sommet {
 public:
     int  Numero;                // Numéro du point
     int  NNumber;               // ?? ne sert que dans Simplification_BDD_old ... A supprimer ???? Quelle est sa fonction ???
@@ -346,12 +318,12 @@ public:
     bool selected;
 //    GLfloat color[3];
 
-// Méthodes, fonctions de la classe Sommet1 (traitements d'un sommet)
+// Méthodes, fonctions de la classe Sommet (traitements d'un sommet)
 
-    Sommet1() {
+    Sommet() {
         NNumber=-1;
     }
-    void initSommet1() {
+    void initSommet() {
         show     = true;
         NNumber  = -1;
         toshow   = 0;
@@ -359,18 +331,18 @@ public:
 //        color = bleu; // Pas encore défini !!!
 //        color[0]=0. ; color[1]=0. ; color[2]=1. ;
     }
-    Sommet1(std::vector<wxString>wxStringlist) {
+    Sommet(std::vector<wxString>wxStringlist) {
         double a;
-        initSommet1();
-        Numero=wxAtoi(wxStringlist[0]);
+        initSommet();
+        Numero = wxAtoi(wxStringlist[0]);
         for(int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
     }
-    Sommet1(int& number, float xyz[3]) {
-        initSommet1();
-        Numero=number;
+    Sommet(int& number, float xyz[3]) {
+        initSommet();
+        Numero = number;
         for(int i=0; i<3; i++) point.push_back(xyz[i]);
      }
     int getNumero() {
@@ -384,49 +356,32 @@ public:
     }
 };
 
-//class Normale {
-//public:
-//    int value;
-//    Normale() {
-//        value=0;
-//    }
-//    Normale(wxString& value) {
-//        this->value=wxAtoi(value);
-//    }
-//    Normale(int& value) {
-//        this->value=value;
-//    }
-//    int GetValue() {
-//        return this->value;
-//    };
-//};
-
-class Normale1 {
+class Normale {
 public:
     int Numero = 0;             // Numéro de la normale : init GD
     std::vector<float> point;   // Coordonnées de la normale en x, y et z
     int toshow = 0;             // init GD
     bool show  = false;         // init GD
 
-// Méthodes, fonctions de la classe Normale1 (traitements d'une normale au barycentre)
+// Méthodes, fonctions de la classe Normale (traitements d'une normale au barycentre)
 
-    Normale1() {
+    Normale() {
     }
-    void initNormale1() {
+    void initNormale() {
         show  = true;
         toshow= 1;
     }
-    Normale1(std::vector<wxString>wxStringlist) {
+    Normale(std::vector<wxString>wxStringlist) {
         double  a;
-        initNormale1();
+        initNormale();
         Numero = wxAtoi(wxStringlist[0]);
         for(int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
     }
-    Normale1(int& number, float xyz[3]) {
-        initNormale1();
+    Normale(int& number, float xyz[3]) {
+        initNormale();
         Numero = number;
         for(int i=0; i<3; i++) point.push_back(xyz[i]);
     }
@@ -437,40 +392,24 @@ public:
         return this->point;
     };
     void setPoint(std::vector<float> new_point) {
-        point=new_point;
+        point = new_point;
     }
 };
 
-//class Aspect_face {
-//public:
-//    int value;
-//    Aspect_face() {
-//    }
-//    Aspect_face(wxString& value) {
-//        this->value=wxAtoi(value);
-//    }
-//    Aspect_face(int& value) {
-//        this->value=value;
-//    }
-//    int GetValue() {
-//        return this->value;
-//    };
-//};
-
-class Aspect_face1 {
+class Aspect_face {
 public:
-    int groupe;
-    int codmatface;
-    int Numero;     // Numéro de la facette
-    int toshow;
+    int  groupe;
+    int  codmatface;
+    int  Numero;        // Numéro de la facette
+    int  toshow;
     bool show;
 
-// Méthodes, fonctions de la classe Aspect_face1 (traitements du numéro de matériau et/ou de groupe d'une facette)
+// Méthodes, fonctions de la classe Aspect_face (traitements du numéro de matériau et/ou de groupe d'une facette)
 
-    Aspect_face1() {
+    Aspect_face() {
         show=true;
     }
-    Aspect_face1(std::vector<wxString>wxStringlist) {
+    Aspect_face(std::vector<wxString>wxStringlist) {
         show=true;
         Numero=wxAtoi(wxStringlist[0]); // On ne récupère que le numéro. Pour groupe et codmatface, sera fait plus tard
 //        wxString code=wxStringlist[1] ;
@@ -512,36 +451,19 @@ public:
     };
 };
 
-///class Luminance {
-///public:
-///    int value;
-///    Luminance() {
-///        value=0;
-///    }
-///    Luminance(wxString& value) {
-///        this->value=wxAtoi(value);
-///    }
-///    Luminance(int& value) {
-///        this->value=value;
-///    }
-///    int GetValue() {
-///        return this->value;
-///    };
-///};
-
-class Luminance1 {
+class Luminance {
 public:
-    int Numero;                 // Numéro de facette
-    int Nb_Sommets_L=0;         // Nombre de sommets (équivallent de Nb_Sommets_F pour Face1)
+    int  Numero;                // Numéro de facette
+    int  Nb_Sommets_L=0;        // Nombre de sommets (équivallent de Nb_Sommets_F pour Face)
     std::vector<int> L_sommets; // Numéros des normales aux sommets
-    int toshow;
+    int  toshow;
     bool show;
 
-// Méthodes, fonctions de la classe Luminance1 (traitements d'une Luminance <=> facette)
+// Méthodes, fonctions de la classe Luminance (traitements d'une Luminance <=> facette)
 
-    Luminance1() {
+    Luminance() {
     }
-    Luminance1(std::vector<wxString>wxStringlist) {
+    Luminance(std::vector<wxString>wxStringlist) {
         show         = true;
         Numero       = wxAtoi(wxStringlist[0]);
         Nb_Sommets_L = wxAtoi(wxStringlist[1]);
@@ -549,7 +471,7 @@ public:
             L_sommets.push_back(wxAtoi(wxStringlist[i+2]));
         }
     }
-    Luminance1(int number, std::vector<int> NumerosSommets) {
+    Luminance(int number, std::vector<int> NumerosSommets) {
         show         = true;
         Numero       = number;
         Nb_Sommets_L = NumerosSommets.size();
@@ -571,52 +493,35 @@ public:
 //    }
 };
 
-//class Vecteur {     /// A supprimer mais pour l'instant laisser, car utilisé dans Calcul_All_Luminance_Vecteurs (A REVOIR !)
-//public:
-//    int value;      // ???? Ne servait que lorsqu'il était indépendant des objets ????
-//    Vecteur() {
-//        value=0;
-//    }
-//    Vecteur(wxString& value) {
-//        this->value = wxAtoi(value);
-//    }
-//    Vecteur(int& value) {
-//        this->value = value;
-//    }
-//    int GetValue() {
-//        return this->value;
-//    };
-//};
-
-class Vecteur1 {
+class Vecteur {
 public:
     int  Numero;                // Numéro de normale au sommet (ou VECTEUR)
-//    int  NNumber;   // Sert à quoi ???
+//    int  NNumber;             // Sert à quoi ???
     std::vector<float> point;   // Coordonnées en x, y et z de cette normale
     int  toshow;
-    bool show;
+//    bool show;                // Ne sert plus !
 
-// Méthodes, fonctions de la classe Vecteur1 (traitements d'un Vecteur pour les normales aux sommets)
+// Méthodes, fonctions de la classe Vecteur (traitements d'un Vecteur pour les normales aux sommets)
 
-    Vecteur1() {
+    Vecteur() {
 //        NNumber=-1;
     }
-    void initVecteur1() {
-        show    = true;
+    void initVecteur() {
+//        show    = true;
 //        NNumber = -1;
         toshow  = 0;
     }
-    Vecteur1(std::vector<wxString>wxStringlist) {
+    Vecteur(std::vector<wxString>wxStringlist) {
         double a;
-        initVecteur1();
-        Numero=wxAtoi(wxStringlist[0]);
+        initVecteur();
+        Numero = wxAtoi(wxStringlist[0]);
         for(int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
     }
-    Vecteur1(int& number, float xyz[3]) {
-        initVecteur1();
+    Vecteur(int& number, float xyz[3]) {
+        initVecteur();
         Numero = number;
         for(int i=0; i<3; i++) point.push_back(xyz[i]);
     }
@@ -627,7 +532,7 @@ public:
         return this->point;
     };
     void setPoint(std::vector<float> new_point) {
-        point=new_point;
+        point = new_point;
     }
 };
 
@@ -646,9 +551,8 @@ class ListeSelected {
     bool verrouiller_liste;
 
 public:
-//    std::vector<ListFace> Liste;
-    std::vector<ListFace> ListeSelect;  // Pourrait-on se passer de ListeSelect et donc ne travailler que sur Liste ????
-                                        // (en fait, c'est l'inverse qui a été fait !)
+    std::vector<ListFace> ListeSelect;
+
     ListeSelected() {
     };
     void verrouiller_ListeSelect(bool verrou) {
@@ -670,49 +574,11 @@ public:
     };
     void add_one(int objet,int face_sommet) {
         ListFace *Make=new ListFace(objet,face_sommet);
-//        Liste.push_back(*Make);
         ListeSelect.push_back(*Make);
     };
     void erase_one_ListeSelect(int objet,int face_sommet) {
-//        for(i=0; i<ListeSelect.size(); i++) {
-//            if((ListeSelect[i].objet==objet) && (ListeSelect[i].face_sommet==face_sommet)) {
-//                ListeSelect.erase(ListeSelect.begin()+i);
-//                break;  // Inutile de continuer car le erase a été effectué
-//            }
-//        }
         if (check_if_in_ListeSelect(objet,face_sommet)) ListeSelect.erase(ListeSelect.begin()+i); // On récupère le i général de ListeSelected
     };
-/*     void erase_one_Liste(int objet,int face_sommet) {
- *         for(i=0; i<Liste.size(); i++) {
- *             if((Liste[i].objet==objet)&&(Liste[i].face_sommet==face_sommet)) {
- *                 Liste.erase(Liste.begin()+i);
- *             }
- *         }
- *     }
- */
-/*     void select_to_selected() {
- *         for(i=0; i<Liste.size(); i++) {
- *             ListeSelect.push_back(Liste[i]);
- *         }
- *         Liste.clear();
- *     }
- */
-/*     bool check_if_in_Liste(int objet,int face_sommet) {
- *         if(Liste.size()==0) {
- *             return false;
- *         }
- *         for(i=0; i<Liste.size(); i++) {
- *             if((Liste[i].objet==objet)&&(Liste[i].face_sommet==face_sommet)) {
- *                 return true;
- *             }
- *         }
- *         return false;            // idem
- *     }
- */
-//    unsigned int size() {           // Utilisé dans SelectionManuelleFacettes, mais on doit pouvoir faire autrement
-//        return Liste.size();    // Faut-il ajouter ListeSelect.size() ?
-//        return ListeSelect.size();    // Faut-il ajouter ListeSelect.size() ?
-//    }
 };
 
 class Sommetmemory {
@@ -725,14 +591,6 @@ public:
     }
 };
 
-//class StoF {                          /// ?? repérage des sommets utilisés dans les facettes ??? Ne sert plus !!!
-//public:
-//    std::vector<std::vector<int> > faces;
-//    std::vector<int> facesall;
-//    std::vector<std::vector<float> > Vectors;
-//    StoF() {}
-//};
-
 class BddInter: public wxGLCanvas {
 // Variables et fonctions internes à la gestion, manipulation des BDDs.
     wxString file;
@@ -744,7 +602,7 @@ class BddInter: public wxGLCanvas {
 
     std::vector<wxString>     wxStringlist;
 
-    bool finishdraw=false;  // Sert dans OnMouse à tout court-circuiter si rien d'affiché à l'écran. Pourrait être supprimé car pas de souci si toujours à true !
+    bool finishdraw = false;    // Sert dans OnMouse à tout court-circuiter si rien d'affiché à l'écran. Pourrait être supprimé car pas de souci si toujours à true !
     float matquat[4][4];
 //    double diagonale_save ;
     double FoV_auto;
@@ -832,7 +690,7 @@ public :
 /*! Paramètres du matériau utilisé pour la colorisation de l'avion par groupes et/ou matériaux */
     static const int nb_couleurs=32;
 
-    // Ces 2 tableaux pourraient être en private mais il faut que nb_couleurs reste en public à donc déclarer avant !
+    // Ces 2 tableaux pourraient être en private mais il faut que nb_couleurs reste en public. à donc déclarer avant !
     // => réordonner complètement public, private et protected
     GLfloat MatAmbient_avionG_def[nb_couleurs][4] ={{0.5f, 0.5f, 0.5f, 1.0f} ,  // Groupe 0
                                                     {0.9f, 0.3f, 0.0f, 1.0f} ,  // Groupe 1
@@ -912,7 +770,7 @@ public :
     unsigned int indiceObjet_courant;
     std::vector<Object> Objetlist;
 
-    int type=0;
+    int type    = 0;
     int type_new=-1;
     int N_elements;
     float xyz[3];
@@ -937,65 +795,65 @@ public :
         NumerosSommets = Numeros;
     }
 
-    float   x_min, x_max, y_min, y_max, z_min, z_max;
-    bool    AfficherNormaleFacette  = false ;
-    bool    AfficherNormalesSommets = false ;
-    bool    centrageRotAuto = true;
+    float x_min, x_max, y_min, y_max, z_min, z_max;
+    bool  AfficherNormaleFacette  = false ;
+    bool  AfficherNormalesSommets = false ;
+    bool  centrageRotAuto = true;
 
 // Valeurs par défaut
 
-    float   len_axe_def       = 0.25;
-    float   len_normales_def  = 0.05;
-    float   ray_sun_def       = 0.03;
-    float   tolerance_def     = 0.001;              // En % de la diagonale de la boîte englobante
-    float   angle_Gouraud_def = 35.0f;
-    float   fmult_Gouraud_def =  1.6f;
-    int     svg_time_def      = 5;                  // en minutes
-    bool    test_seuil_gouraud_def  = false;
+    float len_axe_def       = 0.25;
+    float len_normales_def  = 0.05;
+    float ray_sun_def       = 0.03;
+    float tolerance_def     = 0.001;                // En % de la diagonale de la boîte englobante
+    float angle_Gouraud_def = 35.0f;
+    float fmult_Gouraud_def =  1.6f;
+    int   svg_time_def      = 5;                    // en minutes
+    bool  test_seuil_gouraud_def  = false;
 
-    bool    antialiasing_soft_def        = false;
-    bool    Forcer_1_Seul_Objet_def      = false;   // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
-    bool    lect_obj_opt_def             = false;   // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
-    bool    test_decalage3ds_def         = true;    // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
-    bool    CalculNormalesLectureBdd_def = false;   // Pour forcer le calcul (recalcul) des normales dès la lecture du fichier
-    bool    Enr_Normales_Seuillees_def   = false;
-    bool    reset_zoom                   = true;
-    bool    bdd_modifiee                 = false;   // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
-    bool    creation_facette             = false;   // Pour traiter différement le sélection de points en mode de création de facettes
-    bool    CreerBackup_def              = false;   // Pour renommer l'original d'un fichier de bdd en .bak
-    bool    SupprBackup_def              = false;   // Pour supprimer le .bak en sortie de programme
-    bool    Raz_Selection_F_def          = false;   // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
+    bool  antialiasing_soft_def        = false;
+    bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
+    bool  lect_obj_opt_def             = false;     // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
+    bool  test_decalage3ds_def         = true;      // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
+    bool  CalculNormalesLectureBdd_def = false;     // Pour forcer le calcul (recalcul) des normales dès la lecture du fichier
+    bool  Enr_Normales_Seuillees_def   = false;
+    bool  reset_zoom                   = true;
+    bool  bdd_modifiee                 = false;     // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
+    bool  creation_facette             = false;     // Pour traiter différement le sélection de points en mode de création de facettes
+    bool  CreerBackup_def              = false;     // Pour renommer l'original d'un fichier de bdd en .bak
+    bool  SupprBackup_def              = false;     // Pour supprimer le .bak en sortie de programme
+    bool  Raz_Selection_F_def          = false;     // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
                                                                 // sur M2000 et pour les autres Bdd donnera la même position sur l'écran
-    int     mode_Trackball_def=1;                   // mode par défaut : 1 = Trackball, 0 = Rotation directe
-    int     methode_Triangulation_def=1;            // mode par défaut 0, 1 ou 2
-    float   fmult_diag_def = 10.0f;                 // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
+    int   mode_Trackball_def=1;                     // mode par défaut : 1 = Trackball, 0 = Rotation directe
+    int   methode_Triangulation_def=1;              // mode par défaut 0, 1 ou 2
+    float fmult_diag_def = 10.0f;                   // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
 
 // Valeurs de travail
-    float   len_axe;
-    float   len_normales;
-    float   ray_sun;
-    float   tolerance;
-    bool    test_seuil_gouraud       = test_seuil_gouraud_def;
-    float   angle_Gouraud            = angle_Gouraud_def;
-    float   fmult_Gouraud            = fmult_Gouraud_def;
-    float   seuil_Gouraud;
-    float   angle_Gouraud2           = angle_Gouraud*fmult_Gouraud;
-    float   seuil_Gouraud2;
-    int     svg_time                 = svg_time_def;
-    bool    antialiasing_soft        = antialiasing_soft_def;
-    bool    Forcer_1_Seul_Objet      = Forcer_1_Seul_Objet_def;
-    bool    lect_obj_opt             = lect_obj_opt_def;
-    bool    test_decalage3ds         = test_decalage3ds_def;
-    int     methode_Triangulation    = methode_Triangulation_def;
-    bool    CalculNormalesLectureBdd = CalculNormalesLectureBdd_def;
-    bool    Enr_Normales_Seuillees   = Enr_Normales_Seuillees_def;
-    bool    CreerBackup              = CreerBackup_def;
-    bool    SupprBackup              = SupprBackup_def;
-    bool    OK_FichierCree           = false;
-    bool    Raz_Selection_F          = Raz_Selection_F_def;
+    float len_axe;
+    float len_normales;
+    float ray_sun;
+    float tolerance;
+    bool  test_seuil_gouraud       = test_seuil_gouraud_def;
+    float angle_Gouraud            = angle_Gouraud_def;
+    float fmult_Gouraud            = fmult_Gouraud_def;
+    float seuil_Gouraud;
+    float angle_Gouraud2           = angle_Gouraud*fmult_Gouraud;
+    float seuil_Gouraud2;
+    int   svg_time                 = svg_time_def;
+    bool  antialiasing_soft        = antialiasing_soft_def;
+    bool  Forcer_1_Seul_Objet      = Forcer_1_Seul_Objet_def;
+    bool  lect_obj_opt             = lect_obj_opt_def;
+    bool  test_decalage3ds         = test_decalage3ds_def;
+    int   methode_Triangulation    = methode_Triangulation_def;
+    bool  CalculNormalesLectureBdd = CalculNormalesLectureBdd_def;
+    bool  Enr_Normales_Seuillees   = Enr_Normales_Seuillees_def;
+    bool  CreerBackup              = CreerBackup_def;
+    bool  SupprBackup              = SupprBackup_def;
+    bool  OK_FichierCree           = false;
+    bool  Raz_Selection_F          = Raz_Selection_F_def;
 
     GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
@@ -1037,8 +895,8 @@ public :
     std::list<int> listePoints;
     std::list<int> listeFacettes;
 
-    int indiceAspect=0;
-    int GroupeMateriau[2]={0,0};   // 1 pour repérer par une couleur les groupes, 2 pour repérer les matériaux, 0 sinon
+    int indiceAspect = 0;
+    int GroupeMateriau[2] = {0,0};   // 1 pour repérer par une couleur les groupes, 2 pour repérer les matériaux, 0 sinon
     unsigned int SelectionObjet=0;
 
     bool show_CW_CCW = false;
@@ -1072,7 +930,7 @@ public :
 //    ReperageMateriau        *MRepMat=nullptr; // idem
     bool OK_ToSave = false; // Mis à true lors de la lecture d'un fichier et testé dans SaveTo (pas de save si OK_ToSave = false !!!)
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
-    void SaveTo(wxString);
+    void SaveTo (wxString);
     void SaveBDD(wxString);
     void SaveOBJ(wxString);
     void SaveOFF(wxString);
@@ -1178,8 +1036,8 @@ public :
 
     void drawOpenGL();
 
-    int convert_rotx_LSI();
-    int convert_rotz_LAZ();
+    int  convert_rotx_LSI();
+    int  convert_rotz_LAZ();
 
     bool compare_normales(int, int, int);
     bool points_egaux(const std::vector<float> &, const std::vector<float> &, float);

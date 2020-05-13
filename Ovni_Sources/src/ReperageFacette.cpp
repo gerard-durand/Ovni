@@ -390,13 +390,6 @@ void ReperageFacette::OnButton_ResetClick(wxCommandEvent& event)
 
     StaticText_Warning->Hide();
 
-//    unsigned int i,j;                                     // OK si "Masquer" via ce dialogue, mais si fait en dehors, pas forcément à faire !
-//    for (i=0; i<Element->Objetlist.size(); i++) {
-//        Element->Objetlist[i].afficher = true;
-//        for (j=0; j<Element->Face1list[i].size(); j++) Element->Face1list[i][j].afficher = true; // Et pour deleted ?
-//    }
-//    MElement->m_gllist = 0;
-
     Element->Refresh();
 }
 

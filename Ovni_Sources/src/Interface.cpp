@@ -168,6 +168,7 @@ void BddInter::output_Glut_Msg(GLfloat x, GLfloat y, char *text)
 	    printf("fps = %5.1f\n",fps) ;
 	}
 } */
+
 int BddInter::convert_rotx_LSI() {
     int ival;
     ival = lround(fmod((m_gldata.rotx - 270), 360)) ;        //! Comme dans la version TCL
@@ -491,8 +492,8 @@ void BddInter::Ouvrir_ini_file()
             if (!icmp) {
                 p_txt_wrk = Lire_chaine(&Message[len]) ;
                 sprintf(Message,"%s",p_txt_wrk) ;               // Récupère le répertoire de travail
-                wxWorkDir = wxString::FromUTF8(Message);    // FromAscii(Message); // Lire en utf8 le nom (sinon souci avec les caractères accentués !)
-                wxString Last_Char = wxFILE_SEP_PATH ;      // <=> wxFileName::GetPathSeparator()
+                wxWorkDir = wxString::FromUTF8(Message);        // FromAscii(Message); // Lire en utf8 le nom (sinon souci avec les caractères accentués !)
+                wxString Last_Char = wxFILE_SEP_PATH ;          // <=> wxFileName::GetPathSeparator()
                 if (!wxWorkDir.EndsWith(Last_Char)) wxWorkDir += wxFILE_SEP_PATH ;          // Ajouter le séparateur de Path à la fin s'il n'y est pas déjà !
                 sprintf(Message,"Travail dans : %s\n",(const char *)wxWorkDir.utf8_str()) ; // pb avec caractères accentués dans la console windows !
                 printf(utf8_To_ibm(Message));
@@ -1173,8 +1174,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     int   Nb_Valeurs;
     int   GrpMat;
     bool  Touche_Maj;
-    Face1   *Facette;
-    Sommet1 *Sommet;
+    Face    *Facette;
+    Sommet  *Sommet;
     wxString wxMessage;
 
     wxMouseEvent   event_mouse;
@@ -1802,8 +1803,8 @@ void BddInter::clearall() {
     reset_zoom = true;
     m_loaded   = false;
     diagonale_save=0.0;
-//    glDeleteLists( m_gllist, 10);   // ?? pourquoi 10
-    glDeleteLists( 1, 10);   // ?? pourquoi 10
+//    glDeleteLists( m_gllist, 10);
+    glDeleteLists( 1, 10);   // ?? pourquoi 10 et pas plus ?
     glClear(GL_COLOR_BUFFER_BIT);
     m_gldata.initialized = false;
 }
@@ -2390,7 +2391,7 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
     int i, j;
     int indice_min, indice_max, numero_sommet;
     int NbFacettes;
-    Face1 * facette_courante;
+    Face * facette_courante;
 
     NbFacettes = objet_courant->Nb_facettes;
 
@@ -2434,7 +2435,7 @@ void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
     int i, j;
     int indice_min, indice_max, numero_sommet;
     int NbFacettes;
-    Face1 * facette_courante;
+    Face * facette_courante;
 
     NbFacettes = objet_courant->Nb_facettes;
 
@@ -2914,7 +2915,7 @@ void BddInter::LoadOBJ()
 //!             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
-            Face1  * facette_courante;
+            Face   * facette_courante;
             bool msg_optim = true;
             for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) { // On ne commence que sur le 2ème objet les copies
 
@@ -2980,8 +2981,7 @@ void BddInter::LoadM3D()
  *  Identifie éventuellement plusieurs objets, crée des normales.
  *  Une création de groupes faite ?????????????????????????????????
  */
-//    FILE* f;              // Déjà déclaré au niveau général, donc autant l'utiliser
-//    char s1[666] ;			//chaînes de caractères
+
     char nom_obj[80];
     int sommet[3] ;
     int normal[3] ;
@@ -3004,7 +3004,7 @@ void BddInter::LoadM3D()
         m_gllist = 0;
     }
 
-    f=fopen(buffer.data(),"r");	//ouverture du fichier
+    f = fopen(buffer.data(),"r");   //ouverture du fichier
     fgets(s1,160,f);
     if (!strncmp(s1+3,"MilkShape 3D ASCII",18)) {
         printf("Fichier de type : MilkShape 3D en Ascii\n") ;
@@ -3160,7 +3160,7 @@ void BddInter::LoadPLY()
 *  Identifie éventuellement plusieurs objets, crée des normales.
 *  Une création de groupes faite (d'après les infos de materi)
 */
-//    FILE* f;                  // Déjà déclaré au niveau général, donc autant l'utiliser
+
     char ident[80] ;			//chaînes de caractères  s1[666],
     char nom_obj[80], nom_prec[80] ;
     char *cptr ;
@@ -3355,6 +3355,7 @@ void BddInter::LoadPLY()
 
         if(materi == 0) {
             // A faire
+            printf("Warning : Fichier .ply : cas materi = 0 a coder ?\n");
         }
 
 //      fgets(s1,100,f)     ; // Lire la ligne (contient un numéro et un identifiant d'objet)
@@ -3389,9 +3390,6 @@ void BddInter::LoadPLY()
 
             this->N_elements = this->Objetlist[indiceObjet_courant].Nb_sommets;
             makesommet();
-
-//            this->N_elements = this->Objetlist[o].Nb_vecteurs;
-//            makevecteur();
 
             nfac   = 0;
             npoint = 0;
@@ -3470,8 +3468,7 @@ void BddInter::LoadOFF()
  *  Lecture d'un Fichier de polygones au format OFF
  *  Un seul objet, crée les normales aux barycentres.
  */
-//    FILE* f;              // Déjà déclaré au niveau général, donc autant l'utiliser
-//    char s1[666] ;			//chaine de caractères pour la lecture des 2 1ères lignes du fichier (et éventuellement des fins de lignes dans la partie lecture des facettes !)
+
     char nom_obj[80];
     int n;
     unsigned int i, nfac, npoint, nb_fac, nb_p, nsommets ;
@@ -3796,7 +3793,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
     float matrice[4][4], inv_matrice[4][4] ;
     float matrice_w[4][4];
     Object *objet_courant;
-    Face1  *facette_courante;
+    Face   *facette_courante;
 
     Lib3dsMesh *mesh;
     float pos[3],pos2[3];
@@ -4176,7 +4173,7 @@ void BddInter::LoadBDD() {
         } else if((ligne.find("<ASPECT_FACE>") != notFound) || (ligne.find("<POLY_ATTR>") != notFound)) {
             makeaspect_face();
             mode_lecture = 4;
-            NbAspectFaces = this->Objetlist[indiceObjet].Nb_aspects; //this->Aspect_face1linelist.size();
+            NbAspectFaces = this->Objetlist[indiceObjet].Nb_aspects;
             for (i=0; i<NbAspectFaces;) { //; i++) {
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
                 while (ligne.empty()) {
@@ -4188,12 +4185,6 @@ void BddInter::LoadBDD() {
                     make1aspect_face();     // A supprimer par la suite ??? Pour lire les lignes  <GROUPE> et <CODMATFACE> avec le même indice i
                                             // Mais laisser pour l'instant car décodage et rangement faits dans make1aspect_face à revoir
                                             /// C'est le SEUL endroit ou make1aspect_face est encore actif (mais utile si pas de ligne blanche intermédiaire !)
-///                    if ((ligne.find("<GROUPE>")     != notFound) || (ligne.find("<GROUP>")         != notFound))
-///                        this->Objetlist[indiceObjet].Facelist[i].groupe     = this->Aspect_face1linelist[i].groupe;
-//                        this->Face1list[indiceObjet][i].groupe     = this->Aspect_face1linelist[i].groupe;
-///                    if ((ligne.find("<CODMATFACE>") != notFound) || (ligne.find("<POLY_REF_ATTR>") != notFound))
-///                        this->Objetlist[indiceObjet].Facelist[i].codmatface = this->Aspect_face1linelist[i].codmatface;
-//                        this->Face1list[indiceObjet][i].codmatface = this->Aspect_face1linelist[i].codmatface;
                     getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
                     if (New_aspect_face) i++;   // Incrémenter le compteur i seulement si 3 valeurs dans la ligne
                 }
@@ -4422,7 +4413,7 @@ void BddInter::makeobjet() {
     wxStringlist.clear();
     while ( tokenizer.HasMoreTokens() ) {
         token = tokenizer.GetNextToken();
-        this->wxStringlist.push_back(this->token);  // Pb : si le nom comporte des espaces, c'est plusieurs token
+        this->wxStringlist.push_back(this->token);      // Pb : si le nom comporte des espaces, c'est plusieurs token
     }
     std::cout << '\n' << "objet ";
     wxString Nom_Objet;
@@ -4431,15 +4422,15 @@ void BddInter::makeobjet() {
         wxString *mystring= new wxString(wxStringlist[i]);
         std::string stl_string = std::string(mystring->mb_str());
         std::cout <<" "+stl_string;
-        if (i > 1) Nom_Objet += wxStringlist[i];    // Concaténer les wxStringList à partir de [2]
-        if (i < last) Nom_Objet += _T(" ");         // Séparer par des espaces sauf si c'est le dernier
+        if (i > 1) Nom_Objet += wxStringlist[i];        // Concaténer les wxStringList à partir de [2]
+        if (i < last) Nom_Objet += _T(" ");             // Séparer par des espaces sauf si c'est le dernier
     }
     std::cout << '\n' ;
 //    this->buffer = Nom_Objet.mb_str();
 //    printf("Nom complet : %s\n",buffer.data());
     Object NewObject(Nom_Objet,wxStringlist[1]);
-    NewObject.afficher = true;                       // Par défaut, on affiche l'objet
-    NewObject.deleted  = false;                      // Et on le marque comme "non supprimé" (pas tout de suite !)
+    NewObject.afficher = true;                          // Par défaut, on affiche l'objet
+    NewObject.deleted  = false;                         // Et on le marque comme "non supprimé" (pas tout de suite !)
     if (Numero_base != 0) NewObject.SetValue(NewObject.GetValue() + Numero_base) ; // Changer le numéro d'objet (value) en y ajoutant un offset (Numero_base) !
     wxStringlist.clear();
     this->Objetlist.push_back(NewObject);
@@ -4471,7 +4462,7 @@ void BddInter::makeface() {
 
 void BddInter::make1face() {
     int Numero;
-    Face1 New1Face;
+    Face New1Face;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4479,12 +4470,12 @@ void BddInter::make1face() {
             token = tokenizer.GetNextToken();
             wxStringlist.push_back(token);
         }
-        Numero = wxAtoi(wxStringlist[0]);
-        New1Face = Face1(wxStringlist); // Ici on passe un numéro de facette, un nombre de point n, puis n valeurs
+        Numero   = wxAtoi(wxStringlist[0]);
+        New1Face = Face(wxStringlist); // Ici on passe un numéro de facette, un nombre de point n, puis n valeurs
         wxStringlist.clear();
     } else {
-        Numero = N_elements;
-        New1Face = Face1(Numero, NumerosSommets);
+        Numero   = N_elements;
+        New1Face = Face(Numero, NumerosSommets);
     }
 
     if (Numero > (int)this->Objetlist[indiceObjet_courant].Facelist.size()) {
@@ -4524,7 +4515,7 @@ void BddInter::make1sommet() {
 // Si la liste est de taille suffisante, on utilise directement le Numero via les token ou N_Element
 // sinon, on incrémente la taille de Sommetlist
     int Numero;
-    Sommet1 New1Sommet;
+    Sommet New1Sommet;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4533,11 +4524,11 @@ void BddInter::make1sommet() {
             wxStringlist.push_back(token);
         }
         Numero = wxAtoi(wxStringlist[0]);
-        New1Sommet = Sommet1(wxStringlist);     // Ici, on passe 4 valeurs : un numéro et 3 valeurs en x, y et z
+        New1Sommet = Sommet(wxStringlist);      // Ici, on passe 4 valeurs : un numéro et 3 valeurs en x, y et z
         wxStringlist.clear();
     } else {
         Numero = N_elements;
-        New1Sommet = Sommet1(Numero,xyz);
+        New1Sommet = Sommet(Numero,xyz);
     }
     if (Numero > (int)this->Objetlist[indiceObjet_courant].Sommetlist.size()) {
         this->Objetlist[indiceObjet_courant].Sommetlist.push_back(New1Sommet) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
@@ -4568,14 +4559,13 @@ void BddInter::makenormale() {
 //    this->Normalelist.push_back(NewNormale);
     printf("%6d normales aux facettes\t(<NORMALE>/<POLY_NORMAL>)\n",Nb_normales);
 
-//    this->Normale1linelist.resize(Nb_normales);                     // A supprimer
     this->Objetlist[indiceObjet_courant].Nb_normales = Nb_normales;
 }
 
 void BddInter::make1normale() {
 // Enregistre la normale au barycentre dans la Facelist courante
     int Numero;
-    Normale1 New1Normale;
+    Normale New1Normale;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4583,14 +4573,13 @@ void BddInter::make1normale() {
             token = tokenizer.GetNextToken();
             wxStringlist.push_back(token);
         }
-        Numero = wxAtoi(wxStringlist[0]);
-        New1Normale = Normale1(wxStringlist);
+        Numero      = wxAtoi(wxStringlist[0]);
+        New1Normale = Normale(wxStringlist);
         wxStringlist.clear();
     } else {
-        Numero = N_elements;
-        New1Normale = Normale1(Numero,xyz);
+        Numero      = N_elements;
+        New1Normale = Normale(Numero,xyz);
     }
-//    this->Normale1linelist[Numero-1] = New1Normale;
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].normale_b = New1Normale.getPoint();
 //    printf("%d ",Numero-1);
 //    for (int i=0;i<3;i++) printf("%f ",this->Objetlist[indiceObjet_courant].Facelist[Numero-1].normale_b[i]);
@@ -4618,7 +4607,6 @@ void BddInter::makeaspect_face() {
 //    this->Aspect_facelist.push_back(NewAspect);
     printf("%6d attributs aux facettes\t(<ASPECT_FACE>/<POLY_ATTR>)\n",Nb_aspect);
     this->Objetlist[indiceObjet_courant].Nb_aspects = Nb_aspect;
-//    this->Aspect_face1linelist.resize(Nb_aspect);
 }
 
 void BddInter::make1aspect_face() {
@@ -4627,10 +4615,10 @@ void BddInter::make1aspect_face() {
     int grp_mat;
 
 // Pour l'instant ne gère pas str.IsEmpty() comme les autres fonctions make1* !
-// car Aspect_face1 ne gère que wxStringlist actuellement.
-// Possibilités à voir : Aspect_face1(int& numero, int& grp_mat, int& valeur) grp_mat valant 1 si valeur est un groupe, 2 si valeur est un matériau
-//                    ou Aspect_face1(int& numero, int& numeroGroupe, int& numeroMateriau), mais la faudrait donner les 2 à chaque fois
-//                    ou Aspect_face1(int& numero, std::vector<int> Numeros) Numeros[0] serait le groupe et [1] le matériau
+// car Aspect_face ne gère que wxStringlist actuellement.
+// Possibilités à voir : Aspect_face(int& numero, int& grp_mat, int& valeur) grp_mat valant 1 si valeur est un groupe, 2 si valeur est un matériau
+//                    ou Aspect_face(int& numero, int& numeroGroupe, int& numeroMateriau), mais la faudrait donner les 2 à chaque fois
+//                    ou Aspect_face(int& numero, std::vector<int> Numeros) Numeros[0] serait le groupe et [1] le matériau
 
     grp_mat = 0;
     if((str.Contains(_T("<GROUPE>")))     || (str.Contains(_T("<GROUP>")) )) {
@@ -4654,24 +4642,17 @@ void BddInter::make1aspect_face() {
             wxStringlist.push_back(token);
         }
         if (n_tokens == 3) {                                                    // Une ligne peut contenir à ce niveau 2 ou 3 champs (ou tokens)
-            Aspect_face1 New1aspect_face(wxStringlist);                         // S'il y en a 3, il faut créer un nouveau aspect_face1
-//            this->Aspect_face1linelist.push_back(New1aspect_face);            // ATTENTION : peut ne pas être vrai si plusieurs appels sur le même numéro de facette !
-//            indice=this->Aspect_face1linelist.size()-1;
+            Aspect_face New1aspect_face(wxStringlist);                          // S'il y en a 3, il faut créer un nouveau aspect_face1
             indice = this->indiceAspect = wxAtoi(wxStringlist[0]) -1;           // Sauvegarder indice dans indiceAspect pour usage ultérieur
-//            this->Aspect_face1linelist[indice] = New1aspect_face;
-//            this->Aspect_face1linelist[indice].setGroupe(0);                    // Initialiser groupe et matériaux
-//            this->Aspect_face1linelist[indice].setCodmatface(codmatface_def);
             this->Objetlist[indiceObjet_courant].Facelist[indice].groupe = 0;
             this->Objetlist[indiceObjet_courant].Facelist[indice].codmatface = codmatface_def;
             New_aspect_face = true;
         } else {
-//            indice=this->Aspect_face1linelist.size()-1;                       // S'il n'y en a que 2, utiliser le aspect_face1 précédent
             indice = this->indiceAspect;
             New_aspect_face = false;
         }
         val = wxAtoi(token);                                                    // Récupère le numéro de groupe ou de matériau sous forme d'entier
         if (grp_mat == 1) {
-////            this->Aspect_face1linelist[indice].setGroupe(val);
             this->Objetlist[indiceObjet_courant].Facelist[indice].groupe = val;
 //            auto it = std::find(listeGroupes.begin(),listeGroupes.end(),val);   // Est-il déjà dans la liste ?
 //            if (it == listeGroupes.end() || listeGroupes.empty()) {                                         // Non
@@ -4679,7 +4660,6 @@ void BddInter::make1aspect_face() {
 //                listeGroupes.sort();                                            // Trier la liste (on pourrait le faire plus tard !)
 //            }
         } else if (grp_mat == 2) {
-////            this->Aspect_face1linelist[indice].setCodmatface(val);
             this->Objetlist[indiceObjet_courant].Facelist[indice].codmatface = val;
 //            auto it = std::find(listeMateriaux.begin(),listeMateriaux.end(),val);   // Est-il déjà dans la liste ?
 //            if (it == listeMateriaux.end() || listeMateriaux.empty()) {                                       // Non
@@ -4724,7 +4704,7 @@ void BddInter::makeluminance() {
 void BddInter::make1luminance() {
 // ici reste avec des push_back, pas comme dans make1face ... peut-être à revoir !
     int Numero;
-    Luminance1 New1luminance;
+    Luminance New1luminance;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4733,11 +4713,11 @@ void BddInter::make1luminance() {
             wxStringlist.push_back(token);
         }
         Numero = wxAtoi(wxStringlist[0]);
-        New1luminance = Luminance1(wxStringlist);
+        New1luminance = Luminance(wxStringlist);
         wxStringlist.clear();
     } else {
         Numero = N_elements;
-        New1luminance = Luminance1(Numero, NumerosSommets) ;
+        New1luminance = Luminance(Numero, NumerosSommets) ;
     }
 //    this->Luminance1linelist[Numero-1] = New1luminance;
 //    this->Objetlist[indiceObjet_courant].Luminancelist[Numero-1] = New1luminance;   // à supprimer ...
@@ -4779,7 +4759,7 @@ void BddInter::make1vecteur() {
 // Si la liste est de taille suffisante, on utilise directement le Numero via les token ou N_Element
 // sinon, on incrémente la taille de Vecteurlist
     int Numero;
-    Vecteur1 New1Vecteur;
+    Vecteur New1Vecteur;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4788,11 +4768,11 @@ void BddInter::make1vecteur() {
             wxStringlist.push_back(token);
         }
         Numero = wxAtoi(wxStringlist[0]);
-        New1Vecteur = Vecteur1(wxStringlist);   // Ici, on passe 4 valeurs : un numéro et 3 valeurs en x, y et z
+        New1Vecteur = Vecteur(wxStringlist);    // Ici, on passe 4 valeurs : un numéro et 3 valeurs en x, y et z
         wxStringlist.clear();
     } else {
         Numero = N_elements;
-        New1Vecteur = Vecteur1(Numero,xyz);
+        New1Vecteur = Vecteur(Numero,xyz);
     }
     if (Numero > (int)this->Objetlist[indiceObjet_courant].Vecteurlist.size()) {
         this->Objetlist[indiceObjet_courant].Vecteurlist.push_back(New1Vecteur) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
@@ -4827,7 +4807,7 @@ void BddInter::GenereTableauPointsFacettes(Object * objet)
     unsigned int nb_p, nb_fac;
     unsigned int i, j;
     unsigned int indice_sommet;
-    Face1*   Face_i;
+    Face    *Face_i;
 
     if (verbose) printf("Entree BddInter::GenereTableauPointsFacettes\n");
     nb_p   = objet->Sommetlist.size();  //Nb_sommets;
@@ -5163,12 +5143,10 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
         glBegin(GL_POLYGON);
     }
     // Pas de traitement de smooth ici ni des normales aux facettes ! Colorisation directe.
-//    NumerosSommets = this->Face1list[indiceObjet][indiceFacette].getPoint();
     NumerosSommets = this->Objetlist[indiceObjet].Facelist[indiceFacette].getF_sommets();
 //    selectMode(mode);
     unsigned int ns = NumerosSommets.size();
     for(k=0; k<ns; k++) {
-//        xyz_sommet = this->Sommet1list[indiceObjet][NumerosSommets[k]-1].getPoint();
         xyz_sommet = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
         if (tracerFacette) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
         if (k == 0)
@@ -5231,10 +5209,10 @@ void BddInter::drawOpenGL() {
 //    Vector3D      np;
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
-    Face1*        Face_ij;
-//    Aspect_face1* Aspect_Face_ij;
-//    Normale1*     Normale_Face_ij;
-//    Luminance1*   Luminance_Face_ij=nullptr;
+    Face *Face_ij;
+//    Aspect_face * Aspect_Face_ij;
+//    Normale     * Normale_Face_ij;
+//    Luminance   * Luminance_Face_ij=nullptr;
     Object*       Objet_i;
     unsigned int i=0,j=0,k=0;
     bool test2 = false; // Utilisé pour faire un double passage en mode visualisation du "Sens des normales", le premier en GL_CCW et le second en GL_CW
@@ -5438,39 +5416,10 @@ Boucle:
 
     //                     case 3:
     //                        glBegin(GL_TRIANGLES);
-    //                        NumerosSommets=Face_ij->getF_sommets();
-    //                        for(k=0; k<NumerosSommets.size(); k++) {
-    //                            if (smooth) {
-    //                                NormaleSommet = this->Vecteur1list[i][this->Luminance1list[i][j].point[k]-1].point;
-    //                                glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]);
-    //                            } else {
-    //                                // Dans ce cas, forcer l'utilisation de la normale à la facette pour tous les sommets
-    //                                glNormal3f(NormaleFacette[0],NormaleFacette[1],NormaleFacette[2]);
-    //                            }
-    //                            xyz_sommet=(this->Sommet1list[i][NumerosSommets[k]-1]).getPoint();
-    //                            glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
-    //                        }
+    // ...
     //                        glEnd();
     //                        break;
     //
-    //                    case 4:
-    //                        //printf("\nhello world heuuu %d");
-    //                        //printf("\ntest",NormaleFacette[0],NormaleFacette[1],NormaleFacette[2]);
-    //                        glBegin(GL_QUADS);
-    //                        NumerosSommets=Face_ij->getF_sommets();
-    //                        for(k=0; k<NumerosSommets.size(); k++) {
-    //                            //printf("\nhello world %d",this->Luminance1list[i][j].point[k]);
-    //                            if (smooth) {
-    //                                NormaleSommet = this->Vecteur1list[i][this->Luminance1list[i][j].point[k]-1].point;
-    //                                glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]);
-    //                            } else {
-    //                                glNormal3f(NormaleFacette[0],NormaleFacette[1],NormaleFacette[2]);
-    //                            }
-    //                            xyz_sommet=this->Sommet1list[i][NumerosSommets[k]-1].getPoint();
-    //                            glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
-    //                        }
-    //                        glEnd();
-    //                        break;
 
                         default:
                             glBegin(GL_POLYGON);
@@ -5478,7 +5427,7 @@ Boucle:
                             style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
 //                            selectMode(mode);
 //                          if (smooth && Luminance_Face_ij->Nb_Sommets_F == 0) { // Test en défaut sur objet/facette plane car Luminance_Face_ij
-//                              printf("%d %d sans luminance\n",i,j);           // (ou Luminance1list[i][j]) non initialisé
+//                              printf("%d %d sans luminance\n",i,j);
 //                              Face_ij->flat = true;
 //                          }
 
@@ -5519,12 +5468,6 @@ Boucle:
                 glPopName();
             }   // Objet_i->afficher && !Objet_i->deleted
 
-            // Si le mode "Sens des normales" est activé : Pour forcer une seconde exploration complète des boucles sur i et j en changeant le mode glFrontFace
-//            if((test2==false) && (show_CW_CCW==true)  && (i+1==this->Objetlist.size())) { // Dernier test pour voir si c'est bien le dernier passage sur i !
-//                glFrontFace(GL_CW);
-//                test2=true;
-//                i=-1;   // i est un unsigned int mais en faisant ainsi on réexplore bien depuis i=0 du for(i=0; i<this->Objetlist.size(); i++)
-//            }
         }       // for(i=0; i<this->Objetlist.size(); ...
 
         // Si le mode "Sens des normales" est activé : Pour forcer une seconde exploration complète des boucles sur i et j en changeant le mode glFrontFace
@@ -5635,7 +5578,7 @@ void BddInter::Inverse_Selected_Normales() {
 // Inverse les normales au barycentre et le sens de parcours des sommets des facettes sélectionnées.
     unsigned int i,j,k;
     int m;
-    Face1*    Face_ij;
+    Face *Face_ij;
     bool no_selected = true;
 
     for(i=0; i<this->Objetlist.size(); i++) {
@@ -5674,7 +5617,7 @@ void BddInter::Inverser_Parcours_Selected() {
 
     unsigned int i,j,k;
     int m;
-    Face1*    Face_ij;
+    Face *Face_ij;
     std::vector<int> NumerosSommets;
     std::vector<int> ReverseSommets;
     bool test_print = false;
@@ -5717,11 +5660,11 @@ void BddInter::Inverser_Toutes_les_Normales() {
 void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
     unsigned int j,k;
     int m;
-    Face1*      Face_ij;
-    Face1* Luminance_ij;
-//    Luminance1* Luminance_ij;
-    Vecteur1*   Vecteur_ij;
-    Object*     objet_courant;
+    Face *Face_ij;
+    Face *Luminance_ij;
+//    Luminance* Luminance_ij;
+    Vecteur *Vecteur_ij;
+    Object  *objet_courant;
 
     objet_courant = &(this->Objetlist[o]);
 
@@ -5755,7 +5698,6 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
 
 //    for(j=0; j<objet_courant->Nb_luminances; j++) {   // Souci si différent du nombre de facettes !
     for(j=0; j<objet_courant->Nb_facettes; j++) {
-//        Luminance_ij = &(objet_courant->Luminancelist[j]);
         Luminance_ij = &(objet_courant->Facelist[j]);
         if (!Luminance_ij->L_sommets.empty()) {
             int base = Luminance_ij->L_sommets[0];
@@ -6613,7 +6555,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
     GLuint *ptr=nullptr;
 
     Object *objet_courant;
-    Face1  *new_facette;
+    Face   *new_facette;
 
     bool test_print = false ;       // Mettre true pour activer des impressions de test et commenter la ligne en dessous (ou activer verbose via lettre v)!
     test_print = verbose;
@@ -6814,21 +6756,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());
             MSelect->TextCtrl_Selection->SetValue(str);
 
-            // Test
-//            if (!MPanel->Bouton_souder) {
-//                printf("ListeSelect.size()= %d\n",(int)ToSelect.ListeSelect.size());
-//                for(i=0; i<(int)ToSelect.ListeSelect.size(); i++) {
-//                    printf("%d %d %d\n",i,ToSelect.ListeSelect[i].objet,ToSelect.ListeSelect[i].face_sommet);
-//                }
-///*                 printf("Liste.size()= %d\n",(int)ToSelect.Liste.size());
-// *                 for(i=0; i<(int)ToSelect.Liste.size(); i++) {
-// *                     printf("%d %d %d\n",i,ToSelect.Liste[i].objet,ToSelect.Liste[i].face_sommet);
-// *                 }
-// */
-////                m_gllist = -2;
-////                Refresh();
-//            }
-
             if (MPanel->Bouton_souder) {
                 if(Smemory == nullptr) {
                     // Enregistrer le premier point sélectionné dans Smemory
@@ -6881,7 +6808,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
             if (mode_selection == selection_facette) {
 //                colorface(objet, face);
-//                if (!ToSelect.check_if_in_Liste(objet,face)) ToSelect.add_one(objet,face);  // N'ajouter que si non déjà présent dans la Liste
                 if (OnOff) {
                     if (!ToSelect.check_if_in_ListeSelect(objet,face)) {
                         if (objet != -1) ToSelect.add_one(objet,face);      // N'ajouter que si non déjà présent dans la Liste et objet <> -1 (fond)
@@ -7024,10 +6950,7 @@ bool BddInter::ifexist_sommet(int objet,int sommet) {
 
 void BddInter::SaveTo(wxString str) {
 
-    // A revoir : on doit enregistrer en .bdd quelle que soit l'entrée .3ds, .m3d, .obj, ... => Conversion systématique au format SDM pour Crira
-    // En fait, un SaveBDD direct devrait être suffisant !
-
-    // Sauf si par la suite on enregistre sous d'autres formats (.off, .obj par exemple, mais pas pour CRIRA qui ne connait que le .bdd SDM).
+// Pour enregistrer sous différents formats, le format .bdd est celui par défaut (tous les formats lus ne sont pas accessibles en écriture)
 
     if(OK_ToSave) {
         int types=-1;
@@ -7092,7 +7015,7 @@ void BddInter::SaveBDD(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face1  *Luminance_Face_ij=nullptr;
+    Face   *Luminance_Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7139,18 +7062,18 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
 
         myfile << "\t<FACE>\t";
-        myfile << compteur ; //this->Face1list[i].size();
+        myfile << compteur ;
         myfile << "\n";
         myfile << "\n";
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue ;   // Original de jdias sur .show, mais une facette masquée ne l'est qu'à l'affichage !
+            if(objet_courant->Facelist[j].deleted) continue ;   // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // => on ne travaille que sur les facettes non supprimées !
             numeros_Sommets = objet_courant->Facelist[j].F_sommets;
             myfile << "\t";
@@ -7195,7 +7118,6 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
 //        for(j=0; j<compteur_facettes; j++) {                  // NON car en cas de soudure, on saute des facettes
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-//            if(this->Normale1list[i][j].show == true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
             if(objet_courant->Facelist[j].deleted) continue ;
             compteur++;
             xyz_sommet = objet_courant->Facelist[j].getNormale_b();
@@ -7207,7 +7129,6 @@ void BddInter::SaveBDD(wxString str) {
             }
             myfile << "\n";
         }
-//        printf("\n aspectFace start %d",(int)this->Aspect_face1list[i].size());
         compteur = 0;
         myfile << "\n\t<ASPECT_FACE>\t";
         myfile << compteur_facettes ;
@@ -7231,16 +7152,13 @@ void BddInter::SaveBDD(wxString str) {
         }
         myfile.flush(); // Forcer l'écriture sur le fichier
 
-//        printf("\n aspectFace end %d",(int)this->Aspect_face1list[i].size());
-//        compteur = 0;
         numeros_Sommets.clear();
 //        if (test_seuil_gouraud && Enr_Normales_Seuillees) {
             nouvel_indice = objet_courant->Nb_vecteurs +1;
 //        }
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-//           if(objet_courant->Facelist[j].show == true &&
-           if (!objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
+           if (!objet_courant->Facelist[j].deleted) {
                 numeros_Sommets = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
@@ -7258,7 +7176,7 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].show == false || objet_courant->Facelist[j].deleted) {
+            if(objet_courant->Facelist[j].deleted) {
 //                printf("j=%d ",j);  // Bug : si on le met, OK quand souder a été fait, sinon plante (du moins avec g++ 8.1, car semble OK en 9.3 de Msys2 !)
                 continue ;
             }
@@ -7318,7 +7236,6 @@ void BddInter::SaveBDD(wxString str) {
 //        printf("%d\n",NbVecteurs);
 //        fflush(stdout);
         myfile << std::setw(5) << NbVecteurs;
-//        myfile << std::setw(5) << this->Vecteur1list[i].size();  // Ne marche pas si soudures, car des points sont supprimés !
         myfile << "\n";
         myfile << "\n";
         for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
@@ -7379,7 +7296,7 @@ void BddInter::SaveOBJ(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face1  *Luminance_Face_ij=nullptr;
+    Face   *Luminance_Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7444,7 +7361,7 @@ void BddInter::SaveOBJ(wxString str) {
 //        }
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].show == true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
+            if(!objet_courant->Facelist[j].deleted) {
                 numeros_Sommets = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
@@ -7454,14 +7371,14 @@ void BddInter::SaveOBJ(wxString str) {
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             if(!objet_courant->Facelist[j].deleted) {   // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
-                compteur++;                             // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+                compteur++;                             // Donc compter toutes les facettes non supprimées (.show original != .afficher !)
             }
         }
 
         myfile << "\n# " << compteur << " Elements\n";
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].show == false || objet_courant->Facelist[j].deleted) continue;
+            if(objet_courant->Facelist[j].deleted) continue;
             current_groupe = objet_courant->Facelist[j].getGroupe();
             if (current_groupe != last_groupe) {
                 myfile << "usemtl group_";
@@ -7526,7 +7443,6 @@ void BddInter::SaveOBJ(wxString str) {
             myfile << "\n# " << NbVecteurs << " Normales aux sommets\n";
 
             for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
-    //            if(objet_courant->Vecteurlist[j].show == true) {    // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                     NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "vn";
                     for(k=0; k<3; k++) {
@@ -7649,7 +7565,7 @@ void BddInter::SaveOFF(wxString str) {
         objet_courant = &(this->Objetlist[o]);
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].show == false || objet_courant->Facelist[j].deleted) continue;
+            if(objet_courant->Facelist[j].deleted) continue;
             numeros_Sommets = objet_courant->Facelist[j].F_sommets;
             myfile << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
@@ -7697,7 +7613,7 @@ void BddInter::SaveG3D(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face1  *Luminance_Face_ij=nullptr;
+    Face   *Luminance_Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7786,7 +7702,7 @@ void BddInter::SaveG3D(wxString str) {
 
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].show == true && !objet_courant->Facelist[j].deleted) {     // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted seulement ?
+            if(!objet_courant->Facelist[j].deleted) {
                 numeros_Sommets_L = objet_courant->Facelist[j].getLsommets();
                 compteur_luminances += numeros_Sommets_L.size();
             }
@@ -7812,7 +7728,7 @@ void BddInter::SaveG3D(wxString str) {
         myfile << compteur_sommets;
         myfile << "\">\n";
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier.
 //                compteur++;
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
@@ -7830,18 +7746,18 @@ void BddInter::SaveG3D(wxString str) {
 
         compteur=0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;           // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
-            compteur++;                                     // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+            if(objet_courant->Facelist[j].deleted) continue;        // Test original sur .show
+            compteur++;                                             // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
 
         myfile << "\t\t\t\t\t<facettes nbr=\"";
-        myfile << compteur ; //this->Face1list[i].size();
+        myfile << compteur ;
         myfile << "\">\n";
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;    // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
-            compteur++;                                         // => on ne travaille que sur les facettes non supprimées !
+            if(objet_courant->Facelist[j].deleted) continue;
+            compteur++;
             myfile << "\t\t\t\t\t\t<facette id=\"";
             myfile << compteur;
             myfile << "\">\n";
@@ -7936,7 +7852,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile << NbVecteurs;
             myfile << "\">\n";
             for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
-    //            if(objet_courant->Vecteurlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+    //            if(objet_courant->Vecteurlist[j].show == true) {   // A vérifier.
                     compteur++;
                     NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "\t\t\t\t\t\t<normale_s id=\"";
@@ -7994,12 +7910,12 @@ void BddInter::diviserArete(int objet, int face, int line) {
     int div_limit, Nb_vecteurs_0 ;
     bool vecteurs_presents;
 
-    Face1    NewFace;
-//    Normale1 NewNormale;
+    Face    NewFace;
+//    Normale NewNormale;
     std::vector<float> NewNormale;
-    Sommet1  NewSommet;
-    Sommet1  Sommet_a;
-    Sommet1  Sommet_b;
+    Sommet  NewSommet;
+    Sommet  Sommet_a;
+    Sommet  Sommet_b;
 
     int indice_objet_cible = objet;//-1 ; // -1 à cause de glPushName(i+1) dans showAllLines
     int indice_face_cible  = face;//-1  ; // -1 à cause de glPushName(j+1) dans showAllLines
@@ -8007,9 +7923,9 @@ void BddInter::diviserArete(int objet, int face, int line) {
 
     printf("objet %d, face %d, line %d\n",objet,face,line);
 
-    Luminance1 NewLuminance;
-    Vecteur1 NewVecteur;
-//    Aspect_face1 Newaspect_face;
+    Luminance NewLuminance;
+    Vecteur   NewVecteur;
+//    Aspect_face Newaspect_face;
 //    int NewGroupe,NewCodmatface;
     std::vector<int>::iterator it;
 
@@ -8070,7 +7986,7 @@ void BddInter::diviserArete(int objet, int face, int line) {
         this->Objetlist[indice_objet_cible].Sommetlist [indice_sommet].show   = true;
         if (vecteurs_presents) {
             this->Objetlist[indice_objet_cible].Vecteurlist[indice_sommet].toshow = (undo_memory+1);
-            this->Objetlist[indice_objet_cible].Vecteurlist[indice_sommet].show   = true;
+//            this->Objetlist[indice_objet_cible].Vecteurlist[indice_sommet].show   = true;
         }
 
 //        for(i=0; i<this->Objetlist.size(); i++) { // Pourquoi balayer tous les objets ? 1 seul, doit suffire
@@ -8088,10 +8004,8 @@ void BddInter::diviserArete(int objet, int face, int line) {
                         NewFace       = Objetlist[i].Facelist[j];
                         if (this->Objetlist[i].Facelist[j].toshow == 0) {
                             this->Objetlist[i].Facelist[j].toshow  = ((undo_memory*(-1))-1);
-                            this->Objetlist[i].Facelist[j].show    = false;
                             this->Objetlist[i].Facelist[j].deleted = true;
                         } else {
-                            this->Objetlist[i].Facelist[j].show    = false;  // faire dans tous les cas !!!!
                             this->Objetlist[i].Facelist[j].deleted = true;
                         }
                         it = NewFace.F_sommets.begin()+k+1;
@@ -8109,31 +8023,6 @@ void BddInter::diviserArete(int objet, int face, int line) {
                     }
                 }
                 /// entre 1er et dernier point ?
-//                if(((NumerosSommets[0]==a && NumerosSommets[k]==b) ||
-//                    (NumerosSommets[0]==b && NumerosSommets[k]==a)) && ((int)i==indice_objet_cible)) {  // ???? k en dehors de boucle ?
-//                    NewFace       = Face1list[i][j];
-//                    NewLuminance  = Luminance1list[i][j];
-//                    Newaspect_face= Aspect_face1list[i][j];
-//                    NewNormale=Normale1list[i][j];
-//                    if (this->Face1list[i][j].toshow == 0) {
-//                        this->Face1list[i][j].toshow  = ((undo_memory*(-1))-1);
-//                        this->Face1list[i][j].show    = false;
-////                        this->Face1list[i][j].afficher= false;
-//                        this->Face1list[i][j].deleted = true;
-//                    } else {
-//                        this->Face1list[i][j].show    = false;  // faire dans tous les cas !!!!
-////                        this->Face1list[i][j].afficher= false;
-//                        this->Face1list[i][j].deleted = true;
-//                    }
-//                    NewFace.point.push_back(nouveau_sommet);
-//                    NewFace.Nb_Sommets_F++;
-//                    NewFace.toshow = ((undo_memory)+1);
-//                    NewFace.Numero = this->Face1list[indice_objet_cible].size();
-//                    this->Face1list[i].push_back(NewFace);
-//                    this->Normale1list[i].push_back(NewNormale);
-//                    this->Aspect_face1list[i].push_back(Newaspect_face);
-//                    this->Luminance1list[i].push_back(NewLuminance);
-//                }
             }
 //        }
         numero_a = nouveau_sommet;
@@ -8154,7 +8043,7 @@ void BddInter::souderPoints(int objet, int point) {
 //            Or les premiers push_back sont faits sur indice_objet_cible ... Pas très logique.
 //        ... Peut-être conserver tel quel car gestion du Undo est plus simple ! Pas de distingo interne/externe
 
-//        05/2020 mieux. Faut-il traiter les vecteurs/luminances car très peu de chances qu'ils restent OK après une soudure !
+//        05/2020 mieux. Faut-il traiter les vecteurs/luminances car très peu de chances qu'ils restent OK après une soudure ! => Recalcul de toutes les normales
 
     std::vector<int>NumerosSommets;
     unsigned int i;
@@ -8163,7 +8052,7 @@ void BddInter::souderPoints(int objet, int point) {
     int toUp2=-1;
     int nb_Fac_initial;
 
-    Face1   NewFace;
+    Face    NewFace;
     Object *objet_courant, *objet_origine, *objet_cible;
 
     int indice_objet_cible   = objet;
@@ -8178,17 +8067,17 @@ void BddInter::souderPoints(int objet, int point) {
     objet_cible   = &(this->Objetlist[indice_objet_cible]);
     objet_origine = &(this->Objetlist[indice_objet_origine]);
 
-    Sommet1  NewSommet = objet_cible->Sommetlist [indice_point_cible];      // Récupère le point cible dans l'objet cible
+    Sommet   NewSommet = objet_cible->Sommetlist [indice_point_cible];      // Récupère le point cible dans l'objet cible
     NewSommet.selected = false;
     NewSommet.Numero   = objet_origine->Sommetlist.size() +1;               // Sommetlist pas encore agrandi, donc +1
     objet_origine->Sommetlist.push_back(NewSommet);                         // Ajoute NewSommet en fin de liste origine (même si cible = origine !)
 
     if (objet_cible->Nb_vecteurs > 0) {
-        Vecteur1 NewVecteur=objet_cible->Vecteurlist[indice_point_cible];   // Suppose que indice_points = indice_vecteurs ? Faux si plusieurs normales sur 1 sommet !
+        Vecteur NewVecteur=objet_cible->Vecteurlist[indice_point_cible];    // Suppose que indice_points = indice_vecteurs ? Faux si plusieurs normales sur 1 sommet !
         if (objet_origine->Nb_vecteurs > 0) {
             NewVecteur.Numero = objet_origine->Vecteurlist.size() +1;
             objet_origine->Vecteurlist.push_back(NewVecteur);               // Idem pour NewVecteur, mais il faudra le modifier car non adapté
-///            Luminance1 NewLuminance;                                                            // Non utilisé ? pour l'instant
+///            Luminance NewLuminance;                                                            // Non utilisé ? pour l'instant
         }                                                                   // que fait-on si Nb_vecteurs dans cible = 0 mais pas dans origine : il faudrait en créer un ?
     }
 //    printf("1\n"); fflush(stdout);
@@ -8199,7 +8088,7 @@ void BddInter::souderPoints(int objet, int point) {
         objet_origine->Sommetlist[indice_point_origine].toshow=(-undo_memory-1);
     }
 
-    objet_origine->Sommetlist[indice_point_origine].show= false;
+    objet_origine->Sommetlist[indice_point_origine].show = false;
 
     int new_indice = nouveau_sommet-1;
     objet_origine->Sommetlist[new_indice].toshow = (undo_memory+1);
@@ -8212,51 +8101,49 @@ void BddInter::souderPoints(int objet, int point) {
 //        fflush(stdout);
 
         for(j=0; j<nb_Fac_initial; j++) {
-            if(objet_origine->Facelist[j].show && !objet_origine->Facelist[j].deleted) {
-                toUp1 = -1;
-                toUp2 = -1;
-                NumerosSommets = objet_origine->Facelist[j].getF_sommets();
-                for(k=0; k<(int)NumerosSommets.size(); k++) {
-                    if(NumerosSommets[k] == numero_point_cible) {
-                        toUp1 = k;
-                        if (verbose) printf("toUp1 = %d\n",toUp1);
-                    } else if(NumerosSommets[k] == numero_point_origine) {
-                        toUp2 = k;
-                        if (verbose) printf("toUp2 = %d\n",toUp2);
-                    }
+            if(objet_origine->Facelist[j].deleted) continue ;               // Passer à la facette suivante
+            toUp1 = -1;
+            toUp2 = -1;
+            NumerosSommets = objet_origine->Facelist[j].getF_sommets();
+            for(k=0; k<(int)NumerosSommets.size(); k++) {
+                if(NumerosSommets[k] == numero_point_cible) {
+                    toUp1 = k;
+                    if (verbose) printf("toUp1 = %d\n",toUp1);
+                } else if(NumerosSommets[k] == numero_point_origine) {
+                    toUp2 = k;
+                    if (verbose) printf("toUp2 = %d\n",toUp2);
                 }
-                if ((toUp1 == -1) && (toUp2 == -1)) continue;                   // Aucun sommet modifié dans cette facette, passer à la suivante
-                NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
-                if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
-                if (objet_origine->Facelist[j].toshow == 0) {
-                    objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
-                }
-                objet_origine->Facelist[j].show    = false;                     // Attention ici le .show ne veut pas dire "non masqué" !!
-                objet_origine->Facelist[j].deleted = true ;                     // GD. Marquer cette ancienne facette comme "deleted" A VERIFIER : mais du coup, .show <=> !deleted
-                NewFace.toshow = (undo_memory+1);
-                if((toUp1 != -1) && (toUp2 != -1)) {                            // Soudure interne dans une même facette
-                    NewFace.setNewSommet_F(toUp1, nouveau_sommet);
-                    NewFace.setNewSommet_F(toUp2, nouveau_sommet);
-                    NewFace.F_sommets.erase(NewFace.F_sommets.begin()+toUp2);   // dans ce cas, la facette comportera 1 sommet de moins
-                    NewFace.Nb_Sommets_F--;                                     // donc on actualise Nb_Sommets_F
-                    if (NewFace.Nb_Sommets_L > 0) {
-                        NewFace.setNewSommet_L(toUp1, nouveau_sommet);
-                        NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-                        NewFace.L_sommets.erase(NewFace.L_sommets.begin()+toUp2);                   // Idem pour les luminances
-                        NewFace.Nb_Sommets_L--;
-                    }
-                } else if(toUp1 != -1) {
-                    NewFace.setNewSommet_F(toUp1, nouveau_sommet);                                  // Remplacer l'ancien sommet par le nouveau
-                    if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
-                } else if(toUp2 != -1) {
-                    NewFace.setNewSommet_F(toUp2, nouveau_sommet);                                  // Idem
-                    if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-                }
-                NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
-                objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
-
-                Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
             }
+            if ((toUp1 == -1) && (toUp2 == -1)) continue;                   // Aucun sommet modifié dans cette facette, passer à la suivante
+            NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
+            if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
+            if (objet_origine->Facelist[j].toshow == 0) {
+                objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
+            }
+            objet_origine->Facelist[j].deleted = true ;                     // GD. Marquer cette ancienne facette comme "deleted"
+            NewFace.toshow = (undo_memory+1);
+            if((toUp1 != -1) && (toUp2 != -1)) {                            // Soudure interne dans une même facette
+                NewFace.setNewSommet_F(toUp1, nouveau_sommet);
+                NewFace.setNewSommet_F(toUp2, nouveau_sommet);
+                NewFace.F_sommets.erase(NewFace.F_sommets.begin()+toUp2);   // dans ce cas, la facette comportera 1 sommet de moins
+                NewFace.Nb_Sommets_F--;                                     // donc on actualise Nb_Sommets_F
+                if (NewFace.Nb_Sommets_L > 0) {
+                    NewFace.setNewSommet_L(toUp1, nouveau_sommet);
+                    NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+                    NewFace.L_sommets.erase(NewFace.L_sommets.begin()+toUp2);                   // Idem pour les luminances
+                    NewFace.Nb_Sommets_L--;
+                }
+            } else if(toUp1 != -1) {
+                NewFace.setNewSommet_F(toUp1, nouveau_sommet);                                  // Remplacer l'ancien sommet par le nouveau
+                if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp1, nouveau_sommet);
+            } else if(toUp2 != -1) {
+                NewFace.setNewSommet_F(toUp2, nouveau_sommet);                                  // Idem
+                if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+            }
+            NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
+            objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
+
+            Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
         }
     } else {
 // Note : peu différent de soudure interne, mais quelques cas n'ont pas lieu d'être ici => On préfère réécrire le code, maêm si c'est "presque" le même !
@@ -8264,36 +8151,33 @@ void BddInter::souderPoints(int objet, int point) {
 //        fflush(stdout);
 
         for(j=0; j<nb_Fac_initial; j++) {
-///           if(objet_origine->Facelist[j].toshow > -1) {                      // Test différent si entre 2 objets ????
-            if(objet_origine->Facelist[j].show && !objet_origine->Facelist[j].deleted) {
-//                toUp1 = -1;
-                toUp2 = -1;
-                NumerosSommets = objet_origine->Facelist[j].getF_sommets();
-                for(k=0; k<(int)NumerosSommets.size(); k++) {
-                    if(NumerosSommets[k] == numero_point_origine) {
-                        toUp2 = k;
-                        if (verbose) printf("toUp2 = %d\n",toUp2);
-                    }
+        if(objet_origine->Facelist[j].deleted) continue ;                   // Passer à la facette suivante
+//            toUp1 = -1;
+            toUp2 = -1;
+            NumerosSommets = objet_origine->Facelist[j].getF_sommets();
+            for(k=0; k<(int)NumerosSommets.size(); k++) {
+                if(NumerosSommets[k] == numero_point_origine) {
+                    toUp2 = k;
+                    if (verbose) printf("toUp2 = %d\n",toUp2);
                 }
-//                if ((toUp1 == -1) && (toUp2 == -1)) continue;                 // Sommet non modifié, passer à la facette suivante
-                if (toUp2 == -1) continue;                                      // Aucun sommet modifié dans cette facette, passer à la suivante
-                NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
-                if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
-                if (objet_origine->Facelist[j].toshow == 0) {
-                    objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
-                }
-                objet_origine->Facelist[j].show    = false;
-                objet_origine->Facelist[j].deleted = true;                      // GD
-                NewFace.toshow = (undo_memory+1);
-
-                NewFace.setNewSommet_F(toUp2, nouveau_sommet);
-                if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
-
-                NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
-                objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
-
-                Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
             }
+//            if ((toUp1 == -1) && (toUp2 == -1)) continue;                 // Sommet non modifié, passer à la facette suivante
+            if (toUp2 == -1) continue;                                      // Aucun sommet modifié dans cette facette, passer à la suivante
+            NewFace = objet_origine->Facelist[j];                           // Recopie de la facette à modifier dans NewFace
+            if (objet_origine->Nb_vecteurs == 0) NewFace.Nb_Sommets_L = 0;  // Par précaution
+            if (objet_origine->Facelist[j].toshow == 0) {
+                objet_origine->Facelist[j].toshow = ((undo_memory*(-1))-1);
+            }
+            objet_origine->Facelist[j].deleted = true;                      // GD
+            NewFace.toshow = (undo_memory+1);
+
+            NewFace.setNewSommet_F(toUp2, nouveau_sommet);
+            if (NewFace.Nb_Sommets_L > 0) NewFace.setNewSommet_L(toUp2, nouveau_sommet);
+
+            NewFace.Numero = objet_origine->Facelist.size() +1;                                 // Donner le bon numéro à cette nouvelle facette
+            objet_origine->Facelist.push_back(NewFace);                                         // Enfin ajouter cette nouvelle facette
+
+            Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
         }
     }
     objet_origine->Nb_sommets = objet_origine->Sommetlist.size();   // Mis à jour des valeurs
@@ -8309,7 +8193,7 @@ void BddInter::souderPoints(int objet, int point) {
 }
 
 void BddInter::UNDO_ONE() {
-// On va réactiver les facettes marquées .deleted (et/ou !.show), remettre en état les tableaux (vector en réalité) de facettes, sommets, vecteurs
+// On va réactiver les facettes marquées .deleted, remettre en état les tableaux (vector en réalité) de facettes, sommets, vecteurs
     unsigned int i,j ;
     Object* objet_courant;
 
@@ -8321,11 +8205,9 @@ void BddInter::UNDO_ONE() {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Facelist[j].toshow == (-undo_memory)) {
-                    objet_courant->Facelist[j].show         = true;
                     objet_courant->Facelist[j].deleted      = false;     // GD
                     objet_courant->Facelist[j].toshow       = 0;
                 } else if((objet_courant->Facelist[j].toshow == undo_memory-1)) {
-                    objet_courant->Facelist[j].show         = true;
                     objet_courant->Facelist[j].deleted      = false;     // GD
                 }
             }
@@ -8337,15 +8219,15 @@ void BddInter::UNDO_ONE() {
                     if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
                     j--;    // 1 sommet effacé => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Sommetlist[j].toshow == -undo_memory) {
-                    objet_courant->Sommetlist[j].show    = true;
-                    objet_courant->Sommetlist[j].toshow  = 0;
+                    objet_courant->Sommetlist[j].show   = true;
+                    objet_courant->Sommetlist[j].toshow = 0;
                     if (vecteurs_presents) {
-                        objet_courant->Vecteurlist[j].show   = true;
+//                        objet_courant->Vecteurlist[j].show   = true;
                         objet_courant->Vecteurlist[j].toshow = 0;
                     }
                 } else if(((objet_courant->Sommetlist[j].toshow == undo_memory-1))) {
-                    objet_courant->Sommetlist[j].show    = true;
-                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
+                    objet_courant->Sommetlist[j].show = true;
+//                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
             }
             objet_courant->Nb_facettes = objet_courant->Facelist.size();    // Remettre à jour les Nb_*
@@ -8372,7 +8254,7 @@ void BddInter::Calcul_Normale_Barycentre(int i, int j) {
 // Calcul d'une normale d'une facette d'indice j dans l'objet d'indice i
 // La normale est une "moyenne" si la facette possède plus de 3 points => tolérance aux facettes non planes.
 
-    Face1 * Face_ij;
+    Face *Face_ij;
     float vector1[3];
     float vector2[3];
     float mag;
@@ -8421,9 +8303,9 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
     double  coef ;
     std::vector<float> pa, pb, pc;
     Vector3D v1, v2, vp, np;
-    Object * objet_cur;
-    Face1 cur_fac ;
-    int NbFacettes;
+    Object *objet_cur;
+    Face cur_fac ;
+    int  NbFacettes;
 
     objet_cur = &(this->Objetlist[indice_objet_cur]);
     test_np   = false ;
@@ -8818,8 +8700,8 @@ void BddInter::Simplification_BDD()
     std::vector<int> tabPoints;
     std::vector<float> Point_1, Point_i, Point_j;
     Object * objet_courant;
-    Face1  * Facette_courante;
-///    Luminance1 * Luminance_courante;
+    Face   * Facette_courante;
+///    Luminance * Luminance_courante;
     bool modification, indic;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
 
@@ -9140,57 +9022,6 @@ void BddInter::Simplification_BDD()
     printf("\nFin de simplification de la Bdd\n");
 }
 
-//void BddInter::Simplification_BDD_old() {
-//    std::vector<int>NumerosSommets;
-//    unsigned int i,j,k;
-//
-//    printf("\nSimplification BDD");
-//    for(i=0; i<this->Objetlist.size(); i++) {
-//        printf("\nCheck Sommet");
-//        for(j=0; j<this->Objetlist[i].Sommetlist.size(); j++) {
-//            for(k=0; k<j; k++) {
-//                if ((this->Objetlist[i].Sommetlist[j].point[0] == this->Objetlist[i].Sommetlist[k].point[0]) &&
-//                    (this->Objetlist[i].Sommetlist[j].point[1] == this->Objetlist[i].Sommetlist[k].point[1]) &&
-//                    (this->Objetlist[i].Sommetlist[j].point[2] == this->Objetlist[i].Sommetlist[k].point[2]) &&
-//                    ((this->Objetlist[i].Sommetlist[j].NNumber == -1)&&(this->Objetlist[i].Sommetlist[k].NNumber == -1))) {
-//                        this->Objetlist[i].Sommetlist[j].NNumber = k+1;
-//                }
-//            }
-//        }
-//        printf("\nUpdate Face");
-//        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-//            NumerosSommets = this->Objetlist[i].Facelist[j].F_sommets;
-//            for(k=0; k<NumerosSommets.size(); k++) {
-//                if(this->Objetlist[i].Sommetlist[NumerosSommets[k]-1].NNumber != -1) {
-//                    this->Objetlist[i].Facelist[j].F_sommets[k] = this->Objetlist[i].Sommetlist[NumerosSommets[k]-1].NNumber;
-//                }
-//            }
-//        }
-//        printf("\nErase Sommet");   // Le sommet est toujours en mémoire ! et même si show est false, non utilisé, son numéro est utilisé dans le décompte
-//        for(j=0; j<this->Objetlist[i].Sommetlist.size(); j++) {
-//            if (this->Objetlist[i].Sommetlist[j].NNumber != -1) {
-//                this->Objetlist[i].Sommetlist[j].show   = false;
-//                this->Objetlist[i].Sommetlist[j].toshow = -1;
-//            }
-//        }
-//        printf("\nRefonte luminance/vector");
-//        printf("\nRecalcul luminance/vector");
-////        Calcul_All_Luminance_Vecteurs();
-//        printf("\nEnd simplification");
-//
-//        /*for(int j(0); j<this->Face1list[i].size(); j++)
-//        {
-//            NumerosSommets=this->Face1list[i][j].F_sommets;
-//            printf("\n%d %d",i,j);
-//            for(int k(0); k<NumerosSommets.size(); k++)
-//            {
-//                printf("\n %d",NumerosSommets[k]);
-//            }
-//        }*/
-//
-//    }
-//}
-
 void BddInter::genereAttributsFacettes(int indiceObjet, int Nb_facettes, int numeroGroupe, int numeroMateriau)
 {
     // Groupes dans Aspect_face
@@ -9395,8 +9226,6 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles, bool Ne
     this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
     this->make1face();
 
-    // Test
-//    for (j=0; j<numero/2 ; j++) this->Face1list[this->Objetlist.size()-1][j].flat = true;   // Forcer la moitié des facettes à être planes !
 }
 
 void BddInter::genereSommetsSphere(int Nb_Meridiens, int Nb_Paralleles, float centre[3], float rayon, float coefx, float coefy, float coefz)
@@ -9488,8 +9317,8 @@ void BddInter::GenereNormale_1_Sommet(Object *current_objet, unsigned int indice
     std::vector<float> pa, pb, pc;
     std::vector<float> NormaleSommet;
     Vector3D v1, v2, vp, np;
-    Face1 cur_fac;
-    int NbFacettes;
+    Face cur_fac;
+    int  NbFacettes;
 
     test_np   = false ;
     np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                               // Initialisation
@@ -9561,7 +9390,7 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
 // + Reconstruction des luminances
     int indice_point ;
     Object * objet_courant;
-    Face1  * facette_courante;
+    Face   * facette_courante;
 //    bool verbose=false;       // Pour l'instant ici !
 
 //    printf("\n");
@@ -9648,8 +9477,8 @@ void BddInter::simplification_doublons_points(unsigned int objet)
 {
 	unsigned int i,j,k,nbsom;
     Object      * objet_courant;
-    Face1       * facette;
-//    Luminance1  * luminance;
+    Face        * facette;
+//    Luminance  * luminance;
     bool test;
 
     objet_courant = &(this->Objetlist[objet]) ;

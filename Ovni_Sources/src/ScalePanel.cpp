@@ -145,8 +145,8 @@ void ScalePanel::Init_Centre_Scale()
     unsigned int n_val,o,i,j, Nb_p;
     int indice;
     double cx1,cy1,cz1;
-    Object * objet_courant;
-    Sommet1 *sommet_courant;
+    Object *objet_courant;
+    Sommet *sommet_courant;
     std::vector<int> NumerosSommets;
 
     BddInter *Element = MAIN->Element;
@@ -338,8 +338,8 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
 
     unsigned int n_val, o, i, j, nb_fac;
     int indice;
-    Object  *objet_courant;
-    Sommet1 *sommet_courant;
+    Object *objet_courant;
+    Sommet *sommet_courant;
     std::vector<int> NumerosSommets;
 
     if (Element->mode_selection == Element->selection_objet) {

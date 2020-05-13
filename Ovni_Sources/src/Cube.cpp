@@ -169,7 +169,7 @@ void Cube::genereFacettes(BddInter* Element, int indiceObjet)
     Element->str = _T("5 4 1 2 6 5"); Element->make1face();
     Element->str = _T("6 4 8 7 3 4"); Element->make1face();
 
-    for (int i=0; i<Nb_facettes ; i++) Element->Objetlist[indiceObjet].Facelist[i].flat = true ; // Force le mode facettes planes
+    for (int j=0; j<Nb_facettes ; j++) Element->Objetlist[indiceObjet].Facelist[j].flat = true ; // Force le mode facettes planes
 }
 
 
@@ -233,8 +233,6 @@ void Cube::OnButton_OKClick(wxCommandEvent& event)
     Element->type     = 1;  // Marquer comme si c'était un fichier .bdd
     Element->type_new = 1;
     Element->m_gllist = 0;
-    // NOTE : ne marche pas si un objet n'est pas déjà affiché !
-//    Element->m_loaded = true;
 
     Element->searchMin_Max();
     Element->m_loaded = true;

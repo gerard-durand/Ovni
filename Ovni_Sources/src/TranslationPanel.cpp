@@ -327,8 +327,8 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
 {
     BddInter *Element = MAIN->Element;
 
-    Sommet1 *sommet_courant;
-    Object  *objet_courant;
+    Sommet *sommet_courant;
+    Object *objet_courant;
     std::vector<int> NumerosSommets;
     unsigned int o, i, j, n_val;
     int indice;

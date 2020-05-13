@@ -62,7 +62,6 @@ CentreRotation::~CentreRotation()
 	//*)
 }
 
-
 void CentreRotation::OnInit(wxInitDialogEvent& event)
 {
 }

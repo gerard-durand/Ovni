@@ -226,9 +226,9 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
     BddInter* Element = MAIN->Element;
 
     Object * objet_courant;
-    Face1  * facette_courante;
-    Face1  * facette_nouvelle;
-    Sommet1* sommet_courant;
+    Face   * facette_courante;
+    Face   * facette_nouvelle;
+    Sommet * sommet_courant;
     int isubdiv;
     unsigned int i,j,indiceFacette;
     std::vector<int> NumerosSommets,NewNumeros;

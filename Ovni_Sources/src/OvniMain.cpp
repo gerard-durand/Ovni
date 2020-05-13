@@ -800,7 +800,7 @@ bool OvniFrame::OnInit() {
 OvniFrame::~OvniFrame() {
     //(*Destroy(OvniFrame)
     //*)
-    Timer_Save.Stop();          // Arrêt du timer en sortie de programme (utile en cas de plantage car, apparemment, évite de le laisser actif après la sortie).
+    Timer_Save.Stop();          // Arrêt du timer en sortie de programme (peut être utile en cas de plantage car, apparemment, évite de laisser le timer actif après la sortie).
     Timer_Save.Disconnect();    // et déconnexion de précaution
 }
 
@@ -1325,7 +1325,6 @@ void OvniFrame::Ouvrir_Fichier()
         Selector += _T("Object File Format (*.off)|*.off|");
         Selector += _T("Milkshape 3D text (*.m3d)|*.m3d|");
         Selector += _T("Fichiers dxf (*.dxf)|*.dxf|");
-//        Selector += _T("Fichiers 3D (*.bdd,*.3ds,*.obj,*.g3d,*.ply,*.off,*.m3d,*.dxf)|*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.dxf|");
         Selector += _T("Tous les fichiers 3D |*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.dxf|");
         Selector += _T("Tous les fichiers (*.*)|*.*");
 
@@ -1632,7 +1631,6 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     wxString wxNomFichier = saveFileDialog.GetPath();   // Récupérer le nom complet
     wxFileOutputStream output_stream(wxNomFichier);
     if (!output_stream.IsOk()) {
-        //wxLogError("Cannot save current contents in file '%s'.", saveFileDialog.GetPath());
         printf("ERREUR d'ouverture du fichier %s !\n",(const char*)wxNomFichier.mb_str());
         return;
     }
@@ -2382,7 +2380,6 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
         // Récupérer la mémoire (pour limiter les soucis de fuite mémoire)
         for (unsigned int k=0; k<Element->Objetlist[indiceObjet].Nb_sommets; k++) {
             Element->Objetlist[indiceObjet].Sommetlist[k].point.pop_back();      // Supprimer les sommets
-//            Element->Sommet1list[indiceObjet][k].clear();
         }
         Element->Objetlist[indiceObjet].Sommetlist.clear();
         Element->Objetlist[indiceObjet].Sommetlist.pop_back();
