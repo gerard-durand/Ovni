@@ -35,11 +35,12 @@ const long ModificationPanel::ID_BUTTON9 = wxNewId();
 const long ModificationPanel::ID_BUTTON10 = wxNewId();
 const long ModificationPanel::ID_BUTTON11 = wxNewId();
 const long ModificationPanel::ID_BUTTON12 = wxNewId();
+const long ModificationPanel::ID_BUTTON1 = wxNewId();
 const long ModificationPanel::ID_CHECKBOX1 = wxNewId();
+const long ModificationPanel::ID_PANEL9 = wxNewId();
 const long ModificationPanel::ID_PANEL8 = wxNewId();
 const long ModificationPanel::ID_BUTTON13 = wxNewId();
 const long ModificationPanel::ID_PANEL10 = wxNewId();
-const long ModificationPanel::ID_PANEL9 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ModificationPanel,wxDialog)
@@ -51,7 +52,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 {
 	//(*Initialize(ModificationPanel)
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
-	SetClientSize(wxSize(214,495));
+	SetClientSize(wxSize(214,523));
 	Move(wxPoint(20,20));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arrête"), wxPoint(0,0), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
@@ -93,19 +94,20 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,288), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
-	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,304), wxSize(216,152), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
+	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,304), wxSize(216,186), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(8,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));
 	TextCtrl_Tolerance = new wxTextCtrl(Panel8, ID_TEXTCTRL1, _T("0"), wxPoint(136,8), wxSize(72,20), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_InverserTout = new wxButton(Panel8, ID_BUTTON9, _T("Inverser toutes les normales"), wxPoint(16,32), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
 	Button_Trianguler = new wxButton(Panel8, ID_BUTTON10, _T("Trianguler la BDD"), wxPoint(16,56), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON10"));
 	Button_RecalculerNormales = new wxButton(Panel8, ID_BUTTON11, _T("Recalculer toutes les normales"), wxPoint(16,80), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
 	Button_Simplification = new wxButton(Panel8, ID_BUTTON12, _T("Simplification de la BDD"), wxPoint(16,104), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
-	CheckBox_Transparence = new wxCheckBox(Panel8, ID_CHECKBOX1, _T("Activer la transparence"), wxPoint(16,130), wxSize(176,14), 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	Button_RecalculerAretes = new wxButton(Panel8, ID_BUTTON1, _T("Recalculer les arêtes"), wxPoint(16,128), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	CheckBox_Transparence = new wxCheckBox(Panel8, ID_CHECKBOX1, _T("Activer la transparence"), wxPoint(16,158), wxSize(176,14), 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_Transparence->SetValue(false);
-	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,464), wxSize(216,36), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
-	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
-	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,456), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
+	Panel9 = new wxPanel(Panel8, ID_PANEL9, wxPoint(0,180), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
 	Panel9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,490), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
+	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,6), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
 
 	Connect(ID_TOGGLEBUTTON1,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_AjouterToggle);
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ModificationPanel::OnSpinCtrl_NbSegmentsChange);
@@ -124,6 +126,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Connect(ID_BUTTON10,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_TriangulerClick);
 	Connect(ID_BUTTON11,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_RecalculerNormalesClick);
 	Connect(ID_BUTTON12,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_SimplificationClick);
+	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_RecalculerAretesClick);
 	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnCheckBox_TransparenceClick);
 	Connect(ID_BUTTON13,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_QuitterClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ModificationPanel::OnInit);
@@ -184,8 +187,8 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
         CheckBox_FacettePlane->Disable();   // Mais on garde son état coché/décoché
         Button_Annuler->Disable();
         Button_InverserNormale->Disable();
-        Bouton_diviser = false;
-        Bouton_souder  = false;
+        Bool_diviser = false;
+        Bool_souder  = false;
 //        toredraw = 1;
         Element->show_lines  = false;
         Element->show_points = false;
@@ -204,8 +207,8 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
         for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
     }
     Hide();
-    // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actaliser GenereTableauPointsFacettes et GenereTableauAretes
-    // Mais cette opération est longue sur certaines grosses Bdd. Paut-être à faire en option.
+    // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser GenereTableauPointsFacettes et GenereTableauAretes
+    // Mais cette opération est longue sur certaines grosses Bdd. Paut-être à proposer en option via le bouton "Recalculer les arêtes".
     Element->Refresh();
 }
 
@@ -214,8 +217,8 @@ void ModificationPanel::OnToggleButton_SouderToggle(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Bouton_souder = ToggleButton_Souder->GetValue();
-    if(Bouton_souder) {
+    Bool_souder = ToggleButton_Souder->GetValue();
+    if (Bool_souder) {
 //        printf("Souder YES\n");
         ToggleButton_Ajouter->SetValue(false);
         ToggleButton_Diviser->SetValue(false);
@@ -228,8 +231,8 @@ void ModificationPanel::OnToggleButton_SouderToggle(wxCommandEvent& event)
         Element->modeGL  = (BddInter::MODE)old_modeGL;
     }
 //    toredraw = 1;
-    Bouton_diviser = false;
-    Element->show_points= Bouton_souder;
+    Bool_diviser = false;
+    Element->show_points= Bool_souder;
     Element->show_lines = false;
     Element->m_gllist   = -2;        // Ne reconstruire que la liste de points
     Element->Refresh();
@@ -242,7 +245,7 @@ void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     division=-1;
-    Bouton_diviser = ToggleButton_Ajouter->GetValue();
+    Bool_diviser = ToggleButton_Ajouter->GetValue();
     if (ToggleButton_Ajouter->GetValue()) {
         printf("Ajouter YES\n");
         ToggleButton_Diviser->SetValue(false);
@@ -254,8 +257,8 @@ void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
         Element->modeGL = (BddInter::MODE)old_modeGL;
     }
 //        toredraw = 1;
-    Bouton_souder       = false;
-    Element->show_lines = Bouton_diviser;
+    Bool_souder         = false;
+    Element->show_lines = Bool_diviser;
     Element->show_points= false;
     Element->Refresh();
 }
@@ -265,8 +268,8 @@ void ModificationPanel::OnToggleButton_DiviserToggle(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Bouton_diviser = ToggleButton_Diviser->GetValue();
-    if(Bouton_diviser) {
+    Bool_diviser = ToggleButton_Diviser->GetValue();
+    if (Bool_diviser) {
         ToggleButton_Ajouter->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
 //        printf("Diviser YES\n");
@@ -277,8 +280,8 @@ void ModificationPanel::OnToggleButton_DiviserToggle(wxCommandEvent& event)
         SpinCtrl_NbSegments->Disable();
     }
 //        toredraw = 1;
-    Bouton_souder       = false;
-    Element->show_lines = Bouton_diviser;
+    Bool_souder         = false;
+    Element->show_lines = Bool_diviser;
     Element->show_points= false;
     Element->Refresh();
 }
@@ -552,8 +555,12 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 //                }
             }
 
-            Element->GenereTableauAretes(objet_courant);
-            Element->GenereTableauPointsFacettes(objet_courant);
+            if (objet_courant->Temps_Calcul_Aretes <= tempo_s*CLOCKS_PER_SEC) {
+                Element->GenereTableauPointsFacettes(objet_courant);
+                Element->GenereTableauAretes(objet_courant);    // Peut-être long sur de grosses Bdd (recherche des doublons !) est-ce à faire systématiquement ?
+                Element->buildAllLines();
+                Refresh();
+            }
 
 //  ATTENTION : le nombre de vecteurs dans la Bdd originale peut être différent du nombre de sommets car plusieurs normales sont possibles pour 1 seul sommet
 
@@ -699,4 +706,20 @@ void ModificationPanel::OnButton_InverserToutClick(wxCommandEvent& event)
 void ModificationPanel::OnCheckBox_FacettePlaneClick(wxCommandEvent& event)
 {
     FacetteCreeePlane = CheckBox_FacettePlane->GetValue();
+}
+
+void ModificationPanel::OnButton_RecalculerAretesClick(wxCommandEvent& event)
+{
+    BddInter *Element = MAIN->Element;
+    Object   *objet_courant;
+    unsigned int o;
+
+    for(o=0; o<Element->Objetlist.size(); o++) {
+        objet_courant = &(Element->Objetlist[o]);
+        if (objet_courant->deleted) continue;   // Objet supprimé mais encore en mémoire => passer au suivant
+        Element->GenereTableauPointsFacettes(objet_courant);
+        Element->GenereTableauAretes(objet_courant);
+    }
+    Element->buildAllLines();
+    Element->Refresh();
 }

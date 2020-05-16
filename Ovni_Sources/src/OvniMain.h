@@ -63,6 +63,8 @@
 #include "Aide_html.h"
 #include <math.h>
 
+#define tempo_s 2       //
+
 class OvniFrame: public wxFrame
 {
     public:

@@ -1008,7 +1008,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
         } else {    // Tout autre évênement de souris non déjà traité ci-dessus
 
-            if(MPanel->Bouton_souder || show_points) {
+            if(MPanel->Bool_souder || show_points) {
                 GLint hits=0;
                 GLint viewport[4];
                 wxSize ClientSize = this->GetSize();
@@ -1029,17 +1029,17 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
-                    if (letscheckthemouse(0,hits)) { //,selectBuffer)) {
-//                        m_gllist = 0;       // reconstruit toutes les listes alors que seule celle des points suffirait
-                        searchMin_Max();    // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
-                        if (show_points && !MPanel->Bouton_souder) { // En mode show_points seulement, pas en mode soudure de points
+                    if (letscheckthemouse(0,hits)) {
+//                        m_gllist = 0;                         // reconstruit toutes les listes alors que seule celle des points suffirait
+                        searchMin_Max();                        // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
+                        if (show_points && !MPanel->Bool_souder) { // En mode show_points seulement, pas en mode soudure de points
                             if ((point_under_mouse != point_under_mouse_old) || (objet_under_mouse != objet_under_mouse_old)) {
                                 if (verbose) printf("Survol du point %d de l'objet %d\n", point_under_mouse, objet_under_mouse);
                                 objet_under_mouse_old = objet_under_mouse;  // Mémoriser les valeurs pour ne pas afficher plusieurs fois de suite la même chose !
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
-                        if (MPanel->Bouton_souder) {
+                        if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
                         }
@@ -1060,7 +1060,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_MODELVIEW);
                 stopPicking();
 
-            } else if(MPanel->Bouton_diviser) {
+            } else if(MPanel->Bool_diviser) {
 
                 GLint hits=0;
                 GLint viewport[4];
@@ -1804,7 +1804,7 @@ void BddInter::clearall() {
     m_loaded   = false;
     diagonale_save=0.0;
 //    glDeleteLists( m_gllist, 10);
-    glDeleteLists( 1, 10);   // ?? pourquoi 10 et pas plus ?
+    glDeleteLists( 1, 100);   // ?? pourquoi 100 et pas plus ? que se passe t-il si plus de 100 listes ?
     glClear(GL_COLOR_BUFFER_BIT);
     m_gldata.initialized = false;
 }
@@ -4827,6 +4827,9 @@ void BddInter::GenereTableauPointsFacettes(Object * objet)
 
 void BddInter::GenereTableauAretes(Object * objet)
 {
+    // NOTE : On pourrait chronométrer la partie test des doublons d'arêtes puis, si c'est suffisament court, activer GenereTableauAretes systématiquement quand c'est utile
+    //        plutôt que de laisser ce soin à faire en manuel par l'utilisateur via le bouton "Recalculer les arêtes"
+
     unsigned int i,nb_fac,j,j_b,nb_p;
     unsigned int indice_sommet;
     unsigned int Numero_Objet;
@@ -4834,19 +4837,22 @@ void BddInter::GenereTableauAretes(Object * objet)
     unsigned int indice_a, indice_b;
     std::vector<int>  Numeros_Sommets;
     Aretes   Arete, Arete_test, *p_Arete;
-    bool verbose_local = true;     // Local ici
-    static bool traiter_ici=true;   // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
+    bool verbose_local = true;      // Local ici
+    static bool traiter_ici = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
                                     // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
     bool en_cours;
-    int indice_point, indice_test=50000000;
+//    int indice_point, indice_test=50000000;
     unsigned int Arete_size_test=1000000; // Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
 
+    clock_t time_0, delta_time, time_c;
+    #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
+
 // Cette façon de faire (1ère partie) est simple, mais les arêtes communes à 2 facettes sont comptées 2 fois !
-// La seconde partie permet de décoder les doublons
+// La seconde partie permet de décoder les doublons et de les éliminer
 
     if (verbose) printf("Entree BddInter::GenereTableauAretes\n");
     en_cours     = false;
-    indice_point = 0;
+//    indice_point = 0;
     nb_fac = objet->Nb_facettes;
     objet->Areteslist.clear();
     for (i=0; i< nb_fac ; i++) {
@@ -4891,17 +4897,19 @@ void BddInter::GenereTableauAretes(Object * objet)
 //          d'abord l'égalité sur le 1er indice, puis celui sur le second => moins de test => plus rapide !
 //         On pourrait aussi arrêter de tester les indices et sortir de la boucle en j, dès que 2 correspondances ont été trouvées car dans la majorité des
 //         cas une arête n'est utilisée que 2 fois au plus car commune à 2 facettes.
+
+    time_0 = time_c = clock();
     for (i=0; i<objet->Areteslist.size(); i++) {
-        Arete_test =  objet->Areteslist[i];
+        Arete_test = objet->Areteslist[i];
         if (Arete_test.deleted) continue;   // Arête déjà supprimée. Passer à la suivante ... test sans doute inutile car ça n'arrive jamais tel que c'est construit !
         indice_a = Arete_test.ind_a;
         indice_b = Arete_test.ind_b;
         for (j=i+1; j<objet->Areteslist.size(); j++) {
             p_Arete = &(objet->Areteslist[j]);  // Ici, il vaut mieux travailler sur un pointeur, surtout avec la méthode 2 ci-dessous, sinon on ne modifie qu'une copie !
-            if (Arete.deleted) continue ; // Arête déjà supprimée. Passer à la suivante
+            if (Arete.deleted) continue ;       // Arête déjà supprimée. Passer à la suivante
             // Doublon si les 2 indices a et b sont identiques (ou inversés)
 //            if (((p_Arete->ind_a == Arete_test.ind_a) && (p_Arete->ind_b == Arete_test.ind_b)) ||
-//                ((p_Arete->ind_a == Arete_test.ind_b) && (p_Arete->ind_b == Arete_test.ind_a))) {
+//                ((p_Arete->ind_a == Arete_test.ind_b) && (p_Arete->ind_b == Arete_test.ind_a))) { // Test ne fonctionne pas ?
             if (p_Arete->ind_a == indice_a) {
                 if (p_Arete->ind_b == indice_b) {
         // 2 méthodes testées : la 1 est à peine plus rapide car on garde toute la liste tout le temps. La seconde réajuste les tailles
@@ -4916,18 +4924,21 @@ void BddInter::GenereTableauAretes(Object * objet)
                     break; // doublon trouvé => abandonner le for j et passer au i suivant ! => ignorer des arêtes en triple !
                 }
             }
-            indice_point++; // Pour ajouter éventuellement un indicateur de progression (un . affiché toutes les indice_test valeurs testées)
-                            // L'affichage dépend du temps d'exécution => il faudrait plutôt programmer un timer et donc n'afficher que toutes les x secondes
-            if ((indice_point%indice_test) == 0 && verbose_local) {
-                if (!en_cours) {                                // Seulement la 1ère fois
+//            indice_point++;   // Pour ajouter éventuellement un indicateur de progression (un . affiché toutes les indice_test valeurs testées)
+                                // L'affichage dépend du temps d'exécution => plutôt utiliser un timer et donc n'afficher un '.' que toutes les x secondes
+            delta_time = clock() - time_c;
+//            if ((indice_point%indice_test) == 0 && verbose_local) {
+            if (delta_time >= NB_DELTA_TICKS && verbose_local) {
+                if (!en_cours) {                                    // Seulement la 1ère fois
                     en_cours = true;
-//                    printf("%s",Message);                       // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
-                    printf(utf8_To_ibm(Message));                 // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
-//                    printf("Detection d'aretes en doublon ");   // et le début de l'indicateur de progression
-                    sprintf(Message,"Détection d'arêtes en doublon ");   // et le début de l'indicateur de progression
+//                    printf("%s",Message);
+//                    printf("Detection d'aretes en doublon ");
+                    printf(utf8_To_ibm(Message));                       // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
+                    sprintf(Message,"Détection d'arêtes en doublon ");  // et le début de l'indicateur de progression
                     printf(utf8_To_ibm(Message));
                 }
-                printf(".");    // On pourrait aussi afficher successivement | / - \ avec des backspaces.
+                printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
+                time_c = clock();
             }
         }
     }
@@ -4945,6 +4956,12 @@ void BddInter::GenereTableauAretes(Object * objet)
             sprintf(Message,"Nb_aretes après : %d\n",Nb_apres);
             printf(utf8_To_ibm(Message));
         }
+    }
+
+    delta_time = clock() - time_0;
+    objet->Temps_Calcul_Aretes = delta_time;
+    if (delta_time >= CLOCKS_PER_SEC) { // N'afficher ce temps que si >= 1 seconde
+        printf("Temps de filtrage des doublons : %ld ticks (soit %3.1f secondes)\n\n", delta_time, float(delta_time)/CLOCKS_PER_SEC);
     }
 
     if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
@@ -5480,9 +5497,9 @@ Boucle:
         if (show_CW_CCW == true) {
             glDisable(GL_CULL_FACE);
         }
-        if (MPanel->Bouton_souder) {
+        if (MPanel->Bool_souder) {
             modeGL = points; //13;
-        } else if(MPanel->Bouton_diviser) {
+        } else if(MPanel->Bool_diviser) {
             modeGL = aretes; //12;
         } else {
             modeGL = standard;//11;
@@ -5515,7 +5532,7 @@ Boucle:
 
 //    if (show_plein) glCallList(m_gllist);
     if (show_plein)  glCallList(1);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-    if (show_lines ) glCallList(2);     // <=> showAllLines();
+    if (show_lines)  glCallList(2);     // <=> showAllLines();
     if (show_points) glCallList(3);     // <=> showAllPoints();
     if (show_box)    glCallList(4);     // <=> AffichageBoite()  ;
     if (show_axes)   glCallList(5);     // <=> repereOXYZ() ;
@@ -6486,7 +6503,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
 //                    glPushName(0);
                 this->drawOpenGL();
             }
-            if (MPanel->Bouton_souder || mode == points) {
+            if (MPanel->Bool_souder || mode == points) {
 //                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY), 12., 12., viewport);
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
@@ -6500,7 +6517,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 m_gllist = 0;
                 Refresh();
             }
-            if (MPanel->Bouton_diviser) {
+            if (MPanel->Bool_diviser) {
 //                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY), 12., 12., viewport);
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY-offset_pointeur), width_ligne, width_ligne, viewport); // cf version tcl ligne 6552
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
@@ -6695,8 +6712,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                             objet_courant->Nb_facettes = new_size;
                             Calcul_Normale_Barycentre(objet,new_indice);                // Ici la facette créée est plane
                             objet_courant->Facelist[new_indice].selected = true;
-                            GenereTableauAretes(objet_courant);
                             GenereTableauPointsFacettes(objet_courant);
+                            GenereTableauAretes(objet_courant);
                             new_facette    = &(objet_courant->Facelist[new_indice]);
                             new_facette->groupe     = MPanel->NumeroGroupe;             // OK mais l'effet n'est pas immédiat si affichage coloré (via bouton groupes ou matériaux)
                             new_facette->codmatface = MPanel->NumeroMateriau;
@@ -6756,7 +6773,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());
             MSelect->TextCtrl_Selection->SetValue(str);
 
-            if (MPanel->Bouton_souder) {
+            if (MPanel->Bool_souder) {
                 if(Smemory == nullptr) {
                     // Enregistrer le premier point sélectionné dans Smemory
                     if (test_print) printf("Memoire 1 : objet %d, point %d\n", objet, point);
@@ -8184,8 +8201,12 @@ void BddInter::souderPoints(int objet, int point) {
     objet_origine->Nb_facettes= objet_origine->Facelist.size();
     objet_origine->Nb_vecteurs= objet_origine->Vecteurlist.size();
 
-    GenereTableauPointsFacettes(objet_origine);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
-    GenereTableauAretes(objet_origine);                             // Car peut-être long si beaucoup de facettes
+    if (objet_origine->Temps_Calcul_Aretes < tempo_s*CLOCKS_PER_SEC) {
+        GenereTableauPointsFacettes(objet_origine);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
+        GenereTableauAretes(objet_origine);                             // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
+        buildAllLines();                                                // Indispensable sinon blocage apparent après 2 soudures
+        Refresh();                                                      //  " "
+    }
 
     undo_memory++;
     MPanel->Button_UndoSouder->Enable();
@@ -8197,7 +8218,7 @@ void BddInter::UNDO_ONE() {
     unsigned int i,j ;
     Object* objet_courant;
 
-    if(undo_memory !=0 ) {
+    if(undo_memory != 0) {
         for(i=0; i<this->Objetlist.size(); i++) {
             objet_courant = &(this->Objetlist[i]);
             for(j=0; j<objet_courant->Facelist.size(); j++) {
@@ -8205,10 +8226,10 @@ void BddInter::UNDO_ONE() {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Facelist[j].toshow == (-undo_memory)) {
-                    objet_courant->Facelist[j].deleted      = false;     // GD
+                    objet_courant->Facelist[j].deleted      = false;
                     objet_courant->Facelist[j].toshow       = 0;
-                } else if((objet_courant->Facelist[j].toshow == undo_memory-1)) {
-                    objet_courant->Facelist[j].deleted      = false;     // GD
+                } else if((objet_courant->Facelist[j].toshow == undo_memory-1) && (undo_memory != 1)) { // A vérifier : si undo_memory = 1,
+                    objet_courant->Facelist[j].deleted      = false;                                    // semble faire le undelete sur 1 facette de trop
                 }
             }
             bool vecteurs_presents = true;
@@ -8225,7 +8246,7 @@ void BddInter::UNDO_ONE() {
 //                        objet_courant->Vecteurlist[j].show   = true;
                         objet_courant->Vecteurlist[j].toshow = 0;
                     }
-                } else if(((objet_courant->Sommetlist[j].toshow == undo_memory-1))) {
+                } else if((objet_courant->Sommetlist[j].toshow == undo_memory-1) && (undo_memory != 1)) {   // Idem facettes
                     objet_courant->Sommetlist[j].show = true;
 //                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
@@ -8234,8 +8255,12 @@ void BddInter::UNDO_ONE() {
             objet_courant->Nb_sommets  = objet_courant->Sommetlist.size();
             objet_courant->Nb_vecteurs = objet_courant->Vecteurlist.size();
 
-            GenereTableauPointsFacettes(objet_courant);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
-            GenereTableauAretes(objet_courant);//
+            if (objet_courant->Temps_Calcul_Aretes <= tempo_s*CLOCKS_PER_SEC) {
+                GenereTableauPointsFacettes(objet_courant);                 // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
+                GenereTableauAretes(objet_courant);                         // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
+                buildAllLines();                                            // Indispensable sinon blocage apparent après 2 soudures
+                Refresh();                                                  //  " "
+            }
         }
         undo_memory--;
         if (undo_memory == 0) {
@@ -8360,7 +8385,7 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
 
 bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 
-// Appel dans OnMouse, tests sur MPanel->Bouton_souder et MPanel->Bouton_diviser
+// Appel dans OnMouse, tests sur MPanel->Bool_souder et MPanel->Bool_diviser
 // Fonction très proche de processHits. A t-on besoin des 2 ?
 // mode_appel=0 si appel dans le test souderPoints
 // mode_appel=1 si appel dans le test diviserArete
@@ -8756,6 +8781,7 @@ void BddInter::Simplification_BDD()
         if (verbose) printf("\n");
         for(i=0; i<nb_points; ++i) {
             //pour chaque point d'un objet
+//            objet_courant->Sommetlist[i].toshow = 0 ; // Raz
             Point_i = objet_courant->Sommetlist[i].getPoint();
             if (Point_i.empty()) continue;          // Point vide, non initialisé, non utilisé ?
             cpt = 0;
@@ -8890,6 +8916,7 @@ void BddInter::Simplification_BDD()
 //                    Luminance_courante = &(objet_courant->Luminancelist[k]);
 //                    nbsom = Luminance_courante->Nb_Sommets_L;
                     Facette_courante = &(objet_courant->Facelist[k]);
+                    Facette_courante->toshow = 0;   // Raz de précaution
                     nbsom = Facette_courante->Nb_Sommets_L;
                     for (l=0 ; l<nbsom; l++) {
 //                        if (Luminance_courante->L_sommets[l] == (int)i) {
@@ -9017,7 +9044,10 @@ void BddInter::Simplification_BDD()
                 sprintf(Message,"%4d vecteurs ont été supprimés dans la BDD\n",nbv_changes);
             printf(utf8_To_ibm(Message));
         }
-     }
+    }
+
+    undo_memory = 0;                        // Un undo de souder n'est plus possible
+    MPanel->Button_UndoSouder->Disable();   // et donc désactiver le bouton
 
     printf("\nFin de simplification de la Bdd\n");
 }
@@ -9528,6 +9558,7 @@ void BddInter::simplification_facettes(unsigned int objet)
 	nbface  = objet_courant->Nb_facettes;
 	decalage=0 ;
 	for(i=0; i<nbface; ++i)	{
+        objet_courant->Facelist[i].toshow = 0;              // Raz de cette valeur pour éviter qu'un éventuel futur Undo de souder trouve quelque chose à faire !
 		if(objet_courant->Facelist[i].Nb_Sommets_F < 3) {
 		/* On supprime la facette i */
             if(decalage == 0) printf("Objet indice %d\n",objet) ;

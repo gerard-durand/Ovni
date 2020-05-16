@@ -22,6 +22,7 @@
 #include <vector> //Ne pas oublier !
 #include <list>
 #include <algorithm>
+#include <time.h>
 #include "vector3d.h"
 #include "lib3ds/lib3ds.h"
 #include "libexpat/expat.h"
@@ -121,6 +122,7 @@ public:
     unsigned int  Nb_vecteurs;
     unsigned int  Nb_aretes;
     unsigned int  Nb_matrices;
+    clock_t       Temps_Calcul_Aretes;
     std::vector<Face>    Facelist;
     std::vector<Sommet>  Sommetlist;
     std::vector<Vecteur> Vecteurlist;
@@ -142,8 +144,7 @@ public:
         Nb_vecteurs  = 0;
         Nb_aretes    = 0;
         Nb_matrices  = 0;
-//        bool display   = true;
-//        bool to_delete = false;
+        Temps_Calcul_Aretes = 0;
     }
     Object(wxString& name, wxString& value) {
         initObject(name);

@@ -20,12 +20,12 @@ class ModificationPanel: public wxDialog
 
 		ModificationPanel(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~ModificationPanel();
-        bool Bouton_souder  = false;
-        bool Bouton_diviser = false;
+        bool Bool_souder  = false;
+        bool Bool_diviser = false;
 //        int toredraw=0;
-        int division;
+        int  division;
         bool activer_transparence = false;
-        int NumeroMateriau = 0, NumeroGroupe = 0;
+        int  NumeroMateriau = 0, NumeroGroupe = 0;
         bool FacetteCreeePlane = false;
 //        wxWindow*  Mod_Parent;
 
@@ -34,6 +34,7 @@ class ModificationPanel: public wxDialog
 		wxButton* Button_InverserNormale;
 		wxButton* Button_InverserTout;
 		wxButton* Button_Quitter;
+		wxButton* Button_RecalculerAretes;
 		wxButton* Button_RecalculerNormales;
 		wxButton* Button_Simplification;
 		wxButton* Button_SupprimerFacette;
@@ -96,11 +97,12 @@ class ModificationPanel: public wxDialog
 		static const long ID_BUTTON10;
 		static const long ID_BUTTON11;
 		static const long ID_BUTTON12;
+		static const long ID_BUTTON1;
 		static const long ID_CHECKBOX1;
+		static const long ID_PANEL9;
 		static const long ID_PANEL8;
 		static const long ID_BUTTON13;
 		static const long ID_PANEL10;
-		static const long ID_PANEL9;
 		//*)
 
 	private:
@@ -127,6 +129,7 @@ class ModificationPanel: public wxDialog
 		void OnSpinCtrl_GroupeChange(wxSpinEvent& event);
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		void OnCheckBox_FacettePlaneClick(wxCommandEvent& event);
+		void OnButton_RecalculerAretesClick(wxCommandEvent& event);
 		//*)
         OvniFrame* MAIN;
         int  old_modeGL;

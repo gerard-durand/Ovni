@@ -776,6 +776,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         if (retour_Show == wxID_YES) {
             Element->set_file(Fichier_svg);
             New_file = false;
+        } else {
+            // Le fichier Autosave ne sert pas => le supprimer maintenant, sinon il restera tant qu'une nouvelle sauvegarde n'aura pas été activée par le timer !
+            wxRemoveFile(Fichier_svg);
         }
         // Note : ne pas mettre Element->exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
     }
@@ -930,6 +933,7 @@ void OvniFrame::OnClose(wxCloseEvent& event) {
 
     // On est arrivé ici, donc tout s'est bien passé => supprimer la sauvegarde automatique (s'il y en a une)
     // Note : Un fichier Autosave déjà existant ne sera pas affecté si aucune sauvegarde n'a été effectuée lors de cette exécution d'Ovni
+    //        Mais normalement, il a été supprimé lors de sa détection à l'ouverture d'Ovni.
     if (Element->exists_Autosave) {
         wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
         wxRemoveFile(Fichier_svg);
