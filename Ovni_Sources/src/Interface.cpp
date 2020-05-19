@@ -8205,8 +8205,8 @@ void BddInter::souderPoints(int objet, int point) {
         GenereTableauPointsFacettes(objet_origine);                     // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
         GenereTableauAretes(objet_origine);                             // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
         buildAllLines();                                                // Indispensable sinon blocage apparent après 2 soudures
-        Refresh();                                                      //  " "
-    }
+        Refresh();
+    } else MPanel->aretes_calculees = false;
 
     undo_memory++;
     MPanel->Button_UndoSouder->Enable();
@@ -8260,7 +8260,7 @@ void BddInter::UNDO_ONE() {
                 GenereTableauAretes(objet_courant);                         // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
                 buildAllLines();                                            // Indispensable sinon blocage apparent après 2 soudures
                 Refresh();                                                  //  " "
-            }
+            } else MPanel->aretes_calculees = false;
         }
         undo_memory--;
         if (undo_memory == 0) {

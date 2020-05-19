@@ -27,6 +27,7 @@ class ModificationPanel: public wxDialog
         bool activer_transparence = false;
         int  NumeroMateriau = 0, NumeroGroupe = 0;
         bool FacetteCreeePlane = false;
+        bool aretes_calculees;
 //        wxWindow*  Mod_Parent;
 
 		//(*Declarations(ModificationPanel)

@@ -152,6 +152,7 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
     old_mode_selection = Element->mode_selection;
     old_show_points    = Element->show_points;
     old_show_lines     = Element->show_lines;
+    aretes_calculees   = true;  // Si le fag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
 // RAZ de l'attribut "selected" des facettes en entrée
     for(o=0; o<Element->Objetlist.size(); o++) {
@@ -162,6 +163,11 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
 void ModificationPanel::OnButton_QuitterClick(wxCommandEvent& event)
 {
 // Boutton Quitter <=> OnClose
+    if (!aretes_calculees) {
+        char Message[128];
+        sprintf(Message,"===> ATTENTION : Les arêtes n'ont pas été recalculées\n");
+        printf(utf8_To_ibm(Message));
+    }
     wxCloseEvent close_event;
     OnClose(close_event);
 }
@@ -560,7 +566,8 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 Element->GenereTableauAretes(objet_courant);    // Peut-être long sur de grosses Bdd (recherche des doublons !) est-ce à faire systématiquement ?
                 Element->buildAllLines();
                 Refresh();
-            }
+                aretes_calculees    = true;
+            } else aretes_calculees = false;
 
 //  ATTENTION : le nombre de vecteurs dans la Bdd originale peut être différent du nombre de sommets car plusieurs normales sont possibles pour 1 seul sommet
 
@@ -719,6 +726,7 @@ void ModificationPanel::OnButton_RecalculerAretesClick(wxCommandEvent& event)
         if (objet_courant->deleted) continue;   // Objet supprimé mais encore en mémoire => passer au suivant
         Element->GenereTableauPointsFacettes(objet_courant);
         Element->GenereTableauAretes(objet_courant);
+        aretes_calculees = true;
     }
     Element->buildAllLines();
     Element->Refresh();
