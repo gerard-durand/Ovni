@@ -115,7 +115,7 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
     pal_file_modified = false;  // Fichier palette non lu, donc par défaut, non modifié !
 
     Smemory = nullptr;
-    selectBuffer = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
+    selectBuffer   = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
     this->type     = -1;
     this->m_loaded = false;
     this->MAIN_b   = dynamic_cast<OvniFrame*>((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
@@ -335,7 +335,7 @@ void BddInter::Ouvrir_ini_file()
 
     f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != NULL) {
-        while ((Lu= fgets(Message,300,f_init)) != NULL) {
+        while ((Lu = fgets(Message,300,f_init)) != NULL) {
             len = strlen( init1);
             icmp= strncmp(init1,Message,len) ;                  // Test sur 1er mot clé
             if (!icmp) {
@@ -624,7 +624,7 @@ void BddInter::Resize() {
 //void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) ) {
 void BddInter::OnPaint( wxPaintEvent& event )
 {
-    float quat[4];
+    float   quat[4];
     GLfloat m[4][4];
     int multi_s = 0;
 
@@ -825,6 +825,8 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             long ID_POPUP_RAZ_SELECT = MAIN_b->ID_POPUP_RAZ_SELECT;
             long ID_POPUP_NORM_F     = MAIN_b->ID_POPUP_NORM_F;
             long ID_POPUP_NORM_S     = MAIN_b->ID_POPUP_NORM_S;
+            long ID_POPUP_FLAT       = MAIN_b->ID_POPUP_FLAT;
+            long ID_POPUP_NOT_FLAT   = MAIN_b->ID_POPUP_NOT_FLAT;
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
             wxMenuItem * Popup_RAZ;
@@ -889,6 +891,14 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             else
                 Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, _T("Afficher les normales aux sommets"),         wxEmptyString, wxITEM_NORMAL);
             My_popupmenu.Append(Popup_Afficher_NormalesSommets);
+
+            wxMenuItem * Popup_Forcer_Facettes_Planes;
+            Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         _T("Forcer les facettes à être planes"),  wxEmptyString, wxITEM_NORMAL);
+            My_popupmenu.Append(Popup_Forcer_Facettes_Planes);
+
+            wxMenuItem * Popup_Forcer_Facettes_NonPlanes;
+            Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  _T("Forcer les facettes à être non planes"),  wxEmptyString, wxITEM_NORMAL);
+            My_popupmenu.Append(Popup_Forcer_Facettes_NonPlanes);
 
             if (Elements_Masques || Elements_Supprimes)
                 My_popupmenu.AppendSeparator(); // Ajout d'un séparateur si des élements de menu suivent ...
@@ -2011,6 +2021,10 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
     static float vxyz[3];
     wxString wxNumeros;
 
+    Face   *Face_ij;
+    Object *objet_courant;
+    std::vector<int> Numeros_L;
+
 // Profondeur et nombre d'attributs détectés
 /*  printf("Depth=%2d",XML_Depth) ;
     for (i = 0; attr[i]; i += 2) {
@@ -2047,10 +2061,11 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Element->makeobjet();
                     // Initialisations pour un objet
 //                    o=++i_objetXML_courant ;
-                    o=i_objetXML_courant=Element->indiceObjet_courant; //Objetlist.size() -1;
-                    Element->Objetlist[o].afficher = true;
-                    Element->Objetlist[o].deleted  = false;
-                    Element->Objetlist[o].flat     = true;
+                    o = i_objetXML_courant = Element->indiceObjet_courant; //Objetlist.size() -1;
+                    objet_courant = &(Element->Objetlist[o]);
+                    objet_courant->afficher = true;
+                    objet_courant->deleted  = false;
+                    objet_courant->flat     = true;
 //                    Element->indiceObjet_courant   = o;
                 }
                 if (!strcmp(attr[i],"id")) {
@@ -2086,10 +2101,11 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                 }
             }
         } else if (XML_Depth == 5) {
+            objet_courant = &(Element->Objetlist[o]);
             if (!strcmp(el,"sommets")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    Element->Objetlist[o].Nb_sommets = tmp;
+                    objet_courant->Nb_sommets = tmp;
 //                    printf("Indice objet : %d, sommets   , balise nbr :%d\n",o,tmp);
                     // Création du tableau des points
                     Element->str.clear();
@@ -2099,7 +2115,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
             } else if (!strcmp(el,"normales_s")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    Element->Objetlist[o].Nb_vecteurs = tmp;
+                    objet_courant->Nb_vecteurs = tmp;
 //                    printf("Indice objet : %d, normales_s, balise nbr :%d\n",o,tmp);
                     // Création du tableau des normales aux sommets
                     Element->str.clear();
@@ -2109,7 +2125,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
             } else if (!strcmp(el,"facettes")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    Element->Objetlist[o].Nb_facettes = tmp;
+                    objet_courant->Nb_facettes = tmp;
 //                    printf("Indice objet : %d, facettes,   balise nbr :%d\n",o,tmp);
                     // Création du tableau des facettes
                     Element->str.clear();
@@ -2117,7 +2133,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Element->makeface();
                     Element->makenormale();
                     Element->makeaspect_face();
-//                    if (Element->Objetlist[o].Nb_vecteurs != 0)
+//                    if (objet_courant->Nb_vecteurs != 0)
 //                        Element->makeluminance();
                 }
             }
@@ -2151,6 +2167,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                 }
             }
         } else if (XML_Depth == 7) {
+            Face_ij = &(Element->Objetlist[o].Facelist[ind_fac-1]);
             if (!strcmp(el,"normale_b")) {
                 if (!strcmp(attr[i],"xyz")) {
                     sscanf(attr[i+1],"%f%f%f",&vx,&vy,&vz); // Lire x,y,z de la normale au barycentre
@@ -2185,10 +2202,11 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     // => la restituer via vxyz (intérêt si sommets lu après normale_b)
 //                    Element->Objetlist[Element->indiceObjet_courant].Facelist[ind_fac-1].setNormale_b(vxyz);
 //                    Element->Objetlist[Element->indiceObjet_courant].Facelist[ind_fac-1].flat = true ; // Facette plane par défaut => normales_s lu après !
-                    Element->Objetlist[o].Facelist[ind_fac-1].setNormale_b(vxyz);
-//                    Element->Objetlist[o].Facelist[ind_fac-1].flat = true ; // Facette plane par défaut => normales_s doit être lu après !
+                    Face_ij->setNormale_b(vxyz);
+//                    Face_ij->flat = true ; // Facette plane par défaut => normales_s doit être lu après !
                 }
             } else if (!strcmp(el,"normales_s")) {
+                objet_courant = &(Element->Objetlist[o]);
                 if (!strcmp(attr[i],"ref")) {
 //                    i1=sscanf(attr[i+1],"%d",&tmp);
 //                    printf("%d %d\n",i1,tmp);
@@ -2205,8 +2223,8 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
 //                    printf("%d sommets dans cette facette\n",i1);
                     n=i1;
 
-                    if (Element->Objetlist[o].Nb_luminances == 0) {
-                        Element->N_elements = Element->Objetlist[o].Nb_facettes;
+                    if (objet_courant->Nb_luminances == 0) {
+                        Element->N_elements = objet_courant->Nb_facettes;
                         Element->str.clear();
                         Element->makeluminance();
                     }
@@ -2214,8 +2232,16 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     wxNumeros = wxString::FromAscii(attr[i+1]) ;
                     Element->str += wxNumeros;
                     Element->make1luminance();
-                    Element->Objetlist[o].Facelist[ind_fac-1].flat = false ;    // La facette n'est pas plane
-                    Element->Objetlist[o].flat = false;                 // Du coup, idem pour l'objet.
+                    Face_ij->flat = false ;    // La facette n'est a priori pas plane
+                    objet_courant->flat = false;                         // Du coup, idem pour l'objet.
+                    // Vérifier que la facette n'est pas plane => même numéro de vecteur sur tous les sommets
+                    Numeros_L = Face_ij->getLsommets();
+                    int Num_0 = Numeros_L[0];
+                    bool Facette_plane = true;
+                    for (unsigned int k=1; k<Numeros_L.size(); k++) {
+                        if (Numeros_L[k] != Num_0) Facette_plane = false;
+                    }
+                    if (Facette_plane) Face_ij->flat = true ;    // La facette est donc plane
                 }
             } else if (!strcmp(el,"materiaux")) {
                 if (!strcmp(attr[i],"ref")) {
@@ -2227,7 +2253,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
 //                        Element->str.Printf(_T("%d <GROUPE>  %d"),ind_fac,tmp2)    ; Element->make1aspect_face();
 //                    if (tmp==codemateriau)
 //                        Element->str.Printf(_T("%d <CODMATFACE> %d"),ind_fac,tmp2); Element->make1aspect_face(); // ind_fac,
-                        Element->Objetlist[o].Facelist[ind_fac-1].codmatface = tmp2;
+                        Face_ij->codmatface = tmp2;
                 }
             } else if (!strcmp(el,"valeurs")) {
                 if (!strcmp(attr[i],"val")) {
@@ -2235,7 +2261,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     // Affecter groupe ou materiau suivant ce qui a été donné dans types_valeurs
 //                    if (tmp==codegroupe  )
 //                        Element->str.Printf(_T("%d <GROUPE>  %d"),ind_fac,(int)vx)     ; Element->make1aspect_face();
-                        Element->Objetlist[o].Facelist[ind_fac-1].groupe = (int)vx;
+                        Face_ij->groupe = (int)vx;
 //                    if (tmp==codemateriau)
 //                        Element->str.Printf(_T("%d <CODMATFACE> %d"),ind_fac,(int)vx) ; Element->make1aspect_face(); //ind_fac,
                 }
@@ -2325,12 +2351,12 @@ void BddInter::LectureXML_G3d (FILE *f)
         sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetValue());
         printf(utf8_To_ibm(Message));
         wxCharBuffer buf_nom = this->Objetlist[o].GetName();
-        printf(  "Nom de l'objet %2d                    : %s\n",o,buf_nom.data());
-        printf(  "Nombre de points de l'objet %2d       : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_sommets);
+        printf("Nom de l'objet %2d                    : %s\n",o,buf_nom.data());
+        printf("Nombre de points de l'objet %2d       : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_sommets);
         nb_T_points += Objetlist[o].Nb_sommets;
-        printf(  "Nombre de normales_s de l'objet %2d   : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_vecteurs);
+        printf("Nombre de normales_s de l'objet %2d   : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_vecteurs);
         nb_T_norml += this->Objetlist[o].Nb_vecteurs ;
-        printf(  "Nombre de facettes de l'objet %2d     : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_facettes);
+        printf("Nombre de facettes de l'objet %2d     : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_facettes);
         nb_T_facettes += this->Objetlist[o].Nb_facettes ;
     }
     printf("\n");
@@ -2510,6 +2536,8 @@ void BddInter::LoadOBJ()
     float vx,vy,vz;
 
     std::vector<int> Numeros;
+
+    Face *Face_ij;
 
     // A mettre ailleurs ??
     const char delimiters[] = "/\\" ;
@@ -2894,16 +2922,19 @@ void BddInter::LoadOBJ()
                         else                                  Numeros[i]=valp[i+1];// - npoint_t;
                     }
 //                    printf("%d %d\n",nb_normp_fac,n);
+                    Face_ij = &(this->Objetlist[o].Facelist[nfac-1]);
                     if (nb_normp_fac == n) {            // Pas sûr que ce soit le bon test !!!
                         this->str.clear();
                         this->N_elements = nfac;
                         this->Set_numeros(Numeros);
                         this->make1luminance();
-                        this->Objetlist[o].Facelist[nfac-1].flat = false;   // Facette non plane
-                        this->Objetlist[o].flat = false;            // donc l'objet aussi
+                        Face_ij->flat = false;              // Facette non plane
+                        this->Objetlist[o].flat = false;    // donc l'objet aussi
+                    } else {
+                        Face_ij->flat = true;               // Facette plane
                     }
-                    this->Objetlist[o].Facelist[nfac-1].groupe     = num_mat;
-                    this->Objetlist[o].Facelist[nfac-1].codmatface = num_mat;
+                    Face_ij->groupe     = num_mat;
+                    Face_ij->codmatface = num_mat;
                     continue;
                 }
             }
@@ -4228,12 +4259,19 @@ void BddInter::LoadBDD() {
                 }
                 str.clear();
                 std::istringstream ss(ligne);
-                ss >> N_elements;  // en fait ici, numéro de la facette
-                ss >> Nb;     // ici, nombre de sommets de la facette
+                ss >> N_elements;   // en fait ici, numéro de la facette
+                ss >> Nb;           // ici, nombre de sommets de la facette
                 NumerosSommets.resize(Nb);
                 for (j=0; j<Nb ; j++) ss >> NumerosSommets[j];
                 make1luminance();
                 this->Objetlist[indiceObjet].Facelist[N_elements-1].flat = false; // Smooth possible uniquement pour les facettes avec Luminances données
+                // Test de vérification de facette plane (tous numéros égaux)
+                bool Facette_plane = true;
+                int Num_0 = NumerosSommets[0];
+                for (j=1; j<Nb ; j++) {
+                    if (NumerosSommets[j] != Num_0) Facette_plane = false;
+                }
+                if (Facette_plane) this->Objetlist[indiceObjet].Facelist[N_elements-1].flat = true;
             }
             mode_lecture = -1;
         } else if((ligne.find("<POSITION>") != notFound) || (ligne.find("<PLACEMENT>") != notFound)) {
@@ -5591,6 +5629,36 @@ Boucle:
     if (verbose) printf("Sortie BddInter::drawOpenGL\n");
 }
 
+void BddInter::Flat_Selected_Facettes() {
+// Force le mode "Facettes Planes" des facettes sélectionnées
+    unsigned int i,j;
+    Face *Face_ij;
+
+    for(i=0; i<this->Objetlist.size(); i++) {
+        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+            Face_ij = &(this->Objetlist[i].Facelist[j]);
+            if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
+                if (Face_ij->selected) Face_ij->flat = true;
+            }
+        }
+    }
+}
+
+void BddInter::NotFlat_Selected_Facettes() {
+// Force le mode "Facettes Non Planes" des facettes sélectionnées
+    unsigned int i,j;
+    Face *Face_ij;
+
+    for(i=0; i<this->Objetlist.size(); i++) {
+        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+            Face_ij = &(this->Objetlist[i].Facelist[j]);
+            if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
+                if (Face_ij->selected) Face_ij->flat = false;
+            }
+        }
+    }
+}
+
 void BddInter::Inverse_Selected_Normales() {
 // Inverse les normales au barycentre et le sens de parcours des sommets des facettes sélectionnées.
     unsigned int i,j,k;
@@ -6695,10 +6763,22 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         unsigned int new_size, new_indice;
                         bool UnSeulObjet=true;
                         for(i=1; i<(int)ToSelect.ListeSelect.size(); i++) {
-                            if (ToSelect.ListeSelect[0].objet != ToSelect.ListeSelect[i].objet) UnSeulObjet = false;
+                            if (ToSelect.ListeSelect[0].objet != ToSelect.ListeSelect[i].objet) { // Si objets différents, créer de nouveaux sommets dans le 1er objet listé
+//                                UnSeulObjet = false;                                                              // N'a plus lieu d'être
+                                indiceObjet_courant = ToSelect.ListeSelect[i].objet;
+                                objet_courant = &(this->Objetlist[indiceObjet_courant]);                            // Objet [i] différent de l'objet [0]
+                                Sommet NewSommet = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];  // Récupère le sommet du deuxième objet
+                                indiceObjet_courant = ToSelect.ListeSelect[0].objet;                                // Retour à l'objet [0]
+                                objet_courant = &(this->Objetlist[indiceObjet_courant]);
+                                NewSommet.Numero = objet_courant->Sommetlist.size() +1;                             // Metrre à jour le nouveau numéro du sommet à créer
+                                objet_courant->Sommetlist.push_back(NewSommet);                                     // Ajout de ce nouveau sommet à l'objet [0]
+                                objet_courant->Nb_sommets++;                                                        // Mise à jour du nombre de sommets dans l'objet [0]
+                                ToSelect.ListeSelect[i].objet       = ToSelect.ListeSelect[0].objet;                // Mise à jour dans ListeSelect de objet et face_sommet
+                                ToSelect.ListeSelect[i].face_sommet = NewSommet.Numero -1;
+                            }
                         }
                         // Cas où tous les points sont dans le même objet
-                        if (UnSeulObjet) {
+//                        if (UnSeulObjet) {  // En fait, c'est devenu toujours le cas => test à supprimer
                             indiceObjet_courant = objet;
                             objet_courant = &(this->Objetlist[objet]);
                             new_size = new_indice = objet_courant->Facelist.size();
@@ -6735,19 +6815,19 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                             }
                             objet_courant->Facelist[new_indice].flat = MPanel->FacetteCreeePlane;   // dépend de la case à cocher "Plane" du dialogue "ModificationPanel
 
-                        } else {
-                        // Les points sont dans plusieurs objets => choisir l'objet de ToSelect.ListeSelect[0].objet puis ajouter les points des autres objets dans celui_ci
-                        // Provisoirement, afficher un message ...
-
-                            if (ToSelect.ListeSelect.size() != 0) { // Sinon en mode Release (mais pas en Debug !), s'affiche 2 fois !!!
-
-                                wxMessageDialog *query = new wxMessageDialog(NULL, _T("Tous les points ne sont pas dans le même objet.\nPas encore opérationnel !"),
-                                                             _T("Avertissement"),
-                                                             wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-                                query->ShowModal();
-                                query->Destroy();
-                            }
-                        }
+//                        } else { // Ne sert plus !
+//                        // Les points sont dans plusieurs objets => choisir l'objet de ToSelect.ListeSelect[0].objet puis ajouter les points des autres objets dans celui_ci
+//                        // Provisoirement, afficher un message ...
+//
+//                            if (ToSelect.ListeSelect.size() != 0) { // Sinon en mode Release (mais pas en Debug !), s'affiche 2 fois !!!
+//
+//                                wxMessageDialog *query = new wxMessageDialog(NULL, _T("Tous les points ne sont pas dans le même objet.\nPas encore opérationnel !"),
+//                                                             _T("Avertissement"),
+//                                                             wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
+//                                query->ShowModal();
+//                                query->Destroy();
+//                            }
+//                        }
                         ToSelect.verrouiller_ListeSelect(true);
                         wxKeyEvent key_event;
                         key_event.m_keyCode = 'S';
@@ -7032,7 +7112,7 @@ void BddInter::SaveBDD(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face   *Luminance_Face_ij=nullptr;
+    Face   *Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7053,8 +7133,8 @@ void BddInter::SaveBDD(wxString str) {
     printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 ///        compteur = 0;
         compteur_sommets = 0;
         NewVecteurs.clear();
@@ -7090,9 +7170,10 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue ;   // Original de jdias sur .show, mais au final synonyme de !deleted
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue ;   // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // => on ne travaille que sur les facettes non supprimées !
-            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
+            numeros_Sommets = Face_ij->F_sommets;
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t";
@@ -7135,9 +7216,10 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
 //        for(j=0; j<compteur_facettes; j++) {                  // NON car en cas de soudure, on saute des facettes
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue ;
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue ;
             compteur++;
-            xyz_sommet = objet_courant->Facelist[j].getNormale_b();
+            xyz_sommet = Face_ij->getNormale_b();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             for(k=0; k<xyz_sommet.size(); k++) {
@@ -7152,17 +7234,18 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
         myfile << "\n";
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue ;
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue ;
             compteur++;
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t<GROUPE>\t\t";
-            myfile << objet_courant->Facelist[j].getGroupe();
+            myfile << Face_ij->getGroupe();
             myfile << "\n";
-            if(objet_courant->Facelist[j].getCodmatface() != codmatface_def) {
+            if(Face_ij->getCodmatface() != codmatface_def) {
                 myfile << "\t\t\t";
                 myfile << "<CODMATFACE>\t";
-                myfile << objet_courant->Facelist[j].getCodmatface();
+                myfile << Face_ij->getCodmatface();
                 myfile << "\n";
             }
             myfile << "\n"; // Forcer une ligne blanche après GROUPE, CODMATFACE ou les 2 groupés
@@ -7193,26 +7276,32 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) {
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) {
 //                printf("j=%d ",j);  // Bug : si on le met, OK quand souder a été fait, sinon plante (du moins avec g++ 8.1, car semble OK en 9.3 de Msys2 !)
                 continue ;
             }
             compteur++;
 //            if (compteur == 1) printf("\n");    // Bug : OK si souder et exe normal, mais enlever en mode Debug !!!!!
-            numeros_Sommets = objet_courant->Facelist[j].getLsommets();
+            numeros_Sommets = Face_ij->getLsommets();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t";
             myfile << std::setw(2) << numeros_Sommets.size();
-            if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                NormaleFacette = objet_courant->Facelist[j].getNormale_b();
-                Luminance_Face_ij = &(objet_courant->Facelist[j]);
+            bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
+            if (test_composite) {
+                NormaleFacette = Face_ij->getNormale_b();
             }
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << "\t";
-                if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                    NormaleSommet = objet_courant->Vecteurlist[Luminance_Face_ij->L_sommets[k]-1].point;
-                    test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                if (test_composite) {
+                    if (Face_ij->flat) {
+                        NormaleSommet = NormaleFacette; // Dans ce cas, on remplace la normale au sommet par la normale au barycentre de la facette
+                        test_np = true;
+                    } else {
+                        NormaleSommet = objet_courant->Vecteurlist[Face_ij->L_sommets[k]-1].point;
+                        test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                    }
                     if (test_np) {
                     // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
                         int test   = 0;
@@ -7313,7 +7402,7 @@ void BddInter::SaveOBJ(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face   *Luminance_Face_ij=nullptr;
+    Face   *Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7338,8 +7427,8 @@ void BddInter::SaveOBJ(wxString str) {
     myfile << "# Fichier Wavefront obj créé par Ovni\n";
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 ///        compteur = 0;
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
@@ -7378,8 +7467,9 @@ void BddInter::SaveOBJ(wxString str) {
 //        }
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(!objet_courant->Facelist[j].deleted) {
-                numeros_Sommets = objet_courant->Facelist[j].getLsommets();
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(!Face_ij->deleted) {
+                numeros_Sommets = Face_ij->getLsommets();
                 compteur_luminances += numeros_Sommets.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7395,8 +7485,9 @@ void BddInter::SaveOBJ(wxString str) {
         myfile << "\n# " << compteur << " Elements\n";
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;
-            current_groupe = objet_courant->Facelist[j].getGroupe();
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue;
+            current_groupe = Face_ij->getGroupe();
             if (current_groupe != last_groupe) {
                 myfile << "usemtl group_";
                 if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
@@ -7404,23 +7495,23 @@ void BddInter::SaveOBJ(wxString str) {
                 last_groupe = current_groupe;
             }
 
-            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
+            numeros_Sommets = Face_ij->F_sommets;
             myfile << "f";
-            if (compteur_luminances != 0) {                         // Il y des des normales aux sommets
-                numeros_Sommets_L = objet_courant->Facelist[j].getLsommets();
+            if (compteur_luminances != 0) {                         // Il y a des des normales aux sommets
+                numeros_Sommets_L = Face_ij->getLsommets();
                 if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                    NormaleFacette = objet_courant->Facelist[j].getNormale_b();
-                    Luminance_Face_ij = &(objet_courant->Facelist[j]);
+                    NormaleFacette = Face_ij->getNormale_b();
                 }
             }
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
                 myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices);
+                if(Face_ij->flat) continue;                         // Facette plane, ne pas enregistrer les normales aux sommets
                 if (compteur_luminances != 0) {                     // Il y des des normales aux sommets
                     if (numeros_Sommets_L.size() == 0) continue;    // Si pas de normales aux sommets sur cette facette en particulier, passer à la suivante
                     myfile << "//";                                 // le champ entre les 2 / est réservé aux textures. Non utilisé dans Ovni
                     if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                        NormaleSommet = objet_courant->Vecteurlist[Luminance_Face_ij->L_sommets[k]-1].point;
+                        NormaleSommet = objet_courant->Vecteurlist[Face_ij->L_sommets[k]-1].point;
                         test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
                         if (test_np) {
                         // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
@@ -7508,6 +7599,7 @@ void BddInter::SaveOFF(wxString str) {
     std::vector<int>   numeros_Sommets;
     std::vector<float> xyz_sommet;
 
+    Face   *Face_ij=nullptr;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7533,8 +7625,8 @@ void BddInter::SaveOFF(wxString str) {
     if (commentaires) myfile << "# Fichier Object File Format off créé par Ovni\n";
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         compteur_sommets = 0;
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
@@ -7554,8 +7646,8 @@ void BddInter::SaveOFF(wxString str) {
     myfile << total_vertices << " " << total_facettes << " 0\n";
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         if (commentaires) {
 // ATTENTION : certain logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
             myfile << "# Objet initial : ";
@@ -7578,12 +7670,13 @@ void BddInter::SaveOFF(wxString str) {
         }
     }
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;
-            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue;
+            numeros_Sommets = Face_ij->F_sommets;
             myfile << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
@@ -7630,7 +7723,8 @@ void BddInter::SaveG3D(wxString str) {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
 
-    Face   *Luminance_Face_ij=nullptr;
+    Face   *Face_ij=nullptr;
+    Sommet *Sommet_ij;
     Object *objet_courant;
 
     int compteur = 0;
@@ -7701,8 +7795,8 @@ void BddInter::SaveG3D(wxString str) {
     myfile << "\t\t<objets nbr=\"" << compteur << "\">\n";
 
     for(o=0; o<this->Objetlist.size(); o++) {
-        if (this->Objetlist[o].deleted) continue ;              // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 ///        compteur = 0;
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
@@ -7719,8 +7813,9 @@ void BddInter::SaveG3D(wxString str) {
 
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(!objet_courant->Facelist[j].deleted) {
-                numeros_Sommets_L = objet_courant->Facelist[j].getLsommets();
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(!Face_ij->deleted) {
+                numeros_Sommets_L = Face_ij->getLsommets();
                 compteur_luminances += numeros_Sommets_L.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7745,11 +7840,12 @@ void BddInter::SaveG3D(wxString str) {
         myfile << compteur_sommets;
         myfile << "\">\n";
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            Sommet_ij = &(objet_courant->Sommetlist[j]);
 ///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier.
 //                compteur++;
-                xyz_sommet = objet_courant->Sommetlist[j].getPoint();
+                xyz_sommet = Sommet_ij->getPoint();
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
-                myfile << objet_courant->Sommetlist[j].Numero;
+                myfile << Sommet_ij->Numero;
                 myfile << "\" xyz=\"";
                 for(k=0; k<xyz_sommet.size(); k++) {
                     myfile << "\t";
@@ -7773,13 +7869,14 @@ void BddInter::SaveG3D(wxString str) {
 
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;
+            Face_ij = &(objet_courant->Facelist[j]);
+            if(Face_ij->deleted) continue;
             compteur++;
             myfile << "\t\t\t\t\t\t<facette id=\"";
             myfile << compteur;
             myfile << "\">\n";
 
-            xyz_sommet = objet_courant->Facelist[j].getNormale_b();
+            xyz_sommet = Face_ij->getNormale_b();
             myfile << "\t\t\t\t\t\t\t<normale_b xyz=\"";
             for(k=0; k<xyz_sommet.size(); k++) {
                 myfile << std::fixed << std::setprecision(8)<< std::setw(11) << xyz_sommet[k];
@@ -7789,7 +7886,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile.flush();
 
             myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
-            numeros_Sommets = objet_courant->Facelist[j].F_sommets;
+            numeros_Sommets = Face_ij->F_sommets;
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;
                 myfile << " ";
@@ -7797,17 +7894,22 @@ void BddInter::SaveG3D(wxString str) {
             myfile << "\"/>\n";
             myfile.flush();
 
-            numeros_Sommets_L=objet_courant->Facelist[j].getLsommets();
-            if (numeros_Sommets_L.size() != 0) {
-                if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                    NormaleFacette = objet_courant->Facelist[j].getNormale_b();
-                    Luminance_Face_ij = &(objet_courant->Facelist[j]);
+            numeros_Sommets_L=Face_ij->getLsommets();
+            if ((numeros_Sommets_L.size() != 0) || Face_ij->flat) {
+                bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
+                if (test_composite) {
+                    NormaleFacette = Face_ij->getNormale_b();
                 }
                 myfile << "\t\t\t\t\t\t\t<normales_s ref=\"";
                 for(k=0; k<numeros_Sommets_L.size(); k++) {
-                    if (test_seuil_gouraud && Enr_Normales_Seuillees) {
-                        NormaleSommet = objet_courant->Vecteurlist[Luminance_Face_ij->L_sommets[k]-1].point;
-                        test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                    if (test_composite) {
+                        if (Face_ij->flat) {
+                            NormaleSommet = NormaleFacette; // Dans ce cas, on remplace la normale au sommet par la normale au barycentre de la facette
+                            test_np = true;
+                        } else {
+                            NormaleSommet = objet_courant->Vecteurlist[Face_ij->L_sommets[k]-1].point;
+                            test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
+                        }
                         if (test_np) {
                         // Vérifier si la nouvelle normale aux sommets n'est pas déjà présente dans NewVecteurs
                             int test = 0;
@@ -7840,15 +7942,15 @@ void BddInter::SaveG3D(wxString str) {
             }
             myfile.flush();
 
-            if(objet_courant->Facelist[j].getCodmatface() != codmatface_def) {
+            if(Face_ij->getCodmatface() != codmatface_def) {
                 myfile << "\t\t\t\t\t\t\t<materiaux ref=\"1 ";
-                myfile << objet_courant->Facelist[j].getCodmatface();
+                myfile << Face_ij->getCodmatface();
                 myfile << "\"/>\n";
             }
             myfile.flush();
 
             myfile << "\t\t\t\t\t\t\t<valeurs val=\"2 ";
-            myfile << objet_courant->Facelist[j].getGroupe();
+            myfile << Face_ij->getGroupe();
             myfile << ".0\"/>\n";   // Ici, le format attend un flottant
 
             myfile << "\t\t\t\t\t\t</facette>\n";
@@ -8505,7 +8607,7 @@ void BddInter::Calcul_All_Normales() {
         nb_som = objet_courant->Nb_sommets;
         for(i=0; i<nb_fac; i++) {
             Calcul_Normale_Barycentre(o,i);
-            objet_courant->Facelist[i].flat = false;
+//            objet_courant->Facelist[i].flat = false;  // Garder plutôt ce qu'il y avait, sinon force le lissage de Gouraud partout : pas forcément souhaitable !
         }
         GenereTableauPointsFacettes(objet_courant);
 //        printf("\n%d sf %d %d %d\n",o,objet_courant->Nb_sommets, objet_courant->Nb_facettes,nbfac);

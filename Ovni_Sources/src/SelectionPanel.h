@@ -139,6 +139,7 @@ class SelectionPanel: public wxDialog
 		void OnTextCtrl_NomObjetText(wxCommandEvent& event);
 		void OnButton_SelectionManuelleFacettesClick(wxCommandEvent& event);
 		void OnButton_OuvrirReperageClick(wxCommandEvent& event);
+		void OnCheckBox_ForcerFlatClick(wxCommandEvent& event);
 		//*)
 		void InitPanel();
         OvniFrame* MAIN;

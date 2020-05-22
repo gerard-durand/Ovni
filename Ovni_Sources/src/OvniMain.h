@@ -268,6 +268,8 @@ class OvniFrame: public wxFrame
         static const long ID_POPUP_RAZ_SELECT;
         static const long ID_POPUP_NORM_F;
         static const long ID_POPUP_NORM_S;
+        static const long ID_POPUP_FLAT;
+        static const long ID_POPUP_NOT_FLAT;
 
         void ReperageObjet_activer();
         void ReperagePoint_activer();
@@ -393,6 +395,8 @@ class OvniFrame: public wxFrame
         void OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event);
         void OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event);
         void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);
+        void OnPopup_ForcerFacettesPlanesSelected(wxCommandEvent& event);
+        void OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event);
         bool OnBdd_modifiee();
         void OnPal_modifiee();
 

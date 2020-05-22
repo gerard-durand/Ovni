@@ -147,6 +147,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SelectionPanel::OnTextCtrl_NomObjetText);
 	Connect(ID_RADIOBOX2,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_GrpMatSelect);
 	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_AppliquerClick);
+	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnCheckBox_ForcerFlatClick);
 	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_InverserNormalesClick);
 	Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_UndoNormalesClick);
 	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_DeleteClick);
@@ -214,6 +215,7 @@ void SelectionPanel::InitPanel()
 
         RadioBox_TypeSelection->Disable();
         Button_Etendre->Disable();
+        CheckBox_ForcerFlat->Disable();
 
         break;
 
@@ -254,6 +256,7 @@ void SelectionPanel::InitPanel()
 
 //        RadioBox_TypeSelection->Enable();
         Button_Etendre->Enable();
+        CheckBox_ForcerFlat->Enable();
 
         break;
 
@@ -294,6 +297,8 @@ void SelectionPanel::InitPanel()
 
         RadioBox_TypeSelection->Disable();
         Button_Etendre->Disable();
+
+        CheckBox_ForcerFlat->Enable(); // A voir ?
 
         break;
 
@@ -764,4 +769,33 @@ void SelectionPanel::OnButton_OuvrirReperageClick(wxCommandEvent& event)
 //        MAIN->ReperageObjet_Panel->Show();
         MAIN->ReperageObjet_activer();
     }
+}
+
+void SelectionPanel::OnCheckBox_ForcerFlatClick(wxCommandEvent& event)
+{
+    BddInter *Element = MAIN->Element;
+    unsigned int i,j;
+
+    if (Element->mode_selection == Element->selection_objet) {
+        for (i=0;i<Element->Objetlist.size(); i++) {
+            if (Element->Objetlist[i].selected) {                                                                           // Sur tous les objets sélectionnés,
+                for (j=0;j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = true;   // Sélectionner toutes les facettes
+            }
+        }
+    }
+
+    if (CheckBox_ForcerFlat->GetValue())
+        Element->Flat_Selected_Facettes();
+    else
+        Element->NotFlat_Selected_Facettes();
+
+    if (Element->mode_selection == Element->selection_objet) {
+        for (i=0;i<Element->Objetlist.size(); i++) {
+            if (Element->Objetlist[i].selected) {                                                                           // Sur tous les objets sélectionnés,
+                for (j=0;j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = false;  // Désélectionner toutes les facettes
+            }
+        }
+    }
+    Element->m_gllist = 0;
+    Element->Refresh();
 }

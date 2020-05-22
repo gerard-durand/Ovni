@@ -991,6 +991,8 @@ public :
     void Inverse_Selected_Normales();
     void Inverser_Parcours_Selected();
     void Inverser_Toutes_les_Normales();
+    void Flat_Selected_Facettes();
+    void NotFlat_Selected_Facettes();
     void Inverser_les_Normales_Objet(unsigned int);
     void InverseX();
     void InverseY();

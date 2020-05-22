@@ -216,6 +216,8 @@ const long OvniFrame::ID_POPUP_PARCOURS_I= wxNewId();
 const long OvniFrame::ID_POPUP_RAZ_SELECT= wxNewId();
 const long OvniFrame::ID_POPUP_NORM_F    = wxNewId();
 const long OvniFrame::ID_POPUP_NORM_S    = wxNewId();
+const long OvniFrame::ID_POPUP_FLAT      = wxNewId();
+const long OvniFrame::ID_POPUP_NOT_FLAT  = wxNewId();
 
 const long OvniFrame::idReopenFile3ds    = wxNewId();       // Fait manuellement car non créé via wxSmith
 
@@ -657,6 +659,8 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_POPUP_NORM_F,    wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Afficher_NormalesSelected);
     Connect(ID_POPUP_NORM_S,    wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Afficher_NormalesSommetsSelected);
     Connect(ID_POPUP_RAZ_SELECT,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Raz_Select_FSelected);
+    Connect(ID_POPUP_FLAT,      wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_ForcerFacettesPlanesSelected);
+    Connect(ID_POPUP_NOT_FLAT,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_ForcerFacettesNonPlanesSelected);
 
 //    ID_POPUP_NORM_F_bis = ID_POPUP_NORM_F;
 //    ID_POPUP_NORM_S_bis = ID_POPUP_NORM_S;
@@ -1855,6 +1859,26 @@ void OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected(wxCommandEvent& eve
     // Inverser les normales sélectionnées
     if (Element != nullptr) {
         Element->Inverse_Selected_Normales();
+        Element->m_gllist = 0;
+        Element->Refresh();
+    }
+}
+
+void OvniFrame::OnPopup_ForcerFacettesPlanesSelected(wxCommandEvent& event)
+{
+    // Forcer le mode facettes planes sur les facettes sélectionnées
+    if (Element != nullptr) {
+        Element->Flat_Selected_Facettes();
+        Element->m_gllist = 0;
+        Element->Refresh();
+    }
+}
+
+void OvniFrame::OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event)
+{
+    // Forcer le mode facettes non planes sur les facettes sélectionnées
+    if (Element != nullptr) {
+        Element->NotFlat_Selected_Facettes();
         Element->m_gllist = 0;
         Element->Refresh();
     }
