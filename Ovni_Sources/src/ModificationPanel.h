@@ -40,7 +40,7 @@ class ModificationPanel: public wxDialog
 		wxButton* Button_Simplification;
 		wxButton* Button_SupprimerFacette;
 		wxButton* Button_Trianguler;
-		wxButton* Button_UndoSouder;
+		wxButton* Button_Undo;
 		wxCheckBox* CheckBox_FacettePlane;
 		wxCheckBox* CheckBox_Transparence;
 		wxPanel* Panel10;
@@ -100,10 +100,10 @@ class ModificationPanel: public wxDialog
 		static const long ID_BUTTON12;
 		static const long ID_BUTTON1;
 		static const long ID_CHECKBOX1;
-		static const long ID_PANEL9;
 		static const long ID_PANEL8;
 		static const long ID_BUTTON13;
 		static const long ID_PANEL10;
+		static const long ID_PANEL9;
 		//*)
 
 	private:
@@ -116,7 +116,7 @@ class ModificationPanel: public wxDialog
 		void OnButton_SupprimerFacetteClick(wxCommandEvent& event);
 		void OnButton_InverserNormaleClick(wxCommandEvent& event);
 		void OnToggleButton_SouderToggle(wxCommandEvent& event);
-		void OnButton_UndoSouderClick(wxCommandEvent& event);
+		void OnButton_UndoClick(wxCommandEvent& event);
 		void OnButton_InverserToutClick(wxCommandEvent& event);
 		void OnButton_TriangulerClick(wxCommandEvent& event);
 		void OnButton_RecalculerNormalesClick(wxCommandEvent& event);

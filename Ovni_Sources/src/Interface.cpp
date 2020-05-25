@@ -1021,6 +1021,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             if(MPanel->Bool_souder || show_points) {
                 GLint hits=0;
                 GLint viewport[4];
+                if(MPanel->Bool_souder) modeGL = points;    // On ne passe pas en mode sélection de points si show_points seulement !
                 wxSize ClientSize = this->GetSize();
                 glGetIntegerv(GL_VIEWPORT, viewport);
                 glSelectBuffer(BUFSIZE, selectBuffer);
@@ -1053,7 +1054,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
                         }
-                        m_gllist = -2;
+                        m_gllist = glliste_points;
                         Refresh();          // Plutôt que de reconstruire toute la liste de points, seuls 2 points suffiraient en superposition, 1 point jaune survolé et un point rouge stocké
                     }
                 } else {
@@ -1064,7 +1065,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     face_under_mouse_old  = face_under_mouse  = -1;
                     point_under_mouse_old = point_under_mouse = -1;
                     line_under_mouse_old  = line_under_mouse  = -1;
-                    m_gllist = -2;
+                    m_gllist = glliste_points;
                     Refresh();
                 }
                 glMatrixMode(GL_MODELVIEW);
@@ -1074,6 +1075,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
                 GLint hits=0;
                 GLint viewport[4];
+                modeGL = aretes;
                 wxSize ClientSize = this->GetSize();
                 glGetIntegerv(GL_VIEWPORT, viewport);
                 glSelectBuffer(BUFSIZE, selectBuffer);
@@ -1086,13 +1088,14 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
                 showAllLines();
+//                glCallList(2);                  // Ne semble pas suffisant, plutôt que showAllLines ci-dessus ; OK tant qu'on est dans un seul objet, mais ne marche pas sinon
                 glMatrixMode(GL_PROJECTION);
                 glPopMatrix();
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
                     if (letscheckthemouse(1,hits)) {
-                        m_gllist = 0;
+                        m_gllist = glliste_lines; //0;     // On ne reconstruira que la liste des arêtes dans le Refresh() ci-dessous
                         searchMin_Max();
                         Refresh();
                     }
@@ -5560,7 +5563,12 @@ Boucle:
     }
     // En dehors des créations de liste => fait systématiquement
 
-    if (m_gllist == -2) {
+    if (m_gllist == glliste_lines) {
+        if (verbose) printf("Reconstruction de la liste de aretes seulement\n");
+        buildAllLines();
+        m_gllist = 1;
+    }
+    if (m_gllist == glliste_points) {                                           // le signe - utilisé auparavant n'est plus justifié
         if (verbose) printf("Reconstruction de la liste de points seulement\n");
         buildAllPoints();
         m_gllist = 1;
@@ -5570,10 +5578,10 @@ Boucle:
 
 //    if (show_plein) glCallList(m_gllist);
     if (show_plein)  glCallList(1);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-    if (show_lines)  glCallList(2);     // <=> showAllLines();
-    if (show_points) glCallList(3);     // <=> showAllPoints();
-    if (show_box)    glCallList(4);     // <=> AffichageBoite()  ;
-    if (show_axes)   glCallList(5);     // <=> repereOXYZ() ;
+    if (show_lines)  glCallList(glliste_lines) ;    // <=> showAllLines();
+    if (show_points) glCallList(glliste_points);    // <=> showAllPoints();
+    if (show_box)    glCallList(glliste_boite) ;    // <=> AffichageBoite()  ;
+    if (show_axes)   glCallList(glliste_repere);    // <=> repereOXYZ() ;
     if (show_light)  AfficherSource();
     if (show_star)   GenereEtoile();
     if (Symetrie_Objets) {              // Tracer une boîte englobante rouge autour l'objet d'origine et une cyan pour matérialiser l'objet à créer
@@ -5642,6 +5650,7 @@ void BddInter::Flat_Selected_Facettes() {
             }
         }
     }
+    bdd_modifiee = true;    // Marquer BDD modifiée pour rappeler à Enregistrer en sortie
 }
 
 void BddInter::NotFlat_Selected_Facettes() {
@@ -5657,6 +5666,7 @@ void BddInter::NotFlat_Selected_Facettes() {
             }
         }
     }
+    bdd_modifiee = true;    // Marquer BDD modifiée pour rappeler à Enregistrer en sortie
 }
 
 void BddInter::Inverse_Selected_Normales() {
@@ -5804,8 +5814,8 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
 
 void BddInter::buildAllPoints() {
 // Utilise showAllPoints pour construire une liste 3
-    glDeleteLists(3,1);         // Détruire une éventuelle liste 3 existante
-    glNewList(3, GL_COMPILE) ;
+    glDeleteLists(glliste_points,1);         // Détruire une éventuelle liste 3 existante
+    glNewList(glliste_points, GL_COMPILE) ;
     showAllPoints();
     glEndList();
 }
@@ -5873,8 +5883,8 @@ void BddInter::showAllPoints() {
 
 void BddInter::buildAllLines() {
 // Utilise showAllLines pour construire une liste 2
-    glDeleteLists(2,1);         // Détruire une éventuelle liste 2 existante
-    glNewList(2, GL_COMPILE) ;
+    glDeleteLists(glliste_lines,1);         // Détruire une éventuelle liste 2 existante
+    glNewList(glliste_lines, GL_COMPILE) ;
     showAllLines();
     glEndList();
 }
@@ -5907,15 +5917,15 @@ void BddInter::showAllLines() {
                 glPushName(j);
                 glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans letscheckthemouse) !
                 if (Arete->afficher) {
-                    if(objet_under_mouse==(int)i && line_under_mouse==(int)j) {
-                        plusEpais=true;
-                        glColor3fv(vert); // cyan foncé ... BOF
+                    if((objet_under_mouse == (int)i) && (line_under_mouse == (int)j)) {
+                        plusEpais = true;
+                        glColor3fv(vert);   // cyan foncé ... BOF
                     } else {
-                        plusEpais=false;
-                        glColor3fv(blanc); // cyan +clair
+                        plusEpais = false;
+                        glColor3fv(blanc);  // cyan +clair
                     }
                     if (antialiasing_soft) {
-                        glLineWidth(1.05); // Augmenter un peu la largeur de ligne. Initialement 1.75
+                        glLineWidth(1.05);  // Augmenter un peu la largeur de ligne. Initialement 1.75
                         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
                         glEnable(GL_LINE_SMOOTH);
                         glEnable(GL_BLEND);
@@ -6119,8 +6129,8 @@ void BddInter::buildBoite() {
 // Peut être fait une fois, puis stocké dans une liste.
 // Réinitialiser seulement si changements dans les min et max...
 
-    glDeleteLists(4,1); // Supprimer une éventuelle liste 4 existante
-    glNewList(4, GL_COMPILE);
+    glDeleteLists(glliste_boite,1); // Supprimer une éventuelle liste 4 existante
+    glNewList(glliste_boite, GL_COMPILE);
 
 // Modif GD : ajustement du marquage si trop fin en x, y ou z.
     dx=dy=dz = diagonale_save*0.1 ;
@@ -6414,8 +6424,8 @@ void BddInter::setMin_Max(float x, float y, float z) {
 
 void BddInter::buildRepereOXYZ() {
 
-    glDeleteLists(5,1); // Supprimer une éventuelle liste 5 existante
-    glNewList(5, GL_COMPILE);
+    glDeleteLists(glliste_repere,1); // Supprimer une éventuelle liste 5 existante
+    glNewList(glliste_repere, GL_COMPILE);
     float longueur = diagonale_save*len_axe; //10.0;
 
 //printf("Tracer les axes\n");
@@ -6578,11 +6588,11 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 glMatrixMode(GL_MODELVIEW);
                 m_gllist = 0;
                 m_gllist = glGenLists( 1 );
-                glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );
+                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
                 glInitNames();
                 showAllPoints(); // glCallList(3) ; //
                 glEndList();
-                m_gllist = 0;
+                m_gllist = 0;   // Refaire toutes les listes car les points, les facettes, les arêtes ont changé
                 Refresh();
             }
             if (MPanel->Bool_diviser) {
@@ -6593,11 +6603,14 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 m_gllist = 0;
                 m_gllist = glGenLists( 1 );
 //                printf("liste : %d\n",m_gllist);
-                glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );
+                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
                 glInitNames();
                 showAllLines();// glCallList(2); //
                 glEndList();
-                m_gllist = 0;
+                m_gllist = glliste_lines;
+//                glCallList(glliste_lines);          // Semblait OK ici, plutôt que les lignes précédentes mais .....
+                line_under_mouse = -1;  // Raz du numéro d'arête survolé par la souris
+                objet_under_mouse= -1;
                 Refresh();
             }
             //glTranslatef( m_gldata.posx, m_gldata.posy,m_gldata.posz );
@@ -6867,7 +6880,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     }
                     delete this->Smemory;       // Utile ??
                     this->Smemory  = nullptr; // Reset
-    //                this->m_gllist = -2;
+    //                this->m_gllist = -3;
     //                Refresh();
                 }
             }
@@ -8016,9 +8029,9 @@ void BddInter::SaveG3D(wxString str) {
 }
 
 void BddInter::diviserArete(int objet, int face, int line) {
-// Divise un segment en N points équidistants => Ne tient pas compte de la valeur de MPanel->division qui vaut aussi N dans ce cas.
-// A adapter pour "Ajouter sous le pointeur" (MPanel->division vaut alors -1).
-// Voir ET_COMMAND_Ajout_Point dans interface.c (ligne 760) de la version Tcl.
+// Divise un segment en N points équidistants
+// Dans "Ajouter sous le pointeur" (MPanel->division vaut alors -1) => calcul différent
+
     std::vector<int> NumerosSommets;
     unsigned int i,j,k;
     int l;
@@ -8035,35 +8048,28 @@ void BddInter::diviserArete(int objet, int face, int line) {
     Sommet  NewSommet;
     Sommet  Sommet_a;
     Sommet  Sommet_b;
+    Object  *objet_cible;
 
-    int indice_objet_cible = objet;//-1 ; // -1 à cause de glPushName(i+1) dans showAllLines
-    int indice_face_cible  = face;//-1  ; // -1 à cause de glPushName(j+1) dans showAllLines
+    int indice_objet_cible = objet;
+    int indice_face_cible  = face;
     int indice_a, indice_b, numero_a, numero_b;
 
     printf("objet %d, face %d, line %d\n",objet,face,line);
 
     Luminance NewLuminance;
     Vecteur   NewVecteur;
-//    Aspect_face Newaspect_face;
-//    int NewGroupe,NewCodmatface;
+
     std::vector<int>::iterator it;
 
-//    int a = this->Objetlist[indice_objet_cible].Facelist[indice_face_cible].F_sommets[line];
-//    int b;
-//    if (line == (int)(this->Objetlist[indice_objet_cible].Facelist[indice_face_cible].F_sommets.size()-1)) {
-//        b = this->Objetlist[indice_objet_cible].Facelist[indice_face_cible].F_sommets[0];
-//    } else {
-//        b = this->Objetlist[indice_objet_cible].Facelist[indice_face_cible].F_sommets[line+1];
-//    }
-    indice_a = this->Objetlist[indice_objet_cible].Areteslist[line].ind_a;
-    indice_b = this->Objetlist[indice_objet_cible].Areteslist[line].ind_b;
+    objet_cible = &(this->Objetlist[indice_objet_cible]);
+
+    indice_a = objet_cible->Areteslist[line].ind_a;
+    indice_b = objet_cible->Areteslist[line].ind_b;
     numero_a = indice_a +1;
     numero_b = indice_b +1;
-//    Sommet_a = this->Objetlist[indice_objet_cible].Sommetlist[a-1];
-//    Sommet_b = this->Objetlist[indice_objet_cible].Sommetlist[b-1];
-    Sommet_a = this->Objetlist[indice_objet_cible].Sommetlist[indice_a];
-    Sommet_b = this->Objetlist[indice_objet_cible].Sommetlist[indice_b];
-    if (MPanel->division == -1) {
+    Sommet_a = objet_cible->Sommetlist[indice_a];
+    Sommet_b = objet_cible->Sommetlist[indice_b];
+    if (MPanel->division == -1) {   // On est dans "Ajouter sous le pointeur"
         // Calcul des positions sur l'écran des 2 sommets
         glGetDoublev(GL_MODELVIEW_MATRIX,modelview);
 		glGetDoublev(GL_PROJECTION_MATRIX,proj);
@@ -8072,21 +8078,21 @@ void BddInter::diviserArete(int objet, int face, int line) {
 		gluProject(Sommet_a.point[0],Sommet_a.point[1],Sommet_a.point[2],modelview,proj,global_viewport,&xawin,&yawin,&zawin);
 		gluProject(Sommet_b.point[0],Sommet_b.point[1],Sommet_b.point[2],modelview,proj,global_viewport,&xbwin,&ybwin,&zbwin);
 
-		vx = (mouse_position.x-xawin); vy = ((global_viewport[3]-mouse_position.y)-yawin);
+		vx  = (mouse_position.x-xawin); vy = ((global_viewport[3]-mouse_position.y)-yawin);
 		abx = (xbwin-xawin); aby = (ybwin-yawin);
 
 		t = sqrt( (vx*vx)+(vy*vy) ) / sqrt( (abx*abx)+(aby*aby) );
-		printf("valeur de t : %lf\n",t);
+//		printf("valeur de t : %lf\n",t);
 		div_limit = 2;
     } else {
         div_limit = this->MPanel->SpinCtrl_NbSegments->GetValue();
-        t=1; // juste pour éviter un warning !
+        t = 1;  // juste pour éviter un warning !
     }
-    this->Objetlist[indice_objet_cible].Nb_sommets  += div_limit-1;   // div_limit ??? plutôt div_limit -1 (par ex si on divise en 2, on n'ajoute qu'un sommet !)
-    Nb_vecteurs_0 = this->Objetlist[indice_objet_cible].Nb_vecteurs;
+    objet_cible->Nb_sommets  += div_limit-1;   // div_limit ??? plutôt div_limit -1 (par ex si on divise en 2, on n'ajoute qu'un sommet !)
+    Nb_vecteurs_0 = objet_cible->Nb_vecteurs;
     if (Nb_vecteurs_0 > 0) {
         vecteurs_presents = true;
-        this->Objetlist[indice_objet_cible].Nb_vecteurs += div_limit-1;
+        objet_cible->Nb_vecteurs += div_limit-1;
     } else vecteurs_presents = false;
     for(l=1; l<div_limit; l++) {
         NewSommet = Sommet_a;
@@ -8095,62 +8101,68 @@ void BddInter::diviserArete(int objet, int face, int line) {
             NewSommet.point[k] = Sommet_a.point[k] + (Sommet_b.point[k]-Sommet_a.point[k])*t;
         }
         if (vecteurs_presents) {
-            NewVecteur = this->Objetlist[indice_objet_cible].Vecteurlist[indice_a];
-            this->Objetlist[indice_objet_cible].Vecteurlist.push_back(NewVecteur);
+            NewVecteur = objet_cible->Vecteurlist[indice_a];
+            NewVecteur.Numero = objet_cible->Vecteurlist.size() +1;
+            NewVecteur.toshow = (undo_memory+1);
+            objet_cible->Vecteurlist.push_back(NewVecteur);
         }
-        this->Objetlist[indice_objet_cible].Sommetlist.push_back(NewSommet);
-        int nouveau_sommet  = this->Objetlist[indice_objet_cible].Sommetlist.size();
-        int indice_sommet   = nouveau_sommet-1;
-        this->Objetlist[indice_objet_cible].Sommetlist [indice_sommet].toshow = (undo_memory+1);
-        this->Objetlist[indice_objet_cible].Sommetlist [indice_sommet].show   = true;
-        if (vecteurs_presents) {
-            this->Objetlist[indice_objet_cible].Vecteurlist[indice_sommet].toshow = (undo_memory+1);
-//            this->Objetlist[indice_objet_cible].Vecteurlist[indice_sommet].show   = true;
-        }
+        NewSommet.Numero = objet_cible->Sommetlist.size() +1;
+        NewSommet.toshow = (undo_memory+1);
+        NewSommet.show   = true;
+        objet_cible->Sommetlist.push_back(NewSommet);
+        int nouveau_sommet  = objet_cible->Sommetlist.size();
+//        int indice_sommet   = nouveau_sommet-1;
+//        objet_cible->Sommetlist [indice_sommet].toshow = (undo_memory+1);
+//        objet_cible->Sommetlist [indice_sommet].show   = true;
+//        if (vecteurs_presents) {
+//            objet_cible->Vecteurlist[indice_sommet].toshow = (undo_memory+1);
+////            objet_cible->Vecteurlist[indice_sommet].show   = true;
+//        }
 
-//        for(i=0; i<this->Objetlist.size(); i++) { // Pourquoi balayer tous les objets ? 1 seul, doit suffire
-        i = indice_objet_cible;
-            unsigned int limit = this->Objetlist[i].Facelist.size();
-            for(j=0; j<limit; j++) {
-                NumerosSommets = this->Objetlist[i].Facelist[j].getF_sommets();
-                unsigned int k_fin =NumerosSommets.size();
-                unsigned int k_suiv;
-                for(k=0; k<k_fin; k++) {
-                    k_suiv = k+1;
-                    if (k_suiv >= k_fin) k_suiv = 0; // Pour boucler entre le dernier point et le point 0
-                    if(((NumerosSommets[k] == numero_a && NumerosSommets[k_suiv] == numero_b) ||
-                        (NumerosSommets[k] == numero_b && NumerosSommets[k_suiv] == numero_a)) ) { // && ((int)i==indice_objet_cible)
-                        NewFace       = Objetlist[i].Facelist[j];
-                        if (this->Objetlist[i].Facelist[j].toshow == 0) {
-                            this->Objetlist[i].Facelist[j].toshow  = ((undo_memory*(-1))-1);
-                            this->Objetlist[i].Facelist[j].deleted = true;
-                        } else {
-                            this->Objetlist[i].Facelist[j].deleted = true;
-                        }
-                        it = NewFace.F_sommets.begin()+k+1;
-                        NewFace.F_sommets.insert (it, nouveau_sommet);
-                        NewFace.Nb_Sommets_F++;
-                        if (vecteurs_presents) {
-                            it = NewFace.L_sommets.begin()+k+1;
-                            NewFace.L_sommets.insert (it, nouveau_sommet);
-                            NewFace.Nb_Sommets_L++;
-                        }
-                        NewFace.toshow = ((undo_memory)+1);
-                        NewFace.Numero = this->Objetlist[indice_objet_cible].Facelist.size();
-                        this->Objetlist[i].Facelist.push_back(NewFace);
-                        this->Objetlist[i].Nb_facettes++;
+        unsigned int limit = objet_cible->Facelist.size();
+        for(j=0; j<limit; j++) {
+            NumerosSommets = objet_cible->Facelist[j].getF_sommets();
+            unsigned int k_fin = NumerosSommets.size();
+            unsigned int k_suiv;
+            for(k=0; k<k_fin; k++) {
+                k_suiv = k+1;
+                if (k_suiv >= k_fin) k_suiv = 0; // Pour boucler entre le dernier point et le point 0
+                if(((NumerosSommets[k] == numero_a && NumerosSommets[k_suiv] == numero_b) ||
+                    (NumerosSommets[k] == numero_b && NumerosSommets[k_suiv] == numero_a)) ) {
+                    NewFace = objet_cible->Facelist[j];
+                    if (objet_cible->Facelist[j].toshow == 0) {
+                        objet_cible->Facelist[j].toshow  = ((undo_memory*(-1))-1);
+                        objet_cible->Facelist[j].deleted = true;
+                    } else {
+                        objet_cible->Facelist[j].deleted = true;
                     }
+                    it = NewFace.F_sommets.begin()+k+1;
+                    NewFace.F_sommets.insert (it, nouveau_sommet);
+                    NewFace.Nb_Sommets_F++;
+                    if (vecteurs_presents) {
+                        it = NewFace.L_sommets.begin()+k+1;
+                        NewFace.L_sommets.insert (it, nouveau_sommet);
+                        NewFace.Nb_Sommets_L++;
+                    }
+                    NewFace.toshow = ((undo_memory)+1);
+                    NewFace.Numero = objet_cible->Facelist.size() +1;
+                    objet_cible->Facelist.push_back(NewFace);
+                    objet_cible->Nb_facettes = NewFace.Numero;
                 }
-                /// entre 1er et dernier point ?
             }
+            /// entre 1er et dernier point ?
+        }
 //        }
         numero_a = nouveau_sommet;
     }
     undo_memory++;
+    MPanel->Button_Undo->Enable();
+
     buildAllPoints();
-    GenereTableauPointsFacettes(&(this->Objetlist[indice_objet_cible]));
-    GenereTableauAretes(&(this->Objetlist[indice_objet_cible]));
+    GenereTableauPointsFacettes(objet_cible);
+    GenereTableauAretes(objet_cible);
     buildAllLines();
+    bdd_modifiee = true ;
     Refresh();
 }
 
@@ -8311,7 +8323,7 @@ void BddInter::souderPoints(int objet, int point) {
     } else MPanel->aretes_calculees = false;
 
     undo_memory++;
-    MPanel->Button_UndoSouder->Enable();
+    MPanel->Button_Undo->Enable();
     bdd_modifiee = true ;
 }
 
@@ -8366,7 +8378,7 @@ void BddInter::UNDO_ONE() {
         }
         undo_memory--;
         if (undo_memory == 0) {
-            MPanel->Button_UndoSouder->Disable();
+            MPanel->Button_Undo->Disable();
         }
         m_gllist = 0;
         wxKeyEvent key_event;
@@ -9149,7 +9161,7 @@ void BddInter::Simplification_BDD()
     }
 
     undo_memory = 0;                        // Un undo de souder n'est plus possible
-    MPanel->Button_UndoSouder->Disable();   // et donc désactiver le bouton
+    MPanel->Button_Undo->Disable();         // et donc désactiver le bouton
 
     printf("\nFin de simplification de la Bdd\n");
 }

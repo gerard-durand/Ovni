@@ -908,6 +908,11 @@ public :
 
     GLData m_gldata;
     GLint  m_gllist;    // GLuint
+    GLint glliste_lines  = 2;
+    GLint glliste_points = 3;
+    GLint glliste_boite  = 4;
+    GLint glliste_repere = 5;
+
     bool   materials = false;
     bool   groupes   = false;
     bool   smooth    = false;

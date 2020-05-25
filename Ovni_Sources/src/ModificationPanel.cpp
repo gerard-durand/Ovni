@@ -37,10 +37,10 @@ const long ModificationPanel::ID_BUTTON11 = wxNewId();
 const long ModificationPanel::ID_BUTTON12 = wxNewId();
 const long ModificationPanel::ID_BUTTON1 = wxNewId();
 const long ModificationPanel::ID_CHECKBOX1 = wxNewId();
-const long ModificationPanel::ID_PANEL9 = wxNewId();
 const long ModificationPanel::ID_PANEL8 = wxNewId();
 const long ModificationPanel::ID_BUTTON13 = wxNewId();
 const long ModificationPanel::ID_PANEL10 = wxNewId();
+const long ModificationPanel::ID_PANEL9 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ModificationPanel,wxDialog)
@@ -52,9 +52,9 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 {
 	//(*Initialize(ModificationPanel)
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
-	SetClientSize(wxSize(214,523));
+	SetClientSize(wxSize(216,554));
 	Move(wxPoint(20,20));
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arrête"), wxPoint(0,0), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(16,0), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
 	Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,16), wxSize(216,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
@@ -64,10 +64,10 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	SpinCtrl_NbSegments->Disable();
 	StaticText2 = new wxStaticText(Panel2, ID_STATICTEXT2, _T("segments"), wxPoint(136,35), wxDLG_UNIT(Panel2,wxSize(32,9)), wxALIGN_CENTRE|wxFULL_REPAINT_ON_RESIZE, _T("ID_STATICTEXT2"));
 	ToggleButton_Diviser = new wxToggleButton(Panel2, ID_TOGGLEBUTTON2, _T("Diviser en"), wxPoint(16,32), wxSize(64,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON2"));
-	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,78), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
+	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,152), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
 	StaticText3->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText3->SetBackgroundColour(wxColour(0,0,0));
-	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,96), wxSize(216,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
+	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,168), wxSize(216,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
 	StaticText4 = new wxStaticText(Panel4, ID_STATICTEXT4, _T("Avec le numéro de groupe"), wxPoint(8,2), wxSize(144,16), 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(Panel4, ID_STATICTEXT5, _T("Avec le numéro de matériau"), wxPoint(8,22), wxSize(152,16), 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_Groupe = new wxSpinCtrl(Panel4, ID_SPINCTRL2, _T("0"), wxPoint(168,0), wxSize(40,20), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
@@ -84,17 +84,17 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	CheckBox_FacettePlane = new wxCheckBox(Panel4, ID_CHECKBOX2, _T("Plane"), wxPoint(120,44), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
 	CheckBox_FacettePlane->SetValue(false);
 	CheckBox_FacettePlane->Disable();
-	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Souder deux points"), wxPoint(0,240), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT6"));
+	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Souder deux points"), wxPoint(16,80), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT6"));
 	StaticText6->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText6->SetBackgroundColour(wxColour(0,0,0));
-	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,256), wxSize(216,32), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
-	ToggleButton_Souder = new wxToggleButton(Panel6, ID_TOGGLEBUTTON3, _T("Souder"), wxPoint(16,4), wxSize(96,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON3"));
-	Button_UndoSouder = new wxButton(Panel6, ID_BUTTON8, _T("Undo"), wxPoint(112,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
-	Button_UndoSouder->Disable();
-	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,288), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
+	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,96), wxSize(216,56), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
+	ToggleButton_Souder = new wxToggleButton(Panel6, ID_TOGGLEBUTTON3, _T("Souder"), wxPoint(48,4), wxSize(120,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON3"));
+	Button_Undo = new wxButton(Panel6, ID_BUTTON8, _T("Undo"), wxPoint(8,30), wxSize(200,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_Undo->Disable();
+	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,312), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
-	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,304), wxSize(216,186), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
+	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,328), wxSize(216,186), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(8,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));
 	TextCtrl_Tolerance = new wxTextCtrl(Panel8, ID_TEXTCTRL1, _T("0"), wxPoint(136,8), wxSize(72,20), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_InverserTout = new wxButton(Panel8, ID_BUTTON9, _T("Inverser toutes les normales"), wxPoint(16,32), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
@@ -104,10 +104,10 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Button_RecalculerAretes = new wxButton(Panel8, ID_BUTTON1, _T("Recalculer les arêtes"), wxPoint(16,128), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	CheckBox_Transparence = new wxCheckBox(Panel8, ID_CHECKBOX1, _T("Activer la transparence"), wxPoint(16,158), wxSize(176,14), 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_Transparence->SetValue(false);
-	Panel9 = new wxPanel(Panel8, ID_PANEL9, wxPoint(0,180), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
+	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,520), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
+	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
+	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,512), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
 	Panel9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
-	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,490), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
-	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,6), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
 
 	Connect(ID_TOGGLEBUTTON1,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_AjouterToggle);
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ModificationPanel::OnSpinCtrl_NbSegmentsChange);
@@ -120,7 +120,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_InverserNormaleClick);
 	Connect(ID_CHECKBOX2,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnCheckBox_FacettePlaneClick);
 	Connect(ID_TOGGLEBUTTON3,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_SouderToggle);
-	Connect(ID_BUTTON8,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_UndoSouderClick);
+	Connect(ID_BUTTON8,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_UndoClick);
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ModificationPanel::OnTextCtrl_ToleranceText);
 	Connect(ID_BUTTON9,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_InverserToutClick);
 	Connect(ID_BUTTON10,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_TriangulerClick);
@@ -240,7 +240,7 @@ void ModificationPanel::OnToggleButton_SouderToggle(wxCommandEvent& event)
     Bool_diviser = false;
     Element->show_points= Bool_souder;
     Element->show_lines = false;
-    Element->m_gllist   = -2;        // Ne reconstruire que la liste de points
+    Element->m_gllist   = -Element->glliste_points;          // Ne reconstruire que la liste de points
     Element->Refresh();
 }
 
@@ -253,13 +253,13 @@ void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
     division=-1;
     Bool_diviser = ToggleButton_Ajouter->GetValue();
     if (ToggleButton_Ajouter->GetValue()) {
-        printf("Ajouter YES\n");
+//        printf("Ajouter YES\n");
         ToggleButton_Diviser->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
         SpinCtrl_NbSegments ->Disable();
         old_modeGL = (int)Element->modeGL;
     } else {
-        printf("Ajouter NO\n");
+//        printf("Ajouter NO\n");
         Element->modeGL = (BddInter::MODE)old_modeGL;
     }
 //        toredraw = 1;
@@ -299,7 +299,7 @@ void ModificationPanel::OnSpinCtrl_NbSegmentsChange(wxSpinEvent& event)
 }
 
 //undo
-void ModificationPanel::OnButton_UndoSouderClick(wxCommandEvent& event)
+void ModificationPanel::OnButton_UndoClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
@@ -616,12 +616,13 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                                      wxOK | wxICON_INFORMATION ); // Avec cette icône, l'affichage emet un son (wxICON_QUESTION silencieux !!)
         query->ShowModal();
         query->Destroy();
-
     } else {
         Element->Calcul_All_Normales();     // Ici, le + simple : recalculer toutes les normales (y compris celles aux barycentres !)
         Element->searchMin_Max();           // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
         Element->bdd_modifiee = true;
         Element->m_gllist = 0;              // Retracer la nouvelle Bdd modifiée
+        Element->Smemory  = nullptr;        // Raz
+        Button_Undo->Disable();             // Désactiver le bouton
         Element->Refresh();
     }
 }
