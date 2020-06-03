@@ -824,6 +824,7 @@ public :
     bool  CreerBackup_def              = false;     // Pour renommer l'original d'un fichier de bdd en .bak
     bool  SupprBackup_def              = false;     // Pour supprimer le .bak en sortie de programme
     bool  Raz_Selection_F_def          = false;     // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
+    bool  NotFlat_def                  = false;     // Lors  d'un recalcul des normales, ne change pas les facettes déclarées plane. Si true, lissage de Gouraud actif sur la/les facette(s)
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
@@ -855,6 +856,7 @@ public :
     bool  SupprBackup              = SupprBackup_def;
     bool  OK_FichierCree           = false;
     bool  Raz_Selection_F          = Raz_Selection_F_def;
+    bool  NotFlat                  = NotFlat_def;
 
     GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 

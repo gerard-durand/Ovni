@@ -46,6 +46,7 @@ const char *initI="Creer_Backup=";
 const char *initJ="Suppr_Backup=";
 const char *initK="Msg_Warning=";
 const char *initL="Raz_Selection_F=";
+const char *initM="FacettesNotFlat=";
 
 FILE* f;                                // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -294,6 +295,7 @@ void BddInter::ResetData() {
         MPanel->TextCtrl_Tolerance->SetValue(str);
         MPanel->CheckBox_Transparence->SetValue(false);
         MPanel->activer_transparence = false;
+        MPanel->CheckBox_NotFlat->SetValue(NotFlat);
     }
 
     if (MRotation != nullptr) {
@@ -539,6 +541,16 @@ void BddInter::Ouvrir_ini_file()
                 else Raz_Selection_F = true ;
                 continue;   // Passer au while suivant
             }
+            len = strlen( initM);
+            icmp= strncmp(initM,Message,len) ;                  // Test sur 19ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de NotFlat
+                if (ibool == 0)
+                     NotFlat = false;
+                else NotFlat = true ;
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
@@ -577,6 +589,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initJ,SupprBackup);
         fprintf(f_init,"%s%d\n",initK,msg_warning);
         fprintf(f_init,"%s%d\n",initL,Raz_Selection_F);
+        fprintf(f_init,"%s%d\n",initM,NotFlat);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -3812,8 +3825,7 @@ void BddInter::Affiche_Matrice(float M[4][4]) {
 
 int BddInter::decoder_node (Lib3dsNode *node)
 {
-/*
- *  Lecture d'un Fichier de polygones au format Autodesk 3DS
+/*  Lecture d'un Fichier de polygones au format Autodesk 3DS
  *  Identifie éventuellement plusieurs objets, crée des normales aux barycentres des facettes.
  *  Une création de groupes faite ?????????????????????????????????
  *  Utilise la librairie lib3ds (d'après l'exemple 3ds2m ou 3Dsplay, mais quelques soucis, voir ci-dessus ! )
@@ -8619,7 +8631,7 @@ void BddInter::Calcul_All_Normales() {
         nb_som = objet_courant->Nb_sommets;
         for(i=0; i<nb_fac; i++) {
             Calcul_Normale_Barycentre(o,i);
-//            objet_courant->Facelist[i].flat = false;  // Garder plutôt ce qu'il y avait, sinon force le lissage de Gouraud partout : pas forcément souhaitable !
+            if (NotFlat) objet_courant->Facelist[i].flat = false;  // Garder plutôt ce qu'il y avait, sinon force le lissage de Gouraud partout : pas forcément souhaitable !
         }
         GenereTableauPointsFacettes(objet_courant);
 //        printf("\n%d sf %d %d %d\n",o,objet_courant->Nb_sommets, objet_courant->Nb_facettes,nbfac);

@@ -37,6 +37,7 @@ const long ModificationPanel::ID_BUTTON11 = wxNewId();
 const long ModificationPanel::ID_BUTTON12 = wxNewId();
 const long ModificationPanel::ID_BUTTON1 = wxNewId();
 const long ModificationPanel::ID_CHECKBOX1 = wxNewId();
+const long ModificationPanel::ID_CHECKBOX3 = wxNewId();
 const long ModificationPanel::ID_PANEL8 = wxNewId();
 const long ModificationPanel::ID_BUTTON13 = wxNewId();
 const long ModificationPanel::ID_PANEL10 = wxNewId();
@@ -52,7 +53,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 {
 	//(*Initialize(ModificationPanel)
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
-	SetClientSize(wxSize(216,554));
+	SetClientSize(wxSize(216,582));
 	Move(wxPoint(20,20));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(16,0), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
@@ -94,19 +95,21 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,312), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
-	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,328), wxSize(216,186), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
+	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,328), wxSize(216,208), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(8,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));
 	TextCtrl_Tolerance = new wxTextCtrl(Panel8, ID_TEXTCTRL1, _T("0"), wxPoint(136,8), wxSize(72,20), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_InverserTout = new wxButton(Panel8, ID_BUTTON9, _T("Inverser toutes les normales"), wxPoint(16,32), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
 	Button_Trianguler = new wxButton(Panel8, ID_BUTTON10, _T("Trianguler la BDD"), wxPoint(16,56), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON10"));
-	Button_RecalculerNormales = new wxButton(Panel8, ID_BUTTON11, _T("Recalculer toutes les normales"), wxPoint(16,80), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
-	Button_Simplification = new wxButton(Panel8, ID_BUTTON12, _T("Simplification de la BDD"), wxPoint(16,104), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
-	Button_RecalculerAretes = new wxButton(Panel8, ID_BUTTON1, _T("Recalculer les arêtes"), wxPoint(16,128), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	CheckBox_Transparence = new wxCheckBox(Panel8, ID_CHECKBOX1, _T("Activer la transparence"), wxPoint(16,158), wxSize(176,14), 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	Button_RecalculerNormales = new wxButton(Panel8, ID_BUTTON11, _T("Recalculer toutes les normales"), wxPoint(16,104), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
+	Button_Simplification = new wxButton(Panel8, ID_BUTTON12, _T("Simplification de la BDD"), wxPoint(16,128), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
+	Button_RecalculerAretes = new wxButton(Panel8, ID_BUTTON1, _T("Recalculer les arêtes"), wxPoint(16,152), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	CheckBox_Transparence = new wxCheckBox(Panel8, ID_CHECKBOX1, _T("Activer la transparence"), wxPoint(16,184), wxSize(176,14), 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_Transparence->SetValue(false);
-	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,520), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
+	CheckBox_NotFlat = new wxCheckBox(Panel8, ID_CHECKBOX3, _T("Forcer facettes à NON planes"), wxPoint(28,84), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX3"));
+	CheckBox_NotFlat->SetValue(false);
+	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,544), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
 	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
-	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,512), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
+	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,536), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
 	Panel9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
 
 	Connect(ID_TOGGLEBUTTON1,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_AjouterToggle);
@@ -128,6 +131,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Connect(ID_BUTTON12,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_SimplificationClick);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_RecalculerAretesClick);
 	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnCheckBox_TransparenceClick);
+	Connect(ID_CHECKBOX3,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnCheckBox_NotFlatClick);
 	Connect(ID_BUTTON13,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnButton_QuitterClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ModificationPanel::OnInit);
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ModificationPanel::OnClose);
@@ -152,6 +156,7 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
     old_mode_selection = Element->mode_selection;
     old_show_points    = Element->show_points;
     old_show_lines     = Element->show_lines;
+    CheckBox_NotFlat->SetValue(Element->NotFlat);
     aretes_calculees   = true;  // Si le fag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
 // RAZ de l'attribut "selected" des facettes en entrée
@@ -731,4 +736,9 @@ void ModificationPanel::OnButton_RecalculerAretesClick(wxCommandEvent& event)
     }
     Element->buildAllLines();
     Element->Refresh();
+}
+
+void ModificationPanel::OnCheckBox_NotFlatClick(wxCommandEvent& event)
+{
+    MAIN->Element->NotFlat = CheckBox_NotFlat->GetValue();
 }

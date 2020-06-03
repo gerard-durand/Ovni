@@ -37,6 +37,7 @@ class Prefs_Dialog: public wxDialog
 		wxCheckBox* CheckBox_CreerBackup;
 		wxCheckBox* CheckBox_DisplayFps;
 		wxCheckBox* CheckBox_LectureOptimisee;
+		wxCheckBox* CheckBox_NotFlat;
 		wxCheckBox* CheckBox_RecNormales_Seuillees;
 		wxCheckBox* CheckBox_Seuillage;
 		wxCheckBox* CheckBox_SupprBackup;
@@ -101,6 +102,7 @@ class Prefs_Dialog: public wxDialog
 		static const long ID_SPINCTRLDOUBLE5;
 		static const long ID_CHECKBOX6;
 		static const long ID_CHECKBOX5;
+		static const long ID_CHECKBOX11;
 		static const long ID_STATICLINE6;
 		static const long ID_STATICTEXT7;
 		static const long ID_STATICTEXT8;
@@ -156,6 +158,7 @@ class Prefs_Dialog: public wxDialog
 		void OnCheckBox_SupprBackupClick(wxCommandEvent& event);
 		void OnTextCtrl_WorkDirText(wxCommandEvent& event);
 		void OnSpinCtrl_PasSvgChange(wxSpinEvent& event);
+		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
 		//*)
 		OvniFrame* MAIN;
 

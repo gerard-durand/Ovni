@@ -37,6 +37,7 @@ const long Prefs_Dialog::ID_STATICTEXT6 = wxNewId();
 const long Prefs_Dialog::ID_SPINCTRLDOUBLE5 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX6 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX5 = wxNewId();
+const long Prefs_Dialog::ID_CHECKBOX11 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE6 = wxNewId();
 const long Prefs_Dialog::ID_STATICTEXT7 = wxNewId();
 const long Prefs_Dialog::ID_STATICTEXT8 = wxNewId();
@@ -142,6 +143,9 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	CheckBox_CalculNormales = new wxCheckBox(this, ID_CHECKBOX5, _T("Calcul des normales aux sommets dès la lecture de la Bdd"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX5"));
 	CheckBox_CalculNormales->SetValue(false);
 	BoxSizer1->Add(CheckBox_CalculNormales, 0, wxALL|wxEXPAND, 5);
+	CheckBox_NotFlat = new wxCheckBox(this, ID_CHECKBOX11, _T("Forcer toutes les facettes à être NON planes"), wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX11"));
+	CheckBox_NotFlat->SetValue(false);
+	BoxSizer1->Add(CheckBox_NotFlat, 0, wxALL, 5);
 	StaticLine6 = new wxStaticLine(this, ID_STATICLINE6, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE6"));
 	BoxSizer1->Add(StaticLine6, 0, wxALL|wxEXPAND, 0);
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Intervalle de temps des sauvegardes automatiques en minutes :"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT7"));
@@ -226,6 +230,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Connect(ID_SPINCTRLDOUBLE5,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraud2Change);
 	Connect(ID_CHECKBOX6,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_RecNormales_SeuilleesClick);
 	Connect(ID_CHECKBOX5,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_CalculNormalesClick);
+	Connect(ID_CHECKBOX11,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_NotFlatClick);
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrl_PasSvgChange);
 	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TriangulationSelect);
 	Connect(ID_RADIOBOX2,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TrackballSelect);
@@ -488,6 +493,8 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
         CheckBox_RecNormales_Seuillees->Disable();
 //        CheckBox_RecNormales_Seuillees->SetValue(chkB);
     }
+    chkB = Element->NotFlat = Element->NotFlat_def;
+    CheckBox_NotFlat->SetValue(chkB);
 
 // Pas temporel des sauvegardes
     ival = Element->svg_time = Element->svg_time_def;
@@ -609,5 +616,13 @@ void Prefs_Dialog::OnCheckBox_SupprBackupClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->SupprBackup = CheckBox_SupprBackup->GetValue();
+    Element->ini_file_modified = true ;
+}
+
+void Prefs_Dialog::OnCheckBox_NotFlatClick(wxCommandEvent& event)
+{
+    BddInter *Element = MAIN->Element;
+
+    Element->NotFlat = CheckBox_NotFlat->GetValue();
     Element->ini_file_modified = true ;
 }

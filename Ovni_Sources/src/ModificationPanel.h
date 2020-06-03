@@ -42,6 +42,7 @@ class ModificationPanel: public wxDialog
 		wxButton* Button_Trianguler;
 		wxButton* Button_Undo;
 		wxCheckBox* CheckBox_FacettePlane;
+		wxCheckBox* CheckBox_NotFlat;
 		wxCheckBox* CheckBox_Transparence;
 		wxPanel* Panel10;
 		wxPanel* Panel2;
@@ -100,6 +101,7 @@ class ModificationPanel: public wxDialog
 		static const long ID_BUTTON12;
 		static const long ID_BUTTON1;
 		static const long ID_CHECKBOX1;
+		static const long ID_CHECKBOX3;
 		static const long ID_PANEL8;
 		static const long ID_BUTTON13;
 		static const long ID_PANEL10;
@@ -131,6 +133,7 @@ class ModificationPanel: public wxDialog
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		void OnCheckBox_FacettePlaneClick(wxCommandEvent& event);
 		void OnButton_RecalculerAretesClick(wxCommandEvent& event);
+		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
 		//*)
         OvniFrame* MAIN;
         int  old_modeGL;

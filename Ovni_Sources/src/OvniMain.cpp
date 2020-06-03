@@ -1505,6 +1505,7 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
         Preferences_Panel->CheckBox_RecNormales_Seuillees->Disable();
     }
     Preferences_Panel->CheckBox_RecNormales_Seuillees->SetValue(Element->Enr_Normales_Seuillees);
+    Preferences_Panel->CheckBox_NotFlat->SetValue(Element->NotFlat);
 
     ival = Element->svg_time;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(ival);
