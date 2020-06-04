@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="M2%20Constants">M2 Constants</a>,
+Next:<a rel="next" accesskey="n" href="M2-Defaults.html#M2%20Defaults">M2 Defaults</a>,
+Previous:<a rel="previous" accesskey="p" href="Built-In-Func-Proc.html#Built-In%20Func%2fProc">Built-In Func/Proc</a>,
+Up:<a rel="up" accesskey="u" href="Modula-2.html#Modula-2">Modula-2</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Constants</h5>
+
+   GDB allows you to express the constants of Modula-2 in the following
+ways:
+
+     <ul>
+
+     <li>Integer constants are simply a sequence of digits.  When used in an
+expression, a constant is interpreted to be type-compatible with the
+rest of the expression.  Hexadecimal integers are specified by a
+trailing <code>H</code>, and octal integers by a trailing <code>B</code>.
+
+     <li>Floating point constants appear as a sequence of digits, followed by a
+decimal point and another sequence of digits.  An optional exponent can
+then be specified, in the form <code>E</code>[<code>+</code>|<code>-</code>]<code></code><var>nnn</var><code></code>, where
+<code></code>[<code>+</code>|<code>-</code>]<code></code><var>nnn</var><code></code> is the desired exponent.  All of the
+digits of the floating point constant must be valid decimal (base 10)
+digits.
+
+     <li>Character constants consist of a single character enclosed by a pair of
+like quotes, either single (<code>'</code>) or double (<code>"</code>).  They may
+also be expressed by their ordinal value (their <small>ASCII</small> value, usually)
+followed by a <code>C</code>.
+
+     <li>String constants consist of a sequence of characters enclosed by a
+pair of like quotes, either single (<code>'</code>) or double (<code>"</code>). 
+Escape sequences in the style of C are also allowed.  See <a href="C-Constants.html#C%20Constants">C and C<tt>++</tt> constants</a>, for a brief explanation of escape
+sequences.
+
+     <li>Enumerated constants consist of an enumerated identifier.
+
+     <li>Boolean constants consist of the identifiers <code>TRUE</code> and
+<code>FALSE</code>.
+
+     <li>Pointer constants consist of integral values only.
+
+     <li>Set constants are not yet supported. 
+</ul>
+
+   </body></html>
+

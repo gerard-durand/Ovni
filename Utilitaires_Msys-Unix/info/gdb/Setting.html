@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Setting">Setting</a>,
+Next:<a rel="next" accesskey="n" href="Show.html#Show">Show</a>,
+Up:<a rel="up" accesskey="u" href="Languages.html#Languages">Languages</a>
+<hr><br>
+</div>
+
+<h3 class="section">Switching between source languages</h3>
+
+   <p>There are two ways to control the working language--either have GDB
+set it automatically, or select it manually yourself.  You can use the
+<code>set language</code> command for either purpose.  On startup, GDB
+defaults to setting the language automatically.  The working language is
+used to determine how expressions you type are interpreted, how values
+are printed, etc.
+
+   <p>In addition to the working language, every source file that
+GDB knows about has its own working language.  For some object
+file formats, the compiler might indicate which language a particular
+source file is in.  However, most of the time GDB infers the
+language from the name of the file.  The language of a source file
+controls whether C<tt>++</tt> names are demangled--this way <code>backtrace</code> can
+show each frame appropriately for its own language.  There is no way to
+set the language of a source file from within GDB, but you can
+set the language associated with a filename extension.  See <a href="Show.html#Show">Displaying the language</a>.
+
+   <p>This is most commonly a problem when you use a program, such
+as <code>cfront</code> or <code>f2c</code>, that generates C but is written in
+another language.  In that case, make the
+program use <code>#line</code> directives in its C output; that way
+GDB will know the correct language of the source code of the original
+program, and will display that source code, not the generated C code.
+
+<ul class="menu">
+<li><a accesskey="1" href="Filenames.html#Filenames">Filenames</a>:                    Filename extensions and languages. 
+<li><a accesskey="2" href="Manually.html#Manually">Manually</a>:                     Setting the working language manually
+<li><a accesskey="3" href="Automatically.html#Automatically">Automatically</a>:                Having GDB infer the source language
+</ul>
+
+   </body></html>
+

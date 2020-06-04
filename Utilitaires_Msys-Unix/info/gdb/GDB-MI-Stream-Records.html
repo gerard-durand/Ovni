@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Stream%20Records">GDB/MI Stream Records</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Out-of-band-Records.html#GDB%2fMI%20Out-of-band%20Records">GDB/MI Out-of-band Records</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Result-Records.html#GDB%2fMI%20Result%20Records">GDB/MI Result Records</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI-Output-Records.html#GDB%2fMI%20Output%20Records">GDB/MI Output Records</a>
+<hr><br>
+</div>
+
+<h4 class="subsection"><small>GDB/MI</small> Stream Records</h4>
+
+   GDB internally maintains a number of output streams: the console, the
+target, and the log.  The output intended for each of these streams is
+funneled through the <small>GDB/MI</small> interface using <dfn>stream records</dfn>.
+
+   <p>Each stream record begins with a unique <dfn>prefix character</dfn> which
+identifies its stream (see <a href="GDB-MI-Output-Syntax.html#GDB%2fMI%20Output%20Syntax"><small>GDB/MI</small> Output Syntax</a>).  In addition to the prefix, each stream record contains a
+<code></code><var>string-output</var><code></code>.  This is either raw text (with an implicit new
+line) or a quoted C string (which does not contain an implicit newline).
+
+     <dl>
+<dt><code>"~" </code><var>string-output</var><code></code>
+     <dd>The console output stream contains text that should be displayed in the
+CLI console window.  It contains the textual responses to CLI commands.
+
+     <br><dt><code>"@" </code><var>string-output</var><code></code>
+     <dd>The target output stream contains any textual output from the running
+target.
+
+     <br><dt><code>"&amp;" </code><var>string-output</var><code></code>
+     <dd>The log stream contains debugging messages being produced by GDB's
+internals. 
+</dl>
+
+   </body></html>
+

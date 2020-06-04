@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="H8%2f300">H8/300</a>,
+Next:<a rel="next" accesskey="n" href="H8-500.html#H8%2f500">H8/500</a>,
+Previous:<a rel="previous" accesskey="p" href="ARM.html#ARM">ARM</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Hitachi H8/300</h4>
+
+     <dl>
+
+     <br><dt><code>target hms </code><var>dev</var><code></code>
+     <dd>A Hitachi SH, H8/300, or H8/500 board, attached via serial line to your host. 
+Use special commands <code>device</code> and <code>speed</code> to control the serial
+line and the communications speed used.
+
+     <br><dt><code>target e7000 </code><var>dev</var><code></code>
+     <dd>E7000 emulator for Hitachi H8 and SH.
+
+     <br><dt><code>target sh3 </code><var>dev</var><code></code>
+     <dd><dt><code>target sh3e </code><var>dev</var><code></code>
+     <dd>Hitachi SH-3 and SH-3E target systems.
+
+   </dl>
+
+   <p>When you select remote debugging to a Hitachi SH, H8/300, or H8/500
+board, the <code>load</code> command downloads your program to the Hitachi
+board and also opens it as the current executable target for
+GDB on your host (like the <code>file</code> command).
+
+   GDB needs to know these things to talk to your
+Hitachi SH, H8/300, or H8/500:
+
+     <ol type=1 start=1>
+<li>that you want to use <code>target hms</code>, the remote debugging interface
+for Hitachi microprocessors, or <code>target e7000</code>, the in-circuit
+emulator for the Hitachi SH and the Hitachi 300H.  (<code>target hms</code> is
+the default when GDB is configured specifically for the Hitachi SH,
+H8/300, or H8/500.)
+
+     <li>what serial device connects your host to your Hitachi board (the first
+serial device available on your host is the default).
+
+     <li>what speed to use over the serial device.
+        </ol>
+
+<ul class="menu">
+<li><a accesskey="1" href="Hitachi-Boards.html#Hitachi%20Boards">Hitachi Boards</a>:       Connecting to Hitachi boards. 
+<li><a accesskey="2" href="Hitachi-ICE.html#Hitachi%20ICE">Hitachi ICE</a>:          Using the E7000 In-Circuit Emulator. 
+<li><a accesskey="3" href="Hitachi-Special.html#Hitachi%20Special">Hitachi Special</a>:      Special GDB commands for Hitachi micros. 
+</ul>
+
+   </body></html>
+

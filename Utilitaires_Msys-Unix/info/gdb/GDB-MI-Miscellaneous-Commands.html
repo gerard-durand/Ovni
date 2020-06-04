@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Miscellaneous%20Commands">GDB/MI Miscellaneous Commands</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Stack-Manipulation.html#GDB%2fMI%20Stack%20Manipulation">GDB/MI Stack Manipulation</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Program-Control.html#GDB%2fMI%20Program%20Control">GDB/MI Program Control</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section">Miscellaneous GDB commands in <small>GDB/MI</small></h3>
+
+<h4 class="subheading">The <code>-gdb-exit</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -gdb-exit
+     </pre>
+
+   <p>Exit GDB immediately.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>Approximately corresponds to <code>quit</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -gdb-exit
+     </pre>
+
+<h4 class="subheading">The <code>-gdb-set</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -gdb-set
+     </pre>
+
+   <p>Set an internal GDB variable.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>set</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -gdb-set $foo=3
+     ^done
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-gdb-show</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -gdb-show
+     </pre>
+
+   <p>Show the current value of a GDB variable.
+
+<h5 class="subsubheading">GDB command</h5>
+
+   <p>The corresponding GDB command is <code>show</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -gdb-show annotate
+     ^done,value="0"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-gdb-version</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -gdb-version
+     </pre>
+
+   <p>Show version information for GDB.  Used mostly in testing.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>There's no equivalent GDB command.  GDB by default shows this
+information when you start an interactive session.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -gdb-version
+     ~GNU gdb 5.2.1
+     ~Copyright 2000 Free Software Foundation, Inc.
+     ~GDB is free software, covered by the GNU General Public License, and
+     ~you are welcome to change it and/or distribute copies of it under
+     ~ certain conditions.
+     ~Type "show copying" to see the conditions.
+     ~There is absolutely no warranty for GDB.  Type "show warranty" for
+     ~ details.
+     ~This GDB was configured as
+      "--host=sparc-sun-solaris2.5.1 --target=ppc-eabi".
+     ^done
+     (gdb)
+     </pre>
+
+   </body></html>
+

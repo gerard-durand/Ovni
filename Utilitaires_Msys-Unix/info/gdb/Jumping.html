@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Jumping">Jumping</a>,
+Next:<a rel="next" accesskey="n" href="Signaling.html#Signaling">Signaling</a>,
+Previous:<a rel="previous" accesskey="p" href="Assignment.html#Assignment">Assignment</a>,
+Up:<a rel="up" accesskey="u" href="Altering.html#Altering">Altering</a>
+<hr><br>
+</div>
+
+<h3 class="section">Continuing at a different address</h3>
+
+   <p>Ordinarily, when you continue your program, you do so at the place where
+it stopped, with the <code>continue</code> command.  You can instead continue at
+an address of your own choosing, with the following commands:
+
+     <dl>
+<dt><code>jump </code><var>linespec</var><code></code>
+     <dd>Resume execution at line <var>linespec</var>.  Execution stops again
+immediately if there is a breakpoint there.  See <a href="List.html#List">Printing source lines</a>, for a description of the different forms of
+<var>linespec</var>.  It is common practice to use the <code>tbreak</code> command
+in conjunction with <code>jump</code>.  See <a href="Set-Breaks.html#Set%20Breaks">Setting breakpoints</a>.
+
+     <p>The <code>jump</code> command does not change the current stack frame, or
+the stack pointer, or the contents of any memory location or any
+register other than the program counter.  If line <var>linespec</var> is in
+a different function from the one currently executing, the results may
+be bizarre if the two functions expect different patterns of arguments or
+of local variables.  For this reason, the <code>jump</code> command requests
+confirmation if the specified line is not in the function currently
+executing.  However, even bizarre results are predictable if you are
+well acquainted with the machine-language code of your program.
+
+     <br><dt><code>jump *</code><var>address</var><code></code>
+     <dd>Resume execution at the instruction at address <var>address</var>. 
+</dl>
+
+   <p>On many systems, you can get much the same effect as the <code>jump</code>
+command by storing a new value into the register <code>$pc</code>.  The
+difference is that this does not start your program running; it only
+changes the address of where it <em>will</em> run when you continue.  For
+example,
+
+<pre class="example">     set $pc = 0x485
+     </pre>
+
+<p>makes the next <code>continue</code> command or stepping command execute at
+address <code>0x485</code>, rather than at the address where your program stopped. 
+See <a href="Continuing-and-Stepping.html#Continuing%20and%20Stepping">Continuing and stepping</a>.
+
+   <p>The most common occasion to use the <code>jump</code> command is to back
+up--perhaps with more breakpoints set--over a portion of a program
+that has already executed, in order to examine its execution in more
+detail.
+
+   </body></html>
+

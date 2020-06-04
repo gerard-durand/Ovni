@@ -1,0 +1,124 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Installing%20GDB">Installing GDB</a>,
+Next:<a rel="next" accesskey="n" href="Maintenance-Commands.html#Maintenance%20Commands">Maintenance Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Using-History-Interactively.html#Using%20History%20Interactively">Using History Interactively</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">Installing GDB</h2>
+
+   GDB comes with a <code>configure</code> script that automates the process
+of preparing GDB for installation; you can then use <code>make</code> to
+build the <code>gdb</code> program.
+
+   <p>The GDB distribution includes all the source code you need for
+GDB in a single directory, whose name is usually composed by
+appending the version number to <code>gdb</code>.
+
+   <p>For example, the GDB version 5.2.1 distribution is in the
+<code>gdb-5.2.1</code> directory.  That directory contains:
+
+     <dl>
+<dt><code>gdb-5.2.1/configure </code>(and supporting files)<code></code>
+     <dd>script for configuring GDB and all its supporting libraries
+
+     <br><dt><code>gdb-5.2.1/gdb</code>
+     <dd>the source specific to GDB itself
+
+     <br><dt><code>gdb-5.2.1/bfd</code>
+     <dd>source for the Binary File Descriptor library
+
+     <br><dt><code>gdb-5.2.1/include</code>
+     <dd><small>GNU</small> include files
+
+     <br><dt><code>gdb-5.2.1/libiberty</code>
+     <dd>source for the <code>-liberty</code> free software library
+
+     <br><dt><code>gdb-5.2.1/opcodes</code>
+     <dd>source for the library of opcode tables and disassemblers
+
+     <br><dt><code>gdb-5.2.1/readline</code>
+     <dd>source for the <small>GNU</small> command-line interface
+
+     <br><dt><code>gdb-5.2.1/glob</code>
+     <dd>source for the <small>GNU</small> filename pattern-matching subroutine
+
+     <br><dt><code>gdb-5.2.1/mmalloc</code>
+     <dd>source for the <small>GNU</small> memory-mapped malloc package
+</dl>
+
+   <p>The simplest way to configure and build GDB is to run <code>configure</code>
+from the <code>gdb-</code><var>version-number</var><code></code> source directory, which in
+this example is the <code>gdb-5.2.1</code> directory.
+
+   <p>First switch to the <code>gdb-</code><var>version-number</var><code></code> source directory
+if you are not already in it; then run <code>configure</code>.  Pass the
+identifier for the platform on which GDB will run as an
+argument.
+
+   <p>For example:
+
+<pre class="example">     cd gdb-5.2.1
+     ./configure <var>host</var>
+     make
+     </pre>
+
+<p>where <var>host</var> is an identifier such as <code>sun4</code> or
+<code>decstation</code>, that identifies the platform where GDB will run. 
+(You can often leave off <var>host</var>; <code>configure</code> tries to guess the
+correct value by examining your system.)
+
+   <p>Running <code>configure </code><var>host</var><code></code> and then running <code>make</code> builds the
+<code>bfd</code>, <code>readline</code>, <code>mmalloc</code>, and <code>libiberty</code>
+libraries, then <code>gdb</code> itself.  The configured source files, and the
+binaries, are left in the corresponding source directories.
+
+   <p><code>configure</code> is a Bourne-shell (<code>/bin/sh</code>) script; if your
+system does not recognize this automatically when you run a different
+shell, you may need to run <code>sh</code> on it explicitly:
+
+<pre class="example">     sh configure <var>host</var>
+     </pre>
+
+   <p>If you run <code>configure</code> from a directory that contains source
+directories for multiple libraries or programs, such as the
+<code>gdb-5.2.1</code> source directory for version 5.2.1, <code>configure</code>
+creates configuration files for every directory level underneath (unless
+you tell it not to, with the <code>--norecursion</code> option).
+
+   <p>You can run the <code>configure</code> script from any of the
+subordinate directories in the GDB distribution if you only want to
+configure that subdirectory, but be sure to specify a path to it.
+
+   <p>For example, with version 5.2.1, type the following to configure only
+the <code>bfd</code> subdirectory:
+
+<pre class="example">     cd gdb-5.2.1/bfd
+     ../configure <var>host</var>
+     </pre>
+
+   <p>You can install <code>gdb</code> anywhere; it has no hardwired paths. 
+However, you should make sure that the shell on your path (named by
+the <code>SHELL</code> environment variable) is publicly readable.  Remember
+that GDB uses the shell to start your program--some systems refuse to
+let GDB debug child processes whose programs are not readable.
+
+<ul class="menu">
+<li><a accesskey="1" href="Separate-Objdir.html#Separate%20Objdir">Separate Objdir</a>:              Compiling GDB in another directory
+<li><a accesskey="2" href="Config-Names.html#Config%20Names">Config Names</a>:                 Specifying names for hosts and targets
+<li><a accesskey="3" href="Configure-Options.html#Configure%20Options">Configure Options</a>:            Summary of options for configure
+</ul>
+
+   </body></html>
+

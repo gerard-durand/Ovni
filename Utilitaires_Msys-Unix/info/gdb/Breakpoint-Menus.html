@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Breakpoint%20Menus">Breakpoint Menus</a>,
+Next:<a rel="next" accesskey="n" href="Error-in-Breakpoints.html#Error%20in%20Breakpoints">Error in Breakpoints</a>,
+Previous:<a rel="previous" accesskey="p" href="Break-Commands.html#Break%20Commands">Break Commands</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Breakpoint menus</h4>
+
+   <p>Some programming languages (notably C<tt>++</tt>) permit a single function name
+to be defined several times, for application in different contexts. 
+This is called <dfn>overloading</dfn>.  When a function name is overloaded,
+<code>break </code><var>function</var><code></code> is not enough to tell GDB where you want
+a breakpoint.  If you realize this is a problem, you can use
+something like <code>break </code><var>function</var><code>(</code><var>types</var><code>)</code> to specify which
+particular version of the function you want.  Otherwise, GDB offers
+you a menu of numbered choices for different possible breakpoints, and
+waits for your selection with the prompt <code>&gt;</code>.  The first two
+options are always <code>[0] cancel</code> and <code>[1] all</code>.  Typing <kbd>1</kbd>
+sets a breakpoint at each definition of <var>function</var>, and typing
+<kbd>0</kbd> aborts the <code>break</code> command without setting any new
+breakpoints.
+
+   <p>For example, the following session excerpt shows an attempt to set a
+breakpoint at the overloaded symbol <code>String::after</code>. 
+We choose three particular definitions of that function name:
+
+<pre class="smallexample">     (gdb) b String::after
+     [0] cancel
+     [1] all
+     [2] file:String.cc; line number:867
+     [3] file:String.cc; line number:860
+     [4] file:String.cc; line number:875
+     [5] file:String.cc; line number:853
+     [6] file:String.cc; line number:846
+     [7] file:String.cc; line number:735
+     &gt; 2 4 6
+     Breakpoint 1 at 0xb26c: file String.cc, line 867.
+     Breakpoint 2 at 0xb344: file String.cc, line 875.
+     Breakpoint 3 at 0xafcc: file String.cc, line 846.
+     Multiple breakpoints were set.
+     Use the "delete" command to delete unwanted
+      breakpoints.
+     (gdb)
+     </pre>
+
+   </body></html>
+

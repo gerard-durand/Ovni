@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Hitachi%20ICE">Hitachi ICE</a>,
+Next:<a rel="next" accesskey="n" href="Hitachi-Special.html#Hitachi%20Special">Hitachi Special</a>,
+Previous:<a rel="previous" accesskey="p" href="Hitachi-Boards.html#Hitachi%20Boards">Hitachi Boards</a>,
+Up:<a rel="up" accesskey="u" href="H8-300.html#H8%2f300">H8/300</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Using the E7000 in-circuit emulator</h5>
+
+   <p>You can use the E7000 in-circuit emulator to develop code for either the
+Hitachi SH or the H8/300H.  Use one of these forms of the <code>target
+e7000</code> command to connect GDB to your E7000:
+
+     <dl>
+<dt><code>target e7000 </code><var>port</var><code> </code><var>speed</var><code></code>
+     <dd>Use this form if your E7000 is connected to a serial port.  The
+<var>port</var> argument identifies what serial port to use (for example,
+<code>com2</code>).  The third argument is the line speed in bits per second
+(for example, <code>9600</code>).
+
+     <br><dt><code>target e7000 </code><var>hostname</var><code></code>
+     <dd>If your E7000 is installed as a host on a TCP/IP network, you can just
+specify its hostname; GDB uses <code>telnet</code> to connect. 
+</dl>
+
+   </body></html>
+

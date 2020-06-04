@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Attach">Attach</a>,
+Next:<a rel="next" accesskey="n" href="Kill-Process.html#Kill%20Process">Kill Process</a>,
+Previous:<a rel="previous" accesskey="p" href="Input-Output.html#Input%2fOutput">Input/Output</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Debugging an already-running process</h3>
+
+     <dl>
+<dt><code>attach </code><var>process-id</var><code></code>
+     <dd>This command attaches to a running process--one that was started
+outside GDB.  (<code>info files</code> shows your active
+targets.)  The command takes as argument a process ID.  The usual way to
+find out the process-id of a Unix process is with the <code>ps</code> utility,
+or with the <code>jobs -l</code> shell command.
+
+     <p><code>attach</code> does not repeat if you press &lt;RET&gt; a second time after
+executing the command. 
+</dl>
+
+   <p>To use <code>attach</code>, your program must be running in an environment
+which supports processes; for example, <code>attach</code> does not work for
+programs on bare-board targets that lack an operating system.  You must
+also have permission to send the process a signal.
+
+   <p>When you use <code>attach</code>, the debugger finds the program running in
+the process first by looking in the current working directory, then (if
+the program is not found) by using the source file search path
+(see <a href="Source-Path.html#Source%20Path">Specifying source directories</a>).  You can also use
+the <code>file</code> command to load the program.  See <a href="Files.html#Files">Commands to Specify Files</a>.
+
+   <p>The first thing GDB does after arranging to debug the specified
+process is to stop it.  You can examine and modify an attached process
+with all the GDB commands that are ordinarily available when
+you start processes with <code>run</code>.  You can insert breakpoints; you
+can step and continue; you can modify storage.  If you would rather the
+process continue running, you may use the <code>continue</code> command after
+attaching GDB to the process.
+
+     <dl>
+<dt><code>detach</code>
+     <dd>When you have finished debugging the attached process, you can use the
+<code>detach</code> command to release it from GDB control.  Detaching
+the process continues its execution.  After the <code>detach</code> command,
+that process and GDB become completely independent once more, and you
+are ready to <code>attach</code> another process or start one with <code>run</code>. 
+<code>detach</code> does not repeat if you press &lt;RET&gt; again after
+executing the command. 
+</dl>
+
+   <p>If you exit GDB or use the <code>run</code> command while you have an
+attached process, you kill that process.  By default, GDB asks
+for confirmation if you try to do either of these things; you can
+control whether or not you need to confirm by using the <code>set
+confirm</code> command (see <a href="Messages-Warnings.html#Messages%2fWarnings">Optional warnings and messages</a>).
+
+   </body></html>
+

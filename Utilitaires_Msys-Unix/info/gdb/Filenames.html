@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Filenames">Filenames</a>,
+Next:<a rel="next" accesskey="n" href="Manually.html#Manually">Manually</a>,
+Up:<a rel="up" accesskey="u" href="Setting.html#Setting">Setting</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">List of filename extensions and languages</h4>
+
+   <p>If a source file name ends in one of the following extensions, then
+GDB infers that its language is the one indicated.
+
+     <dl>
+
+     <br><dt><code>.c</code>
+     <dd>C source file
+
+     <br><dt><code>.C</code>
+     <dd><dt><code>.cc</code>
+     <dd><dt><code>.cp</code>
+     <dd><dt><code>.cpp</code>
+     <dd><dt><code>.cxx</code>
+     <dd><dt><code>.c++</code>
+     <dd>C<tt>++</tt> source file
+
+     <br><dt><code>.f</code>
+     <dd><dt><code>.F</code>
+     <dd>Fortran source file
+
+     <br><dt><code>.ch</code>
+     <dd><dt><code>.c186</code>
+     <dd><dt><code>.c286</code>
+     <dd>CHILL source file
+
+     <br><dt><code>.mod</code>
+     <dd>Modula-2 source file
+
+     <br><dt><code>.s</code>
+     <dd><dt><code>.S</code>
+     <dd>Assembler source file.  This actually behaves almost like C, but
+GDB does not skip over function prologues when stepping. 
+</dl>
+
+   <p>In addition, you may set the language associated with a filename
+extension.  See <a href="Show.html#Show">Displaying the language</a>.
+
+   </body></html>
+

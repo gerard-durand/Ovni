@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Server%20Prefix">Server Prefix</a>,
+Next:<a rel="next" accesskey="n" href="Value-Annotations.html#Value%20Annotations">Value Annotations</a>,
+Previous:<a rel="previous" accesskey="p" href="Annotations-Overview.html#Annotations%20Overview">Annotations Overview</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">The Server Prefix</h3>
+
+   <p>To issue a command to GDB without affecting certain aspects of
+the state which is seen by users, prefix it with <code>server </code>.  This
+means that this command will not affect the command history, nor will it
+affect GDB's notion of which command to repeat if &lt;RET&gt; is
+pressed on a line by itself.
+
+   <p>The server prefix does not affect the recording of values into the value
+history; to print a value without recording it into the value history,
+use the <code>output</code> command instead of the <code>print</code> command.
+
+   </body></html>
+

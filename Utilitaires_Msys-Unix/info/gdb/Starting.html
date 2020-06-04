@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Starting">Starting</a>,
+Next:<a rel="next" accesskey="n" href="Arguments.html#Arguments">Arguments</a>,
+Previous:<a rel="previous" accesskey="p" href="Compilation.html#Compilation">Compilation</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Starting your program</h3>
+
+     <dl>
+<dt><code>run</code>
+     <dd><dt><code>r</code>
+     <dd>Use the <code>run</code> command to start your program under GDB. 
+You must first specify the program name (except on VxWorks) with an
+argument to GDB (see <a href="Invocation.html#Invocation">Getting In and Out of GDB</a>), or by using the <code>file</code> or <code>exec-file</code> command
+(see <a href="Files.html#Files">Commands to specify files</a>).
+
+   </dl>
+
+   <p>If you are running your program in an execution environment that
+supports processes, <code>run</code> creates an inferior process and makes
+that process run your program.  (In environments without processes,
+<code>run</code> jumps to the start of your program.)
+
+   <p>The execution of a program is affected by certain information it
+receives from its superior.  GDB provides ways to specify this
+information, which you must do <em>before</em> starting your program.  (You
+can change it after starting your program, but such changes only affect
+your program the next time you start it.)  This information may be
+divided into four categories:
+
+     <dl>
+<dt>The <em>arguments.</em>
+     <dd>Specify the arguments to give your program as the arguments of the
+<code>run</code> command.  If a shell is available on your target, the shell
+is used to pass the arguments, so that you may use normal conventions
+(such as wildcard expansion or variable substitution) in describing
+the arguments. 
+In Unix systems, you can control which shell is used with the
+<code>SHELL</code> environment variable. 
+See <a href="Arguments.html#Arguments">Your program's arguments</a>.
+
+     <br><dt>The <em>environment.</em>
+     <dd>Your program normally inherits its environment from GDB, but you can
+use the GDB commands <code>set environment</code> and <code>unset
+environment</code> to change parts of the environment that affect
+your program.  See <a href="Environment.html#Environment">Your program's environment</a>.
+
+     <br><dt>The <em>working directory.</em>
+     <dd>Your program inherits its working directory from GDB.  You can set
+the GDB working directory with the <code>cd</code> command in GDB. 
+See <a href="Working-Directory.html#Working%20Directory">Your program's working directory</a>.
+
+     <br><dt>The <em>standard input and output.</em>
+     <dd>Your program normally uses the same device for standard input and
+standard output as GDB is using.  You can redirect input and output
+in the <code>run</code> command line, or you can use the <code>tty</code> command to
+set a different device for your program. 
+See <a href="Input-Output.html#Input%2fOutput">Your program's input and output</a>.
+
+     <p><em>Warning:</em> While input and output redirection work, you cannot use
+pipes to pass the output of the program you are debugging to another
+program; if you attempt this, GDB is likely to wind up debugging the
+wrong program. 
+</dl>
+
+   <p>When you issue the <code>run</code> command, your program begins to execute
+immediately.  See <a href="Stopping.html#Stopping">Stopping and continuing</a>, for discussion
+of how to arrange for your program to stop.  Once your program has
+stopped, you may call functions in your program, using the <code>print</code>
+or <code>call</code> commands.  See <a href="Data.html#Data">Examining Data</a>.
+
+   <p>If the modification time of your symbol file has changed since the last
+time GDB read its symbols, GDB discards its symbol
+table, and reads it again.  When it does this, GDB tries to retain
+your current breakpoints.
+
+   </body></html>
+

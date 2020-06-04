@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Statics">Statics</a>,
+Next:<a rel="next" accesskey="n" href="Based-Variables.html#Based%20Variables">Based Variables</a>,
+Previous:<a rel="previous" accesskey="p" href="Common-Blocks.html#Common%20Blocks">Common Blocks</a>,
+Up:<a rel="up" accesskey="u" href="Variables.html#Variables">Variables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Static Variables</h3>
+
+   <p>Initialized static variables are represented by the <code>S</code> and
+<code>V</code> symbol descriptors.  <code>S</code> means file scope static, and
+<code>V</code> means procedure scope static.  One exception: in XCOFF, IBM's
+xlc compiler always uses <code>V</code>, and whether it is file scope or not
+is distinguished by whether the stab is located within a function.
+
+   <p>In a.out files, <code>N_STSYM</code> means the data section, <code>N_FUN</code>
+means the text section, and <code>N_LCSYM</code> means the bss section.  For
+those systems with a read-only data section separate from the text
+section (Solaris), <code>N_ROSYM</code> means the read-only data section.
+
+   <p>For example, the source lines:
+
+<pre class="example">     static const int var_const = 5;
+     static int var_init = 2;
+     static int var_noinit;
+     </pre>
+
+<p>yield the following stabs:
+
+<pre class="example">     .stabs "var_const:S1",36,0,0,_var_const      # 36 is N_FUN
+     ...
+     .stabs "var_init:S1",38,0,0,_var_init        # 38 is N_STSYM
+     ...
+     .stabs "var_noinit:S1",40,0,0,_var_noinit    # 40 is N_LCSYM
+     </pre>
+
+   <p>In XCOFF files, the stab type need not indicate the section;
+<code>C_STSYM</code> can be used for all statics.  Also, each static variable
+is enclosed in a static block.  A <code>C_BSTAT</code> (emitted with a
+<code>.bs</code> assembler directive) symbol begins the static block; its
+value is the symbol number of the csect symbol whose value is the
+address of the static block, its section is the section of the variables
+in that static block, and its name is <code>.bs</code>.  A <code>C_ESTAT</code>
+(emitted with a <code>.es</code> assembler directive) symbol ends the static
+block; its name is <code>.es</code> and its value and section are ignored.
+
+   <p>In ECOFF files, the storage class is used to specify the section, so the
+stab type need not indicate the section.
+
+   <p>In ELF files, for the SunPRO compiler version 2.0.1, symbol descriptor
+<code>S</code> means that the address is absolute (the linker relocates it)
+and symbol descriptor <code>V</code> means that the address is relative to the
+start of the relevant section for that compilation unit.  SunPRO has
+plans to have the linker stop relocating stabs; I suspect that their the
+debugger gets the address from the corresponding ELF (not stab) symbol. 
+I'm not sure how to find which symbol of that name is the right one. 
+The clean way to do all this would be to have a the value of a symbol
+descriptor <code>S</code> symbol be an offset relative to the start of the
+file, just like everything else, but that introduces obvious
+compatibility problems.  For more information on linker stab relocation,
+See <a href="ELF-Linker-Relocation.html#ELF%20Linker%20Relocation">ELF Linker Relocation</a>.
+
+   </body></html>
+

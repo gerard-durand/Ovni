@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Based%20Variables">Based Variables</a>,
+Next:<a rel="next" accesskey="n" href="Parameters.html#Parameters">Parameters</a>,
+Previous:<a rel="previous" accesskey="p" href="Statics.html#Statics">Statics</a>,
+Up:<a rel="up" accesskey="u" href="Variables.html#Variables">Variables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Fortran Based Variables</h3>
+
+   <p>Fortran (at least, the Sun and SGI dialects of FORTRAN-77) has a feature
+which allows allocating arrays with <code>malloc</code>, but which avoids
+blurring the line between arrays and pointers the way that C does.  In
+stabs such a variable uses the <code>b</code> symbol descriptor.
+
+   <p>For example, the Fortran declarations
+
+<pre class="example">     real foo, foo10(10), foo10_5(10,5)
+     pointer (foop, foo)
+     pointer (foo10p, foo10)
+     pointer (foo105p, foo10_5)
+     </pre>
+
+   <p>produce the stabs
+
+<pre class="example">     foo:b6
+     foo10:bar3;1;10;6
+     foo10_5:bar3;1;5;ar3;1;10;6
+     </pre>
+
+   <p>In this example, <code>real</code> is type 6 and type 3 is an integral type
+which is the type of the subscripts of the array (probably
+<code>integer</code>).
+
+   <p>The <code>b</code> symbol descriptor is like <code>V</code> in that it denotes a
+statically allocated symbol whose scope is local to a function; see
+See <a href="Statics.html#Statics">Statics</a>.  The value of the symbol, instead of being the address
+of the variable itself, is the address of a pointer to that variable. 
+So in the above example, the value of the <code>foo</code> stab is the address
+of a pointer to a real, the value of the <code>foo10</code> stab is the
+address of a pointer to a 10-element array of reals, and the value of
+the <code>foo10_5</code> stab is the address of a pointer to a 5-element array
+of 10-element arrays of reals.
+
+   </body></html>
+

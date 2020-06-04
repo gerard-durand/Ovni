@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Debugging%20C%20plus%20plus">Debugging C plus plus</a>,
+Previous:<a rel="previous" accesskey="p" href="Debugging-C.html#Debugging%20C">Debugging C</a>,
+Up:<a rel="up" accesskey="u" href="C.html#C">C</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">GDB features for C<tt>++</tt></h5>
+
+   <p>Some GDB commands are particularly useful with C<tt>++</tt>, and some are
+designed specifically for use with C<tt>++</tt>.  Here is a summary:
+
+     <dl>
+<dt><code></code>breakpoint menus<code></code>
+     <dd>When you want a breakpoint in a function whose name is overloaded,
+GDB breakpoint menus help you specify which function definition
+you want.  See <a href="Breakpoint-Menus.html#Breakpoint%20Menus">Breakpoint menus</a>.
+
+     <br><dt><code>rbreak </code><var>regex</var><code></code>
+     <dd>Setting breakpoints using regular expressions is helpful for setting
+breakpoints on overloaded functions that are not members of any special
+classes. 
+See <a href="Set-Breaks.html#Set%20Breaks">Setting breakpoints</a>.
+
+     <br><dt><code>catch throw</code>
+     <dd><dt><code>catch catch</code>
+     <dd>Debug C<tt>++</tt> exception handling using these commands.  See <a href="Set-Catchpoints.html#Set%20Catchpoints">Setting catchpoints</a>.
+
+     <br><dt><code>ptype </code><var>typename</var><code></code>
+     <dd>Print inheritance relationships as well as other information for type
+<var>typename</var>. 
+See <a href="Symbols.html#Symbols">Examining the Symbol Table</a>.
+
+     <br><dt><code>set print demangle</code>
+     <dd><dt><code>show print demangle</code>
+     <dd><dt><code>set print asm-demangle</code>
+     <dd><dt><code>show print asm-demangle</code>
+     <dd>Control whether C<tt>++</tt> symbols display in their source form, both when
+displaying code as C<tt>++</tt> source and when displaying disassemblies. 
+See <a href="Print-Settings.html#Print%20Settings">Print settings</a>.
+
+     <br><dt><code>set print object</code>
+     <dd><dt><code>show print object</code>
+     <dd>Choose whether to print derived (actual) or declared types of objects. 
+See <a href="Print-Settings.html#Print%20Settings">Print settings</a>.
+
+     <br><dt><code>set print vtbl</code>
+     <dd><dt><code>show print vtbl</code>
+     <dd>Control the format for printing virtual function tables. 
+See <a href="Print-Settings.html#Print%20Settings">Print settings</a>. 
+(The <code>vtbl</code> commands do not work on programs compiled with the HP
+ANSI C<tt>++</tt> compiler (<code>aCC</code>).)
+
+     <br><dt><code>set overload-resolution on</code>
+     <dd>Enable overload resolution for C<tt>++</tt> expression evaluation.  The default
+is on.  For overloaded functions, GDB evaluates the arguments
+and searches for a function whose signature matches the argument types,
+using the standard C<tt>++</tt> conversion rules (see <a href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C<tt>++</tt> expressions</a>, for details).  If it cannot find a match, it emits a
+message.
+
+     <br><dt><code>set overload-resolution off</code>
+     <dd>Disable overload resolution for C<tt>++</tt> expression evaluation.  For
+overloaded functions that are not class member functions, GDB
+chooses the first function of the specified name that it finds in the
+symbol table, whether or not its arguments are of the correct type.  For
+overloaded functions that are class member functions, GDB
+searches for a function whose signature <em>exactly</em> matches the
+argument types.
+
+     <br><dt><code></code>Overloaded symbol names<code></code>
+     <dd>You can specify a particular definition of an overloaded symbol, using
+the same notation that is used to declare such symbols in C<tt>++</tt>: type
+<code></code><var>symbol</var><code>(</code><var>types</var><code>)</code> rather than just <var>symbol</var>.  You can
+also use the GDB command-line word completion facilities to list the
+available choices, or to finish the type list for you. 
+See <a href="Completion.html#Completion">Command completion</a>, for details on how to do this. 
+</dl>
+
+   </body></html>
+

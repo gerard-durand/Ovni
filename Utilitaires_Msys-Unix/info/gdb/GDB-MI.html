@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI">GDB/MI</a>,
+Next:<a rel="next" accesskey="n" href="GDB-Bugs.html#GDB%20Bugs">GDB Bugs</a>,
+Previous:<a rel="previous" accesskey="p" href="Annotations.html#Annotations">Annotations</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">The <small>GDB/MI</small> Interface</h2>
+
+<h3 class="unnumberedsec">Function and Purpose</h3>
+
+   <p><small>GDB/MI</small> is a line based machine oriented text interface to GDB.  It is
+specifically intended to support the development of systems which use
+the debugger as just one small component of a larger system.
+
+   <p>This chapter is a specification of the <small>GDB/MI</small> interface.  It is written
+in the form of a reference manual.
+
+   <p>Note that <small>GDB/MI</small> is still under construction, so some of the
+features described below are incomplete and subject to change.
+
+<h3 class="unnumberedsec">Notation and Terminology</h3>
+
+   <p>This chapter uses the following notation:
+
+     <ul>
+<li><code>|</code> separates two alternatives.
+
+     <li><code>[ </code><var>something</var><code> ]</code> indicates that <var>something</var> is optional:
+it may or may not be given.
+
+     <li><code>( </code><var>group</var><code> )*</code> means that <var>group</var> inside the parentheses
+may repeat zero or more times.
+
+     <li><code>( </code><var>group</var><code> )+</code> means that <var>group</var> inside the parentheses
+may repeat one or more times.
+
+     <li><code>"</code><var>string</var><code>"</code> means a literal <var>string</var>. 
+</ul>
+
+<h3 class="heading">Acknowledgments</h3>
+
+   <p>In alphabetic order: Andrew Cagney, Fernando Nasser, Stan Shebs and
+Elena Zannoni.
+
+<ul class="menu">
+<li><a accesskey="1" href="GDB-MI-Command-Syntax.html#GDB%2fMI%20Command%20Syntax">GDB/MI Command Syntax</a>: 
+<li><a accesskey="2" href="GDB-MI-Compatibility-with-CLI.html#GDB%2fMI%20Compatibility%20with%20CLI">GDB/MI Compatibility with CLI</a>: 
+<li><a accesskey="3" href="GDB-MI-Output-Records.html#GDB%2fMI%20Output%20Records">GDB/MI Output Records</a>: 
+<li><a accesskey="4" href="GDB-MI-Command-Description-Format.html#GDB%2fMI%20Command%20Description%20Format">GDB/MI Command Description Format</a>: 
+<li><a accesskey="5" href="GDB-MI-Breakpoint-Table-Commands.html#GDB%2fMI%20Breakpoint%20Table%20Commands">GDB/MI Breakpoint Table Commands</a>: 
+<li><a accesskey="6" href="GDB-MI-Data-Manipulation.html#GDB%2fMI%20Data%20Manipulation">GDB/MI Data Manipulation</a>: 
+<li><a accesskey="7" href="GDB-MI-Program-Control.html#GDB%2fMI%20Program%20Control">GDB/MI Program Control</a>: 
+<li><a accesskey="8" href="GDB-MI-Miscellaneous-Commands.html#GDB%2fMI%20Miscellaneous%20Commands">GDB/MI Miscellaneous Commands</a>: 
+<li><a accesskey="9" href="GDB-MI-Stack-Manipulation.html#GDB%2fMI%20Stack%20Manipulation">GDB/MI Stack Manipulation</a>: 
+<li><a href="GDB-MI-Symbol-Query.html#GDB%2fMI%20Symbol%20Query">GDB/MI Symbol Query</a>: 
+<li><a href="GDB-MI-Target-Manipulation.html#GDB%2fMI%20Target%20Manipulation">GDB/MI Target Manipulation</a>: 
+<li><a href="GDB-MI-Thread-Commands.html#GDB%2fMI%20Thread%20Commands">GDB/MI Thread Commands</a>: 
+<li><a href="GDB-MI-Tracepoint-Commands.html#GDB%2fMI%20Tracepoint%20Commands">GDB/MI Tracepoint Commands</a>: 
+<li><a href="GDB-MI-Variable-Objects.html#GDB%2fMI%20Variable%20Objects">GDB/MI Variable Objects</a>: 
+</ul>
+
+   </body></html>
+

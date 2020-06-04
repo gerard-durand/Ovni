@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="C">C</a>,
+Next:<a rel="next" accesskey="n" href="Modula-2.html#Modula-2">Modula-2</a>,
+Up:<a rel="up" accesskey="u" href="Support.html#Support">Support</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">C and C<tt>++</tt></h4>
+
+   <p>Since C and C<tt>++</tt> are so closely related, many features of GDB apply
+to both languages.  Whenever this is the case, we discuss those languages
+together.
+
+   <p>The C<tt>++</tt> debugging facilities are jointly implemented by the C<tt>++</tt>
+compiler and GDB.  Therefore, to debug your C<tt>++</tt> code
+effectively, you must compile your C<tt>++</tt> programs with a supported
+C<tt>++</tt> compiler, such as <small>GNU</small> <code>g++</code>, or the HP ANSI C<tt>++</tt>
+compiler (<code>aCC</code>).
+
+   <p>For best results when using <small>GNU</small> C<tt>++</tt>, use the stabs debugging
+format.  You can select that format explicitly with the <code>g++</code>
+command-line options <code>-gstabs</code> or <code>-gstabs+</code>.  See
+<a href="../gcc.info/Debugging-Options.html#Debugging%20Options">Options for Debugging Your Program or <small>GNU</small> CC</a>, for more information.
+
+<ul class="menu">
+<li><a accesskey="1" href="C-Operators.html#C%20Operators">C Operators</a>:                  C and C<tt>++</tt> operators
+<li><a accesskey="2" href="C-Constants.html#C%20Constants">C Constants</a>:                  C and C<tt>++</tt> constants
+<li><a accesskey="3" href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C plus plus expressions</a>:      C<tt>++</tt> expressions
+<li><a accesskey="4" href="C-Defaults.html#C%20Defaults">C Defaults</a>:                   Default settings for C and C<tt>++</tt>
+<li><a accesskey="5" href="C-Checks.html#C%20Checks">C Checks</a>:                     C and C<tt>++</tt> type and range checks
+<li><a accesskey="6" href="Debugging-C.html#Debugging%20C">Debugging C</a>:                  GDB and C
+<li><a accesskey="7" href="Debugging-C-plus-plus.html#Debugging%20C%20plus%20plus">Debugging C plus plus</a>:        GDB features for C<tt>++</tt>
+</ul>
+
+   </body></html>
+

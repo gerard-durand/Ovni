@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fM2">GDB/M2</a>,
+Previous:<a rel="previous" accesskey="p" href="M2-Scope.html#M2%20Scope">M2 Scope</a>,
+Up:<a rel="up" accesskey="u" href="Modula-2.html#Modula-2">Modula-2</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">GDB and Modula-2</h5>
+
+   <p>Some GDB commands have little use when debugging Modula-2 programs. 
+Five subcommands of <code>set print</code> and <code>show print</code> apply
+specifically to C and C<tt>++</tt>: <code>vtbl</code>, <code>demangle</code>,
+<code>asm-demangle</code>, <code>object</code>, and <code>union</code>.  The first four
+apply to C<tt>++</tt>, and the last to the C <code>union</code> type, which has no direct
+analogue in Modula-2.
+
+   <p>The <code>@</code> operator (see <a href="Expressions.html#Expressions">Expressions</a>), while available
+with any language, is not useful with Modula-2.  Its
+intent is to aid the debugging of <dfn>dynamic arrays</dfn>, which cannot be
+created in Modula-2 as they can in C or C<tt>++</tt>.  However, because an
+address can be specified by an integral constant, the construct
+<code>{</code><var>type</var><code>}</code><var>adrexp</var><code></code> is still useful.
+
+   <p>In GDB scripts, the Modula-2 inequality operator <code>#</code> is
+interpreted as the beginning of a comment.  Use <code>&lt;&gt;</code> instead.
+
+   </body></html>
+

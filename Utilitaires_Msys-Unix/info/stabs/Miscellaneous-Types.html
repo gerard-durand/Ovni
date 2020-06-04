@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Miscellaneous%20Types">Miscellaneous Types</a>,
+Next:<a rel="next" accesskey="n" href="Cross-References.html#Cross-References">Cross-References</a>,
+Previous:<a rel="previous" accesskey="p" href="Builtin-Types.html#Builtin%20Types">Builtin Types</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Miscellaneous Types</h3>
+
+     <dl>
+<dt><code>b </code><var>type-information</var><code> ; </code><var>bytes</var><code></code>
+     <dd>Pascal space type.  This is documented by IBM; what does it mean?
+
+     <p>This use of the <code>b</code> type descriptor can be distinguished
+from its use for builtin integral types (see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>) because the character following the type descriptor is
+always a digit, <code>(</code>, or <code>-</code>.
+
+     <br><dt><code>B </code><var>type-information</var><code></code>
+     <dd>A volatile-qualified version of <var>type-information</var>.  This is
+a Sun extension.  References and stores to a variable with a
+volatile-qualified type must not be optimized or cached; they
+must occur as the user specifies them.
+
+     <br><dt><code>d </code><var>type-information</var><code></code>
+     <dd>File of type <var>type-information</var>.  As far as I know this is only used
+by Pascal.
+
+     <br><dt><code>k </code><var>type-information</var><code></code>
+     <dd>A const-qualified version of <var>type-information</var>.  This is a Sun
+extension.  A variable with a const-qualified type cannot be modified.
+
+     <br><dt><code>M </code><var>type-information</var><code> ; </code><var>length</var><code></code>
+     <dd>Multiple instance type.  The type seems to composed of <var>length</var>
+repetitions of <var>type-information</var>, for example <code>character*3</code> is
+represented by <code>M-2;3</code>, where <code>-2</code> is a reference to a
+character type (see <a href="Negative-Type-Numbers.html#Negative%20Type%20Numbers">Negative Type Numbers</a>).  I'm not sure how this
+differs from an array.  This appears to be a Fortran feature. 
+<var>length</var> is a bound, like those in range types; see <a href="Subranges.html#Subranges">Subranges</a>.
+
+     <br><dt><code>S </code><var>type-information</var><code></code>
+     <dd>Pascal set type.  <var>type-information</var> must be a small type such as an
+enumeration or a subrange, and the type is a bitmask whose length is
+specified by the number of elements in <var>type-information</var>.
+
+     <p>In CHILL, if it is a bitstring instead of a set, also use the <code>S</code>
+type attribute (see <a href="String-Field.html#String%20Field">String Field</a>).
+
+     <br><dt><code>* </code><var>type-information</var><code></code>
+     <dd>Pointer to <var>type-information</var>. 
+</dl>
+
+   </body></html>
+

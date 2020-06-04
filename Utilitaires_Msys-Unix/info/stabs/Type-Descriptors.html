@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Type%20Descriptors">Type Descriptors</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">Table of Type Descriptors</h2>
+
+   <p>The type descriptor is the character which follows the type number and
+an equals sign.  It specifies what kind of type is being defined. 
+See <a href="String-Field.html#String%20Field">String Field</a>, for more information about their use.
+
+     <dl>
+<dt><code></code><var>digit</var><code></code>
+     <dd><dt><code>(</code>
+     <dd>Type reference; see <a href="String-Field.html#String%20Field">String Field</a>.
+
+     <br><dt><code>-</code>
+     <dd>Reference to builtin type; see <a href="Negative-Type-Numbers.html#Negative%20Type%20Numbers">Negative Type Numbers</a>.
+
+     <br><dt><code>#</code>
+     <dd>Method (C++); see <a href="Method-Type-Descriptor.html#Method%20Type%20Descriptor">Method Type Descriptor</a>.
+
+     <br><dt><code>*</code>
+     <dd>Pointer; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>&amp;</code>
+     <dd>Reference (C++).
+
+     <br><dt><code>@</code>
+     <dd>Type Attributes (AIX); see <a href="String-Field.html#String%20Field">String Field</a>.  Member (class and variable)
+type (GNU C++); see <a href="Member-Type-Descriptor.html#Member%20Type%20Descriptor">Member Type Descriptor</a>.
+
+     <br><dt><code>a</code>
+     <dd>Array; see <a href="Arrays.html#Arrays">Arrays</a>.
+
+     <br><dt><code>A</code>
+     <dd>Open array; see <a href="Arrays.html#Arrays">Arrays</a>.
+
+     <br><dt><code>b</code>
+     <dd>Pascal space type (AIX); see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.  Builtin integer
+type (Sun); see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>.  Const and volatile
+qualified type (OS9000).
+
+     <br><dt><code>B</code>
+     <dd>Volatile-qualified type; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>c</code>
+     <dd>Complex builtin type (AIX); see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>. 
+Const-qualified type (OS9000).
+
+     <br><dt><code>C</code>
+     <dd>COBOL Picture type.  See AIX documentation for details.
+
+     <br><dt><code>d</code>
+     <dd>File type; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>D</code>
+     <dd>N-dimensional dynamic array; see <a href="Arrays.html#Arrays">Arrays</a>.
+
+     <br><dt><code>e</code>
+     <dd>Enumeration type; see <a href="Enumerations.html#Enumerations">Enumerations</a>.
+
+     <br><dt><code>E</code>
+     <dd>N-dimensional subarray; see <a href="Arrays.html#Arrays">Arrays</a>.
+
+     <br><dt><code>f</code>
+     <dd>Function type; see <a href="Function-Types.html#Function%20Types">Function Types</a>.
+
+     <br><dt><code>F</code>
+     <dd>Pascal function parameter; see <a href="Function-Types.html#Function%20Types">Function Types</a>
+
+     <br><dt><code>g</code>
+     <dd>Builtin floating point type; see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>.
+
+     <br><dt><code>G</code>
+     <dd>COBOL Group.  See AIX documentation for details.
+
+     <br><dt><code>i</code>
+     <dd>Imported type (AIX); see <a href="Cross-References.html#Cross-References">Cross-References</a>.  Volatile-qualified
+type (OS9000).
+
+     <br><dt><code>k</code>
+     <dd>Const-qualified type; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>K</code>
+     <dd>COBOL File Descriptor.  See AIX documentation for details.
+
+     <br><dt><code>M</code>
+     <dd>Multiple instance type; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>n</code>
+     <dd>String type; see <a href="Strings.html#Strings">Strings</a>.
+
+     <br><dt><code>N</code>
+     <dd>Stringptr; see <a href="Strings.html#Strings">Strings</a>.
+
+     <br><dt><code>o</code>
+     <dd>Opaque type; see <a href="Typedefs.html#Typedefs">Typedefs</a>.
+
+     <br><dt><code>p</code>
+     <dd>Procedure; see <a href="Function-Types.html#Function%20Types">Function Types</a>.
+
+     <br><dt><code>P</code>
+     <dd>Packed array; see <a href="Arrays.html#Arrays">Arrays</a>.
+
+     <br><dt><code>r</code>
+     <dd>Range type; see <a href="Subranges.html#Subranges">Subranges</a>.
+
+     <br><dt><code>R</code>
+     <dd>Builtin floating type; see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a> (Sun).  Pascal
+subroutine parameter; see <a href="Function-Types.html#Function%20Types">Function Types</a> (AIX).  Detecting this
+conflict is possible with careful parsing (hint: a Pascal subroutine
+parameter type will always contain a comma, and a builtin type
+descriptor never will).
+
+     <br><dt><code>s</code>
+     <dd>Structure type; see <a href="Structures.html#Structures">Structures</a>.
+
+     <br><dt><code>S</code>
+     <dd>Set type; see <a href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>.
+
+     <br><dt><code>u</code>
+     <dd>Union; see <a href="Unions.html#Unions">Unions</a>.
+
+     <br><dt><code>v</code>
+     <dd>Variant record.  This is a Pascal and Modula-2 feature which is like a
+union within a struct in C.  See AIX documentation for details.
+
+     <br><dt><code>w</code>
+     <dd>Wide character; see <a href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>.
+
+     <br><dt><code>x</code>
+     <dd>Cross-reference; see <a href="Cross-References.html#Cross-References">Cross-References</a>.
+
+     <br><dt><code>Y</code>
+     <dd>Used by IBM's xlC C++ compiler (for structures, I think).
+
+     <br><dt><code>z</code>
+     <dd>gstring; see <a href="Strings.html#Strings">Strings</a>. 
+</dl>
+
+   </body></html>
+

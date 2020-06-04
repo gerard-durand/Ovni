@@ -1,0 +1,2 @@
+bash.exe est utilisé ici également en tant que csh, ksh et sh.
+Un lien physique fonctionne très bien, mais on peut aussi faire une copie simple avec renommage.

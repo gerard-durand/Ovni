@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Breakpoint%20Info">Breakpoint Info</a>,
+Next:<a rel="next" accesskey="n" href="Invalidation.html#Invalidation">Invalidation</a>,
+Previous:<a rel="previous" accesskey="p" href="Errors.html#Errors">Errors</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">Information on Breakpoints</h3>
+
+   <p>The output from the <code>info breakpoints</code> command is annotated as follows:
+
+<pre class="smallexample">     ^Z^Zbreakpoints-headers
+     <var>header-entry</var>
+     ^Z^Zbreakpoints-table
+     </pre>
+
+<p>where <var>header-entry</var> has the same syntax as an entry (see below) but
+instead of containing data, it contains strings which are intended to
+convey the meaning of each field to the user.  This is followed by any
+number of entries.  If a field does not apply for this entry, it is
+omitted.  Fields may contain trailing whitespace.  Each entry consists
+of:
+
+<pre class="smallexample">     ^Z^Zrecord
+     ^Z^Zfield 0
+     <var>number</var>
+     ^Z^Zfield 1
+     <var>type</var>
+     ^Z^Zfield 2
+     <var>disposition</var>
+     ^Z^Zfield 3
+     <var>enable</var>
+     ^Z^Zfield 4
+     <var>address</var>
+     ^Z^Zfield 5
+     <var>what</var>
+     ^Z^Zfield 6
+     <var>frame</var>
+     ^Z^Zfield 7
+     <var>condition</var>
+     ^Z^Zfield 8
+     <var>ignore-count</var>
+     ^Z^Zfield 9
+     <var>commands</var>
+     </pre>
+
+   <p>Note that <var>address</var> is intended for user consumption--the syntax
+varies depending on the language.
+
+   <p>The output ends with
+
+<pre class="smallexample">     ^Z^Zbreakpoints-table-end
+     </pre>
+
+   </body></html>
+

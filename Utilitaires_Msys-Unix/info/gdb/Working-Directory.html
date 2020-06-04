@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Working%20Directory">Working Directory</a>,
+Next:<a rel="next" accesskey="n" href="Input-Output.html#Input%2fOutput">Input/Output</a>,
+Previous:<a rel="previous" accesskey="p" href="Environment.html#Environment">Environment</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Your program's working directory</h3>
+
+   <p>Each time you start your program with <code>run</code>, it inherits its
+working directory from the current working directory of GDB. 
+The GDB working directory is initially whatever it inherited
+from its parent process (typically the shell), but you can specify a new
+working directory in GDB with the <code>cd</code> command.
+
+   <p>The GDB working directory also serves as a default for the commands
+that specify files for GDB to operate on.  See <a href="Files.html#Files">Commands to specify files</a>.
+
+     <dl>
+<dt><code>cd </code><var>directory</var><code></code>
+     <dd>Set the GDB working directory to <var>directory</var>.
+
+     <br><dt><code>pwd</code>
+     <dd>Print the GDB working directory. 
+</dl>
+
+   </body></html>
+

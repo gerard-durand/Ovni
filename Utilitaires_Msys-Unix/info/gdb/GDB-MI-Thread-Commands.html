@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Thread%20Commands">GDB/MI Thread Commands</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Tracepoint-Commands.html#GDB%2fMI%20Tracepoint%20Commands">GDB/MI Tracepoint Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Target-Manipulation.html#GDB%2fMI%20Target%20Manipulation">GDB/MI Target Manipulation</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Thread Commands</h3>
+
+<h4 class="subheading">The <code>-thread-info</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -thread-info
+     </pre>
+
+<h5 class="subsubheading">GDB command</h5>
+
+   <p>No equivalent.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-thread-list-all-threads</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -thread-list-all-threads
+     </pre>
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The equivalent GDB command is <code>info threads</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-thread-list-ids</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -thread-list-ids
+     </pre>
+
+   <p>Produces a list of the currently known GDB thread ids.  At the
+end of the list it also prints the total number of such threads.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>Part of <code>info threads</code> supplies the same information.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>No threads present, besides the main process:
+
+<pre class="smallexample">     (gdb)
+     -thread-list-ids
+     ^done,thread-ids={},number-of-threads="0"
+     (gdb)
+     </pre>
+
+   <p>Several threads:
+
+<pre class="smallexample">     (gdb)
+     -thread-list-ids
+     ^done,thread-ids={thread-id="3",thread-id="2",thread-id="1"},
+     number-of-threads="3"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-thread-select</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -thread-select <var>threadnum</var>
+     </pre>
+
+   <p>Make <var>threadnum</var> the current thread.  It prints the number of the new
+current thread, and the topmost frame for that thread.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>thread</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -exec-next
+     ^running
+     (gdb)
+     *stopped,reason="end-stepping-range",thread-id="2",line="187",
+     file="../../../devo/gdb/testsuite/gdb.threads/linux-dp.c"
+     (gdb)
+     -thread-list-ids
+     ^done,
+     thread-ids={thread-id="3",thread-id="2",thread-id="1"},
+     number-of-threads="3"
+     (gdb)
+     -thread-select 3
+     ^done,new-thread-id="3",
+     frame={level="0 ",func="vprintf",
+     args=[{name="format",value="0x8048e9c \"%*s%c %d %c\\n\""},
+     {name="arg",value="0x2"}],file="vprintf.c",line="31"}
+     (gdb)
+     </pre>
+
+   </body></html>
+

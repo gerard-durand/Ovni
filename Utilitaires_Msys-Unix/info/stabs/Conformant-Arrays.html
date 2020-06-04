@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Conformant%20Arrays">Conformant Arrays</a>,
+Previous:<a rel="previous" accesskey="p" href="Reference-Parameters.html#Reference%20Parameters">Reference Parameters</a>,
+Up:<a rel="up" accesskey="u" href="Parameters.html#Parameters">Parameters</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Passing Conformant Array Parameters</h4>
+
+   <p>Conformant arrays are a feature of Modula-2, and perhaps other
+languages, in which the size of an array parameter is not known to the
+called function until run-time.  Such parameters have two stabs: a
+<code>x</code> for the array itself, and a <code>C</code>, which represents the size
+of the array.  The value of the <code>x</code> stab is the offset in the
+argument list where the address of the array is stored (it this right? 
+it is a guess); the value of the <code>C</code> stab is the offset in the
+argument list where the size of the array (in elements? in bytes?) is
+stored.
+
+   </body></html>
+

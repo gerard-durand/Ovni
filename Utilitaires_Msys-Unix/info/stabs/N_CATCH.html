@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="N_CATCH">N_CATCH</a>,
+Next:<a rel="next" accesskey="n" href="N_SSYM.html#N_SSYM">N_SSYM</a>,
+Previous:<a rel="previous" accesskey="p" href="N_MOD2.html#N_MOD2">N_MOD2</a>,
+Up:<a rel="up" accesskey="u" href="Expanded-Reference.html#Expanded%20Reference">Expanded Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">N_CATCH</h3>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>N_CATCH</b><i>
+     </i></td>
+<td align="right"><code>.stabn</code></td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+GNU C++ <code>catch</code> clause
+
+     <p>GNU C++ <code>catch</code> clause.  The value is its address.  The desc field
+is nonzero if this entry is immediately followed by a <code>CAUGHT</code> stab
+saying what exception was caught.  Multiple <code>CAUGHT</code> stabs means
+that multiple exceptions can be caught here.  If desc is 0, it means all
+exceptions are caught here. 
+</td></tr>
+</table>
+
+   </body></html>
+

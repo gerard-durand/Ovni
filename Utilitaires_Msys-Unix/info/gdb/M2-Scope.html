@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="M2%20Scope">M2 Scope</a>,
+Next:<a rel="next" accesskey="n" href="GDB-M2.html#GDB%2fM2">GDB/M2</a>,
+Previous:<a rel="previous" accesskey="p" href="M2-Checks.html#M2%20Checks">M2 Checks</a>,
+Up:<a rel="up" accesskey="u" href="Modula-2.html#Modula-2">Modula-2</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">The scope operators <code>::</code> and <code>.</code></h5>
+
+   <p>There are a few subtle differences between the Modula-2 scope operator
+(<code>.</code>) and the GDB scope operator (<code>::</code>).  The two have
+similar syntax:
+
+<pre class="example">     
+     <var>module</var> . <var>id</var>
+     <var>scope</var> :: <var>id</var>
+     </pre>
+
+<p>where <var>scope</var> is the name of a module or a procedure,
+<var>module</var> the name of a module, and <var>id</var> is any declared
+identifier within your program, except another module.
+
+   <p>Using the <code>::</code> operator makes GDB search the scope
+specified by <var>scope</var> for the identifier <var>id</var>.  If it is not
+found in the specified scope, then GDB searches all scopes
+enclosing the one specified by <var>scope</var>.
+
+   <p>Using the <code>.</code> operator makes GDB search the current scope for
+the identifier specified by <var>id</var> that was imported from the
+definition module specified by <var>module</var>.  With this operator, it is
+an error if the identifier <var>id</var> was not imported from definition
+module <var>module</var>, or if <var>id</var> is not an identifier in
+<var>module</var>.
+
+   </body></html>
+

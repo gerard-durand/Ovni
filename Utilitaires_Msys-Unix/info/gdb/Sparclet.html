@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Sparclet">Sparclet</a>,
+Next:<a rel="next" accesskey="n" href="Sparclite.html#Sparclite">Sparclite</a>,
+Previous:<a rel="previous" accesskey="p" href="SH.html#SH">SH</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Tsqware Sparclet</h4>
+
+   GDB enables developers to debug tasks running on
+Sparclet targets from a Unix host. 
+GDB uses code that runs on
+both the Unix host and on the Sparclet target.  The program
+<code>gdb</code> is installed and executed on the Unix host.
+
+     <dl>
+<dt><code>remotetimeout </code><var>args</var><code></code>
+     <dd>GDB supports the option <code>remotetimeout</code>. 
+This option is set by the user, and  <var>args</var> represents the number of
+seconds GDB waits for responses. 
+</dl>
+
+   <p>When compiling for debugging, include the options <code>-g</code> to get debug
+information and <code>-Ttext</code> to relocate the program to where you wish to
+load it on the target.  You may also want to add the options <code>-n</code> or
+<code>-N</code> in order to reduce the size of the sections.  Example:
+
+<pre class="example">     sparclet-aout-gcc prog.c -Ttext 0x12010000 -g -o prog -N
+     </pre>
+
+   <p>You can use <code>objdump</code> to verify that the addresses are what you intended:
+
+<pre class="example">     sparclet-aout-objdump --headers --syms prog
+     </pre>
+
+   <p>Once you have set
+your Unix execution search path to find GDB, you are ready to
+run GDB.  From your Unix host, run <code>gdb</code>
+(or <code>sparclet-aout-gdb</code>, depending on your installation).
+
+   GDB comes up showing the prompt:
+
+<pre class="example">     (gdbslet)
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="Sparclet-File.html#Sparclet%20File">Sparclet File</a>:                 Setting the file to debug
+<li><a accesskey="2" href="Sparclet-Connection.html#Sparclet%20Connection">Sparclet Connection</a>:           Connecting to Sparclet
+<li><a accesskey="3" href="Sparclet-Download.html#Sparclet%20Download">Sparclet Download</a>:             Sparclet download
+<li><a accesskey="4" href="Sparclet-Execution.html#Sparclet%20Execution">Sparclet Execution</a>:            Running and debugging
+</ul>
+
+   </body></html>
+

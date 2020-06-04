@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="C%20Defaults">C Defaults</a>,
+Next:<a rel="next" accesskey="n" href="C-Checks.html#C%20Checks">C Checks</a>,
+Previous:<a rel="previous" accesskey="p" href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C plus plus expressions</a>,
+Up:<a rel="up" accesskey="u" href="C.html#C">C</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">C and C<tt>++</tt> defaults</h5>
+
+   <p>If you allow GDB to set type and range checking automatically, they
+both default to <code>off</code> whenever the working language changes to
+C or C<tt>++</tt>.  This happens regardless of whether you or GDB
+selects the working language.
+
+   <p>If you allow GDB to set the language automatically, it
+recognizes source files whose names end with <code>.c</code>, <code>.C</code>, or
+<code>.cc</code>, etc, and when GDB enters code compiled from one of
+these files, it sets the working language to C or C<tt>++</tt>. 
+See <a href="Automatically.html#Automatically">Having GDB infer the source language</a>,
+for further details.
+
+   </body></html>
+

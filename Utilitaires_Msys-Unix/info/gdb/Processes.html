@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Processes">Processes</a>,
+Previous:<a rel="previous" accesskey="p" href="Threads.html#Threads">Threads</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Debugging programs with multiple processes</h3>
+
+   <p>On most systems, GDB has no special support for debugging
+programs which create additional processes using the <code>fork</code>
+function.  When a program forks, GDB will continue to debug the
+parent process and the child process will run unimpeded.  If you have
+set a breakpoint in any code which the child then executes, the child
+will get a <code>SIGTRAP</code> signal which (unless it catches the signal)
+will cause it to terminate.
+
+   <p>However, if you want to debug the child process there is a workaround
+which isn't too painful.  Put a call to <code>sleep</code> in the code which
+the child process executes after the fork.  It may be useful to sleep
+only if a certain environment variable is set, or a certain file exists,
+so that the delay need not occur when you don't want to run GDB
+on the child.  While the child is sleeping, use the <code>ps</code> program to
+get its process ID.  Then tell GDB (a new invocation of
+GDB if you are also debugging the parent process) to attach to
+the child process (see <a href="Attach.html#Attach">Attach</a>).  From that point on you can debug
+the child process just like any other process which you attached to.
+
+   <p>On HP-UX (11.x and later only?), GDB provides support for
+debugging programs that create additional processes using the
+<code>fork</code> or <code>vfork</code> function.
+
+   <p>By default, when a program forks, GDB will continue to debug
+the parent process and the child process will run unimpeded.
+
+   <p>If you want to follow the child process instead of the parent process,
+use the command <code>set&nbsp;follow-fork-mode</code>.
+
+     <dl>
+<dt><code>set follow-fork-mode </code><var>mode</var><code></code>
+     <dd>Set the debugger response to a program call of <code>fork</code> or
+<code>vfork</code>.  A call to <code>fork</code> or <code>vfork</code> creates a new
+process.  The <var>mode</var> can be:
+
+          <dl>
+<dt><code>parent</code>
+          <dd>The original process is debugged after a fork.  The child process runs
+unimpeded.  This is the default.
+
+          <br><dt><code>child</code>
+          <dd>The new process is debugged after a fork.  The parent process runs
+unimpeded.
+
+          <br><dt><code>ask</code>
+          <dd>The debugger will ask for one of the above choices. 
+</dl>
+
+     <br><dt><code>show follow-fork-mode</code>
+     <dd>Display the current debugger response to a <code>fork</code> or <code>vfork</code> call. 
+</dl>
+
+   <p>If you ask to debug a child process and a <code>vfork</code> is followed by an
+<code>exec</code>, GDB executes the new target up to the first
+breakpoint in the new target.  If you have a breakpoint set on
+<code>main</code> in your original program, the breakpoint will also be set on
+the child process's <code>main</code>.
+
+   <p>When a child process is spawned by <code>vfork</code>, you cannot debug the
+child or parent until an <code>exec</code> call completes.
+
+   <p>If you issue a <code>run</code> command to GDB after an <code>exec</code>
+call executes, the new target restarts.  To restart the parent process,
+use the <code>file</code> command with the parent executable name as its
+argument.
+
+   <p>You can use the <code>catch</code> command to make GDB stop whenever
+a <code>fork</code>, <code>vfork</code>, or <code>exec</code> call is made.  See <a href="Set-Catchpoints.html#Set%20Catchpoints">Setting catchpoints</a>.
+
+   </body></html>
+

@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Builtin%20Types">Builtin Types</a>,
+Next:<a rel="next" accesskey="n" href="Miscellaneous-Types.html#Miscellaneous%20Types">Miscellaneous Types</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Builtin Types</h3>
+
+   <p>Certain types are built in (<code>int</code>, <code>short</code>, <code>void</code>,
+<code>float</code>, etc.); the debugger recognizes these types and knows how
+to handle them.  Thus, don't be surprised if some of the following ways
+of specifying builtin types do not specify everything that a debugger
+would need to know about the type--in some cases they merely specify
+enough information to distinguish the type from other types.
+
+   <p>The traditional way to define builtin types is convoluted, so new ways
+have been invented to describe them.  Sun's <code>acc</code> uses special
+builtin type descriptors (<code>b</code> and <code>R</code>), and IBM uses negative
+type numbers.  GDB accepts all three ways, as of version 4.8; dbx just
+accepts the traditional builtin types and perhaps one of the other two
+formats.  The following sections describe each of these formats.
+
+<ul class="menu">
+<li><a accesskey="1" href="Traditional-Builtin-Types.html#Traditional%20Builtin%20Types">Traditional Builtin Types</a>: 	Put on your seat belts and prepare for kludgery
+<li><a accesskey="2" href="Builtin-Type-Descriptors.html#Builtin%20Type%20Descriptors">Builtin Type Descriptors</a>: 	Builtin types with special type descriptors
+<li><a accesskey="3" href="Negative-Type-Numbers.html#Negative%20Type%20Numbers">Negative Type Numbers</a>: 	Builtin types using negative type numbers
+</ul>
+
+   </body></html>
+

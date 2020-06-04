@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Completion">Completion</a>,
+Next:<a rel="next" accesskey="n" href="Help.html#Help">Help</a>,
+Previous:<a rel="previous" accesskey="p" href="Command-Syntax.html#Command%20Syntax">Command Syntax</a>,
+Up:<a rel="up" accesskey="u" href="Commands.html#Commands">Commands</a>
+<hr><br>
+</div>
+
+<h3 class="section">Command completion</h3>
+
+   GDB can fill in the rest of a word in a command for you, if there is
+only one possibility; it can also show you what the valid possibilities
+are for the next word in a command, at any time.  This works for GDB
+commands, GDB subcommands, and the names of symbols in your program.
+
+   <p>Press the &lt;TAB&gt; key whenever you want GDB to fill out the rest
+of a word.  If there is only one possibility, GDB fills in the
+word, and waits for you to finish the command (or press &lt;RET&gt; to
+enter it).  For example, if you type
+
+<pre class="example">     (gdb) info bre &lt;TAB&gt;
+     </pre>
+
+GDB fills in the rest of the word <code>breakpoints</code>, since that is
+the only <code>info</code> subcommand beginning with <code>bre</code>:
+
+<pre class="example">     (gdb) info breakpoints
+     </pre>
+
+<p>You can either press &lt;RET&gt; at this point, to run the <code>info
+breakpoints</code> command, or backspace and enter something else, if
+<code>breakpoints</code> does not look like the command you expected.  (If you
+were sure you wanted <code>info breakpoints</code> in the first place, you
+might as well just type &lt;RET&gt; immediately after <code>info bre</code>,
+to exploit command abbreviations rather than command completion).
+
+   <p>If there is more than one possibility for the next word when you press
+&lt;TAB&gt;, GDB sounds a bell.  You can either supply more
+characters and try again, or just press &lt;TAB&gt; a second time;
+GDB displays all the possible completions for that word.  For
+example, you might want to set a breakpoint on a subroutine whose name
+begins with <code>make_</code>, but when you type <kbd>b make_&lt;TAB&gt;</kbd> GDB
+just sounds the bell.  Typing &lt;TAB&gt; again displays all the
+function names in your program that begin with those characters, for
+example:
+
+<pre class="example">     (gdb) b make_ &lt;TAB&gt;
+<br>GDB sounds bell; press &lt;TAB&gt; again, to see:<br>
+     make_a_section_from_file     make_environ
+     make_abs_section             make_function_type
+     make_blockvector             make_pointer_type
+     make_cleanup                 make_reference_type
+     make_command                 make_symbol_completion_list
+     (gdb) b make_
+     </pre>
+
+<p>After displaying the available possibilities, GDB copies your
+partial input (<code>b make_</code> in the example) so you can finish the
+command.
+
+   <p>If you just want to see the list of alternatives in the first place, you
+can press <kbd>M-?</kbd> rather than pressing &lt;TAB&gt; twice.  <kbd>M-?</kbd>
+means <kbd>&lt;META&gt; ?</kbd>.  You can type this either by holding down a
+key designated as the &lt;META&gt; shift on your keyboard (if there is
+one) while typing <kbd>?</kbd>, or as &lt;ESC&gt; followed by <kbd>?</kbd>.
+
+   <p>Sometimes the string you need, while logically a "word", may contain
+parentheses or other characters that GDB normally excludes from
+its notion of a word.  To permit word completion to work in this
+situation, you may enclose words in <code>'</code> (single quote marks) in
+GDB commands.
+
+   <p>The most likely situation where you might need this is in typing the
+name of a C<tt>++</tt> function.  This is because C<tt>++</tt> allows function
+overloading (multiple definitions of the same function, distinguished
+by argument type).  For example, when you want to set a breakpoint you
+may need to distinguish whether you mean the version of <code>name</code>
+that takes an <code>int</code> parameter, <code>name(int)</code>, or the version
+that takes a <code>float</code> parameter, <code>name(float)</code>.  To use the
+word-completion facilities in this situation, type a single quote
+<code>'</code> at the beginning of the function name.  This alerts
+GDB that it may need to consider more information than usual
+when you press &lt;TAB&gt; or <kbd>M-?</kbd> to request word completion:
+
+<pre class="example">     (gdb) b 'bubble( <kbd>M-?</kbd>
+     bubble(double,double)    bubble(int,int)
+     (gdb) b 'bubble(
+     </pre>
+
+   <p>In some cases, GDB can tell that completing a name requires using
+quotes.  When this happens, GDB inserts the quote for you (while
+completing as much as it can) if you do not type the quote in the first
+place:
+
+<pre class="example">     (gdb) b bub &lt;TAB&gt;
+<br>GDB alters your input line to the following, and rings a bell:<br>
+     (gdb) b 'bubble(
+     </pre>
+
+<p>In general, GDB can tell that a quote is needed (and inserts it) if
+you have not yet started typing the argument list when you ask for
+completion on an overloaded symbol.
+
+   <p>For more information about overloaded functions, see <a href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C<tt>++</tt> expressions</a>.  You can use the command <code>set
+overload-resolution off</code> to disable overload resolution;
+see <a href="Debugging-C-plus-plus.html#Debugging%20C%20plus%20plus">GDB features for C<tt>++</tt></a>.
+
+   </body></html>
+

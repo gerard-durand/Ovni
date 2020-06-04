@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Gould">Gould</a>,
+Next:<a rel="next" accesskey="n" href="N_LENG.html#N_LENG">N_LENG</a>,
+Previous:<a rel="previous" accesskey="p" href="N_SCOPE.html#N_SCOPE">N_SCOPE</a>,
+Up:<a rel="up" accesskey="u" href="Expanded-Reference.html#Expanded%20Reference">Expanded Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">Non-base registers on Gould systems</h3>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>N_NBTEXT</b><i>
+     </i></td>
+<td align="right"><code>.stab?</code></td>
+</tr>
+
+<tr>
+<td align="left"><b>N_NBDATA</b><i>
+     </i></td>
+<td align="right"><code>.stab?</code></td>
+</tr>
+
+<tr>
+<td align="left"><b>N_NBBSS</b><i>
+     </i></td>
+<td align="right"><code>.stab?</code></td>
+</tr>
+
+<tr>
+<td align="left"><b>N_NBSTS</b><i>
+     </i></td>
+<td align="right"><code>.stab?</code></td>
+</tr>
+
+<tr>
+<td align="left"><b>N_NBLCS</b><i>
+     </i></td>
+<td align="right"><code>.stab?</code></td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+These are used on Gould systems for non-base registers syms.
+
+     <p>However, the following values are not the values used by Gould; they are
+the values which GNU has been documenting for these values for a long
+time, without actually checking what Gould uses.  I include these values
+only because perhaps some someone actually did something with the GNU
+information (I hope not, why GNU knowingly assigned wrong values to
+these in the header file is a complete mystery to me).
+
+     <pre class="example">          240    0xf0     N_NBTEXT  ??
+          242    0xf2     N_NBDATA  ??
+          244    0xf4     N_NBBSS   ??
+          246    0xf6     N_NBSTS   ??
+          248    0xf8     N_NBLCS   ??
+          </pre>
+     </td></tr>
+</table>
+
+   </body></html>
+

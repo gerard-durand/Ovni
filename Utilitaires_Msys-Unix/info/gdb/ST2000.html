@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="ST2000">ST2000</a>,
+Next:<a rel="next" accesskey="n" href="Z8000.html#Z8000">Z8000</a>,
+Previous:<a rel="previous" accesskey="p" href="Sparclite.html#Sparclite">Sparclite</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Tandem ST2000</h4>
+
+   GDB may be used with a Tandem ST2000 phone switch, running Tandem's
+STDBUG protocol.
+
+   <p>To connect your ST2000 to the host system, see the manufacturer's
+manual.  Once the ST2000 is physically attached, you can run:
+
+<pre class="example">     target st2000 <var>dev</var> <var>speed</var>
+     </pre>
+
+<p>to establish it as your debugging environment.  <var>dev</var> is normally
+the name of a serial device, such as <code>/dev/ttya</code>, connected to the
+ST2000 via a serial line.  You can instead specify <var>dev</var> as a TCP
+connection (for example, to a serial line attached via a terminal
+concentrator) using the syntax <code></code><var>hostname</var><code>:</code><var>portnumber</var><code></code>.
+
+   <p>The <code>load</code> and <code>attach</code> commands are <em>not</em> defined for
+this target; you must load your program into the ST2000 as you normally
+would for standalone operation.  GDB reads debugging information
+(such as symbols) from a separate, debugging version of the program
+available on your host computer.
+
+   <p>These auxiliary GDB commands are available to help you with the ST2000
+environment:
+
+     <dl>
+<dt><code>st2000 </code><var>command</var><code></code>
+     <dd>Send a <var>command</var> to the STDBUG monitor.  See the manufacturer's
+manual for available commands.
+
+     <br><dt><code>connect</code>
+     <dd>Connect the controlling terminal to the STDBUG command monitor.  When
+you are done interacting with STDBUG, typing either of two character
+sequences gets you back to the GDB command prompt:
+<kbd>&lt;RET&gt;~.</kbd> (Return, followed by tilde and period) or
+<kbd>&lt;RET&gt;~&lt;C-d&gt;</kbd> (Return, followed by tilde and control-D). 
+</dl>
+
+   </body></html>
+

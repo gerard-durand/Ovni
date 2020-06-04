@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Reference%20Parameters">Reference Parameters</a>,
+Next:<a rel="next" accesskey="n" href="Conformant-Arrays.html#Conformant%20Arrays">Conformant Arrays</a>,
+Previous:<a rel="previous" accesskey="p" href="Local-Variable-Parameters.html#Local%20Variable%20Parameters">Local Variable Parameters</a>,
+Up:<a rel="up" accesskey="u" href="Parameters.html#Parameters">Parameters</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Passing Parameters by Reference</h4>
+
+   <p>If the parameter is passed by reference (e.g., Pascal <code>VAR</code>
+parameters), then the symbol descriptor is <code>v</code> if it is in the
+argument list, or <code>a</code> if it in a register.  Other than the fact
+that these contain the address of the parameter rather than the
+parameter itself, they are identical to <code>p</code> and <code>R</code>,
+respectively.  I believe <code>a</code> is an AIX invention; <code>v</code> is
+supported by all stabs-using systems as far as I know.
+
+   </body></html>
+

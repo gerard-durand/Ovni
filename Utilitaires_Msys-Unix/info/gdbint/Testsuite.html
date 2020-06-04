@@ -1,0 +1,158 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Testsuite">Testsuite</a>,
+Next:<a rel="next" accesskey="n" href="Hints.html#Hints">Hints</a>,
+Previous:<a rel="previous" accesskey="p" href="Releasing-GDB.html#Releasing%20GDB">Releasing GDB</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Testsuite</h2>
+
+   <p>The testsuite is an important component of the GDB package. 
+While it is always worthwhile to encourage user testing, in practice
+this is rarely sufficient; users typically use only a small subset of
+the available commands, and it has proven all too common for a change
+to cause a significant regression that went unnoticed for some time.
+
+   <p>The GDB testsuite uses the DejaGNU testing framework. 
+DejaGNU is built using <code>Tcl</code> and <code>expect</code>.  The tests
+themselves are calls to various <code>Tcl</code> procs; the framework runs all the
+procs and summarizes the passes and fails.
+
+<h3 class="section">Using the Testsuite</h3>
+
+   <p>To run the testsuite, simply go to the GDB object directory (or to the
+testsuite's objdir) and type <code>make check</code>.  This just sets up some
+environment variables and invokes DejaGNU's <code>runtest</code> script.  While
+the testsuite is running, you'll get mentions of which test file is in use,
+and a mention of any unexpected passes or fails.  When the testsuite is
+finished, you'll get a summary that looks like this:
+
+<pre class="example">                     === gdb Summary ===
+     
+     # of expected passes            6016
+     # of unexpected failures        58
+     # of unexpected successes       5
+     # of expected failures          183
+     # of unresolved testcases       3
+     # of untested testcases         5
+     </pre>
+
+   <p>The ideal test run consists of expected passes only; however, reality
+conspires to keep us from this ideal.  Unexpected failures indicate
+real problems, whether in GDB or in the testsuite.  Expected
+failures are still failures, but ones which have been decided are too
+hard to deal with at the time; for instance, a test case might work
+everywhere except on AIX, and there is no prospect of the AIX case
+being fixed in the near future.  Expected failures should not be added
+lightly, since you may be masking serious bugs in GDB. 
+Unexpected successes are expected fails that are passing for some
+reason, while unresolved and untested cases often indicate some minor
+catastrophe, such as the compiler being unable to deal with a test
+program.
+
+   <p>When making any significant change to GDB, you should run the
+testsuite before and after the change, to confirm that there are no
+regressions.  Note that truly complete testing would require that you
+run the testsuite with all supported configurations and a variety of
+compilers; however this is more than really necessary.  In many cases
+testing with a single configuration is sufficient.  Other useful
+options are to test one big-endian (Sparc) and one little-endian (x86)
+host, a cross config with a builtin simulator (powerpc-eabi,
+mips-elf), or a 64-bit host (Alpha).
+
+   <p>If you add new functionality to GDB, please consider adding
+tests for it as well; this way future GDB hackers can detect
+and fix their changes that break the functionality you added. 
+Similarly, if you fix a bug that was not previously reported as a test
+failure, please add a test case for it.  Some cases are extremely
+difficult to test, such as code that handles host OS failures or bugs
+in particular versions of compilers, and it's OK not to try to write
+tests for all of those.
+
+<h3 class="section">Testsuite Organization</h3>
+
+   <p>The testsuite is entirely contained in <code>gdb/testsuite</code>.  While the
+testsuite includes some makefiles and configury, these are very minimal,
+and used for little besides cleaning up, since the tests themselves
+handle the compilation of the programs that GDB will run.  The file
+<code>testsuite/lib/gdb.exp</code> contains common utility procs useful for
+all GDB tests, while the directory <code>testsuite/config</code> contains
+configuration-specific files, typically used for special-purpose
+definitions of procs like <code>gdb_load</code> and <code>gdb_start</code>.
+
+   <p>The tests themselves are to be found in <code>testsuite/gdb.*</code> and
+subdirectories of those.  The names of the test files must always end
+with <code>.exp</code>.  DejaGNU collects the test files by wildcarding
+in the test directories, so both subdirectories and individual files
+get chosen and run in alphabetical order.
+
+   <p>The following table lists the main types of subdirectories and what they
+are for.  Since DejaGNU finds test files no matter where they are
+located, and since each test file sets up its own compilation and
+execution environment, this organization is simply for convenience and
+intelligibility.
+
+     <dl>
+<dt><code>gdb.base</code>
+     <dd>This is the base testsuite.  The tests in it should apply to all
+configurations of GDB (but generic native-only tests may live here). 
+The test programs should be in the subset of C that is valid K&amp;R,
+ANSI/ISO, and C++ (<code>#ifdef</code>s are allowed if necessary, for instance
+for prototypes).
+
+     <br><dt><code>gdb.</code><var>lang</var><code></code>
+     <dd>Language-specific tests for any language <var>lang</var> besides C.  Examples are
+<code>gdb.c++</code> and <code>gdb.java</code>.
+
+     <br><dt><code>gdb.</code><var>platform</var><code></code>
+     <dd>Non-portable tests.  The tests are specific to a specific configuration
+(host or target), such as HP-UX or eCos.  Example is <code>gdb.hp</code>, for
+HP-UX.
+
+     <br><dt><code>gdb.</code><var>compiler</var><code></code>
+     <dd>Tests specific to a particular compiler.  As of this writing (June
+1999), there aren't currently any groups of tests in this category that
+couldn't just as sensibly be made platform-specific, but one could
+imagine a <code>gdb.gcc</code>, for tests of GDB's handling of GCC
+extensions.
+
+     <br><dt><code>gdb.</code><var>subsystem</var><code></code>
+     <dd>Tests that exercise a specific GDB subsystem in more depth.  For
+instance, <code>gdb.disasm</code> exercises various disassemblers, while
+<code>gdb.stabs</code> tests pathways through the stabs symbol reader. 
+</dl>
+
+<h3 class="section">Writing Tests</h3>
+
+   <p>In many areas, the GDB tests are already quite comprehensive; you
+should be able to copy existing tests to handle new cases.
+
+   <p>You should try to use <code>gdb_test</code> whenever possible, since it
+includes cases to handle all the unexpected errors that might happen. 
+However, it doesn't cost anything to add new test procedures; for
+instance, <code>gdb.base/exprs.exp</code> defines a <code>test_expr</code> that
+calls <code>gdb_test</code> multiple times.
+
+   <p>Only use <code>send_gdb</code> and <code>gdb_expect</code> when absolutely
+necessary, such as when GDB has several valid responses to a command.
+
+   <p>The source language programs do <em>not</em> need to be in a consistent
+style.  Since GDB is used to debug programs written in many different
+styles, it's worth having a mix of styles in the testsuite; for
+instance, some GDB bugs involving the display of source lines would
+never manifest themselves if the programs used GNU coding style
+uniformly.
+
+   </body></html>
+

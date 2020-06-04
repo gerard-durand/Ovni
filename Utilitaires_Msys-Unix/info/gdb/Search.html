@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Search">Search</a>,
+Next:<a rel="next" accesskey="n" href="Source-Path.html#Source%20Path">Source Path</a>,
+Previous:<a rel="previous" accesskey="p" href="List.html#List">List</a>,
+Up:<a rel="up" accesskey="u" href="Source.html#Source">Source</a>
+<hr><br>
+</div>
+
+<h3 class="section">Searching source files</h3>
+
+   <p>There are two commands for searching through the current source file for a
+regular expression.
+
+     <dl>
+<dt><code>forward-search </code><var>regexp</var><code></code>
+     <dd><dt><code>search </code><var>regexp</var><code></code>
+     <dd>The command <code>forward-search </code><var>regexp</var><code></code> checks each line,
+starting with the one following the last line listed, for a match for
+<var>regexp</var>.  It lists the line that is found.  You can use the
+synonym <code>search </code><var>regexp</var><code></code> or abbreviate the command name as
+<code>fo</code>.
+
+     <br><dt><code>reverse-search </code><var>regexp</var><code></code>
+     <dd>The command <code>reverse-search </code><var>regexp</var><code></code> checks each line, starting
+with the one before the last line listed and going backward, for a match
+for <var>regexp</var>.  It lists the line that is found.  You can abbreviate
+this command as <code>rev</code>. 
+</dl>
+
+   </body></html>
+

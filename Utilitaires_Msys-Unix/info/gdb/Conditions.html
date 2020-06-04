@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Conditions">Conditions</a>,
+Next:<a rel="next" accesskey="n" href="Break-Commands.html#Break%20Commands">Break Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Disabling.html#Disabling">Disabling</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Break conditions</h4>
+
+   <p>The simplest sort of breakpoint breaks every time your program reaches a
+specified place.  You can also specify a <dfn>condition</dfn> for a
+breakpoint.  A condition is just a Boolean expression in your
+programming language (see <a href="Expressions.html#Expressions">Expressions</a>).  A breakpoint with
+a condition evaluates the expression each time your program reaches it,
+and your program stops only if the condition is <em>true</em>.
+
+   <p>This is the converse of using assertions for program validation; in that
+situation, you want to stop when the assertion is violated--that is,
+when the condition is false.  In C, if you want to test an assertion expressed
+by the condition <var>assert</var>, you should set the condition
+<code>! </code><var>assert</var><code></code> on the appropriate breakpoint.
+
+   <p>Conditions are also accepted for watchpoints; you may not need them,
+since a watchpoint is inspecting the value of an expression anyhow--but
+it might be simpler, say, to just set a watchpoint on a variable name,
+and specify a condition that tests whether the new value is an interesting
+one.
+
+   <p>Break conditions can have side effects, and may even call functions in
+your program.  This can be useful, for example, to activate functions
+that log program progress, or to use your own print functions to
+format special data structures. The effects are completely predictable
+unless there is another enabled breakpoint at the same address.  (In
+that case, GDB might see the other breakpoint first and stop your
+program without checking the condition of this one.)  Note that
+breakpoint commands are usually more convenient and flexible than break
+conditions for the
+purpose of performing side effects when a breakpoint is reached
+(see <a href="Break-Commands.html#Break%20Commands">Breakpoint command lists</a>).
+
+   <p>Break conditions can be specified when a breakpoint is set, by using
+<code>if</code> in the arguments to the <code>break</code> command.  See <a href="Set-Breaks.html#Set%20Breaks">Setting breakpoints</a>.  They can also be changed at any time
+with the <code>condition</code> command.
+
+   <p>You can also use the <code>if</code> keyword with the <code>watch</code> command. 
+The <code>catch</code> command does not recognize the <code>if</code> keyword;
+<code>condition</code> is the only way to impose a further condition on a
+catchpoint.
+
+     <dl>
+<dt><code>condition </code><var>bnum</var><code> </code><var>expression</var><code></code>
+     <dd>Specify <var>expression</var> as the break condition for breakpoint,
+watchpoint, or catchpoint number <var>bnum</var>.  After you set a condition,
+breakpoint <var>bnum</var> stops your program only if the value of
+<var>expression</var> is true (nonzero, in C).  When you use
+<code>condition</code>, GDB checks <var>expression</var> immediately for
+syntactic correctness, and to determine whether symbols in it have
+referents in the context of your breakpoint.  If <var>expression</var> uses
+symbols not referenced in the context of the breakpoint, GDB
+prints an error message:
+
+     <pre class="example">          No symbol "foo" in current context.
+          </pre>
+
+     GDB does
+not actually evaluate <var>expression</var> at the time the <code>condition</code>
+command (or a command that sets a breakpoint with a condition, like
+<code>break if ...</code>) is given, however.  See <a href="Expressions.html#Expressions">Expressions</a>.
+
+     <br><dt><code>condition </code><var>bnum</var><code></code>
+     <dd>Remove the condition from breakpoint number <var>bnum</var>.  It becomes
+an ordinary unconditional breakpoint. 
+</dl>
+
+   <p>A special case of a breakpoint condition is to stop only when the
+breakpoint has been reached a certain number of times.  This is so
+useful that there is a special way to do it, using the <dfn>ignore
+count</dfn> of the breakpoint.  Every breakpoint has an ignore count, which
+is an integer.  Most of the time, the ignore count is zero, and
+therefore has no effect.  But if your program reaches a breakpoint whose
+ignore count is positive, then instead of stopping, it just decrements
+the ignore count by one and continues.  As a result, if the ignore count
+value is <var>n</var>, the breakpoint does not stop the next <var>n</var> times
+your program reaches it.
+
+     <dl>
+<dt><code>ignore </code><var>bnum</var><code> </code><var>count</var><code></code>
+     <dd>Set the ignore count of breakpoint number <var>bnum</var> to <var>count</var>. 
+The next <var>count</var> times the breakpoint is reached, your program's
+execution does not stop; other than to decrement the ignore count, GDB
+takes no action.
+
+     <p>To make the breakpoint stop the next time it is reached, specify
+a count of zero.
+
+     <p>When you use <code>continue</code> to resume execution of your program from a
+breakpoint, you can specify an ignore count directly as an argument to
+<code>continue</code>, rather than using <code>ignore</code>.  See <a href="Continuing-and-Stepping.html#Continuing%20and%20Stepping">Continuing and stepping</a>.
+
+     <p>If a breakpoint has a positive ignore count and a condition, the
+condition is not checked.  Once the ignore count reaches zero,
+GDB resumes checking the condition.
+
+     <p>You could achieve the effect of the ignore count with a condition such
+as <code>$foo--&nbsp;&lt;=&nbsp;0</code> using a debugger convenience variable that
+is decremented each time.  See <a href="Convenience-Vars.html#Convenience%20Vars">Convenience variables</a>. 
+</dl>
+
+   <p>Ignore counts apply to breakpoints, watchpoints, and catchpoints.
+
+   </body></html>
+

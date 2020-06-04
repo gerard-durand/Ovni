@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Miscellaneous%20Commands">Miscellaneous Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Keyboard-Macros.html#Keyboard%20Macros">Keyboard Macros</a>,
+Up:<a rel="up" accesskey="u" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Some Miscellaneous Commands</h4>
+
+     <dl>
+
+     <br><dt><code>re-read-init-file (C-x C-r)</code>
+     <dd>Read in the contents of the <var>inputrc</var> file, and incorporate
+any bindings or variable assignments found there.
+
+     <br><dt><code>abort (C-g)</code>
+     <dd>Abort the current editing command and
+ring the terminal's bell (subject to the setting of
+<code>bell-style</code>).
+
+     <br><dt><code>do-uppercase-version (M-a, M-b, M-</code><var>x</var><code>, ...)</code>
+     <dd>If the metafied character <var>x</var> is lowercase, run the command
+that is bound to the corresponding uppercase character.
+
+     <br><dt><code>prefix-meta (&lt;ESC&gt;)</code>
+     <dd>Metafy the next character typed.  This is for keyboards
+without a meta key.  Typing <code>&lt;ESC&gt; f</code> is equivalent to typing
+<kbd>M-f</kbd>.
+
+     <br><dt><code>undo (C-_ or C-x C-u)</code>
+     <dd>Incremental undo, separately remembered for each line.
+
+     <br><dt><code>revert-line (M-r)</code>
+     <dd>Undo all changes made to this line.  This is like executing the <code>undo</code>
+command enough times to get back to the beginning.
+
+     <br><dt><code>tilde-expand (M-~)</code>
+     <dd>Perform tilde expansion on the current word.
+
+     <br><dt><code>set-mark (C-@)</code>
+     <dd>Set the mark to the point.  If a
+numeric argument is supplied, the mark is set to that position.
+
+     <br><dt><code>exchange-point-and-mark (C-x C-x)</code>
+     <dd>Swap the point with the mark.  The current cursor position is set to
+the saved position, and the old cursor position is saved as the mark.
+
+     <br><dt><code>character-search (C-])</code>
+     <dd>A character is read and point is moved to the next occurrence of that
+character.  A negative count searches for previous occurrences.
+
+     <br><dt><code>character-search-backward (M-C-])</code>
+     <dd>A character is read and point is moved to the previous occurrence
+of that character.  A negative count searches for subsequent
+occurrences.
+
+     <br><dt><code>insert-comment (M-#)</code>
+     <dd>The value of the <code>comment-begin</code>
+variable is inserted at the beginning of the current line,
+and the line is accepted as if a newline had been typed.
+
+     <br><dt><code>dump-functions ()</code>
+     <dd>Print all of the functions and their key bindings to the
+Readline output stream.  If a numeric argument is supplied,
+the output is formatted in such a way that it can be made part
+of an <var>inputrc</var> file.  This command is unbound by default.
+
+     <br><dt><code>dump-variables ()</code>
+     <dd>Print all of the settable variables and their values to the
+Readline output stream.  If a numeric argument is supplied,
+the output is formatted in such a way that it can be made part
+of an <var>inputrc</var> file.  This command is unbound by default.
+
+     <br><dt><code>dump-macros ()</code>
+     <dd>Print all of the Readline key sequences bound to macros and the
+strings they output.  If a numeric argument is supplied,
+the output is formatted in such a way that it can be made part
+of an <var>inputrc</var> file.  This command is unbound by default.
+
+   </dl>
+
+   </body></html>
+

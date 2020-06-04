@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Commands%20For%20Text">Commands For Text</a>,
+Next:<a rel="next" accesskey="n" href="Commands-For-Killing.html#Commands%20For%20Killing">Commands For Killing</a>,
+Previous:<a rel="previous" accesskey="p" href="Commands-For-History.html#Commands%20For%20History">Commands For History</a>,
+Up:<a rel="up" accesskey="u" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Commands For Changing Text</h4>
+
+     <dl>
+<dt><code>delete-char (C-d)</code>
+     <dd>Delete the character at point.  If point is at the
+beginning of the line, there are no characters in the line, and
+the last character typed was not bound to <code>delete-char</code>, then
+return <small>EOF</small>.
+
+     <br><dt><code>backward-delete-char (Rubout)</code>
+     <dd>Delete the character behind the cursor.  A numeric argument means
+to kill the characters instead of deleting them.
+
+     <br><dt><code>forward-backward-delete-char ()</code>
+     <dd>Delete the character under the cursor, unless the cursor is at the
+end of the line, in which case the character behind the cursor is
+deleted.  By default, this is not bound to a key.
+
+     <br><dt><code>quoted-insert (C-q or C-v)</code>
+     <dd>Add the next character typed to the line verbatim.  This is
+how to insert key sequences like <kbd>C-q</kbd>, for example.
+
+     <br><dt><code>tab-insert (M-&lt;TAB&gt;)</code>
+     <dd>Insert a tab character.
+
+     <br><dt><code>self-insert (a, b, A, 1, !, ...)</code>
+     <dd>Insert yourself.
+
+     <br><dt><code>transpose-chars (C-t)</code>
+     <dd>Drag the character before the cursor forward over
+the character at the cursor, moving the
+cursor forward as well.  If the insertion point
+is at the end of the line, then this
+transposes the last two characters of the line. 
+Negative arguments have no effect.
+
+     <br><dt><code>transpose-words (M-t)</code>
+     <dd>Drag the word before point past the word after point,
+moving point past that word as well.
+
+     <br><dt><code>upcase-word (M-u)</code>
+     <dd>Uppercase the current (or following) word.  With a negative argument,
+uppercase the previous word, but do not move the cursor.
+
+     <br><dt><code>downcase-word (M-l)</code>
+     <dd>Lowercase the current (or following) word.  With a negative argument,
+lowercase the previous word, but do not move the cursor.
+
+     <br><dt><code>capitalize-word (M-c)</code>
+     <dd>Capitalize the current (or following) word.  With a negative argument,
+capitalize the previous word, but do not move the cursor.
+
+   </dl>
+
+   </body></html>
+

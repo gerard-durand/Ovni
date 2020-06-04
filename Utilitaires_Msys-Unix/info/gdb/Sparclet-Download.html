@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Sparclet%20Download">Sparclet Download</a>,
+Next:<a rel="next" accesskey="n" href="Sparclet-Execution.html#Sparclet%20Execution">Sparclet Execution</a>,
+Previous:<a rel="previous" accesskey="p" href="Sparclet-Connection.html#Sparclet%20Connection">Sparclet Connection</a>,
+Up:<a rel="up" accesskey="u" href="Sparclet.html#Sparclet">Sparclet</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Sparclet download</h5>
+
+   <p>Once connected to the Sparclet target,
+you can use the GDB
+<code>load</code> command to download the file from the host to the target. 
+The file name and load offset should be given as arguments to the <code>load</code>
+command. 
+Since the file format is aout, the program must be loaded to the starting
+address.  You can use <code>objdump</code> to find out what this value is.  The load
+offset is an offset which is added to the VMA (virtual memory address)
+of each of the file's sections. 
+For instance, if the program
+<code>prog</code> was linked to text address 0x1201000, with data at 0x12010160
+and bss at 0x12010170, in GDB, type:
+
+<pre class="example">     (gdbslet) load prog 0x12010000
+     Loading section .text, size 0xdb0 vma 0x12010000
+     </pre>
+
+   <p>If the code is loaded at a different address then what the program was linked
+to, you may need to use the <code>section</code> and <code>add-symbol-file</code> commands
+to tell GDB where to map the symbol table.
+
+   </body></html>
+

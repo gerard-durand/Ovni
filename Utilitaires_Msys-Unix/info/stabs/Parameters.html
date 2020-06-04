@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Parameters">Parameters</a>,
+Previous:<a rel="previous" accesskey="p" href="Based-Variables.html#Based%20Variables">Based Variables</a>,
+Up:<a rel="up" accesskey="u" href="Variables.html#Variables">Variables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Parameters</h3>
+
+   <p>Formal parameters to a function are represented by a stab (or sometimes
+two; see below) for each parameter.  The stabs are in the order in which
+the debugger should print the parameters (i.e., the order in which the
+parameters are declared in the source file).  The exact form of the stab
+depends on how the parameter is being passed.
+
+   <p>Parameters passed on the stack use the symbol descriptor <code>p</code> and
+the <code>N_PSYM</code> symbol type (or <code>C_PSYM</code> for XCOFF).  The value
+of the symbol is an offset used to locate the parameter on the stack;
+its exact meaning is machine-dependent, but on most machines it is an
+offset from the frame pointer.
+
+   <p>As a simple example, the code:
+
+<pre class="example">     main (argc, argv)
+          int argc;
+          char **argv;
+     </pre>
+
+   <p>produces the stabs:
+
+<pre class="example">     .stabs "main:F1",36,0,0,_main                 # 36 is N_FUN
+     .stabs "argc:p1",160,0,0,68                   # 160 is N_PSYM
+     .stabs "argv:p20=*21=*2",160,0,0,72
+     </pre>
+
+   <p>The type definition of <code>argv</code> is interesting because it contains
+several type definitions.  Type 21 is pointer to type 2 (char) and
+<code>argv</code> (type 20) is pointer to type 21.
+
+   <p>The following symbol descriptors are also said to go with <code>N_PSYM</code>. 
+The value of the symbol is said to be an offset from the argument
+pointer (I'm not sure whether this is true or not).
+
+<pre class="example">     pP (&lt;&lt;??&gt;&gt;)
+     pF Fortran function parameter
+     X  (function result variable)
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="Register-Parameters.html#Register%20Parameters">Register Parameters</a>: 
+<li><a accesskey="2" href="Local-Variable-Parameters.html#Local%20Variable%20Parameters">Local Variable Parameters</a>: 
+<li><a accesskey="3" href="Reference-Parameters.html#Reference%20Parameters">Reference Parameters</a>: 
+<li><a accesskey="4" href="Conformant-Arrays.html#Conformant%20Arrays">Conformant Arrays</a>: 
+</ul>
+
+   </body></html>
+

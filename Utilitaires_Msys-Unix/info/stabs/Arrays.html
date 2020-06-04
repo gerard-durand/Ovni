@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Arrays">Arrays</a>,
+Next:<a rel="next" accesskey="n" href="Strings.html#Strings">Strings</a>,
+Previous:<a rel="previous" accesskey="p" href="Subranges.html#Subranges">Subranges</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Array Types</h3>
+
+   <p>Arrays use the <code>a</code> type descriptor.  Following the type descriptor
+is the type of the index and the type of the array elements.  If the
+index type is a range type, it ends in a semicolon; otherwise
+(for example, if it is a type reference), there does not
+appear to be any way to tell where the types are separated.  In an
+effort to clean up this mess, IBM documents the two types as being
+separated by a semicolon, and a range type as not ending in a semicolon
+(but this is not right for range types which are not array indexes,
+see <a href="Subranges.html#Subranges">Subranges</a>).  I think probably the best solution is to specify
+that a semicolon ends a range type, and that the index type and element
+type of an array are separated by a semicolon, but that if the index
+type is a range type, the extra semicolon can be omitted.  GDB (at least
+through version 4.9) doesn't support any kind of index type other than a
+range anyway; I'm not sure about dbx.
+
+   <p>It is well established, and widely used, that the type of the index,
+unlike most types found in the stabs, is merely a type definition, not
+type information (see <a href="String-Field.html#String%20Field">String Field</a>) (that is, it need not start with
+<code></code><var>type-number</var><code>=</code> if it is defining a new type).  According to a
+comment in GDB, this is also true of the type of the array elements; it
+gives <code>ar1;1;10;ar1;1;10;4</code> as a legitimate way to express a two
+dimensional array.  According to AIX documentation, the element type
+must be type information.  GDB accepts either.
+
+   <p>The type of the index is often a range type, expressed as the type
+descriptor <code>r</code> and some parameters.  It defines the size of the
+array.  In the example below, the range <code>r1;0;2;</code> defines an index
+type which is a subrange of type 1 (integer), with a lower bound of 0
+and an upper bound of 2.  This defines the valid range of subscripts of
+a three-element C array.
+
+   <p>For example, the definition:
+
+<pre class="example">     char char_vec[3] = {'a','b','c'};
+     </pre>
+
+<p>produces the output:
+
+<pre class="example">     .stabs "char_vec:G19=ar1;0;2;2",32,0,0,0
+          .global _char_vec
+          .align 4
+     _char_vec:
+          .byte 97
+          .byte 98
+          .byte 99
+     </pre>
+
+   <p>If an array is <dfn>packed</dfn>, the elements are spaced more
+closely than normal, saving memory at the expense of speed.  For
+example, an array of 3-byte objects might, if unpacked, have each
+element aligned on a 4-byte boundary, but if packed, have no padding. 
+One way to specify that something is packed is with type attributes
+(see <a href="String-Field.html#String%20Field">String Field</a>).  In the case of arrays, another is to use the
+<code>P</code> type descriptor instead of <code>a</code>.  Other than specifying a
+packed array, <code>P</code> is identical to <code>a</code>.
+
+   <p>An open array is represented by the <code>A</code> type descriptor followed by
+type information specifying the type of the array elements.
+
+   <p>An N-dimensional dynamic array is represented by
+
+<pre class="example">     D <var>dimensions</var> ; <var>type-information</var>
+     </pre>
+
+   <p><var>dimensions</var> is the number of dimensions; <var>type-information</var>
+specifies the type of the array elements.
+
+   <p>A subarray of an N-dimensional array is represented by
+
+<pre class="example">     E <var>dimensions</var> ; <var>type-information</var>
+     </pre>
+
+   <p><var>dimensions</var> is the number of dimensions; <var>type-information</var>
+specifies the type of the array elements.
+
+   </body></html>
+

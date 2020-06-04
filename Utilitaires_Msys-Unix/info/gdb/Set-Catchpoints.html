@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Set%20Catchpoints">Set Catchpoints</a>,
+Next:<a rel="next" accesskey="n" href="Delete-Breaks.html#Delete%20Breaks">Delete Breaks</a>,
+Previous:<a rel="previous" accesskey="p" href="Set-Watchpoints.html#Set%20Watchpoints">Set Watchpoints</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Setting catchpoints</h4>
+
+   <p>You can use <dfn>catchpoints</dfn> to cause the debugger to stop for certain
+kinds of program events, such as C<tt>++</tt> exceptions or the loading of a
+shared library.  Use the <code>catch</code> command to set a catchpoint.
+
+     <dl>
+<dt><code>catch </code><var>event</var><code></code>
+     <dd>Stop when <var>event</var> occurs.  <var>event</var> can be any of the following:
+          <dl>
+<dt><code>throw</code>
+          <dd>The throwing of a C<tt>++</tt> exception.
+
+          <br><dt><code>catch</code>
+          <dd>The catching of a C<tt>++</tt> exception.
+
+          <br><dt><code>exec</code>
+          <dd>A call to <code>exec</code>.  This is currently only available for HP-UX.
+
+          <br><dt><code>fork</code>
+          <dd>A call to <code>fork</code>.  This is currently only available for HP-UX.
+
+          <br><dt><code>vfork</code>
+          <dd>A call to <code>vfork</code>.  This is currently only available for HP-UX.
+
+          <br><dt><code>load</code>
+          <dd><dt><code>load </code><var>libname</var><code></code>
+          <dd>The dynamic loading of any shared library, or the loading of the library
+<var>libname</var>.  This is currently only available for HP-UX.
+
+          <br><dt><code>unload</code>
+          <dd><dt><code>unload </code><var>libname</var><code></code>
+          <dd>The unloading of any dynamically loaded shared library, or the unloading
+of the library <var>libname</var>.  This is currently only available for HP-UX. 
+</dl>
+
+     <br><dt><code>tcatch </code><var>event</var><code></code>
+     <dd>Set a catchpoint that is enabled only for one stop.  The catchpoint is
+automatically deleted after the first time the event is caught.
+
+   </dl>
+
+   <p>Use the <code>info break</code> command to list the current catchpoints.
+
+   <p>There are currently some limitations to C<tt>++</tt> exception handling
+(<code>catch throw</code> and <code>catch catch</code>) in GDB:
+
+     <ul>
+<li>If you call a function interactively, GDB normally returns
+control to you when the function has finished executing.  If the call
+raises an exception, however, the call may bypass the mechanism that
+returns control to you and cause your program either to abort or to
+simply continue running until it hits a breakpoint, catches a signal
+that GDB is listening for, or exits.  This is the case even if
+you set a catchpoint for the exception; catchpoints on exceptions are
+disabled within interactive calls.
+
+     <li>You cannot raise an exception interactively.
+
+     <li>You cannot install an exception handler interactively. 
+</ul>
+
+   <p>Sometimes <code>catch</code> is not the best way to debug exception handling:
+if you need to know exactly where an exception is raised, it is better to
+stop <em>before</em> the exception handler is called, since that way you
+can see the stack before any unwinding takes place.  If you set a
+breakpoint in an exception handler instead, it may not be easy to find
+out where the exception was raised.
+
+   <p>To stop just before an exception handler is called, you need some
+knowledge of the implementation.  In the case of <small>GNU</small> C<tt>++</tt>, exceptions are
+raised by calling a library function named <code>__raise_exception</code>
+which has the following ANSI C interface:
+
+<pre class="example">         /* <var>addr</var> is where the exception identifier is stored.
+            <var>id</var> is the exception identifier.  */
+         void __raise_exception (void **addr, void *id);
+     </pre>
+
+<p>To make the debugger catch all exceptions before any stack
+unwinding takes place, set a breakpoint on <code>__raise_exception</code>
+(see <a href="Breakpoints.html#Breakpoints">Breakpoints; watchpoints; and exceptions</a>).
+
+   <p>With a conditional breakpoint (see <a href="Conditions.html#Conditions">Break conditions</a>)
+that depends on the value of <var>id</var>, you can stop your program when
+a specific exception is raised.  You can use multiple conditional
+breakpoints to stop your program when any of a number of exceptions are
+raised.
+
+   </body></html>
+

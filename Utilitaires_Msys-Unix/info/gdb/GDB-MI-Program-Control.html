@@ -1,0 +1,582 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Program%20Control">GDB/MI Program Control</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Miscellaneous-Commands.html#GDB%2fMI%20Miscellaneous%20Commands">GDB/MI Miscellaneous Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Data-Manipulation.html#GDB%2fMI%20Data%20Manipulation">GDB/MI Data Manipulation</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Program control</h3>
+
+<h5 class="subsubheading">Program termination</h5>
+
+   <p>As a result of execution, the inferior program can run to completion, if
+it doesn't encounter any breakpoints.  In this case the output will
+include an exit code, if the program has exited exceptionally.
+
+<h5 class="subsubheading">Examples</h5>
+
+<p>Program exited normally:
+
+<pre class="smallexample">     (gdb)
+     -exec-run
+     ^running
+     (gdb)
+     x = 55
+     *stopped,reason="exited-normally"
+     (gdb)
+     </pre>
+
+<p>Program exited exceptionally:
+
+<pre class="smallexample">     (gdb)
+     -exec-run
+     ^running
+     (gdb)
+     x = 55
+     *stopped,reason="exited",exit-code="01"
+     (gdb)
+     </pre>
+
+   <p>Another way the program can terminate is if it receives a signal such as
+<code>SIGINT</code>.  In this case, <small>GDB/MI</small> displays this:
+
+<pre class="smallexample">     (gdb)
+     *stopped,reason="exited-signalled",signal-name="SIGINT",
+     signal-meaning="Interrupt"
+     </pre>
+
+<h4 class="subheading">The <code>-exec-abort</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-abort
+     </pre>
+
+   <p>Kill the inferior running program.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>kill</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-exec-arguments</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-arguments <var>args</var>
+     </pre>
+
+   <p>Set the inferior program arguments, to be used in the next
+<code>-exec-run</code>.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>set args</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>Don't have one around.
+
+<h4 class="subheading">The <code>-exec-continue</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-continue
+     </pre>
+
+   <p>Asynchronous command.  Resumes the execution of the inferior program
+until a breakpoint is encountered, or until the inferior exits.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB corresponding is <code>continue</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     -exec-continue
+     ^running
+     (gdb)
+     @Hello world
+     *stopped,reason="breakpoint-hit",bkptno="2",frame={func="foo",args=[],
+     file="hello.c",line="13"}
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-finish</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-finish
+     </pre>
+
+   <p>Asynchronous command.  Resumes the execution of the inferior program
+until the current function is exited.  Displays the results returned by
+the function.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>finish</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>Function returning <code>void</code>.
+
+<pre class="smallexample">     -exec-finish
+     ^running
+     (gdb)
+     @hello from foo
+     *stopped,reason="function-finished",frame={func="main",args=[],
+     file="hello.c",line="7"}
+     (gdb)
+     </pre>
+
+   <p>Function returning other than <code>void</code>.  The name of the internal
+GDB variable storing the result is printed, together with the
+value itself.
+
+<pre class="smallexample">     -exec-finish
+     ^running
+     (gdb)
+     *stopped,reason="function-finished",frame={addr="0x000107b0",func="foo",
+     args=[{name="a",value="1"],{name="b",value="9"}},
+     file="recursive2.c",line="14"},
+     gdb-result-var="$1",return-value="0"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-interrupt</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-interrupt
+     </pre>
+
+   <p>Asynchronous command.  Interrupts the background execution of the target. 
+Note how the token associated with the stop message is the one for the
+execution command that has been interrupted.  The token for the interrupt
+itself only appears in the <code>^done</code> output.  If the user is trying to
+interrupt a non-running program, an error message will be printed.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>interrupt</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     111-exec-continue
+     111^running
+     
+     (gdb)
+     222-exec-interrupt
+     222^done
+     (gdb)
+     111*stopped,signal-name="SIGINT",signal-meaning="Interrupt",
+     frame={addr="0x00010140",func="foo",args=[],file="try.c",line="13"}
+     (gdb)
+     
+     (gdb)
+     -exec-interrupt
+     ^error,msg="mi_cmd_exec_interrupt: Inferior not executing."
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-next</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-next
+     </pre>
+
+   <p>Asynchronous command.  Resumes execution of the inferior program, stopping
+when the beginning of the next source line is reached.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>next</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     -exec-next
+     ^running
+     (gdb)
+     *stopped,reason="end-stepping-range",line="8",file="hello.c"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-next-instruction</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-next-instruction
+     </pre>
+
+   <p>Asynchronous command.  Executes one machine instruction.  If the
+instruction is a function call continues until the function returns.  If
+the program stops at an instruction in the middle of a source line, the
+address will be printed as well.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>nexti</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -exec-next-instruction
+     ^running
+     
+     (gdb)
+     *stopped,reason="end-stepping-range",
+     addr="0x000100d4",line="5",file="hello.c"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-return</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-return
+     </pre>
+
+   <p>Makes current function return immediately.  Doesn't execute the inferior. 
+Displays the new current frame.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>return</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     200-break-insert callee4
+     200^done,bkpt={number="1",addr="0x00010734",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="8"}
+     (gdb)
+     000-exec-run
+     000^running
+     (gdb)
+     000*stopped,reason="breakpoint-hit",bkptno="1",
+     frame={func="callee4",args=[],
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="8"}
+     (gdb)
+     205-break-delete
+     205^done
+     (gdb)
+     111-exec-return
+     111^done,frame={level="0 ",func="callee3",
+     args=[{name="strarg",
+     value="0x11940 \"A string argument.\""}],
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="18"}
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-run</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-run
+     </pre>
+
+   <p>Asynchronous command.  Starts execution of the inferior from the
+beginning.  The inferior executes until either a breakpoint is
+encountered or the program exits.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>run</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -break-insert main
+     ^done,bkpt={number="1",addr="0x0001072c",file="recursive2.c",line="4"}
+     (gdb)
+     -exec-run
+     ^running
+     (gdb)
+     *stopped,reason="breakpoint-hit",bkptno="1",
+     frame={func="main",args=[],file="recursive2.c",line="4"}
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-show-arguments</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-show-arguments
+     </pre>
+
+   <p>Print the arguments of the program.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>show args</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-exec-step</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-step
+     </pre>
+
+   <p>Asynchronous command.  Resumes execution of the inferior program, stopping
+when the beginning of the next source line is reached, if the next
+source line is not a function call.  If it is, stop at the first
+instruction of the called function.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>step</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>Stepping into a function:
+
+<pre class="smallexample">     -exec-step
+     ^running
+     (gdb)
+     *stopped,reason="end-stepping-range",
+     frame={func="foo",args=[{name="a",value="10"},
+     {name="b",value="0"}],file="recursive2.c",line="11"}
+     (gdb)
+     </pre>
+
+   <p>Regular stepping:
+
+<pre class="smallexample">     -exec-step
+     ^running
+     (gdb)
+     *stopped,reason="end-stepping-range",line="14",file="recursive2.c"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-step-instruction</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-step-instruction
+     </pre>
+
+   <p>Asynchronous command.  Resumes the inferior which executes one machine
+instruction.  The output, once GDB has stopped, will vary depending on
+whether we have stopped in the middle of a source line or not.  In the
+former case, the address at which the program stopped will be printed as
+well.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>stepi</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -exec-step-instruction
+     ^running
+     
+     (gdb)
+     *stopped,reason="end-stepping-range",
+     frame={func="foo",args=[],file="try.c",line="10"}
+     (gdb)
+     -exec-step-instruction
+     ^running
+     
+     (gdb)
+     *stopped,reason="end-stepping-range",
+     frame={addr="0x000100f4",func="foo",args=[],file="try.c",line="10"}
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-exec-until</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -exec-until [ <var>location</var> ]
+     </pre>
+
+   <p>Asynchronous command.  Executes the inferior until the <var>location</var>
+specified in the argument is reached.  If there is no argument, the inferior
+executes until a source line greater than the current one is reached. 
+The reason for stopping in this case will be <code>location-reached</code>.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>until</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -exec-until recursive2.c:6
+     ^running
+     (gdb)
+     x = 55
+     *stopped,reason="location-reached",frame={func="main",args=[],
+     file="recursive2.c",line="6"}
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-file-exec-and-symbols</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-exec-and-symbols <var>file</var>
+     </pre>
+
+   <p>Specify the executable file to be debugged.  This file is the one from
+which the symbol table is also read.  If no file is specified, the
+command clears the executable and symbol information.  If breakpoints
+are set when using this command with no arguments, GDB will produce
+error messages.  Otherwise, no output is produced, except a completion
+notification.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>file</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -file-exec-and-symbols /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+     ^done
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-file-exec-file</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-exec-file <var>file</var>
+     </pre>
+
+   <p>Specify the executable file to be debugged.  Unlike
+<code>-file-exec-and-symbols</code>, the symbol table is <em>not</em> read
+from this file.  If used without argument, GDB clears the information
+about the executable file.  No output is produced, except a completion
+notification.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>exec-file</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -file-exec-file /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+     ^done
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-file-list-exec-sections</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-list-exec-sections
+     </pre>
+
+   <p>List the sections of the current executable file.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The GDB command <code>info file</code> shows, among the rest, the same
+information as this command.  <code>gdbtk</code> has a corresponding command
+<code>gdb_load_info</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-file-list-exec-source-files</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-list-exec-source-files
+     </pre>
+
+   <p>List the source files for the current executable.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>There's no GDB command which directly corresponds to this one. 
+<code>gdbtk</code> has an analogous command <code>gdb_listfiles</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-file-list-shared-libraries</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-list-shared-libraries
+     </pre>
+
+   <p>List the shared libraries in the program.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>info shared</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-file-list-symbol-files</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-list-symbol-files
+     </pre>
+
+   <p>List symbol files.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>info file</code> (part of it).
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-file-symbol-file</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -file-symbol-file <var>file</var>
+     </pre>
+
+   <p>Read symbol table info from the specified <var>file</var> argument.  When
+used without arguments, clears GDB's symbol table info.  No output is
+produced, except for a completion notification.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>symbol-file</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -file-symbol-file /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+     ^done
+     (gdb)
+     </pre>
+
+   </body></html>
+

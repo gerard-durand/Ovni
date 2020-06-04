@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Maintenance%20Commands">Maintenance Commands</a>,
+Next:<a rel="next" accesskey="n" href="Remote-Protocol.html#Remote%20Protocol">Remote Protocol</a>,
+Previous:<a rel="previous" accesskey="p" href="Installing-GDB.html#Installing%20GDB">Installing GDB</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">Maintenance Commands</h2>
+
+   <p>In addition to commands intended for GDB users, GDB
+includes a number of commands intended for GDB developers. 
+These commands are provided here for reference.
+
+     <dl>
+<dt><code><a name="maint%20info%20breakpoints"></a>maint info breakpoints</code>
+     <dd>Using the same format as <code>info breakpoints</code>, display both the
+breakpoints you've set explicitly, and those GDB is using for
+internal purposes.  Internal breakpoints are shown with negative
+breakpoint numbers.  The type column identifies what kind of breakpoint
+is shown:
+
+          <dl>
+<dt><code>breakpoint</code>
+          <dd>Normal, explicitly set breakpoint.
+
+          <br><dt><code>watchpoint</code>
+          <dd>Normal, explicitly set watchpoint.
+
+          <br><dt><code>longjmp</code>
+          <dd>Internal breakpoint, used to handle correctly stepping through
+<code>longjmp</code> calls.
+
+          <br><dt><code>longjmp resume</code>
+          <dd>Internal breakpoint at the target of a <code>longjmp</code>.
+
+          <br><dt><code>until</code>
+          <dd>Temporary internal breakpoint used by the GDB <code>until</code> command.
+
+          <br><dt><code>finish</code>
+          <dd>Temporary internal breakpoint used by the GDB <code>finish</code> command.
+
+          <br><dt><code>shlib events</code>
+          <dd>Shared library events.
+
+     </dl>
+
+   </dl>
+
+   </body></html>
+

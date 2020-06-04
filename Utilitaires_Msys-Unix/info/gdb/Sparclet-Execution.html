@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Sparclet%20Execution">Sparclet Execution</a>,
+Previous:<a rel="previous" accesskey="p" href="Sparclet-Download.html#Sparclet%20Download">Sparclet Download</a>,
+Up:<a rel="up" accesskey="u" href="Sparclet.html#Sparclet">Sparclet</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Running and debugging</h5>
+
+   <p>You can now begin debugging the task using GDB's execution control
+commands, <code>b</code>, <code>step</code>, <code>run</code>, etc.  See the GDB
+manual for the list of commands.
+
+<pre class="example">     (gdbslet) b main
+     Breakpoint 1 at 0x12010000: file prog.c, line 3.
+     (gdbslet) run
+     Starting program: prog
+     Breakpoint 1, main (argc=1, argv=0xeffff21c) at prog.c:3
+     3        char *symarg = 0;
+     (gdbslet) step
+     4        char *execarg = "hello!";
+     (gdbslet)
+     </pre>
+
+   </body></html>
+

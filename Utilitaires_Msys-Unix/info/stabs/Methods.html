@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Methods">Methods</a>,
+Next:<a rel="next" accesskey="n" href="Method-Type-Descriptor.html#Method%20Type%20Descriptor">Method Type Descriptor</a>,
+Previous:<a rel="previous" accesskey="p" href="Class-Instance.html#Class%20Instance">Class Instance</a>,
+Up:<a rel="up" accesskey="u" href="Cplusplus.html#Cplusplus">Cplusplus</a>
+<hr><br>
+</div>
+
+<h3 class="section">Method Definition</h3>
+
+   <p>The class definition shown above declares Ameth.  The C++ source below
+defines Ameth:
+
+<pre class="example">     int
+     baseA::Ameth(int in, char other)
+     {
+             return in;
+     };
+     </pre>
+
+   <p>This method definition yields three stabs following the code of the
+method.  One stab describes the method itself and following two describe
+its parameters.  Although there is only one formal argument all methods
+have an implicit argument which is the <code>this</code> pointer.  The <code>this</code>
+pointer is a pointer to the object on which the method was called.  Note
+that the method name is mangled to encode the class name and argument
+types.  Name mangling is described in the <small>ARM</small> (<cite>The Annotated
+C++ Reference Manual</cite>, by Ellis and Stroustrup, <small>ISBN</small>
+0-201-51459-1); <code>gpcompare.texi</code> in Cygnus GCC distributions
+describes the differences between GNU mangling and <small>ARM</small>
+mangling.
+
+<pre class="example">     .stabs "name:symbol_descriptor(global function)return_type(int)",
+             N_FUN, NIL, NIL, code_addr_of_method_start
+     
+     .stabs "Ameth__5baseAic:F1",36,0,0,_Ameth__5baseAic
+     </pre>
+
+   <p>Here is the stab for the <code>this</code> pointer implicit argument.  The
+name of the <code>this</code> pointer is always <code>this</code>.  Type 19, the
+<code>this</code> pointer is defined as a pointer to type 20, <code>baseA</code>,
+but a stab defining <code>baseA</code> has not yet been emitted.  Since the
+compiler knows it will be emitted shortly, here it just outputs a cross
+reference to the undefined symbol, by prefixing the symbol name with
+<code>xs</code>.
+
+<pre class="example">     .stabs "name:sym_desc(register param)type_def(19)=
+             type_desc(ptr to)type_ref(baseA)=
+             type_desc(cross-reference to)baseA:",N_RSYM,NIL,NIL,register_number
+     
+     .stabs "this:P19=*20=xsbaseA:",64,0,0,8
+     </pre>
+
+   <p>The stab for the explicit integer argument looks just like a parameter
+to a C function.  The last field of the stab is the offset from the
+argument pointer, which in most systems is the same as the frame
+pointer.
+
+<pre class="example">     .stabs "name:sym_desc(value parameter)type_ref(int)",
+             N_PSYM,NIL,NIL,offset_from_arg_ptr
+     
+     .stabs "in:p1",160,0,0,72
+     </pre>
+
+   <p>&lt;&lt; The examples that follow are based on A1.C &gt;&gt;
+
+   </body></html>
+

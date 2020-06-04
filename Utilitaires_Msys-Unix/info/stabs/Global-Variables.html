@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Global%20Variables">Global Variables</a>,
+Next:<a rel="next" accesskey="n" href="Register-Variables.html#Register%20Variables">Register Variables</a>,
+Previous:<a rel="previous" accesskey="p" href="Stack-Variables.html#Stack%20Variables">Stack Variables</a>,
+Up:<a rel="up" accesskey="u" href="Variables.html#Variables">Variables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Global Variables</h3>
+
+   <p>A variable whose scope is not specific to just one source file is
+represented by the <code>G</code> symbol descriptor.  These stabs use the
+<code>N_GSYM</code> stab type (C_GSYM for XCOFF).  The type information for
+the stab (see <a href="String-Field.html#String%20Field">String Field</a>) gives the type of the variable.
+
+   <p>For example, the following source code:
+
+<pre class="example">     char g_foo = 'c';
+     </pre>
+
+<p>yields the following assembly code:
+
+<pre class="example">     .stabs "g_foo:G2",32,0,0,0     # 32 is N_GSYM
+          .global _g_foo
+          .data
+     _g_foo:
+          .byte 99
+     </pre>
+
+   <p>The address of the variable represented by the <code>N_GSYM</code> is not
+contained in the <code>N_GSYM</code> stab.  The debugger gets this information
+from the external symbol for the global variable.  In the example above,
+the <code>.global _g_foo</code> and <code>_g_foo:</code> lines tell the assembler to
+produce an external symbol.
+
+   <p>Some compilers, like GCC, output <code>N_GSYM</code> stabs only once, where
+the variable is defined.  Other compilers, like SunOS4 /bin/cc, output a
+<code>N_GSYM</code> stab for each compilation unit which references the
+variable.
+
+   </body></html>
+

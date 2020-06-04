@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Languages">Languages</a>,
+Next:<a rel="next" accesskey="n" href="Symbols.html#Symbols">Symbols</a>,
+Previous:<a rel="previous" accesskey="p" href="Overlays.html#Overlays">Overlays</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Using GDB with Different Languages</h2>
+
+   <p>Although programming languages generally have common aspects, they are
+rarely expressed in the same manner.  For instance, in ANSI C,
+dereferencing a pointer <code>p</code> is accomplished by <code>*p</code>, but in
+Modula-2, it is accomplished by <code>p^</code>.  Values can also be
+represented (and displayed) differently.  Hex numbers in C appear as
+<code>0x1ae</code>, while in Modula-2 they appear as <code>1AEH</code>.
+
+   <p>Language-specific information is built into GDB for some languages,
+allowing you to express operations like the above in your program's
+native language, and allowing GDB to output values in a manner
+consistent with the syntax of your program's native language.  The
+language you use to build expressions is called the <dfn>working
+language</dfn>.
+
+<ul class="menu">
+<li><a accesskey="1" href="Setting.html#Setting">Setting</a>:                      Switching between source languages
+<li><a accesskey="2" href="Show.html#Show">Show</a>:                         Displaying the language
+<li><a accesskey="3" href="Checks.html#Checks">Checks</a>:                       Type and range checks
+<li><a accesskey="4" href="Support.html#Support">Support</a>:                      Supported languages
+</ul>
+
+   </body></html>
+

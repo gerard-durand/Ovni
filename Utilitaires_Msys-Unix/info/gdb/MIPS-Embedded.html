@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="MIPS%20Embedded">MIPS Embedded</a>,
+Next:<a rel="next" accesskey="n" href="PA.html#PA">PA</a>,
+Previous:<a rel="previous" accesskey="p" href="M88K.html#M88K">M88K</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">MIPS Embedded</h4>
+
+   GDB can use the MIPS remote debugging protocol to talk to a
+MIPS board attached to a serial line.  This is available when
+you configure GDB with <code>--target=mips-idt-ecoff</code>.
+
+   <p>Use these GDB commands to specify the connection to your target board:
+
+     <dl>
+<dt><code>target mips </code><var>port</var><code></code>
+     <dd>To run a program on the board, start up <code>gdb</code> with the
+name of your program as the argument.  To connect to the board, use the
+command <code>target mips </code><var>port</var><code></code>, where <var>port</var> is the name of
+the serial port connected to the board.  If the program has not already
+been downloaded to the board, you may use the <code>load</code> command to
+download it.  You can then use all the usual GDB commands.
+
+     <p>For example, this sequence connects to the target board through a serial
+port, and loads and runs a program called <var>prog</var> through the
+debugger:
+
+     <pre class="example">          host$ gdb <var>prog</var>
+          GDB is free software and ...
+          (gdb) target mips /dev/ttyb
+          (gdb) load <var>prog</var>
+          (gdb) run
+          </pre>
+
+     <br><dt><code>target mips </code><var>hostname</var><code>:</code><var>portnumber</var><code></code>
+     <dd>On some GDB host configurations, you can specify a TCP
+connection (for instance, to a serial line managed by a terminal
+concentrator) instead of a serial port, using the syntax
+<code></code><var>hostname</var><code>:</code><var>portnumber</var><code></code>.
+
+     <br><dt><code>target pmon </code><var>port</var><code></code>
+     <dd>PMON ROM monitor.
+
+     <br><dt><code>target ddb </code><var>port</var><code></code>
+     <dd>NEC's DDB variant of PMON for Vr4300.
+
+     <br><dt><code>target lsi </code><var>port</var><code></code>
+     <dd>LSI variant of PMON.
+
+     <br><dt><code>target r3900 </code><var>dev</var><code></code>
+     <dd>Densan DVE-R3900 ROM monitor for Toshiba R3900 Mips.
+
+     <br><dt><code>target array </code><var>dev</var><code></code>
+     <dd>Array Tech LSI33K RAID controller board.
+
+   </dl>
+
+GDB also supports these special commands for MIPS targets:
+
+     <dl>
+<dt><code>set processor </code><var>args</var><code></code>
+     <dd><dt><code>show processor</code>
+     <dd>Use the <code>set processor</code> command to set the type of MIPS
+processor when you want to access processor-type-specific registers. 
+For example, <code>set processor </code><var>r3041</var><code></code> tells GDB
+to use the CPU registers appropriate for the 3041 chip. 
+Use the <code>show processor</code> command to see what MIPS processor GDB
+is using.  Use the <code>info reg</code> command to see what registers
+GDB is using.
+
+     <br><dt><code>set mipsfpu double</code>
+     <dd><dt><code>set mipsfpu single</code>
+     <dd><dt><code>set mipsfpu none</code>
+     <dd><dt><code>show mipsfpu</code>
+     <dd>If your target board does not support the MIPS floating point
+coprocessor, you should use the command <code>set mipsfpu none</code> (if you
+need this, you may wish to put the command in your GDB init
+file).  This tells GDB how to find the return value of
+functions which return floating point values.  It also allows
+GDB to avoid saving the floating point registers when calling
+functions on the board.  If you are using a floating point coprocessor
+with only single precision floating point support, as on the <small>R4650</small>
+processor, use the command <code>set mipsfpu single</code>.  The default
+double precision floating point coprocessor may be selected using
+<code>set mipsfpu double</code>.
+
+     <p>In previous versions the only choices were double precision or no
+floating point, so <code>set mipsfpu on</code> will select double precision
+and <code>set mipsfpu off</code> will select no floating point.
+
+     <p>As usual, you can inquire about the <code>mipsfpu</code> variable with
+<code>show mipsfpu</code>.
+
+     <br><dt><code>set remotedebug </code><var>n</var><code></code>
+     <dd><dt><code>show remotedebug</code>
+     <dd>You can see some debugging information about communications with the board
+by setting the <code>remotedebug</code> variable.  If you set it to <code>1</code> using
+<code>set remotedebug 1</code>, every packet is displayed.  If you set it
+to <code>2</code>, every character is displayed.  You can check the current value
+at any time with the command <code>show remotedebug</code>.
+
+     <br><dt><code>set timeout </code><var>seconds</var><code></code>
+     <dd><dt><code>set retransmit-timeout </code><var>seconds</var><code></code>
+     <dd><dt><code>show timeout</code>
+     <dd><dt><code>show retransmit-timeout</code>
+     <dd>You can control the timeout used while waiting for a packet, in the MIPS
+remote protocol, with the <code>set timeout </code><var>seconds</var><code></code> command.  The
+default is 5 seconds.  Similarly, you can control the timeout used while
+waiting for an acknowledgement of a packet with the <code>set
+retransmit-timeout </code><var>seconds</var><code></code> command.  The default is 3 seconds. 
+You can inspect both values with <code>show timeout</code> and <code>show
+retransmit-timeout</code>.  (These commands are <em>only</em> available when
+GDB is configured for <code>--target=mips-idt-ecoff</code>.)
+
+     <p>The timeout set by <code>set timeout</code> does not apply when GDB
+is waiting for your program to stop.  In that case, GDB waits
+forever because it has no way of knowing how long the program is going
+to run before stopping. 
+</dl>
+
+   </body></html>
+

@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Quitting%20GDB">Quitting GDB</a>,
+Next:<a rel="next" accesskey="n" href="Shell-Commands.html#Shell%20Commands">Shell Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Invoking-GDB.html#Invoking%20GDB">Invoking GDB</a>,
+Up:<a rel="up" accesskey="u" href="Invocation.html#Invocation">Invocation</a>
+<hr><br>
+</div>
+
+<h3 class="section">Quitting GDB</h3>
+
+     <dl>
+<dt><code>quit </code>[<code></code><var>expression</var><code></code>]<code></code>
+     <dd><dt><code>q</code>
+     <dd>To exit GDB, use the <code>quit</code> command (abbreviated
+<code>q</code>), or type an end-of-file character (usually <kbd>C-d</kbd>).  If you
+do not supply <var>expression</var>, GDB will terminate normally;
+otherwise it will terminate using the result of <var>expression</var> as the
+error code. 
+</dl>
+
+   <p>An interrupt (often <kbd>C-c</kbd>) does not exit from GDB, but rather
+terminates the action of any GDB command that is in progress and
+returns to GDB command level.  It is safe to type the interrupt
+character at any time because GDB does not allow it to take effect
+until a time when it is safe.
+
+   <p>If you have been using GDB to control an attached process or
+device, you can release it with the <code>detach</code> command
+(see <a href="Attach.html#Attach">Debugging an already-running process</a>).
+
+   </body></html>
+

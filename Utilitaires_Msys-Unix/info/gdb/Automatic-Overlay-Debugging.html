@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Automatic%20Overlay%20Debugging">Automatic Overlay Debugging</a>,
+Next:<a rel="next" accesskey="n" href="Overlay-Sample-Program.html#Overlay%20Sample%20Program">Overlay Sample Program</a>,
+Previous:<a rel="previous" accesskey="p" href="Overlay-Commands.html#Overlay%20Commands">Overlay Commands</a>,
+Up:<a rel="up" accesskey="u" href="Overlays.html#Overlays">Overlays</a>
+<hr><br>
+</div>
+
+<h3 class="section">Automatic Overlay Debugging</h3>
+
+   GDB can automatically track which overlays are mapped and which
+are not, given some simple co-operation from the overlay manager in the
+inferior.  If you enable automatic overlay debugging with the
+<code>overlay auto</code> command (see <a href="Overlay-Commands.html#Overlay%20Commands">Overlay Commands</a>), GDB
+looks in the inferior's memory for certain variables describing the
+current state of the overlays.
+
+   <p>Here are the variables your overlay manager must define to support
+GDB's automatic overlay debugging:
+
+     <dl>
+
+     <br><dt><code>_ovly_table</code>:
+     <dd>This variable must be an array of the following structures:
+
+     <pre class="example">          struct
+          {
+            /* The overlay's mapped address.  */
+            unsigned long vma;
+          
+            /* The size of the overlay, in bytes.  */
+            unsigned long size;
+          
+            /* The overlay's load address.  */
+            unsigned long lma;
+          
+            /* Non-zero if the overlay is currently mapped;
+               zero otherwise.  */
+            unsigned long mapped;
+          }
+          </pre>
+
+     <br><dt><code>_novlys</code>:
+     <dd>This variable must be a four-byte signed integer, holding the total
+number of elements in <code>_ovly_table</code>.
+
+   </dl>
+
+   <p>To decide whether a particular overlay is mapped or not, GDB
+looks for an entry in <code>_ovly_table</code> whose <code>vma</code> and
+<code>lma</code> members equal the VMA and LMA of the overlay's section in the
+executable file.  When GDB finds a matching entry, it consults
+the entry's <code>mapped</code> member to determine whether the overlay is
+currently mapped.
+
+   <p>In addition, your overlay manager may define a function called
+<code>_ovly_debug_event</code>.  If this function is defined, GDB
+will silently set a breakpoint there.  If the overlay manager then
+calls this function whenever it has changed the overlay table, this
+will enable GDB to accurately keep track of which overlays
+are in program memory, and update any breakpoints that may be set
+in overlays.  This will allow breakpoints to work even if the
+overlays are kept in ROM or other non-writable memory while they
+are not being executed.
+
+   </body></html>
+

@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Word%20Designators">Word Designators</a>,
+Next:<a rel="next" accesskey="n" href="Modifiers.html#Modifiers">Modifiers</a>,
+Previous:<a rel="previous" accesskey="p" href="Event-Designators.html#Event%20Designators">Event Designators</a>,
+Up:<a rel="up" accesskey="u" href="History-Interaction.html#History%20Interaction">History Interaction</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Word Designators</h4>
+
+   <p>Word designators are used to select desired words from the event. 
+A <code>:</code> separates the event specification from the word designator.  It
+may be omitted if the word designator begins with a <code>^</code>, <code>$</code>,
+<code>*</code>, <code>-</code>, or <code>%</code>.  Words are numbered from the beginning
+of the line, with the first word being denoted by 0 (zero).  Words are
+inserted into the current line separated by single spaces.
+
+   <p>For example,
+
+     <dl>
+<dt><code>!!</code>
+     <dd>designates the preceding command.  When you type this, the preceding
+command is repeated in toto.
+
+     <br><dt><code>!!:$</code>
+     <dd>designates the last argument of the preceding command.  This may be
+shortened to <code>!$</code>.
+
+     <br><dt><code>!fi:2</code>
+     <dd>designates the second argument of the most recent command starting with
+the letters <code>fi</code>. 
+</dl>
+
+   <p>Here are the word designators:
+
+     <dl>
+
+     <br><dt><code>0 (zero)</code>
+     <dd>The <code>0</code>th word.  For many applications, this is the command word.
+
+     <br><dt><code></code><var>n</var><code></code>
+     <dd>The <var>n</var>th word.
+
+     <br><dt><code>^</code>
+     <dd>The first argument; that is, word 1.
+
+     <br><dt><code>$</code>
+     <dd>The last argument.
+
+     <br><dt><code>%</code>
+     <dd>The word matched by the most recent <code>?</code><var>string</var><code>?</code> search.
+
+     <br><dt><code></code><var>x</var><code>-</code><var>y</var><code></code>
+     <dd>A range of words; <code>-</code><var>y</var><code></code> abbreviates <code>0-</code><var>y</var><code></code>.
+
+     <br><dt><code>*</code>
+     <dd>All of the words, except the <code>0</code>th.  This is a synonym for <code>1-$</code>. 
+It is not an error to use <code>*</code> if there is just one word in the event;
+the empty string is returned in that case.
+
+     <br><dt><code></code><var>x</var><code>*</code>
+     <dd>Abbreviates <code></code><var>x</var><code>-$</code>
+
+     <br><dt><code></code><var>x</var><code>-</code>
+     <dd>Abbreviates <code></code><var>x</var><code>-$</code> like <code></code><var>x</var><code>*</code>, but omits the last word.
+
+   </dl>
+
+   <p>If a word designator is supplied without an event specification, the
+previous command is used as the event.
+
+   </body></html>
+

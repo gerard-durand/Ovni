@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Patching">Patching</a>,
+Previous:<a rel="previous" accesskey="p" href="Calling.html#Calling">Calling</a>,
+Up:<a rel="up" accesskey="u" href="Altering.html#Altering">Altering</a>
+<hr><br>
+</div>
+
+<h3 class="section">Patching programs</h3>
+
+   <p>By default, GDB opens the file containing your program's
+executable code (or the corefile) read-only.  This prevents accidental
+alterations to machine code; but it also prevents you from intentionally
+patching your program's binary.
+
+   <p>If you'd like to be able to patch the binary, you can specify that
+explicitly with the <code>set write</code> command.  For example, you might
+want to turn on internal debugging flags, or even to make emergency
+repairs.
+
+     <dl>
+<dt><code>set write on</code>
+     <dd><dt><code>set write off</code>
+     <dd>If you specify <code>set write on</code>, GDB opens executable and
+core files for both reading and writing; if you specify <code>set write
+off</code> (the default), GDB opens them read-only.
+
+     <p>If you have already loaded a file, you must load it again (using the
+<code>exec-file</code> or <code>core-file</code> command) after changing <code>set
+write</code>, for your new setting to take effect.
+
+     <br><dt><code>show write</code>
+     <dd>Display whether executable files and core files are opened for writing
+as well as reading. 
+</dl>
+
+   </body></html>
+

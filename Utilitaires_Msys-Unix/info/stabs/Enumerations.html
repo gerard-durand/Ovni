@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Enumerations">Enumerations</a>,
+Next:<a rel="next" accesskey="n" href="Structures.html#Structures">Structures</a>,
+Previous:<a rel="previous" accesskey="p" href="Strings.html#Strings">Strings</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Enumerations</h3>
+
+   <p>Enumerations are defined with the <code>e</code> type descriptor.
+
+   <p>The source line below declares an enumeration type at file scope. 
+The type definition is located after the <code>N_RBRAC</code> that marks the end of
+the previous procedure's block scope, and before the <code>N_FUN</code> that marks
+the beginning of the next procedure's block scope.  Therefore it does not
+describe a block local symbol, but a file local one.
+
+   <p>The source line:
+
+<pre class="example">     enum e_places {first,second=3,last};
+     </pre>
+
+<p>generates the following stab:
+
+<pre class="example">     .stabs "e_places:T22=efirst:0,second:3,last:4,;",128,0,0,0
+     </pre>
+
+   <p>The symbol descriptor (<code>T</code>) says that the stab describes a
+structure, enumeration, or union tag.  The type descriptor <code>e</code>,
+following the <code>22=</code> of the type definition narrows it down to an
+enumeration type.  Following the <code>e</code> is a list of the elements of
+the enumeration.  The format is <code></code><var>name</var><code>:</code><var>value</var><code>,</code>.  The
+list of elements ends with <code>;</code>.  The fact that <var>value</var> is
+specified as an integer can cause problems if the value is large.  GCC
+2.5.2 tries to output it in octal in that case with a leading zero,
+which is probably a good thing, although GDB 4.11 supports octal only in
+cases where decimal is perfectly good.  Negative decimal values are
+supported by both GDB and dbx.
+
+   <p>There is no standard way to specify the size of an enumeration type; it
+is determined by the architecture (normally all enumerations types are
+32 bits).  Type attributes can be used to specify an enumeration type of
+another size for debuggers which support them; see <a href="String-Field.html#String%20Field">String Field</a>.
+
+   <p>Enumeration types are unusual in that they define symbols for the
+enumeration values (<code>first</code>, <code>second</code>, and <code>third</code> in the
+above example), and even though these symbols are visible in the file as
+a whole (rather than being in a more local namespace like structure
+member names), they are defined in the type definition for the
+enumeration type rather than each having their own symbol.  In order to
+be fast, GDB will only get symbols from such types (in its initial scan
+of the stabs) if the type is the first thing defined after a <code>T</code> or
+<code>t</code> symbol descriptor (the above example fulfills this
+requirement).  If the type does not have a name, the compiler should
+emit it in a nameless stab (see <a href="String-Field.html#String%20Field">String Field</a>); GCC does this.
+
+   </body></html>
+

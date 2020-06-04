@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Nindy%20Options">Nindy Options</a>,
+Next:<a rel="next" accesskey="n" href="Nindy-Reset.html#Nindy%20Reset">Nindy Reset</a>,
+Previous:<a rel="previous" accesskey="p" href="Nindy-Startup.html#Nindy%20Startup">Nindy Startup</a>,
+Up:<a rel="up" accesskey="u" href="i960.html#i960">i960</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Options for Nindy</h5>
+
+   <p>These are the startup options for beginning your GDB session with a
+Nindy-960 board attached:
+
+     <dl>
+<dt><code>-r </code><var>port</var><code></code>
+     <dd>Specify the serial port name of a serial interface to be used to connect
+to the target system.  This option is only available when GDB is
+configured for the Intel 960 target architecture.  You may specify
+<var>port</var> as any of: a full pathname (e.g. <code>-r /dev/ttya</code>), a
+device name in <code>/dev</code> (e.g. <code>-r ttya</code>), or simply the unique
+suffix for a specific <code>tty</code> (e.g. <code>-r a</code>).
+
+     <br><dt><code>-O</code>
+     <dd>(An uppercase letter "O", not a zero.)  Specify that GDB should use
+the "old" Nindy monitor protocol to connect to the target system. 
+This option is only available when GDB is configured for the Intel 960
+target architecture.
+
+     <blockquote>
+<em>Warning:</em> if you specify <code>-O</code>, but are actually trying to
+connect to a target system that expects the newer protocol, the connection
+fails, appearing to be a speed mismatch.  GDB repeatedly
+attempts to reconnect at several different line speeds.  You can abort
+this process with an interrupt. 
+</blockquote>
+
+     <br><dt><code>-brk</code>
+     <dd>Specify that GDB should first send a <code>BREAK</code> signal to the target
+system, in an attempt to reset it, before connecting to a Nindy target.
+
+     <blockquote>
+<em>Warning:</em> Many target systems do not have the hardware that this
+requires; it only works with a few boards. 
+</blockquote>
+     </dl>
+
+   <p>The standard <code>-b</code> option controls the line speed used on the serial
+port.
+
+   </body></html>
+

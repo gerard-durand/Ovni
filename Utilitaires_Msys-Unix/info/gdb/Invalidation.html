@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Invalidation">Invalidation</a>,
+Next:<a rel="next" accesskey="n" href="Annotations-for-Running.html#Annotations%20for%20Running">Annotations for Running</a>,
+Previous:<a rel="previous" accesskey="p" href="Breakpoint-Info.html#Breakpoint%20Info">Breakpoint Info</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">Invalidation Notices</h3>
+
+   <p>The following annotations say that certain pieces of state may have
+changed.
+
+     <dl>
+<dt><code>^Z^Zframes-invalid</code>
+     <dd>
+The frames (for example, output from the <code>backtrace</code> command) may
+have changed.
+
+     <br><dt><code>^Z^Zbreakpoints-invalid</code>
+     <dd>
+The breakpoints may have changed.  For example, the user just added or
+deleted a breakpoint. 
+</dl>
+
+   </body></html>
+

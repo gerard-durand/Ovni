@@ -1,0 +1,2 @@
+Dans Program Files\git\usr\bin, ou programmation\MSYS_bis, on a aussi un bon nombre de ces utilitaires, et en versions plus récentes.
+Serait à tester ... si on peut éviter le double/triple emploi !

@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Editing">Editing</a>,
+Next:<a rel="next" accesskey="n" href="History.html#History">History</a>,
+Previous:<a rel="previous" accesskey="p" href="Prompt.html#Prompt">Prompt</a>,
+Up:<a rel="up" accesskey="u" href="Controlling-GDB.html#Controlling%20GDB">Controlling GDB</a>
+<hr><br>
+</div>
+
+<h3 class="section">Command editing</h3>
+
+   GDB reads its input commands via the <dfn>readline</dfn> interface.  This
+<small>GNU</small> library provides consistent behavior for programs which provide a
+command line interface to the user.  Advantages are <small>GNU</small> Emacs-style
+or <dfn>vi</dfn>-style inline editing of commands, <code>csh</code>-like history
+substitution, and a storage and recall of command history across
+debugging sessions.
+
+   <p>You may control the behavior of command line editing in GDB with the
+command <code>set</code>.
+
+     <dl>
+<dt><code>set editing</code>
+     <dd><dt><code>set editing on</code>
+     <dd>Enable command line editing (enabled by default).
+
+     <br><dt><code>set editing off</code>
+     <dd>Disable command line editing.
+
+     <br><dt><code>show editing</code>
+     <dd>Show whether command line editing is enabled. 
+</dl>
+
+   </body></html>
+

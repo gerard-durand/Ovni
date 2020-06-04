@@ -1,0 +1,300 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Readline%20Init%20File%20Syntax">Readline Init File Syntax</a>,
+Next:<a rel="next" accesskey="n" href="Conditional-Init-Constructs.html#Conditional%20Init%20Constructs">Conditional Init Constructs</a>,
+Up:<a rel="up" accesskey="u" href="Readline-Init-File.html#Readline%20Init%20File">Readline Init File</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Readline Init File Syntax</h4>
+
+   <p>There are only a few basic constructs allowed in the
+Readline init file.  Blank lines are ignored. 
+Lines beginning with a <code>#</code> are comments. 
+Lines beginning with a <code>$</code> indicate conditional
+constructs (see <a href="Conditional-Init-Constructs.html#Conditional%20Init%20Constructs">Conditional Init Constructs</a>).  Other lines
+denote variable settings and key bindings.
+
+     <dl>
+<dt>Variable Settings
+     <dd>You can modify the run-time behavior of Readline by
+altering the values of variables in Readline
+using the <code>set</code> command within the init file. 
+The syntax is simple:
+
+     <pre class="example">          set <var>variable</var> <var>value</var>
+          </pre>
+
+     <p>Here, for example, is how to
+change from the default Emacs-like key binding to use
+<code>vi</code> line editing commands:
+
+     <pre class="example">          set editing-mode vi
+          </pre>
+
+     <p>Variable names and values, where appropriate, are recognized without regard
+to case.
+
+     <p>A great deal of run-time behavior is changeable with the following
+variables.
+
+          <dl>
+
+          <br><dt><code>bell-style</code>
+          <dd>Controls what happens when Readline wants to ring the terminal bell. 
+If set to <code>none</code>, Readline never rings the bell.  If set to
+<code>visible</code>, Readline uses a visible bell if one is available. 
+If set to <code>audible</code> (the default), Readline attempts to ring
+the terminal's bell.
+
+          <br><dt><code>comment-begin</code>
+          <dd>The string to insert at the beginning of the line when the
+<code>insert-comment</code> command is executed.  The default value
+is <code>"#"</code>.
+
+          <br><dt><code>completion-ignore-case</code>
+          <dd>If set to <code>on</code>, Readline performs filename matching and completion
+in a case-insensitive fashion. 
+The default value is <code>off</code>.
+
+          <br><dt><code>completion-query-items</code>
+          <dd>The number of possible completions that determines when the user is
+asked whether he wants to see the list of possibilities.  If the
+number of possible completions is greater than this value,
+Readline will ask the user whether or not he wishes to view
+them; otherwise, they are simply listed. 
+This variable must be set to an integer value greater than or equal to 0. 
+The default limit is <code>100</code>.
+
+          <br><dt><code>convert-meta</code>
+          <dd>If set to <code>on</code>, Readline will convert characters with the
+eighth bit set to an <small>ASCII</small> key sequence by stripping the eighth
+bit and prefixing an &lt;ESC&gt; character, converting them to a
+meta-prefixed key sequence.  The default value is <code>on</code>.
+
+          <br><dt><code>disable-completion</code>
+          <dd>If set to <code>On</code>, Readline will inhibit word completion. 
+Completion  characters will be inserted into the line as if they had
+been mapped to <code>self-insert</code>.  The default is <code>off</code>.
+
+          <br><dt><code>editing-mode</code>
+          <dd>The <code>editing-mode</code> variable controls which default set of
+key bindings is used.  By default, Readline starts up in Emacs editing
+mode, where the keystrokes are most similar to Emacs.  This variable can be
+set to either <code>emacs</code> or <code>vi</code>.
+
+          <br><dt><code>enable-keypad</code>
+          <dd>When set to <code>on</code>, Readline will try to enable the application
+keypad when it is called.  Some systems need this to enable the
+arrow keys.  The default is <code>off</code>.
+
+          <br><dt><code>expand-tilde</code>
+          <dd>If set to <code>on</code>, tilde expansion is performed when Readline
+attempts word completion.  The default is <code>off</code>.
+
+          <br><dt><code>horizontal-scroll-mode</code>
+          <dd>This variable can be set to either <code>on</code> or <code>off</code>.  Setting it
+to <code>on</code> means that the text of the lines being edited will scroll
+horizontally on a single screen line when they are longer than the width
+of the screen, instead of wrapping onto a new screen line.  By default,
+this variable is set to <code>off</code>.
+
+          <br><dt><code>input-meta</code>
+          <dd>If set to <code>on</code>, Readline will enable eight-bit input (it
+will not clear the eighth bit in the characters it reads),
+regardless of what the terminal claims it can support.  The
+default value is <code>off</code>.  The name <code>meta-flag</code> is a
+synonym for this variable.
+
+          <br><dt><code>isearch-terminators</code>
+          <dd>The string of characters that should terminate an incremental search without
+subsequently executing the character as a command (see <a href="Searching.html#Searching">Searching</a>). 
+If this variable has not been given a value, the characters &lt;ESC&gt; and
+<kbd>C-J</kbd> will terminate an incremental search.
+
+          <br><dt><code>keymap</code>
+          <dd>Sets Readline's idea of the current keymap for key binding commands. 
+Acceptable <code>keymap</code> names are
+<code>emacs</code>,
+<code>emacs-standard</code>,
+<code>emacs-meta</code>,
+<code>emacs-ctlx</code>,
+<code>vi</code>,
+<code>vi-move</code>,
+<code>vi-command</code>, and
+<code>vi-insert</code>. 
+<code>vi</code> is equivalent to <code>vi-command</code>; <code>emacs</code> is
+equivalent to <code>emacs-standard</code>.  The default value is <code>emacs</code>. 
+The value of the <code>editing-mode</code> variable also affects the
+default keymap.
+
+          <br><dt><code>mark-directories</code>
+          <dd>If set to <code>on</code>, completed directory names have a slash
+appended.  The default is <code>on</code>.
+
+          <br><dt><code>mark-modified-lines</code>
+          <dd>This variable, when set to <code>on</code>, causes Readline to display an
+asterisk (<code>*</code>) at the start of history lines which have been modified. 
+This variable is <code>off</code> by default.
+
+          <br><dt><code>output-meta</code>
+          <dd>If set to <code>on</code>, Readline will display characters with the
+eighth bit set directly rather than as a meta-prefixed escape
+sequence.  The default is <code>off</code>.
+
+          <br><dt><code>print-completions-horizontally</code>
+          <dd>If set to <code>on</code>, Readline will display completions with matches
+sorted horizontally in alphabetical order, rather than down the screen. 
+The default is <code>off</code>.
+
+          <br><dt><code>show-all-if-ambiguous</code>
+          <dd>This alters the default behavior of the completion functions.  If
+set to <code>on</code>,
+words which have more than one possible completion cause the
+matches to be listed immediately instead of ringing the bell. 
+The default value is <code>off</code>.
+
+          <br><dt><code>visible-stats</code>
+          <dd>If set to <code>on</code>, a character denoting a file's type
+is appended to the filename when listing possible
+completions.  The default is <code>off</code>.
+
+     </dl>
+
+     <br><dt>Key Bindings
+     <dd>The syntax for controlling key bindings in the init file is
+simple.  First you need to find the name of the command that you
+want to change.  The following sections contain tables of the command
+name, the default keybinding, if any, and a short description of what
+the command does.
+
+     <p>Once you know the name of the command, simply place on a line
+in the init file the name of the key
+you wish to bind the command to, a colon, and then the name of the
+command.  The name of the key
+can be expressed in different ways, depending on what you find most
+comfortable.
+
+     <p>In addition to command names, readline allows keys to be bound
+to a string that is inserted when the key is pressed (a <var>macro</var>).
+
+          <dl>
+<dt><var>keyname</var>:&nbsp;<var>function-name</var>&nbsp;or&nbsp;<var>macro</var>
+          <dd><var>keyname</var> is the name of a key spelled out in English.  For example:
+          <pre class="example">               Control-u: universal-argument
+               Meta-Rubout: backward-kill-word
+               Control-o: "&gt; output"
+               </pre>
+
+          <p>In the above example, <kbd>C-u</kbd> is bound to the function
+<code>universal-argument</code>,
+<kbd>M-DEL</kbd> is bound to the function <code>backward-kill-word</code>, and
+<kbd>C-o</kbd> is bound to run the macro
+expressed on the right hand side (that is, to insert the text
+<code>&gt; output</code> into the line).
+
+          <p>A number of symbolic character names are recognized while
+processing this key binding syntax:
+<var>DEL</var>,
+<var>ESC</var>,
+<var>ESCAPE</var>,
+<var>LFD</var>,
+<var>NEWLINE</var>,
+<var>RET</var>,
+<var>RETURN</var>,
+<var>RUBOUT</var>,
+<var>SPACE</var>,
+<var>SPC</var>,
+and
+<var>TAB</var>.
+
+          <br><dt>"<var>keyseq</var>":&nbsp;<var>function-name</var>&nbsp;or&nbsp;<var>macro</var>
+          <dd><var>keyseq</var> differs from <var>keyname</var> above in that strings
+denoting an entire key sequence can be specified, by placing
+the key sequence in double quotes.  Some <small>GNU</small> Emacs style key
+escapes can be used, as in the following example, but the
+special character names are not recognized.
+
+          <pre class="example">               "\C-u": universal-argument
+               "\C-x\C-r": re-read-init-file
+               "\e[11~": "Function Key 1"
+               </pre>
+
+          <p>In the above example, <kbd>C-u</kbd> is again bound to the function
+<code>universal-argument</code> (just as it was in the first example),
+<code></code><kbd>C-x</kbd><code> </code><kbd>C-r</kbd><code></code> is bound to the function <code>re-read-init-file</code>,
+and <code>&lt;ESC&gt; &lt;[&gt; &lt;1&gt; &lt;1&gt; &lt;~&gt;</code> is bound to insert
+the text <code>Function Key 1</code>.
+
+     </dl>
+
+     <p>The following <small>GNU</small> Emacs style escape sequences are available when
+specifying key sequences:
+
+          <dl>
+<dt><code></code><kbd>\C-</kbd><code></code>
+          <dd>control prefix
+<br><dt><code></code><kbd>\M-</kbd><code></code>
+          <dd>meta prefix
+<br><dt><code></code><kbd>\e</kbd><code></code>
+          <dd>an escape character
+<br><dt><code></code><kbd>\\</kbd><code></code>
+          <dd>backslash
+<br><dt><code></code><kbd>\"</kbd><code></code>
+          <dd>&lt;"&gt;, a double quotation mark
+<br><dt><code></code><kbd>\'</kbd><code></code>
+          <dd>&lt;'&gt;, a single quote or apostrophe
+</dl>
+
+     <p>In addition to the <small>GNU</small> Emacs style escape sequences, a second
+set of backslash escapes is available:
+
+          <dl>
+<dt><code>\a</code>
+          <dd>alert (bell)
+<br><dt><code>\b</code>
+          <dd>backspace
+<br><dt><code>\d</code>
+          <dd>delete
+<br><dt><code>\f</code>
+          <dd>form feed
+<br><dt><code>\n</code>
+          <dd>newline
+<br><dt><code>\r</code>
+          <dd>carriage return
+<br><dt><code>\t</code>
+          <dd>horizontal tab
+<br><dt><code>\v</code>
+          <dd>vertical tab
+<br><dt><code>\</code><var>nnn</var><code></code>
+          <dd>the character whose <small>ASCII</small> code is the octal value <var>nnn</var>
+(one to three digits)
+<br><dt><code>\x</code><var>nnn</var><code></code>
+          <dd>the character whose <small>ASCII</small> code is the hexadecimal value <var>nnn</var>
+(one to three digits)
+</dl>
+
+     <p>When entering the text of a macro, single or double quotes must
+be used to indicate a macro definition. 
+Unquoted text is assumed to be a function name. 
+In the macro body, the backslash escapes described above are expanded. 
+Backslash will quote any other character in the macro text,
+including <code>"</code> and <code>'</code>. 
+For example, the following binding will make <code></code><kbd>C-x</kbd><code> \</code>
+insert a single <code>\</code> into the line:
+     <pre class="example">          "\C-x\\": "\\"
+          </pre>
+
+   </dl>
+
+   </body></html>
+

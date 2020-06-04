@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Readline%20Init%20File">Readline Init File</a>,
+Next:<a rel="next" accesskey="n" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Readline-Interaction.html#Readline%20Interaction">Readline Interaction</a>,
+Up:<a rel="up" accesskey="u" href="Command-Line-Editing.html#Command%20Line%20Editing">Command Line Editing</a>
+<hr><br>
+</div>
+
+<h3 class="section">Readline Init File</h3>
+
+   <p>Although the Readline library comes with a set of Emacs-like
+keybindings installed by default, it is possible to use a different set
+of keybindings. 
+Any user can customize programs that use Readline by putting
+commands in an <dfn>inputrc</dfn> file, conventionally in his home directory. 
+The name of this
+file is taken from the value of the environment variable <code>INPUTRC</code>.  If
+that variable is unset, the default is <code>~/.inputrc</code>.
+
+   <p>When a program which uses the Readline library starts up, the
+init file is read, and the key bindings are set.
+
+   <p>In addition, the <code>C-x C-r</code> command re-reads this init file, thus
+incorporating any changes that you might have made to it.
+
+<ul class="menu">
+<li><a accesskey="1" href="Readline-Init-File-Syntax.html#Readline%20Init%20File%20Syntax">Readline Init File Syntax</a>: 	Syntax for the commands in the inputrc file.
+
+<p>
+</p><li><a accesskey="2" href="Conditional-Init-Constructs.html#Conditional%20Init%20Constructs">Conditional Init Constructs</a>: 	Conditional key bindings in the inputrc file.
+
+<p>
+</p><li><a accesskey="3" href="Sample-Init-File.html#Sample%20Init%20File">Sample Init File</a>: 		An example inputrc file. 
+</ul>
+
+   </body></html>
+

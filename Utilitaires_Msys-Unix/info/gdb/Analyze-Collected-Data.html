@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Analyze%20Collected%20Data">Analyze Collected Data</a>,
+Next:<a rel="next" accesskey="n" href="Tracepoint-Variables.html#Tracepoint%20Variables">Tracepoint Variables</a>,
+Previous:<a rel="previous" accesskey="p" href="Set-Tracepoints.html#Set%20Tracepoints">Set Tracepoints</a>,
+Up:<a rel="up" accesskey="u" href="Tracepoints.html#Tracepoints">Tracepoints</a>
+<hr><br>
+</div>
+
+<h3 class="section">Using the collected data</h3>
+
+   <p>After the tracepoint experiment ends, you use GDB commands
+for examining the trace data.  The basic idea is that each tracepoint
+collects a trace <dfn>snapshot</dfn> every time it is hit and another
+snapshot every time it single-steps.  All these snapshots are
+consecutively numbered from zero and go into a buffer, and you can
+examine them later.  The way you examine them is to <dfn>focus</dfn> on a
+specific trace snapshot.  When the remote stub is focused on a trace
+snapshot, it will respond to all GDB requests for memory and
+registers by reading from the buffer which belongs to that snapshot,
+rather than from <em>real</em> memory or registers of the program being
+debugged.  This means that <strong>all</strong> GDB commands
+(<code>print</code>, <code>info registers</code>, <code>backtrace</code>, etc.) will
+behave as if we were currently debugging the program state as it was
+when the tracepoint occurred.  Any requests for data that are not in
+the buffer will fail.
+
+<ul class="menu">
+<li><a accesskey="1" href="tfind.html#tfind">tfind</a>:                        How to select a trace snapshot
+<li><a accesskey="2" href="tdump.html#tdump">tdump</a>:                        How to display all data for a snapshot
+<li><a accesskey="3" href="save-tracepoints.html#save-tracepoints">save-tracepoints</a>:             How to save tracepoints for a future run
+</ul>
+
+   </body></html>
+

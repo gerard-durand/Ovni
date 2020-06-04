@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Data">Data</a>,
+Next:<a rel="next" accesskey="n" href="Tracepoints.html#Tracepoints">Tracepoints</a>,
+Previous:<a rel="previous" accesskey="p" href="Source.html#Source">Source</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Examining Data</h2>
+
+   <p>The usual way to examine data in your program is with the <code>print</code>
+command (abbreviated <code>p</code>), or its synonym <code>inspect</code>.  It
+evaluates and prints the value of an expression of the language your
+program is written in (see <a href="Languages.html#Languages">Using GDB with Different Languages</a>).
+
+     <dl>
+<dt><code>print </code><var>expr</var><code></code>
+     <dd><dt><code>print /</code><var>f</var><code> </code><var>expr</var><code></code>
+     <dd><var>expr</var> is an expression (in the source language).  By default the
+value of <var>expr</var> is printed in a format appropriate to its data type;
+you can choose a different format by specifying <code>/</code><var>f</var><code></code>, where
+<var>f</var> is a letter specifying the format; see <a href="Output-Formats.html#Output%20Formats">Output formats</a>.
+
+     <br><dt><code>print</code>
+     <dd><dt><code>print /</code><var>f</var><code></code>
+     <dd>If you omit <var>expr</var>, GDB displays the last value again (from the
+<dfn>value history</dfn>; see <a href="Value-History.html#Value%20History">Value history</a>).  This allows you to
+conveniently inspect the same value in an alternative format. 
+</dl>
+
+   <p>A more low-level way of examining data is with the <code>x</code> command. 
+It examines data in memory at a specified address and prints it in a
+specified format.  See <a href="Memory.html#Memory">Examining memory</a>.
+
+   <p>If you are interested in information about types, or about how the
+fields of a struct or a class are declared, use the <code>ptype </code><var>exp</var><code></code>
+command rather than <code>print</code>.  See <a href="Symbols.html#Symbols">Examining the Symbol Table</a>.
+
+<ul class="menu">
+<li><a accesskey="1" href="Expressions.html#Expressions">Expressions</a>:                  Expressions
+<li><a accesskey="2" href="Variables.html#Variables">Variables</a>:                    Program variables
+<li><a accesskey="3" href="Arrays.html#Arrays">Arrays</a>:                       Artificial arrays
+<li><a accesskey="4" href="Output-Formats.html#Output%20Formats">Output Formats</a>:               Output formats
+<li><a accesskey="5" href="Memory.html#Memory">Memory</a>:                       Examining memory
+<li><a accesskey="6" href="Auto-Display.html#Auto%20Display">Auto Display</a>:                 Automatic display
+<li><a accesskey="7" href="Print-Settings.html#Print%20Settings">Print Settings</a>:               Print settings
+<li><a accesskey="8" href="Value-History.html#Value%20History">Value History</a>:                Value history
+<li><a accesskey="9" href="Convenience-Vars.html#Convenience%20Vars">Convenience Vars</a>:             Convenience variables
+<li><a href="Registers.html#Registers">Registers</a>:                    Registers
+<li><a href="Floating-Point-Hardware.html#Floating%20Point%20Hardware">Floating Point Hardware</a>:      Floating point hardware
+<li><a href="Memory-Region-Attributes.html#Memory%20Region%20Attributes">Memory Region Attributes</a>:     Memory region attributes
+</ul>
+
+   </body></html>
+

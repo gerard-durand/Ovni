@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Errors">Errors</a>,
+Next:<a rel="next" accesskey="n" href="Breakpoint-Info.html#Breakpoint%20Info">Breakpoint Info</a>,
+Previous:<a rel="previous" accesskey="p" href="Prompting.html#Prompting">Prompting</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">Errors</h3>
+
+<pre class="smallexample">     ^Z^Zquit
+     </pre>
+
+   <p>This annotation occurs right before GDB responds to an interrupt.
+
+<pre class="smallexample">     ^Z^Zerror
+     </pre>
+
+   <p>This annotation occurs right before GDB responds to an error.
+
+   <p>Quit and error annotations indicate that any annotations which GDB was
+in the middle of may end abruptly.  For example, if a
+<code>value-history-begin</code> annotation is followed by a <code>error</code>, one
+cannot expect to receive the matching <code>value-history-end</code>.  One
+cannot expect not to receive it either, however; an error annotation
+does not necessarily mean that GDB is immediately returning all the way
+to the top level.
+
+   <p>A quit or error annotation may be preceded by
+
+<pre class="smallexample">     ^Z^Zerror-begin
+     </pre>
+
+   <p>Any output between that and the quit or error annotation is the error
+message.
+
+   <p>Warning messages are not yet annotated.
+
+   </body></html>
+

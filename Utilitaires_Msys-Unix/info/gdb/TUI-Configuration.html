@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="TUI%20Configuration">TUI Configuration</a>,
+Previous:<a rel="previous" accesskey="p" href="TUI-Commands.html#TUI%20Commands">TUI Commands</a>,
+Up:<a rel="up" accesskey="u" href="TUI.html#TUI">TUI</a>
+<hr><br>
+</div>
+
+<h3 class="section">TUI configuration variables</h3>
+
+   <p>The TUI has several configuration variables that control the
+appearance of windows on the terminal.
+
+     <dl>
+<dt><code>set tui border-kind </code><var>kind</var><code></code>
+     <dd>Select the border appearance for the source, assembly and register windows. 
+The possible values are the following:
+          <dl>
+<dt><code>space</code>
+          <dd>Use a space character to draw the border.
+
+          <br><dt><code>ascii</code>
+          <dd>Use ascii characters + - and | to draw the border.
+
+          <br><dt><code>acs</code>
+          <dd>Use the Alternate Character Set to draw the border.  The border is
+drawn using character line graphics if the terminal supports them.
+
+     </dl>
+
+     <br><dt><code>set tui active-border-mode </code><var>mode</var><code></code>
+     <dd>Select the attributes to display the border of the active window. 
+The possible values are <code>normal</code>, <code>standout</code>, <code>reverse</code>,
+<code>half</code>, <code>half-standout</code>, <code>bold</code> and <code>bold-standout</code>.
+
+     <br><dt><code>set tui border-mode </code><var>mode</var><code></code>
+     <dd>Select the attributes to display the border of other windows. 
+The <var>mode</var> can be one of the following:
+          <dl>
+<dt><code>normal</code>
+          <dd>Use normal attributes to display the border.
+
+          <br><dt><code>standout</code>
+          <dd>Use standout mode.
+
+          <br><dt><code>reverse</code>
+          <dd>Use reverse video mode.
+
+          <br><dt><code>half</code>
+          <dd>Use half bright mode.
+
+          <br><dt><code>half-standout</code>
+          <dd>Use half bright and standout mode.
+
+          <br><dt><code>bold</code>
+          <dd>Use extra bright or bold mode.
+
+          <br><dt><code>bold-standout</code>
+          <dd>Use extra bright or bold and standout mode.
+
+     </dl>
+
+   </dl>
+
+   </body></html>
+

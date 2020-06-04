@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Checks">Checks</a>,
+Next:<a rel="next" accesskey="n" href="Support.html#Support">Support</a>,
+Previous:<a rel="previous" accesskey="p" href="Show.html#Show">Show</a>,
+Up:<a rel="up" accesskey="u" href="Languages.html#Languages">Languages</a>
+<hr><br>
+</div>
+
+<h3 class="section">Type and range checking</h3>
+
+   <blockquote>
+<em>Warning:</em> In this release, the GDB commands for type and range
+checking are included, but they do not yet have any effect.  This
+section documents the intended facilities. 
+</blockquote>
+
+   <p>Some languages are designed to guard you against making seemingly common
+errors through a series of compile- and run-time checks.  These include
+checking the type of arguments to functions and operators, and making
+sure mathematical overflows are caught at run time.  Checks such as
+these help to ensure a program's correctness once it has been compiled
+by eliminating type mismatches, and providing active checks for range
+errors when your program is running.
+
+   GDB can check for conditions like the above if you wish. 
+Although GDB does not check the statements in your program, it
+can check expressions entered directly into GDB for evaluation via
+the <code>print</code> command, for example.  As with the working language,
+GDB can also decide whether or not to check automatically based on
+your program's source language.  See <a href="Support.html#Support">Supported languages</a>,
+for the default settings of supported languages.
+
+<ul class="menu">
+<li><a accesskey="1" href="Type-Checking.html#Type%20Checking">Type Checking</a>:                An overview of type checking
+<li><a accesskey="2" href="Range-Checking.html#Range%20Checking">Range Checking</a>:               An overview of range checking
+</ul>
+
+   </body></html>
+

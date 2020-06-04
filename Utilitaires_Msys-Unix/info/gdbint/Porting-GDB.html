@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Porting%20GDB">Porting GDB</a>,
+Next:<a rel="next" accesskey="n" href="Releasing-GDB.html#Releasing%20GDB">Releasing GDB</a>,
+Previous:<a rel="previous" accesskey="p" href="Coding.html#Coding">Coding</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Porting GDB</h2>
+
+   <p>Most of the work in making GDB compile on a new machine is in
+specifying the configuration of the machine.  This is done in a
+dizzying variety of header files and configuration scripts, which we
+hope to make more sensible soon.  Let's say your new host is called an
+<var>xyz</var> (e.g.,  <code>sun4</code>), and its full three-part configuration
+name is <code></code><var>arch</var><code>-</code><var>xvend</var><code>-</code><var>xos</var><code></code> (e.g.,
+<code>sparc-sun-sunos4</code>).  In particular:
+
+     <ul>
+<li>In the top level directory, edit <code>config.sub</code> and add <var>arch</var>,
+<var>xvend</var>, and <var>xos</var> to the lists of supported architectures,
+vendors, and operating systems near the bottom of the file.  Also, add
+<var>xyz</var> as an alias that maps to
+<code></code><var>arch</var><code>-</code><var>xvend</var><code>-</code><var>xos</var><code></code>.  You can test your changes by
+running
+
+     <pre class="example">          ./config.sub <var>xyz</var>
+          </pre>
+
+     <p>and
+
+     <pre class="example">          ./config.sub <code></code><var>arch</var><code>-</code><var>xvend</var><code>-</code><var>xos</var><code></code>
+          </pre>
+
+     <p>which should both respond with <code></code><var>arch</var><code>-</code><var>xvend</var><code>-</code><var>xos</var><code></code>
+and no error messages.
+
+     <p>You need to port BFD, if that hasn't been done already.  Porting BFD is
+beyond the scope of this manual.
+
+     </p><li>To configure GDB itself, edit <code>gdb/configure.host</code> to recognize
+your system and set <code>gdb_host</code> to <var>xyz</var>, and (unless your
+desired target is already available) also edit <code>gdb/configure.tgt</code>,
+setting <code>gdb_target</code> to something appropriate (for instance,
+<var>xyz</var>).
+
+     <p><em>Maintainer's note: Work in progress.  The file
+</em><code>gdb/configure.host</code><em> originally needed to be modified when either a
+new native target or a new host machine was being added to GDB. 
+Recent changes have removed this requirement.  The file now only needs
+to be modified when adding a new native configuration.  This will likely
+changed again in the future.</em>
+
+     <li>Finally, you'll need to specify and define GDB's host-, native-, and
+target-dependent <code>.h</code> and <code>.c</code> files used for your
+configuration. 
+</ul>
+
+<h3 class="section">Configuring GDB for Release</h3>
+
+   <p>From the top level directory (containing <code>gdb</code>, <code>bfd</code>,
+<code>libiberty</code>, and so on):
+
+<pre class="example">     make -f Makefile.in gdb.tar.gz
+     </pre>
+
+<p>This will properly configure, clean, rebuild any files that are
+distributed pre-built (e.g. <code>c-exp.tab.c</code> or <code>refcard.ps</code>),
+and will then make a tarfile.  (If the top level directory has already
+been configured, you can just do <code>make gdb.tar.gz</code> instead.)
+
+   <p>This procedure requires:
+
+     <ul>
+
+     <li>symbolic links;
+
+     <li><code>makeinfo</code> (texinfo2 level);
+
+     <li>TeX;
+
+     <li><code>dvips</code>;
+
+     <li><code>yacc</code> or <code>bison</code>. 
+</ul>
+
+<small class="dots">...</small> and the usual slew of utilities (<code>sed</code>, <code>tar</code>, etc.).
+
+<h4 class="subheading">TEMPORARY RELEASE PROCEDURE FOR DOCUMENTATION</h4>
+
+   <p><code>gdb.texinfo</code> is currently marked up using the texinfo-2 macros,
+which are not yet a default for anything (but we have to start using
+them sometime).
+
+   <p>For making paper, the only thing this implies is the right generation of
+<code>texinfo.tex</code> needs to be included in the distribution.
+
+   <p>For making info files, however, rather than duplicating the texinfo2
+distribution, generate <code>gdb-all.texinfo</code> locally, and include the
+files <code>gdb.info*</code> in the distribution.  Note the plural;
+<code>makeinfo</code> will split the document into one overall file and five
+or so included files.
+
+   </body></html>
+

@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Signals">Signals</a>,
+Next:<a rel="next" accesskey="n" href="Thread-Stops.html#Thread%20Stops">Thread Stops</a>,
+Previous:<a rel="previous" accesskey="p" href="Continuing-and-Stepping.html#Continuing%20and%20Stepping">Continuing and Stepping</a>,
+Up:<a rel="up" accesskey="u" href="Stopping.html#Stopping">Stopping</a>
+<hr><br>
+</div>
+
+<h3 class="section">Signals</h3>
+
+   <p>A signal is an asynchronous event that can happen in a program.  The
+operating system defines the possible kinds of signals, and gives each
+kind a name and a number.  For example, in Unix <code>SIGINT</code> is the
+signal a program gets when you type an interrupt character (often <kbd>C-c</kbd>);
+<code>SIGSEGV</code> is the signal a program gets from referencing a place in
+memory far away from all the areas in use; <code>SIGALRM</code> occurs when
+the alarm clock timer goes off (which happens only if your program has
+requested an alarm).
+
+   <p>Some signals, including <code>SIGALRM</code>, are a normal part of the
+functioning of your program.  Others, such as <code>SIGSEGV</code>, indicate
+errors; these signals are <dfn>fatal</dfn> (they kill your program immediately) if the
+program has not specified in advance some other way to handle the signal. 
+<code>SIGINT</code> does not indicate an error in your program, but it is normally
+fatal so it can carry out the purpose of the interrupt: to kill the program.
+
+   GDB has the ability to detect any occurrence of a signal in your
+program.  You can tell GDB in advance what to do for each kind of
+signal.
+
+   <p>Normally, GDB is set up to let the non-erroneous signals like
+<code>SIGALRM</code> be silently passed to your program
+(so as not to interfere with their role in the program's functioning)
+but to stop your program immediately whenever an error signal happens. 
+You can change these settings with the <code>handle</code> command.
+
+     <dl>
+<dt><code>info signals</code>
+     <dd><dt><code>info handle</code>
+     <dd>Print a table of all the kinds of signals and how GDB has been told to
+handle each one.  You can use this to see the signal numbers of all
+the defined types of signals.
+
+     <p><code>info handle</code> is an alias for <code>info signals</code>.
+
+     <br><dt><code>handle </code><var>signal</var><code> </code><var>keywords</var><code>...</code>
+     <dd>Change the way GDB handles signal <var>signal</var>.  <var>signal</var>
+can be the number of a signal or its name (with or without the
+<code>SIG</code> at the beginning); a list of signal numbers of the form
+<code></code><var>low</var><code>-</code><var>high</var><code></code>; or the word <code>all</code>, meaning all the
+known signals.  The <var>keywords</var> say what change to make. 
+</dl>
+
+   <p>The keywords allowed by the <code>handle</code> command can be abbreviated. 
+Their full names are:
+
+     <dl>
+<dt><code>nostop</code>
+     <dd>GDB should not stop your program when this signal happens.  It may
+still print a message telling you that the signal has come in.
+
+     <br><dt><code>stop</code>
+     <dd>GDB should stop your program when this signal happens.  This implies
+the <code>print</code> keyword as well.
+
+     <br><dt><code>print</code>
+     <dd>GDB should print a message when this signal happens.
+
+     <br><dt><code>noprint</code>
+     <dd>GDB should not mention the occurrence of the signal at all.  This
+implies the <code>nostop</code> keyword as well.
+
+     <br><dt><code>pass</code>
+     <dd><dt><code>noignore</code>
+     <dd>GDB should allow your program to see this signal; your program
+can handle the signal, or else it may terminate if the signal is fatal
+and not handled.  <code>pass</code> and <code>noignore</code> are synonyms.
+
+     <br><dt><code>nopass</code>
+     <dd><dt><code>ignore</code>
+     <dd>GDB should not allow your program to see this signal. 
+<code>nopass</code> and <code>ignore</code> are synonyms. 
+</dl>
+
+   <p>When a signal stops your program, the signal is not visible to the
+program until you
+continue.  Your program sees the signal then, if <code>pass</code> is in
+effect for the signal in question <em>at that time</em>.  In other words,
+after GDB reports a signal, you can use the <code>handle</code>
+command with <code>pass</code> or <code>nopass</code> to control whether your
+program sees that signal when you continue.
+
+   <p>The default is set to <code>nostop</code>, <code>noprint</code>, <code>pass</code> for
+non-erroneous signals such as <code>SIGALRM</code>, <code>SIGWINCH</code> and
+<code>SIGCHLD</code>, and to <code>stop</code>, <code>print</code>, <code>pass</code> for the
+erroneous signals.
+
+   <p>You can also use the <code>signal</code> command to prevent your program from
+seeing a signal, or cause it to see a signal it normally would not see,
+or to give it any signal at any time.  For example, if your program stopped
+due to some sort of memory reference error, you might store correct
+values into the erroneous variables and continue, hoping to see more
+execution; but your program would probably terminate immediately as
+a result of the fatal signal once it saw the signal.  To prevent this,
+you can continue with <code>signal 0</code>.  See <a href="Signaling.html#Signaling">Giving your program a signal</a>.
+
+   </body></html>
+

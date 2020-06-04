@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Delete%20Breaks">Delete Breaks</a>,
+Next:<a rel="next" accesskey="n" href="Disabling.html#Disabling">Disabling</a>,
+Previous:<a rel="previous" accesskey="p" href="Set-Catchpoints.html#Set%20Catchpoints">Set Catchpoints</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Deleting breakpoints</h4>
+
+   <p>It is often necessary to eliminate a breakpoint, watchpoint, or
+catchpoint once it has done its job and you no longer want your program
+to stop there.  This is called <dfn>deleting</dfn> the breakpoint.  A
+breakpoint that has been deleted no longer exists; it is forgotten.
+
+   <p>With the <code>clear</code> command you can delete breakpoints according to
+where they are in your program.  With the <code>delete</code> command you can
+delete individual breakpoints, watchpoints, or catchpoints by specifying
+their breakpoint numbers.
+
+   <p>It is not necessary to delete a breakpoint to proceed past it.  GDB
+automatically ignores breakpoints on the first instruction to be executed
+when you continue execution without changing the execution address.
+
+     <dl>
+<dt><code>clear</code>
+     <dd>Delete any breakpoints at the next instruction to be executed in the
+selected stack frame (see <a href="Selection.html#Selection">Selecting a frame</a>).  When
+the innermost frame is selected, this is a good way to delete a
+breakpoint where your program just stopped.
+
+     <br><dt><code>clear </code><var>function</var><code></code>
+     <dd><dt><code>clear </code><var>filename</var><code>:</code><var>function</var><code></code>
+     <dd>Delete any breakpoints set at entry to the function <var>function</var>.
+
+     <br><dt><code>clear </code><var>linenum</var><code></code>
+     <dd><dt><code>clear </code><var>filename</var><code>:</code><var>linenum</var><code></code>
+     <dd>Delete any breakpoints set at or within the code of the specified line.
+
+     <br><dt><code>delete </code>[<code>breakpoints</code>]<code> </code>[<code></code><var>range</var><code>...</code>]<code></code>
+     <dd>Delete the breakpoints, watchpoints, or catchpoints of the breakpoint
+ranges specified as arguments.  If no argument is specified, delete all
+breakpoints (GDB asks confirmation, unless you have <code>set
+confirm off</code>).  You can abbreviate this command as <code>d</code>. 
+</dl>
+
+   </body></html>
+

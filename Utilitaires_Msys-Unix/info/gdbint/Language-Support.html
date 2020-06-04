@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Language%20Support">Language Support</a>,
+Next:<a rel="next" accesskey="n" href="Host-Definition.html#Host%20Definition">Host Definition</a>,
+Previous:<a rel="previous" accesskey="p" href="Symbol-Handling.html#Symbol%20Handling">Symbol Handling</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Language Support</h2>
+
+   GDB's language support is mainly driven by the symbol reader,
+although it is possible for the user to set the source language
+manually.
+
+   GDB chooses the source language by looking at the extension
+of the file recorded in the debug info; <code>.c</code> means C, <code>.f</code>
+means Fortran, etc.  It may also use a special-purpose language
+identifier if the debug format supports it, like with DWARF.
+
+<h3 class="section">Adding a Source Language to GDB</h3>
+
+   <p>To add other languages to GDB's expression parser, follow the
+following steps:
+
+     <dl>
+<dt><em>Create the expression parser.</em>
+     <dd>
+This should reside in a file <code></code><var>lang</var><code>-exp.y</code>.  Routines for
+building parsed expressions into a <code>union exp_element</code> list are in
+<code>parse.c</code>.
+
+     <p>Since we can't depend upon everyone having Bison, and YACC produces
+parsers that define a bunch of global names, the following lines
+<strong>must</strong> be included at the top of the YACC parser, to prevent the
+various parsers from defining the same global names:
+
+     <pre class="example">          #define yyparse         <var>lang</var>_parse
+          #define yylex           <var>lang</var>_lex
+          #define yyerror         <var>lang</var>_error
+          #define yylval          <var>lang</var>_lval
+          #define yychar          <var>lang</var>_char
+          #define yydebug         <var>lang</var>_debug
+          #define yypact          <var>lang</var>_pact
+          #define yyr1            <var>lang</var>_r1
+          #define yyr2            <var>lang</var>_r2
+          #define yydef           <var>lang</var>_def
+          #define yychk           <var>lang</var>_chk
+          #define yypgo           <var>lang</var>_pgo
+          #define yyact           <var>lang</var>_act
+          #define yyexca          <var>lang</var>_exca
+          #define yyerrflag       <var>lang</var>_errflag
+          #define yynerrs         <var>lang</var>_nerrs
+          </pre>
+
+     <p>At the bottom of your parser, define a <code>struct language_defn</code> and
+initialize it with the right values for your language.  Define an
+<code>initialize_</code><var>lang</var><code></code> routine and have it call
+<code>add_language(</code><var>lang</var><code>_language_defn)</code> to tell the rest of GDB
+that your language exists.  You'll need some other supporting variables
+and functions, which will be used via pointers from your
+<code></code><var>lang</var><code>_language_defn</code>.  See the declaration of <code>struct
+language_defn</code> in <code>language.h</code>, and the other <code>*-exp.y</code> files,
+for more information.
+
+     <br><dt><em>Add any evaluation routines, if necessary</em>
+     <dd>
+If you need new opcodes (that represent the operations of the language),
+add them to the enumerated type in <code>expression.h</code>.  Add support
+code for these operations in the <code>evaluate_subexp</code> function
+defined in the file <code>eval.c</code>.  Add cases
+for new opcodes in two functions from <code>parse.c</code>:
+<code>prefixify_subexp</code> and <code>length_of_subexp</code>.  These compute
+the number of <code>exp_element</code>s that a given operation takes up.
+
+     <br><dt><em>Update some existing code</em>
+     <dd>
+Add an enumerated identifier for your language to the enumerated type
+<code>enum language</code> in <code>defs.h</code>.
+
+     <p>Update the routines in <code>language.c</code> so your language is included. 
+These routines include type predicates and such, which (in some cases)
+are language dependent.  If your language does not appear in the switch
+statement, an error is reported.
+
+     <p>Also included in <code>language.c</code> is the code that updates the variable
+<code>current_language</code>, and the routines that translate the
+<code>language_</code><var>lang</var><code></code> enumerated identifier into a printable
+string.
+
+     <p>Update the function <code>_initialize_language</code> to include your
+language.  This function picks the default language upon startup, so is
+dependent upon which languages that GDB is built for.
+
+     <p>Update <code>allocate_symtab</code> in <code>symfile.c</code> and/or symbol-reading
+code so that the language of each symtab (source file) is set properly. 
+This is used to determine the language to use at each stack frame level. 
+Currently, the language is set based upon the extension of the source
+file.  If the language can be better inferred from the symbol
+information, please set the language of the symtab in the symbol-reading
+code.
+
+     <p>Add helper code to <code>print_subexp</code> (in <code>expprint.c</code>) to handle any new
+expression opcodes you have added to <code>expression.h</code>.  Also, add the
+printed representations of your operators to <code>op_print_tab</code>.
+
+     <br><dt><em>Add a place of call</em>
+     <dd>
+Add a call to <code></code><var>lang</var><code>_parse()</code> and <code></code><var>lang</var><code>_error</code> in
+<code>parse_exp_1</code> (defined in <code>parse.c</code>).
+
+     <br><dt><em>Use macros to trim code</em>
+     <dd>
+The user has the option of building GDB for some or all of the
+languages.  If the user decides to build GDB for the language
+<var>lang</var>, then every file dependent on <code>language.h</code> will have the
+macro <code>_LANG_</code><var>lang</var><code></code> defined in it.  Use <code>#ifdef</code>s to
+leave out large routines that the user won't need if he or she is not
+using your language.
+
+     <p>Note that you do not need to do this in your YACC parser, since if GDB
+is not build for <var>lang</var>, then <code></code><var>lang</var><code>-exp.tab.o</code> (the
+compiled form of your parser) is not linked into GDB at all.
+
+     <p>See the file <code>configure.in</code> for how GDB is configured
+for different languages.
+
+     <br><dt><em>Edit </em><code>Makefile.in</code><em></em>
+     <dd>
+Add dependencies in <code>Makefile.in</code>.  Make sure you update the macro
+variables such as <code>HFILES</code> and <code>OBJS</code>, otherwise your code may
+not get linked in, or, worse yet, it may not get <code>tar</code>red into the
+distribution! 
+</dl>
+
+   </body></html>
+

@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="NetWare">NetWare</a>,
+Next:<a rel="next" accesskey="n" href="remote-stub.html#remote%20stub">remote stub</a>,
+Previous:<a rel="previous" accesskey="p" href="Server.html#Server">Server</a>,
+Up:<a rel="up" accesskey="u" href="Remote-Debugging.html#Remote%20Debugging">Remote Debugging</a>
+<hr><br>
+</div>
+
+<h3 class="section">Using the <code>gdbserve.nlm</code> program</h3>
+
+   <p><code>gdbserve.nlm</code> is a control program for NetWare systems, which
+allows you to connect your program with a remote GDB via
+<code>target remote</code>.
+
+   GDB and <code>gdbserve.nlm</code> communicate via a serial line,
+using the standard GDB remote serial protocol.
+
+     <dl>
+<dt><em>On the target machine,</em>
+     <dd>you need to have a copy of the program you want to debug. 
+<code>gdbserve.nlm</code> does not need your program's symbol table, so you
+can strip the program if necessary to save space.  GDB on the
+host system does all the symbol handling.
+
+     <p>To use the server, you must tell it how to communicate with
+GDB; the name of your program; and the arguments for your
+program.  The syntax is:
+
+     <pre class="smallexample">          load gdbserve [ BOARD=<var>board</var> ] [ PORT=<var>port</var> ]
+                        [ BAUD=<var>baud</var> ] <var>program</var> [ <var>args</var> ... ]
+          </pre>
+
+     <p><var>board</var> and <var>port</var> specify the serial line; <var>baud</var> specifies
+the baud rate used by the connection.  <var>port</var> and <var>node</var> default
+to 0, <var>baud</var> defaults to 9600bps.
+
+     <p>For example, to debug Emacs with the argument <code>foo.txt</code>and
+communicate with GDB over serial port number 2 or board 1
+using a 19200bps connection:
+
+     <pre class="smallexample">          load gdbserve BOARD=1 PORT=2 BAUD=19200 emacs foo.txt
+          </pre>
+
+     <br><dt><em>On the GDB host machine,</em>
+     <dd>you need an unstripped copy of your program, since GDB needs
+symbols and debugging information.  Start up GDB as usual,
+using the name of the local copy of your program as the first argument. 
+(You may also need the <code>--baud</code> option if the serial line is
+running at anything other than 9600bps.  After that, use <code>target
+remote</code> to establish communications with <code>gdbserve.nlm</code>.  Its
+argument is a device name (usually a serial device, like
+<code>/dev/ttyb</code>).  For example:
+
+     <pre class="smallexample">          (gdb) target remote /dev/ttyb
+          </pre>
+
+     <p>communications with the server via serial line <code>/dev/ttyb</code>. 
+</dl>
+
+   </body></html>
+

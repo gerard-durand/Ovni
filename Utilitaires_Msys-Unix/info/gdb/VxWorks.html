@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="VxWorks">VxWorks</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-OS.html#Embedded%20OS">Embedded OS</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Using GDB with VxWorks</h4>
+
+     <dl>
+
+     <br><dt><code>target vxworks </code><var>machinename</var><code></code>
+     <dd>A VxWorks system, attached via TCP/IP.  The argument <var>machinename</var>
+is the target system's machine name or IP address.
+
+   </dl>
+
+   <p>On VxWorks, <code>load</code> links <var>filename</var> dynamically on the
+current target system as well as adding its symbols in GDB.
+
+   GDB enables developers to spawn and debug tasks running on networked
+VxWorks targets from a Unix host.  Already-running tasks spawned from
+the VxWorks shell can also be debugged.  GDB uses code that runs on
+both the Unix host and on the VxWorks target.  The program
+<code>gdb</code> is installed and executed on the Unix host.  (It may be
+installed with the name <code>vxgdb</code>, to distinguish it from a
+GDB for debugging programs on the host itself.)
+
+     <dl>
+<dt><code>VxWorks-timeout </code><var>args</var><code></code>
+     <dd>All VxWorks-based targets now support the option <code>vxworks-timeout</code>. 
+This option is set by the user, and  <var>args</var> represents the number of
+seconds GDB waits for responses to rpc's.  You might use this if
+your VxWorks target is a slow software simulator or is on the far side
+of a thin network line. 
+</dl>
+
+   <p>The following information on connecting to VxWorks was current when
+this manual was produced; newer releases of VxWorks may use revised
+procedures.
+
+   <p>To use GDB with VxWorks, you must rebuild your VxWorks kernel
+to include the remote debugging interface routines in the VxWorks
+library <code>rdb.a</code>.  To do this, define <code>INCLUDE_RDB</code> in the
+VxWorks configuration file <code>configAll.h</code> and rebuild your VxWorks
+kernel.  The resulting kernel contains <code>rdb.a</code>, and spawns the
+source debugging task <code>tRdbTask</code> when VxWorks is booted.  For more
+information on configuring and remaking VxWorks, see the manufacturer's
+manual.
+
+   <p>Once you have included <code>rdb.a</code> in your VxWorks system image and set
+your Unix execution search path to find GDB, you are ready to
+run GDB.  From your Unix host, run <code>gdb</code> (or
+<code>vxgdb</code>, depending on your installation).
+
+   GDB comes up showing the prompt:
+
+<pre class="example">     (vxgdb)
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="VxWorks-Connection.html#VxWorks%20Connection">VxWorks Connection</a>:           Connecting to VxWorks
+<li><a accesskey="2" href="VxWorks-Download.html#VxWorks%20Download">VxWorks Download</a>:             VxWorks download
+<li><a accesskey="3" href="VxWorks-Attach.html#VxWorks%20Attach">VxWorks Attach</a>:               Running tasks
+</ul>
+
+   </body></html>
+

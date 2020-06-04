@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Stack">Stack</a>,
+Next:<a rel="next" accesskey="n" href="Source.html#Source">Source</a>,
+Previous:<a rel="previous" accesskey="p" href="Stopping.html#Stopping">Stopping</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Examining the Stack</h2>
+
+   <p>When your program has stopped, the first thing you need to know is where it
+stopped and how it got there.
+
+   <p>Each time your program performs a function call, information about the call
+is generated. 
+That information includes the location of the call in your program,
+the arguments of the call,
+and the local variables of the function being called. 
+The information is saved in a block of data called a <dfn>stack frame</dfn>. 
+The stack frames are allocated in a region of memory called the <dfn>call
+stack</dfn>.
+
+   <p>When your program stops, the GDB commands for examining the
+stack allow you to see all of this information.
+
+   <p>One of the stack frames is <dfn>selected</dfn> by GDB and many
+GDB commands refer implicitly to the selected frame.  In
+particular, whenever you ask GDB for the value of a variable in
+your program, the value is found in the selected frame.  There are
+special GDB commands to select whichever frame you are
+interested in. See <a href="Selection.html#Selection">Selecting a frame</a>.
+
+   <p>When your program stops, GDB automatically selects the
+currently executing frame and describes it briefly, similar to the
+<code>frame</code> command (see <a href="Frame-Info.html#Frame%20Info">Information about a frame</a>).
+
+<ul class="menu">
+<li><a accesskey="1" href="Frames.html#Frames">Frames</a>:                       Stack frames
+<li><a accesskey="2" href="Backtrace.html#Backtrace">Backtrace</a>:                    Backtraces
+<li><a accesskey="3" href="Selection.html#Selection">Selection</a>:                    Selecting a frame
+<li><a accesskey="4" href="Frame-Info.html#Frame%20Info">Frame Info</a>:                   Information on a frame
+
+   </ul>
+
+   </body></html>
+

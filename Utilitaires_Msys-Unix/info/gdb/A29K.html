@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="A29K">A29K</a>,
+Next:<a rel="next" accesskey="n" href="Alpha.html#Alpha">Alpha</a>,
+Up:<a rel="up" accesskey="u" href="Architectures.html#Architectures">Architectures</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">A29K</h4>
+
+     <dl>
+
+     <br><dt><code>set rstack_high_address </code><var>address</var><code></code>
+     <dd>On AMD 29000 family processors, registers are saved in a separate
+<dfn>register stack</dfn>.  There is no way for GDB to determine the
+extent of this stack.  Normally, GDB just assumes that the
+stack is "large enough".  This may result in GDB referencing
+memory locations that do not exist.  If necessary, you can get around
+this problem by specifying the ending address of the register stack with
+the <code>set rstack_high_address</code> command.  The argument should be an
+address, which you probably want to precede with <code>0x</code> to specify in
+hexadecimal.
+
+     <br><dt><code>show rstack_high_address</code>
+     <dd>Display the current limit of the register stack, on AMD 29000 family
+processors.
+
+   </dl>
+
+   </body></html>
+

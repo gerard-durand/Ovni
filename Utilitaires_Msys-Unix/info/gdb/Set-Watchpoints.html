@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Set%20Watchpoints">Set Watchpoints</a>,
+Next:<a rel="next" accesskey="n" href="Set-Catchpoints.html#Set%20Catchpoints">Set Catchpoints</a>,
+Previous:<a rel="previous" accesskey="p" href="Set-Breaks.html#Set%20Breaks">Set Breaks</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Setting watchpoints</h4>
+
+   <p>You can use a watchpoint to stop execution whenever the value of an
+expression changes, without having to predict a particular place where
+this may happen.
+
+   <p>Depending on your system, watchpoints may be implemented in software or
+hardware.  GDB does software watchpointing by single-stepping your
+program and testing the variable's value each time, which is hundreds of
+times slower than normal execution.  (But this may still be worth it, to
+catch errors where you have no clue what part of your program is the
+culprit.)
+
+   <p>On some systems, such as HP-UX, Linux and some other x86-based targets,
+GDB includes support for
+hardware watchpoints, which do not slow down the running of your
+program.
+
+     <dl>
+<dt><code>watch </code><var>expr</var><code></code>
+     <dd>Set a watchpoint for an expression.  GDB will break when <var>expr</var>
+is written into by the program and its value changes.
+
+     <br><dt><code>rwatch </code><var>expr</var><code></code>
+     <dd>Set a watchpoint that will break when watch <var>expr</var> is read by the program.
+
+     <br><dt><code>awatch </code><var>expr</var><code></code>
+     <dd>Set a watchpoint that will break when <var>expr</var> is either read or written into
+by the program.
+
+     <br><dt><code>info watchpoints</code>
+     <dd>This command prints a list of watchpoints, breakpoints, and catchpoints;
+it is the same as <code>info break</code>. 
+</dl>
+
+   GDB sets a <dfn>hardware watchpoint</dfn> if possible.  Hardware
+watchpoints execute very quickly, and the debugger reports a change in
+value at the exact instruction where the change occurs.  If GDB
+cannot set a hardware watchpoint, it sets a software watchpoint, which
+executes more slowly and reports the change in value at the next
+statement, not the instruction, after the change occurs.
+
+   <p>When you issue the <code>watch</code> command, GDB reports
+
+<pre class="example">     Hardware watchpoint <var>num</var>: <var>expr</var>
+     </pre>
+
+<p>if it was able to set a hardware watchpoint.
+
+   <p>Currently, the <code>awatch</code> and <code>rwatch</code> commands can only set
+hardware watchpoints, because accesses to data that don't change the
+value of the watched expression cannot be detected without examining
+every instruction as it is being executed, and GDB does not do
+that currently.  If GDB finds that it is unable to set a
+hardware breakpoint with the <code>awatch</code> or <code>rwatch</code> command, it
+will print a message like this:
+
+<pre class="smallexample">     Expression cannot be implemented with read/access watchpoint.
+     </pre>
+
+   <p>Sometimes, GDB cannot set a hardware watchpoint because the
+data type of the watched expression is wider than what a hardware
+watchpoint on the target machine can handle.  For example, some systems
+can only watch regions that are up to 4 bytes wide; on such systems you
+cannot set hardware watchpoints for an expression that yields a
+double-precision floating-point number (which is typically 8 bytes
+wide).  As a work-around, it might be possible to break the large region
+into a series of smaller ones and watch them with separate watchpoints.
+
+   <p>If you set too many hardware watchpoints, GDB might be unable
+to insert all of them when you resume the execution of your program. 
+Since the precise number of active watchpoints is unknown until such
+time as the program is about to be resumed, GDB might not be
+able to warn you about this when you set the watchpoints, and the
+warning will be printed only when the program is resumed:
+
+<pre class="smallexample">     Hardware watchpoint <var>num</var>: Could not insert watchpoint
+     </pre>
+
+<p>If this happens, delete or disable some of the watchpoints.
+
+   <p>The SPARClite DSU will generate traps when a program accesses some data
+or instruction address that is assigned to the debug registers.  For the
+data addresses, DSU facilitates the <code>watch</code> command.  However the
+hardware breakpoint registers can only take two data watchpoints, and
+both watchpoints must be the same kind.  For example, you can set two
+watchpoints with <code>watch</code> commands, two with <code>rwatch</code> commands,
+<strong>or</strong> two with <code>awatch</code> commands, but you cannot set one
+watchpoint with one command and the other with a different command. 
+GDB will reject the command if you try to mix watchpoints. 
+Delete or disable unused watchpoint commands before setting new ones.
+
+   <p>If you call a function interactively using <code>print</code> or <code>call</code>,
+any watchpoints you have set will be inactive until GDB reaches another
+kind of breakpoint or the call completes.
+
+   GDB automatically deletes watchpoints that watch local
+(automatic) variables, or expressions that involve such variables, when
+they go out of scope, that is, when the execution leaves the block in
+which these variables were defined.  In particular, when the program
+being debugged terminates, <em>all</em> local variables go out of scope,
+and so only watchpoints that watch global variables remain set.  If you
+rerun the program, you will need to set all such watchpoints again.  One
+way of doing that would be to set a code breakpoint at the entry to the
+<code>main</code> function and when it breaks, set all the watchpoints.
+
+   <blockquote>
+<em>Warning:</em> In multi-thread programs, watchpoints have only limited
+usefulness.  With the current watchpoint implementation, GDB
+can only watch the value of an expression <em>in a single thread</em>.  If
+you are confident that the expression can only change due to the current
+thread's activity (and if you are also confident that no other thread
+can become current), then you can use watchpoints as usual.  However,
+GDB may not notice when a non-current thread's activity changes
+the expression.
+
+        <p><em>HP-UX Warning:</em> In multi-thread programs, software watchpoints
+have only limited usefulness.  If GDB creates a software
+watchpoint, it can only watch the value of an expression <em>in a
+single thread</em>.  If you are confident that the expression can only
+change due to the current thread's activity (and if you are also
+confident that no other thread can become current), then you can use
+software watchpoints as usual.  However, GDB may not notice
+when a non-current thread's activity changes the expression.  (Hardware
+watchpoints, in contrast, watch an expression in all threads.) 
+</blockquote>
+
+   </body></html>
+

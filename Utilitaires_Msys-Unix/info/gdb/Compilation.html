@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Compilation">Compilation</a>,
+Next:<a rel="next" accesskey="n" href="Starting.html#Starting">Starting</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Compiling for debugging</h3>
+
+   <p>In order to debug a program effectively, you need to generate
+debugging information when you compile it.  This debugging information
+is stored in the object file; it describes the data type of each
+variable or function and the correspondence between source line numbers
+and addresses in the executable code.
+
+   <p>To request debugging information, specify the <code>-g</code> option when you run
+the compiler.
+
+   <p>Many C compilers are unable to handle the <code>-g</code> and <code>-O</code>
+options together.  Using those compilers, you cannot generate optimized
+executables containing debugging information.
+
+   GCC, the <small>GNU</small> C compiler, supports <code>-g</code> with or
+without <code>-O</code>, making it possible to debug optimized code.  We
+recommend that you <em>always</em> use <code>-g</code> whenever you compile a
+program.  You may think your program is correct, but there is no sense
+in pushing your luck.
+
+   <p>When you debug a program compiled with <code>-g -O</code>, remember that the
+optimizer is rearranging your code; the debugger shows you what is
+really there.  Do not be too surprised when the execution path does not
+exactly match your source file!  An extreme example: if you define a
+variable, but never use it, GDB never sees that
+variable--because the compiler optimizes it out of existence.
+
+   <p>Some things do not work as well with <code>-g -O</code> as with just
+<code>-g</code>, particularly on machines with instruction scheduling.  If in
+doubt, recompile with <code>-g</code> alone, and if this fixes the problem,
+please report it to us as a bug (including a test case!).
+
+   <p>Older versions of the <small>GNU</small> C compiler permitted a variant option
+<code>-gg</code> for debugging information.  GDB no longer supports this
+format; if your <small>GNU</small> C compiler has this option, do not use it.
+
+   </body></html>
+

@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Source%20Files">Source Files</a>,
+Next:<a rel="next" accesskey="n" href="Include-Files.html#Include%20Files">Include Files</a>,
+Previous:<a rel="previous" accesskey="p" href="Main-Program.html#Main%20Program">Main Program</a>,
+Up:<a rel="up" accesskey="u" href="Program-Structure.html#Program%20Structure">Program Structure</a>
+<hr><br>
+</div>
+
+<h3 class="section">Paths and Names of the Source Files</h3>
+
+   <p>Before any other stabs occur, there must be a stab specifying the source
+file.  This information is contained in a symbol of stab type
+<code>N_SO</code>; the string field contains the name of the file.  The
+value of the symbol is the start address of the portion of the
+text section corresponding to that file.
+
+   <p>With the Sun Solaris2 compiler, the desc field contains a
+source-language code.
+
+   <p>Some compilers (for example, GCC2 and SunOS4 <code>/bin/cc</code>) also
+include the directory in which the source was compiled, in a second
+<code>N_SO</code> symbol preceding the one containing the file name.  This
+symbol can be distinguished by the fact that it ends in a slash.  Code
+from the <code>cfront</code> C++ compiler can have additional <code>N_SO</code> symbols for
+nonexistent source files after the <code>N_SO</code> for the real source file;
+these are believed to contain no useful information.
+
+   <p>For example:
+
+<pre class="example">     .stabs "/cygint/s1/users/jcm/play/",100,0,0,Ltext0     # 100 is N_SO
+     .stabs "hello.c",100,0,0,Ltext0
+             .text
+     Ltext0:
+     </pre>
+
+   <p>Instead of <code>N_SO</code> symbols, XCOFF uses a <code>.file</code> assembler
+directive which assembles to a <code>C_FILE</code> symbol; explaining this in
+detail is outside the scope of this document.
+
+   <p>If it is useful to indicate the end of a source file, this is done with
+an <code>N_SO</code> symbol with an empty string for the name.  The value is
+the address of the end of the text section for the file.  For some
+systems, there is no indication of the end of a source file, and you
+just need to figure it ended when you see an <code>N_SO</code> for a different
+source file, or a symbol ending in <code>.o</code> (which at least some
+linkers insert to mark the start of a new <code>.o</code> file).
+
+   </body></html>
+

@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Class%20Names">Class Names</a>,
+Next:<a rel="next" accesskey="n" href="Nested-Symbols.html#Nested%20Symbols">Nested Symbols</a>,
+Up:<a rel="up" accesskey="u" href="Cplusplus.html#Cplusplus">Cplusplus</a>
+<hr><br>
+</div>
+
+<h3 class="section">C++ Class Names</h3>
+
+   <p>In C++, a class name which is declared with <code>class</code>, <code>struct</code>,
+or <code>union</code>, is not only a tag, as in C, but also a type name.  Thus
+there should be stabs with both <code>t</code> and <code>T</code> symbol descriptors
+(see <a href="Typedefs.html#Typedefs">Typedefs</a>).
+
+   <p>To save space, there is a special abbreviation for this case.  If the
+<code>T</code> symbol descriptor is followed by <code>t</code>, then the stab
+defines both a type name and a tag.
+
+   <p>For example, the C++ code
+
+<pre class="example">     struct foo {int x;};
+     </pre>
+
+   <p>can be represented as either
+
+<pre class="example">     .stabs "foo:T19=s4x:1,0,32;;",128,0,0,0       # 128 is N_LSYM
+     .stabs "foo:t19",128,0,0,0
+     </pre>
+
+   <p>or
+
+<pre class="example">     .stabs "foo:Tt19=s4x:1,0,32;;",128,0,0,0
+     </pre>
+
+   </body></html>
+

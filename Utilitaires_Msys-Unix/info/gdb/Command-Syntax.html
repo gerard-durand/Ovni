@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Command%20Syntax">Command Syntax</a>,
+Next:<a rel="next" accesskey="n" href="Completion.html#Completion">Completion</a>,
+Up:<a rel="up" accesskey="u" href="Commands.html#Commands">Commands</a>
+<hr><br>
+</div>
+
+<h3 class="section">Command syntax</h3>
+
+   <p>A GDB command is a single line of input.  There is no limit on
+how long it can be.  It starts with a command name, which is followed by
+arguments whose meaning depends on the command name.  For example, the
+command <code>step</code> accepts an argument which is the number of times to
+step, as in <code>step 5</code>.  You can also use the <code>step</code> command
+with no arguments.  Some commands do not allow any arguments.
+
+   GDB command names may always be truncated if that abbreviation is
+unambiguous.  Other possible command abbreviations are listed in the
+documentation for individual commands.  In some cases, even ambiguous
+abbreviations are allowed; for example, <code>s</code> is specially defined as
+equivalent to <code>step</code> even though there are other commands whose
+names start with <code>s</code>.  You can test abbreviations by using them as
+arguments to the <code>help</code> command.
+
+   <p>A blank line as input to GDB (typing just &lt;RET&gt;) means to
+repeat the previous command.  Certain commands (for example, <code>run</code>)
+will not repeat this way; these are commands whose unintentional
+repetition might cause trouble and which you are unlikely to want to
+repeat.
+
+   <p>The <code>list</code> and <code>x</code> commands, when you repeat them with
+&lt;RET&gt;, construct new arguments rather than repeating
+exactly as typed.  This permits easy scanning of source or memory.
+
+   GDB can also use &lt;RET&gt; in another way: to partition lengthy
+output, in a way similar to the common utility <code>more</code>
+(see <a href="Screen-Size.html#Screen%20Size">Screen size</a>).  Since it is easy to press one
+&lt;RET&gt; too many in this situation, GDB disables command
+repetition after any command that generates this sort of display.
+
+   <p>Any text from a <kbd>#</kbd> to the end of the line is a comment; it does
+nothing.  This is useful mainly in command files (see <a href="Command-Files.html#Command%20Files">Command files</a>).
+
+   <p>The <kbd>C-o</kbd> binding is useful for repeating a complex sequence of
+commands.  This command accepts the current line, like <kbd>RET</kbd>, and
+then fetches the next line relative to the current line from the history
+for editing.
+
+   </body></html>
+

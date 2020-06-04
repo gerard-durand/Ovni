@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Main%20Program">Main Program</a>,
+Next:<a rel="next" accesskey="n" href="Source-Files.html#Source%20Files">Source Files</a>,
+Up:<a rel="up" accesskey="u" href="Program-Structure.html#Program%20Structure">Program Structure</a>
+<hr><br>
+</div>
+
+<h3 class="section">Main Program</h3>
+
+   <p>Most languages allow the main program to have any name.  The
+<code>N_MAIN</code> stab type tells the debugger the name that is used in this
+program.  Only the string field is significant; it is the name of
+a function which is the main program.  Most C compilers do not use this
+stab (they expect the debugger to assume that the name is <code>main</code>),
+but some C compilers emit an <code>N_MAIN</code> stab for the <code>main</code>
+function.  I'm not sure how XCOFF handles this.
+
+   </body></html>
+

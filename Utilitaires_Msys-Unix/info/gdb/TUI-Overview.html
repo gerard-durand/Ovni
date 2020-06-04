@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="TUI%20Overview">TUI Overview</a>,
+Next:<a rel="next" accesskey="n" href="TUI-Keys.html#TUI%20Keys">TUI Keys</a>,
+Up:<a rel="up" accesskey="u" href="TUI.html#TUI">TUI</a>
+<hr><br>
+</div>
+
+<h3 class="section">TUI overview</h3>
+
+   <p>The TUI has two display modes that can be switched while
+GDB runs:
+
+     <ul>
+<li>A curses (or TUI) mode in which it displays several text
+windows on the terminal.
+
+     <li>A standard mode which corresponds to the GDB configured without
+the TUI. 
+</ul>
+
+   <p>In the TUI mode, GDB can display several text window
+on the terminal:
+
+     <dl>
+<dt><em>command</em>
+     <dd>This window is the GDB command window with the GDB
+prompt and the GDB outputs.  The GDB input is still
+managed using readline but through the TUI.  The <em>command</em>
+window is always visible.
+
+     <br><dt><em>source</em>
+     <dd>The source window shows the source file of the program.  The current
+line as well as active breakpoints are displayed in this window. 
+The current program position is shown with the <code>&gt;</code> marker and
+active breakpoints are shown with <code>*</code> markers.
+
+     <br><dt><em>assembly</em>
+     <dd>The assembly window shows the disassembly output of the program.
+
+     <br><dt><em>register</em>
+     <dd>This window shows the processor registers.  It detects when
+a register is changed and when this is the case, registers that have
+changed are highlighted.
+
+   </dl>
+
+   <p>The source, assembly and register windows are attached to the thread
+and the frame position.  They are updated when the current thread
+changes, when the frame changes or when the program counter changes. 
+These three windows are arranged by the TUI according to several
+layouts.  The layout defines which of these three windows are visible. 
+The following layouts are available:
+
+     <ul>
+<li>source
+
+     <li>assembly
+
+     <li>source and assembly
+
+     <li>source and registers
+
+     <li>assembly and registers
+
+   </ul>
+
+   </body></html>
+

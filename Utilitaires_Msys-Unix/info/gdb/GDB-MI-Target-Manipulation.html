@@ -1,0 +1,278 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Target%20Manipulation">GDB/MI Target Manipulation</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Thread-Commands.html#GDB%2fMI%20Thread%20Commands">GDB/MI Thread Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Symbol-Query.html#GDB%2fMI%20Symbol%20Query">GDB/MI Symbol Query</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Target Manipulation Commands</h3>
+
+<h4 class="subheading">The <code>-target-attach</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-attach <var>pid</var> | <var>file</var>
+     </pre>
+
+   <p>Attach to a process <var>pid</var> or a file <var>file</var> outside of GDB.
+
+<h5 class="subsubheading">GDB command</h5>
+
+   <p>The corresponding GDB command is <code>attach</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-compare-sections</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-compare-sections [ <var>section</var> ]
+     </pre>
+
+   <p>Compare data of section <var>section</var> on target to the exec file. 
+Without the argument, all sections are compared.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The GDB equivalent is <code>compare-sections</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-detach</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-detach
+     </pre>
+
+   <p>Disconnect from the remote target.  There's no output.
+
+<h5 class="subsubheading">GDB command</h5>
+
+   <p>The corresponding GDB command is <code>detach</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -target-detach
+     ^done
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-target-download</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-download
+     </pre>
+
+   <p>Loads the executable onto the remote target. 
+It prints out an update message every half second, which includes the fields:
+
+     <dl>
+<dt><code>section</code>
+     <dd>The name of the section. 
+<br><dt><code>section-sent</code>
+     <dd>The size of what has been sent so far for that section. 
+<br><dt><code>section-size</code>
+     <dd>The size of the section. 
+<br><dt><code>total-sent</code>
+     <dd>The total size of what was sent so far (the current and the previous sections). 
+<br><dt><code>total-size</code>
+     <dd>The size of the overall executable to download. 
+</dl>
+
+<p>Each message is sent as status record (see <a href="GDB-MI-Output-Syntax.html#GDB%2fMI%20Output%20Syntax"><small>GDB/MI</small> Output Syntax</a>).
+
+   <p>In addition, it prints the name and size of the sections, as they are
+downloaded.  These messages include the following fields:
+
+     <dl>
+<dt><code>section</code>
+     <dd>The name of the section. 
+<br><dt><code>section-size</code>
+     <dd>The size of the section. 
+<br><dt><code>total-size</code>
+     <dd>The size of the overall executable to download. 
+</dl>
+
+<p>At the end, a summary is printed.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>load</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>Note: each status message appears on a single line.  Here the messages
+have been broken down so that they can fit onto a page.
+
+<pre class="smallexample">     (gdb)
+     -target-download
+     +download,{section=".text",section-size="6668",total-size="9880"}
+     +download,{section=".text",section-sent="512",section-size="6668",
+     total-sent="512",total-size="9880"}
+     +download,{section=".text",section-sent="1024",section-size="6668",
+     total-sent="1024",total-size="9880"}
+     +download,{section=".text",section-sent="1536",section-size="6668",
+     total-sent="1536",total-size="9880"}
+     +download,{section=".text",section-sent="2048",section-size="6668",
+     total-sent="2048",total-size="9880"}
+     +download,{section=".text",section-sent="2560",section-size="6668",
+     total-sent="2560",total-size="9880"}
+     +download,{section=".text",section-sent="3072",section-size="6668",
+     total-sent="3072",total-size="9880"}
+     +download,{section=".text",section-sent="3584",section-size="6668",
+     total-sent="3584",total-size="9880"}
+     +download,{section=".text",section-sent="4096",section-size="6668",
+     total-sent="4096",total-size="9880"}
+     +download,{section=".text",section-sent="4608",section-size="6668",
+     total-sent="4608",total-size="9880"}
+     +download,{section=".text",section-sent="5120",section-size="6668",
+     total-sent="5120",total-size="9880"}
+     +download,{section=".text",section-sent="5632",section-size="6668",
+     total-sent="5632",total-size="9880"}
+     +download,{section=".text",section-sent="6144",section-size="6668",
+     total-sent="6144",total-size="9880"}
+     +download,{section=".text",section-sent="6656",section-size="6668",
+     total-sent="6656",total-size="9880"}
+     +download,{section=".init",section-size="28",total-size="9880"}
+     +download,{section=".fini",section-size="28",total-size="9880"}
+     +download,{section=".data",section-size="3156",total-size="9880"}
+     +download,{section=".data",section-sent="512",section-size="3156",
+     total-sent="7236",total-size="9880"}
+     +download,{section=".data",section-sent="1024",section-size="3156",
+     total-sent="7748",total-size="9880"}
+     +download,{section=".data",section-sent="1536",section-size="3156",
+     total-sent="8260",total-size="9880"}
+     +download,{section=".data",section-sent="2048",section-size="3156",
+     total-sent="8772",total-size="9880"}
+     +download,{section=".data",section-sent="2560",section-size="3156",
+     total-sent="9284",total-size="9880"}
+     +download,{section=".data",section-sent="3072",section-size="3156",
+     total-sent="9796",total-size="9880"}
+     ^done,address="0x10004",load-size="9880",transfer-rate="6586",
+     write-rate="429"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-target-exec-status</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-exec-status
+     </pre>
+
+   <p>Provide information on the state of the target (whether it is running or
+not, for instance).
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>There's no equivalent GDB command.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-list-available-targets</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-list-available-targets
+     </pre>
+
+   <p>List the possible targets to connect to.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>help target</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-list-current-targets</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-list-current-targets
+     </pre>
+
+   <p>Describe the current target.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding information is printed by <code>info file</code> (among
+other things).
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-list-parameters</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-list-parameters
+     </pre>
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>No equivalent.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-target-select</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -target-select <var>type</var> <var>parameters <small class="dots">...</small></var>
+     </pre>
+
+   <p>Connect GDB to the remote target.  This command takes two args:
+
+     <dl>
+<dt><code></code><var>type</var><code></code>
+     <dd>The type of target, for instance <code>async</code>, <code>remote</code>, etc. 
+<br><dt><code></code><var>parameters</var><code></code>
+     <dd>Device names, host names and the like.  See <a href="Target-Commands.html#Target%20Commands">Commands for managing targets</a>, for more details. 
+</dl>
+
+   <p>The output is a connection notification, followed by the address at
+which the target program is, in the following form:
+
+<pre class="smallexample">     ^connected,addr="<var>address</var>",func="<var>function name</var>",
+       args=[<var>arg list</var>]
+     </pre>
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>target</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -target-select async /dev/ttya
+     ^connected,addr="0xfe00a300",func="??",args=[]
+     (gdb)
+     </pre>
+
+   </body></html>
+

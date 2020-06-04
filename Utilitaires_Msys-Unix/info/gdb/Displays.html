@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Displays">Displays</a>,
+Next:<a rel="next" accesskey="n" href="Prompting.html#Prompting">Prompting</a>,
+Previous:<a rel="previous" accesskey="p" href="Frame-Annotations.html#Frame%20Annotations">Frame Annotations</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">Displays</h3>
+
+   <p>When GDB is told to display something using the <code>display</code> command,
+the results of the display are annotated:
+
+<pre class="smallexample">     ^Z^Zdisplay-begin
+     <var>number</var>
+     ^Z^Zdisplay-number-end
+     <var>number-separator</var>
+     ^Z^Zdisplay-format
+     <var>format</var>
+     ^Z^Zdisplay-expression
+     <var>expression</var>
+     ^Z^Zdisplay-expression-end
+     <var>expression-separator</var>
+     ^Z^Zdisplay-value
+     <var>value</var>
+     ^Z^Zdisplay-end
+     </pre>
+
+<p>where <var>number</var> is the number of the display, <var>number-separator</var>
+is intended to separate the number from what follows for the user,
+<var>format</var> includes information such as the size, format, or other
+information about how the value is being displayed, <var>expression</var> is
+the expression being displayed, <var>expression-separator</var> is intended
+to separate the expression from the text that follows for the user,
+and <var>value</var> is the actual value being displayed.
+
+   </body></html>
+

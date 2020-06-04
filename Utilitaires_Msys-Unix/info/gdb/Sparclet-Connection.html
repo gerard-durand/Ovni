@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Sparclet%20Connection">Sparclet Connection</a>,
+Next:<a rel="next" accesskey="n" href="Sparclet-Download.html#Sparclet%20Download">Sparclet Download</a>,
+Previous:<a rel="previous" accesskey="p" href="Sparclet-File.html#Sparclet%20File">Sparclet File</a>,
+Up:<a rel="up" accesskey="u" href="Sparclet.html#Sparclet">Sparclet</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Connecting to Sparclet</h5>
+
+   <p>The GDB command <code>target</code> lets you connect to a Sparclet target. 
+To connect to a target on serial port "<code>ttya</code>", type:
+
+<pre class="example">     (gdbslet) target sparclet /dev/ttya
+     Remote target sparclet connected to /dev/ttya
+     main () at ../prog.c:3
+     </pre>
+
+   GDB displays messages like these:
+
+<pre class="example">     Connected to ttya.
+     </pre>
+
+   </body></html>
+

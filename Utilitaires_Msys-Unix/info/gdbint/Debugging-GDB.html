@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Debugging%20GDB">Debugging GDB</a>,
+Up:<a rel="up" accesskey="u" href="Hints.html#Hints">Hints</a>
+<hr><br>
+</div>
+
+<h3 class="section">Debugging GDB with itself</h3>
+
+   <p>If GDB is limping on your machine, this is the preferred way to get it
+fully functional.  Be warned that in some ancient Unix systems, like
+Ultrix 4.2, a program can't be running in one process while it is being
+debugged in another.  Rather than typing the command <kbd>./gdb&nbsp;./gdb</kbd>, which works on Suns and such, you can copy <code>gdb</code> to
+<code>gdb2</code> and then type <kbd>./gdb&nbsp;./gdb2</kbd>.
+
+   <p>When you run GDB in the GDB source directory, it will read a
+<code>.gdbinit</code> file that sets up some simple things to make debugging
+gdb easier.  The <code>info</code> command, when executed without a subcommand
+in a GDB being debugged by gdb, will pop you back up to the top level
+gdb.  See <code>.gdbinit</code> for details.
+
+   <p>If you use emacs, you will probably want to do a <code>make TAGS</code> after
+you configure your distribution; this will put the machine dependent
+routines for your local machine where they will be accessed first by
+<kbd>M-.</kbd>
+
+   <p>Also, make sure that you've either compiled GDB with your local cc, or
+have run <code>fixincludes</code> if you are compiling with gcc.
+
+<h3 class="section">Submitting Patches</h3>
+
+   <p>Thanks for thinking of offering your changes back to the community of
+GDB users.  In general we like to get well designed enhancements. 
+Thanks also for checking in advance about the best way to transfer the
+changes.
+
+   <p>The GDB maintainers will only install "cleanly designed" patches. 
+This manual summarizes what we believe to be clean design for GDB.
+
+   <p>If the maintainers don't have time to put the patch in when it arrives,
+or if there is any question about a patch, it goes into a large queue
+with everyone else's patches and bug reports.
+
+   <p>The legal issue is that to incorporate substantial changes requires a
+copyright assignment from you and/or your employer, granting ownership
+of the changes to the Free Software Foundation.  You can get the
+standard documents for doing this by sending mail to <code>gnu@gnu.org</code>
+and asking for it.  We recommend that people write in "All programs
+owned by the Free Software Foundation" as "NAME OF PROGRAM", so that
+changes in many programs (not just GDB, but GAS, Emacs, GCC,
+etc) can be
+contributed with only one piece of legalese pushed through the
+bureaucracy and filed with the FSF.  We can't start merging changes until
+this paperwork is received by the FSF (their rules, which we follow
+since we maintain it for them).
+
+   <p>Technically, the easiest way to receive changes is to receive each
+feature as a small context diff or unidiff, suitable for <code>patch</code>. 
+Each message sent to me should include the changes to C code and
+header files for a single feature, plus <code>ChangeLog</code> entries for
+each directory where files were modified, and diffs for any changes
+needed to the manuals (<code>gdb/doc/gdb.texinfo</code> or
+<code>gdb/doc/gdbint.texinfo</code>).  If there are a lot of changes for a
+single feature, they can be split down into multiple messages.
+
+   <p>In this way, if we read and like the feature, we can add it to the
+sources with a single patch command, do some testing, and check it in. 
+If you leave out the <code>ChangeLog</code>, we have to write one.  If you leave
+out the doc, we have to puzzle out what needs documenting.  Etc., etc.
+
+   <p>The reason to send each change in a separate message is that we will not
+install some of the changes.  They'll be returned to you with questions
+or comments.  If we're doing our job correctly, the message back to you
+will say what you have to fix in order to make the change acceptable. 
+The reason to have separate messages for separate features is so that
+the acceptable changes can be installed while one or more changes are
+being reworked.  If multiple features are sent in a single message, we
+tend to not put in the effort to sort out the acceptable changes from
+the unacceptable, so none of the features get installed until all are
+acceptable.
+
+   <p>If this sounds painful or authoritarian, well, it is.  But we get a lot
+of bug reports and a lot of patches, and many of them don't get
+installed because we don't have the time to finish the job that the bug
+reporter or the contributor could have done.  Patches that arrive
+complete, working, and well designed, tend to get installed on the day
+they arrive.  The others go into a queue and get installed as time
+permits, which, since the maintainers have many demands to meet, may not
+be for quite some time.
+
+   <p>Please send patches directly to
+<a href="mailto:gdb-patches@sources.redhat.com">the GDB maintainers</a>.
+
+<h3 class="section">Obsolete Conditionals</h3>
+
+   <p>Fragments of old code in GDB sometimes reference or set the following
+configuration macros.  They should not be used by new code, and old uses
+should be removed as those parts of the debugger are otherwise touched.
+
+     <dl>
+<dt><code>STACK_END_ADDR</code>
+     <dd>This macro used to define where the end of the stack appeared, for use
+in interpreting core file formats that don't record this address in the
+core file itself.  This information is now configured in BFD, and GDB
+gets the info portably from there.  The values in GDB's configuration
+files should be moved into BFD configuration files (if needed there),
+and deleted from all of GDB's config files.
+
+     <p>Any <code></code><var>foo</var><code>-xdep.c</code> file that references STACK_END_ADDR
+is so old that it has never been converted to use BFD.  Now that's old!
+
+     <br><dt><code>PYRAMID_CONTROL_FRAME_DEBUGGING</code>
+     <dd>pyr-xdep.c
+<br><dt><code>PYRAMID_CORE</code>
+     <dd>pyr-xdep.c
+<br><dt><code>PYRAMID_PTRACE</code>
+     <dd>pyr-xdep.c
+
+     <br><dt><code>REG_STACK_SEGMENT</code>
+     <dd>exec.c
+
+   </dl>
+
+   </body></html>
+

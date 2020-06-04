@@ -1,0 +1,321 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Print%20Settings">Print Settings</a>,
+Next:<a rel="next" accesskey="n" href="Value-History.html#Value%20History">Value History</a>,
+Previous:<a rel="previous" accesskey="p" href="Auto-Display.html#Auto%20Display">Auto Display</a>,
+Up:<a rel="up" accesskey="u" href="Data.html#Data">Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">Print settings</h3>
+
+   GDB provides the following ways to control how arrays, structures,
+and symbols are printed.
+
+<p>These settings are useful for debugging programs in any language:
+
+     <dl>
+<dt><code>set print address</code>
+     <dd><dt><code>set print address on</code>
+     <dd>GDB prints memory addresses showing the location of stack
+traces, structure values, pointer values, breakpoints, and so forth,
+even when it also displays the contents of those addresses.  The default
+is <code>on</code>.  For example, this is what a stack frame display looks like with
+<code>set print address on</code>:
+
+     <pre class="smallexample">          (gdb) f
+          #0  set_quotes (lq=0x34c78 "&lt;&lt;", rq=0x34c88 "&gt;&gt;")
+              at input.c:530
+          530         if (lquote != def_lquote)
+          </pre>
+
+     <br><dt><code>set print address off</code>
+     <dd>Do not print addresses when displaying their contents.  For example,
+this is the same stack frame displayed with <code>set print address off</code>:
+
+     <pre class="smallexample">          (gdb) set print addr off
+          (gdb) f
+          #0  set_quotes (lq="&lt;&lt;", rq="&gt;&gt;") at input.c:530
+          530         if (lquote != def_lquote)
+          </pre>
+
+     <p>You can use <code>set print address off</code> to eliminate all machine
+dependent displays from the GDB interface.  For example, with
+<code>print address off</code>, you should get the same text for backtraces on
+all machines--whether or not they involve pointer arguments.
+
+     <br><dt><code>show print address</code>
+     <dd>Show whether or not addresses are to be printed. 
+</dl>
+
+   <p>When GDB prints a symbolic address, it normally prints the
+closest earlier symbol plus an offset.  If that symbol does not uniquely
+identify the address (for example, it is a name whose scope is a single
+source file), you may need to clarify.  One way to do this is with
+<code>info line</code>, for example <code>info line *0x4537</code>.  Alternately,
+you can set GDB to print the source file and line number when
+it prints a symbolic address:
+
+     <dl>
+<dt><code>set print symbol-filename on</code>
+     <dd>Tell GDB to print the source file name and line number of a
+symbol in the symbolic form of an address.
+
+     <br><dt><code>set print symbol-filename off</code>
+     <dd>Do not print source file name and line number of a symbol.  This is the
+default.
+
+     <br><dt><code>show print symbol-filename</code>
+     <dd>Show whether or not GDB will print the source file name and
+line number of a symbol in the symbolic form of an address. 
+</dl>
+
+   <p>Another situation where it is helpful to show symbol filenames and line
+numbers is when disassembling code; GDB shows you the line
+number and source file that corresponds to each instruction.
+
+   <p>Also, you may wish to see the symbolic form only if the address being
+printed is reasonably close to the closest earlier symbol:
+
+     <dl>
+<dt><code>set print max-symbolic-offset </code><var>max-offset</var><code></code>
+     <dd>Tell GDB to only display the symbolic form of an address if the
+offset between the closest earlier symbol and the address is less than
+<var>max-offset</var>.  The default is 0, which tells GDB
+to always print the symbolic form of an address if any symbol precedes it.
+
+     <br><dt><code>show print max-symbolic-offset</code>
+     <dd>Ask how large the maximum offset is that GDB prints in a
+symbolic address. 
+</dl>
+
+   <p>If you have a pointer and you are not sure where it points, try
+<code>set print symbol-filename on</code>.  Then you can determine the name
+and source file location of the variable where it points, using
+<code>p/a </code><var>pointer</var><code></code>.  This interprets the address in symbolic form. 
+For example, here GDB shows that a variable <code>ptt</code> points
+at another variable <code>t</code>, defined in <code>hi2.c</code>:
+
+<pre class="example">     (gdb) set print symbol-filename on
+     (gdb) p/a ptt
+     $4 = 0xe008 &lt;t in hi2.c&gt;
+     </pre>
+
+   <blockquote>
+<em>Warning:</em> For pointers that point to a local variable, <code>p/a</code>
+does not show the symbol name and filename of the referent, even with
+the appropriate <code>set print</code> options turned on. 
+</blockquote>
+
+   <p>Other settings control how different kinds of objects are printed:
+
+     <dl>
+<dt><code>set print array</code>
+     <dd><dt><code>set print array on</code>
+     <dd>Pretty print arrays.  This format is more convenient to read,
+but uses more space.  The default is off.
+
+     <br><dt><code>set print array off</code>
+     <dd>Return to compressed format for arrays.
+
+     <br><dt><code>show print array</code>
+     <dd>Show whether compressed or pretty format is selected for displaying
+arrays.
+
+     <br><dt><code>set print elements </code><var>number-of-elements</var><code></code>
+     <dd>Set a limit on how many elements of an array GDB will print. 
+If GDB is printing a large array, it stops printing after it has
+printed the number of elements set by the <code>set print elements</code> command. 
+This limit also applies to the display of strings. 
+When GDB starts, this limit is set to 200. 
+Setting  <var>number-of-elements</var> to zero means that the printing is unlimited.
+
+     <br><dt><code>show print elements</code>
+     <dd>Display the number of elements of a large array that GDB will print. 
+If the number is 0, then the printing is unlimited.
+
+     <br><dt><code>set print null-stop</code>
+     <dd>Cause GDB to stop printing the characters of an array when the first
+<small>NULL</small> is encountered.  This is useful when large arrays actually
+contain only short strings. 
+The default is off.
+
+     <br><dt><code>set print pretty on</code>
+     <dd>Cause GDB to print structures in an indented format with one member
+per line, like this:
+
+     <pre class="smallexample">          $1 = {
+            next = 0x0,
+            flags = {
+              sweet = 1,
+              sour = 1
+            },
+            meat = 0x54 "Pork"
+          }
+          </pre>
+
+     <br><dt><code>set print pretty off</code>
+     <dd>Cause GDB to print structures in a compact format, like this:
+
+     <pre class="smallexample">          $1 = {next = 0x0, flags = {sweet = 1, sour = 1}, \
+          meat = 0x54 "Pork"}
+          </pre>
+
+     <p>This is the default format.
+
+     <br><dt><code>show print pretty</code>
+     <dd>Show which format GDB is using to print structures.
+
+     <br><dt><code>set print sevenbit-strings on</code>
+     <dd>Print using only seven-bit characters; if this option is set,
+GDB displays any eight-bit characters (in strings or
+character values) using the notation <code>\</code><var>nnn</var>.  This setting is
+best if you are working in English (<small>ASCII</small>) and you use the
+high-order bit of characters as a marker or "meta" bit.
+
+     <br><dt><code>set print sevenbit-strings off</code>
+     <dd>Print full eight-bit characters.  This allows the use of more
+international character sets, and is the default.
+
+     <br><dt><code>show print sevenbit-strings</code>
+     <dd>Show whether or not GDB is printing only seven-bit characters.
+
+     <br><dt><code>set print union on</code>
+     <dd>Tell GDB to print unions which are contained in structures.  This
+is the default setting.
+
+     <br><dt><code>set print union off</code>
+     <dd>Tell GDB not to print unions which are contained in structures.
+
+     <br><dt><code>show print union</code>
+     <dd>Ask GDB whether or not it will print unions which are contained in
+structures.
+
+     <p>For example, given the declarations
+
+     <pre class="smallexample">          typedef enum {Tree, Bug} Species;
+          typedef enum {Big_tree, Acorn, Seedling} Tree_forms;
+          typedef enum {Caterpillar, Cocoon, Butterfly}
+                        Bug_forms;
+          
+          struct thing {
+            Species it;
+            union {
+              Tree_forms tree;
+              Bug_forms bug;
+            } form;
+          };
+          
+          struct thing foo = {Tree, {Acorn}};
+          </pre>
+
+     <p>with <code>set print union on</code> in effect <code>p foo</code> would print
+
+     <pre class="smallexample">          $1 = {it = Tree, form = {tree = Acorn, bug = Cocoon}}
+          </pre>
+
+     <p>and with <code>set print union off</code> in effect it would print
+
+     <pre class="smallexample">          $1 = {it = Tree, form = {...}}
+          </pre>
+     </dl>
+
+<p>These settings are of interest when debugging C<tt>++</tt> programs:
+
+     <dl>
+<dt><code>set print demangle</code>
+     <dd><dt><code>set print demangle on</code>
+     <dd>Print C<tt>++</tt> names in their source form rather than in the encoded
+("mangled") form passed to the assembler and linker for type-safe
+linkage.  The default is on.
+
+     <br><dt><code>show print demangle</code>
+     <dd>Show whether C<tt>++</tt> names are printed in mangled or demangled form.
+
+     <br><dt><code>set print asm-demangle</code>
+     <dd><dt><code>set print asm-demangle on</code>
+     <dd>Print C<tt>++</tt> names in their source form rather than their mangled form, even
+in assembler code printouts such as instruction disassemblies. 
+The default is off.
+
+     <br><dt><code>show print asm-demangle</code>
+     <dd>Show whether C<tt>++</tt> names in assembly listings are printed in mangled
+or demangled form.
+
+     <br><dt><code>set demangle-style </code><var>style</var><code></code>
+     <dd>Choose among several encoding schemes used by different compilers to
+represent C<tt>++</tt> names.  The choices for <var>style</var> are currently:
+
+          <dl>
+<dt><code>auto</code>
+          <dd>Allow GDB to choose a decoding style by inspecting your program.
+
+          <br><dt><code>gnu</code>
+          <dd>Decode based on the <small>GNU</small> C<tt>++</tt> compiler (<code>g++</code>) encoding algorithm. 
+This is the default.
+
+          <br><dt><code>hp</code>
+          <dd>Decode based on the HP ANSI C<tt>++</tt> (<code>aCC</code>) encoding algorithm.
+
+          <br><dt><code>lucid</code>
+          <dd>Decode based on the Lucid C<tt>++</tt> compiler (<code>lcc</code>) encoding algorithm.
+
+          <br><dt><code>arm</code>
+          <dd>Decode using the algorithm in the <cite>C</cite><tt>++</tt><cite> Annotated Reference Manual</cite>. 
+<strong>Warning:</strong> this setting alone is not sufficient to allow
+debugging <code>cfront</code>-generated executables.  GDB would
+require further enhancement to permit that.
+
+     </dl>
+If you omit <var>style</var>, you will see a list of possible formats.
+
+     <br><dt><code>show demangle-style</code>
+     <dd>Display the encoding style currently in use for decoding C<tt>++</tt> symbols.
+
+     <br><dt><code>set print object</code>
+     <dd><dt><code>set print object on</code>
+     <dd>When displaying a pointer to an object, identify the <em>actual</em>
+(derived) type of the object rather than the <em>declared</em> type, using
+the virtual function table.
+
+     <br><dt><code>set print object off</code>
+     <dd>Display only the declared type of objects, without reference to the
+virtual function table.  This is the default setting.
+
+     <br><dt><code>show print object</code>
+     <dd>Show whether actual, or declared, object types are displayed.
+
+     <br><dt><code>set print static-members</code>
+     <dd><dt><code>set print static-members on</code>
+     <dd>Print static members when displaying a C<tt>++</tt> object.  The default is on.
+
+     <br><dt><code>set print static-members off</code>
+     <dd>Do not print static members when displaying a C<tt>++</tt> object.
+
+     <br><dt><code>show print static-members</code>
+     <dd>Show whether C<tt>++</tt> static members are printed, or not.
+
+     <br><dt><code>set print vtbl</code>
+     <dd><dt><code>set print vtbl on</code>
+     <dd>Pretty print C<tt>++</tt> virtual function tables.  The default is off. 
+(The <code>vtbl</code> commands do not work on programs compiled with the HP
+ANSI C<tt>++</tt> compiler (<code>aCC</code>).)
+
+     <br><dt><code>set print vtbl off</code>
+     <dd>Do not pretty print C<tt>++</tt> virtual function tables.
+
+     <br><dt><code>show print vtbl</code>
+     <dd>Show whether C<tt>++</tt> virtual function tables are pretty printed, or not. 
+</dl>
+
+   </body></html>
+

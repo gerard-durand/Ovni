@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Tracepoint%20Passcounts">Tracepoint Passcounts</a>,
+Next:<a rel="next" accesskey="n" href="Tracepoint-Actions.html#Tracepoint%20Actions">Tracepoint Actions</a>,
+Previous:<a rel="previous" accesskey="p" href="Enable-and-Disable-Tracepoints.html#Enable%20and%20Disable%20Tracepoints">Enable and Disable Tracepoints</a>,
+Up:<a rel="up" accesskey="u" href="Set-Tracepoints.html#Set%20Tracepoints">Set Tracepoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Tracepoint Passcounts</h4>
+
+     <dl>
+<dt><code>passcount </code>[<code></code><var>n</var><code> </code>[<code></code><var>num</var><code></code>]]<code></code>
+     <dd>Set the <dfn>passcount</dfn> of a tracepoint.  The passcount is a way to
+automatically stop a trace experiment.  If a tracepoint's passcount is
+<var>n</var>, then the trace experiment will be automatically stopped on
+the <var>n</var>'th time that tracepoint is hit.  If the tracepoint number
+<var>num</var> is not specified, the <code>passcount</code> command sets the
+passcount of the most recently defined tracepoint.  If no passcount is
+given, the trace experiment will run until stopped explicitly by the
+user.
+
+     <p>Examples:
+
+     <pre class="smallexample">          (gdb) <b>passcount 5 2</b> // Stop on the 5th execution of
+     <br>                                   <code>// tracepoint 2</code><br>
+          
+          (gdb) <b>passcount 12</b>  // Stop on the 12th execution of the
+     <br>                                   <code>// most recently defined tracepoint.</code><br>
+          (gdb) <b>trace foo</b>
+          (gdb) <b>pass 3</b>
+          (gdb) <b>trace bar</b>
+          (gdb) <b>pass 2</b>
+          (gdb) <b>trace baz</b>
+          (gdb) <b>pass 1</b>        // Stop tracing when foo has been
+     <br>                                    <code>// executed 3 times OR when bar has</code><br>
+     <br>                                    <code>// been executed 2 times</code><br>
+     <br>                                    <code>// OR when baz has been executed 1 time.</code><br>
+          </pre>
+     </dl>
+
+   </body></html>
+

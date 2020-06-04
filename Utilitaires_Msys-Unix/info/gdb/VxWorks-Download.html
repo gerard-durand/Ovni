@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="VxWorks%20Download">VxWorks Download</a>,
+Next:<a rel="next" accesskey="n" href="VxWorks-Attach.html#VxWorks%20Attach">VxWorks Attach</a>,
+Previous:<a rel="previous" accesskey="p" href="VxWorks-Connection.html#VxWorks%20Connection">VxWorks Connection</a>,
+Up:<a rel="up" accesskey="u" href="VxWorks.html#VxWorks">VxWorks</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">VxWorks download</h5>
+
+   <p>If you have connected to the VxWorks target and you want to debug an
+object that has not yet been loaded, you can use the GDB
+<code>load</code> command to download a file from Unix to VxWorks
+incrementally.  The object file given as an argument to the <code>load</code>
+command is actually opened twice: first by the VxWorks target in order
+to download the code, then by GDB in order to read the symbol
+table.  This can lead to problems if the current working directories on
+the two systems differ.  If both systems have NFS mounted the same
+filesystems, you can avoid these problems by using absolute paths. 
+Otherwise, it is simplest to set the working directory on both systems
+to the directory in which the object file resides, and then to reference
+the file by its name, without any path.  For instance, a program
+<code>prog.o</code> may reside in <code></code><var>vxpath</var><code>/vw/demo/rdb</code> in VxWorks
+and in <code></code><var>hostpath</var><code>/vw/demo/rdb</code> on the host.  To load this
+program, type this on VxWorks:
+
+<pre class="example">     -&gt; cd "<var>vxpath</var>/vw/demo/rdb"
+     </pre>
+
+<p>Then, in GDB, type:
+
+<pre class="example">     (vxgdb) cd <var>hostpath</var>/vw/demo/rdb
+     (vxgdb) load prog.o
+     </pre>
+
+   GDB displays a response similar to this:
+
+<pre class="smallexample">     Reading symbol data from wherever/vw/demo/rdb/prog.o... done.
+     </pre>
+
+   <p>You can also use the <code>load</code> command to reload an object module
+after editing and recompiling the corresponding source file.  Note that
+this makes GDB delete all currently-defined breakpoints,
+auto-displays, and convenience variables, and to clear the value
+history.  (This is necessary in order to preserve the integrity of
+debugger's data structures that reference the target system's symbol
+table.)
+
+   </body></html>
+

@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="TODO">TODO</a>,
+Previous:<a rel="previous" accesskey="p" href="Source-Annotations.html#Source%20Annotations">Source Annotations</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">Annotations We Might Want in the Future</h3>
+
+<pre class="format">    - target-invalid
+      the target might have changed (registers, heap contents, or
+      execution status).  For performance, we might eventually want
+      to hit `registers-invalid' and `all-registers-invalid' with
+      greater precision
+
+    - systematic annotation for set/show parameters (including
+      invalidation notices).
+
+    - similarly, `info' returns a list of candidates for invalidation
+      notices.
+</pre>
+
+   </body></html>
+

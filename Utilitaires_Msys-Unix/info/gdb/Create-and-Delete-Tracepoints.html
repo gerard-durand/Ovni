@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Create%20and%20Delete%20Tracepoints">Create and Delete Tracepoints</a>,
+Next:<a rel="next" accesskey="n" href="Enable-and-Disable-Tracepoints.html#Enable%20and%20Disable%20Tracepoints">Enable and Disable Tracepoints</a>,
+Up:<a rel="up" accesskey="u" href="Set-Tracepoints.html#Set%20Tracepoints">Set Tracepoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Create and Delete Tracepoints</h4>
+
+     <dl>
+<dt><code>trace</code>
+     <dd>The <code>trace</code> command is very similar to the <code>break</code> command. 
+Its argument can be a source line, a function name, or an address in
+the target program.  See <a href="Set-Breaks.html#Set%20Breaks">Set Breaks</a>.  The <code>trace</code> command
+defines a tracepoint, which is a point in the target program where the
+debugger will briefly stop, collect some data, and then allow the
+program to continue.  Setting a tracepoint or changing its commands
+doesn't take effect until the next <code>tstart</code> command; thus, you
+cannot change the tracepoint attributes once a trace experiment is
+running.
+
+     <p>Here are some examples of using the <code>trace</code> command:
+
+     <pre class="smallexample">          (gdb) <b>trace foo.c:121</b>    // a source file and line number
+          
+          (gdb) <b>trace +2</b>           // 2 lines forward
+          
+          (gdb) <b>trace my_function</b>  // first source line of function
+          
+          (gdb) <b>trace *my_function</b> // EXACT start address of function
+          
+          (gdb) <b>trace *0x2117c4</b>    // an address
+          </pre>
+
+     <p>You can abbreviate <code>trace</code> as <code>tr</code>.
+
+     <p>The convenience variable <code>$tpnum</code> records the tracepoint number
+of the most recently set tracepoint.
+
+     <br><dt><code>delete tracepoint </code>[<code></code><var>num</var><code></code>]<code></code>
+     <dd>Permanently delete one or more tracepoints.  With no argument, the
+default is to delete all tracepoints.
+
+     <p>Examples:
+
+     <pre class="smallexample">          (gdb) <b>delete trace 1 2 3</b> // remove three tracepoints
+          
+          (gdb) <b>delete trace</b>       // remove all tracepoints
+          </pre>
+
+     <p>You can abbreviate this command as <code>del tr</code>. 
+</dl>
+
+   </body></html>
+

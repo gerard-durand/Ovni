@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Arrays">Arrays</a>,
+Next:<a rel="next" accesskey="n" href="Output-Formats.html#Output%20Formats">Output Formats</a>,
+Previous:<a rel="previous" accesskey="p" href="Variables.html#Variables">Variables</a>,
+Up:<a rel="up" accesskey="u" href="Data.html#Data">Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">Artificial arrays</h3>
+
+   <p>It is often useful to print out several successive objects of the
+same type in memory; a section of an array, or an array of
+dynamically determined size for which only a pointer exists in the
+program.
+
+   <p>You can do this by referring to a contiguous span of memory as an
+<dfn>artificial array</dfn>, using the binary operator <code>@</code>.  The left
+operand of <code>@</code> should be the first element of the desired array
+and be an individual object.  The right operand should be the desired length
+of the array.  The result is an array value whose elements are all of
+the type of the left argument.  The first element is actually the left
+argument; the second element comes from bytes of memory immediately
+following those that hold the first element, and so on.  Here is an
+example.  If a program says
+
+<pre class="example">     int *array = (int *) malloc (len * sizeof (int));
+     </pre>
+
+<p>you can print the contents of <code>array</code> with
+
+<pre class="example">     p *array@len
+     </pre>
+
+   <p>The left operand of <code>@</code> must reside in memory.  Array values made
+with <code>@</code> in this way behave just like other arrays in terms of
+subscripting, and are coerced to pointers when used in expressions. 
+Artificial arrays most often appear in expressions via the value history
+(see <a href="Value-History.html#Value%20History">Value history</a>), after printing one out.
+
+   <p>Another way to create an artificial array is to use a cast. 
+This re-interprets a value as if it were an array. 
+The value need not be in memory:
+<pre class="example">     (gdb) p/x (short[2])0x12345678
+     $1 = {0x1234, 0x5678}
+     </pre>
+
+   <p>As a convenience, if you leave the array length out (as in
+<code>(</code><var>type</var><code>[])</code><var>value</var><code></code>) GDB calculates the size to fill
+the value (as <code>sizeof(</code><var>value</var><code>)/sizeof(</code><var>type</var><code>)</code>:
+<pre class="example">     (gdb) p/x (short[])0x12345678
+     $2 = {0x1234, 0x5678}
+     </pre>
+
+   <p>Sometimes the artificial array mechanism is not quite enough; in
+moderately complex data structures, the elements of interest may not
+actually be adjacent--for example, if you are interested in the values
+of pointers in an array.  One useful work-around in this situation is
+to use a convenience variable (see <a href="Convenience-Vars.html#Convenience%20Vars">Convenience variables</a>) as a counter in an expression that prints the first
+interesting value, and then repeat that expression via &lt;RET&gt;.  For
+instance, suppose you have an array <code>dtab</code> of pointers to
+structures, and you are interested in the values of a field <code>fv</code>
+in each structure.  Here is an example of what you might type:
+
+<pre class="example">     set $i = 0
+     p dtab[$i++]-&gt;fv
+     &lt;RET&gt;
+     &lt;RET&gt;
+     ...
+     </pre>
+
+   </body></html>
+

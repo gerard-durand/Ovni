@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Bug%20Criteria">Bug Criteria</a>,
+Next:<a rel="next" accesskey="n" href="Bug-Reporting.html#Bug%20Reporting">Bug Reporting</a>,
+Up:<a rel="up" accesskey="u" href="GDB-Bugs.html#GDB%20Bugs">GDB Bugs</a>
+<hr><br>
+</div>
+
+<h3 class="section">Have you found a bug?</h3>
+
+   <p>If you are not sure whether you have found a bug, here are some guidelines:
+
+     <ul>
+<li>If the debugger gets a fatal signal, for any input whatever, that is a
+GDB bug.  Reliable debuggers never crash.
+
+     <li>If GDB produces an error message for valid input, that is a
+bug.  (Note that if you're cross debugging, the problem may also be
+somewhere in the connection to the target.)
+
+     <li>If GDB does not produce an error message for invalid input,
+that is a bug.  However, you should note that your idea of
+"invalid input" might be our idea of "an extension" or "support
+for traditional practice".
+
+     <li>If you are an experienced user of debugging tools, your suggestions
+for improvement of GDB are welcome in any case. 
+</ul>
+
+   </body></html>
+

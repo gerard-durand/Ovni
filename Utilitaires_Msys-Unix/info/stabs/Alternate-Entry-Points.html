@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Alternate%20Entry%20Points">Alternate Entry Points</a>,
+Previous:<a rel="previous" accesskey="p" href="Block-Structure.html#Block%20Structure">Block Structure</a>,
+Up:<a rel="up" accesskey="u" href="Program-Structure.html#Program%20Structure">Program Structure</a>
+<hr><br>
+</div>
+
+<h3 class="section">Alternate Entry Points</h3>
+
+   <p>Some languages, like Fortran, have the ability to enter procedures at
+some place other than the beginning.  One can declare an alternate entry
+point.  The <code>N_ENTRY</code> stab is for this; however, the Sun FORTRAN
+compiler doesn't use it.  According to AIX documentation, only the name
+of a <code>C_ENTRY</code> stab is significant; the address of the alternate
+entry point comes from the corresponding external symbol.  A previous
+revision of this document said that the value of an <code>N_ENTRY</code> stab
+was the address of the alternate entry point, but I don't know the
+source for that information.
+
+   </body></html>
+

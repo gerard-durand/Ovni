@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="TUI%20Commands">TUI Commands</a>,
+Next:<a rel="next" accesskey="n" href="TUI-Configuration.html#TUI%20Configuration">TUI Configuration</a>,
+Previous:<a rel="previous" accesskey="p" href="TUI-Keys.html#TUI%20Keys">TUI Keys</a>,
+Up:<a rel="up" accesskey="u" href="TUI.html#TUI">TUI</a>
+<hr><br>
+</div>
+
+<h3 class="section">TUI specific commands</h3>
+
+   <p>The TUI has specific commands to control the text windows. 
+These commands are always available, that is they do not depend on
+the current terminal mode in which GDB runs.  When GDB
+is in the standard mode, using these commands will automatically switch
+in the TUI mode.
+
+     <dl>
+<dt><code>layout next</code>
+     <dd>Display the next layout.
+
+     <br><dt><code>layout prev</code>
+     <dd>Display the previous layout.
+
+     <br><dt><code>layout src</code>
+     <dd>Display the source window only.
+
+     <br><dt><code>layout asm</code>
+     <dd>Display the assembly window only.
+
+     <br><dt><code>layout split</code>
+     <dd>Display the source and assembly window.
+
+     <br><dt><code>layout regs</code>
+     <dd>Display the register window together with the source or assembly window.
+
+     <br><dt><code>focus next | prev | src | asm | regs | split</code>
+     <dd>Set the focus to the named window. 
+This command allows to change the active window so that scrolling keys
+can be affected to another window.
+
+     <br><dt><code>refresh</code>
+     <dd>Refresh the screen.  This is similar to using &lt;C-L&gt; key.
+
+     <br><dt><code>update</code>
+     <dd>Update the source window and the current execution point.
+
+     <br><dt><code>winheight </code><var>name</var><code> +</code><var>count</var><code></code>
+     <dd><dt><code>winheight </code><var>name</var><code> -</code><var>count</var><code></code>
+     <dd>Change the height of the window <var>name</var> by <var>count</var>
+lines.  Positive counts increase the height, while negative counts
+decrease it.
+
+   </dl>
+
+   </body></html>
+

@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Debug%20Session">Debug Session</a>,
+Previous:<a rel="previous" accesskey="p" href="Bootstrapping.html#Bootstrapping">Bootstrapping</a>,
+Up:<a rel="up" accesskey="u" href="remote-stub.html#remote%20stub">remote stub</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Putting it all together</h4>
+
+   <p>In summary, when your program is ready to debug, you must follow these
+steps.
+
+     <ol type=1 start=1>
+<li>Make sure you have defined the supporting low-level routines
+(see <a href="Bootstrapping.html#Bootstrapping">What you must do for the stub</a>):
+     <pre class="display">          <code>getDebugChar</code>, <code>putDebugChar</code>,
+          <code>flush_i_cache</code>, <code>memset</code>, <code>exceptionHandler</code>.
+          </pre>
+
+     <li>Insert these lines near the top of your program:
+
+     <pre class="example">          set_debug_traps();
+          breakpoint();
+          </pre>
+
+     <li>For the 680x0 stub only, you need to provide a variable called
+<code>exceptionHook</code>.  Normally you just use:
+
+     <pre class="example">          void (*exceptionHook)() = 0;
+          </pre>
+
+     <p>but if before calling <code>set_debug_traps</code>, you set it to point to a
+function in your program, that function is called when
+<code>GDB</code> continues after stopping on a trap (for example, bus
+error).  The function indicated by <code>exceptionHook</code> is called with
+one parameter: an <code>int</code> which is the exception number.
+
+     </p><li>Compile and link together: your program, the GDB debugging stub for
+your target architecture, and the supporting subroutines.
+
+     <li>Make sure you have a serial connection between your target machine and
+the GDB host, and identify the serial port on the host.
+
+     <li>Download your program to your target machine (or get it there by
+whatever means the manufacturer provides), and start it.
+
+     <li>To start remote debugging, run GDB on the host machine, and specify
+as an executable file the program that is running in the remote machine. 
+This tells GDB how to find your program's symbols and the contents
+of its pure text.
+
+     <li>Establish communication using the <code>target remote</code> command. 
+Its argument specifies how to communicate with the target
+machine--either via a devicename attached to a direct serial line, or a
+TCP port (usually to a terminal server which in turn has a serial line
+to the target).  For example, to use a serial line connected to the
+device named <code>/dev/ttyb</code>:
+
+     <pre class="example">          target remote /dev/ttyb
+          </pre>
+
+     <p>To use a TCP connection, use an argument of the form
+<code></code><var>host</var><code>:port</code>.  For example, to connect to port 2828 on a
+terminal server named <code>manyfarms</code>:
+
+     <pre class="example">          target remote manyfarms:2828
+          </pre>
+
+     <p>If your remote target is actually running on the same machine as
+your debugger session (e.g. a simulator of your target running on
+the same host), you can omit the hostname.  For example, to connect
+to port 1234 on your local machine:
+
+     <pre class="example">          target remote :1234
+          </pre>
+
+     <p>Note that the colon is still required here.
+        </ol>
+
+   <p>Now you can use all the usual commands to examine and change data and to
+step and continue the remote program.
+
+   <p>To resume the remote program and stop debugging it, use the <code>detach</code>
+command.
+
+   <p>Whenever GDB is waiting for the remote program, if you type the
+interrupt character (often &lt;C-C&gt;), GDB attempts to stop the
+program.  This may or may not succeed, depending in part on the hardware
+and the serial drivers the remote system uses.  If you type the
+interrupt character once again, GDB displays this prompt:
+
+<pre class="example">     Interrupted while waiting for the program.
+     Give up (and stop debugging it)?  (y or n)
+     </pre>
+
+   <p>If you type <kbd>y</kbd>, GDB abandons the remote debugging session. 
+(If you decide you want to try again later, you can use <code>target
+remote</code> again to connect once more.)  If you type <kbd>n</kbd>, GDB
+goes back to waiting.
+
+   </body></html>
+

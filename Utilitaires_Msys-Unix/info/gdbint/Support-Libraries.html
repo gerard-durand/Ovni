@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Support%20Libraries">Support Libraries</a>,
+Next:<a rel="next" accesskey="n" href="Coding.html#Coding">Coding</a>,
+Previous:<a rel="previous" accesskey="p" href="Native-Debugging.html#Native%20Debugging">Native Debugging</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Support Libraries</h2>
+
+<h3 class="section">BFD</h3>
+
+   <p>BFD provides support for GDB in several ways:
+
+     <dl>
+<dt><em>identifying executable and core files</em>
+     <dd>BFD will identify a variety of file types, including a.out, coff, and
+several variants thereof, as well as several kinds of core files.
+
+     <br><dt><em>access to sections of files</em>
+     <dd>BFD parses the file headers to determine the names, virtual addresses,
+sizes, and file locations of all the various named sections in files
+(such as the text section or the data section).  GDB simply
+calls BFD to read or write section <var>x</var> at byte offset <var>y</var> for
+length <var>z</var>.
+
+     <br><dt><em>specialized core file support</em>
+     <dd>BFD provides routines to determine the failing command name stored in a
+core file, the signal with which the program failed, and whether a core
+file matches (i.e. could be a core dump of) a particular executable
+file.
+
+     <br><dt><em>locating the symbol information</em>
+     <dd>GDB uses an internal interface of BFD to determine where to find the
+symbol information in an executable file or symbol-file.  GDB itself
+handles the reading of symbols, since BFD does not "understand" debug
+symbols, but GDB uses BFD's cached information to find the symbols,
+string table, etc. 
+</dl>
+
+<h3 class="section">opcodes</h3>
+
+   <p>The opcodes library provides GDB's disassembler.  (It's a separate
+library because it's also used in binutils, for <code>objdump</code>).
+
+<h3 class="section">readline</h3>
+
+<h3 class="section">mmalloc</h3>
+
+<h3 class="section">libiberty</h3>
+
+<h3 class="section">gnu-regex</h3>
+
+   <p>Regex conditionals.
+
+     <dl>
+<dt><code>C_ALLOCA</code>
+     <dd>
+<br><dt><code>NFAILURES</code>
+     <dd>
+<br><dt><code>RE_NREGS</code>
+     <dd>
+<br><dt><code>SIGN_EXTEND_CHAR</code>
+     <dd>
+<br><dt><code>SWITCH_ENUM_BUG</code>
+     <dd>
+<br><dt><code>SYNTAX_TABLE</code>
+     <dd>
+<br><dt><code>Sword</code>
+     <dd>
+<br><dt><code>sparc</code>
+     <dd></dl>
+
+<h3 class="section">include</h3>
+
+   </body></html>
+

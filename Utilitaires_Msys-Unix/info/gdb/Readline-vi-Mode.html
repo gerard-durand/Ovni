@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Readline%20vi%20Mode">Readline vi Mode</a>,
+Previous:<a rel="previous" accesskey="p" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>,
+Up:<a rel="up" accesskey="u" href="Command-Line-Editing.html#Command%20Line%20Editing">Command Line Editing</a>
+<hr><br>
+</div>
+
+<h3 class="section">Readline vi Mode</h3>
+
+   <p>While the Readline library does not have a full set of <code>vi</code>
+editing functions, it does contain enough to allow simple editing
+of the line.  The Readline <code>vi</code> mode behaves as specified in
+the <small>POSIX</small> 1003.2 standard.
+
+   <p>In order to switch interactively between <code>emacs</code> and <code>vi</code>
+editing modes, use the command <kbd>M-C-j</kbd> (bound to emacs-editing-mode
+when in <code>vi</code> mode and to vi-editing-mode in <code>emacs</code> mode). 
+The Readline default is <code>emacs</code> mode.
+
+   <p>When you enter a line in <code>vi</code> mode, you are already placed in
+`insertion' mode, as if you had typed an <code>i</code>.  Pressing &lt;ESC&gt;
+switches you into `command' mode, where you can edit the text of the
+line with the standard <code>vi</code> movement keys, move to previous
+history lines with <code>k</code> and subsequent lines with <code>j</code>, and
+so forth.
+
+   </body></html>
+

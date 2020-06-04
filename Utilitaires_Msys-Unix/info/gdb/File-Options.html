@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="File%20Options">File Options</a>,
+Next:<a rel="next" accesskey="n" href="Mode-Options.html#Mode%20Options">Mode Options</a>,
+Up:<a rel="up" accesskey="u" href="Invoking-GDB.html#Invoking%20GDB">Invoking GDB</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Choosing files</h4>
+
+   <p>When GDB starts, it reads any arguments other than options as
+specifying an executable file and core file (or process ID).  This is
+the same as if the arguments were specified by the <code>-se</code> and
+<code>-c</code> (or <code>-p</code> options respectively.  (GDB reads the
+first argument that does not have an associated option flag as
+equivalent to the <code>-se</code> option followed by that argument; and the
+second argument that does not have an associated option flag, if any, as
+equivalent to the <code>-c</code>/<code>-p</code> option followed by that argument.) 
+If the second argument begins with a decimal digit, GDB will
+first attempt to attach to it as a process, and if that fails, attempt
+to open it as a corefile.  If you have a corefile whose name begins with
+a digit, you can prevent GDB from treating it as a pid by
+prefixing it with <code>./</code>, eg. <code>./12345</code>.
+
+   <p>If GDB has not been configured to included core file support,
+such as for most embedded targets, then it will complain about a second
+argument and ignore it.
+
+   <p>Many options have both long and short forms; both are shown in the
+following list.  GDB also recognizes the long forms if you truncate
+them, so long as enough of the option is present to be unambiguous. 
+(If you prefer, you can flag option arguments with <code>--</code> rather
+than <code>-</code>, though we illustrate the more usual convention.)
+
+     <dl>
+<dt><code>-symbols </code><var>file</var><code></code>
+     <dd><dt><code>-s </code><var>file</var><code></code>
+     <dd>Read symbol table from file <var>file</var>.
+
+     <br><dt><code>-exec </code><var>file</var><code></code>
+     <dd><dt><code>-e </code><var>file</var><code></code>
+     <dd>Use file <var>file</var> as the executable file to execute when appropriate,
+and for examining pure data in conjunction with a core dump.
+
+     <br><dt><code>-se </code><var>file</var><code></code>
+     <dd>Read symbol table from file <var>file</var> and use it as the executable
+file.
+
+     <br><dt><code>-core </code><var>file</var><code></code>
+     <dd><dt><code>-c </code><var>file</var><code></code>
+     <dd>Use file <var>file</var> as a core dump to examine.
+
+     <br><dt><code>-c </code><var>number</var><code></code>
+     <dd><br><dt><code>-pid </code><var>number</var><code></code>
+     <dd><dt><code>-p </code><var>number</var><code></code>
+     <dd>Connect to process ID <var>number</var>, as with the <code>attach</code> command. 
+If there is no such process, GDB will attempt to open a core
+file named <var>number</var>.
+
+     <br><dt><code>-command </code><var>file</var><code></code>
+     <dd><dt><code>-x </code><var>file</var><code></code>
+     <dd>Execute GDB commands from file <var>file</var>.  See <a href="Command-Files.html#Command%20Files">Command files</a>.
+
+     <br><dt><code>-directory </code><var>directory</var><code></code>
+     <dd><dt><code>-d </code><var>directory</var><code></code>
+     <dd>Add <var>directory</var> to the path to search for source files.
+
+     <br><dt><code>-m</code>
+     <dd><dt><code>-mapped</code>
+     <dd><em>Warning: this option depends on operating system facilities that are not
+supported on all systems.</em><br>
+If memory-mapped files are available on your system through the <code>mmap</code>
+system call, you can use this option
+to have GDB write the symbols from your
+program into a reusable file in the current directory.  If the program you are debugging is
+called <code>/tmp/fred</code>, the mapped symbol file is <code>/tmp/fred.syms</code>. 
+Future GDB debugging sessions notice the presence of this file,
+and can quickly map in symbol information from it, rather than reading
+the symbol table from the executable program.
+
+     <p>The <code>.syms</code> file is specific to the host machine where GDB
+is run.  It holds an exact image of the internal GDB symbol
+table.  It cannot be shared across multiple host platforms.
+
+     <br><dt><code>-r</code>
+     <dd><dt><code>-readnow</code>
+     <dd>Read each symbol file's entire symbol table immediately, rather than
+the default, which is to read it incrementally as it is needed. 
+This makes startup slower, but makes future operations faster.
+
+   </dl>
+
+   <p>You typically combine the <code>-mapped</code> and <code>-readnow</code> options in
+order to build a <code>.syms</code> file that contains complete symbol
+information.  (See <a href="Files.html#Files">Commands to specify files</a>, for information
+on <code>.syms</code> files.)  A simple GDB invocation to do nothing
+but build a <code>.syms</code> file for future use is:
+
+<pre class="example">     gdb -batch -nx -mapped -readnow programname
+     </pre>
+
+   </body></html>
+

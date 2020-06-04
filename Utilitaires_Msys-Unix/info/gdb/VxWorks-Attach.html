@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="VxWorks%20Attach">VxWorks Attach</a>,
+Previous:<a rel="previous" accesskey="p" href="VxWorks-Download.html#VxWorks%20Download">VxWorks Download</a>,
+Up:<a rel="up" accesskey="u" href="VxWorks.html#VxWorks">VxWorks</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Running tasks</h5>
+
+   <p>You can also attach to an existing task using the <code>attach</code> command as
+follows:
+
+<pre class="example">     (vxgdb) attach <var>task</var>
+     </pre>
+
+<p>where <var>task</var> is the VxWorks hexadecimal task ID.  The task can be running
+or suspended when you attach to it.  Running tasks are suspended at
+the time of attachment.
+
+   </body></html>
+

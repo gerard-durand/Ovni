@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Starting%20and%20Stopping%20Trace%20Experiment">Starting and Stopping Trace Experiment</a>,
+Previous:<a rel="previous" accesskey="p" href="Listing-Tracepoints.html#Listing%20Tracepoints">Listing Tracepoints</a>,
+Up:<a rel="up" accesskey="u" href="Set-Tracepoints.html#Set%20Tracepoints">Set Tracepoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Starting and Stopping Trace Experiment</h4>
+
+     <dl>
+<dt><code>tstart</code>
+     <dd>This command takes no arguments.  It starts the trace experiment, and
+begins collecting data.  This has the side effect of discarding all
+the data collected in the trace buffer during the previous trace
+experiment.
+
+     <br><dt><code>tstop</code>
+     <dd>This command takes no arguments.  It ends the trace experiment, and
+stops collecting data.
+
+     <p><strong>Note:</strong> a trace experiment and data collection may stop
+automatically if any tracepoint's passcount is reached
+(see <a href="Tracepoint-Passcounts.html#Tracepoint%20Passcounts">Tracepoint Passcounts</a>), or if the trace buffer becomes full.
+
+     <br><dt><code>tstatus</code>
+     <dd>This command displays the status of the current trace data
+collection. 
+</dl>
+
+   <p>Here is an example of the commands we described so far:
+
+<pre class="smallexample">     (gdb) <b>trace gdb_c_test</b>
+     (gdb) <b>actions</b>
+     Enter actions for tracepoint #1, one per line.
+     &gt; collect $regs,$locals,$args
+     &gt; while-stepping 11
+       &gt; collect $regs
+       &gt; end
+     &gt; end
+     (gdb) <b>tstart</b>
+     	[time passes ...]
+     (gdb) <b>tstop</b>
+     </pre>
+
+   </body></html>
+

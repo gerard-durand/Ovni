@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Kill%20Process">Kill Process</a>,
+Next:<a rel="next" accesskey="n" href="Threads.html#Threads">Threads</a>,
+Previous:<a rel="previous" accesskey="p" href="Attach.html#Attach">Attach</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Killing the child process</h3>
+
+     <dl>
+<dt><code>kill</code>
+     <dd>Kill the child process in which your program is running under GDB. 
+</dl>
+
+   <p>This command is useful if you wish to debug a core dump instead of a
+running process.  GDB ignores any core dump file while your program
+is running.
+
+   <p>On some operating systems, a program cannot be executed outside GDB
+while you have breakpoints set on it inside GDB.  You can use the
+<code>kill</code> command in this situation to permit running your program
+outside the debugger.
+
+   <p>The <code>kill</code> command is also useful if you wish to recompile and
+relink your program, since on many systems it is impossible to modify an
+executable file while it is running in a process.  In this case, when you
+next type <code>run</code>, GDB notices that the file has changed, and
+reads the symbol table again (while trying to preserve your current
+breakpoint settings).
+
+   </body></html>
+

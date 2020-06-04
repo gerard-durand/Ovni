@@ -1,0 +1,107 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Formatting%20Documentation">Formatting Documentation</a>,
+Next:<a rel="next" accesskey="n" href="Command-Line-Editing.html#Command%20Line%20Editing">Command Line Editing</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-Bugs.html#GDB%20Bugs">GDB Bugs</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">Formatting Documentation</h2>
+
+   <p>The GDB 4 release includes an already-formatted reference card, ready
+for printing with PostScript or Ghostscript, in the <code>gdb</code>
+subdirectory of the main source directory<a rel="footnote" href="#fn-1"><sup>1</sup></a>.  If you can use PostScript or Ghostscript with your printer,
+you can print the reference card immediately with <code>refcard.ps</code>.
+
+   <p>The release also includes the source for the reference card.  You
+can format it, using TeX, by typing:
+
+<pre class="example">     make refcard.dvi
+     </pre>
+
+   <p>The GDB reference card is designed to print in <dfn>landscape</dfn>
+mode on US "letter" size paper;
+that is, on a sheet 11 inches wide by 8.5 inches
+high.  You will need to specify this form of printing as an option to
+your <small>DVI</small> output program.
+
+   <p>All the documentation for GDB comes as part of the machine-readable
+distribution.  The documentation is written in Texinfo format, which is
+a documentation system that uses a single source file to produce both
+on-line information and a printed manual.  You can use one of the Info
+formatting commands to create the on-line version of the documentation
+and TeX (or <code>texi2roff</code>) to typeset the printed version.
+
+   GDB includes an already formatted copy of the on-line Info
+version of this manual in the <code>gdb</code> subdirectory.  The main Info
+file is <code>gdb-5.2.1/gdb/gdb.info</code>, and it refers to
+subordinate files matching <code>gdb.info*</code> in the same directory.  If
+necessary, you can print out these files, or read them with any editor;
+but they are easier to read using the <code>info</code> subsystem in <small>GNU</small>
+Emacs or the standalone <code>info</code> program, available as part of the
+<small>GNU</small> Texinfo distribution.
+
+   <p>If you want to format these Info files yourself, you need one of the
+Info formatting programs, such as <code>texinfo-format-buffer</code> or
+<code>makeinfo</code>.
+
+   <p>If you have <code>makeinfo</code> installed, and are in the top level
+GDB source directory (<code>gdb-5.2.1</code>, in the case of
+version 5.2.1), you can make the Info file by typing:
+
+<pre class="example">     cd gdb
+     make gdb.info
+     </pre>
+
+   <p>If you want to typeset and print copies of this manual, you need TeX,
+a program to print its <small>DVI</small> output files, and <code>texinfo.tex</code>, the
+Texinfo definitions file.
+
+   <p>TeX is a typesetting program; it does not print files directly, but
+produces output files called <small>DVI</small> files.  To print a typeset
+document, you need a program to print <small>DVI</small> files.  If your system
+has TeX installed, chances are it has such a program.  The precise
+command to use depends on your system; <kbd>lpr -d</kbd> is common; another
+(for PostScript devices) is <kbd>dvips</kbd>.  The <small>DVI</small> print command may
+require a file name without any extension or a <code>.dvi</code> extension.
+
+   <p>TeX also requires a macro definitions file called
+<code>texinfo.tex</code>.  This file tells TeX how to typeset a document
+written in Texinfo format.  On its own, TeX cannot either read or
+typeset a Texinfo file.  <code>texinfo.tex</code> is distributed with GDB
+and is located in the <code>gdb-</code><var>version-number</var><code>/texinfo</code>
+directory.
+
+   <p>If you have TeX and a <small>DVI</small> printer program installed, you can
+typeset and print this manual.  First switch to the the <code>gdb</code>
+subdirectory of the main source directory (for example, to
+<code>gdb-5.2.1/gdb</code>) and type:
+
+<pre class="example">     make gdb.dvi
+     </pre>
+
+   <p>Then give <code>gdb.dvi</code> to your <small>DVI</small> printing program.
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4>
+<ol type="1">
+<li><a name="fn-1"></a>
+<p>In
+<code>gdb-5.2.1/gdb/refcard.ps</code> of the version 5.2.1
+release.</p>
+
+   </ol><hr></div>
+
+   </body></html>
+

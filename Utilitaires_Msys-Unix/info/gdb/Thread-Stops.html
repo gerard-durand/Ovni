@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Thread%20Stops">Thread Stops</a>,
+Previous:<a rel="previous" accesskey="p" href="Signals.html#Signals">Signals</a>,
+Up:<a rel="up" accesskey="u" href="Stopping.html#Stopping">Stopping</a>
+<hr><br>
+</div>
+
+<h3 class="section">Stopping and starting multi-thread programs</h3>
+
+   <p>When your program has multiple threads (see <a href="Threads.html#Threads">Debugging programs with multiple threads</a>), you can choose whether to set
+breakpoints on all threads, or on a particular thread.
+
+     <dl>
+<dt><code>break </code><var>linespec</var><code> thread </code><var>threadno</var><code></code>
+     <dd><dt><code>break </code><var>linespec</var><code> thread </code><var>threadno</var><code> if ...</code>
+     <dd><var>linespec</var> specifies source lines; there are several ways of
+writing them, but the effect is always to specify some source line.
+
+     <p>Use the qualifier <code>thread </code><var>threadno</var><code></code> with a breakpoint command
+to specify that you only want GDB to stop the program when a
+particular thread reaches this breakpoint.  <var>threadno</var> is one of the
+numeric thread identifiers assigned by GDB, shown in the first
+column of the <code>info threads</code> display.
+
+     <p>If you do not specify <code>thread </code><var>threadno</var><code></code> when you set a
+breakpoint, the breakpoint applies to <em>all</em> threads of your
+program.
+
+     <p>You can use the <code>thread</code> qualifier on conditional breakpoints as
+well; in this case, place <code>thread </code><var>threadno</var><code></code> before the
+breakpoint condition, like this:
+
+     <pre class="smallexample">          (gdb) break frik.c:13 thread 28 if bartab &gt; lim
+          </pre>
+
+   </dl>
+
+   <p>Whenever your program stops under GDB for any reason,
+<em>all</em> threads of execution stop, not just the current thread.  This
+allows you to examine the overall state of the program, including
+switching between threads, without worrying that things may change
+underfoot.
+
+   <p>Conversely, whenever you restart the program, <em>all</em> threads start
+executing.  <em>This is true even when single-stepping</em> with commands
+like <code>step</code> or <code>next</code>.
+
+   <p>In particular, GDB cannot single-step all threads in lockstep. 
+Since thread scheduling is up to your debugging target's operating
+system (not controlled by GDB), other threads may
+execute more than one statement while the current thread completes a
+single step.  Moreover, in general other threads stop in the middle of a
+statement, rather than at a clean statement boundary, when the program
+stops.
+
+   <p>You might even find your program stopped in another thread after
+continuing or even single-stepping.  This happens whenever some other
+thread runs into a breakpoint, a signal, or an exception before the
+first thread completes whatever you requested.
+
+   <p>On some OSes, you can lock the OS scheduler and thus allow only a single
+thread to run.
+
+     <dl>
+<dt><code>set scheduler-locking </code><var>mode</var><code></code>
+     <dd>Set the scheduler locking mode.  If it is <code>off</code>, then there is no
+locking and any thread may run at any time.  If <code>on</code>, then only the
+current thread may run when the inferior is resumed.  The <code>step</code>
+mode optimizes for single-stepping.  It stops other threads from
+"seizing the prompt" by preempting the current thread while you are
+stepping.  Other threads will only rarely (or never) get a chance to run
+when you step.  They are more likely to run when you <code>next</code> over a
+function call, and they are completely free to run when you use commands
+like <code>continue</code>, <code>until</code>, or <code>finish</code>.  However, unless another
+thread hits a breakpoint during its timeslice, they will never steal the
+GDB prompt away from the thread that you are debugging.
+
+     <br><dt><code>show scheduler-locking</code>
+     <dd>Display the current scheduler locking mode. 
+</dl>
+
+   </body></html>
+

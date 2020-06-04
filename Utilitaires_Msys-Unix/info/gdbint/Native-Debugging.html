@@ -1,0 +1,298 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Native%20Debugging">Native Debugging</a>,
+Next:<a rel="next" accesskey="n" href="Support-Libraries.html#Support%20Libraries">Support Libraries</a>,
+Previous:<a rel="previous" accesskey="p" href="Target-Vector-Definition.html#Target%20Vector%20Definition">Target Vector Definition</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Native Debugging</h2>
+
+   <p>Several files control GDB's configuration for native support:
+
+     <dl>
+<dt><code>gdb/config/</code><var>arch</var><code>/</code><var>xyz</var><code>.mh</code>
+     <dd>Specifies Makefile fragments needed by a <em>native</em> configuration on
+machine <var>xyz</var>.  In particular, this lists the required
+native-dependent object files, by defining <code>NATDEPFILES=...</code>. 
+Also specifies the header file which describes native support on
+<var>xyz</var>, by defining <code>NAT_FILE= nm-</code><var>xyz</var><code>.h</code>.  You can also
+define <code>NAT_CFLAGS</code>, <code>NAT_ADD_FILES</code>, <code>NAT_CLIBS</code>,
+<code>NAT_CDEPS</code>, etc.; see <code>Makefile.in</code>.
+
+     <p><em>Maintainer's note: The </em><code>.mh</code><em> suffix is because this file
+originally contained </em><code>Makefile</code><em> fragments for hosting GDB
+on machine </em><var>xyz</var><em>.  While the file is no longer used for this
+purpose, the </em><code>.mh</code><em> suffix remains.  Perhaphs someone will
+eventually rename these fragments so that they have a </em><code>.mn</code><em>
+suffix.</em>
+
+     <br><dt><code>gdb/config/</code><var>arch</var><code>/nm-</code><var>xyz</var><code>.h</code>
+     <dd>(<code>nm.h</code> is a link to this file, created by <code>configure</code>).  Contains C
+macro definitions describing the native system environment, such as
+child process control and core file support.
+
+     <br><dt><code>gdb/</code><var>xyz</var><code>-nat.c</code>
+     <dd>Contains any miscellaneous C code required for this native support of
+this machine.  On some machines it doesn't exist at all. 
+</dl>
+
+   <p>There are some "generic" versions of routines that can be used by
+various systems.  These can be customized in various ways by macros
+defined in your <code>nm-</code><var>xyz</var><code>.h</code> file.  If these routines work for
+the <var>xyz</var> host, you can just include the generic file's name (with
+<code>.o</code>, not <code>.c</code>) in <code>NATDEPFILES</code>.
+
+   <p>Otherwise, if your machine needs custom support routines, you will need
+to write routines that perform the same functions as the generic file. 
+Put them into <code></code><var>xyz</var><code>-nat.c</code>, and put <code></code><var>xyz</var><code>-nat.o</code>
+into <code>NATDEPFILES</code>.
+
+     <dl>
+<dt><code>inftarg.c</code>
+     <dd>This contains the <em>target_ops vector</em> that supports Unix child
+processes on systems which use ptrace and wait to control the child.
+
+     <br><dt><code>procfs.c</code>
+     <dd>This contains the <em>target_ops vector</em> that supports Unix child
+processes on systems which use /proc to control the child.
+
+     <br><dt><code>fork-child.c</code>
+     <dd>This does the low-level grunge that uses Unix system calls to do a "fork
+and exec" to start up a child process.
+
+     <br><dt><code>infptrace.c</code>
+     <dd>This is the low level interface to inferior processes for systems using
+the Unix <code>ptrace</code> call in a vanilla way. 
+</dl>
+
+<h3 class="section">Native core file Support</h3>
+
+     <dl>
+<dt><code>core-aout.c::fetch_core_registers()</code>
+     <dd>Support for reading registers out of a core file.  This routine calls
+<code>register_addr()</code>, see below.  Now that BFD is used to read core
+files, virtually all machines should use <code>core-aout.c</code>, and should
+just provide <code>fetch_core_registers</code> in <code></code><var>xyz</var><code>-nat.c</code> (or
+<code>REGISTER_U_ADDR</code> in <code>nm-</code><var>xyz</var><code>.h</code>).
+
+     <br><dt><code>core-aout.c::register_addr()</code>
+     <dd>If your <code>nm-</code><var>xyz</var><code>.h</code> file defines the macro
+<code>REGISTER_U_ADDR(addr, blockend, regno)</code>, it should be defined to
+set <code>addr</code> to the offset within the <code>user</code> struct of GDB
+register number <code>regno</code>.  <code>blockend</code> is the offset within the
+"upage" of <code>u.u_ar0</code>.  If <code>REGISTER_U_ADDR</code> is defined,
+<code>core-aout.c</code> will define the <code>register_addr()</code> function and
+use the macro in it.  If you do not define <code>REGISTER_U_ADDR</code>, but
+you are using the standard <code>fetch_core_registers()</code>, you will need
+to define your own version of <code>register_addr()</code>, put it into your
+<code></code><var>xyz</var><code>-nat.c</code> file, and be sure <code></code><var>xyz</var><code>-nat.o</code> is in
+the <code>NATDEPFILES</code> list.  If you have your own
+<code>fetch_core_registers()</code>, you may not need a separate
+<code>register_addr()</code>.  Many custom <code>fetch_core_registers()</code>
+implementations simply locate the registers themselves. 
+</dl>
+
+   <p>When making GDB run native on a new operating system, to make it
+possible to debug core files, you will need to either write specific
+code for parsing your OS's core files, or customize
+<code>bfd/trad-core.c</code>.  First, use whatever <code>#include</code> files your
+machine uses to define the struct of registers that is accessible
+(possibly in the u-area) in a core file (rather than
+<code>machine/reg.h</code>), and an include file that defines whatever header
+exists on a core file (e.g. the u-area or a <code>struct core</code>).  Then
+modify <code>trad_unix_core_file_p</code> to use these values to set up the
+section information for the data segment, stack segment, any other
+segments in the core file (perhaps shared library contents or control
+information), "registers" segment, and if there are two discontiguous
+sets of registers (e.g.  integer and float), the "reg2" segment.  This
+section information basically delimits areas in the core file in a
+standard way, which the section-reading routines in BFD know how to seek
+around in.
+
+   <p>Then back in GDB, you need a matching routine called
+<code>fetch_core_registers</code>.  If you can use the generic one, it's in
+<code>core-aout.c</code>; if not, it's in your <code></code><var>xyz</var><code>-nat.c</code> file. 
+It will be passed a char pointer to the entire "registers" segment,
+its length, and a zero; or a char pointer to the entire "regs2"
+segment, its length, and a 2.  The routine should suck out the supplied
+register values and install them into GDB's "registers" array.
+
+   <p>If your system uses <code>/proc</code> to control processes, and uses ELF
+format core files, then you may be able to use the same routines for
+reading the registers out of processes and out of core files.
+
+<h3 class="section">ptrace</h3>
+
+<h3 class="section">/proc</h3>
+
+<h3 class="section">win32</h3>
+
+<h3 class="section">shared libraries</h3>
+
+<h3 class="section">Native Conditionals</h3>
+
+   <p>When GDB is configured and compiled, various macros are
+defined or left undefined, to control compilation when the host and
+target systems are the same.  These macros should be defined (or left
+undefined) in <code>nm-</code><var>system</var><code>.h</code>.
+
+     <dl>
+<dt><code>ATTACH_DETACH</code>
+     <dd>If defined, then GDB will include support for the <code>attach</code> and
+<code>detach</code> commands.
+
+     <br><dt><code>CHILD_PREPARE_TO_STORE</code>
+     <dd>If the machine stores all registers at once in the child process, then
+define this to ensure that all values are correct.  This usually entails
+a read from the child.
+
+     <p>[Note that this is incorrectly defined in <code>xm-</code><var>system</var><code>.h</code> files
+currently.]
+
+     <br><dt><code>FETCH_INFERIOR_REGISTERS</code>
+     <dd>Define this if the native-dependent code will provide its own routines
+<code>fetch_inferior_registers</code> and <code>store_inferior_registers</code> in
+<code></code><var>host</var><code>-nat.c</code>.  If this symbol is <em>not</em> defined, and
+<code>infptrace.c</code> is included in this configuration, the default
+routines in <code>infptrace.c</code> are used for these functions.
+
+     <br><dt><code>FILES_INFO_HOOK</code>
+     <dd>(Only defined for Convex.)
+
+     <br><dt><code>FP0_REGNUM</code>
+     <dd>This macro is normally defined to be the number of the first floating
+point register, if the machine has such registers.  As such, it would
+appear only in target-specific code.  However, <code>/proc</code> support uses this
+to decide whether floats are in use on this target.
+
+     <br><dt><code>GET_LONGJMP_TARGET</code>
+     <dd>For most machines, this is a target-dependent parameter.  On the
+DECstation and the Iris, this is a native-dependent parameter, since
+<code>setjmp.h</code> is needed to define it.
+
+     <p>This macro determines the target PC address that <code>longjmp</code> will jump to,
+assuming that we have just stopped at a longjmp breakpoint.  It takes a
+<code>CORE_ADDR *</code> as argument, and stores the target PC value through this
+pointer.  It examines the current state of the machine as needed.
+
+     <br><dt><code>I386_USE_GENERIC_WATCHPOINTS</code>
+     <dd>An x86-based machine can define this to use the generic x86 watchpoint
+support; see <a href="Algorithms.html#Algorithms">I386_USE_GENERIC_WATCHPOINTS</a>.
+
+     <br><dt><code>KERNEL_U_ADDR</code>
+     <dd>Define this to the address of the <code>u</code> structure (the "user
+struct", also known as the "u-page") in kernel virtual memory.  GDB
+needs to know this so that it can subtract this address from absolute
+addresses in the upage, that are obtained via ptrace or from core files. 
+On systems that don't need this value, set it to zero.
+
+     <br><dt><code>KERNEL_U_ADDR_BSD</code>
+     <dd>Define this to cause GDB to determine the address of <code>u</code> at
+runtime, by using Berkeley-style <code>nlist</code> on the kernel's image in
+the root directory.
+
+     <br><dt><code>KERNEL_U_ADDR_HPUX</code>
+     <dd>Define this to cause GDB to determine the address of <code>u</code> at
+runtime, by using HP-style <code>nlist</code> on the kernel's image in the
+root directory.
+
+     <br><dt><code>ONE_PROCESS_WRITETEXT</code>
+     <dd>Define this to be able to, when a breakpoint insertion fails, warn the
+user that another process may be running with the same executable.
+
+     <br><dt><code>PREPARE_TO_PROCEED (</code><var>select_it</var><code>)</code>
+     <dd>This (ugly) macro allows a native configuration to customize the way the
+<code>proceed</code> function in <code>infrun.c</code> deals with switching between
+threads.
+
+     <p>In a multi-threaded task we may select another thread and then continue
+or step.  But if the old thread was stopped at a breakpoint, it will
+immediately cause another breakpoint stop without any execution (i.e. it
+will report a breakpoint hit incorrectly).  So GDB must step over it
+first.
+
+     <p>If defined, <code>PREPARE_TO_PROCEED</code> should check the current thread
+against the thread that reported the most recent event.  If a step-over
+is required, it returns TRUE.  If <var>select_it</var> is non-zero, it should
+reselect the old thread.
+
+     <br><dt><code>PROC_NAME_FMT</code>
+     <dd>Defines the format for the name of a <code>/proc</code> device.  Should be
+defined in <code>nm.h</code> <em>only</em> in order to override the default
+definition in <code>procfs.c</code>.
+
+     <br><dt><code>PTRACE_FP_BUG</code>
+     <dd>See <code>mach386-xdep.c</code>.
+
+     <br><dt><code>PTRACE_ARG3_TYPE</code>
+     <dd>The type of the third argument to the <code>ptrace</code> system call, if it
+exists and is different from <code>int</code>.
+
+     <br><dt><code>REGISTER_U_ADDR</code>
+     <dd>Defines the offset of the registers in the "u area".
+
+     <br><dt><code>SHELL_COMMAND_CONCAT</code>
+     <dd>If defined, is a string to prefix on the shell command used to start the
+inferior.
+
+     <br><dt><code>SHELL_FILE</code>
+     <dd>If defined, this is the name of the shell to use to run the inferior. 
+Defaults to <code>"/bin/sh"</code>.
+
+     <br><dt><code>SOLIB_ADD (</code><var>filename</var><code>, </code><var>from_tty</var><code>, </code><var>targ</var><code>, </code><var>readsyms</var><code>)</code>
+     <dd>Define this to expand into an expression that will cause the symbols in
+<var>filename</var> to be added to GDB's symbol table. If
+<var>readsyms</var> is zero symbols are not read but any necessary low level
+processing for <var>filename</var> is still done.
+
+     <br><dt><code>SOLIB_CREATE_INFERIOR_HOOK</code>
+     <dd>Define this to expand into any shared-library-relocation code that you
+want to be run just after the child process has been forked.
+
+     <br><dt><code>START_INFERIOR_TRAPS_EXPECTED</code>
+     <dd>When starting an inferior, GDB normally expects to trap
+twice; once when
+the shell execs, and once when the program itself execs.  If the actual
+number of traps is something other than 2, then define this macro to
+expand into the number expected.
+
+     <br><dt><code>SVR4_SHARED_LIBS</code>
+     <dd>Define this to indicate that SVR4-style shared libraries are in use.
+
+     <br><dt><code>USE_PROC_FS</code>
+     <dd>This determines whether small routines in <code>*-tdep.c</code>, which
+translate register values between GDB's internal
+representation and the <code>/proc</code> representation, are compiled.
+
+     <br><dt><code>U_REGS_OFFSET</code>
+     <dd>This is the offset of the registers in the upage.  It need only be
+defined if the generic ptrace register access routines in
+<code>infptrace.c</code> are being used (that is, <code>infptrace.c</code> is
+configured in, and <code>FETCH_INFERIOR_REGISTERS</code> is not defined).  If
+the default value from <code>infptrace.c</code> is good enough, leave it
+undefined.
+
+     <p>The default value means that u.u_ar0 <em>points to</em> the location of
+the registers.  I'm guessing that <code>#define U_REGS_OFFSET 0</code> means
+that <code>u.u_ar0</code> <em>is</em> the location of the registers.
+
+     <br><dt><code>CLEAR_SOLIB</code>
+     <dd>See <code>objfiles.c</code>.
+
+     <br><dt><code>DEBUG_PTRACE</code>
+     <dd>Define this to debug <code>ptrace</code> calls. 
+</dl>
+
+   </body></html>
+

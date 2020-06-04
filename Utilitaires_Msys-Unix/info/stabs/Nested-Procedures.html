@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Nested%20Procedures">Nested Procedures</a>,
+Next:<a rel="next" accesskey="n" href="Block-Structure.html#Block%20Structure">Block Structure</a>,
+Previous:<a rel="previous" accesskey="p" href="Procedures.html#Procedures">Procedures</a>,
+Up:<a rel="up" accesskey="u" href="Program-Structure.html#Program%20Structure">Program Structure</a>
+<hr><br>
+</div>
+
+<h3 class="section">Nested Procedures</h3>
+
+   <p>For any of the symbol descriptors representing procedures, after the
+symbol descriptor and the type information is optionally a scope
+specifier.  This consists of a comma, the name of the procedure, another
+comma, and the name of the enclosing procedure.  The first name is local
+to the scope specified, and seems to be redundant with the name of the
+symbol (before the <code>:</code>).  This feature is used by GCC, and
+presumably Pascal, Modula-2, etc., compilers, for nested functions.
+
+   <p>If procedures are nested more than one level deep, only the immediately
+containing scope is specified.  For example, this code:
+
+<pre class="example">     int
+     foo (int x)
+     {
+       int bar (int y)
+         {
+           int baz (int z)
+             {
+               return x + y + z;
+             }
+           return baz (x + 2 * y);
+         }
+       return x + bar (3 * x);
+     }
+     </pre>
+
+<p>produces the stabs:
+
+<pre class="example">     .stabs "baz:f1,baz,bar",36,0,0,_baz.15         # 36 is N_FUN
+     .stabs "bar:f1,bar,foo",36,0,0,_bar.12
+     .stabs "foo:F1",36,0,0,_foo
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,166 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Values%20and%20their%20Operations">Values and their Operations</a>,
+Next:<a rel="next" accesskey="n" href="Chill-type-and-range-checks.html#Chill%20type%20and%20range%20checks">Chill type and range checks</a>,
+Previous:<a rel="previous" accesskey="p" href="Locations.html#Locations">Locations</a>,
+Up:<a rel="up" accesskey="u" href="Chill.html#Chill">Chill</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Values and their Operations</h5>
+
+   <p>Values are used to alter locations, to investigate complex structures in
+more detail or to filter relevant information out of a large amount of
+data.  There are several (mode dependent) operations defined which enable
+such investigations.  These operations are not only applicable to
+constant values but also to locations, which can become quite useful
+when debugging complex structures.  During parsing the command line
+(e.g. evaluating an expression) GDB treats location names as
+the values behind these locations.
+
+   <p>This section describes how values have to be specified and which
+operations are legal to be used with such values.
+
+     <dl>
+<dt><code>Literal Values</code>
+     <dd>Literal values are specified in the same manner as in <small>GNU</small> Chill programs. 
+For detailed specification refer to the <small>GNU</small> Chill implementation Manual
+chapter 1.5.
+
+     <br><dt><code>Tuple Values</code>
+     <dd>A tuple is specified by <code>&lt;mode name&gt;[&lt;tuple&gt;]</code>, where <code>&lt;mode
+name&gt;</code> can be omitted if the mode of the tuple is unambiguous.  This
+unambiguity is derived from the context of a evaluated expression. 
+<code>&lt;tuple&gt;</code> can be one of the following:
+
+          <ul>
+<li><em>Powerset Tuple</em>
+<li><em>Array Tuple</em>
+<li><em>Structure Tuple</em>
+Powerset tuples, array tuples and structure tuples are specified in the
+same manner as in Chill programs refer to z200/88 chpt 5.2.5. 
+</ul>
+
+     <br><dt><code>String Element Value</code>
+     <dd>A string element value is specified by
+     <pre class="smallexample">          <code>&lt;string value&gt;(&lt;index&gt;)</code>
+          </pre>
+     where <code>&lt;index&gt;</code> is a integer expression.  It delivers a character
+value which is equivalent to the character indexed by <code>&lt;index&gt;</code> in
+the string.
+
+     <br><dt><code>String Slice Value</code>
+     <dd>A string slice value is specified by <code>&lt;string value&gt;(&lt;slice
+spec&gt;)</code>, where <code>&lt;slice spec&gt;</code> can be either a range of integer
+expressions or specified by <code>&lt;start expr&gt; up &lt;size&gt;</code>. 
+<code>&lt;size&gt;</code> denotes the number of elements which the slice contains. 
+The delivered value is a string value, which is part of the specified
+string.
+
+     <br><dt><code>Array Element Values</code>
+     <dd>An array element value is specified by <code>&lt;array value&gt;(&lt;expr&gt;)</code> and
+delivers a array element value of the mode of the specified array.
+
+     <br><dt><code>Array Slice Values</code>
+     <dd>An array slice is specified by <code>&lt;array value&gt;(&lt;slice spec&gt;)</code>, where
+<code>&lt;slice spec&gt;</code> can be either a range specified by expressions or by
+<code>&lt;start expr&gt; up &lt;size&gt;</code>.  <code>&lt;size&gt;</code> denotes the number of
+arrayelements the slice contains.  The delivered value is an array value
+which is part of the specified array.
+
+     <br><dt><code>Structure Field Values</code>
+     <dd>A structure field value is derived by <code>&lt;structure value&gt;.&lt;field
+name&gt;</code>, where <code>&lt;field name&gt;</code> indicates the name of a field specified
+in the mode definition of the structure.  The mode of the delivered value
+corresponds to this mode definition in the structure definition.
+
+     <br><dt><code>Procedure Call Value</code>
+     <dd>The procedure call value is derived from the return value of the
+procedure<a rel="footnote" href="#fn-1"><sup>1</sup></a>.
+
+     <p>Values of duration mode locations are represented by <code>ULONG</code> literals.
+
+     <p>Values of time mode locations appear as
+     <pre class="smallexample">          <code>TIME(&lt;secs&gt;:&lt;nsecs&gt;)</code>
+          </pre>
+
+     <br><dt><code>Zero-adic Operator Value</code>
+     <dd>The zero-adic operator value is derived from the instance value for the
+current active process.
+
+     <br><dt><code>Expression Values</code>
+     <dd>The value delivered by an expression is the result of the evaluation of
+the specified expression.  If there are error conditions (mode
+incompatibility, etc.) the evaluation of expressions is aborted with a
+corresponding error message.  Expressions may be parenthesised which
+causes the evaluation of this expression before any other expression
+which uses the result of the parenthesised expression.  The following
+operators are supported by GDB:
+
+          <dl>
+<dt><code>OR, ORIF, XOR</code>
+          <dd><dt><code>AND, ANDIF</code>
+          <dd><dt><code>NOT</code>
+          <dd>Logical operators defined over operands of boolean mode.
+
+          <br><dt><code>=, /=</code>
+          <dd>Equality and inequality operators defined over all modes.
+
+          <br><dt><code>&gt;, &gt;=</code>
+          <dd><dt><code>&lt;, &lt;=</code>
+          <dd>Relational operators defined over predefined modes.
+
+          <br><dt><code>+, -</code>
+          <dd><dt><code>*, /, MOD, REM</code>
+          <dd>Arithmetic operators defined over predefined modes.
+
+          <br><dt><code>-</code>
+          <dd>Change sign operator.
+
+          <br><dt><code>//</code>
+          <dd>String concatenation operator.
+
+          <br><dt><code>()</code>
+          <dd>String repetition operator.
+
+          <br><dt><code>-&gt;</code>
+          <dd>Referenced location operator which can be used either to take the
+address of a location (<code>-&gt;loc</code>), or to dereference a reference
+location (<code>loc-&gt;</code>).
+
+          <br><dt><code>OR, XOR</code>
+          <dd><dt><code>AND</code>
+          <dd><dt><code>NOT</code>
+          <dd>Powerset and bitstring operators.
+
+          <br><dt><code>&gt;, &gt;=</code>
+          <dd><dt><code>&lt;, &lt;=</code>
+          <dd>Powerset inclusion operators.
+
+          <br><dt><code>IN</code>
+          <dd>Membership operator. 
+</dl>
+</dl>
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4>
+<ol type="1">
+<li><a name="fn-1"></a>
+<p>If a procedure call is used for instance in an
+expression, then this procedure is called with all its side
+effects.  This can lead to confusing results if used carelessly.</p>
+
+   </ol><hr></div>
+
+   </body></html>
+

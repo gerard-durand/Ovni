@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Chill%20type%20and%20range%20checks">Chill type and range checks</a>,
+Next:<a rel="next" accesskey="n" href="Chill-defaults.html#Chill%20defaults">Chill defaults</a>,
+Previous:<a rel="previous" accesskey="p" href="Values-and-their-Operations.html#Values%20and%20their%20Operations">Values and their Operations</a>,
+Up:<a rel="up" accesskey="u" href="Chill.html#Chill">Chill</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Chill type and range checks</h5>
+
+   GDB considers two Chill variables mode equivalent if the sizes
+of the two modes are equal.  This rule applies recursively to more
+complex datatypes which means that complex modes are treated
+equivalent if all element modes (which also can be complex modes like
+structures, arrays, etc.) have the same size.
+
+   <p>Range checking is done on all mathematical operations, assignment, array
+index bounds and all built in procedures.
+
+   <p>Strong type checks are forced using the GDB command <code>set
+check strong</code>.  This enforces strong type and range checks on all
+operations where Chill constructs are used (expressions, built in
+functions, etc.) in respect to the semantics as defined in the z.200
+language specification.
+
+   <p>All checks can be disabled by the GDB command <code>set check
+off</code>.
+
+   </body></html>
+

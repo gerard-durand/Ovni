@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="i960">i960</a>,
+Next:<a rel="next" accesskey="n" href="M32R-D.html#M32R%2fD">M32R/D</a>,
+Previous:<a rel="previous" accesskey="p" href="H8-500.html#H8%2f500">H8/500</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Intel i960</h4>
+
+     <dl>
+
+     <br><dt><code>target mon960 </code><var>dev</var><code></code>
+     <dd>MON960 monitor for Intel i960.
+
+     <br><dt><code>target nindy </code><var>devicename</var><code></code>
+     <dd>An Intel 960 board controlled by a Nindy Monitor.  <var>devicename</var> is
+the name of the serial device to use for the connection, e.g. 
+<code>/dev/ttya</code>.
+
+   </dl>
+
+   <p><dfn>Nindy</dfn> is a ROM Monitor program for Intel 960 target systems.  When
+GDB is configured to control a remote Intel 960 using Nindy, you can
+tell GDB how to connect to the 960 in several ways:
+
+     <ul>
+<li>Through command line options specifying serial port, version of the
+Nindy protocol, and communications speed;
+
+     <li>By responding to a prompt on startup;
+
+     <li>By using the <code>target</code> command at any point during your GDB
+session.  See <a href="Target-Commands.html#Target%20Commands">Commands for managing targets</a>.
+
+   </ul>
+
+   <p>With the Nindy interface to an Intel 960 board, <code>load</code>
+downloads <var>filename</var> to the 960 as well as adding its symbols in
+GDB.
+
+<ul class="menu">
+<li><a accesskey="1" href="Nindy-Startup.html#Nindy%20Startup">Nindy Startup</a>:                Startup with Nindy
+<li><a accesskey="2" href="Nindy-Options.html#Nindy%20Options">Nindy Options</a>:                Options for Nindy
+<li><a accesskey="3" href="Nindy-Reset.html#Nindy%20Reset">Nindy Reset</a>:                  Nindy reset command
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Hitachi%20Boards">Hitachi Boards</a>,
+Next:<a rel="next" accesskey="n" href="Hitachi-ICE.html#Hitachi%20ICE">Hitachi ICE</a>,
+Up:<a rel="up" accesskey="u" href="H8-300.html#H8%2f300">H8/300</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Connecting to Hitachi boards</h5>
+
+   <p>Use the special <code>GDB</code> command <code>device </code><var>port</var><code></code> if you
+need to explicitly set the serial device.  The default <var>port</var> is the
+first available port on your host.  This is only necessary on Unix
+hosts, where it is typically something like <code>/dev/ttya</code>.
+
+   <p><code>GDB</code> has another special command to set the communications
+speed: <code>speed </code><var>bps</var><code></code>.  This command also is only used from Unix
+hosts; on DOS hosts, set the line speed as usual from outside GDB with
+the DOS <code>mode</code> command (for instance,
+<kbd>mode&nbsp;com2:9600,n,8,1,p</kbd> for a 9600bps connection).
+
+   <p>The <code>device</code> and <code>speed</code> commands are available only when you
+use a Unix host to debug your Hitachi microprocessor programs.  If you
+use a DOS host,
+GDB depends on an auxiliary terminate-and-stay-resident program
+called <code>asynctsr</code> to communicate with the development board
+through a PC serial port.  You must also use the DOS <code>mode</code> command
+to set up the serial port on the DOS side.
+
+   <p>The following sample session illustrates the steps needed to start a
+program under GDB control on an H8/300.  The example uses a
+sample H8/300 program called <code>t.x</code>.  The procedure is the same for
+the Hitachi SH and the H8/500.
+
+   <p>First hook up your development board.  In this example, we use a
+board attached to serial port <code>COM2</code>; if you use a different serial
+port, substitute its name in the argument of the <code>mode</code> command. 
+When you call <code>asynctsr</code>, the auxiliary comms program used by the
+debugger, you give it just the numeric part of the serial port's name;
+for example, <code>asyncstr 2</code> below runs <code>asyncstr</code> on
+<code>COM2</code>.
+
+<pre class="example">     C:\H8300\TEST&gt; asynctsr 2
+     C:\H8300\TEST&gt; mode com2:9600,n,8,1,p
+     
+     Resident portion of MODE loaded
+     
+     COM2: 9600, n, 8, 1, p
+     
+     </pre>
+
+   <blockquote>
+<em>Warning:</em> We have noticed a bug in PC-NFS that conflicts with
+<code>asynctsr</code>.  If you also run PC-NFS on your DOS host, you may need to
+disable it, or even boot without it, to use <code>asynctsr</code> to control
+your development board. 
+</blockquote>
+
+   <p>Now that serial communications are set up, and the development board is
+connected, you can start up GDB.  Call <code>gdb</code> with
+the name of your program as the argument.  <code>GDB</code> prompts
+you, as usual, with the prompt <code>(gdb)</code>.  Use two special
+commands to begin your debugging session: <code>target hms</code> to specify
+cross-debugging to the Hitachi board, and the <code>load</code> command to
+download your program to the board.  <code>load</code> displays the names of
+the program's sections, and a <code>*</code> for each 2K of data downloaded. 
+(If you want to refresh GDB data on symbols or on the
+executable file without downloading, use the GDB commands
+<code>file</code> or <code>symbol-file</code>.  These commands, and <code>load</code>
+itself, are described in <a href="Files.html#Files">Commands to specify files</a>.)
+
+<pre class="smallexample">     (eg-C:\H8300\TEST) gdb t.x
+     GDB is free software and you are welcome to distribute copies
+      of it under certain conditions; type "show copying" to see
+      the conditions.
+     There is absolutely no warranty for GDB; type "show warranty"
+     for details.
+     GDB 5.2.1, Copyright 1992 Free Software Foundation, Inc...
+     (gdb) target hms
+     Connected to remote H8/300 HMS system.
+     (gdb) load t.x
+     .text   : 0x8000 .. 0xabde ***********
+     .data   : 0xabde .. 0xad30 *
+     .stack  : 0xf000 .. 0xf014 *
+     </pre>
+
+   <p>At this point, you're ready to run or debug your program.  From here on,
+you can use all the usual GDB commands.  The <code>break</code> command
+sets breakpoints; the <code>run</code> command starts your program;
+<code>print</code> or <code>x</code> display data; the <code>continue</code> command
+resumes execution after stopping at a breakpoint.  You can use the
+<code>help</code> command at any time to find out more about GDB commands.
+
+   <p>Remember, however, that <em>operating system</em> facilities aren't
+available on your development board; for example, if your program hangs,
+you can't send an interrupt--but you can press the <small>RESET</small> switch!
+
+   <p>Use the <small>RESET</small> button on the development board
+     <ul>
+<li>to interrupt your program (don't use <kbd>ctl-C</kbd> on the DOS host--it has
+no way to pass an interrupt signal to the development board); and
+
+     <li>to return to the GDB command prompt after your program finishes
+normally.  The communications protocol provides no other way for GDB
+to detect program completion. 
+</ul>
+
+   <p>In either case, GDB sees the effect of a <small>RESET</small> on the
+development board as a "normal exit" of your program.
+
+   </body></html>
+

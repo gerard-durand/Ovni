@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Byte%20Order">Byte Order</a>,
+Next:<a rel="next" accesskey="n" href="Remote.html#Remote">Remote</a>,
+Previous:<a rel="previous" accesskey="p" href="Target-Commands.html#Target%20Commands">Target Commands</a>,
+Up:<a rel="up" accesskey="u" href="Targets.html#Targets">Targets</a>
+<hr><br>
+</div>
+
+<h3 class="section">Choosing target byte order</h3>
+
+   <p>Some types of processors, such as the MIPS, PowerPC, and Hitachi SH,
+offer the ability to run either big-endian or little-endian byte
+orders.  Usually the executable or symbol will include a bit to
+designate the endian-ness, and you will not need to worry about
+which to use.  However, you may still find it useful to adjust
+GDB's idea of processor endian-ness manually.
+
+     <dl>
+<dt><code>set endian big</code>
+     <dd>Instruct GDB to assume the target is big-endian.
+
+     <br><dt><code>set endian little</code>
+     <dd>Instruct GDB to assume the target is little-endian.
+
+     <br><dt><code>set endian auto</code>
+     <dd>Instruct GDB to use the byte order associated with the
+executable.
+
+     <br><dt><code>show endian</code>
+     <dd>Display GDB's current idea of the target byte order.
+
+   </dl>
+
+   <p>Note that these commands merely adjust interpretation of symbolic
+data on the host, and that they have absolutely no effect on the
+target system.
+
+   </body></html>
+

@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Break%20Commands">Break Commands</a>,
+Next:<a rel="next" accesskey="n" href="Breakpoint-Menus.html#Breakpoint%20Menus">Breakpoint Menus</a>,
+Previous:<a rel="previous" accesskey="p" href="Conditions.html#Conditions">Conditions</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Breakpoint command lists</h4>
+
+   <p>You can give any breakpoint (or watchpoint or catchpoint) a series of
+commands to execute when your program stops due to that breakpoint.  For
+example, you might want to print the values of certain expressions, or
+enable other breakpoints.
+
+     <dl>
+<dt><code>commands </code>[<code></code><var>bnum</var><code></code>]<code></code>
+     <dd><dt><code>... </code><var>command-list</var><code> ...</code>
+     <dd><dt><code>end</code>
+     <dd>Specify a list of commands for breakpoint number <var>bnum</var>.  The commands
+themselves appear on the following lines.  Type a line containing just
+<code>end</code> to terminate the commands.
+
+     <p>To remove all commands from a breakpoint, type <code>commands</code> and
+follow it immediately with <code>end</code>; that is, give no commands.
+
+     <p>With no <var>bnum</var> argument, <code>commands</code> refers to the last
+breakpoint, watchpoint, or catchpoint set (not to the breakpoint most
+recently encountered). 
+</dl>
+
+   <p>Pressing &lt;RET&gt; as a means of repeating the last GDB command is
+disabled within a <var>command-list</var>.
+
+   <p>You can use breakpoint commands to start your program up again.  Simply
+use the <code>continue</code> command, or <code>step</code>, or any other command
+that resumes execution.
+
+   <p>Any other commands in the command list, after a command that resumes
+execution, are ignored.  This is because any time you resume execution
+(even with a simple <code>next</code> or <code>step</code>), you may encounter
+another breakpoint--which could have its own command list, leading to
+ambiguities about which list to execute.
+
+   <p>If the first command you specify in a command list is <code>silent</code>, the
+usual message about stopping at a breakpoint is not printed.  This may
+be desirable for breakpoints that are to print a specific message and
+then continue.  If none of the remaining commands print anything, you
+see no sign that the breakpoint was reached.  <code>silent</code> is
+meaningful only at the beginning of a breakpoint command list.
+
+   <p>The commands <code>echo</code>, <code>output</code>, and <code>printf</code> allow you to
+print precisely controlled output, and are often useful in silent
+breakpoints.  See <a href="Output.html#Output">Commands for controlled output</a>.
+
+   <p>For example, here is how you could use breakpoint commands to print the
+value of <code>x</code> at entry to <code>foo</code> whenever <code>x</code> is positive.
+
+<pre class="example">     break foo if x&gt;0
+     commands
+     silent
+     printf "x is %d\n",x
+     cont
+     end
+     </pre>
+
+   <p>One application for breakpoint commands is to compensate for one bug so
+you can test for another.  Put a breakpoint just after the erroneous line
+of code, give it a condition to detect the case in which something
+erroneous has been done, and give it commands to assign correct values
+to any variables that need them.  End with the <code>continue</code> command
+so that your program does not stop, and start with the <code>silent</code>
+command so that no output is produced.  Here is an example:
+
+<pre class="example">     break 403
+     commands
+     silent
+     set x = y + 4
+     cont
+     end
+     </pre>
+
+   </body></html>
+

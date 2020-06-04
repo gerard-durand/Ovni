@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="C%20plus%20plus%20expressions">C plus plus expressions</a>,
+Next:<a rel="next" accesskey="n" href="C-Defaults.html#C%20Defaults">C Defaults</a>,
+Previous:<a rel="previous" accesskey="p" href="C-Constants.html#C%20Constants">C Constants</a>,
+Up:<a rel="up" accesskey="u" href="C.html#C">C</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">C<tt>++</tt> expressions</h5>
+
+   GDB expression handling can interpret most C<tt>++</tt> expressions.
+
+   <blockquote>
+<em>Warning:</em> GDB can only debug C<tt>++</tt> code if you use the
+proper compiler.  Typically, C<tt>++</tt> debugging depends on the use of
+additional debugging information in the symbol table, and thus requires
+special support.  In particular, if your compiler generates a.out, MIPS
+<small>ECOFF</small>, RS/6000 <small>XCOFF</small>, or <small>ELF</small> with stabs extensions to the
+symbol table, these facilities are all available.  (With <small>GNU</small> CC,
+you can use the <code>-gstabs</code> option to request stabs debugging
+extensions explicitly.)  Where the object code format is standard
+<small>COFF</small> or <small>DWARF</small> in <small>ELF</small>, on the other hand, most of the C<tt>++</tt>
+support in GDB does <em>not</em> work. 
+</blockquote>
+
+     <ol type=1 start=1>
+
+     <li>Member function calls are allowed; you can use expressions like
+
+     <pre class="example">          count = aml-&gt;GetOriginal(x, y)
+          </pre>
+
+     <li>While a member function is active (in the selected stack frame), your
+expressions have the same namespace available as the member function;
+that is, GDB allows implicit references to the class instance
+pointer <code>this</code> following the same rules as C<tt>++</tt>.
+
+     <li>You can call overloaded functions; GDB resolves the function
+call to the right definition, with some restrictions.  GDB does not
+perform overload resolution involving user-defined type conversions,
+calls to constructors, or instantiations of templates that do not exist
+in the program.  It also cannot handle ellipsis argument lists or
+default arguments.
+
+     <p>It does perform integral conversions and promotions, floating-point
+promotions, arithmetic conversions, pointer conversions, conversions of
+class objects to base classes, and standard conversions such as those of
+functions or arrays to pointers; it requires an exact match on the
+number of function arguments.
+
+     <p>Overload resolution is always performed, unless you have specified
+<code>set overload-resolution off</code>.  See <a href="Debugging-C-plus-plus.html#Debugging%20C%20plus%20plus">GDB features for C<tt>++</tt></a>.
+
+     <p>You must specify <code>set overload-resolution off</code> in order to use an
+explicit function signature to call an overloaded function, as in
+     <pre class="smallexample">          p 'foo(char,int)'('x', 13)
+          </pre>
+
+     <p>The GDB command-completion facility can simplify this;
+see <a href="Completion.html#Completion">Command completion</a>.
+
+     </p><li>GDB understands variables declared as C<tt>++</tt> references; you can use
+them in expressions just as you do in C<tt>++</tt> source--they are automatically
+dereferenced.
+
+     <p>In the parameter list shown when GDB displays a frame, the values of
+reference variables are not displayed (unlike other variables); this
+avoids clutter, since references are often used for large structures. 
+The <em>address</em> of a reference variable is always shown, unless
+you have specified <code>set print address off</code>.
+
+     </p><li>GDB supports the C<tt>++</tt> name resolution operator <code>::</code>--your
+expressions can use it just as expressions in your program do.  Since
+one scope may be defined in another, you can use <code>::</code> repeatedly if
+necessary, for example in an expression like
+<code></code><var>scope1</var><code>::</code><var>scope2</var><code>::</code><var>name</var><code></code>.  GDB also allows
+resolving name scope by reference to source files, in both C and C<tt>++</tt>
+debugging (see <a href="Variables.html#Variables">Program variables</a>).
+        </ol>
+
+   <p>In addition, when used with HP's C<tt>++</tt> compiler, GDB supports
+calling virtual functions correctly, printing out virtual bases of
+objects, calling functions in a base subobject, casting objects, and
+invoking user-defined operators.
+
+   </body></html>
+

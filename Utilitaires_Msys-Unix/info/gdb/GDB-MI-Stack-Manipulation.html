@@ -1,0 +1,290 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Stack%20Manipulation">GDB/MI Stack Manipulation</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Symbol-Query.html#GDB%2fMI%20Symbol%20Query">GDB/MI Symbol Query</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Miscellaneous-Commands.html#GDB%2fMI%20Miscellaneous%20Commands">GDB/MI Miscellaneous Commands</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Stack Manipulation Commands</h3>
+
+<h4 class="subheading">The <code>-stack-info-frame</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-info-frame
+     </pre>
+
+   <p>Get info on the current frame.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>info frame</code> or <code>frame</code>
+(without arguments).
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-stack-info-depth</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-info-depth [ <var>max-depth</var> ]
+     </pre>
+
+   <p>Return the depth of the stack.  If the integer argument <var>max-depth</var>
+is specified, do not count beyond <var>max-depth</var> frames.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>There's no equivalent GDB command.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>For a stack with frame levels 0 through 11:
+
+<pre class="smallexample">     (gdb)
+     -stack-info-depth
+     ^done,depth="12"
+     (gdb)
+     -stack-info-depth 4
+     ^done,depth="4"
+     (gdb)
+     -stack-info-depth 12
+     ^done,depth="12"
+     (gdb)
+     -stack-info-depth 11
+     ^done,depth="11"
+     (gdb)
+     -stack-info-depth 13
+     ^done,depth="12"
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-stack-list-arguments</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-list-arguments <var>show-values</var>
+         [ <var>low-frame</var> <var>high-frame</var> ]
+     </pre>
+
+   <p>Display a list of the arguments for the frames between <var>low-frame</var>
+and <var>high-frame</var> (inclusive).  If <var>low-frame</var> and
+<var>high-frame</var> are not provided, list the arguments for the whole call
+stack.
+
+   <p>The <var>show-values</var> argument must have a value of 0 or 1.  A value of
+0 means that only the names of the arguments are listed, a value of 1
+means that both names and values of the arguments are printed.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   GDB does not have an equivalent command.  <code>gdbtk</code> has a
+<code>gdb_get_args</code> command which partially overlaps with the
+functionality of <code>-stack-list-arguments</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -stack-list-frames
+     ^done,
+     stack=[
+     frame={level="0 ",addr="0x00010734",func="callee4",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="8"},
+     frame={level="1 ",addr="0x0001076c",func="callee3",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="17"},
+     frame={level="2 ",addr="0x0001078c",func="callee2",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="22"},
+     frame={level="3 ",addr="0x000107b4",func="callee1",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="27"},
+     frame={level="4 ",addr="0x000107e0",func="main",
+     file="../../../devo/gdb/testsuite/gdb.mi/basics.c",line="32"}]
+     (gdb)
+     -stack-list-arguments 0
+     ^done,
+     stack-args=[
+     frame={level="0",args=[]},
+     frame={level="1",args=[name="strarg"]},
+     frame={level="2",args=[name="intarg",name="strarg"]},
+     frame={level="3",args=[name="intarg",name="strarg",name="fltarg"]},
+     frame={level="4",args=[]}]
+     (gdb)
+     -stack-list-arguments 1
+     ^done,
+     stack-args=[
+     frame={level="0",args=[]},
+     frame={level="1",
+      args=[{name="strarg",value="0x11940 \"A string argument.\""}]},
+     frame={level="2",args=[
+     {name="intarg",value="2"},
+     {name="strarg",value="0x11940 \"A string argument.\""}]},
+     {frame={level="3",args=[
+     {name="intarg",value="2"},
+     {name="strarg",value="0x11940 \"A string argument.\""},
+     {name="fltarg",value="3.5"}]},
+     frame={level="4",args=[]}]
+     (gdb)
+     -stack-list-arguments 0 2 2
+     ^done,stack-args=[frame={level="2",args=[name="intarg",name="strarg"]}]
+     (gdb)
+     -stack-list-arguments 1 2 2
+     ^done,stack-args=[frame={level="2",
+     args=[{name="intarg",value="2"},
+     {name="strarg",value="0x11940 \"A string argument.\""}]}]
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-stack-list-frames</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-list-frames [ <var>low-frame</var> <var>high-frame</var> ]
+     </pre>
+
+   <p>List the frames currently on the stack.  For each frame it displays the
+following info:
+
+     <dl>
+<dt><code></code><var>level</var><code></code>
+     <dd>The frame number, 0 being the topmost frame, i.e. the innermost function. 
+<br><dt><code></code><var>addr</var><code></code>
+     <dd>The <code>$pc</code> value for that frame. 
+<br><dt><code></code><var>func</var><code></code>
+     <dd>Function name. 
+<br><dt><code></code><var>file</var><code></code>
+     <dd>File name of the source file where the function lives. 
+<br><dt><code></code><var>line</var><code></code>
+     <dd>Line number corresponding to the <code>$pc</code>. 
+</dl>
+
+   <p>If invoked without arguments, this command prints a backtrace for the
+whole stack.  If given two integer arguments, it shows the frames whose
+levels are between the two arguments (inclusive).  If the two arguments
+are equal, it shows the single frame at the corresponding level.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB commands are <code>backtrace</code> and <code>where</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>Full stack backtrace:
+
+<pre class="smallexample">     (gdb)
+     -stack-list-frames
+     ^done,stack=
+     [frame={level="0 ",addr="0x0001076c",func="foo",
+       file="recursive2.c",line="11"},
+     frame={level="1 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="2 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="3 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="4 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="5 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="6 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="7 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="8 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="9 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="10",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="11",addr="0x00010738",func="main",
+       file="recursive2.c",line="4"}]
+     (gdb)
+     </pre>
+
+   <p>Show frames between <var>low_frame</var> and <var>high_frame</var>:
+
+<pre class="smallexample">     (gdb)
+     -stack-list-frames 3 5
+     ^done,stack=
+     [frame={level="3 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="4 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"},
+     frame={level="5 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"}]
+     (gdb)
+     </pre>
+
+   <p>Show a single frame:
+
+<pre class="smallexample">     (gdb)
+     -stack-list-frames 3 3
+     ^done,stack=
+     [frame={level="3 ",addr="0x000107a4",func="foo",
+       file="recursive2.c",line="14"}]
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-stack-list-locals</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-list-locals <var>print-values</var>
+     </pre>
+
+   <p>Display the local variable names for the current frame.  With an
+argument of 0 prints only the names of the variables, with argument of 1
+prints also their values.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p><code>info locals</code> in GDB, <code>gdb_get_locals</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -stack-list-locals 0
+     ^done,locals=[name="A",name="B",name="C"]
+     (gdb)
+     -stack-list-locals 1
+     ^done,locals=[{name="A",value="1"},{name="B",value="2"},
+       {name="C",value="3"}]
+     (gdb)
+     </pre>
+
+<h4 class="subheading">The <code>-stack-select-frame</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -stack-select-frame <var>framenum</var>
+     </pre>
+
+   <p>Change the current frame.  Select a different frame <var>framenum</var> on
+the stack.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB commands are <code>frame</code>, <code>up</code>,
+<code>down</code>, <code>select-frame</code>, <code>up-silent</code>, and <code>down-silent</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+<pre class="smallexample">     (gdb)
+     -stack-select-frame 2
+     ^done
+     (gdb)
+     </pre>
+
+   </body></html>
+

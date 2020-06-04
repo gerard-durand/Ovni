@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Shell%20Commands">Shell Commands</a>,
+Previous:<a rel="previous" accesskey="p" href="Quitting-GDB.html#Quitting%20GDB">Quitting GDB</a>,
+Up:<a rel="up" accesskey="u" href="Invocation.html#Invocation">Invocation</a>
+<hr><br>
+</div>
+
+<h3 class="section">Shell commands</h3>
+
+   <p>If you need to execute occasional shell commands during your
+debugging session, there is no need to leave or suspend GDB; you can
+just use the <code>shell</code> command.
+
+     <dl>
+<dt><code>shell </code><var>command string</var><code></code>
+     <dd>Invoke a standard shell to execute <var>command string</var>. 
+If it exists, the environment variable <code>SHELL</code> determines which
+shell to run.  Otherwise GDB uses the default shell
+(<code>/bin/sh</code> on Unix systems, <code>COMMAND.COM</code> on MS-DOS, etc.). 
+</dl>
+
+   <p>The utility <code>make</code> is often needed in development environments. 
+You do not have to use the <code>shell</code> command for this purpose in
+GDB:
+
+     <dl>
+<dt><code>make </code><var>make-args</var><code></code>
+     <dd>Execute the <code>make</code> program with the specified
+arguments.  This is equivalent to <code>shell make </code><var>make-args</var><code></code>. 
+</dl>
+
+   </body></html>
+

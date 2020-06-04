@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="History">History</a>,
+Next:<a rel="next" accesskey="n" href="Screen-Size.html#Screen%20Size">Screen Size</a>,
+Previous:<a rel="previous" accesskey="p" href="Editing.html#Editing">Editing</a>,
+Up:<a rel="up" accesskey="u" href="Controlling-GDB.html#Controlling%20GDB">Controlling GDB</a>
+<hr><br>
+</div>
+
+<h3 class="section">Command history</h3>
+
+   GDB can keep track of the commands you type during your
+debugging sessions, so that you can be certain of precisely what
+happened.  Use these commands to manage the GDB command
+history facility.
+
+     <dl>
+<dt><code>set history filename </code><var>fname</var><code></code>
+     <dd>Set the name of the GDB command history file to <var>fname</var>. 
+This is the file where GDB reads an initial command history
+list, and where it writes the command history from this session when it
+exits.  You can access this list through history expansion or through
+the history command editing characters listed below.  This file defaults
+to the value of the environment variable <code>GDBHISTFILE</code>, or to
+<code>./.gdb_history</code> (<code>./_gdb_history</code> on MS-DOS) if this variable
+is not set.
+
+     <br><dt><code>set history save</code>
+     <dd><dt><code>set history save on</code>
+     <dd>Record command history in a file, whose name may be specified with the
+<code>set history filename</code> command.  By default, this option is disabled.
+
+     <br><dt><code>set history save off</code>
+     <dd>Stop recording command history in a file.
+
+     <br><dt><code>set history size </code><var>size</var><code></code>
+     <dd>Set the number of commands which GDB keeps in its history list. 
+This defaults to the value of the environment variable
+<code>HISTSIZE</code>, or to 256 if this variable is not set. 
+</dl>
+
+   <p>History expansion assigns special meaning to the character <kbd>!</kbd>.
+
+   <p>Since <kbd>!</kbd> is also the logical not operator in C, history expansion
+is off by default. If you decide to enable history expansion with the
+<code>set history expansion on</code> command, you may sometimes need to
+follow <kbd>!</kbd> (when it is used as logical not, in an expression) with
+a space or a tab to prevent it from being expanded.  The readline
+history facilities do not attempt substitution on the strings
+<kbd>!=</kbd> and <kbd>!(</kbd>, even when history expansion is enabled.
+
+   <p>The commands to control history expansion are:
+
+     <dl>
+<dt><code>set history expansion on</code>
+     <dd><dt><code>set history expansion</code>
+     <dd>Enable history expansion.  History expansion is off by default.
+
+     <br><dt><code>set history expansion off</code>
+     <dd>Disable history expansion.
+
+     <p>The readline code comes with more complete documentation of
+editing and history expansion features.  Users unfamiliar with <small>GNU</small> Emacs
+or <code>vi</code> may wish to read it.
+
+     <br><dt><code>show history</code>
+     <dd><dt><code>show history filename</code>
+     <dd><dt><code>show history save</code>
+     <dd><dt><code>show history size</code>
+     <dd><dt><code>show history expansion</code>
+     <dd>These commands display the state of the GDB history parameters. 
+<code>show history</code> by itself displays all four states. 
+</dl>
+
+     <dl>
+<dt><code>show commands</code>
+     <dd>Display the last ten commands in the command history.
+
+     <br><dt><code>show commands </code><var>n</var><code></code>
+     <dd>Print ten commands centered on command number <var>n</var>.
+
+     <br><dt><code>show commands +</code>
+     <dd>Print ten commands just after the commands last printed. 
+</dl>
+
+   </body></html>
+

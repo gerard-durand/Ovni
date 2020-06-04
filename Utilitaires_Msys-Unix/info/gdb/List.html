@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="List">List</a>,
+Next:<a rel="next" accesskey="n" href="Search.html#Search">Search</a>,
+Up:<a rel="up" accesskey="u" href="Source.html#Source">Source</a>
+<hr><br>
+</div>
+
+<h3 class="section">Printing source lines</h3>
+
+   <p>To print lines from a source file, use the <code>list</code> command
+(abbreviated <code>l</code>).  By default, ten lines are printed. 
+There are several ways to specify what part of the file you want to print.
+
+   <p>Here are the forms of the <code>list</code> command most commonly used:
+
+     <dl>
+<dt><code>list </code><var>linenum</var><code></code>
+     <dd>Print lines centered around line number <var>linenum</var> in the
+current source file.
+
+     <br><dt><code>list </code><var>function</var><code></code>
+     <dd>Print lines centered around the beginning of function
+<var>function</var>.
+
+     <br><dt><code>list</code>
+     <dd>Print more lines.  If the last lines printed were printed with a
+<code>list</code> command, this prints lines following the last lines
+printed; however, if the last line printed was a solitary line printed
+as part of displaying a stack frame (see <a href="Stack.html#Stack">Examining the Stack</a>), this prints lines centered around that line.
+
+     <br><dt><code>list -</code>
+     <dd>Print lines just before the lines last printed. 
+</dl>
+
+   <p>By default, GDB prints ten source lines with any of these forms of
+the <code>list</code> command.  You can change this using <code>set listsize</code>:
+
+     <dl>
+<dt><code>set listsize </code><var>count</var><code></code>
+     <dd>Make the <code>list</code> command display <var>count</var> source lines (unless
+the <code>list</code> argument explicitly specifies some other number).
+
+     <br><dt><code>show listsize</code>
+     <dd>Display the number of lines that <code>list</code> prints. 
+</dl>
+
+   <p>Repeating a <code>list</code> command with &lt;RET&gt; discards the argument,
+so it is equivalent to typing just <code>list</code>.  This is more useful
+than listing the same lines again.  An exception is made for an
+argument of <code>-</code>; that argument is preserved in repetition so that
+each repetition moves up in the source file.
+
+   <p>In general, the <code>list</code> command expects you to supply zero, one or two
+<dfn>linespecs</dfn>.  Linespecs specify source lines; there are several ways
+of writing them, but the effect is always to specify some source line. 
+Here is a complete description of the possible arguments for <code>list</code>:
+
+     <dl>
+<dt><code>list </code><var>linespec</var><code></code>
+     <dd>Print lines centered around the line specified by <var>linespec</var>.
+
+     <br><dt><code>list </code><var>first</var><code>,</code><var>last</var><code></code>
+     <dd>Print lines from <var>first</var> to <var>last</var>.  Both arguments are
+linespecs.
+
+     <br><dt><code>list ,</code><var>last</var><code></code>
+     <dd>Print lines ending with <var>last</var>.
+
+     <br><dt><code>list </code><var>first</var><code>,</code>
+     <dd>Print lines starting with <var>first</var>.
+
+     <br><dt><code>list +</code>
+     <dd>Print lines just after the lines last printed.
+
+     <br><dt><code>list -</code>
+     <dd>Print lines just before the lines last printed.
+
+     <br><dt><code>list</code>
+     <dd>As described in the preceding table. 
+</dl>
+
+   <p>Here are the ways of specifying a single source line--all the
+kinds of linespec.
+
+     <dl>
+<dt><code></code><var>number</var><code></code>
+     <dd>Specifies line <var>number</var> of the current source file. 
+When a <code>list</code> command has two linespecs, this refers to
+the same source file as the first linespec.
+
+     <br><dt><code>+</code><var>offset</var><code></code>
+     <dd>Specifies the line <var>offset</var> lines after the last line printed. 
+When used as the second linespec in a <code>list</code> command that has
+two, this specifies the line <var>offset</var> lines down from the
+first linespec.
+
+     <br><dt><code>-</code><var>offset</var><code></code>
+     <dd>Specifies the line <var>offset</var> lines before the last line printed.
+
+     <br><dt><code></code><var>filename</var><code>:</code><var>number</var><code></code>
+     <dd>Specifies line <var>number</var> in the source file <var>filename</var>.
+
+     <br><dt><code></code><var>function</var><code></code>
+     <dd>Specifies the line that begins the body of the function <var>function</var>. 
+For example: in C, this is the line with the open brace.
+
+     <br><dt><code></code><var>filename</var><code>:</code><var>function</var><code></code>
+     <dd>Specifies the line of the open-brace that begins the body of the
+function <var>function</var> in the file <var>filename</var>.  You only need the
+file name with a function name to avoid ambiguity when there are
+identically named functions in different source files.
+
+     <br><dt><code>*</code><var>address</var><code></code>
+     <dd>Specifies the line containing the program address <var>address</var>. 
+<var>address</var> may be any expression. 
+</dl>
+
+   </body></html>
+

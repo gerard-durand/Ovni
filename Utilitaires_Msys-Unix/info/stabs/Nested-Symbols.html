@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Nested%20Symbols">Nested Symbols</a>,
+Next:<a rel="next" accesskey="n" href="Basic-Cplusplus-Types.html#Basic%20Cplusplus%20Types">Basic Cplusplus Types</a>,
+Previous:<a rel="previous" accesskey="p" href="Class-Names.html#Class%20Names">Class Names</a>,
+Up:<a rel="up" accesskey="u" href="Cplusplus.html#Cplusplus">Cplusplus</a>
+<hr><br>
+</div>
+
+<h3 class="section">Defining a Symbol Within Another Type</h3>
+
+   <p>In C++, a symbol (such as a type name) can be defined within another type.
+
+   <p>In stabs, this is sometimes represented by making the name of a symbol
+which contains <code>::</code>.  Such a pair of colons does not end the name
+of the symbol, the way a single colon would (see <a href="String-Field.html#String%20Field">String Field</a>).  I'm
+not sure how consistently used or well thought out this mechanism is. 
+So that a pair of colons in this position always has this meaning,
+<code>:</code> cannot be used as a symbol descriptor.
+
+   <p>For example, if the string for a stab is <code>foo::bar::baz:t5=*6</code>,
+then <code>foo::bar::baz</code> is the name of the symbol, <code>t</code> is the
+symbol descriptor, and <code>5=*6</code> is the type information.
+
+   </body></html>
+

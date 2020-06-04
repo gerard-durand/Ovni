@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="M2%20Checks">M2 Checks</a>,
+Next:<a rel="next" accesskey="n" href="M2-Scope.html#M2%20Scope">M2 Scope</a>,
+Previous:<a rel="previous" accesskey="p" href="Deviations.html#Deviations">Deviations</a>,
+Up:<a rel="up" accesskey="u" href="Modula-2.html#Modula-2">Modula-2</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Modula-2 type and range checks</h5>
+
+   <blockquote>
+<em>Warning:</em> in this release, GDB does not yet perform type or
+range checking. 
+</blockquote>
+
+   GDB considers two Modula-2 variables type equivalent if:
+
+     <ul>
+<li>They are of types that have been declared equivalent via a <code>TYPE
+</code><var>t1</var><code> = </code><var>t2</var><code></code> statement
+
+     <li>They have been declared on the same line.  (Note:  This is true of the
+<small>GNU</small> Modula-2 compiler, but it may not be true of other compilers.) 
+</ul>
+
+   <p>As long as type checking is enabled, any attempt to combine variables
+whose types are not equivalent is an error.
+
+   <p>Range checking is done on all mathematical operations, assignment, array
+index bounds, and all built-in functions and procedures.
+
+   </body></html>
+

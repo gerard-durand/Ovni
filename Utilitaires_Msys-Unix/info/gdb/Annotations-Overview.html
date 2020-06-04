@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Annotations%20Overview">Annotations Overview</a>,
+Next:<a rel="next" accesskey="n" href="Server-Prefix.html#Server%20Prefix">Server Prefix</a>,
+Up:<a rel="up" accesskey="u" href="Annotations.html#Annotations">Annotations</a>
+<hr><br>
+</div>
+
+<h3 class="section">What is an Annotation?</h3>
+
+   <p>To produce annotations, start GDB with the <code>--annotate=2</code> option.
+
+   <p>Annotations start with a newline character, two <code>control-z</code>
+characters, and the name of the annotation.  If there is no additional
+information associated with this annotation, the name of the annotation
+is followed immediately by a newline.  If there is additional
+information, the name of the annotation is followed by a space, the
+additional information, and a newline.  The additional information
+cannot contain newline characters.
+
+   <p>Any output not beginning with a newline and two <code>control-z</code>
+characters denotes literal output from GDB.  Currently there is
+no need for GDB to output a newline followed by two
+<code>control-z</code> characters, but if there was such a need, the
+annotations could be extended with an <code>escape</code> annotation which
+means those three characters as output.
+
+   <p>A simple example of starting up GDB with annotations is:
+
+<pre class="smallexample">     $ gdb --annotate=2
+     GNU GDB 5.0
+     Copyright 2000 Free Software Foundation, Inc.
+     GDB is free software, covered by the GNU General Public License,
+     and you are welcome to change it and/or distribute copies of it
+     under certain conditions.
+     Type "show copying" to see the conditions.
+     There is absolutely no warranty for GDB.  Type "show warranty"
+     for details.
+     This GDB was configured as "sparc-sun-sunos4.1.3"
+     
+     ^Z^Zpre-prompt
+     (gdb)
+     ^Z^Zprompt
+     quit
+     
+     ^Z^Zpost-prompt
+     $
+     </pre>
+
+   <p>Here <code>quit</code> is input to GDB; the rest is output from
+GDB.  The three lines beginning <code>^Z^Z</code> (where <code>^Z</code>
+denotes a <code>control-z</code> character) are annotations; the rest is
+output from GDB.
+
+   </body></html>
+

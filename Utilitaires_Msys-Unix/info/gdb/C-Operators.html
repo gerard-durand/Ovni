@@ -1,0 +1,170 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="C%20Operators">C Operators</a>,
+Next:<a rel="next" accesskey="n" href="C-Constants.html#C%20Constants">C Constants</a>,
+Up:<a rel="up" accesskey="u" href="C.html#C">C</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">C and C<tt>++</tt> operators</h5>
+
+   <p>Operators must be defined on values of specific types.  For instance,
+<code>+</code> is defined on numbers, but not on structures.  Operators are
+often defined on groups of types.
+
+   <p>For the purposes of C and C<tt>++</tt>, the following definitions hold:
+
+     <ul>
+
+     <li><em>Integral types</em> include <code>int</code> with any of its storage-class
+specifiers; <code>char</code>; <code>enum</code>; and, for C<tt>++</tt>, <code>bool</code>.
+
+     <li><em>Floating-point types</em> include <code>float</code>, <code>double</code>, and
+<code>long double</code> (if supported by the target platform).
+
+     <li><em>Pointer types</em> include all types defined as <code>(</code><var>type</var><code> *)</code>.
+
+     <li><em>Scalar types</em> include all of the above.
+
+   </ul>
+
+<p>The following operators are supported.  They are listed here
+in order of increasing precedence:
+
+     <dl>
+<dt><code>,</code>
+     <dd>The comma or sequencing operator.  Expressions in a comma-separated list
+are evaluated from left to right, with the result of the entire
+expression being the last expression evaluated.
+
+     <br><dt><code>=</code>
+     <dd>Assignment.  The value of an assignment expression is the value
+assigned.  Defined on scalar types.
+
+     <br><dt><code></code><var>op</var><code>=</code>
+     <dd>Used in an expression of the form <code></code><var>a</var><code>&nbsp;</code><var>op</var><code>=&nbsp;</code><var>b</var><code></code>,
+and translated to <code></code><var>a</var><code>&nbsp;=&nbsp;</code><var>a&nbsp;op&nbsp;b</var><code></code>. 
+<code></code><var>op</var><code>=</code> and <code>=</code> have the same precedence. 
+<var>op</var> is any one of the operators <code>|</code>, <code>^</code>, <code>&amp;</code>,
+<code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>.
+
+     <br><dt><code>?:</code>
+     <dd>The ternary operator.  <code></code><var>a</var><code> ? </code><var>b</var><code> : </code><var>c</var><code></code> can be thought
+of as:  if <var>a</var> then <var>b</var> else <var>c</var>.  <var>a</var> should be of an
+integral type.
+
+     <br><dt><code>||</code>
+     <dd>Logical <small>OR</small>.  Defined on integral types.
+
+     <br><dt><code>&amp;&amp;</code>
+     <dd>Logical <small>AND</small>.  Defined on integral types.
+
+     <br><dt><code>|</code>
+     <dd>Bitwise <small>OR</small>.  Defined on integral types.
+
+     <br><dt><code>^</code>
+     <dd>Bitwise exclusive-<small>OR</small>.  Defined on integral types.
+
+     <br><dt><code>&amp;</code>
+     <dd>Bitwise <small>AND</small>.  Defined on integral types.
+
+     <br><dt><code>==</code>, <code>!=</code>
+     <dd>Equality and inequality.  Defined on scalar types.  The value of these
+expressions is 0 for false and non-zero for true.
+
+     <br><dt><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>
+     <dd>Less than, greater than, less than or equal, greater than or equal. 
+Defined on scalar types.  The value of these expressions is 0 for false
+and non-zero for true.
+
+     <br><dt><code>&lt;&lt;</code>, <code>&gt;&gt;</code>
+     <dd>left shift, and right shift.  Defined on integral types.
+
+     <br><dt><code>@</code>
+     <dd>The GDB "artificial array" operator (see <a href="Expressions.html#Expressions">Expressions</a>).
+
+     <br><dt><code>+</code>, <code>-</code>
+     <dd>Addition and subtraction.  Defined on integral types, floating-point types and
+pointer types.
+
+     <br><dt><code>*</code>, <code>/</code>, <code>%</code>
+     <dd>Multiplication, division, and modulus.  Multiplication and division are
+defined on integral and floating-point types.  Modulus is defined on
+integral types.
+
+     <br><dt><code>++</code>, <code>--</code>
+     <dd>Increment and decrement.  When appearing before a variable, the
+operation is performed before the variable is used in an expression;
+when appearing after it, the variable's value is used before the
+operation takes place.
+
+     <br><dt><code>*</code>
+     <dd>Pointer dereferencing.  Defined on pointer types.  Same precedence as
+<code>++</code>.
+
+     <br><dt><code>&amp;</code>
+     <dd>Address operator.  Defined on variables.  Same precedence as <code>++</code>.
+
+     <p>For debugging C<tt>++</tt>, GDB implements a use of <code>&amp;</code> beyond what is
+allowed in the C<tt>++</tt> language itself: you can use <code>&amp;(&amp;</code><var>ref</var><code>)</code>
+(or, if you prefer, simply <code>&amp;&amp;</code><var>ref</var><code></code>) to examine the address
+where a C<tt>++</tt> reference variable (declared with <code>&amp;</code><var>ref</var><code></code>) is
+stored.
+
+     <br><dt><code>-</code>
+     <dd>Negative.  Defined on integral and floating-point types.  Same
+precedence as <code>++</code>.
+
+     <br><dt><code>!</code>
+     <dd>Logical negation.  Defined on integral types.  Same precedence as
+<code>++</code>.
+
+     <br><dt><code>~</code>
+     <dd>Bitwise complement operator.  Defined on integral types.  Same precedence as
+<code>++</code>.
+
+     <br><dt><code>.</code>, <code>-&gt;</code>
+     <dd>Structure member, and pointer-to-structure member.  For convenience,
+GDB regards the two as equivalent, choosing whether to dereference a
+pointer based on the stored type information. 
+Defined on <code>struct</code> and <code>union</code> data.
+
+     <br><dt><code>.*</code>, <code>-&gt;*</code>
+     <dd>Dereferences of pointers to members.
+
+     <br><dt><code>[]</code>
+     <dd>Array indexing.  <code></code><var>a</var><code>[</code><var>i</var><code>]</code> is defined as
+<code>*(</code><var>a</var><code>+</code><var>i</var><code>)</code>.  Same precedence as <code>-&gt;</code>.
+
+     <br><dt><code>()</code>
+     <dd>Function parameter list.  Same precedence as <code>-&gt;</code>.
+
+     <br><dt><code>::</code>
+     <dd>C<tt>++</tt> scope resolution operator.  Defined on <code>struct</code>, <code>union</code>,
+and <code>class</code> types.
+
+     <br><dt><code>::</code>
+     <dd>Doubled colons also represent the GDB scope operator
+(see <a href="Expressions.html#Expressions">Expressions</a>).  Same precedence as <code>::</code>,
+above. 
+</dl>
+
+   <p>If an operator is redefined in the user code, GDB usually
+attempts to invoke the redefined version instead of using the operator's
+predefined meaning.
+
+<ul class="menu">
+<li><a accesskey="1" href="C-Constants.html#C%20Constants">C Constants</a>: 
+</ul>
+
+   </body></html>
+

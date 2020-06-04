@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Numeric%20Arguments">Numeric Arguments</a>,
+Next:<a rel="next" accesskey="n" href="Commands-For-Completion.html#Commands%20For%20Completion">Commands For Completion</a>,
+Previous:<a rel="previous" accesskey="p" href="Commands-For-Killing.html#Commands%20For%20Killing">Commands For Killing</a>,
+Up:<a rel="up" accesskey="u" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Specifying Numeric Arguments</h4>
+
+     <dl>
+
+     <br><dt><code>digit-argument (</code><kbd>M-0</kbd><code>, </code><kbd>M-1</kbd><code>, ... </code><kbd>M--</kbd><code>)</code>
+     <dd>Add this digit to the argument already accumulating, or start a new
+argument.  <kbd>M--</kbd> starts a negative argument.
+
+     <br><dt><code>universal-argument ()</code>
+     <dd>This is another way to specify an argument. 
+If this command is followed by one or more digits, optionally with a
+leading minus sign, those digits define the argument. 
+If the command is followed by digits, executing <code>universal-argument</code>
+again ends the numeric argument, but is otherwise ignored. 
+As a special case, if this command is immediately followed by a
+character that is neither a digit or minus sign, the argument count
+for the next command is multiplied by four. 
+The argument count is initially one, so executing this function the
+first time makes the argument count four, a second time makes the
+argument count sixteen, and so on. 
+By default, this is not bound to a key. 
+</dl>
+
+   </body></html>
+

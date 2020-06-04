@@ -1,0 +1,173 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Mode%20Options">Mode Options</a>,
+Previous:<a rel="previous" accesskey="p" href="File-Options.html#File%20Options">File Options</a>,
+Up:<a rel="up" accesskey="u" href="Invoking-GDB.html#Invoking%20GDB">Invoking GDB</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Choosing modes</h4>
+
+   <p>You can run GDB in various alternative modes--for example, in
+batch mode or quiet mode.
+
+     <dl>
+<dt><code>-nx</code>
+     <dd><dt><code>-n</code>
+     <dd>Do not execute commands found in any initialization files.  Normally,
+GDB executes the commands in these files after all the command
+options and arguments have been processed.  See <a href="Command-Files.html#Command%20Files">Command files</a>.
+
+     <br><dt><code>-quiet</code>
+     <dd><dt><code>-silent</code>
+     <dd><dt><code>-q</code>
+     <dd>"Quiet".  Do not print the introductory and copyright messages.  These
+messages are also suppressed in batch mode.
+
+     <br><dt><code>-batch</code>
+     <dd>Run in batch mode.  Exit with status <code>0</code> after processing all the
+command files specified with <code>-x</code> (and all commands from
+initialization files, if not inhibited with <code>-n</code>).  Exit with
+nonzero status if an error occurs in executing the GDB commands
+in the command files.
+
+     <p>Batch mode may be useful for running GDB as a filter, for
+example to download and run a program on another computer; in order to
+make this more useful, the message
+
+     <pre class="example">          Program exited normally.
+          </pre>
+
+     <p>(which is ordinarily issued whenever a program running under
+GDB control terminates) is not issued when running in batch
+mode.
+
+     <br><dt><code>-nowindows</code>
+     <dd><dt><code>-nw</code>
+     <dd>"No windows".  If GDB comes with a graphical user interface
+(GUI) built in, then this option tells GDB to only use the command-line
+interface.  If no GUI is available, this option has no effect.
+
+     <br><dt><code>-windows</code>
+     <dd><dt><code>-w</code>
+     <dd>If GDB includes a GUI, then this option requires it to be
+used if possible.
+
+     <br><dt><code>-cd </code><var>directory</var><code></code>
+     <dd>Run GDB using <var>directory</var> as its working directory,
+instead of the current directory.
+
+     <br><dt><code>-fullname</code>
+     <dd><dt><code>-f</code>
+     <dd><small>GNU</small> Emacs sets this option when it runs GDB as a
+subprocess.  It tells GDB to output the full file name and line
+number in a standard, recognizable fashion each time a stack frame is
+displayed (which includes each time your program stops).  This
+recognizable format looks like two <code>\032</code> characters, followed by
+the file name, line number and character position separated by colons,
+and a newline.  The Emacs-to-GDB interface program uses the two
+<code>\032</code> characters as a signal to display the source code for the
+frame.
+
+     <br><dt><code>-epoch</code>
+     <dd>The Epoch Emacs-GDB interface sets this option when it runs
+GDB as a subprocess.  It tells GDB to modify its print
+routines so as to allow Epoch to display values of expressions in a
+separate window.
+
+     <br><dt><code>-annotate </code><var>level</var><code></code>
+     <dd>This option sets the <dfn>annotation level</dfn> inside GDB.  Its
+effect is identical to using <code>set annotate </code><var>level</var><code></code>
+(see <a href="Annotations.html#Annotations">Annotations</a>). 
+Annotation level controls how much information does GDB print
+together with its prompt, values of expressions, source lines, and other
+types of output.  Level 0 is the normal, level 1 is for use when
+GDB is run as a subprocess of <small>GNU</small> Emacs, level 2 is the
+maximum annotation suitable for programs that control GDB.
+
+     <br><dt><code>-async</code>
+     <dd>Use the asynchronous event loop for the command-line interface. 
+GDB processes all events, such as user keyboard input, via a
+special event loop.  This allows GDB to accept and process user
+commands in parallel with the debugged process being
+run<a rel="footnote" href="#fn-1"><sup>1</sup></a>, so you don't need to wait for
+control to return to GDB before you type the next command. 
+(<em>Note:</em> as of version 5.1, the target side of the asynchronous
+operation is not yet in place, so <code>-async</code> does not work fully
+yet.)
+
+     <p>When the standard input is connected to a terminal device, GDB
+uses the asynchronous event loop by default, unless disabled by the
+<code>-noasync</code> option.
+
+     <br><dt><code>-noasync</code>
+     <dd>Disable the asynchronous event loop for the command-line interface.
+
+     <br><dt><code>--args</code>
+     <dd>Change interpretation of command line so that arguments following the
+executable file are passed as command line arguments to the inferior. 
+This option stops option processing.
+
+     <br><dt><code>-baud </code><var>bps</var><code></code>
+     <dd><dt><code>-b </code><var>bps</var><code></code>
+     <dd>Set the line speed (baud rate or bits per second) of any serial
+interface used by GDB for remote debugging.
+
+     <br><dt><code>-tty </code><var>device</var><code></code>
+     <dd><dt><code>-t </code><var>device</var><code></code>
+     <dd>Run using <var>device</var> for your program's standard input and output.
+
+     <br><dt><code>-tui</code>
+     <dd>Activate the Terminal User Interface when starting. 
+The Terminal User Interface manages several text windows on the terminal,
+showing source, assembly, registers and GDB command outputs
+(see <a href="TUI.html#TUI">GDB Text User Interface</a>). 
+Do not use this option if you run GDB from Emacs
+(see <a href="Emacs.html#Emacs">Using GDB under <small>GNU</small> Emacs</a>).
+
+     <br><dt><code>-interpreter </code><var>interp</var><code></code>
+     <dd>Use the interpreter <var>interp</var> for interface with the controlling
+program or device.  This option is meant to be set by programs which
+communicate with GDB using it as a back end.
+
+     <p><code>--interpreter=mi</code> (or <code>--interpreter=mi1</code>) causes
+GDB to use the <dfn>gdb/mi interface</dfn> (see <a href="GDB-MI.html#GDB%2fMI">The <small>GDB/MI</small> Interface</a>). The older <small>GDB/MI</small> interface, included in
+GDB version 5.0 can be selected with <code>--interpreter=mi0</code>.
+
+     <br><dt><code>-write</code>
+     <dd>Open the executable and core files for both reading and writing.  This
+is equivalent to the <code>set write on</code> command inside GDB
+(see <a href="Patching.html#Patching">Patching</a>).
+
+     <br><dt><code>-statistics</code>
+     <dd>This option causes GDB to print statistics about time and
+memory usage after it completes each command and returns to the prompt.
+
+     <br><dt><code>-version</code>
+     <dd>This option causes GDB to print its version number and
+no-warranty blurb, and exit.
+
+   </dl>
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4>
+<ol type="1">
+<li><a name="fn-1"></a>
+<p>GDB built with <small>DJGPP</small> tools for
+MS-DOS/MS-Windows supports this mode of operation, but the event loop is
+suspended when the debuggee runs.</p>
+
+   </ol><hr></div>
+
+   </body></html>
+

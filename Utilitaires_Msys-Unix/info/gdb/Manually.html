@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Manually">Manually</a>,
+Next:<a rel="next" accesskey="n" href="Automatically.html#Automatically">Automatically</a>,
+Previous:<a rel="previous" accesskey="p" href="Filenames.html#Filenames">Filenames</a>,
+Up:<a rel="up" accesskey="u" href="Setting.html#Setting">Setting</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Setting the working language</h4>
+
+   <p>If you allow GDB to set the language automatically,
+expressions are interpreted the same way in your debugging session and
+your program.
+
+   <p>If you wish, you may set the language manually.  To do this, issue the
+command <code>set language </code><var>lang</var><code></code>, where <var>lang</var> is the name of
+a language, such as
+<code>c</code> or <code>modula-2</code>. 
+For a list of the supported languages, type <code>set language</code>.
+
+   <p>Setting the language manually prevents GDB from updating the working
+language automatically.  This can lead to confusion if you try
+to debug a program when the working language is not the same as the
+source language, when an expression is acceptable to both
+languages--but means different things.  For instance, if the current
+source file were written in C, and GDB was parsing Modula-2, a
+command such as:
+
+<pre class="example">     print a = b + c
+     </pre>
+
+<p>might not have the effect you intended.  In C, this means to add
+<code>b</code> and <code>c</code> and place the result in <code>a</code>.  The result
+printed would be the value of <code>a</code>.  In Modula-2, this means to compare
+<code>a</code> to the result of <code>b+c</code>, yielding a <code>BOOLEAN</code> value.
+
+   </body></html>
+

@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Transformations%20On%20Symbol%20Tables">Transformations On Symbol Tables</a>,
+Previous:<a rel="previous" accesskey="p" href="Symbol-Table-Format.html#Symbol%20Table%20Format">Symbol Table Format</a>,
+Up:<a rel="up" accesskey="u" href="Symbol-Tables.html#Symbol%20Tables">Symbol Tables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Transformations on Symbol Tables</h3>
+
+   <p>The linker concatenates object files and does fixups of externally
+defined symbols.
+
+   <p>You can see the transformations made on stab data by the assembler and
+linker by examining the symbol table after each pass of the build.  To
+do this, use <code>nm -ap</code>, which dumps the symbol table, including
+debugging information, unsorted.  For stab entries the columns are:
+<var>value</var>, <var>other</var>, <var>desc</var>, <var>type</var>, <var>string</var>.  For
+assembler and linker symbols, the columns are: <var>value</var>, <var>type</var>,
+<var>string</var>.
+
+   <p>The low 5 bits of the stab type tell the linker how to relocate the
+value of the stab.  Thus for stab types like <code>N_RSYM</code> and
+<code>N_LSYM</code>, where the value is an offset or a register number, the
+low 5 bits are <code>N_ABS</code>, which tells the linker not to relocate the
+value.
+
+   <p>Where the value of a stab contains an assembly language label,
+it is transformed by each build step.  The assembler turns it into a
+relocatable address and the linker turns it into an absolute address.
+
+<ul class="menu">
+<li><a accesskey="1" href="Transformations-On-Static-Variables.html#Transformations%20On%20Static%20Variables">Transformations On Static Variables</a>: 
+<li><a accesskey="2" href="Transformations-On-Global-Variables.html#Transformations%20On%20Global%20Variables">Transformations On Global Variables</a>: 
+<li><a accesskey="3" href="Stab-Section-Transformations.html#Stab%20Section%20Transformations">Stab Section Transformations</a>: 	   For some object file formats,
+                                           things are a bit different. 
+</ul>
+
+   </body></html>
+

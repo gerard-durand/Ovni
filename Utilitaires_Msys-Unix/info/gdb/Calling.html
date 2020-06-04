@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Calling">Calling</a>,
+Next:<a rel="next" accesskey="n" href="Patching.html#Patching">Patching</a>,
+Previous:<a rel="previous" accesskey="p" href="Returning.html#Returning">Returning</a>,
+Up:<a rel="up" accesskey="u" href="Altering.html#Altering">Altering</a>
+<hr><br>
+</div>
+
+<h3 class="section">Calling program functions</h3>
+
+     <dl>
+<dt><code>call </code><var>expr</var><code></code>
+     <dd>Evaluate the expression <var>expr</var> without displaying <code>void</code>
+returned values. 
+</dl>
+
+   <p>You can use this variant of the <code>print</code> command if you want to
+execute a function from your program, but without cluttering the output
+with <code>void</code> returned values.  If the result is not void, it
+is printed and saved in the value history.
+
+   </body></html>
+

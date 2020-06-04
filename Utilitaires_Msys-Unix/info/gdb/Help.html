@@ -1,0 +1,173 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Help">Help</a>,
+Previous:<a rel="previous" accesskey="p" href="Completion.html#Completion">Completion</a>,
+Up:<a rel="up" accesskey="u" href="Commands.html#Commands">Commands</a>
+<hr><br>
+</div>
+
+<h3 class="section">Getting help</h3>
+
+   <p>You can always ask GDB itself for information on its commands,
+using the command <code>help</code>.
+
+     <dl>
+<dt><code>help</code>
+     <dd><dt><code>h</code>
+     <dd>You can use <code>help</code> (abbreviated <code>h</code>) with no arguments to
+display a short list of named classes of commands:
+
+     <pre class="smallexample">          (gdb) help
+          List of classes of commands:
+          
+          aliases -- Aliases of other commands
+          breakpoints -- Making program stop at certain points
+          data -- Examining data
+          files -- Specifying and examining files
+          internals -- Maintenance commands
+          obscure -- Obscure features
+          running -- Running the program
+          stack -- Examining the stack
+          status -- Status inquiries
+          support -- Support facilities
+          tracepoints -- Tracing of program execution without<br>
+                         stopping the program
+          user-defined -- User-defined commands
+          
+          Type "help" followed by a class name for a list of
+          commands in that class.
+          Type "help" followed by command name for full
+          documentation.
+          Command name abbreviations are allowed if unambiguous.
+          (gdb)
+          </pre>
+
+     <br><dt><code>help </code><var>class</var><code></code>
+     <dd>Using one of the general help classes as an argument, you can get a
+list of the individual commands in that class.  For example, here is the
+help display for the class <code>status</code>:
+
+     <pre class="smallexample">          (gdb) help status
+          Status inquiries.
+          
+          List of commands:
+          
+          info -- Generic command for showing things
+           about the program being debugged
+          show -- Generic command for showing things
+           about the debugger
+          
+          Type "help" followed by command name for full
+          documentation.
+          Command name abbreviations are allowed if unambiguous.
+          (gdb)
+          </pre>
+
+     <br><dt><code>help </code><var>command</var><code></code>
+     <dd>With a command name as <code>help</code> argument, GDB displays a
+short paragraph on how to use that command.
+
+     <br><dt><code>apropos </code><var>args</var><code></code>
+     <dd>The <code>apropos </code><var>args</var><code></code> command searches through all of the GDB
+commands, and their documentation, for the regular expression specified in
+<var>args</var>. It prints out all matches found. For example:
+
+     <pre class="smallexample">          apropos reload
+          </pre>
+
+     <p>results in:
+
+     <pre class="smallexample">          set symbol-reloading -- Set dynamic symbol table reloading
+                                           multiple times in one run
+          show symbol-reloading -- Show dynamic symbol table reloading
+                                           multiple times in one run
+          </pre>
+
+     <br><dt><code>complete </code><var>args</var><code></code>
+     <dd>The <code>complete </code><var>args</var><code></code> command lists all the possible completions
+for the beginning of a command.  Use <var>args</var> to specify the beginning of the
+command you want completed.  For example:
+
+     <pre class="smallexample">          complete i
+          </pre>
+
+     <p>results in:
+
+     <pre class="smallexample">          if
+          ignore
+          info
+          inspect
+          </pre>
+
+     <p>This is intended for use by <small>GNU</small> Emacs. 
+</dl>
+
+   <p>In addition to <code>help</code>, you can use the GDB commands <code>info</code>
+and <code>show</code> to inquire about the state of your program, or the state
+of GDB itself.  Each command supports many topics of inquiry; this
+manual introduces each of them in the appropriate context.  The listings
+under <code>info</code> and under <code>show</code> in the Index point to
+all the sub-commands.  See <a href="Index.html#Index">Index</a>.
+
+     <dl>
+<dt><code>info</code>
+     <dd>This command (abbreviated <code>i</code>) is for describing the state of your
+program.  For example, you can list the arguments given to your program
+with <code>info args</code>, list the registers currently in use with <code>info
+registers</code>, or list the breakpoints you have set with <code>info breakpoints</code>. 
+You can get a complete list of the <code>info</code> sub-commands with
+<code>help&nbsp;info</code>.
+
+     <br><dt><code>set</code>
+     <dd>You can assign the result of an expression to an environment variable with
+<code>set</code>.  For example, you can set the GDB prompt to a $-sign with
+<code>set prompt $</code>.
+
+     <br><dt><code>show</code>
+     <dd>In contrast to <code>info</code>, <code>show</code> is for describing the state of
+GDB itself. 
+You can change most of the things you can <code>show</code>, by using the
+related command <code>set</code>; for example, you can control what number
+system is used for displays with <code>set radix</code>, or simply inquire
+which is currently in use with <code>show radix</code>.
+
+     <p>To display all the settable parameters and their current
+values, you can use <code>show</code> with no arguments; you may also use
+<code>info set</code>.  Both commands produce the same display. 
+</dl>
+
+   <p>Here are three miscellaneous <code>show</code> subcommands, all of which are
+exceptional in lacking corresponding <code>set</code> commands:
+
+     <dl>
+<dt><code>show version</code>
+     <dd>Show what version of GDB is running.  You should include this
+information in GDB bug-reports.  If multiple versions of
+GDB are in use at your site, you may need to determine which
+version of GDB you are running; as GDB evolves, new
+commands are introduced, and old ones may wither away.  Also, many
+system vendors ship variant versions of GDB, and there are
+variant versions of GDB in <small>GNU</small>/Linux distributions as well. 
+The version number is the same as the one announced when you start
+GDB.
+
+     <br><dt><code>show copying</code>
+     <dd>Display information about permission for copying GDB.
+
+     <br><dt><code>show warranty</code>
+     <dd>Display the <small>GNU</small> "NO WARRANTY" statement, or a warranty,
+if your version of GDB comes with one.
+
+   </dl>
+
+   </body></html>
+

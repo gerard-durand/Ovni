@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Conditional%20Init%20Constructs">Conditional Init Constructs</a>,
+Next:<a rel="next" accesskey="n" href="Sample-Init-File.html#Sample%20Init%20File">Sample Init File</a>,
+Previous:<a rel="previous" accesskey="p" href="Readline-Init-File-Syntax.html#Readline%20Init%20File%20Syntax">Readline Init File Syntax</a>,
+Up:<a rel="up" accesskey="u" href="Readline-Init-File.html#Readline%20Init%20File">Readline Init File</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Conditional Init Constructs</h4>
+
+   <p>Readline implements a facility similar in spirit to the conditional
+compilation features of the C preprocessor which allows key
+bindings and variable settings to be performed as the result
+of tests.  There are four parser directives used.
+
+     <dl>
+<dt><code>$if</code>
+     <dd>The <code>$if</code> construct allows bindings to be made based on the
+editing mode, the terminal being used, or the application using
+Readline.  The text of the test extends to the end of the line;
+no characters are required to isolate it.
+
+          <dl>
+<dt><code>mode</code>
+          <dd>The <code>mode=</code> form of the <code>$if</code> directive is used to test
+whether Readline is in <code>emacs</code> or <code>vi</code> mode. 
+This may be used in conjunction
+with the <code>set keymap</code> command, for instance, to set bindings in
+the <code>emacs-standard</code> and <code>emacs-ctlx</code> keymaps only if
+Readline is starting out in <code>emacs</code> mode.
+
+          <br><dt><code>term</code>
+          <dd>The <code>term=</code> form may be used to include terminal-specific
+key bindings, perhaps to bind the key sequences output by the
+terminal's function keys.  The word on the right side of the
+<code>=</code> is tested against both the full name of the terminal and
+the portion of the terminal name before the first <code>-</code>.  This
+allows <code>sun</code> to match both <code>sun</code> and <code>sun-cmd</code>,
+for instance.
+
+          <br><dt><code>application</code>
+          <dd>The <var>application</var> construct is used to include
+application-specific settings.  Each program using the Readline
+library sets the <var>application name</var>, and you can test for
+a particular value. 
+This could be used to bind key sequences to functions useful for
+a specific program.  For instance, the following command adds a
+key sequence that quotes the current or previous word in Bash:
+          <pre class="example">               $if Bash
+               # Quote the current or previous word
+               "\C-xq": "\eb\"\ef\""
+               $endif
+               </pre>
+          </dl>
+
+     <br><dt><code>$endif</code>
+     <dd>This command, as seen in the previous example, terminates an
+<code>$if</code> command.
+
+     <br><dt><code>$else</code>
+     <dd>Commands in this branch of the <code>$if</code> directive are executed if
+the test fails.
+
+     <br><dt><code>$include</code>
+     <dd>This directive takes a single filename as an argument and reads commands
+and bindings from that file. 
+For example, the following directive reads from <code>/etc/inputrc</code>:
+     <pre class="example">          $include /etc/inputrc
+          </pre>
+     </dl>
+
+   </body></html>
+

@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Common%20Blocks">Common Blocks</a>,
+Next:<a rel="next" accesskey="n" href="Statics.html#Statics">Statics</a>,
+Previous:<a rel="previous" accesskey="p" href="Register-Variables.html#Register%20Variables">Register Variables</a>,
+Up:<a rel="up" accesskey="u" href="Variables.html#Variables">Variables</a>
+<hr><br>
+</div>
+
+<h3 class="section">Common Blocks</h3>
+
+   <p>A common block is a statically allocated section of memory which can be
+referred to by several source files.  It may contain several variables. 
+I believe Fortran is the only language with this feature.
+
+   <p>A <code>N_BCOMM</code> stab begins a common block and an <code>N_ECOMM</code> stab
+ends it.  The only field that is significant in these two stabs is the
+string, which names a normal (non-debugging) symbol that gives the
+address of the common block.  According to IBM documentation, only the
+<code>N_BCOMM</code> has the name of the common block (even though their
+compiler actually puts it both places).
+
+   <p>The stabs for the members of the common block are between the
+<code>N_BCOMM</code> and the <code>N_ECOMM</code>; the value of each stab is the
+offset within the common block of that variable.  IBM uses the
+<code>C_ECOML</code> stab type, and there is a corresponding <code>N_ECOML</code>
+stab type, but Sun's Fortran compiler uses <code>N_GSYM</code> instead.  The
+variables within a common block use the <code>V</code> symbol descriptor (I
+believe this is true of all Fortran variables).  Other stabs (at least
+type declarations using <code>C_DECL</code>) can also be between the
+<code>N_BCOMM</code> and the <code>N_ECOMM</code>.
+
+   </body></html>
+

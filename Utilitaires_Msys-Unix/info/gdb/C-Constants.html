@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="C%20Constants">C Constants</a>,
+Next:<a rel="next" accesskey="n" href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C plus plus expressions</a>,
+Previous:<a rel="previous" accesskey="p" href="C-Operators.html#C%20Operators">C Operators</a>,
+Up:<a rel="up" accesskey="u" href="C.html#C">C</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">C and C<tt>++</tt> constants</h5>
+
+   GDB allows you to express the constants of C and C<tt>++</tt> in the
+following ways:
+
+     <ul>
+<li>Integer constants are a sequence of digits.  Octal constants are
+specified by a leading <code>0</code> (i.e. zero), and hexadecimal constants
+by a leading <code>0x</code> or <code>0X</code>.  Constants may also end with a letter
+<code>l</code>, specifying that the constant should be treated as a
+<code>long</code> value.
+
+     <li>Floating point constants are a sequence of digits, followed by a decimal
+point, followed by a sequence of digits, and optionally followed by an
+exponent.  An exponent is of the form:
+<code>e</code>[[<code>+</code>]|<code>-</code>]<code></code><var>nnn</var><code></code>, where <var>nnn</var> is another
+sequence of digits.  The <code>+</code> is optional for positive exponents. 
+A floating-point constant may also end with a letter <code>f</code> or
+<code>F</code>, specifying that the constant should be treated as being of
+the <code>float</code> (as opposed to the default <code>double</code>) type; or with
+a letter <code>l</code> or <code>L</code>, which specifies a <code>long double</code>
+constant.
+
+     <li>Enumerated constants consist of enumerated identifiers, or their
+integral equivalents.
+
+     <li>Character constants are a single character surrounded by single quotes
+(<code>'</code>), or a number--the ordinal value of the corresponding character
+(usually its <small>ASCII</small> value).  Within quotes, the single character may
+be represented by a letter or by <dfn>escape sequences</dfn>, which are of
+the form <code>\</code><var>nnn</var><code></code>, where <var>nnn</var> is the octal representation
+of the character's ordinal value; or of the form <code>\</code><var>x</var><code></code>, where
+<code></code><var>x</var><code></code> is a predefined special character--for example,
+<code>\n</code> for newline.
+
+     <li>String constants are a sequence of character constants surrounded by
+double quotes (<code>"</code>).  Any valid character constant (as described
+above) may appear.  Double quotes within the string must be preceded by
+a backslash, so for instance <code>"a\"b'c"</code> is a string of five
+characters.
+
+     <li>Pointer constants are an integral value.  You can also write pointers
+to constants using the C operator <code>&amp;</code>.
+
+     <li>Array constants are comma-separated lists surrounded by braces <code>{</code>
+and <code>}</code>; for example, <code>{1,2,3}</code> is a three-element array of
+integers, <code>{{1,2}, {3,4}, {5,6}}</code> is a three-by-two array,
+and <code>{&amp;"hi", &amp;"there", &amp;"fred"}</code> is a three-element array of pointers. 
+</ul>
+
+<ul class="menu">
+<li><a accesskey="1" href="C-plus-plus-expressions.html#C%20plus%20plus%20expressions">C plus plus expressions</a>: 
+<li><a accesskey="2" href="C-Defaults.html#C%20Defaults">C Defaults</a>: 
+<li><a accesskey="3" href="C-Checks.html#C%20Checks">C Checks</a>:
+
+<p>
+</p><li><a accesskey="4" href="Debugging-C.html#Debugging%20C">Debugging C</a>: 
+</ul>
+
+   </body></html>
+

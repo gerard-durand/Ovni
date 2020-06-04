@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Readline%20Arguments">Readline Arguments</a>,
+Next:<a rel="next" accesskey="n" href="Searching.html#Searching">Searching</a>,
+Previous:<a rel="previous" accesskey="p" href="Readline-Killing-Commands.html#Readline%20Killing%20Commands">Readline Killing Commands</a>,
+Up:<a rel="up" accesskey="u" href="Readline-Interaction.html#Readline%20Interaction">Readline Interaction</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Readline Arguments</h4>
+
+   <p>You can pass numeric arguments to Readline commands.  Sometimes the
+argument acts as a repeat count, other times it is the <i>sign</i> of the
+argument that is significant.  If you pass a negative argument to a
+command which normally acts in a forward direction, that command will
+act in a backward direction.  For example, to kill text back to the
+start of the line, you might type <code>M-- C-k</code>.
+
+   <p>The general way to pass numeric arguments to a command is to type meta
+digits before the command.  If the first `digit' typed is a minus
+sign (<code>-</code>), then the sign of the argument will be negative.  Once
+you have typed one meta digit to get the argument started, you can type
+the remainder of the digits, and then the command.  For example, to give
+the <kbd>C-d</kbd> command an argument of 10, you could type <code>M-1 0 C-d</code>,
+which will delete the next ten characters on the input line.
+
+   </body></html>
+

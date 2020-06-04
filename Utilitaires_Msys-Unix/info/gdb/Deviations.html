@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Deviations">Deviations</a>,
+Next:<a rel="next" accesskey="n" href="M2-Checks.html#M2%20Checks">M2 Checks</a>,
+Previous:<a rel="previous" accesskey="p" href="M2-Defaults.html#M2%20Defaults">M2 Defaults</a>,
+Up:<a rel="up" accesskey="u" href="Modula-2.html#Modula-2">Modula-2</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Deviations from standard Modula-2</h5>
+
+   <p>A few changes have been made to make Modula-2 programs easier to debug. 
+This is done primarily via loosening its type strictness:
+
+     <ul>
+<li>Unlike in standard Modula-2, pointer constants can be formed by
+integers.  This allows you to modify pointer variables during
+debugging.  (In standard Modula-2, the actual address contained in a
+pointer variable is hidden from you; it can only be modified
+through direct assignment to another pointer variable or expression that
+returned a pointer.)
+
+     <li>C escape sequences can be used in strings and characters to represent
+non-printable characters.  GDB prints out strings with these
+escape sequences embedded.  Single non-printable characters are
+printed using the <code>CHR(</code><var>nnn</var><code>)</code> format.
+
+     <li>The assignment operator (<code>:=</code>) returns the value of its right-hand
+argument.
+
+     <li>All built-in procedures both modify <em>and</em> return their argument. 
+</ul>
+
+   </body></html>
+

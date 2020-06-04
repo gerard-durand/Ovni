@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Commands%20For%20History">Commands For History</a>,
+Next:<a rel="next" accesskey="n" href="Commands-For-Text.html#Commands%20For%20Text">Commands For Text</a>,
+Previous:<a rel="previous" accesskey="p" href="Commands-For-Moving.html#Commands%20For%20Moving">Commands For Moving</a>,
+Up:<a rel="up" accesskey="u" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Commands For Manipulating The History</h4>
+
+     <dl>
+<dt><code>accept-line (Newline or Return)</code>
+     <dd>Accept the line regardless of where the cursor is. 
+If this line is
+non-empty, it may be added to the history list for future recall with
+<code>add_history()</code>. 
+If this line is a modified history line, the history line is restored
+to its original state.
+
+     <br><dt><code>previous-history (C-p)</code>
+     <dd>Move `back' through the history list, fetching the previous command.
+
+     <br><dt><code>next-history (C-n)</code>
+     <dd>Move `forward' through the history list, fetching the next command.
+
+     <br><dt><code>beginning-of-history (M-&lt;)</code>
+     <dd>Move to the first line in the history.
+
+     <br><dt><code>end-of-history (M-&gt;)</code>
+     <dd>Move to the end of the input history, i.e., the line currently
+being entered.
+
+     <br><dt><code>reverse-search-history (C-r)</code>
+     <dd>Search backward starting at the current line and moving `up' through
+the history as necessary.  This is an incremental search.
+
+     <br><dt><code>forward-search-history (C-s)</code>
+     <dd>Search forward starting at the current line and moving `down' through
+the the history as necessary.  This is an incremental search.
+
+     <br><dt><code>non-incremental-reverse-search-history (M-p)</code>
+     <dd>Search backward starting at the current line and moving `up'
+through the history as necessary using a non-incremental search
+for a string supplied by the user.
+
+     <br><dt><code>non-incremental-forward-search-history (M-n)</code>
+     <dd>Search forward starting at the current line and moving `down'
+through the the history as necessary using a non-incremental search
+for a string supplied by the user.
+
+     <br><dt><code>history-search-forward ()</code>
+     <dd>Search forward through the history for the string of characters
+between the start of the current line and the point. 
+This is a non-incremental search. 
+By default, this command is unbound.
+
+     <br><dt><code>history-search-backward ()</code>
+     <dd>Search backward through the history for the string of characters
+between the start of the current line and the point.  This
+is a non-incremental search.  By default, this command is unbound.
+
+     <br><dt><code>yank-nth-arg (M-C-y)</code>
+     <dd>Insert the first argument to the previous command (usually
+the second word on the previous line) at point. 
+With an argument <var>n</var>,
+insert the <var>n</var>th word from the previous command (the words
+in the previous command begin with word 0).  A negative argument
+inserts the <var>n</var>th word from the end of the previous command.
+
+     <br><dt><code>yank-last-arg (M-. or M-_)</code>
+     <dd>Insert last argument to the previous command (the last word of the
+previous history entry).  With an
+argument, behave exactly like <code>yank-nth-arg</code>. 
+Successive calls to <code>yank-last-arg</code> move back through the history
+list, inserting the last argument of each line in turn.
+
+   </dl>
+
+   </body></html>
+

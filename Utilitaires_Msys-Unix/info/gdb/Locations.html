@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Locations">Locations</a>,
+Next:<a rel="next" accesskey="n" href="Values-and-their-Operations.html#Values%20and%20their%20Operations">Values and their Operations</a>,
+Previous:<a rel="previous" accesskey="p" href="How-modes-are-displayed.html#How%20modes%20are%20displayed">How modes are displayed</a>,
+Up:<a rel="up" accesskey="u" href="Chill.html#Chill">Chill</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Locations and their accesses</h5>
+
+   <p>A location in Chill is an object which can contain values.
+
+   <p>A value of a location is generally accessed by the (declared) name of
+the location.  The output conforms to the specification of values in
+Chill programs.  How values are specified
+is the topic of the next section, <a href="Values-and-their-Operations.html#Values%20and%20their%20Operations">Values and their Operations</a>.
+
+   <p>The pseudo-location <code>RESULT</code> (or <code>result</code>) can be used to
+display or change the result of a currently-active procedure:
+
+<pre class="smallexample">     set result := EXPR
+     </pre>
+
+<p>This does the same as the Chill action <code>RESULT EXPR</code> (which
+is not available in GDB).
+
+   <p>Values of reference mode locations are printed by <code>PTR(&lt;hex
+value&gt;)</code> in case of a free reference mode, and by <code>(REF &lt;reference
+mode&gt;) (&lt;hex-value&gt;)</code> in case of a bound reference.  <code>&lt;hex value&gt;</code>
+represents the address where the reference points to.  To access the
+value of the location referenced by the pointer, use the dereference
+operator <code>-&gt;</code>.
+
+   <p>Values of procedure mode locations are displayed by
+<pre class="smallexample">     <code>{ PROC
+     (&lt;argument modes&gt; ) &lt;return mode&gt; } &lt;address&gt; &lt;name of procedure
+     location&gt;</code>
+     </pre>
+   <code>&lt;argument modes&gt;</code> is a list of modes according to the parameter
+specification of the procedure and <code>&lt;address&gt;</code> shows the address of
+the entry point.
+
+   <p>Substructures of string mode-, array mode- or structure mode-values
+(e.g. array slices, fields of structure locations) are accessed using
+certain operations which are described in the next section, <a href="Values-and-their-Operations.html#Values%20and%20their%20Operations">Values and their Operations</a>.
+
+   <p>A location value may be interpreted as having a different mode using the
+location conversion.  This mode conversion is written as <code>&lt;mode
+name&gt;(&lt;location&gt;)</code>.  The user has to consider that the sizes of the modes
+have to be equal otherwise an error occurs.  Furthermore, no range
+checking of the location against the destination mode is performed, and
+therefore the result can be quite confusing.
+
+<pre class="smallexample">     (gdb) print int (s(3 up 4)) XXX TO be filled in !! XXX
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Memory">Memory</a>,
+Next:<a rel="next" accesskey="n" href="Auto-Display.html#Auto%20Display">Auto Display</a>,
+Previous:<a rel="previous" accesskey="p" href="Output-Formats.html#Output%20Formats">Output Formats</a>,
+Up:<a rel="up" accesskey="u" href="Data.html#Data">Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">Examining memory</h3>
+
+   <p>You can use the command <code>x</code> (for "examine") to examine memory in
+any of several formats, independently of your program's data types.
+
+     <dl>
+<dt><code>x/</code><var>nfu</var><code> </code><var>addr</var><code></code>
+     <dd><dt><code>x </code><var>addr</var><code></code>
+     <dd><dt><code>x</code>
+     <dd>Use the <code>x</code> command to examine memory. 
+</dl>
+
+   <p><var>n</var>, <var>f</var>, and <var>u</var> are all optional parameters that specify how
+much memory to display and how to format it; <var>addr</var> is an
+expression giving the address where you want to start displaying memory. 
+If you use defaults for <var>nfu</var>, you need not type the slash <code>/</code>. 
+Several commands set convenient defaults for <var>addr</var>.
+
+     <dl>
+<dt><var>n</var>, the repeat count
+     <dd>The repeat count is a decimal integer; the default is 1.  It specifies
+how much memory (counting by units <var>u</var>) to display.
+
+     <br><dt><var>f</var>, the display format
+     <dd>The display format is one of the formats used by <code>print</code>,
+<code>s</code> (null-terminated string), or <code>i</code> (machine instruction). 
+The default is <code>x</code> (hexadecimal) initially. 
+The default changes each time you use either <code>x</code> or <code>print</code>.
+
+     <br><dt><var>u</var>, the unit size
+     <dd>The unit size is any of
+
+          <dl>
+<dt><code>b</code>
+          <dd>Bytes. 
+<br><dt><code>h</code>
+          <dd>Halfwords (two bytes). 
+<br><dt><code>w</code>
+          <dd>Words (four bytes).  This is the initial default. 
+<br><dt><code>g</code>
+          <dd>Giant words (eight bytes). 
+</dl>
+
+     <p>Each time you specify a unit size with <code>x</code>, that size becomes the
+default unit the next time you use <code>x</code>.  (For the <code>s</code> and
+<code>i</code> formats, the unit size is ignored and is normally not written.)
+
+     <br><dt><var>addr</var>, starting display address
+     <dd><var>addr</var> is the address where you want GDB to begin displaying
+memory.  The expression need not have a pointer value (though it may);
+it is always interpreted as an integer address of a byte of memory. 
+See <a href="Expressions.html#Expressions">Expressions</a>, for more information on expressions.  The default for
+<var>addr</var> is usually just after the last address examined--but several
+other commands also set the default address: <code>info breakpoints</code> (to
+the address of the last breakpoint listed), <code>info line</code> (to the
+starting address of a line), and <code>print</code> (if you use it to display
+a value from memory). 
+</dl>
+
+   <p>For example, <code>x/3uh 0x54320</code> is a request to display three halfwords
+(<code>h</code>) of memory, formatted as unsigned decimal integers (<code>u</code>),
+starting at address <code>0x54320</code>.  <code>x/4xw $sp</code> prints the four
+words (<code>w</code>) of memory above the stack pointer (here, <code>$sp</code>;
+see <a href="Registers.html#Registers">Registers</a>) in hexadecimal (<code>x</code>).
+
+   <p>Since the letters indicating unit sizes are all distinct from the
+letters specifying output formats, you do not have to remember whether
+unit size or format comes first; either order works.  The output
+specifications <code>4xw</code> and <code>4wx</code> mean exactly the same thing. 
+(However, the count <var>n</var> must come first; <code>wx4</code> does not work.)
+
+   <p>Even though the unit size <var>u</var> is ignored for the formats <code>s</code>
+and <code>i</code>, you might still want to use a count <var>n</var>; for example,
+<code>3i</code> specifies that you want to see three machine instructions,
+including any operands.  The command <code>disassemble</code> gives an
+alternative way of inspecting machine instructions; see <a href="Machine-Code.html#Machine%20Code">Source and machine code</a>.
+
+   <p>All the defaults for the arguments to <code>x</code> are designed to make it
+easy to continue scanning memory with minimal specifications each time
+you use <code>x</code>.  For example, after you have inspected three machine
+instructions with <code>x/3i </code><var>addr</var><code></code>, you can inspect the next seven
+with just <code>x/7</code>.  If you use &lt;RET&gt; to repeat the <code>x</code> command,
+the repeat count <var>n</var> is used again; the other arguments default as
+for successive uses of <code>x</code>.
+
+   <p>The addresses and contents printed by the <code>x</code> command are not saved
+in the value history because there is often too much of them and they
+would get in the way.  Instead, GDB makes these values available for
+subsequent use in expressions as values of the convenience variables
+<code>$_</code> and <code>$__</code>.  After an <code>x</code> command, the last address
+examined is available for use in expressions in the convenience variable
+<code>$_</code>.  The contents of that address, as examined, are available in
+the convenience variable <code>$__</code>.
+
+   <p>If the <code>x</code> command has a repeat count, the address and contents saved
+are from the last memory unit printed; this is not the same as the last
+address printed if several units were printed on the last line of output.
+
+   </body></html>
+

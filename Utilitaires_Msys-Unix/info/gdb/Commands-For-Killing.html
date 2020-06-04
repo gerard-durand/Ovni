@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Commands%20For%20Killing">Commands For Killing</a>,
+Next:<a rel="next" accesskey="n" href="Numeric-Arguments.html#Numeric%20Arguments">Numeric Arguments</a>,
+Previous:<a rel="previous" accesskey="p" href="Commands-For-Text.html#Commands%20For%20Text">Commands For Text</a>,
+Up:<a rel="up" accesskey="u" href="Bindable-Readline-Commands.html#Bindable%20Readline%20Commands">Bindable Readline Commands</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Killing And Yanking</h4>
+
+     <dl>
+
+     <br><dt><code>kill-line (C-k)</code>
+     <dd>Kill the text from point to the end of the line.
+
+     <br><dt><code>backward-kill-line (C-x Rubout)</code>
+     <dd>Kill backward to the beginning of the line.
+
+     <br><dt><code>unix-line-discard (C-u)</code>
+     <dd>Kill backward from the cursor to the beginning of the current line.
+
+     <br><dt><code>kill-whole-line ()</code>
+     <dd>Kill all characters on the current line, no matter where point is. 
+By default, this is unbound.
+
+     <br><dt><code>kill-word (M-d)</code>
+     <dd>Kill from point to the end of the current word, or if between
+words, to the end of the next word. 
+Word boundaries are the same as <code>forward-word</code>.
+
+     <br><dt><code>backward-kill-word (M-&lt;DEL&gt;)</code>
+     <dd>Kill the word behind point. 
+Word boundaries are the same as <code>backward-word</code>.
+
+     <br><dt><code>unix-word-rubout (C-w)</code>
+     <dd>Kill the word behind point, using white space as a word boundary. 
+The killed text is saved on the kill-ring.
+
+     <br><dt><code>delete-horizontal-space ()</code>
+     <dd>Delete all spaces and tabs around point.  By default, this is unbound.
+
+     <br><dt><code>kill-region ()</code>
+     <dd>Kill the text in the current region. 
+By default, this command is unbound.
+
+     <br><dt><code>copy-region-as-kill ()</code>
+     <dd>Copy the text in the region to the kill buffer, so it can be yanked
+right away.  By default, this command is unbound.
+
+     <br><dt><code>copy-backward-word ()</code>
+     <dd>Copy the word before point to the kill buffer. 
+The word boundaries are the same as <code>backward-word</code>. 
+By default, this command is unbound.
+
+     <br><dt><code>copy-forward-word ()</code>
+     <dd>Copy the word following point to the kill buffer. 
+The word boundaries are the same as <code>forward-word</code>. 
+By default, this command is unbound.
+
+     <br><dt><code>yank (C-y)</code>
+     <dd>Yank the top of the kill ring into the buffer at point.
+
+     <br><dt><code>yank-pop (M-y)</code>
+     <dd>Rotate the kill-ring, and yank the new top.  You can only do this if
+the prior command is <code>yank</code> or <code>yank-pop</code>. 
+</dl>
+
+   </body></html>
+

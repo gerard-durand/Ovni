@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Symbol%20Descriptors">Symbol Descriptors</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">Table of Symbol Descriptors</h2>
+
+   <p>The symbol descriptor is the character which follows the colon in many
+stabs, and which tells what kind of stab it is.  See <a href="String-Field.html#String%20Field">String Field</a>,
+for more information about their use.
+
+     <dl>
+<dt><code></code><var>digit</var><code></code>
+     <dd><dt><code>(</code>
+     <dd><dt><code>-</code>
+     <dd>Variable on the stack; see <a href="Stack-Variables.html#Stack%20Variables">Stack Variables</a>.
+
+     <br><dt><code>:</code>
+     <dd>C++ nested symbol; see See <a href="Nested-Symbols.html#Nested%20Symbols">Nested Symbols</a>.
+
+     <br><dt><code>a</code>
+     <dd>Parameter passed by reference in register; see <a href="Reference-Parameters.html#Reference%20Parameters">Reference Parameters</a>.
+
+     <br><dt><code>b</code>
+     <dd>Based variable; see <a href="Based-Variables.html#Based%20Variables">Based Variables</a>.
+
+     <br><dt><code>c</code>
+     <dd>Constant; see <a href="Constants.html#Constants">Constants</a>.
+
+     <br><dt><code>C</code>
+     <dd>Conformant array bound (Pascal, maybe other languages); <a href="Conformant-Arrays.html#Conformant%20Arrays">Conformant Arrays</a>.  Name of a caught exception (GNU C++).  These can be
+distinguished because the latter uses <code>N_CATCH</code> and the former uses
+another symbol type.
+
+     <br><dt><code>d</code>
+     <dd>Floating point register variable; see <a href="Register-Variables.html#Register%20Variables">Register Variables</a>.
+
+     <br><dt><code>D</code>
+     <dd>Parameter in floating point register; see <a href="Register-Parameters.html#Register%20Parameters">Register Parameters</a>.
+
+     <br><dt><code>f</code>
+     <dd>File scope function; see <a href="Procedures.html#Procedures">Procedures</a>.
+
+     <br><dt><code>F</code>
+     <dd>Global function; see <a href="Procedures.html#Procedures">Procedures</a>.
+
+     <br><dt><code>G</code>
+     <dd>Global variable; see <a href="Global-Variables.html#Global%20Variables">Global Variables</a>.
+
+     <br><dt><code>i</code>
+     <dd>See <a href="Register-Parameters.html#Register%20Parameters">Register Parameters</a>.
+
+     <br><dt><code>I</code>
+     <dd>Internal (nested) procedure; see <a href="Nested-Procedures.html#Nested%20Procedures">Nested Procedures</a>.
+
+     <br><dt><code>J</code>
+     <dd>Internal (nested) function; see <a href="Nested-Procedures.html#Nested%20Procedures">Nested Procedures</a>.
+
+     <br><dt><code>L</code>
+     <dd>Label name (documented by AIX, no further information known).
+
+     <br><dt><code>m</code>
+     <dd>Module; see <a href="Procedures.html#Procedures">Procedures</a>.
+
+     <br><dt><code>p</code>
+     <dd>Argument list parameter; see <a href="Parameters.html#Parameters">Parameters</a>.
+
+     <br><dt><code>pP</code>
+     <dd>See <a href="Parameters.html#Parameters">Parameters</a>.
+
+     <br><dt><code>pF</code>
+     <dd>Fortran Function parameter; see <a href="Parameters.html#Parameters">Parameters</a>.
+
+     <br><dt><code>P</code>
+     <dd>Unfortunately, three separate meanings have been independently invented
+for this symbol descriptor.  At least the GNU and Sun uses can be
+distinguished by the symbol type.  Global Procedure (AIX) (symbol type
+used unknown); see <a href="Procedures.html#Procedures">Procedures</a>.  Register parameter (GNU) (symbol
+type <code>N_PSYM</code>); see <a href="Parameters.html#Parameters">Parameters</a>.  Prototype of function
+referenced by this file (Sun <code>acc</code>) (symbol type <code>N_FUN</code>).
+
+     <br><dt><code>Q</code>
+     <dd>Static Procedure; see <a href="Procedures.html#Procedures">Procedures</a>.
+
+     <br><dt><code>R</code>
+     <dd>Register parameter; see <a href="Register-Parameters.html#Register%20Parameters">Register Parameters</a>.
+
+     <br><dt><code>r</code>
+     <dd>Register variable; see <a href="Register-Variables.html#Register%20Variables">Register Variables</a>.
+
+     <br><dt><code>S</code>
+     <dd>File scope variable; see <a href="Statics.html#Statics">Statics</a>.
+
+     <br><dt><code>s</code>
+     <dd>Local variable (OS9000).
+
+     <br><dt><code>t</code>
+     <dd>Type name; see <a href="Typedefs.html#Typedefs">Typedefs</a>.
+
+     <br><dt><code>T</code>
+     <dd>Enumeration, structure, or union tag; see <a href="Typedefs.html#Typedefs">Typedefs</a>.
+
+     <br><dt><code>v</code>
+     <dd>Parameter passed by reference; see <a href="Reference-Parameters.html#Reference%20Parameters">Reference Parameters</a>.
+
+     <br><dt><code>V</code>
+     <dd>Procedure scope static variable; see <a href="Statics.html#Statics">Statics</a>.
+
+     <br><dt><code>x</code>
+     <dd>Conformant array; see <a href="Conformant-Arrays.html#Conformant%20Arrays">Conformant Arrays</a>.
+
+     <br><dt><code>X</code>
+     <dd>Function return variable; see <a href="Parameters.html#Parameters">Parameters</a>. 
+</dl>
+
+   </body></html>
+

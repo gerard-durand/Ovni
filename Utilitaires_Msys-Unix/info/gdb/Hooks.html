@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Hooks">Hooks</a>,
+Next:<a rel="next" accesskey="n" href="Command-Files.html#Command%20Files">Command Files</a>,
+Previous:<a rel="previous" accesskey="p" href="Define.html#Define">Define</a>,
+Up:<a rel="up" accesskey="u" href="Sequences.html#Sequences">Sequences</a>
+<hr><br>
+</div>
+
+<h3 class="section">User-defined command hooks</h3>
+
+   <p>You may define <dfn>hooks</dfn>, which are a special kind of user-defined
+command.  Whenever you run the command <code>foo</code>, if the user-defined
+command <code>hook-foo</code> exists, it is executed (with no arguments)
+before that command.
+
+   <p>A hook may also be defined which is run after the command you executed. 
+Whenever you run the command <code>foo</code>, if the user-defined command
+<code>hookpost-foo</code> exists, it is executed (with no arguments) after
+that command.  Post-execution hooks may exist simultaneously with
+pre-execution hooks, for the same command.
+
+   <p>It is valid for a hook to call the command which it hooks.  If this
+occurs, the hook is not re-executed, thereby avoiding infinte recursion.
+
+   <p>In addition, a pseudo-command, <code>stop</code> exists.  Defining
+(<code>hook-stop</code>) makes the associated commands execute every time
+execution stops in your program: before breakpoint commands are run,
+displays are printed, or the stack frame is printed.
+
+   <p>For example, to ignore <code>SIGALRM</code> signals while
+single-stepping, but treat them normally during normal execution,
+you could define:
+
+<pre class="example">     define hook-stop
+     handle SIGALRM nopass
+     end
+     
+     define hook-run
+     handle SIGALRM pass
+     end
+     
+     define hook-continue
+     handle SIGLARM pass
+     end
+     </pre>
+
+   <p>As a further example, to hook at the begining and end of the <code>echo</code>
+command, and to add extra text to the beginning and end of the message,
+you could define:
+
+<pre class="example">     define hook-echo
+     echo &lt;&lt;&lt;---
+     end
+     
+     define hookpost-echo
+     echo ---&gt;&gt;&gt;\n
+     end
+     
+     (gdb) echo Hello World
+     &lt;&lt;&lt;---Hello World---&gt;&gt;&gt;
+     (gdb)
+     
+     </pre>
+
+   <p>You can define a hook for any single-word command in GDB, but
+not for command aliases; you should define a hook for the basic command
+name, e.g.  <code>backtrace</code> rather than <code>bt</code>. 
+If an error occurs during the execution of your hook, execution of
+GDB commands stops and GDB issues a prompt
+(before the command that you actually typed had a chance to run).
+
+   <p>If you try to define a hook which does not match any known command, you
+get a warning from the <code>define</code> command.
+
+   </body></html>
+

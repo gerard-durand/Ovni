@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Simple%20Examples">GDB/MI Simple Examples</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Output-Syntax.html#GDB%2fMI%20Output%20Syntax">GDB/MI Output Syntax</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI-Command-Syntax.html#GDB%2fMI%20Command%20Syntax">GDB/MI Command Syntax</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Simple Examples of <small>GDB/MI</small> Interaction</h4>
+
+   <p>This subsection presents several simple examples of interaction using
+the <small>GDB/MI</small> interface.  In these examples, <code>-&gt;</code> means that the
+following line is passed to <small>GDB/MI</small> as input, while <code>&lt;-</code> means
+the output received from <small>GDB/MI</small>.
+
+<h5 class="subsubheading">Target Stop</h5>
+
+   <p>Here's an example of stopping the inferior process:
+
+<pre class="example">     -&gt; -stop
+     &lt;- (gdb)
+     </pre>
+
+<p>and later:
+
+<pre class="example">     &lt;- *stop,reason="stop",address="0x123",source="a.c:123"
+     &lt;- (gdb)
+     </pre>
+
+<h5 class="subsubheading">Simple CLI Command</h5>
+
+   <p>Here's an example of a simple CLI command being passed through
+<small>GDB/MI</small> and on to the CLI.
+
+<pre class="example">     -&gt; print 1+2
+     &lt;- ~3\n
+     &lt;- (gdb)
+     </pre>
+
+<h5 class="subsubheading">Command With Side Effects</h5>
+
+<pre class="example">     -&gt; -symbol-file xyz.exe
+     &lt;- *breakpoint,nr="3",address="0x123",source="a.c:123"
+     &lt;- (gdb)
+     </pre>
+
+<h5 class="subsubheading">A Bad Command</h5>
+
+   <p>Here's what happens if you pass a non-existent command:
+
+<pre class="example">     -&gt; -rubbish
+     &lt;- error,"Rubbish not found"
+     &lt;- (gdb)
+     </pre>
+
+   </body></html>
+

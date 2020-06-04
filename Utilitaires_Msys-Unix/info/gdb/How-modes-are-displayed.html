@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="How%20modes%20are%20displayed">How modes are displayed</a>,
+Next:<a rel="next" accesskey="n" href="Locations.html#Locations">Locations</a>,
+Up:<a rel="up" accesskey="u" href="Chill.html#Chill">Chill</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">How modes are displayed</h5>
+
+   <p>The Chill Datatype- (Mode) support of GDB is directly related
+with the functionality of the <small>GNU</small> Chill compiler, and therefore deviates
+slightly from the standard specification of the Chill language. The
+provided modes are:
+
+     <dl>
+<dt><code></code><em>Discrete modes:</em><code></code>
+     <dd>
+          <ul>
+<li><em>Integer Modes</em> which are predefined by <code>BYTE, UBYTE, INT,
+UINT, LONG, ULONG</code>,
+<li><em>Boolean Mode</em> which is predefined by <code>BOOL</code>,
+<li><em>Character Mode</em> which is predefined by <code>CHAR</code>,
+<li><em>Set Mode</em> which is displayed by the keyword <code>SET</code>.
+          <pre class="smallexample">               (gdb) ptype x
+               type = SET (karli = 10, susi = 20, fritzi = 100)
+               </pre>
+          If the type is an unnumbered set the set element values are omitted. 
+<li><em>Range Mode</em> which is displayed by
+          <pre class="smallexample">               <code>type = &lt;basemode&gt;(&lt;lower bound&gt; : &lt;upper bound&gt;)</code>
+               </pre>
+          where <code>&lt;lower bound&gt;, &lt;upper bound&gt;</code> can be of any discrete literal
+expression (e.g. set element names). 
+</ul>
+
+     <br><dt><code></code><em>Powerset Mode:</em><code></code>
+     <dd>A Powerset Mode is displayed by the keyword <code>POWERSET</code> followed by
+the member mode of the powerset.  The member mode can be any discrete mode.
+     <pre class="smallexample">          (gdb) ptype x
+          type = POWERSET SET (egon, hugo, otto)
+          </pre>
+
+     <br><dt><code></code><em>Reference Modes:</em><code></code>
+     <dd>
+          <ul>
+<li><em>Bound Reference Mode</em> which is displayed by the keyword <code>REF</code>
+followed by the mode name to which the reference is bound. 
+<li><em>Free Reference Mode</em> which is displayed by the keyword <code>PTR</code>. 
+</ul>
+
+     <br><dt><code></code><em>Procedure mode</em><code></code>
+     <dd>The procedure mode is displayed by <code>type = PROC(&lt;parameter list&gt;)
+&lt;return mode&gt; EXCEPTIONS (&lt;exception list&gt;)</code>. The <code>&lt;parameter
+list&gt;</code> is a list of the parameter modes.  <code>&lt;return mode&gt;</code> indicates
+the mode of the result of the procedure if any.  The exceptionlist lists
+all possible exceptions which can be raised by the procedure.
+
+     <br><dt><code></code><em>Synchronization Modes:</em><code></code>
+     <dd>
+          <ul>
+<li><em>Event Mode</em> which is displayed by
+          <pre class="smallexample">               <code>EVENT (&lt;event length&gt;)</code>
+               </pre>
+          where <code>(&lt;event length&gt;)</code> is optional. 
+<li><em>Buffer Mode</em> which is displayed by
+          <pre class="smallexample">               <code>BUFFER (&lt;buffer length&gt;)&lt;buffer element mode&gt;</code>
+               </pre>
+          where <code>(&lt;buffer length&gt;)</code> is optional. 
+</ul>
+
+     <br><dt><code></code><em>Timing Modes:</em><code></code>
+     <dd>
+          <ul>
+<li><em>Duration Mode</em> which is predefined by <code>DURATION</code>
+<li><em>Absolute Time Mode</em> which is predefined by <code>TIME</code>
+</ul>
+
+     <br><dt><code></code><em>Real Modes:</em><code></code>
+     <dd>Real Modes are predefined with <code>REAL</code> and <code>LONG_REAL</code>.
+
+     <br><dt><code></code><em>String Modes:</em><code></code>
+     <dd>
+          <ul>
+<li><em>Character String Mode</em> which is displayed by
+          <pre class="smallexample">               <code>CHARS(&lt;string length&gt;)</code>
+               </pre>
+          followed by the keyword <code>VARYING</code> if the String Mode is a varying
+mode
+<li><em>Bit String Mode</em> which is displayed by
+          <pre class="smallexample">               <code>BOOLS(&lt;string
+               length&gt;)</code>
+               </pre>
+          </ul>
+
+     <br><dt><code></code><em>Array Mode:</em><code></code>
+     <dd>The Array Mode is displayed by the keyword <code>ARRAY(&lt;range&gt;)</code>
+followed by the element mode (which may in turn be an array mode).
+     <pre class="smallexample">          (gdb) ptype x
+          type = ARRAY (1:42)
+                    ARRAY (1:20)
+                       SET (karli = 10, susi = 20, fritzi = 100)
+          </pre>
+
+     <br><dt><code></code><em>Structure Mode</em><code></code>
+     <dd>The Structure mode is displayed by the keyword <code>STRUCT(&lt;field
+list&gt;)</code>.  The <code>&lt;field list&gt;</code> consists of names and modes of fields
+of the structure.  Variant structures have the keyword <code>CASE &lt;field&gt;
+OF &lt;variant fields&gt; ESAC</code> in their field list.  Since the current version
+of the GNU Chill compiler doesn't implement tag processing (no runtime
+checks of variant fields, and therefore no debugging info), the output
+always displays all variant fields.
+     <pre class="smallexample">          (gdb) ptype str
+          type = STRUCT (
+              as x,
+              bs x,
+              CASE bs OF
+              (karli):
+                  cs a
+              (ott):
+                  ds x
+              ESAC
+          )
+          </pre>
+     </dl>
+
+   </body></html>
+

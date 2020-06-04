@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Member%20Type%20Descriptor">Member Type Descriptor</a>,
+Next:<a rel="next" accesskey="n" href="Protections.html#Protections">Protections</a>,
+Previous:<a rel="previous" accesskey="p" href="Method-Type-Descriptor.html#Method%20Type%20Descriptor">Method Type Descriptor</a>,
+Up:<a rel="up" accesskey="u" href="Cplusplus.html#Cplusplus">Cplusplus</a>
+<hr><br>
+</div>
+
+<h3 class="section">The <code>@</code> Type Descriptor</h3>
+
+   <p>The <code>@</code> type descriptor is for a member (class and variable) type. 
+It is followed by type information for the offset basetype, a comma, and
+type information for the type of the field being pointed to.  (FIXME:
+this is acknowledged to be gibberish.  Can anyone say what really goes
+here?).
+
+   <p>Note that there is a conflict between this and type attributes
+(see <a href="String-Field.html#String%20Field">String Field</a>); both use type descriptor <code>@</code>. 
+Fortunately, the <code>@</code> type descriptor used in this C++ sense always
+will be followed by a digit, <code>(</code>, or <code>-</code>, and type attributes
+never start with those things.
+
+   </body></html>
+

@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Class%20Instance">Class Instance</a>,
+Next:<a rel="next" accesskey="n" href="Methods.html#Methods">Methods</a>,
+Previous:<a rel="previous" accesskey="p" href="Simple-Classes.html#Simple%20Classes">Simple Classes</a>,
+Up:<a rel="up" accesskey="u" href="Cplusplus.html#Cplusplus">Cplusplus</a>
+<hr><br>
+</div>
+
+<h3 class="section">Class Instance</h3>
+
+   <p>As shown above, describing even a simple C++ class definition is
+accomplished by massively extending the stab format used in C to
+describe structure types.  However, once the class is defined, C stabs
+with no modifications can be used to describe class instances.  The
+following source:
+
+<pre class="example">     main () {
+             baseA AbaseA;
+     }
+     </pre>
+
+<p>yields the following stab describing the class instance.  It looks no
+different from a standard C stab describing a local variable.
+
+<pre class="display">     .stabs "name:type_ref(baseA)", N_LSYM, NIL, NIL, frame_ptr_offset
+     </pre>
+
+<pre class="example">     .stabs "AbaseA:20",128,0,0,-20
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Range%20Checking">Range Checking</a>,
+Previous:<a rel="previous" accesskey="p" href="Type-Checking.html#Type%20Checking">Type Checking</a>,
+Up:<a rel="up" accesskey="u" href="Checks.html#Checks">Checks</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">An overview of range checking</h4>
+
+   <p>In some languages (such as Modula-2), it is an error to exceed the
+bounds of a type; this is enforced with run-time checks.  Such range
+checking is meant to ensure program correctness by making sure
+computations do not overflow, or indices on an array element access do
+not exceed the bounds of the array.
+
+   <p>For expressions you use in GDB commands, you can tell
+GDB to treat range errors in one of three ways: ignore them,
+always treat them as errors and abandon the expression, or issue
+warnings but evaluate the expression anyway.
+
+   <p>A range error can result from numerical overflow, from exceeding an
+array index bound, or when you type a constant that is not a member
+of any type.  Some languages, however, do not treat overflows as an
+error.  In many implementations of C, mathematical overflow causes the
+result to "wrap around" to lower values--for example, if <var>m</var> is
+the largest integer value, and <var>s</var> is the smallest, then
+
+<pre class="example">     <var>m</var> + 1 =&gt; <var>s</var>
+     </pre>
+
+   <p>This, too, is specific to individual languages, and in some cases
+specific to individual compilers or machines.  See <a href="Support.html#Support">Supported languages</a>, for further details on specific languages.
+
+   GDB provides some additional commands for controlling the range checker:
+
+     <dl>
+<dt><code>set check range auto</code>
+     <dd>Set range checking on or off based on the current working language. 
+See <a href="Support.html#Support">Supported languages</a>, for the default settings for
+each language.
+
+     <br><dt><code>set check range on</code>
+     <dd><dt><code>set check range off</code>
+     <dd>Set range checking on or off, overriding the default setting for the
+current working language.  A warning is issued if the setting does not
+match the language default.  If a range error occurs and range checking is on,
+then a message is printed and evaluation of the expression is aborted.
+
+     <br><dt><code>set check range warn</code>
+     <dd>Output messages when the GDB range checker detects a range error,
+but attempt to evaluate the expression anyway.  Evaluating the
+expression may still be impossible for other reasons, such as accessing
+memory that the process does not own (a typical example from many Unix
+systems).
+
+     <br><dt><code>show range</code>
+     <dd>Show the current setting of the range checker, and whether or not it is
+being set automatically by GDB. 
+</dl>
+
+   </body></html>
+

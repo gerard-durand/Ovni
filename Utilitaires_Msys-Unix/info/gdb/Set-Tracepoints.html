@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Set%20Tracepoints">Set Tracepoints</a>,
+Next:<a rel="next" accesskey="n" href="Analyze-Collected-Data.html#Analyze%20Collected%20Data">Analyze Collected Data</a>,
+Up:<a rel="up" accesskey="u" href="Tracepoints.html#Tracepoints">Tracepoints</a>
+<hr><br>
+</div>
+
+<h3 class="section">Commands to Set Tracepoints</h3>
+
+   <p>Before running such a <dfn>trace experiment</dfn>, an arbitrary number of
+tracepoints can be set.  Like a breakpoint (see <a href="Set-Breaks.html#Set%20Breaks">Set Breaks</a>), a
+tracepoint has a number assigned to it by GDB.  Like with
+breakpoints, tracepoint numbers are successive integers starting from
+one.  Many of the commands associated with tracepoints take the
+tracepoint number as their argument, to identify which tracepoint to
+work on.
+
+   <p>For each tracepoint, you can specify, in advance, some arbitrary set
+of data that you want the target to collect in the trace buffer when
+it hits that tracepoint.  The collected data can include registers,
+local variables, or global data.  Later, you can use GDB
+commands to examine the values these data had at the time the
+tracepoint was hit.
+
+   <p>This section describes commands to set tracepoints and associated
+conditions and actions.
+
+<ul class="menu">
+<li><a accesskey="1" href="Create-and-Delete-Tracepoints.html#Create%20and%20Delete%20Tracepoints">Create and Delete Tracepoints</a>: 
+<li><a accesskey="2" href="Enable-and-Disable-Tracepoints.html#Enable%20and%20Disable%20Tracepoints">Enable and Disable Tracepoints</a>: 
+<li><a accesskey="3" href="Tracepoint-Passcounts.html#Tracepoint%20Passcounts">Tracepoint Passcounts</a>: 
+<li><a accesskey="4" href="Tracepoint-Actions.html#Tracepoint%20Actions">Tracepoint Actions</a>: 
+<li><a accesskey="5" href="Listing-Tracepoints.html#Listing%20Tracepoints">Listing Tracepoints</a>: 
+<li><a accesskey="6" href="Starting-and-Stopping-Trace-Experiment.html#Starting%20and%20Stopping%20Trace%20Experiment">Starting and Stopping Trace Experiment</a>: 
+</ul>
+
+   </body></html>
+

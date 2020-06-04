@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Result%20Records">GDB/MI Result Records</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Stream-Records.html#GDB%2fMI%20Stream%20Records">GDB/MI Stream Records</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI-Output-Records.html#GDB%2fMI%20Output%20Records">GDB/MI Output Records</a>
+<hr><br>
+</div>
+
+<h4 class="subsection"><small>GDB/MI</small> Result Records</h4>
+
+   <p>In addition to a number of out-of-band notifications, the response to a
+<small>GDB/MI</small> command includes one of the following result indications:
+
+     <dl>
+<dt><code>"^done" [ "," </code><var>results</var><code> ]</code>
+     <dd>The synchronous operation was successful, <code></code><var>results</var><code></code> are the return
+values.
+
+     <br><dt><code>"^running"</code>
+     <dd>The asynchronous operation was successfully started.  The target is
+running.
+
+     <br><dt><code>"^error" "," </code><var>c-string</var><code></code>
+     <dd>The operation failed.  The <code></code><var>c-string</var><code></code> contains the corresponding
+error message. 
+</dl>
+
+   </body></html>
+

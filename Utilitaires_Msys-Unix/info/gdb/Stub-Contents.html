@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Stub%20Contents">Stub Contents</a>,
+Next:<a rel="next" accesskey="n" href="Bootstrapping.html#Bootstrapping">Bootstrapping</a>,
+Up:<a rel="up" accesskey="u" href="remote-stub.html#remote%20stub">remote stub</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">What the stub can do for you</h4>
+
+   <p>The debugging stub for your architecture supplies these three
+subroutines:
+
+     <dl>
+<dt><code>set_debug_traps</code>
+     <dd>This routine arranges for <code>handle_exception</code> to run when your
+program stops.  You must call this subroutine explicitly near the
+beginning of your program.
+
+     <br><dt><code>handle_exception</code>
+     <dd>This is the central workhorse, but your program never calls it
+explicitly--the setup code arranges for <code>handle_exception</code> to
+run when a trap is triggered.
+
+     <p><code>handle_exception</code> takes control when your program stops during
+execution (for example, on a breakpoint), and mediates communications
+with GDB on the host machine.  This is where the communications
+protocol is implemented; <code>handle_exception</code> acts as the GDB
+representative on the target machine.  It begins by sending summary
+information on the state of your program, then continues to execute,
+retrieving and transmitting any information GDB needs, until you
+execute a GDB command that makes your program resume; at that point,
+<code>handle_exception</code> returns control to your own code on the target
+machine.
+
+     <br><dt><code>breakpoint</code>
+     <dd>Use this auxiliary subroutine to make your program contain a
+breakpoint.  Depending on the particular situation, this may be the only
+way for GDB to get control.  For instance, if your target
+machine has some sort of interrupt button, you won't need to call this;
+pressing the interrupt button transfers control to
+<code>handle_exception</code>--in effect, to GDB.  On some machines,
+simply receiving characters on the serial port may also trigger a trap;
+again, in that situation, you don't need to call <code>breakpoint</code> from
+your own program--simply running <code>target remote</code> from the host
+GDB session gets control.
+
+     <p>Call <code>breakpoint</code> if none of these is true, or if you simply want
+to make certain your program stops at a predetermined point for the
+start of your debugging session. 
+</dl>
+
+   </body></html>
+

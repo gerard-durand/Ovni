@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Config%20Names">Config Names</a>,
+Next:<a rel="next" accesskey="n" href="Configure-Options.html#Configure%20Options">Configure Options</a>,
+Previous:<a rel="previous" accesskey="p" href="Separate-Objdir.html#Separate%20Objdir">Separate Objdir</a>,
+Up:<a rel="up" accesskey="u" href="Installing-GDB.html#Installing%20GDB">Installing GDB</a>
+<hr><br>
+</div>
+
+<h3 class="section">Specifying names for hosts and targets</h3>
+
+   <p>The specifications used for hosts and targets in the <code>configure</code>
+script are based on a three-part naming scheme, but some short predefined
+aliases are also supported.  The full naming scheme encodes three pieces
+of information in the following pattern:
+
+<pre class="example">     <var>architecture</var>-<var>vendor</var>-<var>os</var>
+     </pre>
+
+   <p>For example, you can use the alias <code>sun4</code> as a <var>host</var> argument,
+or as the value for <var>target</var> in a <code>--target=</code><var>target</var><code></code>
+option.  The equivalent full name is <code>sparc-sun-sunos4</code>.
+
+   <p>The <code>configure</code> script accompanying GDB does not provide
+any query facility to list all supported host and target names or
+aliases.  <code>configure</code> calls the Bourne shell script
+<code>config.sub</code> to map abbreviations to full names; you can read the
+script, if you wish, or you can use it to test your guesses on
+abbreviations--for example:
+
+<pre class="smallexample">     % sh config.sub i386-linux
+     i386-pc-linux-gnu
+     % sh config.sub alpha-linux
+     alpha-unknown-linux-gnu
+     % sh config.sub hp9k700
+     hppa1.1-hp-hpux
+     % sh config.sub sun4
+     sparc-sun-sunos4.1.1
+     % sh config.sub sun3
+     m68k-sun-sunos4.1.1
+     % sh config.sub i986v
+     Invalid configuration `i986v': machine `i986v' not recognized
+     </pre>
+
+<p><code>config.sub</code> is also distributed in the GDB source
+directory (<code>gdb-5.2.1</code>, for version 5.2.1).
+
+   </body></html>
+

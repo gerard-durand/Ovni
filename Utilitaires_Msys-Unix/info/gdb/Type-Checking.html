@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Type%20Checking">Type Checking</a>,
+Next:<a rel="next" accesskey="n" href="Range-Checking.html#Range%20Checking">Range Checking</a>,
+Up:<a rel="up" accesskey="u" href="Checks.html#Checks">Checks</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">An overview of type checking</h4>
+
+   <p>Some languages, such as Modula-2, are strongly typed, meaning that the
+arguments to operators and functions have to be of the correct type,
+otherwise an error occurs.  These checks prevent type mismatch
+errors from ever causing any run-time problems.  For example,
+
+<pre class="smallexample">     1 + 2 =&gt; 3
+<br>but<br>
+     error--&gt; 1 + 2.3
+     </pre>
+
+   <p>The second example fails because the <code>CARDINAL</code> 1 is not
+type-compatible with the <code>REAL</code> 2.3.
+
+   <p>For the expressions you use in GDB commands, you can tell the
+GDB type checker to skip checking;
+to treat any mismatches as errors and abandon the expression;
+or to only issue warnings when type mismatches occur,
+but evaluate the expression anyway.  When you choose the last of
+these, GDB evaluates expressions like the second example above, but
+also issues a warning.
+
+   <p>Even if you turn type checking off, there may be other reasons
+related to type that prevent GDB from evaluating an expression. 
+For instance, GDB does not know how to add an <code>int</code> and
+a <code>struct foo</code>.  These particular type errors have nothing to do
+with the language in use, and usually arise from expressions, such as
+the one described above, which make little sense to evaluate anyway.
+
+   <p>Each language defines to what degree it is strict about type.  For
+instance, both Modula-2 and C require the arguments to arithmetical
+operators to be numbers.  In C, enumerated types and pointers can be
+represented as numbers, so that they are valid arguments to mathematical
+operators.  See <a href="Support.html#Support">Supported languages</a>, for further
+details on specific languages.
+
+   GDB provides some additional commands for controlling the type checker:
+
+     <dl>
+<dt><code>set check type auto</code>
+     <dd>Set type checking on or off based on the current working language. 
+See <a href="Support.html#Support">Supported languages</a>, for the default settings for
+each language.
+
+     <br><dt><code>set check type on</code>
+     <dd><dt><code>set check type off</code>
+     <dd>Set type checking on or off, overriding the default setting for the
+current working language.  Issue a warning if the setting does not
+match the language default.  If any type mismatches occur in
+evaluating an expression while type checking is on, GDB prints a
+message and aborts evaluation of the expression.
+
+     <br><dt><code>set check type warn</code>
+     <dd>Cause the type checker to issue warnings, but to always attempt to
+evaluate the expression.  Evaluating the expression may still
+be impossible for other reasons.  For example, GDB cannot add
+numbers and structures.
+
+     <br><dt><code>show type</code>
+     <dd>Show the current setting of the type checker, and whether or not GDB
+is setting it automatically. 
+</dl>
+
+   </body></html>
+

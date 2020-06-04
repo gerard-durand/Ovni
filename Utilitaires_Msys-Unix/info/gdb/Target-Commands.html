@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Target%20Commands">Target Commands</a>,
+Next:<a rel="next" accesskey="n" href="Byte-Order.html#Byte%20Order">Byte Order</a>,
+Previous:<a rel="previous" accesskey="p" href="Active-Targets.html#Active%20Targets">Active Targets</a>,
+Up:<a rel="up" accesskey="u" href="Targets.html#Targets">Targets</a>
+<hr><br>
+</div>
+
+<h3 class="section">Commands for managing targets</h3>
+
+     <dl>
+<dt><code>target </code><var>type</var><code> </code><var>parameters</var><code></code>
+     <dd>Connects the GDB host environment to a target machine or
+process.  A target is typically a protocol for talking to debugging
+facilities.  You use the argument <var>type</var> to specify the type or
+protocol of the target machine.
+
+     <p>Further <var>parameters</var> are interpreted by the target protocol, but
+typically include things like device names or host names to connect
+with, process numbers, and baud rates.
+
+     <p>The <code>target</code> command does not repeat if you press &lt;RET&gt; again
+after executing the command.
+
+     <br><dt><code>help target</code>
+     <dd>Displays the names of all targets available.  To display targets
+currently selected, use either <code>info target</code> or <code>info files</code>
+(see <a href="Files.html#Files">Commands to specify files</a>).
+
+     <br><dt><code>help target </code><var>name</var><code></code>
+     <dd>Describe a particular target, including any parameters necessary to
+select it.
+
+     <br><dt><code>set gnutarget </code><var>args</var><code></code>
+     <dd>GDB uses its own library BFD to read your files.  GDB
+knows whether it is reading an <dfn>executable</dfn>,
+a <dfn>core</dfn>, or a <dfn>.o</dfn> file; however, you can specify the file format
+with the <code>set gnutarget</code> command.  Unlike most <code>target</code> commands,
+with <code>gnutarget</code> the <code>target</code> refers to a program, not a machine.
+
+     <blockquote>
+<em>Warning:</em> To specify a file format with <code>set gnutarget</code>,
+you must know the actual BFD name. 
+</blockquote>
+
+     <p>See <a href="Files.html#Files">Commands to specify files</a>.
+
+     <br><dt><code>show gnutarget</code>
+     <dd>Use the <code>show gnutarget</code> command to display what file format
+<code>gnutarget</code> is set to read.  If you have not set <code>gnutarget</code>,
+GDB will determine the file format for each file automatically,
+and <code>show gnutarget</code> displays <code>The current BDF target is "auto"</code>. 
+</dl>
+
+   <p>Here are some common targets (available, or not, depending on the GDB
+configuration):
+
+     <dl>
+<dt><code>target exec </code><var>program</var><code></code>
+     <dd>An executable file.  <code>target exec </code><var>program</var><code></code> is the same as
+<code>exec-file </code><var>program</var><code></code>.
+
+     <br><dt><code>target core </code><var>filename</var><code></code>
+     <dd>A core dump file.  <code>target core </code><var>filename</var><code></code> is the same as
+<code>core-file </code><var>filename</var><code></code>.
+
+     <br><dt><code>target remote </code><var>dev</var><code></code>
+     <dd>Remote serial target in GDB-specific protocol.  The argument <var>dev</var>
+specifies what serial device to use for the connection (e.g. 
+<code>/dev/ttya</code>). See <a href="Remote.html#Remote">Remote debugging</a>.  <code>target remote</code>
+supports the <code>load</code> command.  This is only useful if you have
+some other way of getting the stub to the target system, and you can put
+it somewhere in memory where it won't get clobbered by the download.
+
+     <br><dt><code>target sim</code>
+     <dd>Builtin CPU simulator.  GDB includes simulators for most architectures. 
+In general,
+     <pre class="example">                  target sim
+                  load
+                  run
+          </pre>
+
+     <p>works; however, you cannot assume that a specific memory map, device
+drivers, or even basic I/O is available, although some simulators do
+provide these.  For info about any processor-specific simulator details,
+see the appropriate section in <a href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>.
+
+   </dl>
+
+   <p>Some configurations may include these targets as well:
+
+     <dl>
+
+     <br><dt><code>target nrom </code><var>dev</var><code></code>
+     <dd>NetROM ROM emulator.  This target only supports downloading.
+
+   </dl>
+
+   <p>Different targets are available on different configurations of GDB;
+your configuration may have more or fewer targets.
+
+   <p>Many remote targets require you to download the executable's code
+once you've successfully established a connection.
+
+     <dl>
+
+     <br><dt><code>load </code><var>filename</var><code></code>
+     <dd>Depending on what remote debugging facilities are configured into
+GDB, the <code>load</code> command may be available.  Where it exists, it
+is meant to make <var>filename</var> (an executable) available for debugging
+on the remote system--by downloading, or dynamic linking, for example. 
+<code>load</code> also records the <var>filename</var> symbol table in GDB, like
+the <code>add-symbol-file</code> command.
+
+     <p>If your GDB does not have a <code>load</code> command, attempting to
+execute it gets the error message "<code>You can't do that when your
+target is ...</code>"
+
+     <p>The file is loaded at whatever address is specified in the executable. 
+For some object file formats, you can specify the load address when you
+link the program; for other formats, like a.out, the object file format
+specifies a fixed address.
+
+     <p><code>load</code> does not repeat if you press &lt;RET&gt; again after using it. 
+</dl>
+
+   </body></html>
+

@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Error%20in%20Breakpoints">Error in Breakpoints</a>,
+Previous:<a rel="previous" accesskey="p" href="Breakpoint-Menus.html#Breakpoint%20Menus">Breakpoint Menus</a>,
+Up:<a rel="up" accesskey="u" href="Breakpoints.html#Breakpoints">Breakpoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">"Cannot insert breakpoints"</h4>
+
+   <p>Under some operating systems, breakpoints cannot be used in a program if
+any other process is running that program.  In this situation,
+attempting to run or continue a program with a breakpoint causes
+GDB to print an error message:
+
+<pre class="example">     Cannot insert breakpoints.
+     The same program may be running in another process.
+     </pre>
+
+   <p>When this happens, you have three ways to proceed:
+
+     <ol type=1 start=1>
+<li>Remove or disable the breakpoints, then continue.
+
+     <li>Suspend GDB, and copy the file containing your program to a new
+name.  Resume GDB and use the <code>exec-file</code> command to specify
+that GDB should run your program under that name. 
+Then start your program again.
+
+     <li>Relink your program so that the text segment is nonsharable, using the
+linker option <code>-N</code>.  The operating system limitation may not apply
+to nonsharable executables.
+        </ol>
+
+   <p>A similar message can be printed if you request too many active
+hardware-assisted breakpoints and watchpoints:
+
+<pre class="smallexample">     Stopped; cannot insert breakpoints.
+     You may have requested too many hardware breakpoints and watchpoints.
+     </pre>
+
+<p>This message is printed when you attempt to resume the program, since
+only then GDB knows exactly how many hardware breakpoints and
+watchpoints it needs to insert.
+
+   <p>When this message is printed, you need to disable or remove some of the
+hardware-assisted breakpoints and watchpoints, and then continue.
+
+   </body></html>
+

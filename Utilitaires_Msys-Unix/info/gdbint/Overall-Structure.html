@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+<title>GDB Internals</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="GDB Internals">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Overall%20Structure">Overall Structure</a>,
+Next:<a rel="next" accesskey="n" href="Algorithms.html#Algorithms">Algorithms</a>,
+Previous:<a rel="previous" accesskey="p" href="Requirements.html#Requirements">Requirements</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Overall Structure</h2>
+
+   GDB consists of three major subsystems: user interface,
+symbol handling (the <dfn>symbol side</dfn>), and target system handling (the
+<dfn>target side</dfn>).
+
+   <p>The user interface consists of several actual interfaces, plus
+supporting code.
+
+   <p>The symbol side consists of object file readers, debugging info
+interpreters, symbol table management, source language expression
+parsing, type and value printing.
+
+   <p>The target side consists of execution control, stack frame analysis, and
+physical target manipulation.
+
+   <p>The target side/symbol side division is not formal, and there are a
+number of exceptions.  For instance, core file support involves symbolic
+elements (the basic core file reader is in BFD) and target elements (it
+supplies the contents of memory and the values of registers).  Instead,
+this division is useful for understanding how the minor subsystems
+should fit together.
+
+<h3 class="section">The Symbol Side</h3>
+
+   <p>The symbolic side of GDB can be thought of as "everything
+you can do in GDB without having a live program running". 
+For instance, you can look at the types of variables, and evaluate
+many kinds of expressions.
+
+<h3 class="section">The Target Side</h3>
+
+   <p>The target side of GDB is the "bits and bytes manipulator". 
+Although it may make reference to symbolic info here and there, most
+of the target side will run with only a stripped executable
+available--or even no executable at all, in remote debugging cases.
+
+   <p>Operations such as disassembly, stack frame crawls, and register
+display, are able to work with no symbolic info at all.  In some cases,
+such as disassembly, GDB will use symbolic info to present addresses
+relative to symbols rather than as raw numbers, but it will work either
+way.
+
+<h3 class="section">Configurations</h3>
+
+   <p><dfn>Host</dfn> refers to attributes of the system where GDB runs. 
+<dfn>Target</dfn> refers to the system where the program being debugged
+executes.  In most cases they are the same machine, in which case a
+third type of <dfn>Native</dfn> attributes come into play.
+
+   <p>Defines and include files needed to build on the host are host support. 
+Examples are tty support, system defined types, host byte order, host
+float format.
+
+   <p>Defines and information needed to handle the target format are target
+dependent.  Examples are the stack frame format, instruction set,
+breakpoint instruction, registers, and how to set up and tear down the stack
+to call a function.
+
+   <p>Information that is only needed when the host and target are the same,
+is native dependent.  One example is Unix child process support; if the
+host and target are not the same, doing a fork to start the target
+process is a bad idea.  The various macros needed for finding the
+registers in the <code>upage</code>, running <code>ptrace</code>, and such are all
+in the native-dependent files.
+
+   <p>Another example of native-dependent code is support for features that
+are really part of the target environment, but which require
+<code>#include</code> files that are only available on the host system.  Core
+file handling and <code>setjmp</code> handling are two common cases.
+
+   <p>When you want to make GDB work "native" on a particular machine, you
+have to include all three kinds of information.
+
+   </body></html>
+

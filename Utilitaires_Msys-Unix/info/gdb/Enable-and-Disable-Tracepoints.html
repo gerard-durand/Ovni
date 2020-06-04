@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Enable%20and%20Disable%20Tracepoints">Enable and Disable Tracepoints</a>,
+Next:<a rel="next" accesskey="n" href="Tracepoint-Passcounts.html#Tracepoint%20Passcounts">Tracepoint Passcounts</a>,
+Previous:<a rel="previous" accesskey="p" href="Create-and-Delete-Tracepoints.html#Create%20and%20Delete%20Tracepoints">Create and Delete Tracepoints</a>,
+Up:<a rel="up" accesskey="u" href="Set-Tracepoints.html#Set%20Tracepoints">Set Tracepoints</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Enable and Disable Tracepoints</h4>
+
+     <dl>
+<dt><code>disable tracepoint </code>[<code></code><var>num</var><code></code>]<code></code>
+     <dd>Disable tracepoint <var>num</var>, or all tracepoints if no argument
+<var>num</var> is given.  A disabled tracepoint will have no effect during
+the next trace experiment, but it is not forgotten.  You can re-enable
+a disabled tracepoint using the <code>enable tracepoint</code> command.
+
+     <br><dt><code>enable tracepoint </code>[<code></code><var>num</var><code></code>]<code></code>
+     <dd>Enable tracepoint <var>num</var>, or all tracepoints.  The enabled
+tracepoints will become effective the next time a trace experiment is
+run. 
+</dl>
+
+   </body></html>
+

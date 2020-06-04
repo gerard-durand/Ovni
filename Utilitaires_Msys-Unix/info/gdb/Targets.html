@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Targets">Targets</a>,
+Next:<a rel="next" accesskey="n" href="Remote-Debugging.html#Remote%20Debugging">Remote Debugging</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-Files.html#GDB%20Files">GDB Files</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Specifying a Debugging Target</h2>
+
+   <p>A <dfn>target</dfn> is the execution environment occupied by your program.
+
+   <p>Often, GDB runs in the same host environment as your program;
+in that case, the debugging target is specified as a side effect when
+you use the <code>file</code> or <code>core</code> commands.  When you need more
+flexibility--for example, running GDB on a physically separate
+host, or controlling a standalone system over a serial port or a
+realtime system over a TCP/IP connection--you can use the <code>target</code>
+command to specify one of the target types configured for GDB
+(see <a href="Target-Commands.html#Target%20Commands">Commands for managing targets</a>).
+
+<ul class="menu">
+<li><a accesskey="1" href="Active-Targets.html#Active%20Targets">Active Targets</a>:               Active targets
+<li><a accesskey="2" href="Target-Commands.html#Target%20Commands">Target Commands</a>:              Commands for managing targets
+<li><a accesskey="3" href="Byte-Order.html#Byte%20Order">Byte Order</a>:                   Choosing target byte order
+<li><a accesskey="4" href="Remote.html#Remote">Remote</a>:                       Remote debugging
+<li><a accesskey="5" href="KOD.html#KOD">KOD</a>:                          Kernel Object Display
+
+   </ul>
+
+   </body></html>
+

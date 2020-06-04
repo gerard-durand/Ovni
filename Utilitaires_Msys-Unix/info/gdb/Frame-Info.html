@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Frame%20Info">Frame Info</a>,
+Previous:<a rel="previous" accesskey="p" href="Selection.html#Selection">Selection</a>,
+Up:<a rel="up" accesskey="u" href="Stack.html#Stack">Stack</a>
+<hr><br>
+</div>
+
+<h3 class="section">Information about a frame</h3>
+
+   <p>There are several other commands to print information about the selected
+stack frame.
+
+     <dl>
+<dt><code>frame</code>
+     <dd><dt><code>f</code>
+     <dd>When used without any argument, this command does not change which
+frame is selected, but prints a brief description of the currently
+selected stack frame.  It can be abbreviated <code>f</code>.  With an
+argument, this command is used to select a stack frame. 
+See <a href="Selection.html#Selection">Selecting a frame</a>.
+
+     <br><dt><code>info frame</code>
+     <dd><dt><code>info f</code>
+     <dd>This command prints a verbose description of the selected stack frame,
+including:
+
+          <ul>
+<li>the address of the frame
+<li>the address of the next frame down (called by this frame)
+<li>the address of the next frame up (caller of this frame)
+<li>the language in which the source code corresponding to this frame is written
+<li>the address of the frame's arguments
+<li>the address of the frame's local variables
+<li>the program counter saved in it (the address of execution in the caller frame)
+<li>which registers were saved in the frame
+</ul>
+
+     <p>The verbose description is useful when
+something has gone wrong that has made the stack format fail to fit
+the usual conventions.
+
+     <br><dt><code>info frame </code><var>addr</var><code></code>
+     <dd><dt><code>info f </code><var>addr</var><code></code>
+     <dd>Print a verbose description of the frame at address <var>addr</var>, without
+selecting that frame.  The selected frame remains unchanged by this
+command.  This requires the same kind of address (more than one for some
+architectures) that you specify in the <code>frame</code> command. 
+See <a href="Selection.html#Selection">Selecting a frame</a>.
+
+     <br><dt><code>info args</code>
+     <dd>Print the arguments of the selected frame, each on a separate line.
+
+     <br><dt><code>info locals</code>
+     <dd>Print the local variables of the selected frame, each on a separate
+line.  These are all variables (declared either static or automatic)
+accessible at the point of execution of the selected frame.
+
+     <br><dt><code>info catch</code>
+     <dd>Print a list of all the exception handlers that are active in the
+current stack frame at the current point of execution.  To see other
+exception handlers, visit the associated frame (using the <code>up</code>,
+<code>down</code>, or <code>frame</code> commands); then type <code>info catch</code>. 
+See <a href="Set-Catchpoints.html#Set%20Catchpoints">Setting catchpoints</a>.
+
+   </dl>
+
+   </body></html>
+

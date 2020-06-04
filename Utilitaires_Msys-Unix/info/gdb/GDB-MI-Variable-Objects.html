@@ -1,0 +1,293 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Variable%20Objects">GDB/MI Variable Objects</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Tracepoint-Commands.html#GDB%2fMI%20Tracepoint%20Commands">GDB/MI Tracepoint Commands</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Variable Objects</h3>
+
+<h4 class="subheading">Motivation for Variable Objects in <small>GDB/MI</small></h4>
+
+   <p>For the implementation of a variable debugger window (locals, watched
+expressions, etc.), we are proposing the adaptation of the existing code
+used by <code>Insight</code>.
+
+   <p>The two main reasons for that are:
+
+     <ol type=1 start=1>
+<li>It has been proven in practice (it is already on its second generation).
+
+     <li>It will shorten development time (needless to say how important it is
+now).
+        </ol>
+
+   <p>The original interface was designed to be used by Tcl code, so it was
+slightly changed so it could be used through <small>GDB/MI</small>.  This section
+describes the <small>GDB/MI</small> operations that will be available and gives some
+hints about their use.
+
+   <p><em>Note</em>: In addition to the set of operations described here, we
+expect the <small>GUI</small> implementation of a variable window to require, at
+least, the following operations:
+
+     <ul>
+<li><code>-gdb-show</code> <code>output-radix</code>
+<li><code>-stack-list-arguments</code>
+<li><code>-stack-list-locals</code>
+<li><code>-stack-select-frame</code>
+</ul>
+
+<h4 class="subheading">Introduction to Variable Objects in <small>GDB/MI</small></h4>
+
+   <p>The basic idea behind variable objects is the creation of a named object
+to represent a variable, an expression, a memory location or even a CPU
+register.  For each object created, a set of operations is available for
+examining or changing its properties.
+
+   <p>Furthermore, complex data types, such as C structures, are represented
+in a tree format.  For instance, the <code>struct</code> type variable is the
+root and the children will represent the struct members.  If a child
+is itself of a complex type, it will also have children of its own. 
+Appropriate language differences are handled for C, C<tt>++</tt> and Java.
+
+   <p>When returning the actual values of the objects, this facility allows
+for the individual selection of the display format used in the result
+creation.  It can be chosen among: binary, decimal, hexadecimal, octal
+and natural.  Natural refers to a default format automatically
+chosen based on the variable type (like decimal for an <code>int</code>, hex
+for pointers, etc.).
+
+   <p>The following is the complete set of <small>GDB/MI</small> operations defined to
+access this functionality:
+
+   <p><table><tr align="left"><td valign="top"><strong>Operation</strong>
+</td><td valign="top"><strong>Description</strong>
+
+<br></td></tr><tr align="left"><td valign="top"><code>-var-create</code>
+</td><td valign="top">create a variable object
+<br></td></tr><tr align="left"><td valign="top"><code>-var-delete</code>
+</td><td valign="top">delete the variable object and its children
+<br></td></tr><tr align="left"><td valign="top"><code>-var-set-format</code>
+</td><td valign="top">set the display format of this variable
+<br></td></tr><tr align="left"><td valign="top"><code>-var-show-format</code>
+</td><td valign="top">show the display format of this variable
+<br></td></tr><tr align="left"><td valign="top"><code>-var-info-num-children</code>
+</td><td valign="top">tells how many children this object has
+<br></td></tr><tr align="left"><td valign="top"><code>-var-list-children</code>
+</td><td valign="top">return a list of the object's children
+<br></td></tr><tr align="left"><td valign="top"><code>-var-info-type</code>
+</td><td valign="top">show the type of this variable object
+<br></td></tr><tr align="left"><td valign="top"><code>-var-info-expression</code>
+</td><td valign="top">print what this variable object represents
+<br></td></tr><tr align="left"><td valign="top"><code>-var-show-attributes</code>
+</td><td valign="top">is this variable editable? does it exist here? 
+<br></td></tr><tr align="left"><td valign="top"><code>-var-evaluate-expression</code>
+</td><td valign="top">get the value of this variable
+<br></td></tr><tr align="left"><td valign="top"><code>-var-assign</code>
+</td><td valign="top">set the value of this variable
+<br></td></tr><tr align="left"><td valign="top"><code>-var-update</code>
+</td><td valign="top">update the variable and its children
+   <br></td></tr></table>
+
+   <p>In the next subsection we describe each operation in detail and suggest
+how it can be used.
+
+<h4 class="subheading">Description And Use of Operations on Variable Objects</h4>
+
+<h4 class="subheading">The <code>-var-create</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-create {<var>name</var> | "-"}
+         {<var>frame-addr</var> | "*"} <var>expression</var>
+     </pre>
+
+   <p>This operation creates a variable object, which allows the monitoring of
+a variable, the result of an expression, a memory cell or a CPU
+register.
+
+   <p>The <var>name</var> parameter is the string by which the object can be
+referenced.  It must be unique.  If <code>-</code> is specified, the varobj
+system will generate a string "varNNNNNN" automatically.  It will be
+unique provided that one does not specify <var>name</var> on that format. 
+The command fails if a duplicate name is found.
+
+   <p>The frame under which the expression should be evaluated can be
+specified by <var>frame-addr</var>.  A <code>*</code> indicates that the current
+frame should be used.
+
+   <p><var>expression</var> is any expression valid on the current language set (must not
+begin with a <code>*</code>), or one of the following:
+
+     <ul>
+<li><code>*</code><var>addr</var><code></code>, where <var>addr</var> is the address of a memory cell
+
+     <li><code>*</code><var>addr</var><code>-</code><var>addr</var><code></code> -- a memory address range (TBD)
+
+     <li><code>$</code><var>regname</var><code></code> -- a CPU register name
+</ul>
+
+<h5 class="subsubheading">Result</h5>
+
+   <p>This operation returns the name, number of children and the type of the
+object created.  Type is returned as a string as the ones generated by
+the GDB CLI:
+
+<pre class="example">      name="<var>name</var>",numchild="N",type="<var>type</var>"
+     </pre>
+
+<h4 class="subheading">The <code>-var-delete</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-delete <var>name</var>
+     </pre>
+
+   <p>Deletes a previously created variable object and all of its children.
+
+   <p>Returns an error if the object <var>name</var> is not found.
+
+<h4 class="subheading">The <code>-var-set-format</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-set-format <var>name</var> <var>format-spec</var>
+     </pre>
+
+   <p>Sets the output format for the value of the object <var>name</var> to be
+<var>format-spec</var>.
+
+   <p>The syntax for the <var>format-spec</var> is as follows:
+
+<pre class="example">      <var>format-spec</var> ==&gt;
+      {binary | decimal | hexadecimal | octal | natural}
+     </pre>
+
+<h4 class="subheading">The <code>-var-show-format</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-show-format <var>name</var>
+     </pre>
+
+   <p>Returns the format used to display the value of the object <var>name</var>.
+
+<pre class="example">      <var>format</var> ==&gt;
+      <var>format-spec</var>
+     </pre>
+
+<h4 class="subheading">The <code>-var-info-num-children</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-info-num-children <var>name</var>
+     </pre>
+
+   <p>Returns the number of children of a variable object <var>name</var>:
+
+<pre class="example">      numchild=<var>n</var>
+     </pre>
+
+<h4 class="subheading">The <code>-var-list-children</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-list-children <var>name</var>
+     </pre>
+
+   <p>Returns a list of the children of the specified variable object:
+
+<pre class="example">      numchild=<var>n</var>,children={{name=<var>name</var>,
+      numchild=<var>n</var>,type=<var>type</var>},(repeats N times)}
+     </pre>
+
+<h4 class="subheading">The <code>-var-info-type</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-info-type <var>name</var>
+     </pre>
+
+   <p>Returns the type of the specified variable <var>name</var>.  The type is
+returned as a string in the same format as it is output by the
+GDB CLI:
+
+<pre class="example">      type=<var>typename</var>
+     </pre>
+
+<h4 class="subheading">The <code>-var-info-expression</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-info-expression <var>name</var>
+     </pre>
+
+   <p>Returns what is represented by the variable object <var>name</var>:
+
+<pre class="example">      lang=<var>lang-spec</var>,exp=<var>expression</var>
+     </pre>
+
+<p>where <var>lang-spec</var> is <code>{"C" | "C++" | "Java"}</code>.
+
+<h4 class="subheading">The <code>-var-show-attributes</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-show-attributes <var>name</var>
+     </pre>
+
+   <p>List attributes of the specified variable object <var>name</var>:
+
+<pre class="example">      status=<var>attr</var> [ ( ,<var>attr</var> )* ]
+     </pre>
+
+<p>where <var>attr</var> is <code>{ { editable | noneditable } | TBD }</code>.
+
+<h4 class="subheading">The <code>-var-evaluate-expression</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-evaluate-expression <var>name</var>
+     </pre>
+
+   <p>Evaluates the expression that is represented by the specified variable
+object and returns its value as a string in the current format specified
+for the object:
+
+<pre class="example">      value=<var>value</var>
+     </pre>
+
+<h4 class="subheading">The <code>-var-assign</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-assign <var>name</var> <var>expression</var>
+     </pre>
+
+   <p>Assigns the value of <var>expression</var> to the variable object specified
+by <var>name</var>.  The object must be <code>editable</code>.
+
+<h4 class="subheading">The <code>-var-update</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -var-update {<var>name</var> | "*"}
+     </pre>
+
+   <p>Update the value of the variable object <var>name</var> by evaluating its
+expression after fetching all the new values from memory or registers. 
+A <code>*</code> causes all existing variable objects to be updated.
+
+   </body></html>
+

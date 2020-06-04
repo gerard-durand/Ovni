@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Server">Server</a>,
+Next:<a rel="next" accesskey="n" href="NetWare.html#NetWare">NetWare</a>,
+Up:<a rel="up" accesskey="u" href="Remote-Debugging.html#Remote%20Debugging">Remote Debugging</a>
+<hr><br>
+</div>
+
+<h3 class="section">Using the <code>gdbserver</code> program</h3>
+
+   <p><code>gdbserver</code> is a control program for Unix-like systems, which
+allows you to connect your program with a remote GDB via
+<code>target remote</code>--but without linking in the usual debugging stub.
+
+   <p><code>gdbserver</code> is not a complete replacement for the debugging stubs,
+because it requires essentially the same operating-system facilities
+that GDB itself does.  In fact, a system that can run
+<code>gdbserver</code> to connect to a remote GDB could also run
+GDB locally!  <code>gdbserver</code> is sometimes useful nevertheless,
+because it is a much smaller program than GDB itself.  It is
+also easier to port than all of GDB, so you may be able to get
+started more quickly on a new system by using <code>gdbserver</code>. 
+Finally, if you develop code for real-time systems, you may find that
+the tradeoffs involved in real-time operation make it more convenient to
+do as much development work as possible on another system, for example
+by cross-compiling.  You can use <code>gdbserver</code> to make a similar
+choice for debugging.
+
+   GDB and <code>gdbserver</code> communicate via either a serial line
+or a TCP connection, using the standard GDB remote serial
+protocol.
+
+     <dl>
+<dt><em>On the target machine,</em>
+     <dd>you need to have a copy of the program you want to debug. 
+<code>gdbserver</code> does not need your program's symbol table, so you can
+strip the program if necessary to save space.  GDB on the host
+system does all the symbol handling.
+
+     <p>To use the server, you must tell it how to communicate with GDB;
+the name of your program; and the arguments for your program.  The usual
+syntax is:
+
+     <pre class="smallexample">          target&gt; gdbserver <var>comm</var> <var>program</var> [ <var>args</var> ... ]
+          </pre>
+
+     <p><var>comm</var> is either a device name (to use a serial line) or a TCP
+hostname and portnumber.  For example, to debug Emacs with the argument
+<code>foo.txt</code> and communicate with GDB over the serial port
+<code>/dev/com1</code>:
+
+     <pre class="smallexample">          target&gt; gdbserver /dev/com1 emacs foo.txt
+          </pre>
+
+     <p><code>gdbserver</code> waits passively for the host GDB to communicate
+with it.
+
+     <p>To use a TCP connection instead of a serial line:
+
+     <pre class="smallexample">          target&gt; gdbserver host:2345 emacs foo.txt
+          </pre>
+
+     <p>The only difference from the previous example is the first argument,
+specifying that you are communicating with the host GDB via
+TCP.  The <code>host:2345</code> argument means that <code>gdbserver</code> is to
+expect a TCP connection from machine <code>host</code> to local TCP port 2345. 
+(Currently, the <code>host</code> part is ignored.)  You can choose any number
+you want for the port number as long as it does not conflict with any
+TCP ports already in use on the target system (for example, <code>23</code> is
+reserved for <code>telnet</code>).<a rel="footnote" href="#fn-1"><sup>1</sup></a>  You must use the same port number with the host GDB
+<code>target remote</code> command.
+
+     <p>On some targets, <code>gdbserver</code> can also attach to running programs. 
+This is accomplished via the <code>--attach</code> argument.  The syntax is:
+
+     <pre class="smallexample">          target&gt; gdbserver <var>comm</var> --attach <var>pid</var>
+          </pre>
+
+     <p><var>pid</var> is the process ID of a currently running process.  It isn't necessary
+to point <code>gdbserver</code> at a binary for the running process.
+
+     <br><dt><em>On the GDB host machine,</em>
+     <dd>you need an unstripped copy of your program, since GDB needs
+symbols and debugging information.  Start up GDB as usual,
+using the name of the local copy of your program as the first argument. 
+(You may also need the <code>--baud</code> option if the serial line is
+running at anything other than 9600bps.)  After that, use <code>target
+remote</code> to establish communications with <code>gdbserver</code>.  Its argument
+is either a device name (usually a serial device, like
+<code>/dev/ttyb</code>), or a TCP port descriptor in the form
+<code></code><var>host</var><code>:</code><var>PORT</var><code></code>.  For example:
+
+     <pre class="smallexample">          (gdb) target remote /dev/ttyb
+          </pre>
+
+     <p>communicates with the server via serial line <code>/dev/ttyb</code>, and
+
+     <pre class="smallexample">          (gdb) target remote the-target:2345
+          </pre>
+
+     <p>communicates via a TCP connection to port 2345 on host <code>the-target</code>. 
+For TCP connections, you must start up <code>gdbserver</code> prior to using
+the <code>target remote</code> command.  Otherwise you may get an error whose
+text depends on the host system, but which usually looks something like
+<code>Connection refused</code>. 
+</dl>
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4>
+<ol type="1">
+<li><a name="fn-1"></a>
+<p>If you choose a port number that
+conflicts with another service, <code>gdbserver</code> prints an error message
+and exits.</p>
+
+   </ol><hr></div>
+
+   </body></html>
+

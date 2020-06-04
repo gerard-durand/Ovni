@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Compatibility%20with%20CLI">GDB/MI Compatibility with CLI</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Output-Records.html#GDB%2fMI%20Output%20Records">GDB/MI Output Records</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Command-Syntax.html#GDB%2fMI%20Command%20Syntax">GDB/MI Command Syntax</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Compatibility with CLI</h3>
+
+   <p>To help users familiar with GDB's existing CLI interface, <small>GDB/MI</small>
+accepts existing CLI commands.  As specified by the syntax, such
+commands can be directly entered into the <small>GDB/MI</small> interface and GDB will
+respond.
+
+   <p>This mechanism is provided as an aid to developers of <small>GDB/MI</small>
+clients and not as a reliable interface into the CLI.  Since the command
+is being interpreteted in an environment that assumes <small>GDB/MI</small>
+behaviour, the exact output of such commands is likely to end up being
+an un-supported hybrid of <small>GDB/MI</small> and CLI output.
+
+   </body></html>
+

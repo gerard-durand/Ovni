@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Sparclet%20File">Sparclet File</a>,
+Next:<a rel="next" accesskey="n" href="Sparclet-Connection.html#Sparclet%20Connection">Sparclet Connection</a>,
+Up:<a rel="up" accesskey="u" href="Sparclet.html#Sparclet">Sparclet</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Setting file to debug</h5>
+
+   <p>The GDB command <code>file</code> lets you choose with program to debug.
+
+<pre class="example">     (gdbslet) file prog
+     </pre>
+
+   GDB then attempts to read the symbol table of <code>prog</code>. 
+GDB locates
+the file by searching the directories listed in the command search
+path. 
+If the file was compiled with debug information (option "-g"), source
+files will be searched as well. 
+GDB locates
+the source files by searching the directories listed in the directory search
+path (see <a href="Environment.html#Environment">Your program's environment</a>). 
+If it fails
+to find a file, it displays a message such as:
+
+<pre class="example">     prog: No such file or directory.
+     </pre>
+
+   <p>When this happens, add the appropriate directories to the search paths with
+the GDB commands <code>path</code> and <code>dir</code>, and execute the
+<code>target</code> command again.
+
+   </body></html>
+

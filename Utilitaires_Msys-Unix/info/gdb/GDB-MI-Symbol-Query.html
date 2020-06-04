@@ -1,0 +1,195 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Symbol%20Query">GDB/MI Symbol Query</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Target-Manipulation.html#GDB%2fMI%20Target%20Manipulation">GDB/MI Target Manipulation</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Stack-Manipulation.html#GDB%2fMI%20Stack%20Manipulation">GDB/MI Stack Manipulation</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI.html#GDB%2fMI">GDB/MI</a>
+<hr><br>
+</div>
+
+<h3 class="section"><small>GDB/MI</small> Symbol Query Commands</h3>
+
+<h4 class="subheading">The <code>-symbol-info-address</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-info-address <var>symbol</var>
+     </pre>
+
+   <p>Describe where <var>symbol</var> is stored.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>info address</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-info-file</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-info-file
+     </pre>
+
+   <p>Show the file for the symbol.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>There's no equivalent GDB command.  <code>gdbtk</code> has
+<code>gdb_find_file</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-info-function</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-info-function
+     </pre>
+
+   <p>Show which function the symbol lives in.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p><code>gdb_get_function</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-info-line</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-info-line
+     </pre>
+
+   <p>Show the core addresses of the code for a source line.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB comamnd is <code>info line</code>. 
+<code>gdbtk</code> has the <code>gdb_get_line</code> and <code>gdb_get_file</code> commands.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-info-symbol</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-info-symbol <var>addr</var>
+     </pre>
+
+   <p>Describe what symbol is at location <var>addr</var>.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>info symbol</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-list-functions</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-list-functions
+     </pre>
+
+   <p>List the functions in the executable.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p><code>info functions</code> in GDB, <code>gdb_listfunc</code> and
+<code>gdb_search</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-list-types</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-list-types
+     </pre>
+
+   <p>List all the type names.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding commands are <code>info types</code> in GDB,
+<code>gdb_search</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-list-variables</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-list-variables
+     </pre>
+
+   <p>List all the global and static variable names.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p><code>info variables</code> in GDB, <code>gdb_search</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-locate</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-locate
+     </pre>
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p><code>gdb_loc</code> in <code>gdbtk</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+<h4 class="subheading">The <code>-symbol-type</code> Command</h4>
+
+<h5 class="subsubheading">Synopsis</h5>
+
+<pre class="example">      -symbol-type <var>variable</var>
+     </pre>
+
+   <p>Show type of <var>variable</var>.
+
+<h5 class="subsubheading">GDB Command</h5>
+
+   <p>The corresponding GDB command is <code>ptype</code>, <code>gdbtk</code> has
+<code>gdb_obj_variable</code>.
+
+<h5 class="subsubheading">Example</h5>
+
+   <p>N.A.
+
+   </body></html>
+

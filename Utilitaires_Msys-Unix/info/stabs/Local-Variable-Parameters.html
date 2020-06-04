@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Local%20Variable%20Parameters">Local Variable Parameters</a>,
+Next:<a rel="next" accesskey="n" href="Reference-Parameters.html#Reference%20Parameters">Reference Parameters</a>,
+Previous:<a rel="previous" accesskey="p" href="Register-Parameters.html#Register%20Parameters">Register Parameters</a>,
+Up:<a rel="up" accesskey="u" href="Parameters.html#Parameters">Parameters</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">Storing Parameters as Local Variables</h4>
+
+   <p>There is a case similar to an argument in a register, which is an
+argument that is actually stored as a local variable.  Sometimes this
+happens when the argument was passed in a register and then the compiler
+stores it as a local variable.  If possible, the compiler should claim
+that it's in a register, but this isn't always done.
+
+   <p>If a parameter is passed as one type and converted to a smaller type by
+the prologue (for example, the parameter is declared as a <code>float</code>,
+but the calling conventions specify that it is passed as a
+<code>double</code>), then GCC2 (sometimes) uses a pair of symbols.  The first
+symbol uses symbol descriptor <code>p</code> and the type which is passed. 
+The second symbol has the type and location which the parameter actually
+has after the prologue.  For example, suppose the following C code
+appears with no prototypes involved:
+
+<pre class="example">     void
+     subr (f)
+          float f;
+     {
+     </pre>
+
+   <p>if <code>f</code> is passed as a double at stack offset 8, and the prologue
+converts it to a float in register number 0, then the stabs look like:
+
+<pre class="example">     .stabs "f:p13",160,0,3,8   # 160 is <code>N_PSYM</code>, here 13 is <code>double</code>
+     .stabs "f:r12",64,0,3,0    # 64 is <code>N_RSYM</code>, here 12 is <code>float</code>
+     </pre>
+
+   <p>In both stabs 3 is the line number where <code>f</code> is declared
+(see <a href="Line-Numbers.html#Line%20Numbers">Line Numbers</a>).
+
+   <p>GCC, at least on the 960, has another solution to the same problem.  It
+uses a single <code>p</code> symbol descriptor for an argument which is stored
+as a local variable but uses <code>N_LSYM</code> instead of <code>N_PSYM</code>.  In
+this case, the value of the symbol is an offset relative to the local
+variables for that function, not relative to the arguments; on some
+machines those are the same thing, but not on all.
+
+   <p>On the VAX or on other machines in which the calling convention includes
+the number of words of arguments actually passed, the debugger (GDB at
+least) uses the parameter symbols to keep track of whether it needs to
+print nameless arguments in addition to the formal parameters which it
+has printed because each one has a stab.  For example, in
+
+<pre class="example">     extern int fprintf (FILE *stream, char *format, ...);
+     ...
+     fprintf (stdout, "%d\n", x);
+     </pre>
+
+   <p>there are stabs for <code>stream</code> and <code>format</code>.  On most machines,
+the debugger can only print those two arguments (because it has no way
+of knowing that additional arguments were passed), but on the VAX or
+other machines with a calling convention which indicates the number of
+words of arguments, the debugger can print all three arguments.  To do
+so, the parameter symbol (symbol descriptor <code>p</code>) (not necessarily
+<code>r</code> or symbol descriptor omitted symbols) needs to contain the
+actual type as passed (for example, <code>double</code> not <code>float</code> if it
+is passed as a double and converted to a float).
+
+   </body></html>
+

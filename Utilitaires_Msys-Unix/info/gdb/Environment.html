@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Environment">Environment</a>,
+Next:<a rel="next" accesskey="n" href="Working-Directory.html#Working%20Directory">Working Directory</a>,
+Previous:<a rel="previous" accesskey="p" href="Arguments.html#Arguments">Arguments</a>,
+Up:<a rel="up" accesskey="u" href="Running.html#Running">Running</a>
+<hr><br>
+</div>
+
+<h3 class="section">Your program's environment</h3>
+
+   <p>The <dfn>environment</dfn> consists of a set of environment variables and
+their values.  Environment variables conventionally record such things as
+your user name, your home directory, your terminal type, and your search
+path for programs to run.  Usually you set up environment variables with
+the shell and they are inherited by all the other programs you run.  When
+debugging, it can be useful to try running your program with a modified
+environment without having to start GDB over again.
+
+     <dl>
+<dt><code>path </code><var>directory</var><code></code>
+     <dd>Add <var>directory</var> to the front of the <code>PATH</code> environment variable
+(the search path for executables) that will be passed to your program. 
+The value of <code>PATH</code> used by GDB does not change. 
+You may specify several directory names, separated by whitespace or by a
+system-dependent separator character (<code>:</code> on Unix, <code>;</code> on
+MS-DOS and MS-Windows).  If <var>directory</var> is already in the path, it
+is moved to the front, so it is searched sooner.
+
+     <p>You can use the string <code>$cwd</code> to refer to whatever is the current
+working directory at the time GDB searches the path.  If you
+use <code>.</code> instead, it refers to the directory where you executed the
+<code>path</code> command.  GDB replaces <code>.</code> in the
+<var>directory</var> argument (with the current path) before adding
+<var>directory</var> to the search path.
+
+     <br><dt><code>show paths</code>
+     <dd>Display the list of search paths for executables (the <code>PATH</code>
+environment variable).
+
+     <br><dt><code>show environment </code>[<code></code><var>varname</var><code></code>]<code></code>
+     <dd>Print the value of environment variable <var>varname</var> to be given to
+your program when it starts.  If you do not supply <var>varname</var>,
+print the names and values of all environment variables to be given to
+your program.  You can abbreviate <code>environment</code> as <code>env</code>.
+
+     <br><dt><code>set environment </code><var>varname</var><code> </code>[<code>=</code><var>value</var><code></code>]<code></code>
+     <dd>Set environment variable <var>varname</var> to <var>value</var>.  The value
+changes for your program only, not for GDB itself.  <var>value</var> may
+be any string; the values of environment variables are just strings, and
+any interpretation is supplied by your program itself.  The <var>value</var>
+parameter is optional; if it is eliminated, the variable is set to a
+null value.
+
+     <p>For example, this command:
+
+     <pre class="example">          set env USER = foo
+          </pre>
+
+     <p>tells the debugged program, when subsequently run, that its user is named
+<code>foo</code>.  (The spaces around <code>=</code> are used for clarity here; they
+are not actually required.)
+
+     <br><dt><code>unset environment </code><var>varname</var><code></code>
+     <dd>Remove variable <var>varname</var> from the environment to be passed to your
+program.  This is different from <code>set env </code><var>varname</var><code> =</code>;
+<code>unset environment</code> removes the variable from the environment,
+rather than assigning it an empty value. 
+</dl>
+
+   <p><em>Warning:</em> On Unix systems, GDB runs your program using
+the shell indicated
+by your <code>SHELL</code> environment variable if it exists (or
+<code>/bin/sh</code> if not).  If your <code>SHELL</code> variable names a shell
+that runs an initialization file--such as <code>.cshrc</code> for C-shell, or
+<code>.bashrc</code> for BASH--any variables you set in that file affect
+your program.  You may wish to move setting of environment variables to
+files that are only run when you sign on, such as <code>.login</code> or
+<code>.profile</code>.
+
+   </body></html>
+

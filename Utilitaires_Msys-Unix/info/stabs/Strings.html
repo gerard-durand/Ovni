@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Strings">Strings</a>,
+Next:<a rel="next" accesskey="n" href="Enumerations.html#Enumerations">Enumerations</a>,
+Previous:<a rel="previous" accesskey="p" href="Arrays.html#Arrays">Arrays</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Strings</h3>
+
+   <p>Some languages, like C or the original Pascal, do not have string types,
+they just have related things like arrays of characters.  But most
+Pascals and various other languages have string types, which are
+indicated as follows:
+
+     <dl>
+<dt><code>n </code><var>type-information</var><code> ; </code><var>bytes</var><code></code>
+     <dd><var>bytes</var> is the maximum length.  I'm not sure what
+<var>type-information</var> is; I suspect that it means that this is a string
+of <var>type-information</var> (thus allowing a string of integers, a string
+of wide characters, etc., as well as a string of characters).  Not sure
+what the format of this type is.  This is an AIX feature.
+
+     <br><dt><code>z </code><var>type-information</var><code> ; </code><var>bytes</var><code></code>
+     <dd>Just like <code>n</code> except that this is a gstring, not an ordinary
+string.  I don't know the difference.
+
+     <br><dt><code>N</code>
+     <dd>Pascal Stringptr.  What is this?  This is an AIX feature. 
+</dl>
+
+   <p>Languages, such as CHILL which have a string type which is basically
+just an array of characters use the <code>S</code> type attribute
+(see <a href="String-Field.html#String%20Field">String Field</a>).
+
+   </body></html>
+

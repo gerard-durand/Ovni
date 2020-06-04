@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Numbers">Numbers</a>,
+Next:<a rel="next" accesskey="n" href="Messages-Warnings.html#Messages%2fWarnings">Messages/Warnings</a>,
+Previous:<a rel="previous" accesskey="p" href="Screen-Size.html#Screen%20Size">Screen Size</a>,
+Up:<a rel="up" accesskey="u" href="Controlling-GDB.html#Controlling%20GDB">Controlling GDB</a>
+<hr><br>
+</div>
+
+<h3 class="section">Numbers</h3>
+
+   <p>You can always enter numbers in octal, decimal, or hexadecimal in
+GDB by the usual conventions: octal numbers begin with
+<code>0</code>, decimal numbers end with <code>.</code>, and hexadecimal numbers
+begin with <code>0x</code>.  Numbers that begin with none of these are, by
+default, entered in base 10; likewise, the default display for
+numbers--when no particular format is specified--is base 10.  You can
+change the default base for both input and output with the <code>set
+radix</code> command.
+
+     <dl>
+<dt><code>set input-radix </code><var>base</var><code></code>
+     <dd>Set the default base for numeric input.  Supported choices
+for <var>base</var> are decimal 8, 10, or 16.  <var>base</var> must itself be
+specified either unambiguously or using the current default radix; for
+example, any of
+
+     <pre class="smallexample">          set radix 012
+          set radix 10.
+          set radix 0xa
+          </pre>
+
+     <p>sets the base to decimal.  On the other hand, <code>set radix 10</code>
+leaves the radix unchanged no matter what it was.
+
+     <br><dt><code>set output-radix </code><var>base</var><code></code>
+     <dd>Set the default base for numeric display.  Supported choices
+for <var>base</var> are decimal 8, 10, or 16.  <var>base</var> must itself be
+specified either unambiguously or using the current default radix.
+
+     <br><dt><code>show input-radix</code>
+     <dd>Display the current default base for numeric input.
+
+     <br><dt><code>show output-radix</code>
+     <dd>Display the current default base for numeric display. 
+</dl>
+
+   </body></html>
+

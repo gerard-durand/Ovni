@@ -1,0 +1,142 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="GDB%2fMI%20Output%20Syntax">GDB/MI Output Syntax</a>,
+Next:<a rel="next" accesskey="n" href="GDB-MI-Simple-Examples.html#GDB%2fMI%20Simple%20Examples">GDB/MI Simple Examples</a>,
+Previous:<a rel="previous" accesskey="p" href="GDB-MI-Input-Syntax.html#GDB%2fMI%20Input%20Syntax">GDB/MI Input Syntax</a>,
+Up:<a rel="up" accesskey="u" href="GDB-MI-Command-Syntax.html#GDB%2fMI%20Command%20Syntax">GDB/MI Command Syntax</a>
+<hr><br>
+</div>
+
+<h4 class="subsection"><small>GDB/MI</small> Output Syntax</h4>
+
+   <p>The output from <small>GDB/MI</small> consists of zero or more out-of-band records
+followed, optionally, by a single result record.  This result record
+is for the most recent command.  The sequence of output records is
+terminated by <code>(gdb)</code>.
+
+   <p>If an input command was prefixed with a <code></code><var>token</var><code></code> then the
+corresponding output for that command will also be prefixed by that same
+<var>token</var>.
+
+     <dl>
+<dt><code></code><var>output</var><code> ==&gt;</code>
+     <dd><code>( </code><var>out-of-band-record</var><code> )* [ </code><var>result-record</var><code> ] "(gdb)" </code><var>nl</var><code></code>
+
+     <br><dt><code></code><var>result-record</var><code> ==&gt;</code>
+     <dd><code> [ </code><var>token</var><code> ] "^" </code><var>result-class</var><code> ( "," </code><var>result</var><code> )* </code><var>nl</var><code></code>
+
+     <br><dt><code></code><var>out-of-band-record</var><code> ==&gt;</code>
+     <dd><code></code><var>async-record</var><code> | </code><var>stream-record</var><code></code>
+
+     <br><dt><code></code><var>async-record</var><code> ==&gt;</code>
+     <dd><code></code><var>exec-async-output</var><code> | </code><var>status-async-output</var><code> | </code><var>notify-async-output</var><code></code>
+
+     <br><dt><code></code><var>exec-async-output</var><code> ==&gt;</code>
+     <dd><code>[ </code><var>token</var><code> ] "*" </code><var>async-output</var><code></code>
+
+     <br><dt><code></code><var>status-async-output</var><code> ==&gt;</code>
+     <dd><code>[ </code><var>token</var><code> ] "+" </code><var>async-output</var><code></code>
+
+     <br><dt><code></code><var>notify-async-output</var><code> ==&gt;</code>
+     <dd><code>[ </code><var>token</var><code> ] "=" </code><var>async-output</var><code></code>
+
+     <br><dt><code></code><var>async-output</var><code> ==&gt;</code>
+     <dd><code></code><var>async-class</var><code> ( "," </code><var>result</var><code> )* </code><var>nl</var><code></code>
+
+     <br><dt><code></code><var>result-class</var><code> ==&gt;</code>
+     <dd><code>"done" | "running" | "connected" | "error" | "exit"</code>
+
+     <br><dt><code></code><var>async-class</var><code> ==&gt;</code>
+     <dd><code>"stopped" | </code><var>others</var><code></code> (where <var>others</var> will be added
+depending on the needs--this is still in development).
+
+     <br><dt><code></code><var>result</var><code> ==&gt;</code>
+     <dd><code> </code><var>variable</var><code> "=" </code><var>value</var><code></code>
+
+     <br><dt><code></code><var>variable</var><code> ==&gt;</code>
+     <dd><code> </code><var>string</var><code> </code>
+
+     <br><dt><code></code><var>value</var><code> ==&gt;</code>
+     <dd><code> </code><var>const</var><code> | </code><var>tuple</var><code> | </code><var>list</var><code> </code>
+
+     <br><dt><code></code><var>const</var><code> ==&gt;</code>
+     <dd><code></code><var>c-string</var><code></code>
+
+     <br><dt><code></code><var>tuple</var><code> ==&gt;</code>
+     <dd><code> "{}" | "{" </code><var>result</var><code> ( "," </code><var>result</var><code> )* "}" </code>
+
+     <br><dt><code></code><var>list</var><code> ==&gt;</code>
+     <dd><code> "[]" | "[" </code><var>value</var><code> ( "," </code><var>value</var><code> )* "]" | "["
+</code><var>result</var><code> ( "," </code><var>result</var><code> )* "]" </code>
+
+     <br><dt><code></code><var>stream-record</var><code> ==&gt;</code>
+     <dd><code></code><var>console-stream-output</var><code> | </code><var>target-stream-output</var><code> | </code><var>log-stream-output</var><code></code>
+
+     <br><dt><code></code><var>console-stream-output</var><code> ==&gt;</code>
+     <dd><code>"~" </code><var>c-string</var><code></code>
+
+     <br><dt><code></code><var>target-stream-output</var><code> ==&gt;</code>
+     <dd><code>"@" </code><var>c-string</var><code></code>
+
+     <br><dt><code></code><var>log-stream-output</var><code> ==&gt;</code>
+     <dd><code>"&amp;" </code><var>c-string</var><code></code>
+
+     <br><dt><code></code><var>nl</var><code> ==&gt;</code>
+     <dd><code>CR | CR-LF</code>
+
+     <br><dt><code></code><var>token</var><code> ==&gt;</code>
+     <dd><em>any sequence of digits</em>. 
+</dl>
+
+<p>Notes:
+
+     <ul>
+<li>All output sequences end in a single line containing a period.
+
+     <li>The <code></code><var>token</var><code></code> is from the corresponding request.  If an execution
+command is interrupted by the <code>-exec-interrupt</code> command, the
+<var>token</var> associated with the <code>*stopped</code> message is the one of the
+original execution command, not the one of the interrupt command.
+
+     <li><var>status-async-output</var> contains on-going status information about the
+progress of a slow operation.  It can be discarded.  All status output is
+prefixed by <code>+</code>.
+
+     <li><var>exec-async-output</var> contains asynchronous state change on the target
+(stopped, started, disappeared).  All async output is prefixed by
+<code>*</code>.
+
+     <li><var>notify-async-output</var> contains supplementary information that the
+client should handle (e.g., a new breakpoint information).  All notify
+output is prefixed by <code>=</code>.
+
+     <li><var>console-stream-output</var> is output that should be displayed as is in the
+console.  It is the textual response to a CLI command.  All the console
+output is prefixed by <code>~</code>.
+
+     <li><var>target-stream-output</var> is the output produced by the target program. 
+All the target output is prefixed by <code>@</code>.
+
+     <li><var>log-stream-output</var> is output text coming from GDB's internals, for
+instance messages that should be displayed as part of an error log.  All
+the log output is prefixed by <code>&amp;</code>.
+
+     <li>New <small>GDB/MI</small> commands should only output <var>lists</var> containing
+<var>values</var>.
+
+   </ul>
+
+   <p>See <a href="GDB-MI-Stream-Records.html#GDB%2fMI%20Stream%20Records"><small>GDB/MI</small> Stream Records</a>, for more
+details about the various output records.
+
+   </body></html>
+

@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Source%20Path">Source Path</a>,
+Next:<a rel="next" accesskey="n" href="Machine-Code.html#Machine%20Code">Machine Code</a>,
+Previous:<a rel="previous" accesskey="p" href="Search.html#Search">Search</a>,
+Up:<a rel="up" accesskey="u" href="Source.html#Source">Source</a>
+<hr><br>
+</div>
+
+<h3 class="section">Specifying source directories</h3>
+
+   <p>Executable programs sometimes do not record the directories of the source
+files from which they were compiled, just the names.  Even when they do,
+the directories could be moved between the compilation and your debugging
+session.  GDB has a list of directories to search for source files;
+this is called the <dfn>source path</dfn>.  Each time GDB wants a source file,
+it tries all the directories in the list, in the order they are present
+in the list, until it finds a file with the desired name.  Note that
+the executable search path is <em>not</em> used for this purpose.  Neither is
+the current working directory, unless it happens to be in the source
+path.
+
+   <p>If GDB cannot find a source file in the source path, and the
+object program records a directory, GDB tries that directory
+too.  If the source path is empty, and there is no record of the
+compilation directory, GDB looks in the current directory as a
+last resort.
+
+   <p>Whenever you reset or rearrange the source path, GDB clears out
+any information it has cached about where source files are found and where
+each line is in the file.
+
+   <p>When you start GDB, its source path includes only <code>cdir</code>
+and <code>cwd</code>, in that order. 
+To add other directories, use the <code>directory</code> command.
+
+     <dl>
+<dt><code>directory </code><var>dirname</var><code> ...</code>
+     <dd><br><dt><code>dir </code><var>dirname</var><code> ...</code>
+     <dd>Add directory <var>dirname</var> to the front of the source path.  Several
+directory names may be given to this command, separated by <code>:</code>
+(<code>;</code> on MS-DOS and MS-Windows, where <code>:</code> usually appears as
+part of absolute file names) or
+whitespace.  You may specify a directory that is already in the source
+path; this moves it forward, so GDB searches it sooner.
+
+     <p>You can use the string <code>$cdir</code> to refer to the compilation
+directory (if one is recorded), and <code>$cwd</code> to refer to the current
+working directory.  <code>$cwd</code> is not the same as <code>.</code>--the former
+tracks the current working directory as it changes during your GDB
+session, while the latter is immediately expanded to the current
+directory at the time you add an entry to the source path.
+
+     <br><dt><code>directory</code>
+     <dd>Reset the source path to empty again.  This requires confirmation.
+
+     <br><dt><code>show directories</code>
+     <dd>Print the source path: show which directories it contains. 
+</dl>
+
+   <p>If your source path is cluttered with directories that are no longer of
+interest, GDB may sometimes cause confusion by finding the wrong
+versions of source.  You can correct the situation as follows:
+
+     <ol type=1 start=1>
+<li>Use <code>directory</code> with no argument to reset the source path to empty.
+
+     <li>Use <code>directory</code> with suitable arguments to reinstall the
+directories you want in the source path.  You can add all the
+directories in one command.
+        </ol>
+
+   </body></html>
+

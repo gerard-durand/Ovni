@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Nindy%20Startup">Nindy Startup</a>,
+Next:<a rel="next" accesskey="n" href="Nindy-Options.html#Nindy%20Options">Nindy Options</a>,
+Up:<a rel="up" accesskey="u" href="i960.html#i960">i960</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Startup with Nindy</h5>
+
+   <p>If you simply start <code>gdb</code> without using any command-line
+options, you are prompted for what serial port to use, <em>before</em> you
+reach the ordinary GDB prompt:
+
+<pre class="example">     Attach /dev/ttyNN -- specify NN, or "quit" to quit:
+     </pre>
+
+<p>Respond to the prompt with whatever suffix (after <code>/dev/tty</code>)
+identifies the serial port you want to use.  You can, if you choose,
+simply start up with no Nindy connection by responding to the prompt
+with an empty line.  If you do this and later wish to attach to Nindy,
+use <code>target</code> (see <a href="Target-Commands.html#Target%20Commands">Commands for managing targets</a>).
+
+   </body></html>
+

@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Invoking%20GDB">Invoking GDB</a>,
+Next:<a rel="next" accesskey="n" href="Quitting-GDB.html#Quitting%20GDB">Quitting GDB</a>,
+Up:<a rel="up" accesskey="u" href="Invocation.html#Invocation">Invocation</a>
+<hr><br>
+</div>
+
+<h3 class="section">Invoking GDB</h3>
+
+   <p>Invoke GDB by running the program <code>gdb</code>.  Once started,
+GDB reads commands from the terminal until you tell it to exit.
+
+   <p>You can also run <code>gdb</code> with a variety of arguments and options,
+to specify more of your debugging environment at the outset.
+
+   <p>The command-line options described here are designed
+to cover a variety of situations; in some environments, some of these
+options may effectively be unavailable.
+
+   <p>The most usual way to start GDB is with one argument,
+specifying an executable program:
+
+<pre class="example">     gdb <var>program</var>
+     </pre>
+
+<p>You can also start with both an executable program and a core file
+specified:
+
+<pre class="example">     gdb <var>program</var> <var>core</var>
+     </pre>
+
+   <p>You can, instead, specify a process ID as a second argument, if you want
+to debug a running process:
+
+<pre class="example">     gdb <var>program</var> 1234
+     </pre>
+
+<p>would attach GDB to process <code>1234</code> (unless you also have a file
+named <code>1234</code>; GDB does check for a core file first).
+
+   <p>Taking advantage of the second command-line argument requires a fairly
+complete operating system; when you use GDB as a remote
+debugger attached to a bare board, there may not be any notion of
+"process", and there is often no way to get a core dump.  GDB
+will warn you if it is unable to attach or to read core dumps.
+
+   <p>You can optionally have <code>gdb</code> pass any arguments after the
+executable file to the inferior using <code>--args</code>.  This option stops
+option processing.
+<pre class="example">     gdb --args gcc -O2 -c foo.c
+     </pre>
+   This will cause <code>gdb</code> to debug <code>gcc</code>, and to set
+<code>gcc</code>'s command-line arguments (see <a href="Arguments.html#Arguments">Arguments</a>) to <code>-O2 -c foo.c</code>.
+
+   <p>You can run <code>gdb</code> without printing the front material, which describes
+GDB's non-warranty, by specifying <code>-silent</code>:
+
+<pre class="smallexample">     gdb -silent
+     </pre>
+
+<p>You can further control how GDB starts up by using command-line
+options.  GDB itself can remind you of the options available.
+
+<p>Type
+
+<pre class="example">     gdb -help
+     </pre>
+
+<p>to display all available options and briefly describe their use
+(<code>gdb -h</code> is a shorter equivalent).
+
+   <p>All options and command line arguments you give are processed
+in sequential order.  The order makes a difference when the
+<code>-x</code> option is used.
+
+<ul class="menu">
+<li><a accesskey="1" href="File-Options.html#File%20Options">File Options</a>:                 Choosing files
+<li><a accesskey="2" href="Mode-Options.html#Mode%20Options">Mode Options</a>:                 Choosing modes
+</ul>
+
+   </body></html>
+

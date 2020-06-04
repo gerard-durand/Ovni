@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Subranges">Subranges</a>,
+Next:<a rel="next" accesskey="n" href="Arrays.html#Arrays">Arrays</a>,
+Previous:<a rel="previous" accesskey="p" href="Cross-References.html#Cross-References">Cross-References</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Subrange Types</h3>
+
+   <p>The <code>r</code> type descriptor defines a type as a subrange of another
+type.  It is followed by type information for the type of which it is a
+subrange, a semicolon, an integral lower bound, a semicolon, an
+integral upper bound, and a semicolon.  The AIX documentation does not
+specify the trailing semicolon, in an effort to specify array indexes
+more cleanly, but a subrange which is not an array index has always
+included a trailing semicolon (see <a href="Arrays.html#Arrays">Arrays</a>).
+
+   <p>Instead of an integer, either bound can be one of the following:
+
+     <dl>
+<dt><code>A </code><var>offset</var><code></code>
+     <dd>The bound is passed by reference on the stack at offset <var>offset</var>
+from the argument list.  See <a href="Parameters.html#Parameters">Parameters</a>, for more information on such
+offsets.
+
+     <br><dt><code>T </code><var>offset</var><code></code>
+     <dd>The bound is passed by value on the stack at offset <var>offset</var> from
+the argument list.
+
+     <br><dt><code>a </code><var>register-number</var><code></code>
+     <dd>The bound is passed by reference in register number
+<var>register-number</var>.
+
+     <br><dt><code>t </code><var>register-number</var><code></code>
+     <dd>The bound is passed by value in register number <var>register-number</var>.
+
+     <br><dt><code>J</code>
+     <dd>There is no bound. 
+</dl>
+
+   <p>Subranges are also used for builtin types; see <a href="Traditional-Builtin-Types.html#Traditional%20Builtin%20Types">Traditional Builtin Types</a>.
+
+   </body></html>
+

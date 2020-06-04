@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Stab%20Symbol%20Types">Stab Symbol Types</a>,
+Previous:<a rel="previous" accesskey="p" href="Non-Stab-Symbol-Types.html#Non-Stab%20Symbol%20Types">Non-Stab Symbol Types</a>,
+Up:<a rel="up" accesskey="u" href="Stab-Types.html#Stab%20Types">Stab Types</a>
+<hr><br>
+</div>
+
+<h3 class="appendixsec">Stab Symbol Types</h3>
+
+   <p>The following symbol types indicate that this is a stab.  This is the
+full list of stab numbers, including stab types that are used in
+languages other than C.
+
+     <dl>
+<dt><code>0x20     N_GSYM</code>
+     <dd>Global symbol; see <a href="Global-Variables.html#Global%20Variables">Global Variables</a>.
+
+     <br><dt><code>0x22     N_FNAME</code>
+     <dd>Function name (for BSD Fortran); see <a href="Procedures.html#Procedures">Procedures</a>.
+
+     <br><dt><code>0x24     N_FUN</code>
+     <dd>Function name (see <a href="Procedures.html#Procedures">Procedures</a>) or text segment variable
+(see <a href="Statics.html#Statics">Statics</a>).
+
+     <br><dt><code>0x26 N_STSYM</code>
+     <dd>Data segment file-scope variable; see <a href="Statics.html#Statics">Statics</a>.
+
+     <br><dt><code>0x28 N_LCSYM</code>
+     <dd>BSS segment file-scope variable; see <a href="Statics.html#Statics">Statics</a>.
+
+     <br><dt><code>0x2a N_MAIN</code>
+     <dd>Name of main routine; see <a href="Main-Program.html#Main%20Program">Main Program</a>.
+
+     <br><dt><code>0x2c N_ROSYM</code>
+     <dd>Variable in <code>.rodata</code> section; see <a href="Statics.html#Statics">Statics</a>.
+
+     <br><dt><code>0x30     N_PC</code>
+     <dd>Global symbol (for Pascal); see <a href="N_PC.html#N_PC">N_PC</a>.
+
+     <br><dt><code>0x32     N_NSYMS</code>
+     <dd>Number of symbols (according to Ultrix V4.0); see <a href="N_NSYMS.html#N_NSYMS">N_NSYMS</a>.
+
+     <br><dt><code>0x34     N_NOMAP</code>
+     <dd>No DST map; see <a href="N_NOMAP.html#N_NOMAP">N_NOMAP</a>.
+
+     <br><dt><code>0x38 N_OBJ</code>
+     <dd>Object file (Solaris2).
+
+     <br><dt><code>0x3c N_OPT</code>
+     <dd>Debugger options (Solaris2).
+
+     <br><dt><code>0x40     N_RSYM</code>
+     <dd>Register variable; see <a href="Register-Variables.html#Register%20Variables">Register Variables</a>.
+
+     <br><dt><code>0x42     N_M2C</code>
+     <dd>Modula-2 compilation unit; see <a href="N_M2C.html#N_M2C">N_M2C</a>.
+
+     <br><dt><code>0x44     N_SLINE</code>
+     <dd>Line number in text segment; see <a href="Line-Numbers.html#Line%20Numbers">Line Numbers</a>.
+
+     <br><dt><code>0x46     N_DSLINE</code>
+     <dd>Line number in data segment; see <a href="Line-Numbers.html#Line%20Numbers">Line Numbers</a>.
+
+     <br><dt><code>0x48     N_BSLINE</code>
+     <dd>Line number in bss segment; see <a href="Line-Numbers.html#Line%20Numbers">Line Numbers</a>.
+
+     <br><dt><code>0x48     N_BROWS</code>
+     <dd>Sun source code browser, path to <code>.cb</code> file; see <a href="N_BROWS.html#N_BROWS">N_BROWS</a>.
+
+     <br><dt><code>0x4a     N_DEFD</code>
+     <dd>GNU Modula2 definition module dependency; see <a href="N_DEFD.html#N_DEFD">N_DEFD</a>.
+
+     <br><dt><code>0x4c N_FLINE</code>
+     <dd>Function start/body/end line numbers (Solaris2).
+
+     <br><dt><code>0x50     N_EHDECL</code>
+     <dd>GNU C++ exception variable; see <a href="N_EHDECL.html#N_EHDECL">N_EHDECL</a>.
+
+     <br><dt><code>0x50     N_MOD2</code>
+     <dd>Modula2 info "for imc" (according to Ultrix V4.0); see <a href="N_MOD2.html#N_MOD2">N_MOD2</a>.
+
+     <br><dt><code>0x54     N_CATCH</code>
+     <dd>GNU C++ <code>catch</code> clause; see <a href="N_CATCH.html#N_CATCH">N_CATCH</a>.
+
+     <br><dt><code>0x60     N_SSYM</code>
+     <dd>Structure of union element; see <a href="N_SSYM.html#N_SSYM">N_SSYM</a>.
+
+     <br><dt><code>0x62 N_ENDM</code>
+     <dd>Last stab for module (Solaris2).
+
+     <br><dt><code>0x64     N_SO</code>
+     <dd>Path and name of source file; see <a href="Source-Files.html#Source%20Files">Source Files</a>.
+
+     <br><dt><code>0x80 N_LSYM</code>
+     <dd>Stack variable (see <a href="Stack-Variables.html#Stack%20Variables">Stack Variables</a>) or type (see <a href="Typedefs.html#Typedefs">Typedefs</a>).
+
+     <br><dt><code>0x82     N_BINCL</code>
+     <dd>Beginning of an include file (Sun only); see <a href="Include-Files.html#Include%20Files">Include Files</a>.
+
+     <br><dt><code>0x84     N_SOL</code>
+     <dd>Name of include file; see <a href="Include-Files.html#Include%20Files">Include Files</a>.
+
+     <br><dt><code>0xa0     N_PSYM</code>
+     <dd>Parameter variable; see <a href="Parameters.html#Parameters">Parameters</a>.
+
+     <br><dt><code>0xa2     N_EINCL</code>
+     <dd>End of an include file; see <a href="Include-Files.html#Include%20Files">Include Files</a>.
+
+     <br><dt><code>0xa4     N_ENTRY</code>
+     <dd>Alternate entry point; see <a href="Alternate-Entry-Points.html#Alternate%20Entry%20Points">Alternate Entry Points</a>.
+
+     <br><dt><code>0xc0     N_LBRAC</code>
+     <dd>Beginning of a lexical block; see <a href="Block-Structure.html#Block%20Structure">Block Structure</a>.
+
+     <br><dt><code>0xc2     N_EXCL</code>
+     <dd>Place holder for a deleted include file; see <a href="Include-Files.html#Include%20Files">Include Files</a>.
+
+     <br><dt><code>0xc4     N_SCOPE</code>
+     <dd>Modula2 scope information (Sun linker); see <a href="N_SCOPE.html#N_SCOPE">N_SCOPE</a>.
+
+     <br><dt><code>0xe0     N_RBRAC</code>
+     <dd>End of a lexical block; see <a href="Block-Structure.html#Block%20Structure">Block Structure</a>.
+
+     <br><dt><code>0xe2     N_BCOMM</code>
+     <dd>Begin named common block; see <a href="Common-Blocks.html#Common%20Blocks">Common Blocks</a>.
+
+     <br><dt><code>0xe4     N_ECOMM</code>
+     <dd>End named common block; see <a href="Common-Blocks.html#Common%20Blocks">Common Blocks</a>.
+
+     <br><dt><code>0xe8     N_ECOML</code>
+     <dd>Member of a common block; see <a href="Common-Blocks.html#Common%20Blocks">Common Blocks</a>.
+
+     <br><dt><code>0xea N_WITH</code>
+     <dd>Pascal <code>with</code> statement: type,,0,0,offset (Solaris2).
+
+     <br><dt><code>0xf0     N_NBTEXT</code>
+     <dd>Gould non-base registers; see <a href="Gould.html#Gould">Gould</a>.
+
+     <br><dt><code>0xf2     N_NBDATA</code>
+     <dd>Gould non-base registers; see <a href="Gould.html#Gould">Gould</a>.
+
+     <br><dt><code>0xf4     N_NBBSS</code>
+     <dd>Gould non-base registers; see <a href="Gould.html#Gould">Gould</a>.
+
+     <br><dt><code>0xf6     N_NBSTS</code>
+     <dd>Gould non-base registers; see <a href="Gould.html#Gould">Gould</a>.
+
+     <br><dt><code>0xf8     N_NBLCS</code>
+     <dd>Gould non-base registers; see <a href="Gould.html#Gould">Gould</a>. 
+</dl>
+
+   </body></html>
+

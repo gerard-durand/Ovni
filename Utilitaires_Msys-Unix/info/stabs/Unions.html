@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+<title>STABS</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="STABS">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Unions">Unions</a>,
+Next:<a rel="next" accesskey="n" href="Function-Types.html#Function%20Types">Function Types</a>,
+Previous:<a rel="previous" accesskey="p" href="Typedefs.html#Typedefs">Typedefs</a>,
+Up:<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr><br>
+</div>
+
+<h3 class="section">Unions</h3>
+
+<pre class="example">     union u_tag {
+       int  u_int;
+       float u_float;
+       char* u_char;
+     } an_u;
+     </pre>
+
+   <p>This code generates a stab for a union tag and a stab for a union
+variable.  Both use the <code>N_LSYM</code> stab type.  If a union variable is
+scoped locally to the procedure in which it is defined, its stab is
+located immediately preceding the <code>N_LBRAC</code> for the procedure's block
+start.
+
+   <p>The stab for the union tag, however, is located preceding the code for
+the procedure in which it is defined.  The stab type is <code>N_LSYM</code>.  This
+would seem to imply that the union type is file scope, like the struct
+type <code>s_tag</code>.  This is not true.  The contents and position of the stab
+for <code>u_type</code> do not convey any information about its procedure local
+scope.
+
+<pre class="smallexample">     # 128 is N_LSYM
+     .stabs "u_tag:T23=u4u_int:1,0,32;u_float:12,0,32;u_char:21,0,32;;",
+            128,0,0,0
+     </pre>
+
+   <p>The symbol descriptor <code>T</code>, following the <code>name:</code> means that
+the stab describes an enumeration, structure, or union tag.  The type
+descriptor <code>u</code>, following the <code>23=</code> of the type definition,
+narrows it down to a union type definition.  Following the <code>u</code> is
+the number of bytes in the union.  After that is a list of union element
+descriptions.  Their format is <var>name:type, bit offset into the
+union, number of bytes for the element;</var>.
+
+   <p>The stab for the union variable is:
+
+<pre class="example">     .stabs "an_u:23",128,0,0,-20     # 128 is N_LSYM
+     </pre>
+
+   <p><code>-20</code> specifies where the variable is stored (see <a href="Stack-Variables.html#Stack%20Variables">Stack Variables</a>).
+
+   </body></html>
+

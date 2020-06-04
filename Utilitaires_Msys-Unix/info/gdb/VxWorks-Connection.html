@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="VxWorks%20Connection">VxWorks Connection</a>,
+Next:<a rel="next" accesskey="n" href="VxWorks-Download.html#VxWorks%20Download">VxWorks Download</a>,
+Up:<a rel="up" accesskey="u" href="VxWorks.html#VxWorks">VxWorks</a>
+<hr><br>
+</div>
+
+<h5 class="subsubsection">Connecting to VxWorks</h5>
+
+   <p>The GDB command <code>target</code> lets you connect to a VxWorks target on the
+network.  To connect to a target whose host name is "<code>tt</code>", type:
+
+<pre class="example">     (vxgdb) target vxworks tt
+     </pre>
+
+   GDB displays messages like these:
+
+<pre class="smallexample">     Attaching remote machine across net...
+     Connected to tt.
+     </pre>
+
+   GDB then attempts to read the symbol tables of any object modules
+loaded into the VxWorks target since it was last booted.  GDB locates
+these files by searching the directories listed in the command search
+path (see <a href="Environment.html#Environment">Your program's environment</a>); if it fails
+to find an object file, it displays a message such as:
+
+<pre class="example">     prog.o: No such file or directory.
+     </pre>
+
+   <p>When this happens, add the appropriate directory to the search path with
+the GDB command <code>path</code>, and execute the <code>target</code>
+command again.
+
+   </body></html>
+

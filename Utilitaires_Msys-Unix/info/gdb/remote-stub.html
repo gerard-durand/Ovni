@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="remote%20stub">remote stub</a>,
+Previous:<a rel="previous" accesskey="p" href="NetWare.html#NetWare">NetWare</a>,
+Up:<a rel="up" accesskey="u" href="Remote-Debugging.html#Remote%20Debugging">Remote Debugging</a>
+<hr><br>
+</div>
+
+<h3 class="section">Implementing a remote stub</h3>
+
+   <p>The stub files provided with GDB implement the target side of the
+communication protocol, and the GDB side is implemented in the
+GDB source file <code>remote.c</code>.  Normally, you can simply allow
+these subroutines to communicate, and ignore the details.  (If you're
+implementing your own stub file, you can still ignore the details: start
+with one of the existing stub files.  <code>sparc-stub.c</code> is the best
+organized, and therefore the easiest to read.)
+
+   <p>To debug a program running on another machine (the debugging
+<dfn>target</dfn> machine), you must first arrange for all the usual
+prerequisites for the program to run by itself.  For example, for a C
+program, you need:
+
+     <ol type=1 start=1>
+<li>A startup routine to set up the C runtime environment; these usually
+have a name like <code>crt0</code>.  The startup routine may be supplied by
+your hardware supplier, or you may have to write your own.
+
+     <li>A C subroutine library to support your program's
+subroutine calls, notably managing input and output.
+
+     <li>A way of getting your program to the other machine--for example, a
+download program.  These are often supplied by the hardware
+manufacturer, but you may have to write your own from hardware
+documentation.
+        </ol>
+
+   <p>The next step is to arrange for your program to use a serial port to
+communicate with the machine where GDB is running (the <dfn>host</dfn>
+machine).  In general terms, the scheme looks like this:
+
+     <dl>
+<dt><em>On the host,</em>
+     <dd>GDB already understands how to use this protocol; when everything
+else is set up, you can simply use the <code>target remote</code> command
+(see <a href="Targets.html#Targets">Specifying a Debugging Target</a>).
+
+     <br><dt><em>On the target,</em>
+     <dd>you must link with your program a few special-purpose subroutines that
+implement the GDB remote serial protocol.  The file containing these
+subroutines is called  a <dfn>debugging stub</dfn>.
+
+     <p>On certain remote targets, you can use an auxiliary program
+<code>gdbserver</code> instead of linking a stub into your program. 
+See <a href="Server.html#Server">Using the <code>gdbserver</code> program</a>, for details. 
+</dl>
+
+   <p>The debugging stub is specific to the architecture of the remote
+machine; for example, use <code>sparc-stub.c</code> to debug programs on
+<small>SPARC</small> boards.
+
+   <p>These working remote stubs are distributed with GDB:
+
+     <dl>
+
+     <br><dt><code>i386-stub.c</code>
+     <dd>For Intel 386 and compatible architectures.
+
+     <br><dt><code>m68k-stub.c</code>
+     <dd>For Motorola 680x0 architectures.
+
+     <br><dt><code>sh-stub.c</code>
+     <dd>For Hitachi SH architectures.
+
+     <br><dt><code>sparc-stub.c</code>
+     <dd>For <small>SPARC</small> architectures.
+
+     <br><dt><code>sparcl-stub.c</code>
+     <dd>For Fujitsu <small>SPARCLITE</small> architectures.
+
+   </dl>
+
+   <p>The <code>README</code> file in the GDB distribution may list other
+recently added stubs.
+
+<ul class="menu">
+<li><a accesskey="1" href="Stub-Contents.html#Stub%20Contents">Stub Contents</a>:        What the stub can do for you
+<li><a accesskey="2" href="Bootstrapping.html#Bootstrapping">Bootstrapping</a>:        What you must do for the stub
+<li><a accesskey="3" href="Debug-Session.html#Debug%20Session">Debug Session</a>:        Putting it all together
+</ul>
+
+   </body></html>
+

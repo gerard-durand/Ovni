@@ -1,0 +1,233 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Symbols">Symbols</a>,
+Next:<a rel="next" accesskey="n" href="Altering.html#Altering">Altering</a>,
+Previous:<a rel="previous" accesskey="p" href="Languages.html#Languages">Languages</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">Examining the Symbol Table</h2>
+
+   <p>The commands described in this chapter allow you to inquire about the
+symbols (names of variables, functions and types) defined in your
+program.  This information is inherent in the text of your program and
+does not change as your program executes.  GDB finds it in your
+program's symbol table, in the file indicated when you started GDB
+(see <a href="File-Options.html#File%20Options">Choosing files</a>), or by one of the
+file-management commands (see <a href="Files.html#Files">Commands to specify files</a>).
+
+   <p>Occasionally, you may need to refer to symbols that contain unusual
+characters, which GDB ordinarily treats as word delimiters.  The
+most frequent case is in referring to static variables in other
+source files (see <a href="Variables.html#Variables">Program variables</a>).  File names
+are recorded in object files as debugging symbols, but GDB would
+ordinarily parse a typical file name, like <code>foo.c</code>, as the three words
+<code>foo</code> <code>.</code> <code>c</code>.  To allow GDB to recognize
+<code>foo.c</code> as a single symbol, enclose it in single quotes; for example,
+
+<pre class="example">     p 'foo.c'::x
+     </pre>
+
+<p>looks up the value of <code>x</code> in the scope of the file <code>foo.c</code>.
+
+     <dl>
+<dt><code>info address </code><var>symbol</var><code></code>
+     <dd>Describe where the data for <var>symbol</var> is stored.  For a register
+variable, this says which register it is kept in.  For a non-register
+local variable, this prints the stack-frame offset at which the variable
+is always stored.
+
+     <p>Note the contrast with <code>print &amp;</code><var>symbol</var><code></code>, which does not work
+at all for a register variable, and for a stack local variable prints
+the exact address of the current instantiation of the variable.
+
+     <br><dt><code>info symbol </code><var>addr</var><code></code>
+     <dd>Print the name of a symbol which is stored at the address <var>addr</var>. 
+If no symbol is stored exactly at <var>addr</var>, GDB prints the
+nearest symbol and an offset from it:
+
+     <pre class="example">          (gdb) info symbol 0x54320
+          _initialize_vx + 396 in section .text
+          </pre>
+
+     <p>This is the opposite of the <code>info address</code> command.  You can use
+it to find out the name of a variable or a function given its address.
+
+     <br><dt><code>whatis </code><var>expr</var><code></code>
+     <dd>Print the data type of expression <var>expr</var>.  <var>expr</var> is not
+actually evaluated, and any side-effecting operations (such as
+assignments or function calls) inside it do not take place. 
+See <a href="Expressions.html#Expressions">Expressions</a>.
+
+     <br><dt><code>whatis</code>
+     <dd>Print the data type of <code>$</code>, the last value in the value history.
+
+     <br><dt><code>ptype </code><var>typename</var><code></code>
+     <dd>Print a description of data type <var>typename</var>.  <var>typename</var> may be
+the name of a type, or for C code it may have the form <code>class
+</code><var>class-name</var><code></code>, <code>struct </code><var>struct-tag</var><code></code>, <code>union
+</code><var>union-tag</var><code></code> or <code>enum </code><var>enum-tag</var><code></code>.
+
+     <br><dt><code>ptype </code><var>expr</var><code></code>
+     <dd><dt><code>ptype</code>
+     <dd>Print a description of the type of expression <var>expr</var>.  <code>ptype</code>
+differs from <code>whatis</code> by printing a detailed description, instead
+of just the name of the type.
+
+     <p>For example, for this variable declaration:
+
+     <pre class="example">          struct complex {double real; double imag;} v;
+          </pre>
+
+     <p>the two commands give this output:
+
+     <pre class="example">          (gdb) whatis v
+          type = struct complex
+          (gdb) ptype v
+          type = struct complex {
+              double real;
+              double imag;
+          }
+          </pre>
+
+     <p>As with <code>whatis</code>, using <code>ptype</code> without an argument refers to
+the type of <code>$</code>, the last value in the value history.
+
+     <br><dt><code>info types </code><var>regexp</var><code></code>
+     <dd><dt><code>info types</code>
+     <dd>Print a brief description of all types whose names match <var>regexp</var>
+(or all types in your program, if you supply no argument).  Each
+complete typename is matched as though it were a complete line; thus,
+<code>i type value</code> gives information on all types in your program whose
+names include the string <code>value</code>, but <code>i type ^value$</code> gives
+information only on types whose complete name is <code>value</code>.
+
+     <p>This command differs from <code>ptype</code> in two ways: first, like
+<code>whatis</code>, it does not print a detailed description; second, it
+lists all source files where a type is defined.
+
+     <br><dt><code>info scope </code><var>addr</var><code></code>
+     <dd>List all the variables local to a particular scope.  This command
+accepts a location--a function name, a source line, or an address
+preceded by a <code>*</code>, and prints all the variables local to the
+scope defined by that location.  For example:
+
+     <pre class="smallexample">          (gdb) <b>info scope command_line_handler</b>
+          Scope for command_line_handler:
+          Symbol rl is an argument at stack/frame offset 8, length 4.
+          Symbol linebuffer is in static storage at address 0x150a18, length 4.
+          Symbol linelength is in static storage at address 0x150a1c, length 4.
+          Symbol p is a local variable in register $esi, length 4.
+          Symbol p1 is a local variable in register $ebx, length 4.
+          Symbol nline is a local variable in register $edx, length 4.
+          Symbol repeat is a local variable at frame offset -8, length 4.
+          </pre>
+
+     <p>This command is especially useful for determining what data to collect
+during a <dfn>trace experiment</dfn>, see <a href="Tracepoint-Actions.html#Tracepoint%20Actions">collect</a>.
+
+     <br><dt><code>info source</code>
+     <dd>Show the name of the current source file--that is, the source file for
+the function containing the current point of execution--and the language
+it was written in.
+
+     <br><dt><code>info sources</code>
+     <dd>Print the names of all source files in your program for which there is
+debugging information, organized into two lists: files whose symbols
+have already been read, and files whose symbols will be read when needed.
+
+     <br><dt><code>info functions</code>
+     <dd>Print the names and data types of all defined functions.
+
+     <br><dt><code>info functions </code><var>regexp</var><code></code>
+     <dd>Print the names and data types of all defined functions
+whose names contain a match for regular expression <var>regexp</var>. 
+Thus, <code>info fun step</code> finds all functions whose names
+include <code>step</code>; <code>info fun ^step</code> finds those whose names
+start with <code>step</code>.  If a function name contains characters
+that conflict with the regular expression language (eg. 
+<code>operator*()</code>), they may be quoted with a backslash.
+
+     <br><dt><code>info variables</code>
+     <dd>Print the names and data types of all variables that are declared
+outside of functions (i.e. excluding local variables).
+
+     <br><dt><code>info variables </code><var>regexp</var><code></code>
+     <dd>Print the names and data types of all variables (except for local
+variables) whose names contain a match for regular expression
+<var>regexp</var>.
+
+     <p>Some systems allow individual object files that make up your program to
+be replaced without stopping and restarting your program.  For example,
+in VxWorks you can simply recompile a defective object file and keep on
+running.  If you are running on one of these systems, you can allow
+GDB to reload the symbols for automatically relinked modules:
+
+          <dl>
+<dt><code>set symbol-reloading on</code>
+          <dd>Replace symbol definitions for the corresponding source file when an
+object file with a particular name is seen again.
+
+          <br><dt><code>set symbol-reloading off</code>
+          <dd>Do not replace symbol definitions when encountering object files of the
+same name more than once.  This is the default state; if you are not
+running on a system that permits automatic relinking of modules, you
+should leave <code>symbol-reloading</code> off, since otherwise GDB
+may discard symbols when linking large programs, that may contain
+several modules (from different directories or libraries) with the same
+name.
+
+          <br><dt><code>show symbol-reloading</code>
+          <dd>Show the current <code>on</code> or <code>off</code> setting. 
+</dl>
+
+     <br><dt><code>set opaque-type-resolution on</code>
+     <dd>Tell GDB to resolve opaque types.  An opaque type is a type
+declared as a pointer to a <code>struct</code>, <code>class</code>, or
+<code>union</code>--for example, <code>struct MyType *</code>--that is used in one
+source file although the full declaration of <code>struct MyType</code> is in
+another source file.  The default is on.
+
+     <p>A change in the setting of this subcommand will not take effect until
+the next time symbols for a file are loaded.
+
+     <br><dt><code>set opaque-type-resolution off</code>
+     <dd>Tell GDB not to resolve opaque types.  In this case, the type
+is printed as follows:
+     <pre class="smallexample">          {&lt;no data fields&gt;}
+          </pre>
+
+     <br><dt><code>show opaque-type-resolution</code>
+     <dd>Show whether opaque types are resolved or not.
+
+     <br><dt><code>maint print symbols </code><var>filename</var><code></code>
+     <dd><dt><code>maint print psymbols </code><var>filename</var><code></code>
+     <dd><dt><code>maint print msymbols </code><var>filename</var><code></code>
+     <dd>Write a dump of debugging symbol data into the file <var>filename</var>. 
+These commands are used to debug the GDB symbol-reading code.  Only
+symbols with debugging data are included.  If you use <code>maint print
+symbols</code>, GDB includes all the symbols for which it has already
+collected full details: that is, <var>filename</var> reflects symbols for
+only those files whose symbols GDB has read.  You can use the
+command <code>info sources</code> to find out which files these are.  If you
+use <code>maint print psymbols</code> instead, the dump shows information about
+symbols that GDB only knows partially--that is, symbols defined in
+files that GDB has skimmed, but not yet read completely.  Finally,
+<code>maint print msymbols</code> dumps just the minimal symbol information
+required for each object file from which GDB has read some symbols. 
+See <a href="Files.html#Files">Commands to specify files</a>, for a discussion of how
+GDB reads symbols (in the description of <code>symbol-file</code>). 
+</dl>
+
+   </body></html>
+

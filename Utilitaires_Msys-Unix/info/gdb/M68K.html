@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+<title>Debugging with GDB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Debugging with GDB">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="M68K">M68K</a>,
+Next:<a rel="next" accesskey="n" href="M88K.html#M88K">M88K</a>,
+Previous:<a rel="previous" accesskey="p" href="M32R-D.html#M32R%2fD">M32R/D</a>,
+Up:<a rel="up" accesskey="u" href="Embedded-Processors.html#Embedded%20Processors">Embedded Processors</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">M68k</h4>
+
+   <p>The Motorola m68k configuration includes ColdFire support, and
+target command for the following ROM monitors.
+
+     <dl>
+
+     <br><dt><code>target abug </code><var>dev</var><code></code>
+     <dd>ABug ROM monitor for M68K.
+
+     <br><dt><code>target cpu32bug </code><var>dev</var><code></code>
+     <dd>CPU32BUG monitor, running on a CPU32 (M68K) board.
+
+     <br><dt><code>target dbug </code><var>dev</var><code></code>
+     <dd>dBUG ROM monitor for Motorola ColdFire.
+
+     <br><dt><code>target est </code><var>dev</var><code></code>
+     <dd>EST-300 ICE monitor, running on a CPU32 (M68K) board.
+
+     <br><dt><code>target rom68k </code><var>dev</var><code></code>
+     <dd>ROM 68K monitor, running on an M68K IDP board.
+
+   </dl>
+
+   <p>If GDB is configured with <code>m68*-ericsson-*</code>, it will
+instead have only a single special target command:
+
+     <dl>
+
+     <br><dt><code>target es1800 </code><var>dev</var><code></code>
+     <dd>ES-1800 emulator for M68K.
+
+   </dl>
+
+   <p>[context?]
+
+     <dl>
+
+     <br><dt><code>target rombug </code><var>dev</var><code></code>
+     <dd>ROMBUG ROM monitor for OS/9000.
+
+   </dl>
+
+   </body></html>
+
