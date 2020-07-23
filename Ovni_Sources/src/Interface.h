@@ -36,7 +36,7 @@
 
 #ifndef GL_MULTISAMPLE                  // pour éviter le include de glew.h et GL_MULTISAMPLE_ARB, sinon GL_MULTISAMPLE existe dans gl.h mais n'est pas activé sous Windows !
     #define GL_MULTISAMPLE      0x809D  // il faudrait glext.h et aussi peut-être glext.dll, mais en 64 bits !
-#endif
+#endif // GL_MULTISAMPLE
 #ifndef GL_SAMPLE_BUFFERS
     #define GL_SAMPLE_BUFFERS   0x80A8
 #endif // GL_SAMPLE_BUFFERS
@@ -825,6 +825,7 @@ public :
     bool  SupprBackup_def              = false;     // Pour supprimer le .bak en sortie de programme
     bool  Raz_Selection_F_def          = false;     // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
     bool  NotFlat_def                  = false;     // Lors  d'un recalcul des normales, ne change pas les facettes déclarées plane. Si true, lissage de Gouraud actif sur la/les facette(s)
+    bool  msg_warning_def              = true;      // Affiche un message sous forme de dialogue si la carte graphique ne supporte pas WX_GL_SAMPLE_BUFFERS (antialiasing par multisample)
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
@@ -857,6 +858,7 @@ public :
     bool  OK_FichierCree           = false;
     bool  Raz_Selection_F          = Raz_Selection_F_def;
     bool  NotFlat                  = NotFlat_def;
+    bool  msg_warning              = msg_warning_def;
 
     GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 

@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wx/msw/setup.h
+// Name:        wx/gtk/setup.h
 // Purpose:     Configuration for the library
 // Author:      Julian Smart
 // Modified by:
@@ -1130,12 +1130,19 @@
 // depends on it)
 #define wxUSE_INFOBAR       1
 
-// Use wxMenu, wxMenuBar, wxMenuItem.
+// Use wxMenu, wxMenuItem.
 //
 // Default is 1.
 //
 // Recommended setting: 1 (can't be disabled under MSW)
 #define wxUSE_MENUS         1
+
+// Use wxMenuBar.
+//
+// Default is 1.
+//
+// Recommended setting: 1 (can't be disabled under MSW)
+#define wxUSE_MENUBAR       1
 
 // Use wxNotificationMessage.
 //
@@ -1764,5 +1771,12 @@
 #define wxUSE_CRASHREPORT 1
 /* --- end MSW options --- */
 
-#endif // _WX_SETUP_H_
+// GTK-specific options used when not using configure. As we can't test for the
+// exact GTK version (without including GTK+ headers that we don't want to
+// include from our own public headers), just assume a recent GTK 2.x.
+#define __WXGTK20__
+#define __WXGTK210__
+#define __WXGTK218__
+//#define __WXGTK3__
 
+#endif // _WX_SETUP_H_

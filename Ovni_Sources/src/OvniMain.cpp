@@ -229,7 +229,34 @@ END_EVENT_TABLE()
 OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
     // Menus, boutons et autres contrôles gérés par wxSmith
-    //(*Initialize(OvniFrame)
+
+    // Note mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code pas wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
+    // permet par exemple d'avoir 2 versions de GLCanvasAttributes_1[] conditionnées par un if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) testant la validité de
+    // int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, 0, 0 };     // Peut-être + général que #if wxCHECK_VERSION(3,0,0)
+    // En cas de changement dans wxSmith sur la frame principale OvniFrame, il suffit de réactiver le //(*, faire les changements dans wxSmith, remettre en place le //_(* et
+    // remettre en place le code qui a été supprimé par la génération automatique (voir l'exemple ci-dessous).
+
+    int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, WX_GL_SAMPLES, 4, 0, 0 };
+    bool GLExtend = false;
+    if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) GLExtend = true;
+/*  Exemple de code à remplacer/ajouter :
+    int GLCanvasAttributes_1[] = {
+        WX_GL_RGBA,
+        WX_GL_DOUBLEBUFFER,
+        WX_GL_DEPTH_SIZE,      16,
+        WX_GL_STENCIL_SIZE,    0,
+    #if wxCHECK_VERSION(3,0,0)
+        WX_GL_SAMPLE_BUFFERS,  1,
+        WX_GL_SAMPLES,         4,
+    #endif // wxCHECK_VERSION
+        0, 0
+        };
+    if (!GLExtend) {
+        printf("WX_GL_SAMPLE_BUFFERS non reconnu par la carte graphique et/ou son driver !\n");
+        GLCanvasAttributes_1[6] = GLCanvasAttributes_1[7] = 0;
+    }
+*/
+    //_(*Initialize(OvniFrame)
     Create(parent, wxID_ANY, _T("OVNI Version wxWidgets"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxFULL_REPAINT_ON_RESIZE, _T("wxID_ANY"));
     Hide();
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -253,7 +280,12 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     	WX_GL_SAMPLE_BUFFERS,  1,
     	WX_GL_SAMPLES,         4,
     #endif // wxCHECK_VERSION
-    	0, 0 };
+        0, 0
+        };
+    if (!GLExtend) {
+        printf("WX_GL_SAMPLE_BUFFERS non reconnu par la carte graphique et/ou son driver !\n");
+        GLCanvasAttributes_1[6] = GLCanvasAttributes_1[7] = 0;
+    }
     #if wxCHECK_VERSION(3,0,0)
     	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
     #else
@@ -675,7 +707,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Axes->     SetToolTip(_T("Affichage des Axes"));
     Button_Boite->    SetToolTip(_T("Affichage de la Boîte englobante"));
     Button_Normale_Barycentre->SetToolTip(_T("Affichage des Normales aux Barycentres des facettes sélectionnées"));
-    Button_Normales_Sommets->SetToolTip(_T("Affichage des Normales aux Sommets des facettes sélectionnées"));
+    Button_Normales_Sommets->  SetToolTip(_T("Affichage des Normales aux Sommets des facettes sélectionnées"));
     Button_Source->   SetToolTip(_T("Affichage de la Source de lumière"));
     Button_Gouraud->  SetToolTip(_T("Affichage de facettes planes ou lissage de Gouraud"));
     Button_Outils->   SetToolTip(_T("Sélections et déplacements"));
@@ -684,7 +716,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Groupes->  SetToolTip(_T("Coloriser les groupes"));
     Button_Materiaux->SetToolTip(_T("Coloriser les matériaux"));
 
-    wxSize* ClientSize = new wxSize(800,600);
+//    wxSize* ClientSize = new wxSize(800,600);
 //    this->SetMinSize(*ClientSize);
     //OpenGL initialisation code
     InitOpenGL();
@@ -812,7 +844,7 @@ OvniFrame::~OvniFrame() {
 }
 
 void OvniFrame::InitOpenGL(void) {
-    if (verbose) printf("Entree OvniFrame::InitOpenGL\n");  // Ne semble plus très utile ... à voir ... et peu-être intégrer ailleurs
+    if (verbose) printf("Entree OvniFrame::InitOpenGL\n");  // Ne semble plus très utile ... à voir ... et peut-être intégrer ailleurs
     //create opengl context
     m_glcontext = new wxGLContext(GLCanvas);
     //bind the context to the widget
@@ -1709,6 +1741,7 @@ void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 
 //    BoxSizer1->SetSizeHints(this);
     BoxSizer1->SetDimension(0,0,ClientSize_GL.x, New_y_size);
+    Element->Resize();
     Element->Refresh();
 
     if (verbose) printf("Sortie OvniFrame::OnButton_SlidersToggle\n\n");

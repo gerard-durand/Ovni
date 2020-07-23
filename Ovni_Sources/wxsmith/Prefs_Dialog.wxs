@@ -226,6 +226,15 @@
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
+				<object class="wxCheckBox" name="ID_CHECKBOX11" variable="CheckBox_NotFlat" member="yes">
+					<label>Forcer toutes les facettes à être NON planes</label>
+					<pos>0,0</pos>
+					<handler function="OnCheckBox_NotFlatClick" entry="EVT_CHECKBOX" />
+				</object>
+				<flag>wxALL</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
 				<object class="wxStaticLine" name="ID_STATICLINE6" variable="StaticLine6" member="yes">
 					<size>10,-1</size>
 				</object>

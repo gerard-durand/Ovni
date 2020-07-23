@@ -18,16 +18,19 @@
 				<Option projectResourceIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
+					<Add option="-std=gnu++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-std=gnu++11" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DWXUSINGDLL" />
 					<Add option="-DDEBUG" />
+					<Add directory="$(#wx3)/include" />
+					<Add directory="$(#wx3)/contrib/include" />
 					<Add directory="$(#wx3)/lib/gcc_dll64_8.1.0/mswu" />
 					<Add directory="C:/MinGW64-8.1.0/include" />
 				</Compiler>
 				<ResourceCompiler>
+					<Add directory="$(#wx3)/include" />
 					<Add directory="$(#wx3)/lib/gcc_dll64_8.1.0/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -64,6 +67,7 @@
 					<Add directory="C:/msys64/MinGW64/include" />
 				</Compiler>
 				<ResourceCompiler>
+					<Add directory="$(#wx314)/include" />
 					<Add directory="$(#wx314)/lib/gcc_dll64_Msys2/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -95,10 +99,13 @@
 					<Add option="-fpermissive" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DWXUSINGDLL" />
+					<Add directory="$(#wx3)/include" />
+					<Add directory="$(#wx3)/contrib/include" />
 					<Add directory="$(#wx3)/lib/gcc_dll64_8.1.0/mswu" />
 					<Add directory="C:/MinGW64-8.1.0/include" />
 				</Compiler>
 				<ResourceCompiler>
+					<Add directory="$(#wx3)/include" />
 					<Add directory="$(#wx3)/lib/gcc_dll64_8.1.0/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -132,10 +139,13 @@
 					<Add option="-D__MINGW64__" />
 					<Add option="-DFREEGLUT_STATIC" />
 					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="$(#wx3)/include" />
+					<Add directory="$(#wx3)/contrib/include" />
 					<Add directory="$(#wx3)/lib/gcc_lib64_8.1.0/mswu" />
 					<Add directory="C:/MinGW64-8.1.0/include" />
 				</Compiler>
 				<ResourceCompiler>
+					<Add directory="$(#wx3)/include" />
 					<Add directory="$(#wx3)/lib/gcc_lib64_8.1.0/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -200,6 +210,7 @@
 					<Add directory="C:/msys64/MinGW64/include" />
 				</Compiler>
 				<ResourceCompiler>
+					<Add directory="$(#wx314)/include" />
 					<Add directory="$(#wx314)/lib/gcc_dll64_Msys2/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -224,12 +235,7 @@
 			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
-			<Add directory="$(#wx3)/include" />
-			<Add directory="$(#wx3)/contrib/include" />
 		</Compiler>
-		<ResourceCompiler>
-			<Add directory="$(#wx3)/include" />
-		</ResourceCompiler>
 		<Linker>
 			<Add option="-mthreads" />
 		</Linker>

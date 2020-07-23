@@ -2,7 +2,7 @@
 <wxsmith>
 	<object class="wxDialog" name="SelectionPanel">
 		<title>Sélection - Déplacements</title>
-		<pos>10,10</pos>
+		<pos>20,20</pos>
 		<size>280,691</size>
 		<id_arg>0</id_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
@@ -161,6 +161,7 @@
 			<label>Forcer le mode Faces planes</label>
 			<pos>8,400</pos>
 			<enabled>0</enabled>
+			<handler function="OnCheckBox_ForcerFlatClick" entry="EVT_CHECKBOX" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON4" variable="Button_InverserNormales" member="yes">
 			<label>Inverser les normales</label>

@@ -61,7 +61,6 @@ char s1[666]; //,buffer[1000] ;			// chaines de caractères. Déclarée ici car 
 
 unsigned int codegroupe,codemateriau;
 int message_multi_sample_actif = 0;
-bool msg_warning = true ;               // Si false, certains messages de Warning ne seront pas affichés
 
 BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_SIZE(BddInter::OnSize)
@@ -203,6 +202,7 @@ void BddInter::ResetData() {
     tolerance           = tolerance_def;
     svg_time            = svg_time_def;
     Raz_Selection_F     = Raz_Selection_F_def;
+    msg_warning         = msg_warning_def;
 
     m_gldata.rotx       = 0.0f;
     m_gldata.roty       = 0.0f;
@@ -708,7 +708,8 @@ void BddInter::OnPaint( wxPaintEvent& event )
         if (antialiasing_soft) {
             message_multi_sample_actif += 1;
             if ((message_multi_sample_actif == 2) && msg_warning) {  // à ne faire qu'une seule fois par session, mais pas trop tôt !
-                wxString wxMessage = _T("Le driver de la carte graphique n'active pas l'option GL_MULTISAMPLE.\n");
+                wxString wxMessage = _T("Le driver de la carte graphique n'active pas l'option GL_MULTISAMPLE et/ou\n");
+                wxMessage         += _T("OVNI n'est pas dans la liste des softs connus de la carte graphique.\n");
                 wxMessage         += _T("OpenGL ne peut donc pas traiter l'antialiasing des polygones.\n\n");
                 wxMessage         += _T("Pour ne plus afficher ce message mettre Msg_Warning=0 dans Ovni.ini");
                 wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),

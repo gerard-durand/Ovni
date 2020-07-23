@@ -1,21 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wx/osx/setup.h
+// Name:        wx/motif/setup.h
 // Purpose:     Configuration for the library
-// Author:      Stefan Csomor
-// Modified by: Stefan Csomor
-// Created:     1998-01-01
-// Copyright:   (c) Stefan Csomor
+// Author:      Julian Smart
+// Modified by:
+// Created:     01/02/97
+// Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef _WX_SETUP_H_
 #define _WX_SETUP_H_
-
-#ifdef __WXMAC_XCODE__
-// while configure based builds have the flags prepended, we must do this here
-// for xcode based builds
-#include "wx/osx/config_xcode.h"
-#endif
 
 /* --- start common options --- */
 // ----------------------------------------------------------------------------
@@ -1136,12 +1130,19 @@
 // depends on it)
 #define wxUSE_INFOBAR       1
 
-// Use wxMenu, wxMenuBar, wxMenuItem.
+// Use wxMenu, wxMenuItem.
 //
 // Default is 1.
 //
 // Recommended setting: 1 (can't be disabled under MSW)
 #define wxUSE_MENUS         1
+
+// Use wxMenuBar.
+//
+// Default is 1.
+//
+// Recommended setting: 1 (can't be disabled under MSW)
+#define wxUSE_MENUBAR       1
 
 // Use wxNotificationMessage.
 //
@@ -1568,67 +1569,5 @@
 
 /* --- end common options --- */
 
-/* --- start OSX options --- */
-// ----------------------------------------------------------------------------
-// Unix-specific options settings
-// ----------------------------------------------------------------------------
+#endif // _WX_SETUP_H_
 
-// use wxSelectDispatcher class
-#define wxUSE_SELECT_DISPATCHER 1
-
-// use wxEpollDispatcher class (Linux only)
-#define wxUSE_EPOLL_DISPATCHER 0
-
-/*
- Use GStreamer for Unix.
-
- Default is 0 as this requires a lot of dependencies which might not be
- available.
-
- Recommended setting: 1 (wxMediaCtrl won't work by default without it).
- */
-#define wxUSE_GSTREAMER 0
-
-// This is only used under Unix, but needs to be defined here as it's checked
-// by wx/unix/chkconf.h.
-#define wxUSE_XTEST 0
-
-// ----------------------------------------------------------------------------
-// Mac-specific settings
-// ----------------------------------------------------------------------------
-
-#undef wxUSE_GRAPHICS_CONTEXT
-#define wxUSE_GRAPHICS_CONTEXT 1
-
-
-// things not implemented under Mac
-
-#undef wxUSE_STACKWALKER
-#define wxUSE_STACKWALKER 0
-
-// wxWebKit is a wrapper for Apple's WebKit framework, use it if you want to
-// embed the Safari browser control
-// 0 by default because of Jaguar compatibility problems
-#define wxUSE_WEBKIT        1
-
-
-// Set to 0 for no libmspack
-#define wxUSE_LIBMSPACK     0
-
-// native toolbar does support embedding controls, but not complex panels, please test
-#define wxOSX_USE_NATIVE_TOOLBAR 1
-
-// make sure we have the proper dispatcher for the console event loop
-#define wxUSE_SELECT_DISPATCHER 1
-#define wxUSE_EPOLL_DISPATCHER 0
-
-// set to 1 if you have older code that still needs icon refs
-#define wxOSX_USE_ICONREF 0
-
-// set to 0 if you have code that has problems with the new bitmap implementation
-#define wxOSX_BITMAP_NATIVE_ACCESS 1
-
-/* --- end OSX options --- */
-
-#endif
-    // _WX_SETUP_H_
