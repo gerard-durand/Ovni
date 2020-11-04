@@ -48,6 +48,7 @@ const long SelectionPanel::ID_RADIOBOX3 = wxNewId();
 const long SelectionPanel::ID_STATICTEXT12 = wxNewId();
 const long SelectionPanel::ID_BUTTON13 = wxNewId();
 const long SelectionPanel::ID_BUTTON14 = wxNewId();
+const long SelectionPanel::ID_BUTTON16 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(SelectionPanel,wxDialog)
@@ -61,7 +62,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(SelectionPanel)
 	Create(parent, wxID_ANY, _T("Sélection - Déplacements"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-	SetClientSize(wxSize(280,691));
+	SetClientSize(wxSize(280,717));
 	Move(wxPoint(20,20));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
@@ -120,26 +121,28 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Delete = new wxButton(this, ID_BUTTON6, _T("Supprimer la/les facette(s)"), wxPoint(24,448), wxSize(160,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
 	Button_UndoDelete = new wxButton(this, ID_BUTTON7, _T("Undo"), wxPoint(184,448), wxSize(72,24), 0, wxDefaultValidator, _T("ID_BUTTON7"));
 	Button_UndoDelete->Disable();
-	Button_InverserParcours = new wxButton(this, ID_BUTTON8, _T("Inversion du sens de parcours"), wxPoint(24,472), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
-	Button_Masquer = new wxButton(this, ID_BUTTON9, _T("Masquer les facettes"), wxPoint(24,496), wxSize(160,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
-	Button_UndoMasquer = new wxButton(this, ID_BUTTON15, _T("Undo"), wxPoint(184,496), wxSize(72,24), 0, wxDefaultValidator, _T("ID_BUTTON15"));
+	Button_InverserParcours = new wxButton(this, ID_BUTTON8, _T("Inversion du sens de parcours"), wxPoint(24,496), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_Masquer = new wxButton(this, ID_BUTTON9, _T("Masquer les facettes"), wxPoint(24,520), wxSize(160,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
+	Button_UndoMasquer = new wxButton(this, ID_BUTTON15, _T("Undo"), wxPoint(184,520), wxSize(72,24), 0, wxDefaultValidator, _T("ID_BUTTON15"));
 	Button_UndoMasquer->Disable();
-	Button_Reafficher = new wxButton(this, ID_BUTTON10, _T("Tout réafficher"), wxPoint(24,520), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON10"));
-	Button_Centrer = new wxButton(this, ID_BUTTON11, _T("Centrer la rotation sur la/les facettes"), wxPoint(24,544), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
-	Button_Manipulations = new wxButton(this, ID_BUTTON12, _T("Manipulations de l\'objet"), wxPoint(24,568), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
+	Button_Reafficher = new wxButton(this, ID_BUTTON10, _T("Tout réafficher"), wxPoint(24,544), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON10"));
+	Button_Centrer = new wxButton(this, ID_BUTTON11, _T("Centrer la rotation sur la/les facettes"), wxPoint(24,568), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
+	Button_Manipulations = new wxButton(this, ID_BUTTON12, _T("Manipulations de l\'objet"), wxPoint(24,592), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
 	wxString __wxRadioBoxChoices_3[3] =
 	{
 		_T("Unique"),
 		_T("Faces avant"),
 		_T("Faces arrière")
 	};
-	RadioBox_TypeSelection = new wxRadioBox(this, ID_RADIOBOX3, wxEmptyString, wxPoint(0,600), wxSize(280,40), 3, __wxRadioBoxChoices_3, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX3"));
+	RadioBox_TypeSelection = new wxRadioBox(this, ID_RADIOBOX3, wxEmptyString, wxPoint(0,624), wxSize(280,40), 3, __wxRadioBoxChoices_3, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX3"));
 	RadioBox_TypeSelection->Disable();
-	StaticText10 = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,596), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
+	StaticText10 = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,624), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
 	StaticText10->SetForegroundColour(wxColour(255,255,255));
 	StaticText10->SetBackgroundColour(wxColour(0,0,0));
-	Button_Etendre = new wxButton(this, ID_BUTTON13, _T("Étendre la sélection"), wxPoint(64,640), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
-	Button_Quitter = new wxButton(this, ID_BUTTON14, _T("Fermer"), wxPoint(184,664), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON14"));
+	Button_Etendre = new wxButton(this, ID_BUTTON13, _T("Étendre la sélection"), wxPoint(64,664), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
+	Button_Quitter = new wxButton(this, ID_BUTTON14, _T("Fermer"), wxPoint(184,688), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON14"));
+	Button_Fusionner = new wxButton(this, ID_BUTTON16, _T("Fusionner les objets sélectionnés"), wxPoint(24,472), wxSize(232,23), 0, wxDefaultValidator, _T("ID_BUTTON16"));
+	Button_Fusionner->Disable();
 
 	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_SelectionSelect);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_SelectionManuelleFacettesClick);
@@ -161,6 +164,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Connect(ID_RADIOBOX3,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_TypeSelectionSelect);
 	Connect(ID_BUTTON13,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_EtendreClick);
 	Connect(ID_BUTTON14,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_QuitterClick);
+	Connect(ID_BUTTON16,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_FusionnerClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&SelectionPanel::OnInit);
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&SelectionPanel::OnClose);
 	//*)
@@ -207,6 +211,7 @@ void SelectionPanel::InitPanel()
 
         Button_InverserParcours->Disable();
         Button_Masquer->Disable();
+        Button_Fusionner->Disable();
 
 //        Button_Reafficher->Enable();
 
@@ -245,6 +250,8 @@ void SelectionPanel::InitPanel()
 //        Button_UndoDelete->Enable();
 
         Button_InverserParcours->Enable();
+        Button_Fusionner->Disable();
+
 
         Button_Masquer->SetLabel(_T("Masquer les facettes"));
         Button_Masquer->Enable();
@@ -281,6 +288,11 @@ void SelectionPanel::InitPanel()
 
         Button_InverserNormales->Enable();
 //        Button_UndoNormales    ->Enable();    // Changer ou pas ?
+        if (Element->listeObjets.size() >= 2) { // à ce niveau, doit sans doute toujours être nul, donc test inutile ?
+            Button_Fusionner->Enable();
+        } else {
+            Button_Fusionner->Disable();
+        }
 
         Button_Delete->SetLabel(_T("Supprimer l'Objet"));
         Button_Delete->Enable();
@@ -333,9 +345,9 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     MAIN->toggle_outils = false;
     MAIN->Button_Outils->SetValue(false);
     if (MAIN->Button_Points->GetValue())    // Si le bouton Afficher les points est activé, remettre show_points à true
-        Element->show_points=true;
+        Element->show_points = true;
     else
-        Element->show_points=false;   // sinon, false
+        Element->show_points = false;   // sinon, false
     if (Element->mode_selection == Element->selection_objet) {
         Element->m_gllist=0;
     }
@@ -368,7 +380,7 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
 
     Element->listeObjets.clear();
     Element->listePoints.clear();
-    for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected=false;
+    for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
 
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
@@ -700,6 +712,7 @@ void SelectionPanel::OnTextCtrl_NomObjetText(wxCommandEvent& event)
         if (Element->listeObjets.size() == 1) {
             auto it = Element->listeObjets.begin();
             wxString Nouveau_nom = TextCtrl_NomObjet->GetValue();
+            Nouveau_nom = Nouveau_nom.utf8_str();   // Conversion de utf8 en string
             Element->Objetlist[*it].SetName(Nouveau_nom);
             printf("Nouveau nom de l'objet : %s\n",Element->Objetlist[*it].GetName());
             Element->bdd_modifiee = true;
@@ -798,4 +811,127 @@ void SelectionPanel::OnCheckBox_ForcerFlatClick(wxCommandEvent& event)
     }
     Element->m_gllist = 0;
     Element->Refresh();
+}
+
+void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
+{
+    unsigned int o, k, j, Nb_valeurs;
+    unsigned int New_Nb_sommets, New_Nb_facettes, New_Nb_normales, New_Nb_aspects, New_Nb_luminances, New_Nb_vecteurs;
+    unsigned int Offset_Nb_sommets, Offset_Nb_facettes, Offset_Nb_normales, Offset_Nb_aspects, Offset_Nb_luminances, Offset_Nb_vecteurs;
+    int Numero, groupe, codmatface;
+    std::vector<float> vecteur3D;
+    std::vector<int> F_sommets, L_sommets;
+
+    Object *Objet_courant, *Objet_base;
+    Face    NewFace;
+    Face   *Facette_courante;
+
+    BddInter *Element = MAIN->Element;
+
+    New_Nb_sommets = New_Nb_facettes = New_Nb_normales = New_Nb_aspects = New_Nb_luminances = New_Nb_vecteurs = 0;
+
+    auto it = Element->listeObjets.end(); it--; // Pointer le dernier objet de la liste (c'est le premier séletionné et c'est là qu'on fusionne les autres)
+
+    Offset_Nb_sommets = Offset_Nb_facettes = Offset_Nb_normales = Offset_Nb_aspects = Offset_Nb_luminances = Offset_Nb_vecteurs = 0;
+
+    printf("Fusion des objets suivants dans %s :\n",Element->Objetlist[*it].GetName());
+    for (o=0; o<Element->listeObjets.size(); ++o, it--) {
+        Objet_courant = &(Element->Objetlist[*it]);
+        printf("Objet %d, numero %d, %s\n",o,Objet_courant->GetValue(),Objet_courant->GetName());
+        if (o == 0) {
+            New_Nb_sommets    = Objet_courant->Nb_sommets;
+            New_Nb_facettes   = Objet_courant->Nb_facettes;
+            New_Nb_normales   = Objet_courant->Nb_normales;
+            New_Nb_aspects    = Objet_courant->Nb_aspects;
+            New_Nb_luminances = Objet_courant->Nb_luminances;
+            New_Nb_vecteurs   = Objet_courant->Nb_vecteurs;
+            Objet_base = Objet_courant;
+        } else {
+            New_Nb_sommets   += Objet_courant->Nb_sommets;
+            New_Nb_facettes  += Objet_courant->Nb_facettes;
+            New_Nb_normales  += Objet_courant->Nb_normales;
+            New_Nb_aspects   += Objet_courant->Nb_aspects;
+            New_Nb_luminances+= Objet_courant->Nb_luminances;
+            New_Nb_vecteurs  += Objet_courant->Nb_vecteurs;
+
+            Objet_base->Sommetlist.resize(New_Nb_sommets);
+            for (k=0; k<Objet_courant->Nb_sommets; k++) {
+                vecteur3D = Objet_courant->Sommetlist[k].getPoint();
+                Numero    = k+1+Offset_Nb_sommets;
+                Objet_base->Sommetlist[Numero-1] = Sommet(Numero, vecteur3D);
+            }
+            Objet_base->Nb_sommets = New_Nb_sommets;
+
+            Objet_base->Vecteurlist.resize(New_Nb_vecteurs);
+            for (k=0; k<Objet_courant->Nb_vecteurs; k++) {
+                vecteur3D = Objet_courant->Vecteurlist[k].getPoint();
+                Numero    = k+1+Offset_Nb_vecteurs;
+                Objet_base->Vecteurlist[Numero-1] = Vecteur(Numero, vecteur3D);
+            }
+            Objet_base->Nb_vecteurs = New_Nb_vecteurs;
+
+            Objet_base->Facelist.resize(New_Nb_facettes);
+            for (k=0; k<Objet_courant->Nb_facettes; k++) {
+                Facette_courante = &(Objet_courant->Facelist[k]);
+                F_sommets  = Facette_courante->getF_sommets();
+                L_sommets  = Facette_courante->getL_sommets();
+                vecteur3D  = Facette_courante->getNormale_b();
+                groupe     = Facette_courante->getGroupe();
+                codmatface = Facette_courante->getCodmatface();
+                Nb_valeurs = F_sommets.size();
+                for (j=0; j<Nb_valeurs; j++) F_sommets[j] += Offset_Nb_sommets;
+                Nb_valeurs = L_sommets.size();
+                for (j=0; j<Nb_valeurs; j++) L_sommets[j] += Offset_Nb_vecteurs;
+
+                Numero  = k+1+Offset_Nb_facettes;
+                NewFace = Face(Numero,F_sommets);
+                NewFace.setNormale_b(vecteur3D);
+                NewFace.setGroupe(groupe);
+                NewFace.setCodmatface(codmatface);
+                NewFace.flat = Facette_courante->flat;  // Récupérer le booléen flat de la facette courante et le recopier dans la nouvelle facette
+                NewFace.setLsommet(L_sommets);
+                Objet_base->Facelist[Numero-1] = NewFace;
+            }
+            Objet_base->Nb_facettes  = New_Nb_facettes;
+            Objet_base->Nb_normales  = New_Nb_normales;
+            Objet_base->Nb_aspects   = New_Nb_aspects;
+            Objet_base->Nb_luminances= New_Nb_luminances;
+
+            if(!(Objet_courant->flat)) Objet_base->flat = false; // Au moins 1 des objets fusionnés n'est pas plat -> l'objet fusionné ne l'est pas non plus, du moins globalement
+
+            Objet_courant->deleted   = true;    // Problème : un undelete peut le restituer. Voir comment le supprimer réellement de la mémoire
+            Objet_courant->afficher  = false;   // ... pas suffisant
+            Objet_courant->selected  = false;
+        }
+        Offset_Nb_sommets    = Objet_base->Nb_sommets;      // Conserver les offsets pour la fusion d'objet suivante
+        Offset_Nb_facettes   = Objet_base->Nb_facettes;
+        Offset_Nb_normales   = Objet_base->Nb_normales;
+        Offset_Nb_aspects    = Objet_base->Nb_aspects;
+        Offset_Nb_luminances = Objet_base->Nb_luminances;
+        Offset_Nb_vecteurs   = Objet_base->Nb_vecteurs;
+    }
+
+    while (Element->listeObjets.size() > 1) {   // On ne garde que le dernier élément de la liste, soit objet_base (car la liste des Objets est construite par des push_front)
+        it = Element->listeObjets.begin();
+        Element->listeObjets.erase(it);
+    }
+    wxString str_loc;
+    str_loc.clear();
+    str_loc.Printf(_T("%d"),(int)Element->listeObjets.size());
+    TextCtrl_Selection->SetValue(str_loc);
+
+    Element->m_gllist = 0;
+    Element->Refresh();
+    Element->bdd_modifiee = true;
+    Button_Fusionner->Disable();
+
+    ToDo();
+}
+
+void SelectionPanel::ToDo()
+{
+    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore complètement opérationnel...\nSimulation interface OK"), _T("Avertissement"),
+                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
+    query->ShowModal();
+    query->Destroy();
 }

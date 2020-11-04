@@ -255,7 +255,7 @@ void ReperagePoint::OnButton_ResetClick(wxCommandEvent& event)
     int num_obj = Element->Objetlist[IndiceObjet].GetValue();
     str.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str);
-    str = Element->Objetlist[IndiceObjet].GetwxName();
+    str = wxString(Element->Objetlist[IndiceObjet].GetName(), wxConvUTF8);
     Text_NomObjet->SetValue(str);
 
     int IndicePoint=-1;

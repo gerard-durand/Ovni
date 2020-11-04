@@ -16,8 +16,9 @@
     Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D Ascii), .g3d
     (Format Onera G3D), .off (Object File Format de chez DEC). Quanu un fichier
     a été ouvert, son extension devient celle proposée par défaut.<br>
-    <b>Fusionner</b> : Pour fusionner la bdd courante avec un autre fichier de
-    bdd. Les objets restent indépendants.<br>
+    <b>Ajouter une Bdd</b> : Pour ajouter à la bdd courante avec un autre fichier de
+    bdd. Les objets restent indépendants. Il existe une fonction de fusion de plusieurs objets
+    accessible via le menu (ou l'icône) de "Sélection et déplacement".<br>
     <b>Enregistrer</b> : Enregistre avec le nom courant (seulement en .bdd,
     format Oktal).<br>
     <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd
@@ -129,7 +130,10 @@
     aussi de déplacer la sélection, ou encore d'effectuer, via le bouton
     "Manipulations de l'objet", la translation, la rotation, la création par
     symétrie d'un objet ou encore, directement, le masquage ou la suppression
-    d'un objet/facette.<br>
+    d'un objet/facette. Quand plusieurs objets sont sélectionnés, on peut aussi
+    les fusionner en 1 seul onjet (fusion des tableaux de points, facettes, ...).
+    Il peut être utile, mais pas nécessaire, de faire suivre cette action par
+    une simplification de la base de données pour éliminer les doublons de points, normales,...<br>
     La plupart des fonctions ont un UNDO, <b>sauf la suppression d'un groupe de
       facettes</b><br>
     Tout comme dans Repérage, on peut effectuer une permutation circulaire de

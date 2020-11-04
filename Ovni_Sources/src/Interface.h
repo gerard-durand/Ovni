@@ -272,7 +272,7 @@ public:
     void setNormale_b(float new_normale[3]) {
         for (int i=0; i<3; i++) normale_b[i] = new_normale[i];
     }
-    std::vector<int> getLsommets() {
+    std::vector<int> getL_sommets() {
         return this->L_sommets;
     };
     void setLsommet(std::vector<int> new_point) {
@@ -346,6 +346,11 @@ public:
         Numero = number;
         for(int i=0; i<3; i++) point.push_back(xyz[i]);
      }
+    Sommet(int& number, std::vector<float> xyz) {
+        initSommet();
+        Numero = number;
+        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+    }
     int getNumero() {
         return this->Numero;
     };
@@ -486,7 +491,7 @@ public:
 //    int getNumero() {
 //        return this->Numero;
 //    };
-//    std::vector<int> getLsommets() {
+//    std::vector<int> getL_sommets() {
 //        return this->L_sommets;
 //    };
 //    void setLsommet(std::vector<int> new_point) {
@@ -522,6 +527,11 @@ public:
         }
     }
     Vecteur(int& number, float xyz[3]) {
+        initVecteur();
+        Numero = number;
+        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+    }
+    Vecteur(int& number, std::vector<float> xyz) {
         initVecteur();
         Numero = number;
         for(int i=0; i<3; i++) point.push_back(xyz[i]);

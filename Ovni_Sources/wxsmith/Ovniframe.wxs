@@ -134,11 +134,11 @@
 					<enabled>0</enabled>
 					<handler function="OnMenu_ReOpenSelected" entry="EVT_MENU" />
 				</object>
-				<object class="wxMenuItem" name="idMergeFile" variable="Menu_Fusionner" member="yes">
-					<label>Fusionner</label>
-					<help>Fusionne un nouveau fichier avec ceux déjà présents</help>
+				<object class="wxMenuItem" name="idAddFile" variable="Menu_AddFile" member="yes">
+					<label>Ajouter une Bdd</label>
+					<help>Ajoute un nouveau fichier Bdd à ceux déjà présents</help>
 					<enabled>0</enabled>
-					<handler function="OnMenu_FusionnerSelected" entry="EVT_MENU" />
+					<handler function="OnMenu_AddFileSelected" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idSaveFile" variable="Menu_Enregistrer" member="yes">
 					<label>Enregistrer</label>

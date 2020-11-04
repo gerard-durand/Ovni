@@ -11,6 +11,7 @@
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include "vector3d.h"
+#include "utf8.h"
 
 #include "OvniMain.h"
 #include <time.h>
@@ -1476,6 +1477,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             MSelect->TextCtrl_IndFacette ->SetValue(str_reset);
             MSelect->TextCtrl_NumGroupe  ->SetValue(str_reset);
             MSelect->TextCtrl_NumMateriau->SetValue(str_reset);
+            MSelect->Button_Fusionner    ->Disable();
         }
         m_gllist = 0;
         Refresh();
@@ -2252,7 +2254,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Face_ij->flat = false ;    // La facette n'est a priori pas plane
                     objet_courant->flat = false;                         // Du coup, idem pour l'objet.
                     // Vérifier que la facette n'est pas plane => même numéro de vecteur sur tous les sommets
-                    Numeros_L = Face_ij->getLsommets();
+                    Numeros_L = Face_ij->getL_sommets();
                     int Num_0 = Numeros_L[0];
                     bool Facette_plane = true;
                     for (unsigned int k=1; k<Numeros_L.size(); k++) {
@@ -2367,7 +2369,7 @@ void BddInter::LectureXML_G3d (FILE *f)
 		indiceObjet_courant = o;
         sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetValue());
         printf(utf8_To_ibm(Message));
-        wxCharBuffer buf_nom = this->Objetlist[o].GetName();
+        wxCharBuffer buf_nom = this->Objetlist[o].GetName();    // Normalement déjà en utf8 dans le format g3d
         printf("Nom de l'objet %2d                    : %s\n",o,buf_nom.data());
         printf("Nombre de points de l'objet %2d       : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_sommets);
         nb_T_points += Objetlist[o].Nb_sommets;
@@ -2552,6 +2554,9 @@ void BddInter::LoadOBJ()
     unsigned int Nb_objets, indice_premierObjet;
     float vx,vy,vz;
 
+    bool nom_utf8;
+    wxString str_loc;
+
     std::vector<int> Numeros;
 
     Face *Face_ij;
@@ -2663,7 +2668,10 @@ void BddInter::LoadOBJ()
                 printf(utf8_To_ibm(Message));
 //                printf("Liste des nom lus:\n");
                 for (i=0 ; i< o ; i++) {
-                    sprintf(Message,"Numéro: %3d, %s",i+1,tab_nom[i]); // Pas besoin de \n, il est déjà dans tab_nom
+                    str_loc  = wxString(tab_nom[i]);
+                    nom_utf8 = is_utf8(tab_nom[i]) ;
+                    if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
+                    sprintf(Message,"Numéro: %3d, %s",i+1,(const char *)str_loc.data());//tab_nom[i]); // Pas besoin de \n, il est déjà dans tab_nom
                     printf(utf8_To_ibm(Message));
 //                    printf("Numero: %3d, %s",i+1,tab_nom[i]); // Pas besoin de \n, il est déjà dans tab_nom
                 }
@@ -2804,6 +2812,8 @@ void BddInter::LoadOBJ()
 #else
             wxString wxNom=wxString::FromAscii(nom_obj);
 #endif
+            nom_utf8 = is_utf8(wxNom.data());
+            if (!nom_utf8) wxNom = wxNom.utf8_str();        // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
             this->Objetlist[indice_premierObjet].SetName(wxNom);
         //    printf("OK3...\n");
             nfac    = 0 ;
@@ -2829,6 +2839,8 @@ void BddInter::LoadOBJ()
 #else
                     wxNom = wxString::FromAscii(Lire_chaine(s1+2));
 #endif // wxCHECK_VERSION
+                    nom_utf8 = is_utf8(wxNom.data());
+                    if (!nom_utf8) wxNom = wxNom.utf8_str();                // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
 
                     this->Objetlist[o].SetName(wxNom);                      // ! A vérifier car actuellement 1 seul objet !
                     indiceObjet_courant = o;
@@ -4122,6 +4134,8 @@ void BddInter::LoadBDD() {
     int j, k, Nb;
     double matrice[16];
 
+    bool ligne_utf8;
+
     if(verbose) printf("Entree de BddInter::LoadBdd\n");
 
     wxCharBuffer buffer=this->file.mb_str();
@@ -4139,9 +4153,9 @@ void BddInter::LoadBDD() {
         if (ligne[0] == '#') continue;                  // Si c'est une ligne de commentaires, passer à la suivante
 
 #if wxCHECK_VERSION(3,0,0)
-        str=wxString(ligne);
+        str = wxString(ligne);
 #else
-        str=wxString::FromAscii(ligne.c_str());
+        str = wxString::FromAscii(ligne.c_str());
 #endif // wxCHECK_VERSION
 
         if((ligne.find("<OBJET>") != notFound) || (ligne.find("<OBJECT>") != notFound)) { // La ligne contient <OBJET> (ou <OBJECT> en version SDM anglaise)
@@ -4156,6 +4170,10 @@ void BddInter::LoadBDD() {
                     non_retenus++;
                 }
             }
+
+            ligne_utf8 = is_utf8(ligne.data());     // La ligne est-elle en utf8 ?
+            if(!ligne_utf8) str = str.utf8_str();   // Ligne non utf8 (donc probablement Ansi) : la convertir en utf8
+
             makeobjet();
             mode_lecture = 0;
             indiceObjet  = Objetlist.size() -1;      // Numéro d'indice de l'objet à lire
@@ -4469,15 +4487,17 @@ void BddInter::makeobjet() {
         token = tokenizer.GetNextToken();
         this->wxStringlist.push_back(this->token);      // Pb : si le nom comporte des espaces, c'est plusieurs token
     }
-    std::cout << '\n' << "objet ";
+    std::cout << '\n' << "Objet ";
     wxString Nom_Objet;
     unsigned int last = this->wxStringlist.size()-1;
     for(unsigned int i=1; i<=last; i++) {
         wxString *mystring= new wxString(wxStringlist[i]);
         std::string stl_string = std::string(mystring->mb_str());
         std::cout <<" "+stl_string;
-        if (i > 1) Nom_Objet += wxStringlist[i];        // Concaténer les wxStringList à partir de [2]
-        if (i < last) Nom_Objet += _T(" ");             // Séparer par des espaces sauf si c'est le dernier
+        if (i > 1) {
+            Nom_Objet += wxStringlist[i];               // Concaténer les wxStringList à partir de [2]
+            if (i < last) Nom_Objet += _T(" ");         // Séparer par des espaces sauf si c'est le dernier
+        }
     }
     std::cout << '\n' ;
 //    this->buffer = Nom_Objet.mb_str();
@@ -4936,12 +4956,12 @@ void BddInter::GenereTableauAretes(Object * objet)
     if (Nb_avant >= Arete_size_test) traiter_ici = false;
     if (!traiter_ici) {
         if (verbose_local) {
-            printf("Objet %s\nNb_aretes : %d\n",objet->GetName(),Nb_avant);
+            printf("Objet : %s\nNb_aretes : %d\n",objet->GetName(),Nb_avant);
             if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
         }
         return;
     }
-    if (verbose_local) sprintf(Message,"Objet %s\nNb_aretes avant : %d\n",objet->GetName(),Nb_avant);
+    if (verbose_local) sprintf(Message,"Objet : %s\nNb_aretes avant : %d\n",objet->GetName(),Nb_avant);
     Nb_deleted = 0;
 
 
@@ -6772,7 +6792,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 printf("et ayant pour id ");
                 printf("%d\n", ID);
             }
-            MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
+            MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
+//            MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
             str.Printf(_T("%d"),this->Objetlist[objet].GetValue());
             MSelect->TextCtrl_NumObjet->SetValue(str);
             str.Printf(_T("%d"),objet);
@@ -6966,7 +6987,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 if (objet == -1) {
                     MSelect->TextCtrl_NomObjet->ChangeValue(_T("Fond"));
                 } else {
-                    MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
+                    MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
+//                    MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
                 }
                 str.Printf(_T("%d"),this->Objetlist[objet].GetValue());     // Numéro de l'objet (!= son indice)
                 MSelect->TextCtrl_NumObjet->SetValue(str);
@@ -6976,10 +6998,19 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 MSelect->TextCtrl_IndFacette->SetValue(str);
                 str.Printf(_T("%d"),face+1);
                 MSelect->TextCtrl_NumFacette->SetValue(str);
-                if (mode_selection == selection_objet)
-                    str.Printf(_T("%d"),(int)listeObjets.size()) ;
-                else
+                if (mode_selection == selection_objet) {
+                    int nb_Objets_selected = (int)listeObjets.size();
+                    str.Printf(_T("%d"),nb_Objets_selected) ;
+                    if (nb_Objets_selected >= 2) {
+                        MSelect->Button_Fusionner->Enable();    // Activer le bouton de fusion d'objets si le nombre d'objets sélectionnés est >= 2
+                        MSelect->TextCtrl_NomObjet->SetValue(_T("Sélection multiple"));
+                    } else {
+                        MSelect->Button_Fusionner->Disable();   // Le désactiver sinon (rien à fusionner).
+                        if (nb_Objets_selected == 0) MSelect->TextCtrl_NomObjet->SetValue("");
+                    }
+                } else {
                     str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());
+                }
                 MSelect->TextCtrl_Selection->SetValue(str);
                 if (objet == -1) {
                     MSelect->TextCtrl_NumGroupe  ->SetValue(_T(""));
@@ -7285,7 +7316,7 @@ void BddInter::SaveBDD(wxString str) {
         unsigned compteur_luminances = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
            if (!objet_courant->Facelist[j].deleted) {
-                numeros_Sommets = objet_courant->Facelist[j].getLsommets();
+                numeros_Sommets = objet_courant->Facelist[j].getL_sommets();
                 compteur_luminances += numeros_Sommets.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7309,7 +7340,7 @@ void BddInter::SaveBDD(wxString str) {
             }
             compteur++;
 //            if (compteur == 1) printf("\n");    // Bug : OK si souder et exe normal, mais enlever en mode Debug !!!!!
-            numeros_Sommets = Face_ij->getLsommets();
+            numeros_Sommets = Face_ij->getL_sommets();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t";
@@ -7495,7 +7526,7 @@ void BddInter::SaveOBJ(wxString str) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(!Face_ij->deleted) {
-                numeros_Sommets = Face_ij->getLsommets();
+                numeros_Sommets = Face_ij->getL_sommets();
                 compteur_luminances += numeros_Sommets.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7524,7 +7555,7 @@ void BddInter::SaveOBJ(wxString str) {
             numeros_Sommets = Face_ij->F_sommets;
             myfile << "f";
             if (compteur_luminances != 0) {                         // Il y a des des normales aux sommets
-                numeros_Sommets_L = Face_ij->getLsommets();
+                numeros_Sommets_L = Face_ij->getL_sommets();
                 if (test_seuil_gouraud && Enr_Normales_Seuillees) {
                     NormaleFacette = Face_ij->getNormale_b();
                 }
@@ -7841,7 +7872,7 @@ void BddInter::SaveG3D(wxString str) {
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(!Face_ij->deleted) {
-                numeros_Sommets_L = Face_ij->getLsommets();
+                numeros_Sommets_L = Face_ij->getL_sommets();
                 compteur_luminances += numeros_Sommets_L.size();
             }
             // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
@@ -7920,7 +7951,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile << "\"/>\n";
             myfile.flush();
 
-            numeros_Sommets_L=Face_ij->getLsommets();
+            numeros_Sommets_L=Face_ij->getL_sommets();
             if ((numeros_Sommets_L.size() != 0) || Face_ij->flat) {
                 bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
                 if (test_composite) {

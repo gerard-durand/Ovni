@@ -368,7 +368,7 @@ void ReperageFacette::OnButton_ResetClick(wxCommandEvent& event)
     int num_obj = Element->Objetlist[IndiceObjet].GetValue();
     str.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str);
-    str = Element->Objetlist[IndiceObjet].GetwxName();
+    str = wxString(Element->Objetlist[IndiceObjet].GetName(), wxConvUTF8);
     Text_NomObjet->SetValue(str);
 
 // Init facette
@@ -451,7 +451,7 @@ void ReperageFacette::OnButton_InvNormaleClick(wxCommandEvent& event)
         objet_courant->Facelist[IndiceFacette].setFsommet(ReverseSommets);
         // Idem pour normales aux sommets
         if (objet_courant->Facelist[IndiceFacette].L_sommets.size() != 0) {  // doit être la même chose !!!
-            NumerosSommets = objet_courant->Facelist[IndiceFacette].getLsommets();
+            NumerosSommets = objet_courant->Facelist[IndiceFacette].getL_sommets();
             ReverseSommets.clear();
             for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
             objet_courant->Facelist[IndiceFacette].setLsommet(ReverseSommets);
@@ -479,7 +479,7 @@ void ReperageFacette::OnButton_PermuterClick(wxCommandEvent& event)
         objet_courant->Facelist[IndiceFacette].setFsommet(NumerosSommets);
         // Permuter aussi les numéros des normales aux sommets (seulement s'ils existent), pas forcément les mêmes numéros que pour les facettes
         if (objet_courant->Facelist[IndiceFacette].L_sommets.size() != 0) {
-            NumerosSommets = objet_courant->Facelist[IndiceFacette].getLsommets();  // En toute rigueur NumerosVecteurs
+            NumerosSommets = objet_courant->Facelist[IndiceFacette].getL_sommets();  // En toute rigueur NumerosVecteurs
             last = NumerosSommets.back();
             NumerosSommets.pop_back();
             NumerosSommets.insert(NumerosSommets.begin(),last);

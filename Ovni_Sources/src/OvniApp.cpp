@@ -23,11 +23,16 @@ bool OvniApp::OnInit() {
     char Message[1024];
 //    printf("Entree OvniApp::OnInit\n");
 
+#if _WIN32
+    system("chcp 65001  > nul");    // Pour coder en UTF-8 les sorties dans la console DOS sous Windows
+#endif
+
 // D'après : https://wiki.wxwidgets.org/Converting_everything_to_and_from_wxString
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());
     wxString appPath(f.GetPath());
     snprintf(Message,1024,"Chemin de l'exécutable :\n%s\n",(const char*)appPath.utf8_str());
-    printf(utf8_To_ibm(Message));
+    printf(Message);
+///    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
 //    wxString cmd=_T("cd ") + appPath;   // Construire une commande cd dans le répertoire d'Ovni.exe
 //    system((const char*)cmd.mb_str());               // Se placer dans le répertoire d'Ovni.exe (mais ne suffit pas pour trouver les icônes)
     wxSetWorkingDirectory(appPath);

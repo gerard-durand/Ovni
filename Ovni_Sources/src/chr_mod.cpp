@@ -2,7 +2,7 @@
 /* Voici une paire de fonctions en C qui fait le transcodage de CP437 a
 ISO-8859-1 et retour: */
 
-    /*-----------------------------------------------------------------------*/
+    /*----  --------------------------------------------------------------------------------------------------*/
     /*
      *   ibm2iso (*c*):  Translates ibm accentuated chars by ISO char.
      *   iso2ibm (*c*):  Translates iso accentuated chars to IBM ones.
@@ -47,6 +47,11 @@ ISO-8859-1 et retour: */
 #define UTF8_1ST_OF_3       0xe0  // 1110 xxxx
 #define UTF8_TRAIL          0x80  // 10xx xxxx
 /**********************************/
+
+/**** pour la fonction is_utf8 ****/
+#include "utf8.h"
+/**********************************/
+
 static char Message_iso[1024];
 /* Anciens codes */
 static unsigned char IsoTable[256]=
@@ -140,10 +145,12 @@ char *ibm_To_iso (char *Texte)
 /* Nouveaux et codes modifiés ... */
  char *utf8_To_ibm (char *Texte)
 {
+/* Fonction invalidée car maintenant la console Windows sort les caractères en utf8 à cause du chcp 65001 > nul ; ajouté en début de OvniApp.cpp
 #ifdef WIN32    // Ne concerne que Windows
     unsigned int nb = utf8ToEascii(Texte, strlen(Texte), Message_iso, 1024);
     return (Message_iso);
 #endif
+*/
     return (Texte) ;
 }
 
@@ -370,4 +377,87 @@ unsigned int utf8ToEascii(const char * capSrc,unsigned int iSrcLen,char * capDes
     if (ret == 0) ret = iNbUnicode;
     capDest[ret] = 0;   // Par précaution
     return ret;
+}
+
+// d'après https://stackoverflow.com/questions/1031645/how-to-detect-utf-8-in-plain-c
+// Teste si une chaine est valide en codage utf8 : attention ; il peut y avoir de faux positifs d'près ce forum !
+
+bool is_utf8(const char * string)
+{
+    if(!string)
+        return false;
+
+    const unsigned char * bytes = (const unsigned char *)string;
+    while(*bytes)
+    {
+        if( (// ASCII
+             // use bytes[0] <= 0x7F to allow ASCII control characters
+                bytes[0] == 0x09 ||
+                bytes[0] == 0x0A ||
+                bytes[0] == 0x0D ||
+                (0x20 <= bytes[0] && bytes[0] <= 0x7E)
+            )
+        ) {
+            bytes += 1;
+            continue;
+        }
+
+        if( (// non-overlong 2-byte
+                (0xC2 <= bytes[0] && bytes[0] <= 0xDF) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF)
+            )
+        ) {
+            bytes += 2;
+            continue;
+        }
+
+        if( (// excluding overlongs
+                bytes[0] == 0xE0 &&
+                (0xA0 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            ) ||
+            (// straight 3-byte
+                ((0xE1 <= bytes[0] && bytes[0] <= 0xEC) ||
+                    bytes[0] == 0xEE ||
+                    bytes[0] == 0xEF) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            ) ||
+            (// excluding surrogates
+                bytes[0] == 0xED &&
+                (0x80 <= bytes[1] && bytes[1] <= 0x9F) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            )
+        ) {
+            bytes += 3;
+            continue;
+        }
+
+        if( (// planes 1-3
+                bytes[0] == 0xF0 &&
+                (0x90 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            ) ||
+            (// planes 4-15
+                (0xF1 <= bytes[0] && bytes[0] <= 0xF3) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            ) ||
+            (// plane 16
+                bytes[0] == 0xF4 &&
+                (0x80 <= bytes[1] && bytes[1] <= 0x8F) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            )
+        ) {
+            bytes += 4;
+            continue;
+        }
+
+        return false;
+    }
+
+    return true;
 }

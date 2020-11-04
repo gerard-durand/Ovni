@@ -26,6 +26,7 @@ class SelectionPanel: public wxDialog
 		wxButton* Button_Centrer;
 		wxButton* Button_Delete;
 		wxButton* Button_Etendre;
+		wxButton* Button_Fusionner;
 		wxButton* Button_InverserNormales;
 		wxButton* Button_InverserParcours;
 		wxButton* Button_Manipulations;
@@ -109,6 +110,7 @@ class SelectionPanel: public wxDialog
 		static const long ID_STATICTEXT12;
 		static const long ID_BUTTON13;
 		static const long ID_BUTTON14;
+		static const long ID_BUTTON16;
 		//*)
 
 	private:
@@ -140,8 +142,10 @@ class SelectionPanel: public wxDialog
 		void OnButton_SelectionManuelleFacettesClick(wxCommandEvent& event);
 		void OnButton_OuvrirReperageClick(wxCommandEvent& event);
 		void OnCheckBox_ForcerFlatClick(wxCommandEvent& event);
+		void OnButton_FusionnerClick(wxCommandEvent& event);
 		//*)
 		void InitPanel();
+		void ToDo();
         OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

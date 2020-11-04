@@ -124,7 +124,7 @@ class OvniFrame: public wxFrame
          wxMenuItem* Menu_EnregistrerPalette;
          wxMenuItem* Menu_Enregistrer_Sous;
          wxMenuItem* Menu_FacteurEchelleBdd;
-         wxMenuItem* Menu_Fusionner;
+         wxMenuItem* Menu_AddFile;
          wxMenuItem* Menu_Hardware3D;
          wxMenuItem* Menu_MasquerFacettes;
          wxMenuItem* Menu_Open;
@@ -168,6 +168,7 @@ class OvniFrame: public wxFrame
          wxStatusBar* StatusBar1;
          wxTimer Timer_Save;
          //*)
+
 #if wxCHECK_VERSION(3,0,0)
          wxToggleButton* Button_Axes;
          wxToggleButton* Button_Boite;
@@ -377,7 +378,7 @@ class OvniFrame: public wxFrame
         void OnMenu_EnregistrerPaletteSelected(wxCommandEvent& event);
         void OnMenu_RelirePaletteSelected(wxCommandEvent& event);
         void OnMenu_CouleurDesGroupesSelected(wxCommandEvent& event);
-        void OnMenu_FusionnerSelected(wxCommandEvent& event);
+        void OnMenu_AddFileSelected(wxCommandEvent& event);
         void OnMenu_EnregistrerSelected(wxCommandEvent& event);
         void OnMenuItem_ImagePpmSelected(wxCommandEvent& event);
         void OnMenuItem_ImageJpegSelected(wxCommandEvent& event);
@@ -432,7 +433,7 @@ class OvniFrame: public wxFrame
 		static const long ID_PANEL2;
 		static const long idOpenFile;
 		static const long idReopenFile;
-		static const long idMergeFile;
+		static const long idAddFile;
 		static const long idSaveFile;
 		static const long idSaveFileAs;
 		static const long idProperties;

@@ -3,7 +3,7 @@
 	<object class="wxDialog" name="SelectionPanel">
 		<title>Sélection - Déplacements</title>
 		<pos>20,20</pos>
-		<size>280,691</size>
+		<size>280,717</size>
 		<id_arg>0</id_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
@@ -191,38 +191,38 @@
 		</object>
 		<object class="wxButton" name="ID_BUTTON8" variable="Button_InverserParcours" member="yes">
 			<label>Inversion du sens de parcours</label>
-			<pos>24,472</pos>
+			<pos>24,496</pos>
 			<size>232,24</size>
 			<handler function="OnButton_InverserParcoursClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON9" variable="Button_Masquer" member="yes">
 			<label>Masquer les facettes</label>
-			<pos>24,496</pos>
+			<pos>24,520</pos>
 			<size>160,24</size>
 			<handler function="OnButton_MasquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON15" variable="Button_UndoMasquer" member="yes">
 			<label>Undo</label>
-			<pos>184,496</pos>
+			<pos>184,520</pos>
 			<size>72,24</size>
 			<enabled>0</enabled>
 			<handler function="OnButton_UndoMasquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON10" variable="Button_Reafficher" member="yes">
 			<label>Tout réafficher</label>
-			<pos>24,520</pos>
+			<pos>24,544</pos>
 			<size>232,24</size>
 			<handler function="OnButton_ReafficherClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON11" variable="Button_Centrer" member="yes">
 			<label>Centrer la rotation sur la/les facettes</label>
-			<pos>24,544</pos>
+			<pos>24,568</pos>
 			<size>232,24</size>
 			<handler function="OnButton_CentrerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON12" variable="Button_Manipulations" member="yes">
 			<label>Manipulations de l&apos;objet</label>
-			<pos>24,568</pos>
+			<pos>24,592</pos>
 			<size>232,24</size>
 			<handler function="OnButton_ManipulationsClick" entry="EVT_BUTTON" />
 		</object>
@@ -234,7 +234,7 @@
 				<item>Faces arrière</item>
 			</content>
 			<default>-1</default>
-			<pos>0,600</pos>
+			<pos>0,624</pos>
 			<size>280,40</size>
 			<enabled>0</enabled>
 			<style>wxRA_VERTICAL</style>
@@ -242,7 +242,7 @@
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT12" variable="StaticText10" member="yes">
 			<label>Type de Sélection</label>
-			<pos>0,596</pos>
+			<pos>0,624</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
@@ -250,15 +250,22 @@
 		</object>
 		<object class="wxButton" name="ID_BUTTON13" variable="Button_Etendre" member="yes">
 			<label>Étendre la sélection</label>
-			<pos>64,640</pos>
+			<pos>64,664</pos>
 			<size>144,24</size>
 			<handler function="OnButton_EtendreClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON14" variable="Button_Quitter" member="yes">
 			<label>Fermer</label>
-			<pos>184,664</pos>
+			<pos>184,688</pos>
 			<size>96,24</size>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON16" variable="Button_Fusionner" member="yes">
+			<label>Fusionner les objets sélectionnés</label>
+			<pos>24,472</pos>
+			<size>232,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton_FusionnerClick" entry="EVT_BUTTON" />
 		</object>
 	</object>
 </wxsmith>
