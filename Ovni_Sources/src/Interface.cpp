@@ -2684,11 +2684,14 @@ void BddInter::LoadOBJ()
             printf(utf8_To_ibm(Message));
 //            printf("Nombre total de materiaux: %d\n",nb_mat);
             if (nb_mat) {
-                sprintf(Message,"Liste des matériaux:\n");
+                sprintf(Message,"Liste des matériaux :\n");
                 printf(utf8_To_ibm(Message));
 //                printf("Liste des materiaux:\n");
                 for (i=0 ; i< nb_mat ; i++) {
-                    sprintf(Message,"Numéro: %3d, %s",i+1,tab_mat[i]); // Pas besoin de \n, il est déjà dans tab_mat
+                    str_loc  = wxString(tab_mat[i]);
+                    nom_utf8 = is_utf8(tab_mat[i]);
+                    if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom du matériau n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
+                    sprintf(Message,"Numéro: %3d, %s",i+1,(const char *)str_loc.data());//tab_mat[i]); // Pas besoin de \n, il est déjà dans tab_mat
                     printf(utf8_To_ibm(Message));
 //                    printf("Numero: %3d, %s",i+1,tab_mat[i]); // Pas besoin de \n, il est déjà dans tab_mat
                 }
