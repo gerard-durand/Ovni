@@ -1389,6 +1389,7 @@ void OvniFrame::Ouvrir_Fichier()
     Element->Slider_z = Slider_z;
     Element->MPanel   = Modifications_Panel;
     Element->MSelect  = Selections_Panel;
+    Element->MSelObj  = Selections_Manuelles_Objets;
     Element->MPrefs   = Preferences_Panel;
     Element->MPosObs  = PositionObsAzimutSite_Panel;
     Element->MPosLight= PositionSource_Panel;

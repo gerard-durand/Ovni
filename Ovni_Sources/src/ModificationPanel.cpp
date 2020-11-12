@@ -354,6 +354,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
     int jj, jj1, jj2, jj3, jj3v;
     unsigned int new_triangles = 0;
     bool parite=false;
+    bool facette_plane;
     float xyz[3];
     std::vector<float> xyz_pt;
     std::vector<int>   NumerosSommets;
@@ -411,6 +412,10 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 nb_sommets = objet_courant->Facelist[i].Nb_Sommets_F;
                 if (nb_sommets <= 3) continue ;                 // On ne change rien, c'est déjà un triangle
 
+                if (objet_courant->Facelist[i].Nb_Sommets_L == 0) {
+                        facette_plane = true;
+                } else  facette_plane = false;
+
                 facette_courante = &(objet_courant->Facelist[i]);
                 if (facette_courante->deleted) continue;        // Facette supprimée ... passer à la suivante
                 if (Element->verbose) {
@@ -442,24 +447,28 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     Element->str.clear();
                     Element->N_elements = new_numero;
                     Element->make1sommet();                         // Ici on va augmenter la taille de Sommetlist via push_back
-                    new_numero = objet_courant->Nb_vecteurs +1;
-                    Element->xyz[0] = Element->xyz[1] = 0. ; Element->xyz[2] = 1; // Initialiser le vecteur
-                    Element->N_elements = new_numero;
-                    Element->make1vecteur();
+                    if (!facette_plane) {
+                        new_numero = objet_courant->Nb_vecteurs +1;
+                        Element->xyz[0] = Element->xyz[1] = 0. ; Element->xyz[2] = 1; // Initialiser le vecteur
+                        Element->N_elements = new_numero;
+                        Element->make1vecteur();
+                    }
 //                    nb_new = nb_sommets;
                     nb_new = nb_sommets-1;  // 1 de moins car on réutilise la facette de base (facette_courante)
 //                    jj1 = objet_courant->Nb_sommets;
-                    jj3 = objet_courant->Nb_sommets;    // Indice du nouveau point central
-                    jj3v= objet_courant->Nb_vecteurs;   // Indice du vecteur sur le point central
+                    jj3 = objet_courant->Nb_sommets;                        // Indice du nouveau point central
+                    if (!facette_plane) jj3v= objet_courant->Nb_vecteurs;   // Indice du vecteur sur le point central
 
                     if (Element->verbose) {
                         printf("Originale modifiee :\n");
                         printf("Sommets de     %3d :",i+1);  // Numéro de la facette courante qui sera modifiée en place pour n'avoir plus que 3 sommets
                         for(k=0;k<2;k++) printf(" %3d",facette_courante->F_sommets[k]);
                         printf(" %3d\n",jj3);
-                        printf("Vecteurs de    %3d :",i+1);
-                        for(k=0;k<2;k++) printf(" %3d",facette_courante->L_sommets[k]);
-                        printf(" %3d\n",jj3v);
+                        if (!facette_plane) {
+                            printf("Vecteurs de    %3d :",i+1);
+                            for(k=0;k<2;k++) printf(" %3d",facette_courante->L_sommets[k]);
+                            printf(" %3d\n",jj3v);
+                        }
                     }
 
                     // Et pour la normale au barycentre ... cf version TCL, interface.c ligne 5921 et suivantes
@@ -470,9 +479,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                         printf("Sommets de     %3d :",i+1);  // Numéro de la facette courante qui sera modifiée en place pour n'avoir plus que 3 sommets
                         for(k=0;k<3;k++) printf(" %3d",facette_courante->F_sommets[k]);
                         printf("\n");
-                        printf("Vecteurs de    %3d :",i+1);
-                        for(k=0;k<3;k++) printf(" %3d",facette_courante->L_sommets[k]);
-                        printf("\n");
+                        if (!facette_plane) {
+                            printf("Vecteurs de    %3d :",i+1);
+                            for(k=0;k<3;k++) printf(" %3d",facette_courante->L_sommets[k]);
+                            printf("\n");
+                        }
                     }
                     nb_new = nb_sommets -3;
                     jj1 = 0;
@@ -513,30 +524,36 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     }
                     NumerosSommets[0]  = facette_courante->F_sommets[jj1];
                     NumerosSommets[1]  = facette_courante->F_sommets[jj2];
-                    NumerosVecteurs[0] = facette_courante->L_sommets[jj1];
-                    NumerosVecteurs[1] = facette_courante->L_sommets[jj2];
+                    if (!facette_plane) {
+                        NumerosVecteurs[0] = facette_courante->L_sommets[jj1];
+                        NumerosVecteurs[1] = facette_courante->L_sommets[jj2];
+                    }
                     if (methode_triangulation != 2) {
                         NumerosSommets[2]  = facette_courante->F_sommets[jj3];
-                        NumerosVecteurs[2] = facette_courante->L_sommets[jj3];
+                        if (!facette_plane) NumerosVecteurs[2] = facette_courante->L_sommets[jj3];
                     } else {
                         NumerosSommets[2] = jj3;
-                        NumerosVecteurs[2]= jj3v;
+                        if (!facette_plane) NumerosVecteurs[2]= jj3v;
                     }
                     if (Element->verbose) {
                         printf("New sommets  : %3d :",new_numero_facette);
                         for(k=0;k<3;k++) printf(" %3d",NumerosSommets[k]);
                         printf("\n");
-                        printf("New vecteurs : %3d :",new_numero_facette);
-                        for(k=0;k<3;k++) printf(" %3d",NumerosVecteurs[k]);
-                        printf("\n");
+                        if (!facette_plane) {
+                            printf("New vecteurs : %3d :",new_numero_facette);
+                            for(k=0;k<3;k++) printf(" %3d",NumerosVecteurs[k]);
+                            printf("\n");
+                        }
                     }
                     // Création de la nouvelle facette
                     new_indice_facette      = new_numero_facette-1;
                     Element->N_elements     = new_numero_facette;
                     Element->NumerosSommets = NumerosSommets;
                     Element->make1face();
-                    Element->NumerosSommets = NumerosVecteurs;
-                    Element->make1luminance();
+                    if (!facette_plane) {
+                        Element->NumerosSommets = NumerosVecteurs;
+                        Element->make1luminance();
+                    }
                     facette_courante = &(objet_courant->Facelist[i]);   // Facelist a changé donc peut avoir changé de place en mémoire => réinit du pointeur facette_courante
                     facette_nouvelle = &(objet_courant->Facelist[new_indice_facette]);
                     facette_nouvelle->groupe     = facette_courante->groupe;
@@ -560,8 +577,10 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 //                } else {                                //        évite le deleted = true; mais alors, quelle que soit la méthode l'ordre des facettes n'est
                 facette_courante->F_sommets.resize(3);        //plus en séquence logique ...
                 facette_courante->Nb_Sommets_F = 3;
-                facette_courante->L_sommets.resize(3);
-                facette_courante->Nb_Sommets_L = 3;
+                if (!facette_plane) {
+                    facette_courante->L_sommets.resize(3);
+                    facette_courante->Nb_Sommets_L = 3;
+                }
                 Element->Calcul_Normale_Barycentre(o,i);    // Recalculer la normale au barycentre de la facette originale
 //                }
             }

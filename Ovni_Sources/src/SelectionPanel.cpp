@@ -523,14 +523,17 @@ void SelectionPanel::OnButton_DeleteClick(wxCommandEvent& event)
         key_event.m_keyCode = WXK_DELETE;           // Touche Suppr principale
         Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" au clavier
     } else if (Element->mode_selection == Element->selection_objet) {
-        auto it = Element->listeObjets.begin();
-        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
-            Element->Objetlist[*it].deleted = true;
-        }
+//        auto it = Element->listeObjets.begin();
+//        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
+//            Element->Objetlist[*it].deleted = true;
+//        }
+        wxKeyEvent key_event;
+        key_event.m_keyCode = WXK_DELETE;           // Touche Suppr principale
+        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" au clavier
     }
     Button_UndoDelete->Enable();
-    Element->m_gllist = 0;
-    Element->Refresh();
+//    Element->m_gllist = 0;    // Inutile car fait via OnKeyDown
+//    Element->Refresh();       // ""
 }
 
 void SelectionPanel::OnButton_UndoDeleteClick(wxCommandEvent& event)
@@ -577,14 +580,17 @@ void SelectionPanel::OnButton_MasquerClick(wxCommandEvent& event)
         key_event.m_keyCode = WXK_NUMPAD_DELETE;    // Touche Suppr du Numpad
         Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" du clavier Numpad
     } else if (Element->mode_selection == Element->selection_objet) {
-        auto it = Element->listeObjets.begin();
-        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
-            Element->Objetlist[*it].afficher = false;
-        }
+        wxKeyEvent key_event;
+        key_event.m_keyCode = WXK_NUMPAD_DELETE;    // Touche Suppr du Numpad
+        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" du clavier Numpad
+//        auto it = Element->listeObjets.begin();
+//        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
+//            Element->Objetlist[*it].afficher = false;
+//        }
     }
     Button_UndoMasquer->Enable();
-    Element->m_gllist = 0;
-    Element->Refresh();
+//    Element->m_gllist = 0;    // Inutile car fait via OnKeyDown
+//    Element->Refresh();       // ""
 }
 
 void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
@@ -614,11 +620,33 @@ void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
     Element->Refresh();
 }
 
+void SelectionPanel::Reset_ListeObjets()
+{
+    BddInter *Element = MAIN->Element;
+    unsigned int i,n,indice_ListBox;
+
+    wxString str_loc;
+    n = MAIN->Selections_Manuelles_Objets->CheckListBox1->GetCount();   // Récupère le nombre d'items actuels
+    for (i=0 ; i<n ; i++)
+        MAIN->Selections_Manuelles_Objets->CheckListBox1->Delete(0);    // Supprime ces "anciens" items
+
+    indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
+    for (i=0; i<Element->Objetlist.size(); i++) {
+        if (!Element->Objetlist[i].deleted) {
+            str_loc = wxString(Element->Objetlist[i].GetName(), wxConvUTF8);
+            MAIN->Selections_Manuelles_Objets->CheckListBox1->Append(str_loc);    // Recrée tous les items (des objets non supprimés)
+            MAIN->Selections_Manuelles_Objets->CheckListBox1->Check(indice_ListBox,Element->Objetlist[i].selected); // Coche ceux qui sont déjà sélectionnés
+            indice_ListBox++;
+        }
+    }
+}
+
 void SelectionPanel::OnButton_ReafficherClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
+    unsigned int i;
 
-    for (unsigned int i=0; i<Element->Objetlist.size(); i++) {
+    for (i=0; i<Element->Objetlist.size(); i++) {
         Element->Objetlist[i].deleted = false;                        // Revalider les objets complètement supprimés
         Element->Objetlist[i].afficher= true;                         // Les réafficher
         for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
@@ -626,6 +654,11 @@ void SelectionPanel::OnButton_ReafficherClick(wxCommandEvent& event)
             Element->Objetlist[i].Facelist[j].afficher = true;        // + réafficher toutes les facettes
         }
     }
+
+    if (MAIN->Selections_Manuelles_Objets->IsShown()) {                     // Mettre à jour si la fenêtre est affichée
+        Reset_ListeObjets();
+    }
+
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -731,23 +764,7 @@ void SelectionPanel::OnButton_SelectionManuelleFacettesClick(wxCommandEvent& eve
     wxString Titre, Identification, str_loc;
 
     if (Element->mode_selection == Element->selection_objet) {
-        unsigned int i,n,indice_ListBox;
-        wxString str_loc;
-        n = MAIN->Selections_Manuelles_Objets->CheckListBox1->GetCount();// Récupère le nombre d'items actuels
-        for (i=0 ; i<n ; i++)
-            MAIN->Selections_Manuelles_Objets->CheckListBox1->Delete(0); // Supprime ces "anciens" items
-
-        indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
-        for (i=0; i<Element->Objetlist.size(); i++) {
-            if (!Element->Objetlist[i].deleted) {
-                str_loc = wxString(Element->Objetlist[i].GetName(), wxConvUTF8);
-                MAIN->Selections_Manuelles_Objets->CheckListBox1->Append(str_loc);    // Recrée tous les items (des objets non supprimés)
-                MAIN->Selections_Manuelles_Objets->CheckListBox1->Check(indice_ListBox,Element->Objetlist[i].selected); // Coche ceux qui sont déjà sélectionnés
-                indice_ListBox++;
- //           if (Element->Objetlist[i].deleted) ChoixAffichageObjets_Panel->CheckListBox1->Check(i,false);
-            }
-        }
-
+        Reset_ListeObjets();
         MAIN->Selections_Manuelles_Objets->Show();
 
     } else if (Element->mode_selection == Element->selection_facette) {

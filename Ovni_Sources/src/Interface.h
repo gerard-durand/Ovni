@@ -943,6 +943,7 @@ public :
     Prefs_Dialog            *MPrefs   = nullptr;
     PositionObs_AzimutSite  *MPosObs  = nullptr;
     PositionSource          *MPosLight= nullptr;
+    SelectionManuelleObjets *MSelObj  = nullptr; // Non utilisé ?
     CentreRotation          *MPosCRot = nullptr;
     ZoomSpecifique          *MZoomSpec= nullptr;
 //    ReperageFacette         *MRepFacet=nullptr;

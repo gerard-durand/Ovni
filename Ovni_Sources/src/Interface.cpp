@@ -1583,27 +1583,56 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (mode_selection == selection_point) break;   // Delete ne s'applique pas au mode de sélection des sommets
 
-        do {
-//            printf("\ntouche S : \nsize avant: %d\n",this->ToSelect.ListeSelect.size());
-            for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
-                for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
-                    if (ToSelect.check_if_in_ListeSelect(objet,face)) {
-    //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
-                        Facette = &(this->Objetlist[objet].Facelist[face]);
-                        Facette->selected = false;
-                        Facette->color[0] = gris_def;
-                        Facette->color[1] = gris_def;
-                        Facette->color[2] = gris_def;
-                        Facette->deleted  = true;
-                        Elements_Supprimes= true;              // Au moins une facette supprimée
-                        ToSelect.erase_one_ListeSelect(objet,face);
+        if (mode_selection == selection_objet) {
+            auto it = listeObjets.begin();
+            for (unsigned int i=0; i<listeObjets.size(); i++, it++) {
+                Objetlist[*it].deleted = true;
+            }
+            if (MSelObj->IsShown()) {                   // Mettre à jour la fenêtre de Sélection Manuelle d'objets si elle est affichée
+                unsigned int i,n,indice_ListBox;
+                wxString str_loc;
+                n = MSelObj->CheckListBox1->GetCount(); // Récupère le nombre d'items actuels
+                for (i=0 ; i<n ; i++)
+                    MSelObj->CheckListBox1->Delete(0);  // Supprime ces "anciens" items
+
+                indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
+                for (i=0; i<Objetlist.size(); i++) {
+                    if (!Objetlist[i].deleted) {
+                        str_loc = wxString(Objetlist[i].GetName(), wxConvUTF8);
+                        MSelObj->CheckListBox1->Append(str_loc);                                // Recrée tous les items (des objets non supprimés)
+                        MSelObj->CheckListBox1->Check(indice_ListBox,Objetlist[i].selected);    // Coche ceux qui sont déjà sélectionnés
+                        indice_ListBox++;
                     }
                 }
             }
-//            printf("size apres: %d\n",this->ToSelect.ListeSelect.size());     // Effet escompté mais la Liste n'est pas forcément vide !
-        } while (this->ToSelect.ListeSelect.size() > 0);                        // Donc, on boucle ... jusqu'à ce que ...
-        m_gllist = 0;
-        Refresh();
+            m_gllist = 0;
+            Refresh();
+            break;
+        }
+
+        if (mode_selection == selection_facette) {
+            do {
+    //            printf("\ntouche S : \nsize avant: %d\n",this->ToSelect.ListeSelect.size());
+                for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
+                    for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
+                        if (ToSelect.check_if_in_ListeSelect(objet,face)) {
+        //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
+                            Facette = &(this->Objetlist[objet].Facelist[face]);
+                            Facette->selected = false;
+                            Facette->color[0] = gris_def;
+                            Facette->color[1] = gris_def;
+                            Facette->color[2] = gris_def;
+                            Facette->deleted  = true;
+                            Elements_Supprimes= true;              // Au moins une facette supprimée
+                            ToSelect.erase_one_ListeSelect(objet,face);
+                        }
+                    }
+                }
+    //            printf("size apres: %d\n",this->ToSelect.ListeSelect.size());     // Effet escompté mais la Liste n'est pas forcément vide !
+            } while (this->ToSelect.ListeSelect.size() > 0);                        // Donc, on boucle ... jusqu'à ce que ...
+            m_gllist = 0;
+            Refresh();
+        }
         break;
 
         // Masquer les facettes sélectionnées
@@ -1611,27 +1640,39 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (mode_selection == selection_point) break;   // Masquer ne s'applique pas au mode de sélection des sommets
 
-        do {
-//            printf("\ntouche S : \nsize avant: %d\n",this->ToSelect.ListeSelect.size());
-            for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
-                for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
-                    if (ToSelect.check_if_in_ListeSelect(objet,face)) {
-                        Facette = &(this->Objetlist[objet].Facelist[face]);
-    //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
-                        Facette->selected = false;
-                        Facette->color[0] = gris_def;
-                        Facette->color[1] = gris_def;
-                        Facette->color[2] = gris_def;
-                        Facette->afficher = false;
-                        Elements_Masques  = true;               // Au moins une facette masquée
-                        ToSelect.erase_one_ListeSelect(objet,face);
+        if (mode_selection == selection_objet) {
+            auto it = listeObjets.begin();
+            for (unsigned int i=0; i<listeObjets.size(); i++, it++) {
+                Objetlist[*it].afficher = false;
+            }
+            m_gllist = 0;
+            Refresh();
+            break;
+        }
+
+        if (mode_selection == selection_facette) {
+            do {
+    //            printf("\ntouche S : \nsize avant: %d\n",this->ToSelect.ListeSelect.size());
+                for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
+                    for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
+                        if (ToSelect.check_if_in_ListeSelect(objet,face)) {
+                            Facette = &(this->Objetlist[objet].Facelist[face]);
+        //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
+                            Facette->selected = false;
+                            Facette->color[0] = gris_def;
+                            Facette->color[1] = gris_def;
+                            Facette->color[2] = gris_def;
+                            Facette->afficher = false;
+                            Elements_Masques  = true;               // Au moins une facette masquée
+                            ToSelect.erase_one_ListeSelect(objet,face);
+                        }
                     }
                 }
-            }
-//            printf("size apres: %d\n",this->ToSelect.ListeSelect.size());     // Effet escompté mais la Liste n'est pas forcément vide !
-        } while (this->ToSelect.ListeSelect.size() > 0);                        // Donc, on boucle ... jusqu'à ce que ...
-        m_gllist = 0;
-        Refresh();
+    //            printf("size apres: %d\n",this->ToSelect.ListeSelect.size());     // Effet escompté mais la Liste n'est pas forcément vide !
+            } while (this->ToSelect.ListeSelect.size() > 0);                        // Donc, on boucle ... jusqu'à ce que ...
+            m_gllist = 0;
+            Refresh();
+        }
         break;
 
 // Quitter par les touches Q ou Escape (en plus de Alt-X déjà programmé et les icônes X de fermeture)
@@ -7006,7 +7047,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     str.Printf(_T("%d"),nb_Objets_selected) ;
                     if (nb_Objets_selected >= 2) {
                         MSelect->Button_Fusionner->Enable();    // Activer le bouton de fusion d'objets si le nombre d'objets sélectionnés est >= 2
-                        MSelect->TextCtrl_NomObjet->SetValue(_T("Sélection multiple"));
+                        MSelect->TextCtrl_NomObjet->ChangeValue(_T("Sélection multiple"));  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
                     } else {
                         MSelect->Button_Fusionner->Disable();   // Le désactiver sinon (rien à fusionner).
                         if (nb_Objets_selected == 0) MSelect->TextCtrl_NomObjet->SetValue("");
@@ -7053,6 +7094,29 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 if (mode_selection == selection_objet) {
                     m_gllist = 0;
                     Refresh();
+                }
+            }
+
+            if (MSelObj != nullptr) {       // Devrait toujours être le cas ... mais test par précaution
+                if (MSelObj->IsShown()) {   // Normalement a lieu si MSelObj->IsShown()), mais pourrait avoir été clos manuellement
+                    unsigned int iobj,indice_ListBox;
+
+// Lignes recopiées et adaptées de SelectionPanel::Reset_ListeObjets
+
+//                    wxString str_loc;                                       // Recréer la liste : ne sert à rien à ce niveau semble t-il !
+//                    unsigned int n = MSelObj->CheckListBox1->GetCount();    // Récupère le nombre d'items actuels
+//                    for (iobj=0 ; iobj<n ; iobj++)
+//                        MSelObj->CheckListBox1->Delete(0);    // Supprime ces "anciens" items
+
+                    indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
+                    for (iobj=0; iobj<Objetlist.size(); iobj++) {
+                        if (!Objetlist[iobj].deleted) {
+//                            str_loc = wxString(Objetlist[iobj].GetName(), wxConvUTF8);
+//                            MSelObj->CheckListBox1->Append(str_loc);                                  // Recrée tous les items (des objets non supprimés)
+                            MSelObj->CheckListBox1->Check(indice_ListBox,Objetlist[iobj].selected);     // Coche ceux qui sont déjà sélectionnés
+                            indice_ListBox++;
+                        }
+                    }
                 }
             }
         }

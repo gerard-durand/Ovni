@@ -79,6 +79,7 @@ void SelectionManuelleObjets::OnButton_AucunClick(wxCommandEvent& event)
     MAIN->Selections_Panel->TextCtrl_Selection->SetValue(str_loc);
     MAIN->Selections_Panel->TextCtrl_NomObjet ->ChangeValue(_T(""));    //ChangeValue plutôt que SetValue pour éviter la génération d'un event de texte
     MAIN->Selections_Panel->TextCtrl_NumObjet ->SetValue(_T(""));
+    MAIN->Selections_Panel->Button_Fusionner  ->Disable();
 
     Element->m_gllist = 0;
     Element->Refresh();
@@ -89,6 +90,7 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     bool chkB;
+    int chk_compteur=0;
 
     int n = CheckListBox1->GetCount();
     unsigned int indice_objet = 0;  // Pour découpler l'indice d'objet avec celui de la CheckBoxList (en cas d'objets supprimés)
@@ -100,6 +102,7 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
         Element->Objetlist[indice_objet].selected = true;
         Element->listeObjets.push_back(i);
         indice_objet++;
+        chk_compteur++;
     }
     Element->SelectionObjet = -1;
 
@@ -108,6 +111,9 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
     MAIN->Selections_Panel->TextCtrl_Selection->SetValue(str_loc);
     MAIN->Selections_Panel->TextCtrl_NomObjet ->ChangeValue(_T("Sélection multiple"));
     MAIN->Selections_Panel->TextCtrl_NumObjet ->SetValue(_T(""));
+    if (chk_compteur > 1)
+         MAIN->Selections_Panel->Button_Fusionner->Enable();
+    else MAIN->Selections_Panel->Button_Fusionner->Disable();
 //    MAIN->Selections_Panel->Refresh();
 
     Element->m_gllist = 0;
@@ -142,16 +148,19 @@ void SelectionManuelleObjets::OnCheckListBox1Toggled(wxCommandEvent& event)
         MAIN->Selections_Panel->TextCtrl_Selection->SetValue(_T(""));
         MAIN->Selections_Panel->TextCtrl_NomObjet ->ChangeValue(_T(""));
         MAIN->Selections_Panel->TextCtrl_NumObjet ->SetValue(_T(""));
+        MAIN->Selections_Panel->Button_Fusionner  ->Disable();
     } else {
         MAIN->Selections_Panel->TextCtrl_Selection->SetValue(str_loc);
         if (compteur > 1) {
             MAIN->Selections_Panel->TextCtrl_NomObjet->ChangeValue(_T("Sélection multiple"));
             MAIN->Selections_Panel->TextCtrl_NumObjet->SetValue(_T(""));
+            MAIN->Selections_Panel->Button_Fusionner->Enable();
         } else {
             str_loc = wxString(Element->Objetlist[Element->SelectionObjet].GetName(), wxConvUTF8);
             MAIN->Selections_Panel->TextCtrl_NomObjet ->ChangeValue(str_loc);
             str_loc.Printf(_T("%d"),Element->SelectionObjet);
             MAIN->Selections_Panel->TextCtrl_NumObjet->SetValue(str_loc);
+            MAIN->Selections_Panel->Button_Fusionner ->Disable();
         }
     }
     if (compteur == 0)

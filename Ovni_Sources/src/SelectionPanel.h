@@ -145,6 +145,7 @@ class SelectionPanel: public wxDialog
 		void OnButton_FusionnerClick(wxCommandEvent& event);
 		//*)
 		void InitPanel();
+		void Reset_ListeObjets();
 		void ToDo();
         OvniFrame* MAIN;
 
