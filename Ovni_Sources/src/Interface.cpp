@@ -7014,15 +7014,18 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             }
 
             if (mode_selection == selection_objet) {
+//                if (objet == -1) return;      /// Pour l'instant c'est mieux que de passer par l'affichage de "Fond" et le comptabiliser comme un objet
                 SelectionObjet = -1 ; //objet+1; //this->Objetlist[objet].GetValue();   // Valeur < 0 pour drawOpenGL, la sélection se faisant via l'attribut selected de Objetlist[objet]
-//                printf("Objet : %d %d %d\n",objet,SelectionObjet,mode_selection);
-                auto it = std::find(listeObjets.begin(),listeObjets.end(),objet);       // Est-il déjà dans la liste ?
-                if (it == listeObjets.end() || listeObjets.empty()) {                   // Non
-                    listeObjets.push_front(objet);                                          // L'ajouter à la liste des objets
-                    this->Objetlist[objet].selected = true;                                 // Le marquer comme sélectionné
-                } else {                                                                // Oui
-                    listeObjets.erase(it);                                                  // Le supprimer de la liste des objets
-                    this->Objetlist[objet].selected = false;                                // Le marquer comme non sélectionné
+                if (objet >= 0) {                   // Pour ne comptabiliser que des clics sur un objet, pas sur le Fond
+    //                printf("Objet : %d %d %d\n",objet,SelectionObjet,mode_selection);
+                    auto it = std::find(listeObjets.begin(),listeObjets.end(),objet);       // Est-il déjà dans la liste ?
+                    if (it == listeObjets.end() || listeObjets.empty()) {                   // Non
+                        listeObjets.push_front(objet);                                          // L'ajouter à la liste des objets
+                        if (objet >= 0) this->Objetlist[objet].selected = true;                                 // Le marquer comme sélectionné
+                    } else {                                                                // Oui
+                        listeObjets.erase(it);                                                  // Le supprimer de la liste des objets
+                        if (objet >= 0) this->Objetlist[objet].selected = false;                                // Le marquer comme non sélectionné
+                    }
                 }
             }
 
@@ -7034,8 +7037,12 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
 //                    MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
                 }
-                str.Printf(_T("%d"),this->Objetlist[objet].GetValue());     // Numéro de l'objet (!= son indice)
-                MSelect->TextCtrl_NumObjet->SetValue(str);
+                if (objet != -1) {
+                    str.Printf(_T("%d"),this->Objetlist[objet].GetValue());     // Numéro de l'objet (!= son indice)
+                    MSelect->TextCtrl_NumObjet->SetValue(str);
+                } else {
+                    MSelect->TextCtrl_NumObjet->SetValue(_T(""));
+                }
                 str.Printf(_T("%d"),objet);                                 // Indice de l'objet
                 MSelect->TextCtrl_IndObjet->SetValue(str);
                 str.Printf(_T("%d"),face);
@@ -7050,7 +7057,17 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         MSelect->TextCtrl_NomObjet->ChangeValue(_T("Sélection multiple"));  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
                     } else {
                         MSelect->Button_Fusionner->Disable();   // Le désactiver sinon (rien à fusionner).
-                        if (nb_Objets_selected == 0) MSelect->TextCtrl_NomObjet->SetValue("");
+                        if ((nb_Objets_selected == 0) && (objet >= 0)) MSelect->TextCtrl_NomObjet->SetValue(""); // Le clic sur l'objet restant l'a déselectionné !
+                    }
+                    if (nb_Objets_selected == 1) {
+                        if (objet == -1) {
+                            MSelect->CheckBox_ForcerFlat->SetValue(false);
+                        } else {
+                            MSelect->CheckBox_ForcerFlat->SetValue(this->Objetlist[objet].flat);
+                        }
+                    } else {
+                        MSelect->CheckBox_ForcerFlat->SetValue(false);  // Ici, si plusieurs objets sélectionnés, on pourrait evt. mettre wxCHK_UNDETERMINED via Set3StateValue
+//                        MSelect->CheckBox_ForcerFlat->Set3StateValue(wxCHK_UNDETERMINED);
                     }
                 } else {
                     str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());

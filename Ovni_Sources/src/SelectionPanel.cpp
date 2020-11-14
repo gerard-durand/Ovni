@@ -221,6 +221,7 @@ void SelectionPanel::InitPanel()
         RadioBox_TypeSelection->Disable();
         Button_Etendre->Disable();
         CheckBox_ForcerFlat->Disable();
+        CheckBox_ForcerFlat->SetValue(false);
 
         break;
 
@@ -264,6 +265,7 @@ void SelectionPanel::InitPanel()
 //        RadioBox_TypeSelection->Enable();
         Button_Etendre->Enable();
         CheckBox_ForcerFlat->Enable();
+        CheckBox_ForcerFlat->SetValue(false);
 
         break;
 
@@ -311,6 +313,7 @@ void SelectionPanel::InitPanel()
         Button_Etendre->Disable();
 
         CheckBox_ForcerFlat->Enable(); // A voir ?
+        CheckBox_ForcerFlat->SetValue(false);
 
         break;
 
