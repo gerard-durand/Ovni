@@ -103,6 +103,7 @@ class OvniFrame: public wxFrame
          wxMenuItem* MenuItem_ImagePng;
          wxMenuItem* MenuItem_ImagePpm;
          wxMenuItem* MenuItem_Quitter;
+         wxMenuItem* Menu_AddFile;
          wxMenuItem* Menu_Affichage_Axes;
          wxMenuItem* Menu_Affichage_Boite;
          wxMenuItem* Menu_Affichage_Filaire;
@@ -124,7 +125,6 @@ class OvniFrame: public wxFrame
          wxMenuItem* Menu_EnregistrerPalette;
          wxMenuItem* Menu_Enregistrer_Sous;
          wxMenuItem* Menu_FacteurEchelleBdd;
-         wxMenuItem* Menu_AddFile;
          wxMenuItem* Menu_Hardware3D;
          wxMenuItem* Menu_MasquerFacettes;
          wxMenuItem* Menu_Open;

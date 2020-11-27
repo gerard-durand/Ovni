@@ -245,6 +245,7 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
+    bool     symetries_impaires;
     unsigned int n_val, i, j, nb_fac;
     Object   *objet_courant, *objet_nouveau;
     Sommet   *sommet_courant;
@@ -252,15 +253,23 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
     Face     *facette_courante;
     unsigned int indiceObjet, new_numero, ns;
     int numero_max;
+    std::vector<int> NumerosSommets;
+    std::vector<int> ReverseSommets;
+    int nb_symetries = 0;
 
     bool Symetriser_X = CheckBox_X->GetValue();
     bool Symetriser_Y = CheckBox_Y->GetValue();
     bool Symetriser_Z = CheckBox_Z->GetValue();
 
+    if (Symetriser_X) nb_symetries++;
+    if (Symetriser_Y) nb_symetries++;
+    if (Symetriser_Z) nb_symetries++;
+    symetries_impaires = (bool)(nb_symetries % 2);      // Parité du nombre de symétries
+
     n_val   = Element->listeObjets.size();
     auto it = Element->listeObjets.begin();
 
-    indiceObjet = Element->Objetlist.size() -1;      // Numéro d'indice du dernier objet
+    indiceObjet = Element->Objetlist.size() -1;         // Numéro d'indice du dernier objet
     numero_max = 0;
     for (i=0; i<=indiceObjet; i++) numero_max = std::max(numero_max,Element->Objetlist[i].GetValue());
 //    printf("\nNumero maximal : %d\n",numero_max);
@@ -268,25 +277,10 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
 
     for (i=0; i<n_val; i++, it++) {
         int o = *it;
-//        printf("Objet : %d",o);
-//        objet_courant = &(Element->Objetlist[o]);
-///        unsigned int ns = Element->Objetlist[o].Sommetlist.size();
-
-///        indiceObjet = Element->Objetlist.size() -1;       // Numéro d'indice du dernier objet
-//        printf("\ndernier = %d, indiceObjet_courant actuel = %d\n",indiceObjet,Element->indiceObjet_courant);
-///        Element->indiceObjet_courant = indiceObjet;       // Enregistrer ce numéro d'indice dans BddInter (par précaution car devrait déjà y être !)
-///        Element->str.Printf(_T("<OBJET> %d Nouvel objet"),objet_courant->GetValue()+new_numero);
-//        Element->str += objet_courant->GetwxName() + _T(" - par Symetrie");
-///        Element->makeobjet();                             // Prépare le nouvel objet
         Element->Objetlist.push_back(Element->Objetlist[o]);    // Push_back d'une copie de l'objet initial
         objet_courant = &(Element->Objetlist[o]);
         indiceObjet = Element->Objetlist.size() -1;       // Numéro d'indice de l'objet créé
         Element->indiceObjet_courant = indiceObjet;       // Enregistrer ce numéro d'indice dans BddInter
-//        printf("nouveau = %d\n",indiceObjet);
-///        Element->Objetlist[indiceObjet] = Element->Objetlist[o];    // Recopie de l'objet sélectionné dans le nouvel objet (copie tout le contenu !)
-                                                                                // y compris le nom => Numéro et nom initialisés dans str sont écrasés !
-
-//        printf("nb_facettes : %d %d %d\n",Element->Objetlist[indiceObjet].Nb_facettes,Element->Objetlist[indiceObjet].Facelist.size(),Element->Objetlist[o].Nb_facettes);
 
         objet_nouveau = &(Element->Objetlist[indiceObjet]);
         objet_nouveau->SetValue(objet_courant->GetValue()+new_numero);              // Nouveau numéro pour le nouvel objet
@@ -294,7 +288,6 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
         wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - par symetrie"); // Ajouter "par symetrie" au nom de l'objet original
         objet_nouveau->SetName(Nouveau_nom);
         objet_courant->SetName(Ancien_nom);     // Bizzarement objet_courant a perdu son nom. Restitution ici !
-
 
         // Changer certaines valeurs selon les options de symétrisation X, Y et/ou Z
         // 1) Changer les coordonnées des sommets
@@ -306,13 +299,25 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
             if (Symetriser_Y) sommet_courant->point[1] *= -1;
             if (Symetriser_Z) sommet_courant->point[2] *= -1;
         }
-        // 2) Changer les coordonnées des normales aux barycentres
+        // 2) Changer les coordonnées des normales aux barycentres et éventuellement inverser le sens de parcours des sommets de la facette (si le nombre de symétries est impair)
         nb_fac = objet_nouveau->Facelist.size();
         for (j=0; j<nb_fac; j++) {
             facette_courante = &(objet_nouveau->Facelist[j]);
             if (Symetriser_X) facette_courante->normale_b[0] *= -1;
             if (Symetriser_Y) facette_courante->normale_b[1] *= -1;
             if (Symetriser_Z) facette_courante->normale_b[2] *= -1;
+            if (symetries_impaires) {
+                NumerosSommets = facette_courante->getF_sommets();
+                ReverseSommets.clear();
+                for (auto it2=NumerosSommets.crbegin(); it2 != NumerosSommets.crend(); ++it2) ReverseSommets.push_back(*it2);
+                facette_courante->setFsommet(ReverseSommets);
+                NumerosSommets = facette_courante->getL_sommets();
+                if (NumerosSommets.size() > 0) {    // Ne pas faire s'il n'y a pas de normales aux sommets
+                    ReverseSommets.clear();
+                    for (auto it2=NumerosSommets.crbegin(); it2 != NumerosSommets.crend(); ++it2) ReverseSommets.push_back(*it2);
+                    facette_courante->setLsommet(ReverseSommets);
+                }
+            }
         }
         // 3) Changer les coordonnées des normales aux sommets
         ns = objet_courant->Vecteurlist.size();

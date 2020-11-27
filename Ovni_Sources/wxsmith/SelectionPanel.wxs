@@ -3,7 +3,7 @@
 	<object class="wxDialog" name="SelectionPanel">
 		<title>Sélection - Déplacements</title>
 		<pos>20,20</pos>
-		<size>280,717</size>
+		<size>280,724</size>
 		<id_arg>0</id_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
@@ -229,34 +229,32 @@
 		<object class="wxRadioBox" name="ID_RADIOBOX3" variable="RadioBox_TypeSelection" member="yes">
 			<label></label>
 			<content>
-				<item>Unique</item>
+				<item>Les 2 faces</item>
 				<item>Faces avant</item>
 				<item>Faces arrière</item>
 			</content>
-			<default>-1</default>
-			<pos>0,624</pos>
-			<size>280,40</size>
-			<enabled>0</enabled>
+			<pos>0,628</pos>
+			<size>280,42</size>
 			<style>wxRA_VERTICAL</style>
 			<handler function="OnRadioBox_TypeSelectionSelect" entry="EVT_RADIOBOX" />
 		</object>
-		<object class="wxStaticText" name="ID_STATICTEXT12" variable="StaticText10" member="yes">
+		<object class="wxStaticText" name="ID_STATICTEXT12" variable="StaticText_TypeSelection" member="yes">
 			<label>Type de Sélection</label>
 			<pos>0,624</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
-			<bg>#000000</bg>
+			<bg>wxSYS_COLOUR_BACKGROUND</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxButton" name="ID_BUTTON13" variable="Button_Etendre" member="yes">
 			<label>Étendre la sélection</label>
-			<pos>64,664</pos>
+			<pos>64,672</pos>
 			<size>144,24</size>
 			<handler function="OnButton_EtendreClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON14" variable="Button_Quitter" member="yes">
 			<label>Fermer</label>
-			<pos>184,688</pos>
+			<pos>176,696</pos>
 			<size>96,24</size>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 		</object>

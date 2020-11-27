@@ -22,7 +22,7 @@
 #include <vector> //Ne pas oublier !
 #include <list>
 #include <algorithm>
-#include <time.h>
+#include <ctime>
 #include "vector3d.h"
 #include "lib3ds/lib3ds.h"
 #include "libexpat/expat.h"
@@ -618,8 +618,9 @@ class BddInter: public wxGLCanvas {
 //    double diagonale_save ;
     double FoV_auto;
     float  longueur_normales;
-    int xd_sel,yd_sel,xa_sel,ya_sel;    // Coordonnées écran pour le tracé d'un rectangle de sélection (d=début - a=arrivée)
-	GLdouble select_largeur,select_hauteur,xmil,ymil;
+    GLint xd_sel,yd_sel,xa_sel,ya_sel;      // Coordonnées écran pour le tracé d'un rectangle de sélection (d=début - a=arrivée)
+//	GLdouble select_largeur=1.0, select_hauteur=1.0;    // doivent être d'au moins 1 pixel
+//	GLdouble xmil,ymil;
 
     int  undo_memory;
     int  objet_under_mouse;
@@ -636,7 +637,7 @@ class BddInter: public wxGLCanvas {
     GLfloat width_pixel = 1.;       // Largeur de zone pour sélectionner 1 pixel (sélection de facettes ou d'objets)
     GLfloat width_point = 5.;       // Largeur de zone pour sélectionner 1 point
     GLfloat width_ligne = 4.;       // Largeur de zone pour sélectionner 1 ligne
-    GLfloat offset_pointeur = 4.;   // Pour rattraper un petit décalage en Y entre le pointeur de souris et un sommet pointé (devrait être nul !!!).
+    GLint   offset_pointeur = 4;    // Pour rattraper un petit décalage en Y entre le pointeur de souris et un sommet pointé (devrait être nul !!!).
     DXFRenderer m_renderer;
 //    GLfloat Light0Position_def[4]= {4.0f,4.0f,2.0f,0.0f};
 //    GLfloat light0_dir[3]= {0.0,0.0,0.0};
@@ -822,7 +823,7 @@ public :
     int   svg_time_def      = 5;                    // en minutes
     bool  test_seuil_gouraud_def  = false;
 
-    bool  antialiasing_soft_def        = false;
+    bool  antialiasing_soft_def        = false;     // Antialiasing par défaut non fait par OpenGL pour éviter les soucis avec cartes graphiques ne le supportant pas
     bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
     bool  lect_obj_opt_def             = false;     // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
     bool  test_decalage3ds_def         = true;      // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
@@ -960,7 +961,8 @@ public :
     bool show_light = false, show_box    = true, show_axes = true, show_plein = true;
     bool show_lines = false, show_points = false;
     bool show_star  = false;
-    bool rectangle_selection = false;
+    bool test_rectangle_selection = false;
+    int  TypeSelection = 0;
     std::vector<float> point_star;
     wxSlider* Slider_x = nullptr;
     wxSlider* Slider_y = nullptr;
@@ -1008,8 +1010,10 @@ public :
     void glutSolidSphere_local(GLdouble , GLint , GLint );
     void AfficherSource();
     void UNDO_ONE();
+    void DisplayMessage(wxString );
     void Inverse_Selected_Normales();
     void Inverser_Parcours_Selected();
+    void Inverser_Parcours_Facettes_Objet(unsigned int , bool);
     void Inverser_Toutes_les_Normales();
     void Flat_Selected_Facettes();
     void NotFlat_Selected_Facettes();
@@ -1033,8 +1037,8 @@ public :
     void SetPosObs(bool );
     void Tracer_normale(const std::vector <float> & , const std::vector <float> &, int );
     void coloriserFacette(unsigned int, unsigned int, bool);
-    void dessin_rect_select();
-    void Selection_rectangle(int, int);
+    void draw_rectangle_selection();
+    void Selection_rectangle(GLint, GLint);
 
     void GenereTableauPointsFacettes(Object *);
     void GenereTableauAretes(Object *);

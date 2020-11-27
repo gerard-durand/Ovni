@@ -42,7 +42,6 @@ class SelectionPanel: public wxDialog
 		wxRadioBox* RadioBox_GrpMat;
 		wxRadioBox* RadioBox_Selection;
 		wxRadioBox* RadioBox_TypeSelection;
-		wxStaticText* StaticText10;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
@@ -54,6 +53,7 @@ class SelectionPanel: public wxDialog
 		wxStaticText* StaticText_Mat;
 		wxStaticText* StaticText_NumerosUtilises;
 		wxStaticText* StaticText_Selection;
+		wxStaticText* StaticText_TypeSelection;
 		wxTextCtrl* TextCtrl_GrpMat;
 		wxTextCtrl* TextCtrl_IndFacette;
 		wxTextCtrl* TextCtrl_IndObjet;

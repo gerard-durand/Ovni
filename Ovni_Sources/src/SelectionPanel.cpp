@@ -62,7 +62,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(SelectionPanel)
 	Create(parent, wxID_ANY, _T("Sélection - Déplacements"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-	SetClientSize(wxSize(280,717));
+	SetClientSize(wxSize(280,724));
 	Move(wxPoint(20,20));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
@@ -130,17 +130,17 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Manipulations = new wxButton(this, ID_BUTTON12, _T("Manipulations de l\'objet"), wxPoint(24,592), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
 	wxString __wxRadioBoxChoices_3[3] =
 	{
-		_T("Unique"),
+		_T("Les 2 faces"),
 		_T("Faces avant"),
 		_T("Faces arrière")
 	};
-	RadioBox_TypeSelection = new wxRadioBox(this, ID_RADIOBOX3, wxEmptyString, wxPoint(0,624), wxSize(280,40), 3, __wxRadioBoxChoices_3, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX3"));
-	RadioBox_TypeSelection->Disable();
-	StaticText10 = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,624), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
-	StaticText10->SetForegroundColour(wxColour(255,255,255));
-	StaticText10->SetBackgroundColour(wxColour(0,0,0));
-	Button_Etendre = new wxButton(this, ID_BUTTON13, _T("Étendre la sélection"), wxPoint(64,664), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
-	Button_Quitter = new wxButton(this, ID_BUTTON14, _T("Fermer"), wxPoint(184,688), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON14"));
+	RadioBox_TypeSelection = new wxRadioBox(this, ID_RADIOBOX3, wxEmptyString, wxPoint(0,628), wxSize(280,42), 3, __wxRadioBoxChoices_3, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX3"));
+	RadioBox_TypeSelection->SetSelection(0);
+	StaticText_TypeSelection = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,624), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
+	StaticText_TypeSelection->SetForegroundColour(wxColour(255,255,255));
+	StaticText_TypeSelection->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	Button_Etendre = new wxButton(this, ID_BUTTON13, _T("Étendre la sélection"), wxPoint(64,672), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
+	Button_Quitter = new wxButton(this, ID_BUTTON14, _T("Fermer"), wxPoint(176,696), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON14"));
 	Button_Fusionner = new wxButton(this, ID_BUTTON16, _T("Fusionner les objets sélectionnés"), wxPoint(24,472), wxSize(232,23), 0, wxDefaultValidator, _T("ID_BUTTON16"));
 	Button_Fusionner->Disable();
 
@@ -182,6 +182,7 @@ SelectionPanel::~SelectionPanel()
 void SelectionPanel::InitPanel()
 {
     BddInter *Element = MAIN->Element;
+    int TypeSelection;
 
     switch (RadioBox_Selection->GetSelection()) {
     case 0:
@@ -218,10 +219,15 @@ void SelectionPanel::InitPanel()
         Button_Centrer->Enable();
         Button_Centrer->SetLabel(_T("Centrer la rotation sur le(s) point(s)"));
 
-        RadioBox_TypeSelection->Disable();
         Button_Etendre->Disable();
+
         CheckBox_ForcerFlat->Disable();
         CheckBox_ForcerFlat->SetValue(false);
+
+        RadioBox_TypeSelection  ->Disable();
+        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+        glDisable(GL_CULL_FACE);
 
         break;
 
@@ -262,8 +268,20 @@ void SelectionPanel::InitPanel()
         Button_Centrer->Enable();
         Button_Centrer->SetLabel(_T("Centrer la rotation sur la/les facette(s)"));
 
-//        RadioBox_TypeSelection->Enable();
+        RadioBox_TypeSelection->Enable();
+        TypeSelection = RadioBox_TypeSelection->GetSelection(); // ou = Element->TypeSelection
+        if (TypeSelection > 0) {
+            glEnable(GL_CULL_FACE);
+            if (TypeSelection == 1)
+                 glFrontFace(GL_CCW);
+            else glFrontFace(GL_CW) ;
+        } else glDisable(GL_CULL_FACE); // Ici si == 0
+
+        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+
         Button_Etendre->Enable();
+
         CheckBox_ForcerFlat->Enable();
         CheckBox_ForcerFlat->SetValue(false);
 
@@ -300,7 +318,7 @@ void SelectionPanel::InitPanel()
         Button_Delete->Enable();
 //        Button_UndoDelete->Enable();
 
-        Button_InverserParcours->Disable();
+        Button_InverserParcours->Enable();
 
         Button_Masquer->SetLabel(_T("Masquer l'Objet"));
         Button_Masquer->Enable();
@@ -309,7 +327,11 @@ void SelectionPanel::InitPanel()
         Button_Centrer->Enable();
         Button_Centrer->SetLabel(_T("Centrer la rotation sur l'Objet/les Objets)"));
 
-        RadioBox_TypeSelection->Disable();
+        RadioBox_TypeSelection  ->Disable();
+        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+        glDisable(GL_CULL_FACE);
+
         Button_Etendre->Disable();
 
         CheckBox_ForcerFlat->Enable(); // A voir ?
@@ -385,6 +407,7 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     Element->listePoints.clear();
     for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
 
+
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
     TextCtrl_NumObjet   ->SetValue(str_reset);
@@ -398,6 +421,8 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     wxKeyEvent key_event;               // Raz de la liste de points/facettes sélectionnés
     key_event.m_keyCode = 'S';
     Element->OnKeyDown(key_event);      // Simule une pression sur la touche S au clavier
+
+    RadioBox_TypeSelection->SetSelection(Element->TypeSelection);   // Remet en état le bouton Radio qui peut avoit été changé via InitPanel ou ResetData (touche S)
 
     Element->m_gllist = 0;
     Element->Refresh();
@@ -716,6 +741,21 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
 
 void SelectionPanel::OnRadioBox_TypeSelectionSelect(wxCommandEvent& event)
 {
+    BddInter *Element = MAIN->Element;
+
+    int TypeSelection = Element->TypeSelection = RadioBox_TypeSelection->GetSelection();    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
+//    printf("Radio TypeSelection %d\n",TypeSelection);
+
+    if (TypeSelection > 0) {        // Fait ici plutôt que dans drawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
+        glEnable(GL_CULL_FACE);
+        if (TypeSelection == 1)
+             glFrontFace(GL_CCW);
+        else glFrontFace(GL_CW) ;
+    } else glDisable(GL_CULL_FACE); // Ici si == 0
+
+//    Element->m_gllist = 0;
+    Element->Refresh();
+
 }
 
 void SelectionPanel::OnButton_EtendreClick(wxCommandEvent& event)
@@ -945,7 +985,7 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
     Element->bdd_modifiee = true;
     Button_Fusionner->Disable();
 
-    ToDo();
+//    ToDo();
 }
 
 void SelectionPanel::ToDo()

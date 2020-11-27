@@ -1690,7 +1690,8 @@ void OvniFrame::OnOutils_Selec_DeplSelected(wxCommandEvent& event)
             Selections_Panel->RadioBox_Selection->SetSelection(1) ;         // 0 = Points, 1 = Facettes, 2 = Objet
             Selections_Panel->RadioBox_GrpMat->SetSelection(0)    ;         // 0 = Groupe, 1 = Matériau
 //            Selections_Panel->TextCtrl_NumerosUtilises->SetLabel(_T(""));   // Provisoire
-            Selections_Panel->RadioBox_TypeSelection->SetSelection(0) ;     // 0 = Unique, 1 = Faces avant, 2 = Faces arrière
+//            Selections_Panel->RadioBox_TypeSelection->SetSelection(0) ;     // 0 = 2 faces, 1 = Faces avant, 2 = Faces arrière
+//            Element->TypeSelection = 0;
 
             Selections_Panel->Show();
             Selections_Panel->Refresh();

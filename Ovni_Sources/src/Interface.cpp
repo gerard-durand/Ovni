@@ -6,15 +6,15 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <stdio.h>      /* printf */
-#include <math.h>       /* round, floor, ceil, trunc, M_PI, ... */
+#include <cstdio>      /* printf */
+#include <cmath>       /* round, floor, ceil, trunc, M_PI, ... */
+#include <cstdlib>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include "vector3d.h"
 #include "utf8.h"
 
 #include "OvniMain.h"
-#include <time.h>
 
 const float to_Deg = 180.0f/M_PI;
 const float to_Rad = 1.0f/to_Deg;
@@ -311,6 +311,11 @@ void BddInter::ResetData() {
         MScale->TextCtrl_ScaleZ->SetValue(str);
         MScale->CheckBox_ScaleUnique->SetValue(true);
     }
+    if (MSelect != nullptr) {
+        MSelect->RadioBox_TypeSelection->SetSelection(0);
+        TypeSelection = 0;
+    }
+    glDisable(GL_CULL_FACE);    // Mode compatible de TypeSelection = 0
 
     m_gldata.initialized = false ;
 
@@ -945,8 +950,11 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 //        if(event.RightDown()) {
         if (event.MiddleDown()) {   // Comme en version Tcl, bouton Milieu. mêmes actions qu'initialement event.RightDown() ||
             this->ToSelect.verrouiller_ListeSelect(false);  // Déverrouiller la liste (par précaution)
-            xd_sel = xa_sel = mouse_position.x;             // Initialisation pour un éventuel tracé de rectangle de sélection
-            yd_sel = ya_sel = mouse_position.y;
+            if (test_rectangle_selection) {                 // ici pour l'instant (phase de test)
+                xd_sel = xa_sel = mouse_position.x;             // Initialisations pour un éventuel tracé de rectangle de sélection
+                yd_sel = ya_sel = mouse_position.y;
+//                select_largeur  = select_hauteur = 1;           // Donner au moins 1 pixel de largeur/hauteur
+            }
             testPicking(mouse_position.x, mouse_position.y, modeGL, true) ; // OnOff sur true pour basculer en sélectionné / non sélectionné
             stopPicking();
         } else if(event.MiddleIsDown()) { // event.RightIsDown() || dans ce cas <=> Dragging avec le bouton du Milieu
@@ -955,12 +963,17 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 testPicking(mouse_position.x, mouse_position.y, modeGL, false) ;// OnOff sur false => Sélectionner si glisser à la souris
                 stopPicking();
             }
-            if (rectangle_selection) {  // ici pour l'instant (phase de test)
-                Selection_rectangle(mouse_position.x,mouse_position.y); // Paramétrage de l'arrivée du rectangle de sélection
+            if (test_rectangle_selection) {  // ici pour l'instant (phase de test)
+                Selection_rectangle((GLint)mouse_position.x,(GLint)mouse_position.y);   // Paramétrage de l'arrivée du rectangle de sélection
                 Refresh();
             }
         } else if(event.MiddleUp()) {   // event.RightUp() ||
             this->ToSelect.verrouiller_ListeSelect(false);  // Déverrouiller la liste : évite de recommencer une sélection tant qu'on n'a pas relaché la souris
+            if (test_rectangle_selection) {  // ici pour l'instant (phase de test)
+                xd_sel = xa_sel = (GLint)mouse_position.x;
+                yd_sel = ya_sel = (GLint)mouse_position.y;
+                Refresh();
+            }
         } else if (event.Dragging()) {
             if(event.LeftIsDown()) {        // Ici Dragging avec bouton gauche de la souris
                 wxSize sz(GetClientSize());
@@ -1044,7 +1057,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_PROJECTION);
                 glPushMatrix();
                 glLoadIdentity();
-                gluPickMatrix((GLdouble)mouse_position.x, (GLdouble)(viewport[3]-mouse_position.y -offset_pointeur), width_point, width_point, viewport);
+                gluPickMatrix((GLdouble)mouse_position.x, (GLdouble)(viewport[3] -mouse_position.y -offset_pointeur), width_point, width_point, viewport);
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
@@ -1098,7 +1111,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_PROJECTION);
                 glPushMatrix();
                 glLoadIdentity();
-                gluPickMatrix((GLdouble)mouse_position.x, (GLdouble)(viewport[3]-mouse_position.y -offset_pointeur), width_ligne, width_ligne, viewport);
+                gluPickMatrix((GLdouble)mouse_position.x, (GLdouble)(viewport[3] -mouse_position.y -offset_pointeur), width_ligne, width_ligne, viewport);
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
@@ -1478,6 +1491,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             MSelect->TextCtrl_NumGroupe  ->SetValue(str_reset);
             MSelect->TextCtrl_NumMateriau->SetValue(str_reset);
             MSelect->Button_Fusionner    ->Disable();
+            MSelect->RadioBox_TypeSelection->SetSelection(0);
         }
         m_gllist = 0;
         Refresh();
@@ -1697,8 +1711,11 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
     case 'J':
         // Touche J pour divers tests provisoires ... A supprimer donc !
-        rectangle_selection = !rectangle_selection;
-        Refresh();
+        test_rectangle_selection = !test_rectangle_selection;
+        printf("Mode Test ");
+        if (test_rectangle_selection)   printf("on\n");
+        else                            printf("off\n");
+//        Refresh();
         break;
 
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
@@ -5707,7 +5724,7 @@ Boucle:
         output_Glut_Msg(0.005,0.01,Message_fps);
     }
 
-    if (rectangle_selection) dessin_rect_select();
+    if (test_rectangle_selection) draw_rectangle_selection();
 
     SetFocus(); // Donne le focus à la fenètre OpenGL => utilisation des touches de raccourcis clavier
 
@@ -5782,12 +5799,63 @@ void BddInter::Inverse_Selected_Normales() {
 //    Refresh();
 }
 
+void BddInter::DisplayMessage(wxString wxMessage)
+{
+        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
+                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
+        query->ShowModal();
+        query->Destroy();
+        return;
+}
+
 void BddInter::Inverser_Parcours_Selected() {
 // <=> Inverse_Selected_Normales mais on ne garde que l'inversion du sens de parcours des sommets de facettes
 
 // PROBLEME : avec la touche clavier "p", les facettes inversées deviennent parfois invisibles en mode affichage "Sens des Normales" (sur M2000_V9 mais pas sur 00_convertedf1nvCdKe_0 !!)
 
-    unsigned int i,j,k;
+    unsigned int i;
+    wxString wxMessage;
+
+    if (mode_selection == selection_facette) {
+        if (ToSelect.ListeSelect.empty()) {
+            wxMessage = _T("Aucune Facette sélectionnée !");
+            DisplayMessage(wxMessage);
+            return;
+        }
+//        printf("Inverser parcours des facettes sélectionnées\n");
+        for(i=0; i<this->Objetlist.size(); i++) {
+            Inverser_Parcours_Facettes_Objet(i, false);         // Seulement les facettes sélectionnées
+        }
+        bdd_modifiee = true;
+    }
+
+    if (mode_selection == selection_objet) {
+        if (listeObjets.empty()) {
+            wxMessage = _T("Aucun Objet sélectionné !");
+            DisplayMessage(wxMessage);
+            return;
+        }
+//        if (listeObjets.size() == 0) return;    // Rien à faire dans ce cas
+//        printf("Inverser parcours des facettes des objets sélectionnés\n");
+        auto it = listeObjets.begin();
+        for (unsigned int i=0; i<listeObjets.size(); i++, it++) {
+            Inverser_Parcours_Facettes_Objet(*it, true);        // Toutes les facettes des objets sélectionnés
+        }
+        bdd_modifiee = true;
+    }
+
+//    m_gllist=0;   // Fait dans le OnMenu ...
+//    Refresh();
+}
+
+void BddInter::Inverser_Parcours_Facettes_Objet(unsigned int i, bool all) {
+// <=> Inverse_Selected_Normales mais on ne garde que l'inversion du sens de parcours des sommets de facettes
+// Si all est : false, ne touche que les facettes sélectionnées de l'objet i
+//            : true, toutes les facettes de l'objet i sont inversées
+
+// PROBLEME : avec la touche clavier "p", les facettes inversées deviennent parfois invisibles en mode affichage "Sens des Normales" (sur M2000_V9 mais pas sur 00_convertedf1nvCdKe_0 !!)
+
+    unsigned int j,k;
     int m;
     Face *Face_ij;
     std::vector<int> NumerosSommets;
@@ -5796,32 +5864,34 @@ void BddInter::Inverser_Parcours_Selected() {
 
 //    printf("Inverser parcours\n");
 
-    for(i=0; i<this->Objetlist.size(); i++) {
-        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-            Face_ij = &(this->Objetlist[i].Facelist[j]);
-            if(Face_ij->afficher && !Face_ij->deleted) {
-                if (Face_ij->selected) {
-                    NumerosSommets = Face_ij->getF_sommets();
-                    ReverseSommets.clear();
-                    if (test_print) {
-                        for (unsigned int k=0; k<NumerosSommets.size(); k++) printf("%d ",NumerosSommets[k]);
-                        printf("\n");
-                    }
-                    for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
-                    Face_ij->setFsommet(ReverseSommets);
+    for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+        Face_ij = &(this->Objetlist[i].Facelist[j]);
+        if(Face_ij->afficher && !Face_ij->deleted) {
+            if (Face_ij->selected || all) {
+                NumerosSommets = Face_ij->getF_sommets();
+                ReverseSommets.clear();
+                if (test_print) {
+                    for (unsigned int k=0; k<NumerosSommets.size(); k++) printf("%d ",NumerosSommets[k]);
+                    printf("\n");
+                }
+                for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
+                Face_ij->setFsommet(ReverseSommets);
 
-                    if (test_print) {
-                        NumerosSommets = Face_ij->getF_sommets();
-                        for (k=0; k<NumerosSommets.size(); k++) printf("%d ",NumerosSommets[k]);
-                        printf("\n");
-                    }
+                if (test_print) {
+                    NumerosSommets = Face_ij->getF_sommets();
+                    for (k=0; k<NumerosSommets.size(); k++) printf("%d ",NumerosSommets[k]);
+                    printf("\n");
+                }
+                // Idem sur les normales aux sommets, si elles existent
+                NumerosSommets = Face_ij->getL_sommets();
+                if (NumerosSommets.size() > 0) {
+                    ReverseSommets.clear();
+                    for (auto it=NumerosSommets.crbegin(); it != NumerosSommets.crend(); ++it) ReverseSommets.push_back(*it);
+                    Face_ij->setLsommet(ReverseSommets);
                 }
             }
         }
     }
-    bdd_modifiee = true;
-//    m_gllist=0;   // Fait dans le OnMenu ...
-//    Refresh();
 }
 
 void BddInter::Inverser_Toutes_les_Normales() {
@@ -6634,24 +6704,14 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
 
     if (type!=-1) {
         switch(type_new) {
-        case 0:
+        case 0:                 // Spécifique fichier .dxf. Serait à supprimer une fois le décodage réalisé ... mais reste à faire !
             //printf("\ndraw dxf!!!\n");
             m_renderer.Render();
             break;
         case 1:
-//        case 2:
-//        case 3:
-//        case 4:
-//        case 5:
-//        case 6:
-//        case 7:
             //printf("\ndraw a .bdd file !!!\n");
             if (mode == standard) { // || mode == points) {
-                if (rectangle_selection) {
-                    gluPickMatrix((GLdouble)xmil, (GLdouble)(viewport[3]-ymil-offset_pointeur), select_largeur, select_hauteur, viewport);
-                } else {
-                    gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY-offset_pointeur), width, width, viewport);
-                }
+                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width, width, viewport);
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
 //                    glInitNames();    // C'est ici en version Tcl ! mais ne change rien !!
@@ -6659,8 +6719,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 this->drawOpenGL();
             }
             if (MPanel->Bool_souder || mode == points) {
-//                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY), 12., 12., viewport);
-                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
+                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 m_gllist = 0;
@@ -6673,8 +6732,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 Refresh();
             }
             if (MPanel->Bool_diviser) {
-//                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY), 12., 12., viewport);
-                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3]-cursorY-offset_pointeur), width_ligne, width_ligne, viewport); // cf version tcl ligne 6552
+                gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_ligne, width_ligne, viewport); // cf version tcl ligne 6552
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 m_gllist = 0;
@@ -6693,16 +6751,15 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
             //glTranslatef( m_gldata.posx, m_gldata.posy,m_gldata.posz );
             break;
         default:
-            //printf("\ndraw a .3ds file !!!\n");
+            //printf("\ndraw something else ? !!!\n");
             break;
         }
-
     }
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     glFlush();
-    hits = glRenderMode(GL_RENDER); //printf("hits = %d\n",hits);
+    hits = glRenderMode(GL_RENDER); //if(test_rectangle_selection) printf("hits = %d\n",hits);
     if (hits != 0) {
 //        printf("hits2= %d\n",hits);
         processHits(hits, OnOff);//, selectBuffer);
@@ -7021,10 +7078,10 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     auto it = std::find(listeObjets.begin(),listeObjets.end(),objet);       // Est-il déjà dans la liste ?
                     if (it == listeObjets.end() || listeObjets.empty()) {                   // Non
                         listeObjets.push_front(objet);                                          // L'ajouter à la liste des objets
-                        if (objet >= 0) this->Objetlist[objet].selected = true;                                 // Le marquer comme sélectionné
+                        if (objet >= 0) this->Objetlist[objet].selected = true;                     // Le marquer comme sélectionné
                     } else {                                                                // Oui
                         listeObjets.erase(it);                                                  // Le supprimer de la liste des objets
-                        if (objet >= 0) this->Objetlist[objet].selected = false;                                // Le marquer comme non sélectionné
+                        if (objet >= 0) this->Objetlist[objet].selected = false;                    // Le marquer comme non sélectionné
                     }
                 }
             }
@@ -9843,77 +9900,118 @@ void BddInter::GenereListeGroupesMateriaux(unsigned int objet)
     }
 }
 
-/* Fixe les coordonnées du 2ème point (xa_sel) permettant de tracer le rectangle de sélection avec le premier point xd_sel*/
-void BddInter::Selection_rectangle (int xa, int ya)
+/* Fixe les coordonnées du 2ème point (xa_sel,ya_sel) permettant de sélectionner des pixels dans le rectangle de sélection avec le premier point xd_sel,yd_sel*/
+void BddInter::Selection_rectangle (GLint xa, GLint ya)
 {
-//	int i,j,k;
-//	GLdouble select_largeur,select_hauteur,xmil,ymil;
+	int i,j,nb_points;
+    GLdouble Cursor_X0, Cursor_Y0, Cursor_X, Cursor_Y, pas_X, pas_Y;
+    GLdouble select_largeur, select_hauteur;
 
-//	rectangle_selection = true;
+    nb_points = 4;  // Soit nb_points -1 intervalles (doit être > 2)
 
 	xa_sel = xa;
 	ya_sel = ya;
 
+//	printf("%4d %4d %4d %4d\n",xd_sel,yd_sel,xa_sel,ya_sel);
+
 	//calcul de la largeur et de la hauteur de la zone de sélection
-	select_largeur = (xd_sel!=xa_sel?(GLdouble)abs(xa_sel-xd_sel):1.0);
-	select_hauteur = (yd_sel!=ya_sel?(GLdouble)abs(ya_sel-yd_sel):1.0);
+	select_largeur = (GLdouble)abs(xa_sel-xd_sel);
+	select_hauteur = (GLdouble)abs(ya_sel-yd_sel);
 
 	//calcul du point central de la zone de sélection
-	xmil = (GLdouble)(xd_sel+xa_sel)*0.5;
-	ymil = (GLdouble)(yd_sel+ya_sel)*0.5;
+//	xmil = (GLdouble)(xd_sel+xa_sel)*0.5;
+//	ymil = (GLdouble)(yd_sel+ya_sel)*0.5;
 
-//	Picking(xmil,global_viewport[3]-ymil,select_largeur,select_hauteur);//Appel de la fonction réalisant le Picking
+    Cursor_X0 = ((xd_sel < xa_sel) ? xd_sel : xa_sel);  // Le point debut (d) peut-être > point final (a) => Cursor_X0 est la valeur minimale sur l'écran
+    Cursor_Y0 = ((yd_sel < ya_sel) ? yd_sel : ya_sel);  // Idem en Y
+    pas_X     = select_largeur/(nb_points-1);           // Pour limiter le nombre de boucles en i et j mais du coup, remplissage avec des oublis
+    pas_Y     = select_hauteur/(nb_points-1);           // car on ne parcoure pas toute la sélection rectangulaire ! Temps de parcours trop long
 
+    // NOTE : on peut se contenter du début et de l'arrivée sur les bords du rectangle et ne subdiviser qu'à l'intérieur
+    //        => moins de points à tester => + rapide mais un peu moins efficace
+    //        On pourrait tester un tirage aléatoire de points en nombre pas trop élevé ...
+    /****/
+    // 4 coins dans un premier temps
+//    for (i=0,Cursor_X=Cursor_X0 ; i<2 ; i++,Cursor_X+=select_largeur) {
+//        for (j=0,Cursor_Y=Cursor_Y0 ; j<2 ; j++,Cursor_Y+=select_hauteur) {
+//            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
+//        }
+//    }
+//    // Intérieur maintenant
+//    Cursor_X0 += pas_X;
+//    Cursor_Y0 += pas_Y;
+//    nb_points -= 2;
+    /****/
+    // Ici suffit, sans les 4 coins à part pour être plus exhaustif (supprimer/commenter les lignes entre les 2 /****/
+
+    for (i=0,Cursor_X=Cursor_X0 ; i<nb_points ; i++,Cursor_X+=pas_X) {
+        for (j=0,Cursor_Y=Cursor_Y0 ; j<nb_points ; j++,Cursor_Y+=pas_Y) {
+            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
+        }
+    }
+// Via tirage aléatoire, mais pas beaucoup mieux !
+//	srand (time(NULL));
+//	nb_points*=2;
+//    for (i=0;i<nb_points;i++) {
+//        Cursor_X = Cursor_X0 + float(rand())/RAND_MAX*select_largeur;
+//        Cursor_Y = Cursor_Y0 + float(rand())/RAND_MAX*select_hauteur;
+//        testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
+//    }
 	return;
 }
 
 /*Dessine le rectangle de sélection pendant la multi-sélection*/
-void BddInter::dessin_rect_select()
+void BddInter::draw_rectangle_selection()
 {
 //    printf("OK2 : ");
     if ((xd_sel == xa_sel) && (yd_sel == ya_sel)) return; // Rien à faire dans ce cas
+
+    GLint yd_offset,ya_offset;
 
     wxSize ClientSize = this->GetSize();
 //printf ("%d %d\n",ClientSize.x,ClientSize.y);
 	glDisable(GL_LIGHTING);
 
-	glPushMatrix();                      //sauvegarde de la matrice de modélisation
-	glLoadIdentity();                    //réinitialisation de la matrice
+	glPushMatrix();                      // sauvegarde de la matrice de modélisation
+	glLoadIdentity();                    // réinitialisation de la matrice
 
-	glMatrixMode(GL_PROJECTION);         //on sélectionne la matrice de projection
-	glPushMatrix();                      //On sauvegarde la matrice de projection
-	glLoadIdentity();                    //on charge l'identité
+	glMatrixMode(GL_PROJECTION);         // on sélectionne la matrice de projection
+	glPushMatrix();                      // On sauvegarde la matrice de projection
+	glLoadIdentity();                    // on charge l'identité
 
 	gluOrtho2D(0,ClientSize.x,ClientSize.y,0);//On passe en 2D
 
-	glMatrixMode(GL_MODELVIEW);          //on sélectionne la matrice de modélisation
+	glMatrixMode(GL_MODELVIEW);          // on sélectionne la matrice de modélisation
 
 	glLineWidth(1.3);
 	glColor3f(0.8f,0.7f,0.6f);
 
-	glDepthFunc(GL_ALWAYS);             //le rectangle de sélection s'affiche par dessus tout les objets de la scène
+	glDepthFunc(GL_ALWAYS);             // le rectangle de sélection s'affiche par dessus tout les objets de la scène
 
-	//glEnable(GL_LINE_STIPPLE);        //active les pointillés
-	//glLineStipple(1,0x0F0F);          //spécifie le type de pointillé
+	//glEnable(GL_LINE_STIPPLE);        // active les pointillés
+	//glLineStipple(1,0x0F0F);          // spécifie le type de pointillé
 
-	glBegin(GL_LINE_LOOP);              //On trace le carré de sélection
-		glVertex2i(xd_sel,yd_sel);
-		glVertex2i(xa_sel,yd_sel);
-		glVertex2i(xa_sel,ya_sel);
-		glVertex2i(xd_sel,ya_sel);
+	yd_offset = yd_sel+offset_pointeur; // Décaler en Y à cause de l'offset du pointeur
+	ya_offset = ya_sel+offset_pointeur; // ""
+
+	glBegin(GL_LINE_LOOP);              // On trace le rectangle de sélection
+		glVertex2i(xd_sel,yd_offset);
+		glVertex2i(xa_sel,yd_offset);
+		glVertex2i(xa_sel,ya_offset);
+		glVertex2i(xd_sel,ya_offset);
 	glEnd();
 	//glDisable(GL_LINE_STIPPLE);
 
 
-	glDepthFunc(GL_LEQUAL);             //on repasse au test normal (objet le plus près affiché)
+	glDepthFunc(GL_LEQUAL);             // on repasse au test normal (objet le plus près affiché)
 
 	glLineWidth(1);
 //	glDisable(GL_LINE_STIPPLE);//on désactive les pointillés
 
-	glPopMatrix();                      //on restaure la matrice de modélisation
+	glPopMatrix();                      // on restaure la matrice de modélisation
 
 	glMatrixMode(GL_PROJECTION);        // on sélectionne la matrice de projection
-	glPopMatrix();                      //et on la restaure
+	glPopMatrix();                      // et on la restaure
 
 	glMatrixMode(GL_MODELVIEW);         // on re-sélectionne la matrice de modélisation avant de quitter la fonction
 
