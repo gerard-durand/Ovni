@@ -34,7 +34,7 @@ const long TranslationPanel::ID_BUTTON3 = wxNewId();
 //*)
 
 wxString format_1 = _T("%4.2f");    // Format pour les écritures des multiples du pas grossier
-wxString format_2 = _T("%5.3f");    // Format pour les écritures avec le pas fin
+wxString format_2 = _T("%6.3f");    // Format pour les écritures avec le pas fin
 
 BEGIN_EVENT_TABLE(TranslationPanel,wxDialog)
 	//(*EventTable(TranslationPanel)
@@ -48,55 +48,60 @@ TranslationPanel::TranslationPanel(wxWindow* parent,wxWindowID id,const wxPoint&
 	SetClientSize(wxSize(441,223));
 	Move(wxPoint(30,30));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Pas grossier"), wxPoint(8,12), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	TextCtrl_PasGrossier = new wxTextCtrl(this, ID_TEXTCTRL1, _T("0.20"), wxPoint(104,8), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	TextCtrl_PasGrossier = new wxTextCtrl(this, ID_TEXTCTRL1, _T("0.20"), wxPoint(104,8), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Pas fin"), wxPoint(256,12), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-	TextCtrl_PasFin = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.01"), wxPoint(320,8), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+	TextCtrl_PasFin = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.010"), wxPoint(320,8), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	Button_Valider = new wxButton(this, ID_BUTTON1, _T("Valider la modification du Pas"), wxPoint(48,40), wxSize(336,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Translation en X"), wxPoint(8,92), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText3->SetForegroundColour(wxColour(255,0,0));
-	TextCtrl_XG = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(104,88), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+	TextCtrl_XG = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(104,88), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
 	SpinButton_XG = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(200,88), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton_XG->SetRange(-10, 10);
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Affiner en X"), wxPoint(248,92), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	StaticText4->SetForegroundColour(wxColour(255,0,0));
 	TextCtrl_XF = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.000"), wxPoint(320,88), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+	TextCtrl_XF->Disable();
 	SpinButton_XF = new wxSpinButton(this, ID_SPINBUTTON2, wxPoint(416,88), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON2"));
 	SpinButton_XF->SetRange(-10, 10);
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Translation en Y"), wxPoint(8,124), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	StaticText5->SetForegroundColour(wxColour(0,128,0));
-	TextCtrl_YG = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0.0"), wxPoint(104,120), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
+	TextCtrl_YG = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0.0"), wxPoint(104,120), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
 	SpinButton_YG = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(200,120), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
 	SpinButton_YG->SetRange(-10, 1000);
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Affiner en Y"), wxPoint(248,124), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	StaticText6->SetForegroundColour(wxColour(0,128,0));
 	TextCtrl_YF = new wxTextCtrl(this, ID_TEXTCTRL6, _T("0.000"), wxPoint(320,120), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL6"));
+	TextCtrl_YF->Disable();
 	SpinButton_YF = new wxSpinButton(this, ID_SPINBUTTON4, wxPoint(416,120), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON4"));
 	SpinButton_YF->SetRange(-10, 10);
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Translation en Z"), wxPoint(8,156), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxColour(0,0,255));
-	TextCtrl_ZG = new wxTextCtrl(this, ID_TEXTCTRL7, _T("0.0"), wxPoint(104,152), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+	TextCtrl_ZG = new wxTextCtrl(this, ID_TEXTCTRL7, _T("0.0"), wxPoint(104,152), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL7"));
 	SpinButton_ZG = new wxSpinButton(this, ID_SPINBUTTON5, wxPoint(200,152), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON5"));
 	SpinButton_ZG->SetRange(-10, 10);
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("Affiner en Z"), wxPoint(248,156), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	StaticText8->SetForegroundColour(wxColour(0,0,255));
 	TextCtrl_ZF = new wxTextCtrl(this, ID_TEXTCTRL8, _T("0.000"), wxPoint(320,152), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL8"));
+	TextCtrl_ZF->Disable();
 	SpinButton_ZF = new wxSpinButton(this, ID_SPINBUTTON6, wxPoint(416,152), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON6"));
 	SpinButton_ZF->SetRange(-10, 10);
 	Button_OK = new wxButton(this, ID_BUTTON2, _T("OK"), wxPoint(104,192), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(232,192), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasGrossierText);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasFinText);
+	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasGrossierText);
+	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasFinText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TranslationPanel::OnButton_ValiderClick);
-	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_XGText);
+	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_XGTextEnter);
 	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeUp);
 	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeDown);
 	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeUp);
 	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeDown);
+	Connect(ID_TEXTCTRL5,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_YGTextEnter);
 	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeUp);
 	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeDown);
 	Connect(ID_SPINBUTTON4,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeUp);
 	Connect(ID_SPINBUTTON4,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeDown);
+	Connect(ID_TEXTCTRL7,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_ZGTextEnter);
 	Connect(ID_SPINBUTTON5,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeUp);
 	Connect(ID_SPINBUTTON5,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeDown);
 	Connect(ID_SPINBUTTON6,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZFChangeUp);
@@ -119,7 +124,7 @@ TranslationPanel::~TranslationPanel()
 void TranslationPanel::OnClose(wxCloseEvent& event)
 {
     tx = ty = tz = 0.0;
-    Pas_X = Pas_Y = Pas_Z = Pas_XG = Pas_YG = Pas_ZG = Pas_XF = Pas_YF = Pas_ZF = 0.0;
+    Cumul_X = Cumul_Y = Cumul_Z = Cumul_XG = Cumul_YG = Cumul_ZG = Cumul_XF = Cumul_YF = Cumul_ZF = 0.0;
     Hide();
 }
 
@@ -135,25 +140,35 @@ void TranslationPanel::OnInit(wxInitDialogEvent& event)
     Pas_F = wxAtof(TextCtrl_PasFin->GetValue());
     // Tout remettre à 0
     tx = ty = tz = 0.0 ;
-    Pas_X = Pas_Y = Pas_Z = Pas_XG = Pas_YG = Pas_ZG = Pas_XF = Pas_YF = Pas_ZF = 0.0;
+    Cumul_X = Cumul_Y = Cumul_Z = Cumul_XG = Cumul_YG = Cumul_ZG = Cumul_XF = Cumul_YF = Cumul_ZF = 0.0;
     SpinButton_XG->SetValue(0);
     SpinButton_XF->SetValue(0);
     SpinButton_YG->SetValue(0);
     SpinButton_YF->SetValue(0);
     SpinButton_ZG->SetValue(0);
     SpinButton_ZF->SetValue(0);
+
     wxTexte.Printf(format_1,tx);
     TextCtrl_XG->SetValue(wxTexte);
     TextCtrl_YG->SetValue(wxTexte);
     TextCtrl_ZG->SetValue(wxTexte);
+
+    wxTexte.Printf(format_2,tx);
     TextCtrl_XF->SetValue(wxTexte);
     TextCtrl_YF->SetValue(wxTexte);
     TextCtrl_ZF->SetValue(wxTexte);
 }
 
-void TranslationPanel::OnTextCtrl_XGText(wxCommandEvent& event)
+void TranslationPanel::OnTextCtrl_XGTextEnter(wxCommandEvent& event)
 {
-    // Pour une éventuelle entrée directe !
+    // Pour une éventuelle entrée directe via la touche Entrée/Return/Enter!
+    Cumul_XG = wxAtof(TextCtrl_XG->GetValue());
+    wxTexte.Printf(format_2,Cumul_XG);
+    TextCtrl_XF->SetValue(wxTexte);
+    tx = Cumul_XG - Cumul_X;        // Calcul du delta de translation
+    Cumul_X = Cumul_XG;             // Cumul global = Cumul_XG qui vient d'être modifié
+    ty = tz = 0.0;
+    Appliquer_Translation(tx, ty, tz);
 }
 
 void TranslationPanel::OnSpinButton_XGChangeUp(wxSpinEvent& event)
@@ -170,17 +185,18 @@ void TranslationPanel::OnSpinButton_XGChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_XGChange(wxSpinEvent& event)
 {
-    ty = tz = 0.0;
-    Pas_XG += tx ;
-    tx     -= Pas_XF;               // Tenir compte d'un Pas_XF précédent
-    Pas_XF  = 0.0;
-    Pas_X   = Pas_XG;
-    wxTexte.Printf(format_1,Pas_XG);
+    ty = tz   = 0.0;
+    Cumul_XG += tx ;
+    tx       -= Cumul_XF;               // Tenir compte d'un Cumul_XF précédent
+    Cumul_XF  = 0.0;
+    Cumul_X   = Cumul_XG;               // Cumul global = Cumul_XG qui vient d'être modifié
+    wxTexte.Printf(format_1,Cumul_XG);  // Afficher la nouvelle valeur grossière
     TextCtrl_XG->SetValue(wxTexte);
+    wxTexte.Printf(format_2,Cumul_XG);  // Afficher la nouvelle valeur fine
     TextCtrl_XF->SetValue(wxTexte);
-    SpinButton_XG->SetValue(0);     // Par précaution, mais la valeur ne sert plus directement
-    SpinButton_XF->SetValue(0);     // Idem
-    event.Skip();                   // Utile ?
+    SpinButton_XG->SetValue(0);         // Par précaution, mais la valeur ne sert plus directement
+    SpinButton_XF->SetValue(0);         // Idem
+    event.Skip();                       // Utile ?
     Appliquer_Translation(tx, ty, tz);
 }
 
@@ -198,13 +214,24 @@ void TranslationPanel::OnSpinButton_XFChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_XFChange(wxSpinEvent& event)
 {
-    ty = tz = 0.0;
-    Pas_XF += tx ;
-    Pas_X   = Pas_XG + Pas_XF;      // Pour afficher le déplacement total en X dans TextCtrl_XF
-    wxTexte.Printf(format_2,Pas_X);
+    ty = tz   = 0.0;
+    Cumul_XF += tx ;
+    Cumul_X   = Cumul_XG + Cumul_XF;    // Pour afficher le déplacement total en X dans TextCtrl_XF
+    wxTexte.Printf(format_2,Cumul_X);
     TextCtrl_XF->SetValue(wxTexte);
-    SpinButton_XF->SetValue(0);     // Par précaution, mais la valeur ne sert plus directement
-    event.Skip();                   // Utile ?
+    SpinButton_XF->SetValue(0);         // Par précaution, mais la valeur ne sert plus directement
+    event.Skip();                       // Utile ?
+    Appliquer_Translation(tx, ty, tz);
+}
+
+void TranslationPanel::OnTextCtrl_YGTextEnter(wxCommandEvent& event)
+{
+    Cumul_YG = wxAtof(TextCtrl_YG->GetValue());
+    wxTexte.Printf(format_2,Cumul_YG);
+    TextCtrl_YF->SetValue(wxTexte);
+    ty = Cumul_YG - Cumul_Y;
+    Cumul_Y = Cumul_YG;
+    tx = tz = 0.0;
     Appliquer_Translation(tx, ty, tz);
 }
 
@@ -222,13 +249,14 @@ void TranslationPanel::OnSpinButton_YGChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_YGChange(wxSpinEvent& event)
 {
-    tx = tz = 0.0;
-    Pas_YG += ty ;
-    ty     -= Pas_YF;
-    Pas_YF  = 0.0;
-    Pas_Y   = Pas_YG;
-    wxTexte.Printf(format_1,Pas_YG);
+    tx = tz   = 0.0;
+    Cumul_YG += ty ;
+    ty       -= Cumul_YF;
+    Cumul_YF  = 0.0;
+    Cumul_Y   = Cumul_YG;
+    wxTexte.Printf(format_1,Cumul_YG);
     TextCtrl_YG->SetValue(wxTexte);
+    wxTexte.Printf(format_2,Cumul_YG);
     TextCtrl_YF->SetValue(wxTexte);
     SpinButton_YG->SetValue(0);
     SpinButton_YF->SetValue(0);
@@ -250,13 +278,24 @@ void TranslationPanel::OnSpinButton_YFChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_YFChange(wxSpinEvent& event)
 {
-    tx = tz = 0.0;
-    Pas_YF += ty ;
-    Pas_Y   = Pas_YG + Pas_YF;
-    wxTexte.Printf(format_2,Pas_Y);
+    tx = tz   = 0.0;
+    Cumul_YF += ty ;
+    Cumul_Y   = Cumul_YG + Cumul_YF;
+    wxTexte.Printf(format_2,Cumul_Y);
     TextCtrl_YF->SetValue(wxTexte);
     SpinButton_YF->SetValue(0);
     event.Skip();
+    Appliquer_Translation(tx, ty, tz);
+}
+
+void TranslationPanel::OnTextCtrl_ZGTextEnter(wxCommandEvent& event)
+{
+    Cumul_ZG = wxAtof(TextCtrl_ZG->GetValue());
+    wxTexte.Printf(format_2,Cumul_ZG);
+    TextCtrl_ZF->SetValue(wxTexte);
+    tz = Cumul_ZG - Cumul_Z;
+    Cumul_Z = Cumul_ZG;
+    tx = ty = 0.0;
     Appliquer_Translation(tx, ty, tz);
 }
 
@@ -274,13 +313,14 @@ void TranslationPanel::OnSpinButton_ZGChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_ZGChange(wxSpinEvent& event)
 {
-    tx = ty = 0.0;
-    Pas_ZG += tz ;
-    tz     -= Pas_ZF;
-    Pas_ZF  = 0.0;
-    Pas_Z   = Pas_ZG;
-    wxTexte.Printf(format_1,Pas_ZG);
+    tx = ty   = 0.0;
+    Cumul_ZG += tz ;
+    tz       -= Cumul_ZF;
+    Cumul_ZF  = 0.0;
+    Cumul_Z   = Cumul_ZG;
+    wxTexte.Printf(format_1,Cumul_ZG);
     TextCtrl_ZG->SetValue(wxTexte);
+    wxTexte.Printf(format_2,Cumul_ZG);
     TextCtrl_ZF->SetValue(wxTexte);
     SpinButton_ZG->SetValue(0);
     SpinButton_ZF->SetValue(0);
@@ -302,10 +342,10 @@ void TranslationPanel::OnSpinButton_ZFChangeDown(wxSpinEvent& event)
 
 void TranslationPanel::OnSpinButton_ZFChange(wxSpinEvent& event)
 {
-    tx = ty = 0.0;
-    Pas_ZF += tz ;
-    Pas_Z   = Pas_ZG + Pas_ZF;
-    wxTexte.Printf(format_2,Pas_Z);
+    tx = ty   = 0.0;
+    Cumul_ZF += tz ;
+    Cumul_Z   = Cumul_ZG + Cumul_ZF;
+    wxTexte.Printf(format_2,Cumul_Z);
     TextCtrl_ZF->SetValue(wxTexte);
     SpinButton_ZF->SetValue(0);
     event.Skip();
@@ -314,12 +354,13 @@ void TranslationPanel::OnSpinButton_ZFChange(wxSpinEvent& event)
 
 void TranslationPanel::OnTextCtrl_PasFinText(wxCommandEvent& event)
 {
-    // Pour une éventuelle entrée directe (à valider par un return ?) => Bouton Valider n'est pas nécessaire !
+    // Pour une éventuelle entrée directe (à valider par un Return/Entrée/Enter ) => Bouton Valider n'est pas nécessaire !
     Pas_F = wxAtof(TextCtrl_PasFin->GetValue());
 }
 
 void TranslationPanel::OnTextCtrl_PasGrossierText(wxCommandEvent& event)
 {
+    // Pour une éventuelle entrée directe
     Pas_G = wxAtof(TextCtrl_PasGrossier->GetValue());
 }
 
@@ -334,10 +375,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
     int indice;
     if (Element->mode_selection == Element->selection_objet) {
         if (Element->listeObjets.empty()) {
-            wxMessageDialog *query = new wxMessageDialog(NULL, _T("Aucun Objet sélectionné !"), _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-            query->ShowModal();
-            query->Destroy();
+            Element->DisplayMessage(_T("Aucun Objet sélectionné !"),true);
             return;
         }
         auto it = Element->listeObjets.begin();
@@ -485,15 +523,12 @@ void TranslationPanel::OnButton_OKClick(wxCommandEvent& event)
 
 void TranslationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 {
-    Appliquer_Translation(-Pas_X, -Pas_Y, -Pas_Z);  // Remettre dans l'état initial
+    Appliquer_Translation(-Cumul_X, -Cumul_Y, -Cumul_Z);  // Remettre dans l'état initial
     wxCloseEvent close_event;
     OnClose(close_event);
 }
 
 //void TranslationPanel::ToDo()
 //{
-//    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore opérationnel\nSimulation interface OK"), _T("Avertissement"),
-//                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-//    query->ShowModal();
-//    query->Destroy();
+//    MAIN->Element->DisplayMessage(_T("Pas encore opérationnel\nSimulation interface OK"), true);
 //}

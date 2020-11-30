@@ -82,7 +82,6 @@ class TranslationPanel: public wxDialog
 		void OnTextCtrl1Text(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		void OnButton_ValiderClick(wxCommandEvent& event);
-		void OnTextCtrl_XGText(wxCommandEvent& event);
 		void OnSpinButton_XGChange(wxSpinEvent& event);
 		void OnSpinButton_XFChange(wxSpinEvent& event);
 		void OnSpinButton_YGChange(wxSpinEvent& event);
@@ -106,13 +105,16 @@ class TranslationPanel: public wxDialog
 		void OnSpinButton_YFChangeDown(wxSpinEvent& event);
 		void OnSpinButton_ZFChangeUp(wxSpinEvent& event);
 		void OnSpinButton_ZFChangeDown(wxSpinEvent& event);
+		void OnTextCtrl_XGTextEnter(wxCommandEvent& event);
+		void OnTextCtrl_YGTextEnter(wxCommandEvent& event);
+		void OnTextCtrl_ZGTextEnter(wxCommandEvent& event);
 		//*)
 		void Appliquer_Translation(double, double, double);
 //		void ToDo();
 		double Pas_G, Pas_F;
-		double Pas_X, Pas_XG, Pas_XF;
-		double Pas_Y, Pas_YG, Pas_YF;
-		double Pas_Z, Pas_ZG, Pas_ZF;
+		double Cumul_X, Cumul_XG, Cumul_XF;
+		double Cumul_Y, Cumul_YG, Cumul_YF;
+		double Cumul_Z, Cumul_ZG, Cumul_ZF;
 		double tx, ty, tz;
 		wxString wxTexte;
         OvniFrame* MAIN;

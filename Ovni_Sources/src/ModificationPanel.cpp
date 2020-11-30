@@ -157,7 +157,7 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
     old_show_points    = Element->show_points;
     old_show_lines     = Element->show_lines;
     CheckBox_NotFlat->SetValue(Element->NotFlat);
-    aretes_calculees   = true;  // Si le fag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
+    aretes_calculees   = true;  // Si le flag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
 // RAZ de l'attribut "selected" des facettes en entrée
     for(o=0; o<Element->Objetlist.size(); o++) {
@@ -636,10 +636,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 
 // Tous les objets ont été analysés et traités
     if (new_triangles == 0) {
-        wxMessageDialog *query = new wxMessageDialog(NULL, _T("La base de données est déjà triangulée !"), _T("Avertissement"),
-                                     wxOK | wxICON_INFORMATION ); // Avec cette icône, l'affichage emet un son (wxICON_QUESTION silencieux !!)
-        query->ShowModal();
-        query->Destroy();
+        Element->DisplayMessage(_T("La base de données est déjà triangulée !"),true);
     } else {
         Element->Calcul_All_Normales();     // Ici, le + simple : recalculer toutes les normales (y compris celles aux barycentres !)
         Element->searchMin_Max();           // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)

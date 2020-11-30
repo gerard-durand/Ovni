@@ -235,7 +235,6 @@ void RotationPanel::Init_Centre_Rotation()
         OnButton_ValiderPointClick(cmd_event);
         break;
     }
-
 }
 
 void RotationPanel::OnTextCtrl_XText(wxCommandEvent& event)
@@ -513,8 +512,5 @@ void RotationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 //void RotationPanel::ToDo()
 //{
-//    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore complètement opérationnel\nSimulation interface OK"), _T("Avertissement"),
-//                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-//    query->ShowModal();
-//    query->Destroy();
+//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), false);
 //}

@@ -83,6 +83,7 @@ class PropertiesPanel: public wxDialog
 
 		//(*Handlers(PropertiesPanel)
 		void OnBoutonOKClick(wxCommandEvent& event);
+		void OnInit(wxInitDialogEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

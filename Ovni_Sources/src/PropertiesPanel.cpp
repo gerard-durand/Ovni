@@ -45,14 +45,14 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 {
 	//(*Initialize(PropertiesPanel)
 	Create(parent, id, _T("Propriétés de la Bdd"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
-	SetClientSize(wxSize(325,410));
+	SetClientSize(wxSize(335,463));
 	Move(wxDefaultPosition);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Fichier(s) de base de données :"), wxPoint(0,1), wxSize(325,20), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Fichier(s) de base de données :"), wxPoint(0,1), wxSize(335,20), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetMinSize(wxSize(325,20));
 	StaticText1->SetMaxSize(wxSize(325,20));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
-	StaticTextNomBdd = new wxStaticText(this, ID_STATICTEXT2, _T("Nom du fichier"), wxPoint(0,20), wxSize(325,20), wxST_NO_AUTORESIZE|wxALIGN_CENTRE, _T("ID_STATICTEXT2"));
+	StaticTextNomBdd = new wxStaticText(this, ID_STATICTEXT2, _T("Nom du fichier"), wxPoint(0,20), wxSize(335,20), wxST_NO_AUTORESIZE|wxALIGN_CENTRE, _T("ID_STATICTEXT2"));
 	StaticTextNomBdd->SetForegroundColour(wxColour(255,255,255));
 	StaticTextNomBdd->SetBackgroundColour(wxColour(0,0,0));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT3, _T("Nombre d\'objets"), wxPoint(32,56), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
@@ -67,7 +67,7 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	nb_aretes = new wxStaticText(this, ID_STATICTEXT12, _T("nnnnn"), wxPoint(216,104), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT12"));
 	nb_groupes = new wxStaticText(this, ID_STATICTEXT13, _T("nnnnn"), wxPoint(216,120), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT13"));
 	nb_materiaux = new wxStaticText(this, ID_STATICTEXT14, _T("nnnnn"), wxPoint(216,136), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT14"));
-	StaticText8 = new wxStaticText(this, ID_STATICTEXT15, _T("\nStatistiques"), wxPoint(0,160), wxSize(325,40), wxALIGN_CENTRE, _T("ID_STATICTEXT15"));
+	StaticText8 = new wxStaticText(this, ID_STATICTEXT15, _T("\nStatistiques"), wxPoint(0,160), wxSize(335,40), wxALIGN_CENTRE, _T("ID_STATICTEXT15"));
 	StaticText8->SetForegroundColour(wxColour(255,255,255));
 	StaticText8->SetBackgroundColour(wxColour(0,0,0));
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT16, _T("Nombre de facettes à 3 points"), wxPoint(32,208), wxDefaultSize, 0, _T("ID_STATICTEXT16"));
@@ -80,11 +80,11 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	nb_maxPoints = new wxStaticText(this, ID_STATICTEXT23, _T("nnnnn"), wxPoint(216,240), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT23"));
 	numero_facette = new wxStaticText(this, ID_STATICTEXT24, _T("nnnnn"), wxPoint(216,256), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT24"));
 	numero_objet = new wxStaticText(this, ID_STATICTEXT25, _T("nnnnn"), wxPoint(216,272), wxSize(60,16), wxST_NO_AUTORESIZE|wxALIGN_RIGHT, _T("ID_STATICTEXT25"));
-	StaticText14 = new wxStaticText(this, ID_STATICTEXT26, _T("\nBoite Englobante"), wxPoint(0,296), wxSize(325,40), wxALIGN_CENTRE, _T("ID_STATICTEXT26"));
+	StaticText14 = new wxStaticText(this, ID_STATICTEXT26, _T("\nBoite Englobante"), wxPoint(0,296), wxSize(335,40), wxALIGN_CENTRE, _T("ID_STATICTEXT26"));
 	StaticText14->SetForegroundColour(wxColour(255,255,255));
 	StaticText14->SetBackgroundColour(wxColour(0,0,0));
-	Texte_Box = new wxStaticText(this, ID_STATICTEXT27, _T("Texte"), wxPoint(0,344), wxSize(325,16), wxST_NO_AUTORESIZE|wxALIGN_CENTRE, _T("ID_STATICTEXT27"));
-	BoutonOK = new wxButton(this, ID_BUTTON1, _T("OK"), wxPoint(120,376), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Texte_Box = new wxStaticText(this, ID_STATICTEXT27, _T("Texte\n1\n2\n3\n4"), wxPoint(0,344), wxSize(335,88), wxST_NO_AUTORESIZE|wxALIGN_CENTRE, _T("ID_STATICTEXT27"));
+	BoutonOK = new wxButton(this, ID_BUTTON1, _T("OK"), wxPoint(128,432), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	BoutonOK->SetFocus();
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PropertiesPanel::OnBoutonOKClick);
@@ -100,4 +100,8 @@ PropertiesPanel::~PropertiesPanel()
 void PropertiesPanel::OnBoutonOKClick(wxCommandEvent& event)
 {
     Hide();
+}
+
+void PropertiesPanel::OnInit(wxInitDialogEvent& event)
+{
 }

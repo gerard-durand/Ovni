@@ -1010,7 +1010,7 @@ public :
     void glutSolidSphere_local(GLdouble , GLint , GLint );
     void AfficherSource();
     void UNDO_ONE();
-    void DisplayMessage(wxString );
+    void DisplayMessage(wxString , bool );
     void Inverse_Selected_Normales();
     void Inverser_Parcours_Selected();
     void Inverser_Parcours_Facettes_Objet(unsigned int , bool);

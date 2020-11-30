@@ -2,13 +2,13 @@
 <wxsmith>
 	<object class="wxDialog" name="PropertiesPanel">
 		<title>Propriétés de la Bdd</title>
-		<size>325,410</size>
+		<size>335,463</size>
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Fichier(s) de base de données :</label>
 			<pos>0,1</pos>
-			<size>325,20</size>
+			<size>335,20</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<minsize>325,20</minsize>
@@ -18,7 +18,7 @@
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticTextNomBdd" member="yes">
 			<label>Nom du fichier</label>
 			<pos>0,20</pos>
-			<size>325,20</size>
+			<size>335,20</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxST_NO_AUTORESIZE|wxALIGN_CENTRE</style>
@@ -86,7 +86,7 @@
 		<object class="wxStaticText" name="ID_STATICTEXT15" variable="StaticText8" member="yes">
 			<label>&#x0A;Statistiques</label>
 			<pos>0,160</pos>
-			<size>325,40</size>
+			<size>335,40</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
@@ -144,20 +144,20 @@
 		<object class="wxStaticText" name="ID_STATICTEXT26" variable="StaticText14" member="yes">
 			<label>&#x0A;Boite Englobante</label>
 			<pos>0,296</pos>
-			<size>325,40</size>
+			<size>335,40</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT27" variable="Texte_Box" member="yes">
-			<label>Texte</label>
+			<label>Texte&#x0A;1&#x0A;2&#x0A;3&#x0A;4</label>
 			<pos>0,344</pos>
-			<size>325,16</size>
+			<size>335,88</size>
 			<style>wxST_NO_AUTORESIZE|wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="BoutonOK" member="yes">
 			<label>OK</label>
-			<pos>120,376</pos>
+			<pos>128,432</pos>
 			<focused>1</focused>
 			<handler function="OnBoutonOKClick" entry="EVT_BUTTON" />
 		</object>

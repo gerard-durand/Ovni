@@ -115,17 +115,17 @@ void ManipulationsPanel::OnButton_TranslationClick(wxCommandEvent& event)
 
     wxString wxTexte;
 
-    Element->MTrans->SpinButton_XG->SetValue(0);      // Tout remettre à 0
+    Element->MTrans->SpinButton_XG->SetValue(0);        // Tout remettre à 0
     Element->MTrans->SpinButton_YG->SetValue(0);
     Element->MTrans->SpinButton_ZG->SetValue(0);
     Element->MTrans->SpinButton_XF->SetValue(0);
     Element->MTrans->SpinButton_YF->SetValue(0);
     Element->MTrans->SpinButton_ZF->SetValue(0);
-    wxTexte.Printf(_T("%2.1f"),0.0);
+    wxTexte.Printf(_T("%2.1f"),0.0);                    // En toute rigueur devrait être identique à format_1 dans TranslationPanel.cpp, mais le OnInit repasse par dessus
     Element->MTrans->TextCtrl_XG->SetValue(wxTexte);
     Element->MTrans->TextCtrl_YG->SetValue(wxTexte);
     Element->MTrans->TextCtrl_ZG->SetValue(wxTexte);
-    Element->MTrans->TextCtrl_XF->SetValue(wxTexte);
+    Element->MTrans->TextCtrl_XF->SetValue(wxTexte);    // Devrait utiliser format_2, mais idem ci-dessus
     Element->MTrans->TextCtrl_YF->SetValue(wxTexte);
     Element->MTrans->TextCtrl_ZF->SetValue(wxTexte);
     Element->MTrans->Show();
@@ -350,8 +350,5 @@ void ManipulationsPanel::OnButton_RazClick(wxCommandEvent& event)
 
 //void ManipulationsPanel::ToDo()
 //{
-//    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore complètement opérationnel"), _T("Avertissement"),
-//                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-//    query->ShowModal();
-//    query->Destroy();
+//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel"), true);
 //}

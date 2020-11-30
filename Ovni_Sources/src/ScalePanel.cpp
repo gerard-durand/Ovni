@@ -461,7 +461,7 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
 //        OnButton_AnnulerClick(event); // mode de sélection facette : ne rien faire pour le moment !
 
     } else {
-        // Ici on est en mode de sélection point : ne rien faire pour le moment !
+        // Ici on est en mode de sélection point
         for (o=0; o<Element->Objetlist.size(); o++) {               // Traiter les objets indépendamment
             Element->listeFacettes.clear();
             objet_courant = &(Element->Objetlist[o]);
@@ -528,10 +528,7 @@ void ScalePanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 //void ScalePanel::ToDo()
 //{
-//    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore complètement opérationnel\nSimulation interface OK"), _T("Avertissement"),
-//                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-//    query->ShowModal();
-//    query->Destroy();
+//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), true);
 //}
 
 

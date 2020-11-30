@@ -17,19 +17,19 @@
 			<value>0.20</value>
 			<pos>104,8</pos>
 			<size>96,24</size>
-			<style>wxTE_RIGHT</style>
-			<handler function="OnTextCtrl_PasGrossierText" entry="EVT_TEXT" />
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_PasGrossierText" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Pas fin</label>
 			<pos>256,12</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_PasFin" member="yes">
-			<value>0.01</value>
+			<value>0.010</value>
 			<pos>320,8</pos>
 			<size>96,24</size>
-			<style>wxTE_RIGHT</style>
-			<handler function="OnTextCtrl_PasFinText" entry="EVT_TEXT" />
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_PasFinText" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_Valider" member="yes">
 			<label>Valider la modification du Pas</label>
@@ -46,8 +46,8 @@
 			<value>0.0</value>
 			<pos>104,88</pos>
 			<size>96,24</size>
-			<style>wxTE_RIGHT</style>
-			<handler function="OnTextCtrl_XGText" entry="EVT_TEXT" />
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_XGTextEnter" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton_XG" member="yes">
 			<min>-10</min>
@@ -66,6 +66,7 @@
 			<value>0.000</value>
 			<pos>320,88</pos>
 			<size>96,24</size>
+			<enabled>0</enabled>
 			<style>wxTE_RIGHT</style>
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON2" variable="SpinButton_XF" member="yes">
@@ -85,7 +86,8 @@
 			<value>0.0</value>
 			<pos>104,120</pos>
 			<size>96,24</size>
-			<style>wxTE_RIGHT</style>
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_YGTextEnter" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON3" variable="SpinButton_YG" member="yes">
 			<min>-10</min>
@@ -104,6 +106,7 @@
 			<value>0.000</value>
 			<pos>320,120</pos>
 			<size>96,24</size>
+			<enabled>0</enabled>
 			<style>wxTE_RIGHT</style>
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON4" variable="SpinButton_YF" member="yes">
@@ -123,7 +126,8 @@
 			<value>0.0</value>
 			<pos>104,152</pos>
 			<size>96,24</size>
-			<style>wxTE_RIGHT</style>
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_ZGTextEnter" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON5" variable="SpinButton_ZG" member="yes">
 			<min>-10</min>
@@ -142,6 +146,7 @@
 			<value>0.000</value>
 			<pos>320,152</pos>
 			<size>96,24</size>
+			<enabled>0</enabled>
 			<style>wxTE_RIGHT</style>
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON6" variable="SpinButton_ZF" member="yes">

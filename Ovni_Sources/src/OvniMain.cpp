@@ -1655,11 +1655,7 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     if (Element == nullptr)             notOK = true;
     if (Element->Objetlist.size() == 0) notOK = true;
     if (notOK) {   // Il n'y a rien à enregistrer
-        wxString Msg = _T("Aucun objet à enregistrer !\n");
-        wxMessageDialog *query = new wxMessageDialog(NULL, Msg, _T("Avertissement"),
-                                                wxOK | wxICON_INFORMATION );
-        query->ShowModal();
-        query->Destroy();
+        Element->DisplayMessage(_T("Aucun objet à enregistrer !\n"),true);
         return;
     }
     // Préparer l'enregistrement sous...
@@ -1767,11 +1763,7 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
         if ((Element->smooth) && (flat)) {
             wxString Msg = _T("Lissage de Gouraud impossible.\nTous les objets sont plats : pas de normales aux sommets !\n");
             Msg +=         _T("Recalculer les normales ou relancer la lecture en cochant la case adéquate du dialogue \"Fichier/Préférences\"");
-            wxMessageDialog *query = new wxMessageDialog(NULL, Msg, _T("Avertissement"),
-                                                wxOK | wxICON_INFORMATION );
-                                                // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-            query->ShowModal();
-            query->Destroy();
+            Element->DisplayMessage(Msg,true);
             Button_Gouraud->SetValue(false);    // Simuler un nouveau clic sur le bouton pour le remettre à l'état initial
             Element->smooth = false;
             return; // On ne fait rien de plus !
@@ -2082,9 +2074,17 @@ void OvniFrame::OnMenu_ProprietesSelected(wxCommandEvent& event)
     Properties_Panel->numero_facette->SetLabel(String_local);
 
 // Dimensions de la boîte englobante
-    String_local.Printf(_T("%5.3f*%5.3f*%5.3f"), Element->x_max-Element->x_min,
-                                                 Element->y_max-Element->y_min,
-                                                 Element->z_max-Element->z_min);
+    float x_min,x_max,y_min,y_max,z_min,z_max;
+    x_min = Element->x_min; x_max = Element->x_max;
+    y_min = Element->y_min; y_max = Element->y_max;
+    z_min = Element->z_min; z_max = Element->z_max;
+    String_local.Printf(_T("X : %8.4f\t%8.4f\nY : %8.4f\t%8.4f\nZ : %8.4f\t%8.4f\n----------\n%5.3f*%5.3f*%5.3f"),
+                                                x_min,x_max,
+                                                y_min,y_max,
+                                                z_min,z_max,
+                                                x_max-x_min,
+                                                y_max-y_min,
+                                                z_max-z_min);
 
     Properties_Panel->Texte_Box->SetLabel(String_local);   // L'attribut wxALIGN_CENTRE est perdu !
 //    Properties_Panel->Texte_Box->SetLabel(wxString(buffer[0]));

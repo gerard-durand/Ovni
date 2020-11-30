@@ -724,10 +724,7 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
         }
     }
     if (test) {
-        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-        query->ShowModal();
-        query->Destroy();
+        Element->DisplayMessage(wxMessage,true);
         return;
     }
     // Le bouton Rotation de Manipulation d'objet n'est actif que si on est en mode de sélection d'objet !
@@ -833,13 +830,10 @@ void SelectionPanel::OnButton_OuvrirReperageClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     if (Element->mode_selection == Element->selection_point) {
-//        MAIN->ReperagePoint_Panel->Show();
         MAIN->ReperagePoint_activer();
     } else if (Element->mode_selection == Element->selection_facette) {
-//        MAIN->ReperageFacette_Panel->Show();
         MAIN->ReperageFacette_activer();
     } else { // <=> selection_objet
-//        MAIN->ReperageObjet_Panel->Show();
         MAIN->ReperageObjet_activer();
     }
 }
@@ -990,8 +984,5 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
 
 void SelectionPanel::ToDo()
 {
-    wxMessageDialog *query = new wxMessageDialog(NULL, _T("Pas encore complètement opérationnel...\nSimulation interface OK"), _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-    query->ShowModal();
-    query->Destroy();
+    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel...\nSimulation interface OK"), true);
 }

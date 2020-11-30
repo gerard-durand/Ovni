@@ -601,11 +601,9 @@ void BddInter::Stocker_ini_file()
         fclose(f_init) ;
     }
     else {
-        wxMessageDialog *query = new wxMessageDialog(NULL, _T("Ecriture impossible dans le fichier .ini"), _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-        query->ShowModal();
-        query->Destroy();
-        return ;
+        wxString wxMessage=_T("Ecriture impossible dans le fichier .ini");
+        DisplayMessage(wxMessage,true);
+//        return ;
     }
     return ;
 }
@@ -718,10 +716,7 @@ void BddInter::OnPaint( wxPaintEvent& event )
                 wxMessage         += _T("OVNI n'est pas dans la liste des softs connus de la carte graphique.\n");
                 wxMessage         += _T("OpenGL ne peut donc pas traiter l'antialiasing des polygones.\n\n");
                 wxMessage         += _T("Pour ne plus afficher ce message mettre Msg_Warning=0 dans Ovni.ini");
-                wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
-                                                             wxOK | wxICON_QUESTION );
-                query->ShowModal();
-                query->Destroy();
+                DisplayMessage(wxMessage,false);
             }
         }
     }
@@ -1585,10 +1580,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 wxMessage+= _T("pas ou plus de points communs avec les facettes voisines");
             }
 //            wxMessageBox(wxMessage,_T("Avertissement"),wxOK); // Idem ci-dessous + alerte sonore
-            wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
-                                                         wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-            query->ShowModal();
-            query->Destroy();
+            DisplayMessage(wxMessage,false);
         }
         break;
 
@@ -4342,7 +4334,6 @@ void BddInter::LoadBDD() {
             this->Objetlist[indiceObjet].flat = false;                  // L'objet peut être tracé en mode smooth car <LUMINANCE> est présent
             unsigned int NbLuminances_a_lire = this->Objetlist[indiceObjet].Nb_luminances;
             if (NbLuminances_a_lire < NbFacettes) {                    // C'est le cas de F16.bdd original
-//                this->Objetlist[indiceObjet].Luminancelist.resize(NbFacettes);
                 printf("-> Nombre de luminances a lire : %d, Nouvelle dimension : %d\n",NbLuminances_a_lire, NbFacettes);
                 this->Objetlist[indiceObjet].Nb_luminances = NbFacettes;
                 for (unsigned int nfac=0 ; nfac < NbFacettes ; nfac++) this->Objetlist[indiceObjet].Facelist[nfac].flat = true; // Tout initialiser à plat
@@ -4416,10 +4407,8 @@ void BddInter::LoadBDD() {
         printf("Le fichier ne comporte aucun objet !\n");
         m_gllist = 0;
         fichierBdd.close();
-        wxMessageDialog *query = new wxMessageDialog(NULL, _T("Le fichier ne comporte aucun objet !"), _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-        query->ShowModal();
-        query->Destroy();
+        wxString wxMessage = _T("Le fichier ne comporte aucun objet !");
+        DisplayMessage(wxMessage,true);
         return;
     }
     if ((Objetlist.end()-1)->Nb_facettes == 0) {
@@ -4812,7 +4801,6 @@ void BddInter::makeluminance() {
 // Ne sert plus maintenant qu'à initialiser Nb_luminances dans un objet. => On pourrait s'en passer (à condition d'initialiser ailleurs et/ou autrement !)
 
     int Nb_luminances;
-//    Luminance NewNormaleSommets;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4821,18 +4809,13 @@ void BddInter::makeluminance() {
 //              this->wxStringlist.push_back(this->token);
             wxStringlist.push_back(token);
         }
-//        NewNormaleSommets = Luminance(token) ; //wxStringlist[1]);
         Nb_luminances = wxAtoi(token);
         wxStringlist.clear();
     } else {
         Nb_luminances = N_elements;
-//        NewNormaleSommets = Luminance(Nb_luminances) ;
     }
-//    this->Luminancelist.push_back(NewNormaleSommets);
     printf("%6d valeurs de Luminances\t(<LUMINANCE>)\n",Nb_luminances);
 
- //   this->Luminance1linelist.resize(Nb_luminances); // ATTENTION : souci si Nb_luminances < Nb_facettes de l'objet en cours (comme dans F16.bdd !)
-//    this->Objetlist[indiceObjet_courant].Luminancelist.resize(Nb_luminances); // ATTENTION : souci si Nb_luminances < Nb_facettes de l'objet en cours (comme dans F16.bdd !)
     this->Objetlist[indiceObjet_courant].Nb_luminances = Nb_luminances;
 }
 
@@ -4854,8 +4837,6 @@ void BddInter::make1luminance() {
         Numero = N_elements;
         New1luminance = Luminance(Numero, NumerosSommets) ;
     }
-//    this->Luminance1linelist[Numero-1] = New1luminance;
-//    this->Objetlist[indiceObjet_courant].Luminancelist[Numero-1] = New1luminance;   // à supprimer ...
 // Pour voir ...
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].Nb_Sommets_L = New1luminance.Nb_Sommets_L;
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].L_sommets.clear();  // Forcer un clear ici car peut avoir été déjà initialisé ailleurs => push_back ne ferait pas ce qu'il faut !
@@ -5327,7 +5308,6 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
             // La facette n'est pas plane ...
                 for(k=0; k<ns; k++) {
                     xyz_sommet    = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
-//                    NormaleSommet = this->Objetlist[indiceObjet].Vecteurlist[this->Objetlist[indiceObjet].Luminancelist[indiceFacette].L_sommets[k]-1].point;
                     NormaleSommet = this->Objetlist[indiceObjet].Vecteurlist[this->Objetlist[indiceObjet].Facelist[indiceFacette].L_sommets[k]-1].point;
 //                    np.X = NormaleSommet[0] ; np.Y = NormaleSommet[1] ; np.Z = NormaleSommet[2] ;
                     Calcul_Normale_Seuillee(indiceObjet,indiceFacette,k,NormaleFacette,NormaleSommet) ;
@@ -5350,7 +5330,6 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
         }
     }
     glEnable(GL_LIGHTING);
-//    glColor3f(couleurs[0],couleurs[1],couleurs[2]); // Restaurer la couleur actuelle
     glColor4fv(couleurs); // Restaurer la couleur actuelle (R, G, B et alpha sauvegardés en début)
 }
 
@@ -5362,9 +5341,6 @@ void BddInter::drawOpenGL() {
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
     Face *Face_ij;
-//    Aspect_face * Aspect_Face_ij;
-//    Normale     * Normale_Face_ij;
-//    Luminance   * Luminance_Face_ij=nullptr;
     Object*       Objet_i;
     unsigned int i=0,j=0,k=0;
     bool test2 = false; // Utilisé pour faire un double passage en mode visualisation du "Sens des normales", le premier en GL_CCW et le second en GL_CW
@@ -5450,8 +5426,6 @@ Boucle:
                     // => écriture + simple et execution + rapide
 
                     Face_ij = &(Objet_i->Facelist[j]);
-
-//                    if (!Objet_i->flat && !Face_ij->flat) Luminance_Face_ij = &(Objet_i->Luminancelist[j]);
 
 //                    if (Face_ij->afficher && Face_ij->show && !Face_ij->deleted) {  // Test sur show et afficher ???
                     if (Face_ij->afficher && !Face_ij->deleted) {  // Test sur show et afficher ???
@@ -5577,11 +5551,6 @@ Boucle:
                             glBegin(GL_POLYGON);
                             NumerosSommets = Face_ij->getF_sommets();
                             style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
-//                            selectMode(mode);
-//                          if (smooth && Luminance_Face_ij->Nb_Sommets_F == 0) { // Test en défaut sur objet/facette plane car Luminance_Face_ij
-//                              printf("%d %d sans luminance\n",i,j);
-//                              Face_ij->flat = true;
-//                          }
 
                             lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
                             // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
@@ -5799,13 +5768,14 @@ void BddInter::Inverse_Selected_Normales() {
 //    Refresh();
 }
 
-void BddInter::DisplayMessage(wxString wxMessage)
+void BddInter::DisplayMessage(wxString wxMessage, bool bip)
 {
-        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"),
-                                                 wxOK | wxICON_INFORMATION ); // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-        query->ShowModal();
-        query->Destroy();
-        return;
+    long style     = wxOK | wxICON_QUESTION;        // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
+    if (bip) style = wxOK | wxICON_INFORMATION;
+
+    wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"), style);
+    query->ShowModal();
+    query->Destroy();
 }
 
 void BddInter::Inverser_Parcours_Selected() {
@@ -5819,7 +5789,7 @@ void BddInter::Inverser_Parcours_Selected() {
     if (mode_selection == selection_facette) {
         if (ToSelect.ListeSelect.empty()) {
             wxMessage = _T("Aucune Facette sélectionnée !");
-            DisplayMessage(wxMessage);
+            DisplayMessage(wxMessage,true);
             return;
         }
 //        printf("Inverser parcours des facettes sélectionnées\n");
@@ -5832,7 +5802,7 @@ void BddInter::Inverser_Parcours_Selected() {
     if (mode_selection == selection_objet) {
         if (listeObjets.empty()) {
             wxMessage = _T("Aucun Objet sélectionné !");
-            DisplayMessage(wxMessage);
+            DisplayMessage(wxMessage,true);
             return;
         }
 //        if (listeObjets.size() == 0) return;    // Rien à faire dans ce cas
@@ -5852,8 +5822,6 @@ void BddInter::Inverser_Parcours_Facettes_Objet(unsigned int i, bool all) {
 // <=> Inverse_Selected_Normales mais on ne garde que l'inversion du sens de parcours des sommets de facettes
 // Si all est : false, ne touche que les facettes sélectionnées de l'objet i
 //            : true, toutes les facettes de l'objet i sont inversées
-
-// PROBLEME : avec la touche clavier "p", les facettes inversées deviennent parfois invisibles en mode affichage "Sens des Normales" (sur M2000_V9 mais pas sur 00_convertedf1nvCdKe_0 !!)
 
     unsigned int j,k;
     int m;
@@ -5904,7 +5872,6 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
     int m;
     Face *Face_ij;
     Face *Luminance_ij;
-//    Luminance* Luminance_ij;
     Vecteur *Vecteur_ij;
     Object  *objet_courant;
 
@@ -8670,7 +8637,6 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
             }
             if (test_np) {
                 np.normalize();
-//                NormaleSommet[0] = np.X ; NormaleSommet[1] = np.Y ; NormaleSommet[2] = np.Z ;
                 NormaleSommet = {(float)np.X, (float)np.Y, (float)np.Z} ;
             } else { /* Si test_np est faux, normalement ne devrait pas arriver, mais .... on ne garde alors que la normale à la facette <=> ancienne méthode */
                 NormaleSommet = NormaleFacette;
@@ -8816,7 +8782,6 @@ void BddInter::Calcul_All_Normales() {
         // Recopie des numéros de sommets des facettes dans les numéros de vecteurs des luminances.
         objet_courant->Nb_vecteurs   = nb_som;
         objet_courant->Nb_luminances = nb_fac;
-//        objet_courant->Luminancelist.resize(nb_fac);
         indiceObjet_courant = o;
         str.clear();
         for (i=0; i<nb_fac; i++) {
@@ -8837,11 +8802,11 @@ void BddInter::InverseX() {
         objet_courant = &(this->Objetlist[i]);
         for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
-                objet_courant->Vecteurlist[j].point[0]  *= -1;
+                objet_courant->Vecteurlist[j].point[0] *= -1;
         }
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
-                objet_courant->Sommetlist[j].point[0]   *= -1;
+                objet_courant->Sommetlist[j].point[0]  *= -1;
         }
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[0] *= -1;
@@ -8857,11 +8822,11 @@ void BddInter::InverseY() {
         objet_courant = &(this->Objetlist[i]);
         for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
-                objet_courant->Vecteurlist[j].point[1]  *= -1;
+                objet_courant->Vecteurlist[j].point[1] *= -1;
         }
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
-                objet_courant->Sommetlist[j].point[1]   *= -1;
+                objet_courant->Sommetlist[j].point[1]  *= -1;
         }
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[1] *= -1;
@@ -8877,11 +8842,11 @@ void BddInter::InverseZ() {
         objet_courant = &(this->Objetlist[i]);
         for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
-                objet_courant->Vecteurlist[j].point[2]   *= -1;
+                objet_courant->Vecteurlist[j].point[2] *= -1;
         }
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
-                objet_courant->Sommetlist[j].point[2]   *= -1;
+                objet_courant->Sommetlist[j].point[2]  *= -1;
         }
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[2] *= -1;
@@ -9025,7 +8990,7 @@ void BddInter::Simplification_BDD()
     std::vector<float> Point_1, Point_i, Point_j;
     Object * objet_courant;
     Face   * Facette_courante;
-///    Luminance * Luminance_courante;
+
     bool modification, indic;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
 
@@ -9212,13 +9177,10 @@ void BddInter::Simplification_BDD()
             //pour chaque normale au sommet d'un objet (vecteur au sens SDM)
                 cpt = 0 ;
                 for (k=0 ; k<nbface ; k++ ) {
-//                    Luminance_courante = &(objet_courant->Luminancelist[k]);
-//                    nbsom = Luminance_courante->Nb_Sommets_L;
                     Facette_courante = &(objet_courant->Facelist[k]);
                     Facette_courante->toshow = 0;   // Raz de précaution
                     nbsom = Facette_courante->Nb_Sommets_L;
                     for (l=0 ; l<nbsom; l++) {
-//                        if (Luminance_courante->L_sommets[l] == (int)i) {
                         if (Facette_courante->L_sommets[l] == (int)i) {
                             cpt++ ;         // i est utilisé
                             break ;         // Ne pas continuer
@@ -9260,13 +9222,9 @@ void BddInter::Simplification_BDD()
                     for(j=0; j<cpt; ++j) {
                         for(k=0; k<nbface; ++k) {
                             //on parcourt chaque face (luminance) de l'objet
-//                            Luminance_courante = &(objet_courant->Luminancelist[k]);
-//                            nbsom = Luminance_courante->Nb_Sommets_L;
                             Facette_courante = &(objet_courant->Facelist[k]);
                             nbsom = Facette_courante->Nb_Sommets_L;
                             for(l=0; l<nbsom; ++l) {                // Si la facette n'a pas de normales aux sommets, nbsom vaut 0 et on ne passe pas dans la boucle
-//                                if (Luminance_courante->L_sommets[l] == tabPoints[j]) {
-//                                    Luminance_courante->L_sommets[l] = i+1; // Numéro de vecteur et non indice ! décalé de 1 !!
                                 if (Facette_courante->L_sommets[l] == tabPoints[j]) {
                                     Facette_courante->L_sommets[l] = i+1; // Numéro de vecteur et non indice ! décalé de 1 !!
                                     if (verbose) {
@@ -9275,14 +9233,9 @@ void BddInter::Simplification_BDD()
                                         indic = true ;
                                     }
                                 }
-///                                else if (Luminance_courante->L_sommets[l] > tabPoints[j]) {
                                 else if (Facette_courante->L_sommets[l] > tabPoints[j]) {
                                     //on décrémente tous les numéros de vecteurs supérieurs à tabPoints[l] dans le tableau de luminances
-//                                    int newval = Luminance_courante->L_sommets[l];
-//                                    newval--;
-//                                    Luminance_courante->L_sommets[l] = newval;
-//                                    --(Luminance_courante->L_sommets[l]);         // Vérifier si ça marche plutôt que les 3 lignes ci-dessus
-                                    --(Facette_courante->L_sommets[l]);         // Vérifier si ça marche plutôt que les 3 lignes ci-dessus
+                                    --(Facette_courante->L_sommets[l]);
                                 }
                             }
                         }
@@ -9770,18 +9723,6 @@ bool BddInter::compare_normales(int objet, int face_1, int face_2) {
 
     return false;
 
-//    if ( (n1[0] < 0.0 && n2[0] < 0.0) || (n1[0] > 0.0 && n2[0] > 0.0) || (n1[0] == 0.0 && n2[0] == 0.0) ) {
-//		if ( (n1[1] < 0.0 && n2[1] < 0.0) || (n1[1] > 0.0 && n2[1] > 0.0) || (n1[1] == 0.0 && n2[1] == 0.0) ) {
-//			if ( (n1[2] < 0.0 && n2[2] < 0.0) || (n1[2] > 0.0 && n2[2] > 0.0) || (n1[2] == 0.0 && n2[2] == 0.0) )
-//				return true;
-//			else
-//				return false;
-//		}
-//		else
-//			return false;
-//	}
-//	else
-//		return false;
 }
 
 bool BddInter::points_egaux(const std::vector<float> &point_1, const std::vector<float> &point_2, float epsilon)
@@ -9807,23 +9748,19 @@ void BddInter::simplification_doublons_points(unsigned int objet)
 	unsigned int i,j,k,nbsom;
     Object      * objet_courant;
     Face        * facette;
-//    Luminance  * luminance;
     bool test;
 
     objet_courant = &(this->Objetlist[objet]) ;
 
 	for(i=0; i<objet_courant->Nb_facettes; ++i) {
         facette   = &(objet_courant->Facelist[i]);
-//        luminance = &(objet_courant->Luminancelist[i]);
 		nbsom   = facette->Nb_Sommets_F;
 		for(j=0; j<nbsom; ++j) {
 			for(k=0; k<nbsom; ++k) { // Faut-il reprendre à partir de 0 ou seulement de j+1 ?
 				if(k!=j) {
 					if(facette->F_sommets[j] == facette->F_sommets[k] ) {
                         test = false;                               // true si pas de normales aux sommets ???
-//                        if (!luminance->L_sommets.empty()) {
                         if(objet_courant->Nb_luminances != 0) {
-//                            if(luminance->L_sommets[j] == luminance->L_sommets[k] )
                             if(facette->L_sommets[j] == facette->L_sommets[k] )
                                 test = true;
                             else
