@@ -93,7 +93,7 @@ void DeplacerBdd::OnButton_OKClick(wxCommandEvent& event)
     dx = wxAtof(TextCtrl_DeplX->GetValue());
     dy = wxAtof(TextCtrl_DeplY->GetValue());
     dz = wxAtof(TextCtrl_DeplZ->GetValue());
-//    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(Deplacer_Parent);
+
     for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
         for (i=0; i<objet_courant->Nb_sommets; i++) {

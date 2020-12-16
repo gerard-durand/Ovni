@@ -273,8 +273,8 @@ void Prefs_Dialog::OnSpinCtrlDouble_normChange(wxSpinDoubleEvent& event)
 
     Element->len_normales = SpinCtrlDouble_norm->GetValue();
     Element->ini_file_modified = true ;
-    Element->m_gllist = 0;      // Pourquoi regénérer toutes les listes ? Il ne faudrait retracer que les normales des facettes sélectionnées, pas les objets
-    Element->Refresh();         // Test avec m_gllist = -3 + ajout dans drawOpenGL ... mais résultat moyen ! superposition des tracés de normales.
+    Element->m_gllist = Element->glliste_select; //0;      // Ne regénére que la liste des facettes sélectionnées => les normales des facettes
+    Element->Refresh();
 }
 
 void Prefs_Dialog::OnSpinCtrlDouble_srcChange(wxSpinDoubleEvent& event)
@@ -318,15 +318,15 @@ void Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraudChange(wxSpinDoubleEvent& event)
     BddInter *Element = MAIN->Element;
 
     float val = SpinCtrlDouble_SeuilGouraud->GetValue();
-    Element->angle_Gouraud = val;
+    Element->angle_Gouraud  = val;
     float seuil= cos(val*to_Rad);
     if (val >= 179.9) seuil = -1.0f;
-    Element->seuil_Gouraud = seuil;
+    Element->seuil_Gouraud  = seuil;
 
     val *= MAIN->Element->fmult_Gouraud;
     if (val > 90.0) val = 180.0;
     seuil= cos(val*to_Rad);
-    if (val >= 179.9) seuil = -1.0f;
+    if (val >= 179.9) seuil   = -1.0f;
     Element->seuil_Gouraud2   = seuil;
     Element->ini_file_modified= true ;
     Element->m_gllist = 0;

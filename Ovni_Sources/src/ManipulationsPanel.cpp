@@ -69,7 +69,6 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	//*)
 
     this->MAIN = dynamic_cast<OvniFrame*>(parent);
-
 }
 
 ManipulationsPanel::~ManipulationsPanel()
@@ -204,13 +203,7 @@ void ManipulationsPanel::CreerBoiteObjet()
                 z1b1 = z2b1 = sommet_courant->point[2];
                 first= false;
             } else {
-//                x1b1 = (x1b1 < sommet_courant->point[0] ? x1b1 : sommet_courant->point[0]); // min en x
-//                x2b1 = (x2b1 > sommet_courant->point[0] ? x2b1 : sommet_courant->point[0]); // max en x
-//                y1b1 = (y1b1 < sommet_courant->point[1] ? y1b1 : sommet_courant->point[1]); // min en y
-//                y2b1 = (y2b1 > sommet_courant->point[1] ? y2b1 : sommet_courant->point[1]); // max en y
-//                z1b1 = (z1b1 < sommet_courant->point[2] ? z1b1 : sommet_courant->point[2]); // min en z
-//                z2b1 = (z2b1 > sommet_courant->point[2] ? z2b1 : sommet_courant->point[2]); // max en z
-                x1b1 = std::min(x1b1,(double)sommet_courant->point[0]); // min en x  (code plus concis, mais plus rapide ? ... pas sûr !)
+                x1b1 = std::min(x1b1,(double)sommet_courant->point[0]); // min en x
                 x2b1 = std::max(x2b1,(double)sommet_courant->point[0]); // max en x
                 y1b1 = std::min(y1b1,(double)sommet_courant->point[1]); // min en y
                 y2b1 = std::max(y2b1,(double)sommet_courant->point[1]); // max en y

@@ -76,6 +76,7 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
 // Adapté de la version Tcl d'Ovni
 
     BddInter * Element=MAIN->Element;
+    Face * Facette_courante;
 
 	int indice = -1 ;
     int indice_facette, indice_facette_deb, objet, face ;
@@ -99,12 +100,11 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
                 for (indice=indice_facette_deb ; indice < indice_facette ; indice++) {
                     if (indice < (int)Element->Objetlist[objet].Nb_facettes-1) {
                         // N'ajouter que si non déjà présent dans la Liste
-//                        if (!Element->ToSelect.check_if_in_Liste(objet,indice)) {
                         if (!Element->ToSelect.check_if_in_ListeSelect(objet,indice)) {
                             if (Element->verbose) printf("objet %d, facette %d\n",objet,indice);
                             Element->ToSelect.add_one(objet,indice);
-                            Element->colorface(objet,indice);
-//                            Element->ToSelect.add_one(objet,indice);
+//                            Element->colorface(objet,indice);
+                            Element->Objetlist[objet].Facelist[indice].selected = true;
                         }
                     }
                 }
@@ -116,8 +116,9 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
                 if (!Element->ToSelect.check_if_in_ListeSelect(objet,indice_facette)) {
                     if (Element->verbose) printf("objet %d, facette %d\n",objet,indice_facette);
                     Element->ToSelect.add_one(objet,indice_facette);
-                    Element->colorface(objet,indice_facette);
-//                    Element->ToSelect.add_one(objet,indice_facette);
+//                    Element->colorface(objet,indice_facette);
+                    Element->Objetlist[objet].Facelist[indice_facette].selected = true;
+
                 }
             }
             face = indice_facette;          // Sauvegarde dans face
@@ -157,17 +158,19 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
 
         objet = Element->ToSelect.ListeSelect[0].objet;
         face  = Element->ToSelect.ListeSelect[0].face_sommet;
-        int first_grp = Element->Objetlist[objet].Facelist[face].groupe;
-        int first_mat = Element->Objetlist[objet].Facelist[face].codmatface;
+        Facette_courante = &(Element->Objetlist[objet].Facelist[face]);
+        int first_grp = Facette_courante->groupe;
+        int first_mat = Facette_courante->codmatface;
 
         for (int i=1; i< len_liste; i++) {                  // boucle non utilisée si len_liste == 1
             objet = Element->ToSelect.ListeSelect[i].objet;
             face  = Element->ToSelect.ListeSelect[i].face_sommet;
+            Facette_courante = &(Element->Objetlist[objet].Facelist[face]);
             if (Element->verbose) printf("%d %d %d %d %d\n", i, objet, face,
-                                                             Element->Objetlist[objet].Facelist[face].groupe,
-                                                             Element->Objetlist[objet].Facelist[face].codmatface);
-            if (Element->Objetlist[objet].Facelist[face].groupe     != first_grp) groupes_egaux   = false;
-            if (Element->Objetlist[objet].Facelist[face].codmatface != first_mat) materiaux_egaux = false;
+                                                             Facette_courante->groupe,
+                                                             Facette_courante->codmatface);
+            if (Facette_courante->groupe     != first_grp) groupes_egaux   = false;
+            if (Facette_courante->codmatface != first_mat) materiaux_egaux = false;
         }
 
         if (groupes_egaux) {
@@ -180,7 +183,7 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
         }
     }
 
-    Element->m_gllist = 0;
+    Element->m_gllist = Element->glliste_select; //0;
     Element->Refresh();
 }
 

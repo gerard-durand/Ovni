@@ -262,14 +262,14 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     Panel1->SetMinSize(wxSize(-1,25));
-    StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,5), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-    Button_ZoomPlus = new wxButton(Panel1, ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    Button_ZoomMoins = new wxButton(Panel1, ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,5), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    Button_Gauche = new wxButton(Panel1, ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
-    Button_Droite = new wxButton(Panel1, ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    Button_Haut = new wxButton(Panel1, ID_BUTTON5, _T("Haut"), wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
-    Button_Bas = new wxButton(Panel1, ID_BUTTON6, _T("Bas"), wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    Button_ZoomPlus  = new wxButton(Panel1,  ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Button_ZoomMoins = new wxButton(Panel1,  ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    StaticText1   = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,5), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    StaticText2   = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,5), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    Button_Gauche = new wxButton(Panel1,     ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    Button_Droite = new wxButton(Panel1,     ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    Button_Haut   = new wxButton(Panel1,     ID_BUTTON5, _T("Haut"),   wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    Button_Bas    = new wxButton(Panel1,     ID_BUTTON6, _T("Bas"),    wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
     BoxSizer1->Add(Panel1, 0, wxALL|wxEXPAND, 0);
     int GLCanvasAttributes_1[] = {
         WX_GL_RGBA,
@@ -512,12 +512,12 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1->SetSizeHints(this);
     Center();
 
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
-    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
-    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
-    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
-    Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
-    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
+    Connect(ID_BUTTON1,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
+    Connect(ID_BUTTON2,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
+    Connect(ID_BUTTON3,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
+    Connect(ID_BUTTON4,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
+    Connect(ID_BUTTON5,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
+    Connect(ID_BUTTON6,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
     GLCanvas->Connect(wxEVT_PAINT,(wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint,0,this);
     Connect(ID_SLIDER_X, wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
     Connect(ID_SLIDER_X, wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
@@ -534,12 +534,12 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(idPrefs,     wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PreferencesSelected);
     Connect(idHardware,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Hardware3DSelected);
     Connect(idMenuQuit,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnQuit);
-    Connect(menu_Affichage_Points,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
+    Connect(menu_Affichage_Points, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
     Connect(menu_Affichage_Filaire,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_FilaireSelected);
-    Connect(menu_Affichage_Plein,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
-    Connect(menu_Affichage_Axes,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
-    Connect(menu_Affichage_Boite,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
-    Connect(menu_Affichage_Source,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
+    Connect(menu_Affichage_Plein,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
+    Connect(menu_Affichage_Axes,   wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
+    Connect(menu_Affichage_Boite,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
+    Connect(menu_Affichage_Source, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
     Connect(ID_MENUITEM1, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OrigineSelected);
     Connect(ID_MENUITEM2, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeFaceSelected);
     Connect(ID_MENUITEM3, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeProfilSelected);
@@ -1166,7 +1166,6 @@ void OvniFrame::OnButton_PointsToggle(wxCommandEvent& event) {
     else
         Menu_Affichage_Points->Check(false);
 
-//    Modifications_Panel->toredraw = 1;
     if (Element != nullptr) {
         Element->show_points = Button_Points->GetValue();
         Element->Refresh();
@@ -1197,7 +1196,6 @@ void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
     else
         Menu_Affichage_Filaire->Check(false);
 
-//    Modifications_Panel->toredraw = 1;
     if(Element != nullptr) {
         Element->show_lines = Button_Filaire->GetValue();
         Element->Refresh();
@@ -1271,7 +1269,7 @@ void OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected(wxCommandEvent& event)
         Menu_Reperage_Couleurs_Materiaux->Check(false);
     }
     // Code de colorisation facette par facette à écrire, mais pas forcément ici ! A l'usage, ne semble pas beaucoup servir !
-    Element->m_gllist=0;
+    Element->m_gllist = 0;
     Element->Refresh();
 }
 
@@ -1465,8 +1463,8 @@ void OvniFrame::Ouvrir_Fichier()
 
         //wxMessageBox(_T("Fichier vide !"));
         if (Element->Objetlist.size() == 0) {               // On a appuyé sur Annuler mais aucun objet n'est déjà présent
-            Element->m_gllist=0;
-            Element->m_loaded=true;                             // Faire comme si un fichier avait été chargé !
+            Element->m_gllist = 0;
+            Element->m_loaded = true;                           // Faire comme si un fichier avait été chargé !
             Update();                                           // Avec wxWidgets 3.1.4 remplace les 2 lignes ci-dessous ! Marche aussi avec 3.1.3
 //            wxPaintEvent cmdPaint;                              // Pour déclencher un évênement OnPaint qui affichera alors un fond bleu uniforme, vide d'objet
 //            Element->BddInter::Forcer_OnPaint(cmdPaint);        // Note : inutile avec wxWidgets 2.8, mais pas avec 3.1 et +
@@ -2365,7 +2363,7 @@ void OvniFrame::OnButton_Normale_BarycentreClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormale->SetValue(Button_Normale_Barycentre->GetValue());       // Synchroniser le bouton et la checkbox
     Element->AfficherNormaleFacette = Button_Normale_Barycentre->GetValue();                            // et la variable d'affichage
-    Element->m_gllist = 0;    // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
+    Element->m_gllist = Element->glliste_select; //0   // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
 
@@ -2373,7 +2371,7 @@ void OvniFrame::OnButton_Normales_SommetsClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormales_Sommets->SetValue(Button_Normales_Sommets->GetValue());// Synchroniser le bouton et la checkbox
     Element->AfficherNormalesSommets = Button_Normales_Sommets->GetValue();                             // et la variable d'affichage
-    Element->m_gllist = 0;    // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
+    Element->m_gllist = Element->glliste_select; //0    // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
 
@@ -2553,13 +2551,6 @@ void OvniFrame::OnPopup_Afficher_NormalesSelected(wxCommandEvent& event)
     wxCommandEvent event_button(wxEVT_COMMAND_BUTTON_CLICKED);  // Simuler un clic sur le bouton d'affichage des normales aux barycentres
     OnButton_Normale_BarycentreClick(event_button);
 }
-
-//void OvniFrame::OnRightUp(wxMouseEvent& event)
-//{
-//    printf("Right clic main\n");
-//    PopupMenu(&My_popupmenu);
-//}
-
 
 void OvniFrame::OnMenu_DeplacerBddSelected(wxCommandEvent& event)
 {

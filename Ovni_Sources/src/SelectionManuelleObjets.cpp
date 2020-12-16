@@ -114,7 +114,6 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
     if (chk_compteur > 1)
          MAIN->Selections_Panel->Button_Fusionner->Enable();
     else MAIN->Selections_Panel->Button_Fusionner->Disable();
-//    MAIN->Selections_Panel->Refresh();
 
     Element->m_gllist = 0;
     Element->Refresh();

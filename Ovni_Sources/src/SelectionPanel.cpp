@@ -374,17 +374,22 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     else
         Element->show_points = false;   // sinon, false
     if (Element->mode_selection == Element->selection_objet) {
-        Element->m_gllist=0;
+        Element->m_gllist = 0;
     }
     Element->listeObjets.clear();
     Element->listePoints.clear();
     for (unsigned int i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected=false;
     Element->SelectionObjet = 0;
+    if (Element->mode_selection == Element->selection_point) {
+        wxKeyEvent key_event;
+        key_event.m_keyCode = 'S';                          // Raz de la sélection de points, sinon pb lors du basculement en mode selection_facette
+        Element->OnKeyDown(key_event);                      // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
+    }
     Element->mode_selection = Element->selection_facette;   // Remettre en mode sélection de facettes
     RadioBox_Selection->SetSelection(1);                    // aussi dans l'interface
     RadioBox_GrpMat->SetSelection(0);                       // Remettre le choix sur Groupe/Matériau sur Groupe
     wxCommandEvent new_event;
-    OnRadioBox_GrpMatSelect(new_event); // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
+    OnRadioBox_GrpMatSelect(new_event);                     // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
     Element->Refresh();
 }
 
@@ -407,7 +412,6 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     Element->listePoints.clear();
     for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
 
-
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
     TextCtrl_NumObjet   ->SetValue(str_reset);
@@ -422,9 +426,9 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     key_event.m_keyCode = 'S';
     Element->OnKeyDown(key_event);      // Simule une pression sur la touche S au clavier
 
-    RadioBox_TypeSelection->SetSelection(Element->TypeSelection);   // Remet en état le bouton Radio qui peut avoit été changé via InitPanel ou ResetData (touche S)
+    RadioBox_TypeSelection->SetSelection(Element->TypeSelection);   // Remet en état le bouton Radio qui peut avoir été changé via InitPanel ou ResetData (touche S)
 
-    Element->m_gllist = 0;
+    Element->m_gllist = 0;              // on pourrait éviter un reset complet sauf si on venait du mode de sélection objets
     Element->Refresh();
 }
 
@@ -471,6 +475,7 @@ void SelectionPanel::OnRadioBox_GrpMatSelect(wxCommandEvent& event)
 void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
+    Face * Facette_courante;
 
     unsigned int i,j,n_val;
 
@@ -478,14 +483,15 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
 
     if (Element->mode_selection == Element->selection_facette) {
         for (i=0; i<Element->Objetlist.size(); i++) {
-            if (Element->Objetlist[i].deleted) continue ;                     // Ne pas traiter les objets supprimés
+            if (Element->Objetlist[i].deleted) continue ;                   // Ne pas traiter les objets supprimés
             for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
-                if (Element->Objetlist[i].Facelist[j].deleted) continue;      // Ne pas traiter les facettes supprimées
-                if (Element->Objetlist[i].Facelist[j].selected) {
+                Facette_courante = &(Element->Objetlist[i].Facelist[j]);
+                if (Facette_courante->deleted) continue;                    // Ne pas traiter les facettes supprimées
+                if (Facette_courante->selected) {
                     if (RadioBox_GrpMat->GetSelection() == 0)
-                        Element->Objetlist[i].Facelist[j].groupe     = new_GrpMat;
+                        Facette_courante->groupe     = new_GrpMat;
                     else
-                        Element->Objetlist[i].Facelist[j].codmatface = new_GrpMat;
+                        Facette_courante->codmatface = new_GrpMat;
                 }
             }
         }
@@ -493,13 +499,14 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
         auto it = Element->listeObjets.begin();
         n_val   = Element->listeObjets.size();
         for (i=0; i<n_val; i++, it++) {
-            if (Element->Objetlist[*it].deleted) continue ;                   // Ne pas traiter les objets supprimés
+            if (Element->Objetlist[*it].deleted) continue ;                 // Ne pas traiter les objets supprimés
             for (j=0; j<Element->Objetlist[*it].Facelist.size(); j++) {
-                if (Element->Objetlist[*it].Facelist[j].deleted) continue;    // Ne pas traiter les facettes supprimées
+                Facette_courante = &(Element->Objetlist[*it].Facelist[j]);
+                if (Facette_courante->deleted) continue;                    // Ne pas traiter les facettes supprimées
                 if (RadioBox_GrpMat->GetSelection() == 0)
-                    Element->Objetlist[*it].Facelist[j].groupe       = new_GrpMat;
+                    Facette_courante->groupe     = new_GrpMat;
                 else
-                    Element->Objetlist[*it].Facelist[j].codmatface   = new_GrpMat;
+                    Facette_courante->codmatface = new_GrpMat;
             }
         }
     }
@@ -567,6 +574,7 @@ void SelectionPanel::OnButton_DeleteClick(wxCommandEvent& event)
 void SelectionPanel::OnButton_UndoDeleteClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
+    Face * Facette_courante;
 
 // le mode_point n'est pas concerné
     if (Element->mode_selection == Element->selection_facette) {
@@ -575,26 +583,25 @@ void SelectionPanel::OnButton_UndoDeleteClick(wxCommandEvent& event)
             if (Element->Objetlist[i].deleted) continue;                  // Ne rien faire sur les objets complètement supprimés
             for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
                 if (Element->ToSelect.check_if_in_ListeSelect(i,j)) {
-                    Element->Objetlist[i].Facelist[j].deleted  = false;   // Undelete
-                    Element->colorface(i,j);                              // coloriser la facette
-                    Element->Objetlist[i].Facelist[j].selected = true;    // puis la marquer comme Sélectionnée
-                    Element->Objetlist[i].Facelist[j].afficher = true;    // + réafficher
+                    Facette_courante = &(Element->Objetlist[i].Facelist[j]);
+                    Facette_courante->deleted  = false;   // Undelete
+//                    Element->colorface(i,j);            // coloriser la facette
+                    Facette_courante->selected = true;    // marquer la facette comme Sélectionnée
+                    Facette_courante->afficher = true;    // + réafficher
                 }
             }
         }
+        Element->m_gllist = Element->glliste_select;
+
     } else if (Element->mode_selection == Element->selection_objet) {
         auto it = Element->listeObjets.begin();
         for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
             Element->Objetlist[*it].deleted = false;
         }
+        Element->m_gllist = 0;
     }
     Button_UndoDelete->Disable();
-    Element->m_gllist = 0;
     Element->Refresh();
-}
-
-void SelectionPanel::OnButton_PermutationClick(wxCommandEvent& event)
-{
 }
 
 void SelectionPanel::OnButton_MasquerClick(wxCommandEvent& event)
@@ -624,6 +631,7 @@ void SelectionPanel::OnButton_MasquerClick(wxCommandEvent& event)
 void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
+    Face * Facette_courante;
 
     if (Element->mode_selection == Element->selection_facette) {
         Element->ToSelect = UndoListe;    // Remettre en place la liste ToSelect depuis UndoListe
@@ -631,20 +639,22 @@ void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
             if (Element->Objetlist[i].deleted) continue;                  // Ne rien faire sur les objets complètement supprimés
             for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
                 if (Element->ToSelect.check_if_in_ListeSelect(i,j)) {
-                    Element->colorface(i,j);                              // coloriser la facette
-                    Element->Objetlist[i].Facelist[j].selected = true;    // puis la marquer comme Sélectionnée
-                    Element->Objetlist[i].Facelist[j].afficher = true;    // + réafficher
+                    Facette_courante = &(Element->Objetlist[i].Facelist[j]);
+//                    Element->colorface(i,j);            // coloriser la facette
+                    Facette_courante->selected = true;    // marquer la facette comme Sélectionnée
+                    Facette_courante->afficher = true;    // + réafficher
                 }
             }
         }
+        Element->m_gllist = Element->glliste_select;
     } else if (Element->mode_selection == Element->selection_objet) {
         auto it = Element->listeObjets.begin();
         for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
             Element->Objetlist[*it].afficher = true;
         }
+        Element->m_gllist = 0;
     }
     Button_UndoMasquer->Disable();
-    Element->m_gllist = 0;
     Element->Refresh();
 }
 
@@ -672,18 +682,20 @@ void SelectionPanel::Reset_ListeObjets()
 void SelectionPanel::OnButton_ReafficherClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
+    Face * Facette_courante;
     unsigned int i;
 
     for (i=0; i<Element->Objetlist.size(); i++) {
-        Element->Objetlist[i].deleted = false;                        // Revalider les objets complètement supprimés
-        Element->Objetlist[i].afficher= true;                         // Les réafficher
+        Element->Objetlist[i].deleted = false;                          // Revalider les objets complètement supprimés
+        Element->Objetlist[i].afficher= true;                           // Les réafficher
         for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
-            Element->Objetlist[i].Facelist[j].deleted  = false;       // Undelete des facettes
-            Element->Objetlist[i].Facelist[j].afficher = true;        // + réafficher toutes les facettes
+            Facette_courante = &(Element->Objetlist[i].Facelist[j]);
+            Facette_courante->deleted  = false;                         // Undelete des facettes
+            Facette_courante->afficher = true;                          // + réafficher toutes les facettes
         }
     }
 
-    if (MAIN->Selections_Manuelles_Objets->IsShown()) {                     // Mettre à jour si la fenêtre est affichée
+    if (MAIN->Selections_Manuelles_Objets->IsShown()) {                 // Mettre à jour si la fenêtre est affichée
         Reset_ListeObjets();
     }
 

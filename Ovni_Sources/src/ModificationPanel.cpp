@@ -27,6 +27,7 @@ const long ModificationPanel::ID_PANEL4 = wxNewId();
 const long ModificationPanel::ID_STATICTEXT6 = wxNewId();
 const long ModificationPanel::ID_TOGGLEBUTTON3 = wxNewId();
 const long ModificationPanel::ID_BUTTON8 = wxNewId();
+const long ModificationPanel::ID_STATICLINE1 = wxNewId();
 const long ModificationPanel::ID_PANEL6 = wxNewId();
 const long ModificationPanel::ID_STATICTEXT7 = wxNewId();
 const long ModificationPanel::ID_STATICTEXT8 = wxNewId();
@@ -40,8 +41,8 @@ const long ModificationPanel::ID_CHECKBOX1 = wxNewId();
 const long ModificationPanel::ID_CHECKBOX3 = wxNewId();
 const long ModificationPanel::ID_PANEL8 = wxNewId();
 const long ModificationPanel::ID_BUTTON13 = wxNewId();
-const long ModificationPanel::ID_PANEL10 = wxNewId();
 const long ModificationPanel::ID_PANEL9 = wxNewId();
+const long ModificationPanel::ID_PANEL10 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ModificationPanel,wxDialog)
@@ -53,7 +54,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 {
 	//(*Initialize(ModificationPanel)
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
-	SetClientSize(wxSize(216,582));
+	SetClientSize(wxSize(216,591));
 	Move(wxPoint(20,20));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(16,0), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
@@ -65,10 +66,10 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	SpinCtrl_NbSegments->Disable();
 	StaticText2 = new wxStaticText(Panel2, ID_STATICTEXT2, _T("segments"), wxPoint(136,35), wxDLG_UNIT(Panel2,wxSize(32,9)), wxALIGN_CENTRE|wxFULL_REPAINT_ON_RESIZE, _T("ID_STATICTEXT2"));
 	ToggleButton_Diviser = new wxToggleButton(Panel2, ID_TOGGLEBUTTON2, _T("Diviser en"), wxPoint(16,32), wxSize(64,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON2"));
-	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,152), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
+	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,160), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
 	StaticText3->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText3->SetBackgroundColour(wxColour(0,0,0));
-	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,168), wxSize(216,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
+	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,176), wxSize(216,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
 	StaticText4 = new wxStaticText(Panel4, ID_STATICTEXT4, _T("Avec le numéro de groupe"), wxPoint(8,2), wxSize(144,16), 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(Panel4, ID_STATICTEXT5, _T("Avec le numéro de matériau"), wxPoint(8,22), wxSize(152,16), 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_Groupe = new wxSpinCtrl(Panel4, ID_SPINCTRL2, _T("0"), wxPoint(168,0), wxSize(40,20), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
@@ -88,14 +89,15 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Souder deux points"), wxPoint(16,80), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT6"));
 	StaticText6->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText6->SetBackgroundColour(wxColour(0,0,0));
-	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,96), wxSize(216,56), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
+	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,96), wxSize(216,64), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
 	ToggleButton_Souder = new wxToggleButton(Panel6, ID_TOGGLEBUTTON3, _T("Souder"), wxPoint(48,4), wxSize(120,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON3"));
-	Button_Undo = new wxButton(Panel6, ID_BUTTON8, _T("Undo"), wxPoint(8,30), wxSize(200,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_Undo = new wxButton(Panel6, ID_BUTTON8, _T("Undo"), wxPoint(8,36), wxSize(200,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
 	Button_Undo->Disable();
-	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,312), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
+	StaticLine1 = new wxStaticLine(Panel6, ID_STATICLINE1, wxPoint(0,32), wxSize(216,1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
+	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,320), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
-	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,328), wxSize(216,208), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
+	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,336), wxSize(216,208), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(8,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));
 	TextCtrl_Tolerance = new wxTextCtrl(Panel8, ID_TEXTCTRL1, _T("0"), wxPoint(136,8), wxSize(72,20), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_InverserTout = new wxButton(Panel8, ID_BUTTON9, _T("Inverser toutes les normales"), wxPoint(16,32), wxSize(184,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));
@@ -107,9 +109,9 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	CheckBox_Transparence->SetValue(false);
 	CheckBox_NotFlat = new wxCheckBox(Panel8, ID_CHECKBOX3, _T("Forcer facettes à NON planes"), wxPoint(28,84), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX3"));
 	CheckBox_NotFlat->SetValue(false);
-	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,544), wxSize(216,40), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
-	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,4), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
-	Panel9 = new wxPanel(this, ID_PANEL9, wxPoint(0,536), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
+	Panel10 = new wxPanel(this, ID_PANEL10, wxPoint(0,544), wxSize(216,48), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
+	Button_Quitter = new wxButton(Panel10, ID_BUTTON13, _T("Quitter"), wxPoint(64,16), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
+	Panel9 = new wxPanel(Panel10, ID_PANEL9, wxPoint(0,0), wxSize(216,8), wxTAB_TRAVERSAL, _T("ID_PANEL9"));
 	Panel9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
 
 	Connect(ID_TOGGLEBUTTON1,wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&ModificationPanel::OnToggleButton_AjouterToggle);
@@ -159,6 +161,7 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
     CheckBox_NotFlat->SetValue(Element->NotFlat);
     aretes_calculees   = true;  // Si le flag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
+
 // RAZ de l'attribut "selected" des facettes en entrée
     for(o=0; o<Element->Objetlist.size(); o++) {
         for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
@@ -200,11 +203,10 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
         Button_InverserNormale->Disable();
         Bool_diviser = false;
         Bool_souder  = false;
-//        toredraw = 1;
+
         Element->show_lines  = false;
         Element->show_points = false;
         Element->Smemory     = nullptr;
-//        Element->m_gllist= -2;        // Ne reconstruire que la liste de points
     }
     Element->modeGL          = (BddInter::MODE)old_modeGL;
     Element->mode_selection  = (BddInter::SELECTION)old_mode_selection;
@@ -213,13 +215,14 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
     if (old_show_points) Element->show_points = true;                   // Dans ce cas, forcer à true
     if (old_show_lines)  Element->show_lines  = true;                   // idem
 //    printf("mode_selection : %d %d\n",old_mode_selection,Element->mode_selection);
+
 // RAZ l'attribut "selected" des facettes en sortie (par précaution)
     for(o=0; o<Element->Objetlist.size(); o++) {
         for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
     }
     Hide();
     // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser GenereTableauPointsFacettes et GenereTableauAretes
-    // Mais cette opération est longue sur certaines grosses Bdd. Paut-être à proposer en option via le bouton "Recalculer les arêtes".
+    // Mais cette opération est longue sur certaines grosses Bdd. Peut-être à proposer en option via le bouton "Recalculer les arêtes".
     Element->Refresh();
 }
 
@@ -241,18 +244,15 @@ void ModificationPanel::OnToggleButton_SouderToggle(wxCommandEvent& event)
         Element->Smemory = nullptr;   // ""
         Element->modeGL  = (BddInter::MODE)old_modeGL;
     }
-//    toredraw = 1;
     Bool_diviser = false;
     Element->show_points= Bool_souder;
     Element->show_lines = false;
-    Element->m_gllist   = -Element->glliste_points;          // Ne reconstruire que la liste de points
     Element->Refresh();
 }
 
-//ajouter sous le pointeur
+//ajouter sous le pointeur un point à une arête
 void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
 {
-// Semble ne pas utiliser la position du pointeur et être <=> diviser en N parties égales ! N étant le contenu actuel de SpinCtrl_NbSegments !!!
     BddInter *Element = MAIN->Element;
 
     division=-1;
@@ -262,45 +262,47 @@ void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
         ToggleButton_Diviser->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
         SpinCtrl_NbSegments ->Disable();
-        old_modeGL = (int)Element->modeGL;
+        Element->modeGL = Element->aretes;
     } else {
 //        printf("Ajouter NO\n");
         Element->modeGL = (BddInter::MODE)old_modeGL;
     }
-//        toredraw = 1;
     Bool_souder         = false;
     Element->show_lines = Bool_diviser;
     Element->show_points= false;
+    Element->m_gllist   = Element->glliste_lines;
     Element->Refresh();
 }
 
-//division d'arrête
+//division d'arrête en N segments d'égale longueur
 void ModificationPanel::OnToggleButton_DiviserToggle(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
     Bool_diviser = ToggleButton_Diviser->GetValue();
     if (Bool_diviser) {
+//        printf("Diviser YES\n");
         ToggleButton_Ajouter->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
-//        printf("Diviser YES\n");
         SpinCtrl_NbSegments ->Enable();
+        Element->modeGL = Element->aretes;
         division = SpinCtrl_NbSegments->GetValue();
     } else {
 //        printf("Diviser NO\n");
         SpinCtrl_NbSegments->Disable();
+        Element->modeGL = (BddInter::MODE)old_modeGL;
     }
-//        toredraw = 1;
     Bool_souder         = false;
     Element->show_lines = Bool_diviser;
     Element->show_points= false;
+    Element->m_gllist   = Element->glliste_lines;
     Element->Refresh();
 }
 
 void ModificationPanel::OnSpinCtrl_NbSegmentsChange(wxSpinEvent& event)
 {
     division = SpinCtrl_NbSegments->GetValue();
-    printf("Division : %d\n",division);
+//    printf("Division : %d\n",division);
 }
 
 //undo
@@ -312,7 +314,7 @@ void ModificationPanel::OnButton_UndoClick(wxCommandEvent& event)
 ///    Element->modeGL = (BddInter::MODE)old_modeGL;    // Pas ici !!!!
 ///    delete Element->Smemory;      // Utile ?
 ///    Element->Smemory = nullptr;   //                 Par contre, peut-être ajouter un reset de sélection pour éviter un point vert restant ?
-//    Element->m_gllist= -2;
+//    Element->m_gllist = 0; // inutile ? et plutôt glliste_points ou glliste_lines
     Element->Refresh();
 }
 
@@ -329,7 +331,6 @@ void ModificationPanel::OnButton_RecalculerNormalesClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->Calcul_All_Normales();
-//    toredraw = 1;                               // double emploi ?
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -339,7 +340,6 @@ void ModificationPanel::OnButton_SimplificationClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->Simplification_BDD();
-//    toredraw = 1;                               // double emploi ?
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -360,7 +360,6 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
     std::vector<int>   NumerosSommets;
     std::vector<int>   NumerosVecteurs;
     std::list<int>     IndicesFacettes;
-//    std::list<int>     IndicesSommets;
 
     int methode_triangulation, new_points, new_numero;
     unsigned int nb_new;
@@ -436,7 +435,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 // Créer un nouveau point au centre de la facette
                     std::fill_n(xyz,3,0.0); // <=> xyz[0] = xyz[1] = xyz[2] = 0.0;
                     for(j=0;j<nb_sommets;j++) {
-                        jj      = facette_courante->F_sommets[j]-1;  // jj : indice = numero-1
+                        jj      = facette_courante->F_sommets[j]-1; // jj : indice = numero-1
                         xyz_pt  = objet_courant->Sommetlist[jj].getPoint();
                         xyz[0] += xyz_pt[0]; xyz[1] += xyz_pt[1]; xyz[2] += xyz_pt[2];
                     }
@@ -453,9 +452,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                         Element->N_elements = new_numero;
                         Element->make1vecteur();
                     }
-//                    nb_new = nb_sommets;
                     nb_new = nb_sommets-1;  // 1 de moins car on réutilise la facette de base (facette_courante)
-//                    jj1 = objet_courant->Nb_sommets;
                     jj3 = objet_courant->Nb_sommets;                        // Indice du nouveau point central
                     if (!facette_plane) jj3v= objet_courant->Nb_vecteurs;   // Indice du vecteur sur le point central
 
@@ -494,13 +491,13 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 if (Element->verbose) printf("Nouvelles facettes:\n");
                 for(j=0; j<nb_new; j++) {
                     new_numero_facette++;
-                    if (methode_triangulation == 0) {   // Méthode la + simple 0,1,2 puis 0,2,3, ... et 0, n-2, n-1
+                    if (methode_triangulation == 0) {       // Méthode la + simple 0,1,2 puis 0,2,3, ... et 0, n-2, n-1
                         jj1 = 0 ;
                         jj2 = j+2 ;
                         jj3 = jj2+1 ;
                     } else if (methode_triangulation == 1) {
                         parite = !parite ;
-                        if (parite) {                     // Méthode 0,1,2 puis 0,2,n-1 puis n-1,2,3 puis n-1,3,n-2 ...
+                        if (parite) {                       // Méthode 0,1,2 puis 0,2,n-1 puis n-1,2,3 puis n-1,3,n-2 ...
                             jj2 = jj3 ;
                             jj3 = jj1-1;
                             if(jj3 < 0) jj3 = nb_sommets-1;
@@ -508,19 +505,10 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                             jj1 = jj3 ;
                             jj3 = jj2+1 ;
                         }
-                    } else { // <=>  if (methode_triangulation == 2) {
-//                        jj2 = j ;
-//                        jj3 = jj2+1;
-//                        if(jj3 >= (int)nb_sommets) jj3=0;
-//                        NumerosSommets[0] = jj1;
+                    } else { // <=>  if (methode_triangulation == 2)
                         jj1 = j+1 ;
                         jj2 = jj1+1;
                         if(jj2 >= (int)nb_sommets) jj2=0;
-//                        NumerosSommets[0] = jj3;
-////                        new_tab_facette[num_fac].ind_sommets[1] = jj1;
-////                        if (nb_norm != 0) {
-////                            new_tab_facette[num_fac].ind_normales[1] = jj1;
-////                        }
                     }
                     NumerosSommets[0]  = facette_courante->F_sommets[jj1];
                     NumerosSommets[1]  = facette_courante->F_sommets[jj2];
@@ -573,16 +561,14 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 if (methode_triangulation == 2) {
                     facette_courante->F_sommets[2] = jj3;   // Modification du 3ème sommet de la facette de base
                 }
-//                    facette_courante->deleted = true;   // Note : on devrait pouvoir faire comme avec les autres méthodes en modifiant le 3ème pt de la facette inchangée
-//                } else {                                //        évite le deleted = true; mais alors, quelle que soit la méthode l'ordre des facettes n'est
-                facette_courante->F_sommets.resize(3);        //plus en séquence logique ...
+
+                facette_courante->F_sommets.resize(3);
                 facette_courante->Nb_Sommets_F = 3;
                 if (!facette_plane) {
                     facette_courante->L_sommets.resize(3);
                     facette_courante->Nb_Sommets_L = 3;
                 }
                 Element->Calcul_Normale_Barycentre(o,i);    // Recalculer la normale au barycentre de la facette originale
-//                }
             }
 
             if (objet_courant->Temps_Calcul_Aretes <= tempo_s*CLOCKS_PER_SEC) {
@@ -651,7 +637,6 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 void ModificationPanel::OnCheckBox_TransparenceClick(wxCommandEvent& event)
 {
     activer_transparence = CheckBox_Transparence->GetValue();
-//    toredraw = 1;                               // double emploi ?
     MAIN->Element->m_gllist = 0;
     MAIN->Element->Refresh();
 }
@@ -694,7 +679,7 @@ void ModificationPanel::OnToggleButton_CreerFacetteToggle(wxCommandEvent& event)
             for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
         }
     }
-//    Element->m_gllist = 0;
+//    Element->m_gllist = 0;    // Inutile ici ?
 
     Element->Refresh();
 }

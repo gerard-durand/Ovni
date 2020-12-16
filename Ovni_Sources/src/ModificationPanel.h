@@ -7,6 +7,7 @@
 #include <wx/dialog.h>
 #include <wx/panel.h>
 #include <wx/spinctrl.h>
+#include <wx/statline.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/tglbtn.h>
@@ -22,7 +23,6 @@ class ModificationPanel: public wxDialog
 		virtual ~ModificationPanel();
         bool Bool_souder  = false;
         bool Bool_diviser = false;
-//        int toredraw=0;
         int  division;
         bool activer_transparence = false;
         int  NumeroMateriau = 0, NumeroGroupe = 0;
@@ -53,6 +53,7 @@ class ModificationPanel: public wxDialog
 		wxSpinCtrl* SpinCtrl_Groupe;
 		wxSpinCtrl* SpinCtrl_Materiau;
 		wxSpinCtrl* SpinCtrl_NbSegments;
+		wxStaticLine* StaticLine1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
@@ -91,6 +92,7 @@ class ModificationPanel: public wxDialog
 		static const long ID_STATICTEXT6;
 		static const long ID_TOGGLEBUTTON3;
 		static const long ID_BUTTON8;
+		static const long ID_STATICLINE1;
 		static const long ID_PANEL6;
 		static const long ID_STATICTEXT7;
 		static const long ID_STATICTEXT8;
@@ -104,8 +106,8 @@ class ModificationPanel: public wxDialog
 		static const long ID_CHECKBOX3;
 		static const long ID_PANEL8;
 		static const long ID_BUTTON13;
-		static const long ID_PANEL10;
 		static const long ID_PANEL9;
+		static const long ID_PANEL10;
 		//*)
 
 	private:
@@ -134,6 +136,7 @@ class ModificationPanel: public wxDialog
 		void OnCheckBox_FacettePlaneClick(wxCommandEvent& event);
 		void OnButton_RecalculerAretesClick(wxCommandEvent& event);
 		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
+		void OnPanel6Paint(wxPaintEvent& event);
 		//*)
         OvniFrame* MAIN;
         int  old_modeGL;

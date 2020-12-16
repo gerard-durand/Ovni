@@ -174,8 +174,6 @@ void Icosaedre::genereIcosaedre()
     wxString num_obj;
     int new_num;
 
-//    int new_num = Element->Objetlist[(Element->Objetlist.size()-1)].GetValue() +1;
-//  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
     if (Element->Objetlist.size() == 0)
         new_num = 1;
     else
@@ -304,11 +302,9 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
 
             indiceFacette = newFacette++;
             Element->N_elements = newFacette;
-//            Element->NumerosSommets[0] = Nb_sommets+1; Element->NumerosSommets[1] = NumerosSommets[1] ; Element->NumerosSommets[2] = Nb_sommets+2;
             Element->NumerosSommets = {(int)Nb_sommets+1, NumerosSommets[1], (int)Nb_sommets+2};
             Element->make1face();
             objet_courant = &(Element->Objetlist[indiceObjet]);
-//            facette_courante = &(objet_courant->Facelist[i]);
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);
             facette_nouvelle->groupe       = groupe;
             facette_nouvelle->codmatface   = codmatface;
@@ -319,7 +315,6 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
 
             indiceFacette++;
             Element->N_elements = ++newFacette;
-//            Element->NumerosSommets[0] = Nb_sommets+1; Element->NumerosSommets[1] = Nb_sommets+2 ;      Element->NumerosSommets[2] = Nb_sommets+3;
             Element->NumerosSommets = {(int)Nb_sommets+1, (int)Nb_sommets+2, (int)Nb_sommets+3};
             Element->make1face();
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);
@@ -332,7 +327,6 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
 
             indiceFacette++;
             Element->N_elements = ++newFacette;
-//            Element->NumerosSommets[0] = Nb_sommets+3; Element->NumerosSommets[1] = Nb_sommets+2 ;      Element->NumerosSommets[2] = NumerosSommets[2];
             Element->NumerosSommets = {(int)Nb_sommets+3, (int)Nb_sommets+2, NumerosSommets[2]};
             Element->make1face();
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);

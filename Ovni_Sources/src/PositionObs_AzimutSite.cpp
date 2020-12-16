@@ -111,7 +111,6 @@ void PositionObs_AzimutSite::OnSpinCtrl_LSIChange(wxSpinEvent& event)
     Element->Slider_x->SetValue(val);
     Element->CalculMatriceRot();
     Element->Refresh();
-//    MAIN->Refresh();
 }
 
 void PositionObs_AzimutSite::OnButton_QuitClick(wxCommandEvent& event)

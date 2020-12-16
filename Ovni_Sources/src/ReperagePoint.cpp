@@ -229,8 +229,6 @@ void ReperagePoint::OnButton_ResetClick(wxCommandEvent& event)
 
     wxString str;
 
-//    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(Point_Parent);
-
     wxCommandEvent event_check(wxEVT_COMMAND_CHECKBOX_CLICKED);//, ID_CHECKBOX1);
     wxCommandEvent event_button(wxEVT_COMMAND_BUTTON_CLICKED) ;
 

@@ -180,8 +180,6 @@ void Cube::genereCube()
 
     BddInter* Element = MAIN->Element;
 
-//    int new_num = Element->Objetlist[(Element->Objetlist.size()-1)].GetValue() +1;
-//  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
     if (Element->Objetlist.size() == 0)
         new_num = 1;
     else
@@ -215,8 +213,6 @@ void Cube::genereCube()
 
 void Cube::OnButton_OKClick(wxCommandEvent& event)
 {
-//    wxString str;
-
     BddInter* Element = MAIN->Element;
 
     arete = wxAtof(TextCtrl_Arete->GetValue());

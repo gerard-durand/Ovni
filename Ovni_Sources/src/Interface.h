@@ -588,7 +588,7 @@ public:
         ListeSelect.push_back(*Make);
     };
     void erase_one_ListeSelect(int objet,int face_sommet) {
-        if (check_if_in_ListeSelect(objet,face_sommet)) ListeSelect.erase(ListeSelect.begin()+i); // On récupère le i général de ListeSelected
+        if (check_if_in_ListeSelect(objet,face_sommet)) ListeSelect.erase(ListeSelect.begin()+i); // On récupère l'indice i trouvé de ListeSelected
     };
 };
 
@@ -684,16 +684,17 @@ class BddInter: public wxGLCanvas {
 
     GLfloat rouge[3] = {1.0f, 0.0f, 0.0f};
     GLfloat vert[3]  = {0.0f, 1.0f, 0.0f};
-    GLfloat vert_f[3]= {0.0f, 0.5f, 0.0f};      // Vert foncé
-    GLfloat vert_c[3]= {0.5f, 1.0f, 0.5f};      // Vert clair
+    GLfloat vert_f[3]= {0.0f, 0.5f, 0.0f};              // Vert foncé
+    GLfloat vert_c[3]= {0.5f, 1.0f, 0.5f};              // Vert clair
     GLfloat bleu[3]  = {0.0f, 0.0f, 1.0f};
     GLfloat blanc[3] = {1.0f, 1.0f, 1.0f};
     GLfloat noir[3]  = {0.0f, 0.0f, 0.0f};
     GLfloat jaune[3] = {1.0f, 1.0f, 0.0f};
     GLfloat violet[3]= {1.0f, 0.0f, 1.0f};
     GLfloat cyan[3]  = {0.0f, 1.0f, 1.0f};
-    GLfloat cyan_f[3]= {0.0f, 0.5f, 0.5f};      // Cyan foncé
-    GLfloat cyan_c[3]= {0.5f, 1.0f, 1.0f};      // Cyan clair
+    GLfloat cyan_f[3]= {0.0f, 0.5f, 0.5f};              // Cyan foncé
+    GLfloat cyan_c[3]= {0.5f, 1.0f, 1.0f};              // Cyan clair
+    GLfloat gris[3]  = {gris_def, gris_def, gris_def};  // Gris par défaut
 
 public :
     unsigned int Numero_base;
@@ -923,15 +924,20 @@ public :
 
     GLData m_gldata;
     GLint  m_gllist;    // GLuint
+    GLint glliste_objets = 1;
     GLint glliste_lines  = 2;
     GLint glliste_points = 3;
     GLint glliste_boite  = 4;
     GLint glliste_repere = 5;
+    GLint glliste_select = 6;
+    GLint glliste_segment= 7;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
 
     bool   materials = false;
     bool   groupes   = false;
     bool   smooth    = false;
 
+    bool segment_surligne   = false;
+    bool click_sur_segment  = false;
     bool Elements_Masques   = false; // à l'initialisation, rien n'est masqué
     bool Elements_Supprimes = false; // ni supprimé. Ces 2 indicateurs sont globaux. Pour les détails, voir dans chaque objet et chaque facette
 
@@ -996,7 +1002,7 @@ public :
 
     wxString get_file();                // Fichier courant (égal à first_file pour le premier fichier ouvert ou si c'est le seul !)
     wxString get_firstFile();           // Premier fichier lu en cas de fusion
-    bool colorface(int objet,int face);
+    void colorface(int objet,int face,bool OnOff);
     void set_file(wxString file);
     void set_firstFile(wxString file);
     void create_bdd();
@@ -1036,7 +1042,7 @@ public :
     void OnKeyUpDown   (wxKeyEvent& event, int signe);
     void SetPosObs(bool );
     void Tracer_normale(const std::vector <float> & , const std::vector <float> &, int );
-    void coloriserFacette(unsigned int, unsigned int, bool);
+    void coloriserFacette(unsigned int, unsigned int, bool, GLfloat couleur[3]);
     void draw_rectangle_selection();
     void Selection_rectangle(GLint, GLint);
 
@@ -1137,7 +1143,10 @@ private :
     //opengl affichage
     void showAllPoints();
     void showAllLines();
+    void showSegment();
+    void showPoint();
     void buildAllPoints();
+    void buildAllFacettesSelected();
 
     double Norme3(float x, float y, float z);
     void GenereEtoile();

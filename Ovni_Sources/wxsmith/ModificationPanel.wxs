@@ -3,7 +3,7 @@
 	<object class="wxDialog" name="ModificationPanel">
 		<title>Modifications</title>
 		<pos>20,20</pos>
-		<size>216,582</size>
+		<size>216,591</size>
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
@@ -49,14 +49,14 @@
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 			<label>Création de facettes</label>
-			<pos>0,152</pos>
+			<pos>0,160</pos>
 			<size>216,16</size>
 			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxPanel" name="ID_PANEL4" variable="Panel4" member="yes">
-			<pos>0,168</pos>
+			<pos>0,176</pos>
 			<size>216,144</size>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 				<label>Avec le numéro de groupe</label>
@@ -125,7 +125,7 @@
 		</object>
 		<object class="wxPanel" name="ID_PANEL6" variable="Panel6" member="yes">
 			<pos>0,96</pos>
-			<size>216,56</size>
+			<size>216,64</size>
 			<object class="wxToggleButton" name="ID_TOGGLEBUTTON3" variable="ToggleButton_Souder" member="yes">
 				<label>Souder</label>
 				<pos>48,4</pos>
@@ -134,22 +134,26 @@
 			</object>
 			<object class="wxButton" name="ID_BUTTON8" variable="Button_Undo" member="yes">
 				<label>Undo</label>
-				<pos>8,30</pos>
+				<pos>8,36</pos>
 				<size>200,24</size>
 				<enabled>0</enabled>
 				<handler function="OnButton_UndoClick" entry="EVT_BUTTON" />
 			</object>
+			<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+				<pos>0,32</pos>
+				<size>216,1</size>
+			</object>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
 			<label>Divers</label>
-			<pos>0,312</pos>
+			<pos>0,320</pos>
 			<size>216,16</size>
 			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxPanel" name="ID_PANEL8" variable="Panel8" member="yes">
-			<pos>0,328</pos>
+			<pos>0,336</pos>
 			<size>216,208</size>
 			<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
 				<label>Tolérance d&apos;égalité %</label>
@@ -207,18 +211,18 @@
 		</object>
 		<object class="wxPanel" name="ID_PANEL10" variable="Panel10" member="yes">
 			<pos>0,544</pos>
-			<size>216,40</size>
+			<size>216,48</size>
 			<object class="wxButton" name="ID_BUTTON13" variable="Button_Quitter" member="yes">
 				<label>Quitter</label>
-				<pos>64,4</pos>
+				<pos>64,16</pos>
 				<size>88,24</size>
 				<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 			</object>
-		</object>
-		<object class="wxPanel" name="ID_PANEL9" variable="Panel9" member="yes">
-			<pos>0,536</pos>
-			<size>216,8</size>
-			<bg>wxSYS_COLOUR_BACKGROUND</bg>
+			<object class="wxPanel" name="ID_PANEL9" variable="Panel9" member="yes">
+				<pos>0,0</pos>
+				<size>216,8</size>
+				<bg>wxSYS_COLOUR_BACKGROUND</bg>
+			</object>
 		</object>
 	</object>
 </wxsmith>

@@ -54,9 +54,9 @@ void ChoixAffichageObjets::OnCheckListBox1Toggled(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     bool chkB;
-//    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(Chk_Parent);
     int n = CheckListBox1->GetCount();
     unsigned int indice_objet = 0;  // Pour découpler l'indice d'objet avec celui de la CheckBoxList (en cas d'objets supprimés)
+
     for (int i=0; i<n; i++) {
         chkB = CheckListBox1->IsChecked(i);
         while (Element->Objetlist[indice_objet].deleted) indice_objet++;    // Passer les objets supprimés (incrémenter l'indice)

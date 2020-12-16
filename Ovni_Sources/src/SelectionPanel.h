@@ -128,7 +128,6 @@ class SelectionPanel: public wxDialog
 		void OnButton_UndoNormalesClick(wxCommandEvent& event);
 		void OnButton_DeleteClick(wxCommandEvent& event);
 		void OnButton_UndoDeleteClick(wxCommandEvent& event);
-		void OnButton_PermutationClick(wxCommandEvent& event);
 		void OnButton_MasquerClick(wxCommandEvent& event);
 		void OnButton_ReafficherClick(wxCommandEvent& event);
 		void OnButton_CentrerClick(wxCommandEvent& event);

@@ -92,7 +92,7 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
     alpha  = 0.0;            // Ne servent plus ??? sauf peut-être via et dans CalculAngles
     beta   = 0.0;
     gamma  = 0.0;
-    modeGL = standard; //11;
+    modeGL = standard;
     objet_under_mouse = -1;
     face_under_mouse  = -1;
     point_under_mouse = -1;
@@ -332,7 +332,6 @@ void BddInter::ResetData() {
 
 //    Refresh();  // Ce Refresh ne sert sans doute à rien ... à vérifier !
     if(verbose) printf("Sortie de BddInter::ResetData\n");
-
 }
 
 void BddInter::Ouvrir_ini_file()
@@ -463,12 +462,6 @@ void BddInter::Ouvrir_ini_file()
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&svg_time) ;              // Récupère la valeur de svg_time
-                // Initialisation du timer
-/*                if (svg_time > 0) {
-                    this->MAIN_b->Timer_Save.Start(svg_time*60000,false);  // Convertir des minutes en millisecondes, mais ici, ne trouve pas le timer !
-                } else {
-                    this->MAIN_b->Timer_Save.Stop();
-                }*/
                 continue;   // Passer au while suivant
             }
             len = strlen( initE);
@@ -610,7 +603,7 @@ void BddInter::Stocker_ini_file()
 
 void BddInter::OnSize(wxSizeEvent& event)
 {
-    // Ne semble pas (ou plus) servir
+    // Ne semble pas (ou plus) servir (sauf peut-être via EVT_SIZE
     if(verbose) printf("Entree BddInter::OnSize\n");
 
 //    // this is also necessary to update the context on some platforms
@@ -630,7 +623,7 @@ void BddInter::OnSize(wxSizeEvent& event)
 void BddInter::Resize() {
     if (verbose) printf("Entree BddInter::Resize\n");
     ResetProjectionMode();
-    Refresh();                                          // Est-ce utile ?
+    Refresh();                                              // Est-ce utile ?
     if (verbose) printf("Sortie BddInter::Resize\n");
 }
 
@@ -918,11 +911,11 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             if (Elements_Masques || Elements_Supprimes)
                 My_popupmenu.AppendSeparator(); // Ajout d'un séparateur si des élements de menu suivent ...
 
-            if (Elements_Masques) {     // S'il y a au moins une facette masquée, proposer de les réafficher
+            if (Elements_Masques) {             // S'il y a au moins une facette masquée, proposer de les réafficher
                 wxMenuItem * Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, _T("Réafficher les facettes masquées"), wxEmptyString, wxITEM_NORMAL);
                 My_popupmenu.Append(Popup_Demasquer);
             }
-            if (Elements_Supprimes) {   // S'il y a au moins une facette supprimée, proposer de les restituer
+            if (Elements_Supprimes) {           // S'il y a au moins une facette supprimée, proposer de les restituer
                 wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE, _T("Restituer les facettes supprimées"),  wxEmptyString, wxITEM_NORMAL);
                 My_popupmenu.Append(Popup_Undelete);
             }
@@ -939,35 +932,50 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 //            printf("begin X Y : %d %d\n",m_gldata.BeginX,m_gldata.BeginY);
         }
 
-//        mode = standard;
+//        modeGL = standard;
         if (mode_selection == selection_point) modeGL = points;
 
 //        if(event.RightDown()) {
         if (event.MiddleDown()) {   // Comme en version Tcl, bouton Milieu. mêmes actions qu'initialement event.RightDown() ||
+//            printf("event.MiddleDown\n");
             this->ToSelect.verrouiller_ListeSelect(false);  // Déverrouiller la liste (par précaution)
-            if (test_rectangle_selection) {                 // ici pour l'instant (phase de test)
+//            if (test_rectangle_selection) {                 // ici pour l'instant (phase de test)
                 xd_sel = xa_sel = mouse_position.x;             // Initialisations pour un éventuel tracé de rectangle de sélection
                 yd_sel = ya_sel = mouse_position.y;
 //                select_largeur  = select_hauteur = 1;           // Donner au moins 1 pixel de largeur/hauteur
-            }
+//            }
+//            if (mode_selection == selection_point)   m_gllist = glliste_points;
+//            if (mode_selection == selection_facette) m_gllist = glliste_select;
             testPicking(mouse_position.x, mouse_position.y, modeGL, true) ; // OnOff sur true pour basculer en sélectionné / non sélectionné
-            stopPicking();
+//            stopPicking();    // Ne sert plus car action équivallente déjà faite en fin de testPicking
+            if (modeGL == aretes) click_sur_segment = true;
         } else if(event.MiddleIsDown()) { // event.RightIsDown() || dans ce cas <=> Dragging avec le bouton du Milieu
 //            printf("event.MiddleIsDown x,y,mode %d %d %d\n",mouse_position.x,mouse_position.y,modeGL);
             if (!this->ToSelect.getVerrou_ListeSelect()) {  // Ne rien faire si la liste est verrouillée
-                testPicking(mouse_position.x, mouse_position.y, modeGL, false) ;// OnOff sur false => Sélectionner si glisser à la souris
-                stopPicking();
+//                if (mode_selection == selection_point)   m_gllist = glliste_points;
+//                if (mode_selection == selection_facette) m_gllist = glliste_select;
+                if ((mouse_position.x != xd_sel) || (mouse_position.y != yd_sel)) {
+                    testPicking(mouse_position.x, mouse_position.y, modeGL, false) ;    // OnOff sur false => Sélectionner si glisser à la souris
+//                  stopPicking();
+                }
             }
-            if (test_rectangle_selection) {  // ici pour l'instant (phase de test)
+            if (test_rectangle_selection) {                 /// ici pour l'instant (phase de test)
                 Selection_rectangle((GLint)mouse_position.x,(GLint)mouse_position.y);   // Paramétrage de l'arrivée du rectangle de sélection
                 Refresh();
             }
         } else if(event.MiddleUp()) {   // event.RightUp() ||
+//            printf("event.MiddleUp\n");
             this->ToSelect.verrouiller_ListeSelect(false);  // Déverrouiller la liste : évite de recommencer une sélection tant qu'on n'a pas relaché la souris
-            if (test_rectangle_selection) {  // ici pour l'instant (phase de test)
-                xd_sel = xa_sel = (GLint)mouse_position.x;
+            if (test_rectangle_selection) {                 ///ici pour l'instant (phase de test)
+                xd_sel = xa_sel = (GLint)mouse_position.x;  // Donner la même valeur aux 2 extrémités => ne tracera plus le rectangle
                 yd_sel = ya_sel = (GLint)mouse_position.y;
+                if (mode_selection == selection_point)   m_gllist = glliste_points;
+                if (mode_selection == selection_facette) m_gllist = glliste_select;
                 Refresh();
+            }
+            if ((modeGL == aretes) && click_sur_segment) {
+                buildAllLines(); /// OK si on a cliqué sur une arête, sinon inutile !
+                click_sur_segment = false;
             }
         } else if (event.Dragging()) {
             if(event.LeftIsDown()) {        // Ici Dragging avec bouton gauche de la souris
@@ -1057,7 +1065,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
 //                showAllPoints();
-                glCallList(3);
+                glCallList(glliste_points);
                 glMatrixMode(GL_PROJECTION);
                 glPopMatrix();
                 glFlush();
@@ -1073,14 +1081,16 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
+                        m_gllist = glliste_points;// Reconstruire toute la liste de points
                         if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
+                            // Plutôt que de reconstruire toute la liste de points, seuls 2 points suffisent en superposition, 1 point jaune survolé et un point rouge stocké
+                            m_gllist = glliste_objets; //points;
                         }
-                        m_gllist = glliste_points;
-                        Refresh();          // Plutôt que de reconstruire toute la liste de points, seuls 2 points suffiraient en superposition, 1 point jaune survolé et un point rouge stocké
+                        Refresh();
                     }
-                } else {
+                } else { // Pas de clic ni de point survolé
                     // Mettre l'attribut selected à false sur les 2 valeurs de points (par précaution)
 //                    if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
 //                    if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
@@ -1088,7 +1098,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     face_under_mouse_old  = face_under_mouse  = -1;
                     point_under_mouse_old = point_under_mouse = -1;
                     line_under_mouse_old  = line_under_mouse  = -1;
-                    m_gllist = glliste_points;
+                    m_gllist = glliste_objets; //points;
                     Refresh();
                 }
                 glMatrixMode(GL_MODELVIEW);
@@ -1096,6 +1106,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             } else if(MPanel->Bool_diviser) {
 
+//                printf("OnMouse + Bool_diviser\n");
                 GLint hits=0;
                 GLint viewport[4];
                 modeGL = aretes;
@@ -1110,25 +1121,32 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
-                showAllLines();
-//                glCallList(2);                  // Ne semble pas suffisant, plutôt que showAllLines ci-dessus ; OK tant qu'on est dans un seul objet, mais ne marche pas sinon
+//                showAllLines();           // Long a exécuter ... car recolorise 1 seul segment à chaque fois
+                glCallList(glliste_lines);  // N'est-ce pas suffisant ?? plutôt que showAllLines ci-dessus ; OK tant qu'on est dans un seul objet, mais ...
                 glMatrixMode(GL_PROJECTION);
                 glPopMatrix();
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
                     if (letscheckthemouse(1,hits)) {
-                        m_gllist = glliste_lines; //0;     // On ne reconstruira que la liste des arêtes dans le Refresh() ci-dessous
+//                        m_gllist = glliste_lines; //0;     // On ne reconstruira que la liste des arêtes dans le Refresh() ci-dessous
+                        // Il suffirait d'afficher la liste complète et d'y ajouter seulement le segment vert, pas tout recalculer !
                         searchMin_Max();
-                        Refresh();
+                        segment_surligne = true;
+//                        Refresh();
+                    } else {
+                        segment_surligne = false;
                     }
                 } else {
                     objet_under_mouse = -1;
                     face_under_mouse  = -1;
                     point_under_mouse = -1;
                     line_under_mouse  = -1;
-                    Refresh();
+                    segment_surligne  = false;
+//                    Refresh();
                 }
+                m_gllist = glliste_objets;  // Pas besoin de regénérer la liste des lignes ici. Sera fait plus tard après clic sur la ligne.
+                Refresh();
                 glMatrixMode(GL_MODELVIEW);
                 stopPicking();
             }
@@ -1145,7 +1163,7 @@ void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
     m_gldata.BeginX  = event.GetX();
     m_gldata.BeginY  = event.GetY();
 //    printf("Mouseweelmoved\n");
-///    event.Skip();                // N'a pas l'air utile
+    event.Skip();                                       /// N'a pas l'air utile, mais ne semble pas gêner !
 }
 
 void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
@@ -1165,7 +1183,7 @@ void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
             m_gldata.rotz += signe*pas_deg;
             degres = fmod(m_gldata.rotz, 360) ;
             if (degres < 0) degres +=360;
-            m_gldata.rotz = degres;             // Utile ou fait dans les sliders ?
+            m_gldata.rotz = degres;                     // Utile ou fait dans les sliders ?
             Slider_z->SetValue(lround(degres));
         }
     } else {                                            // Sinon Déplacement
@@ -1190,7 +1208,7 @@ void BddInter::OnKeyUpDown(wxKeyEvent& event, int signe) {
             m_gldata.rotx -= signe*pas_deg;
             degres = fmod(m_gldata.rotx, 360) ;
             if (degres < 0) degres +=360;
-            m_gldata.rotx = degres;         // Utile ou fait dans les sliders ?
+            m_gldata.rotx = degres;                     // Utile ou fait dans les sliders ?
             Slider_x->SetValue(lround(degres));
         }
     } else {                                            // Sinon Déplacement
@@ -1400,11 +1418,16 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // ou    case 'i':
         Inverse_Selected_Normales();
         if (Raz_Selection_F) {
+            SELECTION old  = mode_selection;
+            mode_selection = selection_facette;
             key_event.m_keyCode = 'S';
             OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
-            break;  // m_gllist = 0; et Refresh() déjà fait via 'S'
+            mode_selection = old;
+            m_gllist = 0;           // Regénérer toutes les listes
+            Refresh();
+            break;
         }
-        m_gllist = 0;
+        m_gllist = glliste_select;
         Refresh();
         break;
 
@@ -1418,7 +1441,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             break;
         }
 
-        GLfloat m[4][4];
+        GLfloat m[4][4];            // C'est un m minuscule => affiche la matrice
 
         glGetFloatv(GL_MODELVIEW_MATRIX, *m);
         printf("Matrice GL 2D:\n");
@@ -1438,12 +1461,17 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // ou    case 'p':
         Inverser_Parcours_Selected();
         if (Raz_Selection_F) {
+            SELECTION old  = mode_selection;
+            mode_selection = selection_facette;
             key_event.m_keyCode = 'S';
             OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
+            mode_selection = old;
+            m_gllist = 0;           // Regénérer toutes les listes
+            Refresh();
             break;  // m_gllist = 0; et Refresh() déjà fait via 'S'
         }
-        m_gllist = 0;
-        Refresh();
+//        m_gllist = 0;   // utile ? car ne devrait rien changer à l'affichage
+//        Refresh();
         break;
 
 // Reset (valeurs d'initialisation)
@@ -1462,14 +1490,18 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             // On récupère le premier élément de la liste et on remet les valeurs de selected à false (par défaut)
             int objet = ToSelect.ListeSelect[0].objet;
             int numero= ToSelect.ListeSelect[0].face_sommet ;
-            if (ifexist_sommet(objet,numero)) {
-                Sommet = &(this->Objetlist[objet].Sommetlist[numero]);
-                Sommet->selected = false;                               // si numero peut correspondre à un sommet, mettre selected à false
+            if (mode_selection == selection_point) {
+                if (ifexist_sommet(objet,numero)) {
+                    Sommet = &(this->Objetlist[objet].Sommetlist[numero]);
+                    Sommet->selected = false;                               // si numero peut correspondre à un sommet, mettre selected à false
+                }
             }
-            if (ifexist_facette(objet,numero)) {
-                Facette = &(this->Objetlist[objet].Facelist[numero]);
-                Facette->selected = false;                              // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
-                Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def;
+            if (mode_selection == selection_facette) {
+                if (ifexist_facette(objet,numero)) {
+                    Facette = &(this->Objetlist[objet].Facelist[numero]);
+                    Facette->selected = false;                              // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
+                    Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def;   // Ne sert plus ?
+                }
             }
             ToSelect.ListeSelect.erase(ToSelect.ListeSelect.begin());   // On supprime le premier élément de la liste => la liste se décale d'un cran.
         }
@@ -1488,7 +1520,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             MSelect->Button_Fusionner    ->Disable();
             MSelect->RadioBox_TypeSelection->SetSelection(0);
         }
-        m_gllist = 0;
+
+        buildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
+        buildAllPoints();           // Idem pour les points
+        m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
         Refresh();
         break;
 
@@ -1533,6 +1568,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         int sz_numF, sz_numJ;
 
         extend_auto = false;                                               // Initialiser le marqueur d'ajouts de facettes
+        // Du fait des boucles imbriquées ce test peut-être long (et même très long sur de grosses Bdds)
         for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
             for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                 if (ToSelect.check_if_in_ListeSelect(objet,face)) {
@@ -1554,7 +1590,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                                         if (!ToSelect.check_if_in_ListeSelect(objet,j)) {   // N'ajouter que si non déjà présent dans la Liste
                                             ToSelect.add_one(objet,j);
                                             extend_auto = true;                             // Marquer qu'on a ajouté une facette dans la liste
-                                            colorface(objet,j);
+                                            this->Objetlist[objet].Facelist[j].selected = true;
+//                                            colorface(objet,j);   // Maintenant <=> ligne ci-dessus
                                         }
                                     }
                                 }
@@ -1566,7 +1603,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
         str.Printf(_T("%d"),(int)this->ToSelect.ListeSelect.size());
         MSelect->TextCtrl_Selection->SetValue(str); // Peut se faire dans tous les cas, même si SelectionPanel non affiché (MSelect->IsShown() est false)
-//        m_gllist = 0;
+        m_gllist = glliste_select; // 0;
         Refresh();
 //        printf("C'est fini\n");
         wxEndBusyCursor();                                                  // Supprime le curseur animé... C'est terminé !
@@ -1579,7 +1616,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 wxMessage = _T("L'extension automatique de la sélection a atteind sa limite :\n");
                 wxMessage+= _T("pas ou plus de points communs avec les facettes voisines");
             }
-//            wxMessageBox(wxMessage,_T("Avertissement"),wxOK); // Idem ci-dessous + alerte sonore
             DisplayMessage(wxMessage,false);
         }
         break;
@@ -1625,9 +1661,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
                             Facette = &(this->Objetlist[objet].Facelist[face]);
                             Facette->selected = false;
-                            Facette->color[0] = gris_def;
-                            Facette->color[1] = gris_def;
-                            Facette->color[2] = gris_def;
+//                            Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def;     // Ne sert plus ?
                             Facette->deleted  = true;
                             Elements_Supprimes= true;              // Au moins une facette supprimée
                             ToSelect.erase_one_ListeSelect(objet,face);
@@ -1665,9 +1699,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                             Facette = &(this->Objetlist[objet].Facelist[face]);
         //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
                             Facette->selected = false;
-                            Facette->color[0] = gris_def;
-                            Facette->color[1] = gris_def;
-                            Facette->color[2] = gris_def;
+//                            Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def; // Ne sert plus ?
                             Facette->afficher = false;
                             Elements_Masques  = true;               // Au moins une facette masquée
                             ToSelect.erase_one_ListeSelect(objet,face);
@@ -1800,7 +1832,7 @@ void BddInter::ResetProjectionMode() {
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
+        gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);   /// ici .x et .y, pas .GetX et .GetY ? à vérifier peut-être
         glMatrixMode(GL_MODELVIEW);
 
    }
@@ -1841,7 +1873,6 @@ void BddInter::CalculAngles(float *m, float &alpha, float &beta, float &gamma) {
     Clamp(alpha,0.0f,360.0f);                           // Recadrer les angles dans l'intervalle [0,360°[
     Clamp(beta, 0.0f,360.0f);                           // Vu l'usage fait ici, un fmod avec décalage de 360 si valeurs négatives doit être suffisant.
     Clamp(gamma,0.0f,360.0f);
-
 }
 
 void BddInter::Clamp(float &angle, const float vmin, const float vmax) {
@@ -1882,8 +1913,7 @@ void BddInter::clearall() {
     reset_zoom = true;
     m_loaded   = false;
     diagonale_save=0.0;
-//    glDeleteLists( m_gllist, 10);
-    glDeleteLists( 1, 100);   // ?? pourquoi 100 et pas plus ? que se passe t-il si plus de 100 listes ?
+    glDeleteLists( 1, 100);   // ?? pourquoi 100 et pas plus ? que se passe t-il si plus de 100 listes ? 6 doit être suffisant en fait (glliste_* de 1 à 6)
     glClear(GL_COLOR_BUFFER_BIT);
     m_gldata.initialized = false;
 }
@@ -2083,15 +2113,15 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
     float vx,vy,vz;
     char *cptr;
 //    int valp[500];  // Attention, stockage provisoire limité à 500 valeurs (nb sommets ou normales / facette)
-    int val_id=0 ;
+    int  val_id=0 ;
     static int nb_val_id=0;
     char sc[100];
-    int nc ;
+    int  nc ;
     static float vxyz[3];
     wxString wxNumeros;
 
     Face   *Face_ij;
-    Object *objet_courant;
+    Object *Objet_courant;
     std::vector<int> Numeros_L;
 
 // Profondeur et nombre d'attributs détectés
@@ -2131,10 +2161,10 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     // Initialisations pour un objet
 //                    o=++i_objetXML_courant ;
                     o = i_objetXML_courant = Element->indiceObjet_courant; //Objetlist.size() -1;
-                    objet_courant = &(Element->Objetlist[o]);
-                    objet_courant->afficher = true;
-                    objet_courant->deleted  = false;
-                    objet_courant->flat     = true;
+                    Objet_courant = &(Element->Objetlist[o]);
+                    Objet_courant->afficher = true;
+                    Objet_courant->deleted  = false;
+                    Objet_courant->flat     = true;
 //                    Element->indiceObjet_courant   = o;
                 }
                 if (!strcmp(attr[i],"id")) {
@@ -2170,11 +2200,11 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                 }
             }
         } else if (XML_Depth == 5) {
-            objet_courant = &(Element->Objetlist[o]);
+            Objet_courant = &(Element->Objetlist[o]);
             if (!strcmp(el,"sommets")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    objet_courant->Nb_sommets = tmp;
+                    Objet_courant->Nb_sommets = tmp;
 //                    printf("Indice objet : %d, sommets   , balise nbr :%d\n",o,tmp);
                     // Création du tableau des points
                     Element->str.clear();
@@ -2184,7 +2214,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
             } else if (!strcmp(el,"normales_s")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    objet_courant->Nb_vecteurs = tmp;
+                    Objet_courant->Nb_vecteurs = tmp;
 //                    printf("Indice objet : %d, normales_s, balise nbr :%d\n",o,tmp);
                     // Création du tableau des normales aux sommets
                     Element->str.clear();
@@ -2194,7 +2224,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
             } else if (!strcmp(el,"facettes")) {
                 if (!strcmp(attr[i],"nbr")) {
                     tmp = atoi(attr[i+1]);
-                    objet_courant->Nb_facettes = tmp;
+                    Objet_courant->Nb_facettes = tmp;
 //                    printf("Indice objet : %d, facettes,   balise nbr :%d\n",o,tmp);
                     // Création du tableau des facettes
                     Element->str.clear();
@@ -2202,7 +2232,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Element->makeface();
                     Element->makenormale();
                     Element->makeaspect_face();
-//                    if (objet_courant->Nb_vecteurs != 0)
+//                    if (Objet_courant->Nb_vecteurs != 0)
 //                        Element->makeluminance();
                 }
             }
@@ -2275,7 +2305,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
 //                    Face_ij->flat = true ; // Facette plane par défaut => normales_s doit être lu après !
                 }
             } else if (!strcmp(el,"normales_s")) {
-                objet_courant = &(Element->Objetlist[o]);
+                Objet_courant = &(Element->Objetlist[o]);
                 if (!strcmp(attr[i],"ref")) {
 //                    i1=sscanf(attr[i+1],"%d",&tmp);
 //                    printf("%d %d\n",i1,tmp);
@@ -2292,8 +2322,8 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
 //                    printf("%d sommets dans cette facette\n",i1);
                     n=i1;
 
-                    if (objet_courant->Nb_luminances == 0) {
-                        Element->N_elements = objet_courant->Nb_facettes;
+                    if (Objet_courant->Nb_luminances == 0) {
+                        Element->N_elements = Objet_courant->Nb_facettes;
                         Element->str.clear();
                         Element->makeluminance();
                     }
@@ -2302,7 +2332,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Element->str += wxNumeros;
                     Element->make1luminance();
                     Face_ij->flat = false ;    // La facette n'est a priori pas plane
-                    objet_courant->flat = false;                         // Du coup, idem pour l'objet.
+                    Objet_courant->flat = false;                         // Du coup, idem pour l'objet.
                     // Vérifier que la facette n'est pas plane => même numéro de vecteur sur tous les sommets
                     Numeros_L = Face_ij->getL_sommets();
                     int Num_0 = Numeros_L[0];
@@ -2449,7 +2479,7 @@ void BddInter::LoadG3D()
     wxCharBuffer buffer=this->file.mb_str();
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
@@ -2486,7 +2516,7 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
     int i, j;
     int indice_min, indice_max, numero_sommet;
     int NbFacettes;
-    Face * facette_courante;
+    Face *facette_courante;
 
     NbFacettes = objet_courant->Nb_facettes;
 
@@ -2497,8 +2527,8 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
         msg_optim = false;
     }
     indice_max = -1;
-    indice_min = objet_courant->Nb_sommets;                             // On traite d'abord les sommets de facettes
-    for (i=0; i<NbFacettes; i++) {                      // Recherche des numéros de sommets min et max utilisés dans l'objet
+    indice_min = objet_courant->Nb_sommets;                     // On traite d'abord les sommets de facettes
+    for (i=0; i<NbFacettes; i++) {                              // Recherche des numéros de sommets min et max utilisés dans l'objet
         facette_courante = &(objet_courant->Facelist[i]);
         for (j=0; j < facette_courante->Nb_Sommets_F; j++) {
             numero_sommet = facette_courante->F_sommets[j];
@@ -2630,7 +2660,7 @@ void BddInter::LoadOBJ()
     nom_fichier = cptr;                         // a simplifier ?
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
@@ -2885,10 +2915,9 @@ void BddInter::LoadOBJ()
                         nfac_t   += nfac;
                         nfac  =0 ;
                     }
-//                    strcpy(cel->tab_objet[o].nom, Lire_chaine(s1+2));           // Nom de l'objet
 
 #if wxCHECK_VERSION(3,0,0)
-                    wxNom = wxString(Lire_chaine(s1+2));
+                    wxNom = wxString(Lire_chaine(s1+2));                    // Nom de l'objet
 #else
                     wxNom = wxString::FromAscii(Lire_chaine(s1+2));
 #endif // wxCHECK_VERSION
@@ -3067,9 +3096,7 @@ void BddInter::LoadOBJ()
                     PremierObjet->Nb_sommets = PremierObjet->Nb_vecteurs = 0;
                     PremierObjet->deleted    = true;    // Ceinture et bretelles !!!! :-)
                 }
-
             }
-
 
 //****************************************
 //            if (svg_entete && entete != NULL) fclose(entete) ;
@@ -3113,7 +3140,7 @@ void BddInter::LoadM3D()
     wxCharBuffer buffer=this->file.mb_str();
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
 
@@ -3260,9 +3287,7 @@ void BddInter::LoadM3D()
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf(utf8_To_ibm(Message));
     if(verbose) printf("Sortie de BddInter::LoadM3D\n");
-
 }
-
 
 //******************************************************************************
 
@@ -3299,7 +3324,7 @@ void BddInter::LoadPLY()
     wxCharBuffer buffer=this->file.mb_str();
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
 
@@ -3572,7 +3597,6 @@ void BddInter::LoadPLY()
     fclose(f);
 
     if(verbose) printf("Sortie de BddInter::LoadPLY\n");
-
 }
 
 void BddInter::LoadOFF()
@@ -3596,7 +3620,7 @@ void BddInter::LoadOFF()
     wxCharBuffer buffer=this->file.mb_str();
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
@@ -3714,7 +3738,7 @@ void BddInter::Load3DS()
     wxCharBuffer buffer=this->file.mb_str();
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
 
@@ -3812,7 +3836,6 @@ void BddInter::Load3DS()
     m_gllist = 0;
 
     if(verbose) printf("Sortie de BddInter::Load3DS\n");
-
 }
 
 int BddInter::mesh_count_smoothing(Lib3dsMesh *mesh)
@@ -4195,7 +4218,7 @@ void BddInter::LoadBDD() {
     std::ifstream fichierBdd (buffer.data());
 
     if(m_gllist != 0) {
-        glDeleteLists(m_gllist,1);
+        glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
 
@@ -4435,12 +4458,12 @@ void BddInter::LoadBDD() {
 //        printf("\nCalcul Vecteur !!!\n");
 //        Calcul_All_Vecteurs();
 //    }
+
     m_loaded = true;
     m_gllist = 0;
     fichierBdd.close();
 
     if(verbose) printf("Sortie de BddInter::LoadBdd\n");
-
 }
 
 void BddInter::TraiterMatricePosition(unsigned int i)
@@ -4505,7 +4528,8 @@ void BddInter::TraiterMatricePosition(unsigned int i)
         V2 = V2.MultPoint4dMatrice4x4(matrice);     // Transformation de V2
         New_Norm = V1.crossProduct(V2);             // Normale à V1 et V2 : V1^V2
         New_Norm.normalize();                       // Normalisation à 1.
-        Normale[0] = New_Norm.X ; Normale[1] = New_Norm.Y ; Normale[2] = New_Norm.Z ;
+
+        Normale = {(float)New_Norm.X, (float)New_Norm.Y, (float)New_Norm.Z} ;
         this->Objetlist[i].Facelist[j].setNormale_b(Normale);
     }
 
@@ -4524,7 +4548,7 @@ void BddInter::TraiterMatricePosition(unsigned int i)
         V2 = V2.MultPoint4dMatrice4x4(matrice);     // Transformation de V2
         New_Norm = V1.crossProduct(V2);             // Normale à V1 et V2 : V1^V2
         New_Norm.normalize();                       // Normalisation à 1.
-//        Normale[0] = New_Norm.X ; Normale[1] = New_Norm.Y ; Normale[2] = New_Norm.Z ;
+
         Normale = {(float)New_Norm.X, (float)New_Norm.Y, (float)New_Norm.Z} ;
         this->Objetlist[i].Vecteurlist[j].setPoint(Normale);
     }
@@ -4570,14 +4594,10 @@ void BddInter::makeface() {
             token = tokenizer.GetNextToken();
             wxStringlist.push_back(token);
         }
-//        Face NewFace(token) ; //wxStringlist[1]); // 0 avec les Replace
         Nb_facettes = wxAtoi(token);
-//        this->Facelist.push_back(NewFace);
         wxStringlist.clear();
     } else {
         Nb_facettes = N_elements;
-//        Face NewFace(Nb_facettes);
-//        this->Facelist.push_back(NewFace);
     }
     printf("%6d facettes\t\t\t(<FACE>/<POLYGON>)\n",Nb_facettes);
     this->Objetlist[indiceObjet_courant].Nb_facettes = Nb_facettes;  // Stocker le nombre de facettes dans l'objet
@@ -4621,13 +4641,9 @@ void BddInter::makesommet() {
             wxStringlist.push_back(token);
         }
         Nb_sommets = wxAtoi(token);
-//        Sommet NewSommet(token); //wxStringlist[1]); // 0 avec les Replace
-//        this->Sommetlist.push_back(NewSommet);      // Pas très utile mais à garder pour utilisation dans souderPoints notamment !
         wxStringlist.clear();
     } else {
         Nb_sommets = N_elements;
-//        Sommet NewSommet(Nb_sommets);
-//        this->Sommetlist.push_back(NewSommet);
     }
     printf("%6d sommets\t\t\t(<SOMMET>/<VERTEX>)\n",Nb_sommets);
     this->Objetlist[indiceObjet_courant].Nb_sommets = Nb_sommets;  // Stocker le nombre de sommets dans l'objet
@@ -4665,7 +4681,6 @@ void BddInter::make1sommet() {
 void BddInter::makenormale() {
     // Ne sert qu'à initialiser Nb_normales dans Objetlist[indiceObjet_courant]
     int Nb_normales;
-//    Normale NewNormale;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4674,13 +4689,10 @@ void BddInter::makenormale() {
             wxStringlist.push_back(token);
         }
         Nb_normales = wxAtoi(token);
-//        NewNormale  = Normale(token); //wxStringlist[1]); // 0 avec les Replace
         wxStringlist.clear();
     } else {
         Nb_normales = N_elements;
-//        NewNormale  = Normale(Nb_normales);
     }
-//    this->Normalelist.push_back(NewNormale);
     printf("%6d normales aux facettes\t(<NORMALE>/<POLY_NORMAL>)\n",Nb_normales);
 
     this->Objetlist[indiceObjet_courant].Nb_normales = Nb_normales;
@@ -4713,7 +4725,6 @@ void BddInter::make1normale() {
 void BddInter::makeaspect_face() {
     // Ne sert qu'à initialiser Nb_aspects dans Objetlist[indiceObjet_courant]
     int Nb_aspect;
-//    Aspect_face NewAspect;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -4722,13 +4733,10 @@ void BddInter::makeaspect_face() {
             wxStringlist.push_back(token);
         }
         Nb_aspect = wxAtoi(token);
-//        NewAspect = Aspect_face(token); //wxStringlist[1]);    // 0 avec Replace
         wxStringlist.clear();
     } else {
         Nb_aspect = N_elements;
-//        NewAspect = Aspect_face(Nb_aspect);
     }
-//    this->Aspect_facelist.push_back(NewAspect);
     printf("%6d attributs aux facettes\t(<ASPECT_FACE>/<POLY_ATTR>)\n",Nb_aspect);
     this->Objetlist[indiceObjet_courant].Nb_aspects = Nb_aspect;
 }
@@ -4837,13 +4845,12 @@ void BddInter::make1luminance() {
         Numero = N_elements;
         New1luminance = Luminance(Numero, NumerosSommets) ;
     }
-// Pour voir ...
+
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].Nb_Sommets_L = New1luminance.Nb_Sommets_L;
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].L_sommets.clear();  // Forcer un clear ici car peut avoir été déjà initialisé ailleurs => push_back ne ferait pas ce qu'il faut !
     for(int i=0; i<New1luminance.Nb_Sommets_L; i++) {
         this->Objetlist[indiceObjet_courant].Facelist[Numero-1].L_sommets.push_back(New1luminance.L_sommets[i]);
     }
-    /**/
 }
 
 void BddInter::makevecteur() {
@@ -4912,12 +4919,6 @@ void BddInter::makeposition() {
     this->Objetlist[indiceObjet_courant].Nb_matrices = wxAtoi(token);   // Nombre de transformations (normalement 1 seule si <MAT_POSITION>
 }
 
-//void BddInter::make1position() {
-//    // A faire : il faut lire et stocker une matrice 4*4
-//
-//    // En fait fait autrement, directement dans LoadBDD
-//}
-
 void BddInter::GenereTableauPointsFacettes(Object * objet)
 {
     unsigned int nb_p, nb_fac;
@@ -4957,7 +4958,6 @@ void BddInter::GenereTableauAretes(Object * objet)
     static bool traiter_ici = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
                                     // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
     bool en_cours;
-//    int indice_point, indice_test=50000000;
     unsigned int Arete_size_test=1000000; // Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
 
     clock_t time_0, delta_time, time_c;
@@ -5043,7 +5043,6 @@ void BddInter::GenereTableauAretes(Object * objet)
 //            indice_point++;   // Pour ajouter éventuellement un indicateur de progression (un . affiché toutes les indice_test valeurs testées)
                                 // L'affichage dépend du temps d'exécution => plutôt utiliser un timer et donc n'afficher un '.' que toutes les x secondes
             delta_time = clock() - time_c;
-//            if ((indice_point%indice_test) == 0 && verbose_local) {
             if (delta_time >= NB_DELTA_TICKS && verbose_local) {
                 if (!en_cours) {                                    // Seulement la 1ère fois
                     en_cours = true;
@@ -5084,7 +5083,7 @@ void BddInter::GenereTableauAretes(Object * objet)
 }
 
 void BddInter::InitGL() {
-    {
+    {       // sert à quoi ?
         if (verbose) printf("Entree BddInter::InitGL\n");
         glLoadIdentity();
 
@@ -5145,53 +5144,51 @@ void BddInter::searchMin_Max() {
 
     if (verbose) printf("Entree BddInter::searchMin_Max\n");
 
-// Le if ci-dessous semble inutile car tous les appels à searchMin_Max sont précédés de m_gllist = 0 et suivis d'un Refresh() !
-//    if( m_gllist == 0 || MPanel->toredraw == 1) {     // MPanel->toredraw==1 ne semble pas justifié car reconstruit inutilement les listes dans drawOpenGL (à vérifier !)
-        resetMin_Max();
-        nb_objets = this->Objetlist.size();
-        nb_objets_reels = nb_objets;
-        nb_3points=nb_4points=nb_aretes=nb_facettes=nb_sommets=nb_sommets_max=numero_facette_max=numero_objet_max=0 ;
-        for(i=0; i<nb_objets; i++) {
-            if (this->Objetlist[i].deleted) {
-                nb_objets_reels--;
-            } else {
-                nb_facettes += this->Objetlist[i].Facelist.size();      // On pourrait utiliser this->Objetlist[i].Nb_facettes
-                nb_sommets  += this->Objetlist[i].Sommetlist.size();    // idem Nb_sommets
-                nb_aretes   += this->Objetlist[i].Areteslist.size();    // idem Nb_aretes
-                for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-                    if (this->Objetlist[i].Facelist[j].deleted) nb_facettes-- ; // Décompter les facettes supprimées
-                    if (this->Objetlist[i].Facelist[j].afficher && !this->Objetlist[i].Facelist[j].deleted) {
-                        numSommets.clear();
-                        numSommets=this->Objetlist[i].Facelist[j].getF_sommets();
-                        unsigned int nombreSommets = numSommets.size();
-    //                    nb_sommets += nombreSommets ;   // Non car chaque point est compté plusieurs fois (1 par facette)
-                        if (nombreSommets == 3) nb_3points += 1 ;
-                        else                    nb_4points += 1 ;
+    resetMin_Max();
+    nb_objets = this->Objetlist.size();
+    nb_objets_reels = nb_objets;
+    nb_3points=nb_4points=nb_aretes=nb_facettes=nb_sommets=nb_sommets_max=numero_facette_max=numero_objet_max=0 ;
+    for(i=0; i<nb_objets; i++) {
+        if (this->Objetlist[i].deleted) {
+            nb_objets_reels--;
+        } else {
+            nb_facettes += this->Objetlist[i].Facelist.size();      // On pourrait utiliser this->Objetlist[i].Nb_facettes
+            nb_sommets  += this->Objetlist[i].Sommetlist.size();    // idem Nb_sommets
+            nb_aretes   += this->Objetlist[i].Areteslist.size();    // idem Nb_aretes
+            for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+                if (this->Objetlist[i].Facelist[j].deleted) nb_facettes-- ; // Décompter les facettes supprimées
+                if (this->Objetlist[i].Facelist[j].afficher && !this->Objetlist[i].Facelist[j].deleted) {
+                    numSommets.clear();
+                    numSommets=this->Objetlist[i].Facelist[j].getF_sommets();
+                    unsigned int nombreSommets = numSommets.size();
+//                    nb_sommets += nombreSommets ;   // Non car chaque point est compté plusieurs fois (1 par facette)
+                    if (nombreSommets == 3) nb_3points += 1 ;
+                    else                    nb_4points += 1 ;
 
-                        if (nombreSommets > nb_sommets_max) {
-                            nb_sommets_max     = nombreSommets ;
-                            numero_objet_max   = i ;
-                            numero_facette_max = j ;
-                        }
-                        for(k=0; k<nombreSommets; k++) {
-                            Point_XYZ = this->Objetlist[i].Sommetlist[numSommets[k]-1].getPoint();
-                            setMin_Max(Point_XYZ[0],Point_XYZ[1],Point_XYZ[2]);
-                        }
+                    if (nombreSommets > nb_sommets_max) {
+                        nb_sommets_max     = nombreSommets ;
+                        numero_objet_max   = i ;
+                        numero_facette_max = j ;
+                    }
+                    for(k=0; k<nombreSommets; k++) {
+                        Point_XYZ = this->Objetlist[i].Sommetlist[numSommets[k]-1].getPoint();
+                        setMin_Max(Point_XYZ[0],Point_XYZ[1],Point_XYZ[2]);
                     }
                 }
             }
         }
-        if (x_min == +FLT_MAX) {
-            // min et max non initialisés correctement (valeurs de resetMin_Max() non retouchées !) : on ne teste que x_max, ça devrait être suffisant.
-            x_min = x_max = y_min = y_max = z_min = z_max = 0.0;
-        }
-        diagonale_save = Norme3(x_max-x_min, y_max-y_min, z_max-z_min) ;
-        centre_auto[0] = (x_max+x_min)*0.5 ;    // Centre de la boite englobante
-        centre_auto[1] = (y_max+y_min)*0.5 ;
-        centre_auto[2] = (z_max+z_min)*0.5 ;
-        if (centrageRotAuto) centreRot = centre_auto ;
-//    }
-        if (verbose) printf("Sortie BddInter::searchMin_Max\n");
+    }
+    if (x_min == +FLT_MAX) {
+        // min et max non initialisés correctement (valeurs de resetMin_Max() non retouchées !) : on ne teste que x_max, ça devrait être suffisant.
+        x_min = x_max = y_min = y_max = z_min = z_max = 0.0;
+    }
+    diagonale_save = Norme3(x_max-x_min, y_max-y_min, z_max-z_min) ;
+    centre_auto[0] = (x_max+x_min)*0.5 ;    // Centre de la boite englobante
+    centre_auto[1] = (y_max+y_min)*0.5 ;
+    centre_auto[2] = (z_max+z_min)*0.5 ;
+    if (centrageRotAuto) centreRot = centre_auto ;
+
+    if (verbose) printf("Sortie BddInter::searchMin_Max\n");
 }
 
 float BddInter::produit_scalaire(const std::vector<float> &v1, const std::vector<float> &v2){
@@ -5249,26 +5246,28 @@ void BddInter::Tracer_normale(const std::vector <float> &o, const std::vector <f
 	glPopMatrix();
 }
 
-void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFacette, bool tracerFacette)
+void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFacette, bool tracerFacette, GLfloat couleur[3])
 {
-// colorise les facettes sélectionnées et y ajoute éventuellement la/les normale(s)
+// colorise les facettes sélectionnées ou la facette surlignée et y ajoute éventuellement la/les normale(s)
 
     std::vector <int>   NumerosSommets;
     std::vector <float> xyz_sommet;
     std::vector <float> barycentre;
     std::vector <float> NormaleFacette;
     std::vector <float> NormaleSommet;
-//    Vector3D np;
     unsigned int k=0,j=0;
-//    bool test_np;
     GLfloat couleurs[4];    // R, G, B, alpha
+    Object *Objet_courant;
+    Face   *Facette_courante;
 
     if (this->Objetlist[indiceObjet].deleted) return;   // Ne rien faire sur un objet supprimé
 
+    Objet_courant    = &(this->Objetlist[indiceObjet]);
+    Facette_courante = &(this->Objetlist[indiceObjet].Facelist[indiceFacette]);
     glGetFloatv(GL_CURRENT_COLOR, couleurs);            // Sauvegarde de la couleur actuelle (R G B alpha)
     glDisable(GL_LIGHTING);
     if (tracerFacette) {
-        glColor3fv(jaune);  // Les facettes surlignées sont en jaune
+        glColor3fv(couleur);  // Les facettes surlignées sont en jaune (mais est sans effet dans le mode sélection de facettes)
 //      glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionJ)  ;
 //      glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionJ)  ;
 //      glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionJ) ;
@@ -5276,11 +5275,11 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
         glBegin(GL_POLYGON);
     }
     // Pas de traitement de smooth ici ni des normales aux facettes ! Colorisation directe.
-    NumerosSommets = this->Objetlist[indiceObjet].Facelist[indiceFacette].getF_sommets();
+    NumerosSommets  = Facette_courante->getF_sommets();
 //    selectMode(mode);
     unsigned int ns = NumerosSommets.size();
     for(k=0; k<ns; k++) {
-        xyz_sommet = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
+        xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
         if (tracerFacette) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
         if (k == 0)
             barycentre = xyz_sommet;
@@ -5290,26 +5289,25 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
     }
     if (tracerFacette) glEnd();
 
-    if (!this->Objetlist[indiceObjet].Facelist[indiceFacette].deleted) { // Ne pas afficher les normales et points des facettes supprimées
+    if (!Facette_courante->deleted) {   // Ne pas afficher les normales et points des facettes supprimées
         if (AfficherNormaleFacette) {
             for (j=0; j<3; j++) barycentre[j] /= ns;
-            NormaleFacette = this->Objetlist[indiceObjet].Facelist[indiceFacette].getNormale_b();
+            NormaleFacette = Facette_courante->getNormale_b();
             Tracer_normale(barycentre,NormaleFacette,0);
         }
         if (AfficherNormalesSommets) {
-            NormaleFacette = this->Objetlist[indiceObjet].Facelist[indiceFacette].getNormale_b();
-            if (this->Objetlist[indiceObjet].Facelist[indiceFacette].flat || this->Objetlist[indiceObjet].flat) {
+            NormaleFacette = Facette_courante->getNormale_b();
+            if (Facette_courante->flat || Objet_courant->flat) {
             // La facette est plane => tracer la normale à la facette sur les ns sommets
                 for(k=0; k<ns; k++) {
-                    xyz_sommet = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
+                    xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                     Tracer_normale(xyz_sommet,NormaleFacette,1);
                 }
             } else {
             // La facette n'est pas plane ...
                 for(k=0; k<ns; k++) {
-                    xyz_sommet    = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
-                    NormaleSommet = this->Objetlist[indiceObjet].Vecteurlist[this->Objetlist[indiceObjet].Facelist[indiceFacette].L_sommets[k]-1].point;
-//                    np.X = NormaleSommet[0] ; np.Y = NormaleSommet[1] ; np.Z = NormaleSommet[2] ;
+                    xyz_sommet    = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
+                    NormaleSommet = Objet_courant->Vecteurlist[Facette_courante->L_sommets[k]-1].point;
                     Calcul_Normale_Seuillee(indiceObjet,indiceFacette,k,NormaleFacette,NormaleSommet) ;
                     Tracer_normale(xyz_sommet,NormaleSommet,1);
                 }
@@ -5320,7 +5318,7 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
             glPointSize(8);
             glBegin(GL_POINTS);
             for(k=0; k<ns; k++) {
-                xyz_sommet = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
+                xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                 glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                 if (NumerosSommets[k] == Numero_Sommet_a_Surligner) point_star = xyz_sommet;
             }
@@ -5340,13 +5338,14 @@ void BddInter::drawOpenGL() {
 //    Vector3D      np;
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
-    Face *Face_ij;
-    Object*       Objet_i;
+    Face    *Face_ij;
+    Object  *Objet_i;
     unsigned int i=0,j=0,k=0;
     bool test2 = false; // Utilisé pour faire un double passage en mode visualisation du "Sens des normales", le premier en GL_CCW et le second en GL_CW
     bool test_np, lissage_Gouraud;
 
-    if (verbose) printf("Entree BddInter::drawOpenGL\n");
+    if (verbose)
+        printf("Entrée BddInter::drawOpenGL\n");
 
     glPointSize(5.0);
     longueur_normales = diagonale_save*len_normales*m_gldata.zoom/FoV_auto; // Attention : diagonale_save peut être modifié dans searchMin_Max => effet indésirable potentiel ?
@@ -5358,16 +5357,14 @@ void BddInter::drawOpenGL() {
 
 //    printf("smooth : %d\n",smooth);
 
-//    if( m_gllist == 0 || MPanel->toredraw==1) {         // MPanel->toredraw==1 ne semble plus justifié car reconstruit inutilement les listes (à vérifier mais tous les toredraw=1 sont en commentaires !) en fait, double emploi avec m_gllist=0 ?
     if( m_gllist == 0 ) {
 
         if (verbose) printf("Reconstruction des listes\n");
 
         searchMin_Max();    // Pour mettre à jour les différents compteurs d'objets, facettes, points ... Met aussi à jour diagonale_save et centrage_auto
-//        MPanel->toredraw = 0;
-        int nb_normales_seuillees = 0; // A déclarer plutôt ailleurs, mais initialiser ici
-        glDeleteLists(1,1); // Supprime la liste 1
-        m_gllist = 1;//glGenLists( 1 );
+        int nb_normales_seuillees = 0;      // A déclarer plutôt ailleurs, mais initialiser ici
+        glDeleteLists(glliste_objets,1);    // Supprime la liste des objets
+        m_gllist = glliste_objets;
         glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );  /// Si seulement GL_COMPILE, la sélection de facettes via clic milieu souris est en bleu au lieu de vert ! Pourquoi ?
         if (MPanel->activer_transparence) {
             glEnable(GL_BLEND);
@@ -5386,8 +5383,8 @@ Boucle:
             if (Objet_i->afficher && !Objet_i->deleted) {
                 glPushName(i);
 
-                // Note : on pourrait fusionner les 2 if (Rotation_Objets) et if (Changer_Echelle) : voir si souci de performances ?
-                if (Rotation_Objets) { // Rotation visuelle
+                // Note : on pourrait peut-être fusionner les 2 if (Rotation_Objets) et if (Changer_Echelle) : voir si souci de performances ?
+                if (Rotation_Objets) { // Rotation visuelle. Ici seulement les objets complets sélectionnés.
                     glPushMatrix();
                     // Est-ce que l'objet i est dans listeObjets ?
                     int n_val = listeObjets.size();
@@ -5404,7 +5401,7 @@ Boucle:
                     }
                 }
 
-                if (Changer_Echelle) { // Mis à l'échelle visuelle
+                if (Changer_Echelle) { // Mis à l'échelle visuelle. Ici seulement les objets complets sélectionnés.
                     glPushMatrix();
                     // Est-ce que l'objet i est dans listeObjets ?
                     int n_val = listeObjets.size();
@@ -5431,97 +5428,90 @@ Boucle:
                     if (Face_ij->afficher && !Face_ij->deleted) {  // Test sur show et afficher ???
                         NormaleFacette.clear();
                         NumerosSommets.clear();
-//                      x++;
-                        //selection de couleur
-                        if (Face_ij->selected) {
-                            // Note : les facettes sélectionnées et leurs normales sont incluses dans la liste
-                            glColor3fv(Face_ij->color);
-                            coloriserFacette(i,j,false);    // ici on ne fera que le tracé des normales (si demandées !)
-                        } else {
-                            if (show_CW_CCW==false) {
-                                if((groupes==false)&&(materials==false)) {
-                                    glColor3fv(Face_ij->color);
-                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)  ;
-                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)  ;
-                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
 
-                                    if (SelectionObjet != 0) { // On est en mode Repérage d'objets => Coloriser l'objet sélectionné en rouge
-                                        if ((SelectionObjet == i+1) || Objet_i->selected ) {            // 1er test utile ??
-                                            glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionR)  ;
-                                            glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionR)  ;
-                                            glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionR) ;
-                                            glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionR);
-                                        }
-                                    }
+                        if (show_CW_CCW==false) {
+                            if((groupes==false)&&(materials==false)) {
+                            glColor3fv(Face_ij->color); // Etait initialisé ou modifié dans colorface
+                                glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)  ;
+                                glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)  ;
+                                glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+                                glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
 
-                                    // Colorisation d'un groupe ou d'un matériau particulier en bleu
-                                    if (GroupeMateriau[0] != 0) {
-                                        int grpmat;
+                                if (SelectionObjet != 0) { // On est en mode Repérage d'objets => Coloriser l'objet sélectionné en rouge
+                                    if ((SelectionObjet == i+1) || Objet_i->selected ) {            // 1er test utile ??
+                                        glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionR)  ;
+                                        glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionR)  ;
+                                        glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionR) ;
+                                        glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionR);
+                                    }
+                                }
 
-                                        if (GroupeMateriau[0] == 1) grpmat = Face_ij->getGroupe();        // On est dans Repérage Groupes
-                                        else                        grpmat = Face_ij->getCodmatface();    // On est dans Repérage Matériaux
-                                        if (grpmat == GroupeMateriau[1]) {
-                                            glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionB)  ;
-                                            glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionB)  ;
-                                            glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionB) ;
-                                            glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionB);
-                                        }
-                                    }
+                                // Colorisation d'un groupe ou d'un matériau particulier en bleu
+                                if (GroupeMateriau[0] != 0) {
+                                    int grpmat;
 
-                                } else {
-                                    int groupe   = Face_ij->getGroupe();
-                                    int material = Face_ij->getCodmatface();
-                                    int color_max= nb_couleurs-1;
-//                                  printf("objet %d facette %d groupe %d material %d\n",i,j,groupe,material);
-                                    if (groupe<0) {
-                                        groupe=0;
-                                    } else if(groupe>color_max) {
-                                        groupe=color_max;
-                                    }
-                                    if (material<0) {
-                                        material=10;    // Si material non initialisé (à -1) tracer en rouge comme un jet
-                                    } else if(material>color_max) {
-                                        material=color_max;
-                                    }
-                                    if(groupes == true) {
-                                        // Le glColor3f ci-dessous n'existe pas dans la version Tcl. Pourquoi le faut-il ici ? cf InitGL peut-être
-                                        // pour activer ambiant et diffuse dans glColorMaterial !!!
-//                                        glColor3fv(color_groupe_material[groupe]) ;//[0], // écriture + concise qu'avec glColor3f
-                                        glColor3fv(MatAmbient_avionG[groupe]) ;//[0], // écriture + concise qu'avec glColor3f même avec 4 valeurs par groupe dans MatAmbient_avionG
-//                                                  color_groupe_material[groupe][1],
-//                                                  color_groupe_material[groupe][2]);
-                                        glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[groupe])  ;
-                                        glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[groupe])  ;
-                                        glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-                                        glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
-                                    } else {
-//                                        glColor3fv(color_groupe_material[material]) ;
-                                        glColor3fv(MatAmbient_avionG[material]) ;   // Idem ci-dessus pour les groupes
-                                        glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[material])  ;
-                                        glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[material])  ;
-                                        glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-                                        glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                                    if (GroupeMateriau[0] == 1) grpmat = Face_ij->getGroupe();        // On est dans Repérage Groupes
+                                    else                        grpmat = Face_ij->getCodmatface();    // On est dans Repérage Matériaux
+                                    if (grpmat == GroupeMateriau[1]) {
+                                        glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionB)  ;
+                                        glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionB)  ;
+                                        glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionB) ;
+                                        glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionB);
                                     }
                                 }
 
                             } else {
-                                // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
-                                // De plus il faut les glColor3fv(color_groupe ... ci-dessus) soient présents ! Pour éviter ce double coloriage, il faudrait traiter le sens des normales
-                                // comme le reste, soit avec des glMaterialfv (cf version TCL) ou à la rigueur disable puis enable de GL_LIGHTING. à voir à l'occasion ...
-                                if(test2 == true) {
-                                    glColor3fv(rouge);  // Vert initialement, mais souci en cas de sélection sur Sens de rotation inversé (même couleur => ne se voit pas).
-//                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionRG) ;    // Pas convainquant, de plus inhibe la sélection des facettes ! => faire autrement
-//                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionRG) ;
-//                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-//                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
-                                } else {                // Peut-être essayer un vert + clair (vert_c) ou + foncé (vert_f) ? Bof !
-                                    glColor3fv(bleu);
-//                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionBG) ;
-//                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionBG) ;
-//                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-//                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                                int groupe   = Face_ij->getGroupe();
+                                int material = Face_ij->getCodmatface();
+                                int color_max= nb_couleurs-1;
+//                                  printf("objet %d facette %d groupe %d material %d\n",i,j,groupe,material);
+                                if (groupe<0) {
+                                    groupe=0;
+                                } else if(groupe>color_max) {
+                                    groupe=color_max;
                                 }
+                                if (material<0) {
+                                    material=10;    // Si material non initialisé (à -1) tracer en rouge comme un jet
+                                } else if(material>color_max) {
+                                    material=color_max;
+                                }
+                                if(groupes == true) {
+                                    // Le glColor3f ci-dessous n'existe pas dans la version Tcl. Pourquoi le faut-il ici ? cf InitGL peut-être
+                                    // pour activer ambiant et diffuse dans glColorMaterial !!!
+//                                        glColor3fv(color_groupe_material[groupe]) ;//[0], // écriture + concise qu'avec glColor3f
+                                    glColor3fv(MatAmbient_avionG[groupe]) ;//[0], // écriture + concise qu'avec glColor3f même avec 4 valeurs par groupe dans MatAmbient_avionG
+//                                                  color_groupe_material[groupe][1],
+//                                                  color_groupe_material[groupe][2]);
+                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[groupe])  ;
+                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[groupe])  ;
+                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                                } else {
+//                                        glColor3fv(color_groupe_material[material]) ;
+                                    glColor3fv(MatAmbient_avionG[material]) ;   // Idem ci-dessus pour les groupes
+                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[material])  ;
+                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[material])  ;
+                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                                }
+                            }
+
+                        } else {
+                            // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
+                            // De plus il faut les glColor3fv(color_groupe ... ci-dessus) soient présents ! Pour éviter ce double coloriage, il faudrait traiter le sens des normales
+                            // comme le reste, soit avec des glMaterialfv (cf version TCL) ou à la rigueur disable puis enable de GL_LIGHTING. à voir à l'occasion ...
+                            if(test2 == true) {
+                                glColor3fv(rouge);  // Vert initialement, mais souci en cas de sélection sur Sens de rotation inversé (même couleur => ne se voit pas).
+//                              glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionRG) ;    // Pas convainquant, de plus inhibe la sélection des facettes ! => faire autrement
+//                              glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionRG) ;
+//                              glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+//                              glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                            } else {                // Peut-être essayer un vert + clair (vert_c) ou + foncé (vert_f) ? Bof !
+                                glColor3fv(bleu);
+//                              glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionBG) ;
+//                              glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionBG) ;
+//                              glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+//                              glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
                             }
                         }
 
@@ -5567,7 +5557,7 @@ Boucle:
                                 }
                                 xyz_sommet = Objet_i->Sommetlist[NumerosSommets[k]-1].getPoint();
                                 if (Changer_Echelle) {
-                                    if (Objet_i->Sommetlist[NumerosSommets[k]-1].selected || Face_ij->selected) {
+                                    if (Objet_i->Sommetlist[NumerosSommets[k]-1].selected  || Face_ij->selected) {  // en mode selection_point ou selection_facette
                                         xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
                                         xyz_sommet[0] *= Scale_X  ; xyz_sommet[1] *= Scale_Y  ; xyz_sommet[2] *= Scale_Z ;
                                         xyz_sommet[0] += Centre_X ; xyz_sommet[1] += Centre_Y ; xyz_sommet[2] += Centre_Z;
@@ -5602,11 +5592,11 @@ Boucle:
             glDisable(GL_CULL_FACE);
         }
         if (MPanel->Bool_souder) {
-            modeGL = points; //13;
+            modeGL = points;
         } else if(MPanel->Bool_diviser) {
-            modeGL = aretes; //12;
+            modeGL = aretes;
         } else {
-            modeGL = standard;//11;
+            modeGL = standard;
         }
 //        diagonale_save = Norme3(maxx-minx, maxy-miny, maxz-minz) ;
         if (MPanel->activer_transparence) {
@@ -5622,62 +5612,56 @@ Boucle:
         buildAllPoints();
         buildBoite();
         buildRepereOXYZ();
+        buildAllFacettesSelected();
         Refresh();          // S'il n'est pas là, pas d'affichage des objets la première fois !
-    }
+    }   // m_gllist == 0
     // En dehors des créations de liste => fait systématiquement
 
     if (m_gllist == glliste_lines) {
         if (verbose) printf("Reconstruction de la liste de aretes seulement\n");
         buildAllLines();
-        m_gllist = 1;
+        m_gllist = glliste_objets;
     }
     if (m_gllist == glliste_points) {                                           // le signe - utilisé auparavant n'est plus justifié
         if (verbose) printf("Reconstruction de la liste de points seulement\n");
         buildAllPoints();
-        m_gllist = 1;
+        m_gllist = glliste_objets;
+    }
+    if (m_gllist == glliste_select) {
+        buildAllFacettesSelected();
+        m_gllist = glliste_objets;
     }
 
     if (verbose) printf("Affichage des listes\n");
 
-//    if (show_plein) glCallList(m_gllist);
-    if (show_plein)  glCallList(1);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-    if (show_lines)  glCallList(glliste_lines) ;    // <=> showAllLines();
-    if (show_points) glCallList(glliste_points);    // <=> showAllPoints();
-    if (show_box)    glCallList(glliste_boite) ;    // <=> AffichageBoite()  ;
-    if (show_axes)   glCallList(glliste_repere);    // <=> repereOXYZ() ;
-    if (show_light)  AfficherSource();
+    if (show_plein)  {
+        glCallList(glliste_objets);    // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
+        if ((mode_selection == selection_facette) && (!MPanel->Bool_souder))
+            glCallList(glliste_select);
+    }
+    if (show_lines)  glCallList(glliste_lines) ;    // <=> showAllLines() mais appel direct de la liste donc bien plus rapide;
+    if (show_points) {
+            glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
+            showPoint();                    // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
+    }
+    if (show_box)    glCallList(glliste_boite) ;    // <=> AffichageBoite() ""  ;
+    if (show_axes)   glCallList(glliste_repere);    // <=> repereOXYZ()     ""  ;
+    if (show_light)  AfficherSource();              // Une liste pourrait être utile ? pas sûr !
     if (show_star)   GenereEtoile();
+
+    if (segment_surligne) showSegment();            // Pas de liste ici ; génération directe du segment surligné
+
     if (Symetrie_Objets) {              // Tracer une boîte englobante rouge autour l'objet d'origine et une cyan pour matérialiser l'objet à créer
         glColor3fv(rouge);
-        TracerBoite(x1_b1,x2_b1,y1_b1,y2_b1,z1_b1,z2_b1);
+        TracerBoite(x1_b1,x2_b1,y1_b1,y2_b1,z1_b1,z2_b1);   // Boîte de l'objet d'origine
         glColor3fv(cyan);
-        TracerBoite(x1_b2,x2_b2,y1_b2,y2_b2,z1_b2,z2_b2);
+        TracerBoite(x1_b2,x2_b2,y1_b2,y2_b2,z1_b2,z2_b2);   // Boîte de l'objet à créer par symétrie
     }
 
     if (Facette_Surlignee) {    // Faire en dehors de la génération de liste car ici, on a une seule facette à traiter
 //        printf("Facette surlignee : %d %d\n",Numero_Objet_a_Surligner, Numero_Facette_Surlignee);
-        coloriserFacette(Numero_Objet_a_Surligner, Numero_Facette_Surlignee, true); // Ici tracé de la facette et des normales (si demandées)
+        coloriserFacette(Numero_Objet_a_Surligner, Numero_Facette_Surlignee, true, jaune); // Ici tracé de la facette en jaune et des normales (si demandées)
     }
-
-// Test pour coloriser seulement des facettes sélectionnées sans reconstruire toute les listes
-// En fait, trace 2 fois les normales, celles incluses dans la liste et celles-ci. Mais il ne faut pas enlever celles de la liste !!!!
-//    if (m_gllist == -3) {
-//        for(i=0; i<this->Objetlist.size(); i++) {
-//            Objet_i = &this->Objetlist[i];
-//            if (Objet_i->afficher && !Objet_i->deleted) {
-//                for(j=0; j<Objet_i->Facelist.size(); j++) {
-//                    Face_ij = &(Objet_i->Facelist[j]);
-//                    if (Face_ij->afficher && Face_ij->show && !Face_ij->deleted) {  // Test sur show et afficher ???
-//                        if (Face_ij->selected) {
-//                            glColor3fv(Face_ij->color);     // Normalement <=> vert
-//                            coloriserFacette(i,j,false);    // ici on ne fera que le tracé des normales (si demandées !)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        m_gllist = 1; // Pour ne passer qu'une seule fois dans ce if
-//    }
 
     if (viewFps) {
         delta_time = glutGet(GLUT_ELAPSED_TIME) - timebase;
@@ -5693,11 +5677,12 @@ Boucle:
         output_Glut_Msg(0.005,0.01,Message_fps);
     }
 
-    if (test_rectangle_selection) draw_rectangle_selection();
+    if (test_rectangle_selection) draw_rectangle_selection();   // Trace un rectangle pour sélectionner les facettes qui sont internes
 
     SetFocus(); // Donne le focus à la fenètre OpenGL => utilisation des touches de raccourcis clavier
 
-    if (verbose) printf("Sortie BddInter::drawOpenGL\n");
+    if (verbose)
+        printf("Sortie BddInter::drawOpenGL\n");
 }
 
 void BddInter::Flat_Selected_Facettes() {
@@ -5764,7 +5749,7 @@ void BddInter::Inverse_Selected_Normales() {
 
     if (no_selected) Inverser_Toutes_les_Normales(); // Si aucune facette n'est sélectionnée, tout inverser
 
-//    m_gllist=0;   // Fait dans le OnMenu ...
+//    m_gllist = 0;   // Fait dans le OnMenu ...
 //    Refresh();
 }
 
@@ -5805,7 +5790,6 @@ void BddInter::Inverser_Parcours_Selected() {
             DisplayMessage(wxMessage,true);
             return;
         }
-//        if (listeObjets.size() == 0) return;    // Rien à faire dans ce cas
 //        printf("Inverser parcours des facettes des objets sélectionnés\n");
         auto it = listeObjets.begin();
         for (unsigned int i=0; i<listeObjets.size(); i++, it++) {
@@ -5814,7 +5798,7 @@ void BddInter::Inverser_Parcours_Selected() {
         bdd_modifiee = true;
     }
 
-//    m_gllist=0;   // Fait dans le OnMenu ...
+//    m_gllist = 0;   // Fait dans le OnMenu ...
 //    Refresh();
 }
 
@@ -5922,26 +5906,175 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
 
     bdd_modifiee = true;
 
-//    m_gllist=0;   // Fait dans le OnMenu ...
+//    m_gllist = 0;   // Fait dans le OnMenu ...
 //    Refresh();
 }
 
+void BddInter::buildAllFacettesSelected() {
+
+    // Repris en grande partie de drawOpenGL
+
+//    char test;
+    std::vector<int>   NumerosSommets;
+    std::vector<float> xyz_sommet;
+    std::vector<float> NormaleFacette;
+    std::vector<float> NormaleSommet;
+    Face   *Face_ij;
+    Object *Objet_i;
+    unsigned int i=0,j=0,k=0;
+//    bool test_np;
+    bool lissage_Gouraud;
+
+    if (verbose)
+        printf("Entree BddInter::buildAllFacettesSelected\n");
+
+    glDeleteLists(glliste_select,1);                                // Détruire une éventuelle liste existante de facettes sélectionnées
+    if (this->ToSelect.ListeSelect.empty()) return;                 // Rien de plus à faire
+
+    glNewList(glliste_select, GL_COMPILE_AND_EXECUTE) ;             // Création d'une liste de facettes sélectionnées
+
+    if (verbose)
+        printf("Reconstruction de la liste des facettes sélectionnées\n");
+
+//    int nb_normales_seuillees = 0; // A déclarer plutôt ailleurs, mais initialiser ici
+
+    for(i=0; i<this->ToSelect.ListeSelect.size(); i++) {
+
+        int objet = this->ToSelect.ListeSelect[i].objet;
+        int numero= this->ToSelect.ListeSelect[i].face_sommet ;
+
+//        printf("%d %d\n",objet,numero);
+
+        // Objet courant
+        Objet_i = &this->Objetlist[objet];
+
+        if (Objet_i->afficher && !Objet_i->deleted) {
+
+            Face_ij = &(Objet_i->Facelist[numero]);
+
+            if (Changer_Echelle) { // Mis à l'échelle visuelle
+                glPushMatrix();
+                // Mise à l'échelle visuelle uniquement. Pas de changement dans la Bdd (Sommets, normales, ... inchangés)
+                // l'effet n'est pas top car 2 surfaces se superposent : donne des facettes composites grises et vertes
+                glTranslated(Centre_X,   Centre_Y,  Centre_Z);  // Recentrer en 0,0,0
+                glScaled(Scale_X,Scale_Y,Scale_Z);              // Mise à l'échelle des 3 axes
+                glTranslated(-Centre_X, -Centre_Y, -Centre_Z);  // Replacer l'objet à sa position originale
+            }
+
+            if (Face_ij->afficher && !Face_ij->deleted) {  // Test sur show et afficher ???
+                NormaleFacette.clear();
+                NumerosSommets.clear();
+                // Note : les facettes sélectionnées et leurs normales sont incluses dans la liste
+                glColor3fv(vert);
+                coloriserFacette(objet,numero,true, vert);
+
+                NormaleFacette = Face_ij->getNormale_b();
+
+                switch(Face_ij->Nb_Sommets_F) {
+                case 2:                     // Lignes simples ou facette dégénérées réduites à 2 points !
+                    glBegin(GL_LINES);
+                    NumerosSommets = Face_ij->getF_sommets();
+                    for(k=0; k<NumerosSommets.size(); k++) {
+                        glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);  // ??? BUG ??? d'où vient xyz_sommet dans ce cas ????
+                    }
+                    glEnd();
+                    break;
+
+                default:
+                    glBegin(GL_POLYGON);
+                    NumerosSommets = Face_ij->getF_sommets();
+                    style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
+
+                    lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
+                    // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
+                    for(k=0; k<NumerosSommets.size(); k++) {
+                        if (lissage_Gouraud) {
+                            // Facette non plane => utiliser le lissage de Gouraud (et donc les normales aux sommets)
+                            NormaleSommet = Objet_i->Vecteurlist[Face_ij->L_sommets[k]-1].point;
+//                            test_np =
+                            Calcul_Normale_Seuillee(i,j,k,NormaleFacette,NormaleSommet) ;
+ //                           if (test_np) nb_normales_seuillees++;
+                            glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]);
+                        } else {
+                            // Facette plane
+                            glNormal3f(NormaleFacette[0],NormaleFacette[1],NormaleFacette[2]);
+                        }
+                        xyz_sommet = Objet_i->Sommetlist[NumerosSommets[k]-1].getPoint();
+//                        if (Changer_Echelle) {
+////                            if (Face_ij->selected) { // C'est forcément le cas ici !
+//                                xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
+//                                xyz_sommet[0] *= Scale_X  ; xyz_sommet[1] *= Scale_Y  ; xyz_sommet[2] *= Scale_Z ;
+//                                xyz_sommet[0] += Centre_X ; xyz_sommet[1] += Centre_Y ; xyz_sommet[2] += Centre_Z;
+////                            }
+//                        }
+                        glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+                    }
+                    glEnd();
+
+                    break;
+                }
+            }
+
+            if (Changer_Echelle) {
+                glPopMatrix();
+            }
+
+        }   // Objet_i->afficher && !Objet_i->deleted
+
+    }       // for(i=0; i<this->ToSelect.ListeSelect.size() ...
+
+    glEndList();
+}
+
+void BddInter::showPoint() {
+
+    std::vector<float> xyz_sommet;
+    Object*     objet_courant;
+
+    if(Smemory != nullptr) {                                        // Tracé en rouge du point déjà sélectionné
+        objet_courant = &(this->Objetlist[Smemory->objet]);
+        if (objet_courant->afficher && !objet_courant->deleted){
+            glDisable(GL_LIGHTING);
+            glBegin(GL_POINTS);
+            xyz_sommet=objet_courant->Sommetlist[Smemory->sommet].getPoint();
+            glColor3fv(rouge);
+            if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+            glEnd();
+            glEnable(GL_LIGHTING);
+        }
+    }
+    if (objet_under_mouse != -1 && point_under_mouse != -1) {       // Tracé en jaune du point survolé
+        objet_courant = &(this->Objetlist[objet_under_mouse]);
+        if (objet_courant->afficher && !objet_courant->deleted){
+            glDisable(GL_LIGHTING);
+            glBegin(GL_POINTS);
+            xyz_sommet=objet_courant->Sommetlist[point_under_mouse].getPoint();
+            glColor3fv(jaune);
+            if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+            glEnd();
+            glEnable(GL_LIGHTING);
+        }
+    }
+}
+
 void BddInter::buildAllPoints() {
-// Utilise showAllPoints pour construire une liste 3
-    glDeleteLists(glliste_points,1);         // Détruire une éventuelle liste 3 existante
-    glNewList(glliste_points, GL_COMPILE) ;
+// Utilise showAllPoints pour construire une liste de points
+
+    if (verbose)
+        printf("Entrée BddInter::buildAllPoints\n");
+
+    glDeleteLists(glliste_points,1);         // Détruire une éventuelle liste de points existante
+    glNewList(glliste_points, GL_COMPILE_AND_EXECUTE) ;
+    glInitNames();
     showAllPoints();
     glEndList();
 }
 
 void BddInter::showAllPoints() {
-
-    glDisable(GL_LIGHTING);
-    //glEnable(GL_PROGRAM_POINT_SIZE);
-    //glPointSize(15)
-    //glPointParameterf(GL_POINT_FADE_THRESHOLD_SIZE,  5.0);
     std::vector<float> xyz_sommet;
     Object*     objet_courant;
+
+    glDisable(GL_LIGHTING);
 
     for(unsigned int i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
@@ -5955,26 +6088,8 @@ void BddInter::showAllPoints() {
                     xyz_sommet=objet_courant->Sommetlist[j].getPoint();
                     glPushName(-1);
                     glBegin(GL_POINTS);
-//                    glTranslatef(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);                    // Utile ?
-                    if(Smemory != nullptr) {
-                        if(Smemory->sommet==(int)j && Smemory->objet==(int)i) {
-                            glColor3fv(rouge);                                                  // Point rouge si déjà cliqué (donc en mémoire)
-                        } else if (objet_under_mouse==(int)i && point_under_mouse==(int)j) {
-                            glColor3fv(jaune);                                                  // Point jaune si seulement survolé
-                        } else {
-                            glColor3fv(bleu);                                                   // Point bleu standard
-                        }
-                    } else {
-//                        if (objet_under_mouse==(int)i+1 && point_under_mouse==(int)j+1) {
-                        glColor3fv(bleu);                                                   // Point bleu standard
-                        if (objet_courant->Sommetlist[j].selected) glColor3fv(vert);        // Point vert si on le sélectionne
-                        if (objet_under_mouse==(int)i && point_under_mouse==(int)j) {
-                            glColor3fv(jaune);                                              // Point jaune si seulement survolé
-//                            objet_under_mouse = -1;                                         // Pour éviter que ce point reste jaune s'il n'est plus survolé
-                        } /*else {
-                            glColor3fv(bleu);                                                   // Point bleu standard
-                        }*/
-                    }
+                    glColor3fv(bleu);                                                   // Point bleu standard
+                    if (objet_courant->Sommetlist[j].selected) glColor3fv(vert);        // Point vert si on le sélectionne
                     if (Changer_Echelle) {
                         if (objet_courant->Sommetlist[j].selected) {
                             xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
@@ -5983,7 +6098,6 @@ void BddInter::showAllPoints() {
                         }
                     }
                     if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]); // Ne pas tenir compte de points vides (non utilisés a priori !)
-//                    glTranslatef(-xyz_sommet[0],-xyz_sommet[1],-xyz_sommet[2]);                 // Utile ??
                     glEnd();
                     glPopName();
                     glPopName();
@@ -5996,9 +6110,14 @@ void BddInter::showAllPoints() {
 }
 
 void BddInter::buildAllLines() {
-// Utilise showAllLines pour construire une liste 2
-    glDeleteLists(glliste_lines,1);         // Détruire une éventuelle liste 2 existante
-    glNewList(glliste_lines, GL_COMPILE) ;
+// Utilise showAllLines pour construire une liste de segments
+
+    if (verbose)
+        printf("Entrée BddInter::buildAllLines\n");
+
+    glDeleteLists(glliste_lines,1);         // Détruire une éventuelle liste d'arêtes existante
+    glNewList(glliste_lines, GL_COMPILE) ;  // ou GL_COMPILE_AND_EXECUTE ?
+    glInitNames();
     showAllLines();
     glEndList();
 }
@@ -6006,15 +6125,18 @@ void BddInter::buildAllLines() {
 void BddInter::showAllLines() {
 
 // Version GD utilisant la génération préalable des arêtes de GenereTableauAretes.
+// Liste de toutes les arêtes. La ligne survolée (en vert) sera générée à part, hors liste.
 
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
     Aretes*  Arete;
     Object*     objet_courant;
 
-    bool plusEpais;         // Pour tracer en plus épais une ligne survolée à la souris
-    GLfloat l_width_e=3.;   // Largeur de ligne plus épaisse
-    GLfloat l_width_n=1.;   // Largeur de ligne normale (1 devrait aller mais un peu juste pour sélectionner !)
+    if (verbose)
+        printf("Entrée BddInter::showAllLines\n");
+
+    GLfloat l_width_n = 1.;                 // Largeur de ligne normale (1 devrait aller mais un peu juste pour sélectionner !)
+    GLfloat l_width_e = l_width_n*1.05;     // Augmenter un peu la largeur de ligne pour l'antialiasing soft. Initialement 1.75
 
     glDisable(GL_LIGHTING);
 
@@ -6031,21 +6153,14 @@ void BddInter::showAllLines() {
                 glPushName(j);
                 glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans letscheckthemouse) !
                 if (Arete->afficher) {
-                    if((objet_under_mouse == (int)i) && (line_under_mouse == (int)j)) {
-                        plusEpais = true;
-                        glColor3fv(vert);   // cyan foncé ... BOF
-                    } else {
-                        plusEpais = false;
-                        glColor3fv(blanc);  // cyan +clair
-                    }
+                    glColor3fv(blanc);  // cyan +clair
                     if (antialiasing_soft) {
-                        glLineWidth(1.05);  // Augmenter un peu la largeur de ligne. Initialement 1.75
+                        glLineWidth(l_width_e);
                         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
                         glEnable(GL_LINE_SMOOTH);
                         glEnable(GL_BLEND);
                         glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
                     }
-                    if (plusEpais) glLineWidth(l_width_e);
                     glBegin(GL_LINES);
                     xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
                     glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
@@ -6054,21 +6169,68 @@ void BddInter::showAllLines() {
                     glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                     glEnd();
                     if (antialiasing_soft) {
-//                        glLineWidth(1.);    // Remettre la largeur de ligne par défaut
                         glHint(GL_LINE_SMOOTH_HINT,GL_DONT_CARE);
                         glDisable(GL_LINE_SMOOTH);
                         glDisable(GL_BLEND);
+                        glLineWidth(l_width_n);
                     }
-                    glLineWidth(l_width_n);
                 }
                 glPopName();
                 glPopName();
             }
-            if (verbose) printf("Nombre de lignes a tracer : %d\n",Nb_lignes);
+            if (verbose) printf("Nombre de lignes à tracer : %d\n",Nb_lignes);
         }
         glPopName();
+        glLineWidth(l_width_n); // Par précaution
     }
     glEnable(GL_LIGHTING);
+}
+
+void BddInter::showSegment() {
+
+// Version GD utilisant la génération préalable des arêtes de GenereTableauAretes.
+// Reprise de l'ancien shwAllLines, générant toutes les lignes systématiquement.
+
+    std::vector<float> xyz_sommet;
+    unsigned int i,j,k;
+    Aretes* Arete;
+    Object* objet_courant;
+
+    GLfloat l_width_n = 1.;     // Largeur de ligne normale
+    GLfloat l_width_e = 3.;     // Largeur de ligne plus épaisse
+
+    if((objet_under_mouse == -1) && (line_under_mouse == -1)) return;
+
+    objet_courant = &(this->Objetlist[objet_under_mouse]);
+    if (objet_courant->afficher && !objet_courant->deleted){
+        Arete = &(objet_courant->Areteslist[line_under_mouse]);
+        if (Arete->deleted) return;       // L'arête a été supprimée : ignorer
+
+        if (Arete->afficher) {
+            glDisable(GL_LIGHTING);
+            glLineWidth(l_width_e);
+            glColor3fv(vert);
+            if (antialiasing_soft) {
+                glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
+                glEnable(GL_LINE_SMOOTH);
+                glEnable(GL_BLEND);
+                glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+            }
+            glBegin(GL_LINES);
+            xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
+            glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+            xyz_sommet = objet_courant->Sommetlist[Arete->ind_b].getPoint();
+            glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+            glEnd();
+            if (antialiasing_soft) {
+                glHint(GL_LINE_SMOOTH_HINT,GL_DONT_CARE);
+                glDisable(GL_LINE_SMOOTH);
+                glDisable(GL_BLEND);
+            }
+            glLineWidth(l_width_n);
+            glEnable(GL_LIGHTING);
+        }
+    }
 }
 
 // Copie locale de fghCircleTable dans freeglut_geometry.c 2.8.1 : lignes 124 ...
@@ -6224,7 +6386,7 @@ void BddInter::AfficherSource() {
 //    glTranslatef(+Light0Position[0],+Light0Position[1],+Light0Position[2]);
     glTranslatef(lpx,lpy,lpz);
     rayon = ray_sun*diagonale_save ;
-    glutSolidSphere_local(rayon,20,20);       // Avec freeglut de base, plante ici dans un appel interne à glutGameModeGet
+    glutSolidSphere_local(rayon,20,20);       // Avec freeglut 3.0 de base, plante ici dans un appel interne à glutGameModeGet
     glEnable(GL_LIGHTING);
     glPopMatrix();
 }
@@ -6384,7 +6546,6 @@ void BddInter::buildBoite() {
 //    glPopName();
     glEnable(GL_LIGHTING);
     glEndList();
-
 }
 
 void BddInter::TracerBoite(double x1,double x2,double y1,double y2,double z1,double z2) {
@@ -6405,6 +6566,7 @@ void BddInter::TracerBoite(double x1,double x2,double y1,double y2,double z1,dou
         glVertex3d(x2,y2,z1);
         glVertex3d(x1,y2,z1);
     glEnd();
+
     glBegin(GL_LINE_LOOP);
         glVertex3d(x1,y1,z2);
         glVertex3d(x2,y1,z2);
@@ -6439,7 +6601,6 @@ void BddInter::TracerBoite(double x1,double x2,double y1,double y2,double z1,dou
 	    glDisable(GL_BLEND);
 	}
     glEnable(GL_LIGHTING);
-
 }
 
 void BddInter::GenereEtoile() {
@@ -6513,12 +6674,12 @@ void BddInter::GenereEtoile() {
 }
 
 void BddInter::resetMin_Max() {
-    x_min = +FLT_MAX; // 8888888888888888.0;
-    x_max = -FLT_MAX; //-8000000000000000.0;
-    y_min = +FLT_MAX; // 8888888888888888.0;
-    y_max = -FLT_MAX; //-8888888888888888.0;
-    z_min = +FLT_MAX; // 8888888888888888.0;
-    z_max = -FLT_MAX; //-8888888888888888.0;
+    x_min = +FLT_MAX;
+    x_max = -FLT_MAX;
+    y_min = +FLT_MAX;
+    y_max = -FLT_MAX;
+    z_min = +FLT_MAX;
+    z_max = -FLT_MAX;
 }
 
 void BddInter::setMin_Max(float x, float y, float z) {
@@ -6528,12 +6689,6 @@ void BddInter::setMin_Max(float x, float y, float z) {
     x_max = ( x>x_max ? x : x_max);
     y_max = ( y>y_max ? y : y_max);
     z_max = ( z>z_max ? z : z_max);
-//    if(x<x_min) x_min=x;
-//    if(y<y_min) y_min=y;
-//    if(z<z_min) z_min=z;
-//    if(x>x_max) x_max=x;
-//    if(y>y_max) y_max=y;
-//    if(z>z_max) z_max=z;
 }
 
 void BddInter::buildRepereOXYZ() {
@@ -6561,25 +6716,25 @@ void BddInter::buildRepereOXYZ() {
 /* On trace les 3 axes dans des couleurs différentes */
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(255, 0, 0);    /* Axe X en rouge */
+    glColor3ub(255, 0, 0);      // Axe X en rouge
     glVertex3f(0,0,0);
     glVertex3f(longueur,0,0);
     glEnd();
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(0, 255, 0);    /* Axe Y en vert */
+    glColor3ub(0, 255, 0);      // Axe Y en vert
     glVertex3f(0,0,0);
     glVertex3f(0,longueur,0) ;
     glEnd();
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(0, 0, 255);   /* Axe Z en bleu */
+    glColor3ub(0, 0, 255);      // Axe Z en bleu
     glVertex3f(0,0,0);
     glVertex3f(0,0,longueur);
     glEnd();
 
 //    glPopName();
-	glLineWidth(1);	//taille en pixel d'une LINE
+	glLineWidth(1);	            //taille en pixel d'une LINE
 
 	if (antialiasing_soft) {
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
@@ -6589,13 +6744,6 @@ void BddInter::buildRepereOXYZ() {
     glEnable(GL_LIGHTING);
     glEndList();
 }
-
-//double BddInter::CalculeMax(double a, double b) {
-////	if (a > b )
-////		return a;
-////	return b;
-//	 return ( (a>b) ? a : b) ;  // Note : la fonction std::max existe en C++
-//}
 
 void BddInter::SetPosObs(bool resetFoV) {
     float FoV;
@@ -6627,7 +6775,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
     //build_rotmatrix( m,v);
     //glTranslatef( +m_gldata.posx, +m_gldata.posy, +m_gldata.posz );
 
-    if (verbose) printf("mode = "); //mode=13;
+    if (verbose) printf("mode = ");
     if (mode == (int)standard) {
         if (verbose) printf("standard ");
         width = width_pixel;
@@ -6689,28 +6837,35 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
-                m_gllist = 0;
-                m_gllist = glGenLists( 1 );
-                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
-                glInitNames();
-                showAllPoints(); // glCallList(3) ; //
-                glEndList();
-                m_gllist = 0;   // Refaire toutes les listes car les points, les facettes, les arêtes ont changé
+//                buildAllPoints();             // Ne suffisait pas ici ! Il y manquait le glInitNames ?
+                glCallList(glliste_points);
+//                m_gllist = glliste_points;//0;
+//                glDeleteLists(m_gllist,1);
+//                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
+//                glInitNames();
+//                showAllPoints();
+//                glEndList();
+                face_under_mouse = -1;
+                if ((MPanel->Bool_souder) && (point_under_mouse != -1)) {
+                    ToSelect.ListeSelect.clear();
+                    m_gllist = 0;   // Refaire toutes les listes car les facettes, les arêtes ont changé (les points sont à jour : on pourrait éviter de les reconstruire !)
+                } else {
+                    m_gllist = glliste_objets;
+                }
                 Refresh();
             }
             if (MPanel->Bool_diviser) {
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_ligne, width_ligne, viewport); // cf version tcl ligne 6552
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
-                m_gllist = 0;
-                m_gllist = glGenLists( 1 );
-//                printf("liste : %d\n",m_gllist);
-                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
-                glInitNames();
-                showAllLines();// glCallList(2); //
-                glEndList();
-                m_gllist = glliste_lines;
-//                glCallList(glliste_lines);          // Semblait OK ici, plutôt que les lignes précédentes mais .....
+                glCallList(glliste_lines);
+//                m_gllist = glliste_lines;
+////                printf("liste : %d\n",m_gllist);
+//                glDeleteLists(m_gllist,1);                    <=> buildAllLines, mais superflu. glCallList est suffisant et bien plus rapide
+//                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
+//                glInitNames();
+//                showAllLines();
+//                glEndList();
                 line_under_mouse = -1;  // Raz du numéro d'arête survolé par la souris
                 objet_under_mouse= -1;
                 Refresh();
@@ -6732,9 +6887,6 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; /
         processHits(hits, OnOff);//, selectBuffer);
     }
     ResetProjectionMode();
-
-    //processHits(hits, selectBuffer);
-    //glutPostRedisplay();
 }
 
 void BddInter::stopPicking() {
@@ -6758,6 +6910,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
     bool test_print = false ;       // Mettre true pour activer des impressions de test et commenter la ligne en dessous (ou activer verbose via lettre v)!
     test_print = verbose;
+//    test_print = true;
 
     if (verbose) printf("Entree de processHits\n");
 
@@ -6780,6 +6933,9 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             printf("style : %d (POINTS:%d LINE_LOOP:%d POLYGON:%d)\n",style,GL_POINTS,GL_LINE_LOOP,GL_POLYGON);
         GLuint val0;
         val0 = *ptr;
+
+        if (val0 < 2) return;   /// pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
+
         int incrHits = 0;
         if (val0 != 0) incrHits = 1;    // Si val0 == 0, c'est qu'on est sur le fond <=> hits = 0 !
         int newHits  = 0;
@@ -6819,8 +6975,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 //        printf(" zz : %f\n",zz);
         if (test_print) printf("newHits %d\n",newHits);
 
-//        for (i = 0; i < hits; i++) {
-//        for (i = 0; i < newHits; i++) {
         for (i = 1; i < newHits; i++) {                 // Commencer à 1, car 0 déjà fait !
             /*!on teste quel point picke est le plus proche*/
 //            ptr++;
@@ -6883,6 +7037,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                                 indiceObjet_courant = ToSelect.ListeSelect[i].objet;
                                 objet_courant = &(this->Objetlist[indiceObjet_courant]);                            // Objet [i] différent de l'objet [0]
                                 Sommet NewSommet = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];  // Récupère le sommet du deuxième objet
+                                objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet].selected = false;    // Marque l'ancien sommet comme non sélectionné
                                 indiceObjet_courant = ToSelect.ListeSelect[0].objet;                                // Retour à l'objet [0]
                                 objet_courant = &(this->Objetlist[indiceObjet_courant]);
                                 NewSommet.Numero = objet_courant->Sommetlist.size() +1;                             // Metrre à jour le nouveau numéro du sommet à créer
@@ -6892,64 +7047,52 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                                 ToSelect.ListeSelect[i].face_sommet = NewSommet.Numero -1;
                             }
                         }
-                        // Cas où tous les points sont dans le même objet
-//                        if (UnSeulObjet) {  // En fait, c'est devenu toujours le cas => test à supprimer
-                            indiceObjet_courant = objet;
-                            objet_courant = &(this->Objetlist[objet]);
-                            new_size = new_indice = objet_courant->Facelist.size();
-                            if (objet_courant->Nb_facettes_original == 0) objet_courant->Nb_facettes_original = new_size; // Sauvegarde initiale du nombre de facettes
-                            new_size++;
-                            N_elements = new_size;
-                            str.clear();
-                            NumerosSommets.resize(ToSelect.ListeSelect.size());
-                            for(i=0; i<(int)ToSelect.ListeSelect.size();i++) NumerosSommets[i] = ToSelect.ListeSelect[i].face_sommet +1; // Numéros décalés d'1 cran / indices
-                            make1face();
-                            objet_courant->Nb_facettes = new_size;
-                            Calcul_Normale_Barycentre(objet,new_indice);                // Ici la facette créée est plane
-                            objet_courant->Facelist[new_indice].selected = true;
-                            GenereTableauPointsFacettes(objet_courant);
-                            GenereTableauAretes(objet_courant);
-                            new_facette    = &(objet_courant->Facelist[new_indice]);
-                            new_facette->groupe     = MPanel->NumeroGroupe;             // OK mais l'effet n'est pas immédiat si affichage coloré (via bouton groupes ou matériaux)
-                            new_facette->codmatface = MPanel->NumeroMateriau;
-                            NumerosSommets = new_facette->F_sommets;
-                            new_facette->L_sommets    = NumerosSommets;                 // Recopie provisoire des numéros de sommets de facettes dans les numéros de vecteurs pour les lumminances
-                            new_facette->Nb_Sommets_F = new_facette->F_sommets.size();  // Ajustement des tailles des vecteurs = sommets
-                            new_facette->Nb_Sommets_L = new_facette->L_sommets.size();  //                                       et luminances
-                            // Augmenter le nombre de vecteurs car les nouvelles normales aux sommets ne remplacent pas forcément les anciennes, notamment
-                            // quand une normale spécifique est utilisée par 2 sommets ou plus. Peut arriver en cas de simplification de Bdd !
-                            indice_vec = this->Objetlist[objet].Vecteurlist.size();     // Initialise indice_vec avec la taille actuelle des vecteurs
-                            new_size   = indice_vec + new_facette->Nb_Sommets_L;        // Nouvelle taille
-                            this->Objetlist[objet].Vecteurlist.resize(new_size);        // Resize dzs vecteurs
-                            this->Objetlist[objet].Nb_vecteurs = new_size;              // et maj de Nb_vecteurs
-                            for(i=0; i<(int)NumerosSommets.size();i++) {
+                        indiceObjet_courant = objet;
+                        objet_courant = &(this->Objetlist[objet]);
+                        new_size = new_indice = objet_courant->Facelist.size();
+                        if (objet_courant->Nb_facettes_original == 0) objet_courant->Nb_facettes_original = new_size; // Sauvegarde initiale du nombre de facettes
+                        new_size++;
+                        N_elements = new_size;
+                        str.clear();
+                        NumerosSommets.resize(ToSelect.ListeSelect.size());
+                        for(i=0; i<(int)ToSelect.ListeSelect.size();i++) NumerosSommets[i] = ToSelect.ListeSelect[i].face_sommet +1; // Numéros décalés d'1 cran / indices
+                        make1face();
+                        objet_courant->Nb_facettes = new_size;
+                        Calcul_Normale_Barycentre(objet,new_indice);                // Ici la facette créée est plane
+                        objet_courant->Facelist[new_indice].selected = true;
+                        GenereTableauPointsFacettes(objet_courant);
+                        GenereTableauAretes(objet_courant);
+                        new_facette    = &(objet_courant->Facelist[new_indice]);
+                        new_facette->groupe     = MPanel->NumeroGroupe;             // OK mais l'effet n'est pas immédiat si affichage coloré (via bouton groupes ou matériaux)
+                        new_facette->codmatface = MPanel->NumeroMateriau;
+                        NumerosSommets = new_facette->F_sommets;
+                        new_facette->L_sommets    = NumerosSommets;                 // Recopie provisoire des numéros de sommets de facettes dans les numéros de vecteurs pour les lumminances
+                        new_facette->Nb_Sommets_F = new_facette->F_sommets.size();  // Ajustement des tailles des vecteurs = sommets
+                        new_facette->Nb_Sommets_L = new_facette->L_sommets.size();  //                                       et luminances
+                        // Augmenter le nombre de vecteurs car les nouvelles normales aux sommets ne remplacent pas forcément les anciennes, notamment
+                        // quand une normale spécifique est utilisée par 2 sommets ou plus. Peut arriver en cas de simplification de Bdd !
+                        indice_vec = this->Objetlist[objet].Vecteurlist.size();     // Initialise indice_vec avec la taille actuelle des vecteurs
+                        new_size   = indice_vec + new_facette->Nb_Sommets_L;        // Nouvelle taille
+                        this->Objetlist[objet].Vecteurlist.resize(new_size);        // Resize dzs vecteurs
+                        this->Objetlist[objet].Nb_vecteurs = new_size;              // et maj de Nb_vecteurs
+                        for(i=0; i<(int)NumerosSommets.size();i++) {
 //                               printf("indice %d, Numero de sommet : %d\n",i,NumerosSommets[i]);
-                                indice_pt = NumerosSommets[i]-1;
-                                GenereNormale_1_Sommet(objet_courant,indice_pt,indice_vec);
-                                indice_vec++;
-                            }
-                            objet_courant->Facelist[new_indice].flat = MPanel->FacetteCreeePlane;   // dépend de la case à cocher "Plane" du dialogue "ModificationPanel
-
-//                        } else { // Ne sert plus !
-//                        // Les points sont dans plusieurs objets => choisir l'objet de ToSelect.ListeSelect[0].objet puis ajouter les points des autres objets dans celui_ci
-//                        // Provisoirement, afficher un message ...
-//
-//                            if (ToSelect.ListeSelect.size() != 0) { // Sinon en mode Release (mais pas en Debug !), s'affiche 2 fois !!!
-//
-//                                wxMessageDialog *query = new wxMessageDialog(NULL, _T("Tous les points ne sont pas dans le même objet.\nPas encore opérationnel !"),
-//                                                             _T("Avertissement"),
-//                                                             wxOK | wxICON_QUESTION ); // Avec cette icône, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-//                                query->ShowModal();
-//                                query->Destroy();
-//                            }
-//                        }
-                        ToSelect.verrouiller_ListeSelect(true);
+                            indice_pt = NumerosSommets[i]-1;
+                            GenereNormale_1_Sommet(objet_courant,indice_pt,indice_vec);
+                            indice_vec++;
+                        }
+                        objet_courant->Facelist[new_indice].flat = MPanel->FacetteCreeePlane;   // dépend de la case à cocher "Plane" du dialogue "ModificationPanel
+                        ToSelect.verrouiller_ListeSelect(false);
+                        MPanel->Button_SupprimerFacette->Enable();
+                        MPanel->Button_InverserNormale ->Enable();
+                        SELECTION old  = mode_selection;
+                        mode_selection = selection_point;
                         wxKeyEvent key_event;
                         key_event.m_keyCode = 'S';
                         OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de points
+                        mode_selection = old;
+
                         m_gllist = 0;
-                        MPanel->Button_SupprimerFacette->Enable();
-                        MPanel->Button_InverserNormale ->Enable();
                         Refresh();
 
                     } else if (OnOff) {
@@ -6981,9 +7124,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         Objetlist[objet].Sommetlist[point].selected = false;    // Sinon le second point sélectionné reste coloré en vert
                     }
                     delete this->Smemory;       // Utile ??
-                    this->Smemory  = nullptr; // Reset
-    //                this->m_gllist = -3;
-    //                Refresh();
+                    this->Smemory  = nullptr;   // Reset
+                    ToSelect.ListeSelect.clear();
                 }
             }
         }
@@ -7019,19 +7161,19 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             }
 
             if (mode_selection == selection_facette) {
-//                colorface(objet, face);
+                if (objet != -1) {  // Ne rien faire si le clic sur l'objet est en fait sur le fond
                 if (OnOff) {
                     if (!ToSelect.check_if_in_ListeSelect(objet,face)) {
-                        if (objet != -1) ToSelect.add_one(objet,face);      // N'ajouter que si non déjà présent dans la Liste et objet <> -1 (fond)
+                            ToSelect.add_one(objet,face);                       // N'ajouter que si non déjà présent dans la Liste
+                            colorface(objet, face, true);
                     } else {
                         ToSelect.erase_one_ListeSelect(objet,face);         // Sinon, le supprimer
+                            colorface(objet, face, false);
                     }
-                    if (objet != -1) colorface(objet, face);
                 } else {
                     if (!ToSelect.check_if_in_ListeSelect(objet,face)) {    // N'ajouter que si non déjà présent dans la Liste
-                        if (objet != -1) {
                             ToSelect.add_one(objet,face);
-                            colorface(objet, face);
+                            colorface(objet, face, true);
                         }
                     }
                 }
@@ -7165,29 +7307,27 @@ void BddInter::processHits(GLint hits, bool OnOff) {
     }
 }
 
-bool BddInter::colorface(int objet,int face) {
-    if(ifexist_facette(objet,face)) {
-//        if(!ToSelect.check_if_in_Liste(objet,face)) {
-        if(ToSelect.check_if_in_ListeSelect(objet,face)) {
-//            if(!Objetlist[objet].Facelist[face].selected) {
-            Objetlist[objet].Facelist[face].color[0] = 0.0f;   // R
-            Objetlist[objet].Facelist[face].color[1] = 1.0f;   // V
-            Objetlist[objet].Facelist[face].color[2] = 0.0f;   // B
-            Objetlist[objet].Facelist[face].selected = true;
-//            }
+void BddInter::colorface(int objet,int face, bool OnOff) {
+
+/// Ne sert plus à grand chose ... notamment ne colorise plus la facette sélectionnée, car fonction reportée dans la création de liste
+
+    Face *facette_courante;
+//    int i;
+
+    if(ifexist_facette(objet,face)) {   // On vérifie que la facette existe bien dans l'objet
+        facette_courante = &(Objetlist[objet].Facelist[face]);
+//        if(ToSelect.check_if_in_ListeSelect(objet,face)) {
+        if(OnOff) {
+//            for (i=0; i<2 ; i++) facette_courante->color[i] = vert[i];
+            facette_courante->selected = true;
         } else {
-            Objetlist[objet].Facelist[face].color[0] = gris_def;
-            Objetlist[objet].Facelist[face].color[1] = gris_def;
-            Objetlist[objet].Facelist[face].color[2] = gris_def;
-            Objetlist[objet].Facelist[face].selected = false;
-//            }
+//            for (i=0; i<2 ; i++) facette_courante->color[i] = gris[i];
+            facette_courante->selected = false;
         }
-            glDeleteLists(m_gllist,1);
-            m_gllist = 0;
-            Refresh();
-//        }
+        m_gllist = glliste_select;  // Pour ne reconstruire que la liste des facettes sélectionnées
+        Refresh();
     }
-    return false;
+    return;
 }
 
 bool BddInter::ifexist_facette(int objet,int face) {
@@ -7814,7 +7954,7 @@ void BddInter::SaveOFF(wxString str) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
         if (commentaires) {
-// ATTENTION : certain logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
+// ATTENTION : certains logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
             myfile << "# Objet initial : ";
             myfile << objet_courant->GetName();                         // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
 //            wxString mystring = objet_courant->GetwxName();
@@ -8313,7 +8453,7 @@ void BddInter::diviserArete(int objet, int face, int line) {
     buildAllPoints();
     GenereTableauPointsFacettes(objet_cible);
     GenereTableauAretes(objet_cible);
-    buildAllLines();
+//    buildAllLines();
     bdd_modifiee = true ;
     Refresh();
 }
@@ -8429,7 +8569,7 @@ void BddInter::souderPoints(int objet, int point) {
             Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
         }
     } else {
-// Note : peu différent de soudure interne, mais quelques cas n'ont pas lieu d'être ici => On préfère réécrire le code, maêm si c'est "presque" le même !
+// Note : peu différent de soudure interne, mais quelques cas n'ont pas lieu d'être ici => On préfère réécrire le code, même si c'est "presque" le même !
         printf("Soudure entre 2 objets\n");
 //        fflush(stdout);
 
@@ -8463,7 +8603,7 @@ void BddInter::souderPoints(int objet, int point) {
             Calcul_Normale_Barycentre(indice_objet_origine, objet_origine->Facelist.size()-1);  // Calcul de la nouvelle normale au barycentre
         }
     }
-    objet_origine->Nb_sommets = objet_origine->Sommetlist.size();   // Mis à jour des valeurs
+    objet_origine->Nb_sommets = objet_origine->Sommetlist.size();       // Mise à jour des valeurs
     objet_origine->Nb_facettes= objet_origine->Facelist.size();
     objet_origine->Nb_vecteurs= objet_origine->Vecteurlist.size();
 
@@ -8485,17 +8625,17 @@ void BddInter::UNDO_ONE() {
     Object* objet_courant;
 
     if(undo_memory != 0) {
-        for(i=0; i<this->Objetlist.size(); i++) {
+        for(i=0; i<this->Objetlist.size(); i++) {   /// est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
             objet_courant = &(this->Objetlist[i]);
             for(j=0; j<objet_courant->Facelist.size(); j++) {
                 if (objet_courant->Facelist[j].toshow == undo_memory) {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
-                } else if(objet_courant->Facelist[j].toshow == (-undo_memory)) {
-                    objet_courant->Facelist[j].deleted      = false;
-                    objet_courant->Facelist[j].toshow       = 0;
-                } else if((objet_courant->Facelist[j].toshow == undo_memory-1) && (undo_memory != 1)) { // A vérifier : si undo_memory = 1,
-                    objet_courant->Facelist[j].deleted      = false;                                    // semble faire le undelete sur 1 facette de trop
+                } else if(objet_courant->Facelist[j].toshow  == (-undo_memory)) {
+                    objet_courant->Facelist[j].deleted       = false;
+                    objet_courant->Facelist[j].toshow        = 0;
+                } else if((objet_courant->Facelist[j].toshow == undo_memory-1) && (undo_memory != 1)) {     // A vérifier : si undo_memory = 1,
+                    objet_courant->Facelist[j].deleted       = false;                                       // semble faire le undelete sur 1 facette de trop
                 }
             }
             bool vecteurs_presents = true;
@@ -8506,14 +8646,16 @@ void BddInter::UNDO_ONE() {
                     if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
                     j--;    // 1 sommet effacé => passer une fois de moins dans la boucle en j
                 } else if(objet_courant->Sommetlist[j].toshow == -undo_memory) {
-                    objet_courant->Sommetlist[j].show   = true;
-                    objet_courant->Sommetlist[j].toshow = 0;
+                    objet_courant->Sommetlist[j].show     = true;
+                    objet_courant->Sommetlist[j].toshow   = 0;
+                    objet_courant->Sommetlist[j].selected = false;
                     if (vecteurs_presents) {
 //                        objet_courant->Vecteurlist[j].show   = true;
                         objet_courant->Vecteurlist[j].toshow = 0;
                     }
                 } else if((objet_courant->Sommetlist[j].toshow == undo_memory-1) && (undo_memory != 1)) {   // Idem facettes
-                    objet_courant->Sommetlist[j].show = true;
+                    objet_courant->Sommetlist[j].show     = true;
+                    objet_courant->Sommetlist[j].selected = false;
 //                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
             }
@@ -8524,18 +8666,19 @@ void BddInter::UNDO_ONE() {
             if (objet_courant->Temps_Calcul_Aretes <= tempo_s*CLOCKS_PER_SEC) {
                 GenereTableauPointsFacettes(objet_courant);                 // Faut-il le faire à chaque soudure ou une seule fois en sortie de ModificationPanel
                 GenereTableauAretes(objet_courant);                         // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
-                buildAllLines();                                            // Indispensable sinon blocage apparent après 2 soudures
-                Refresh();                                                  //  " "
+//                buildAllLines();                                            // Indispensable ??? sinon blocage apparent après 2 soudures
+//                Refresh();                                                  //  " "
             } else MPanel->aretes_calculees = false;
         }
         undo_memory--;
         if (undo_memory == 0) {
             MPanel->Button_Undo->Disable();
         }
-        m_gllist = 0;
+
         wxKeyEvent key_event;
         key_event.m_keyCode = 'S';
         OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de points
+        m_gllist = 0;           /// Utile ? => reconstruire toutes les listes !
     }
     Refresh();
 }
@@ -8587,7 +8730,6 @@ void BddInter::Calcul_Normale_Barycentre(int i, int j) {
 }
 
 bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int ind_P, std::vector<float> &NormaleFacette, std::vector<float> &NormaleSommet)
-//bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int ind_P, Vector3D &np)
 {
     bool test_np ;
     int npoint, i, k, k2, nbs, nfac ;
@@ -8600,11 +8742,11 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
 
     objet_cur = &(this->Objetlist[indice_objet_cur]);
     test_np   = false ;
-    np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                               // Initialisation
+    np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                             // Initialisation
     if (test_seuil_gouraud) {
         if (!((produit_scalaire(NormaleFacette,NormaleSommet) > seuil_Gouraud) || (seuil_Gouraud <= -0.999 ))) {
-            npoint = objet_cur->Facelist[ind_fac].F_sommets[ind_P] -1;                 // Ici c'est le numéro d'indice du sommet qu'il faut récupérer
-            NbFacettes = objet_cur->Pointslist[npoint].IndicesFacettes.size();  // Nombre de facettes qui utilisent ce sommet
+            npoint = objet_cur->Facelist[ind_fac].F_sommets[ind_P] -1;              // Ici c'est le numéro d'indice du sommet qu'il faut récupérer
+            NbFacettes = objet_cur->Pointslist[npoint].IndicesFacettes.size();      // Nombre de facettes qui utilisent ce sommet
             for (k=0; k< NbFacettes ; k++) {
                 nfac    = objet_cur->Pointslist[npoint].IndicesFacettes[k] ;
                 /* Ne pas prendre en compte les facettes dont l'angle entre la normale avec celle de
@@ -8616,11 +8758,9 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
                     coef    = 0.;
                     pa      = objet_cur->Sommetlist[cur_fac.F_sommets[0]-1].getPoint() ;
                     pb      = objet_cur->Sommetlist[cur_fac.F_sommets[1]-1].getPoint() ;
-//                  v1 = SoustractionPoint(pb,pa) ;
                     v1.X    = (double)(pb[0] - pa[0]); v1.Y = (double)(pb[1] - pa[1]); v1.Z = (double)(pb[2] - pa[2]);
                     for (k2=2 ; k2 < nbs ; k2++) {
                         pc = objet_cur->Sommetlist[cur_fac.F_sommets[k2]-1].getPoint() ;
-//                      v2 = SoustractionPoint(pc,pa) ;
                         v2.X = (double)(pc[0] - pa[0]); v2.Y = (double)(pc[1] - pa[1]); v2.Z = (double)(pc[2] - pa[2]);
 //                      coef += Norme(produit_vect(&v1,&v2)) ; // En toute rigueur diviser par 2 !
                         vp = v1.crossProduct(v2);
@@ -8662,27 +8802,33 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 
     bool test_print = false;    // Mettre true pour activer des impressions de test
     test_print = verbose;
+//    test_print = true;
 
     if (verbose) printf("Entree de letscheckthemouse\n");
 
-//    int objet_under_mouseM=objet_under_mouse;
-//    int face_under_mouseM =face_under_mouse;
-//    int line_under_mouseM =line_under_mouse;
-
-    if (hits>=BUFSIZE || hits<0) {
+    if (hits >= BUFSIZE || hits < 0) {
         if (hits > 0) {// Si valeur négative, ne rien afficher car ce n'est pas toujours une erreur ! Peut-être pb de timing
             std::cout<<"trop de points cliques ou valeur negative :  ";
             std::cout<< hits;
             std::cout<<" \n";
         }
-        objet_under_mouse=-1;
-        face_under_mouse =-1;
-        point_under_mouse=-1;
-        line_under_mouse =-1;
+        objet_under_mouse = -1;
+        face_under_mouse  = -1;
+        point_under_mouse = -1;
+        line_under_mouse  = -1;
         return false;
     } else {
         /*!on initialise le pointeur*/
         ptr = (GLuint *) selectBuffer;
+
+        GLuint val0 = *ptr;
+        if (val0 < 2) {
+            objet_under_mouse = -1;
+            face_under_mouse  = -1;
+            point_under_mouse = -1;
+            line_under_mouse  = -1;
+            return false;     /// pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
+        }
 
         offset = 6; // ici on est soit en GL_POINTS, soit en GL_LINE*
 
@@ -8733,7 +8879,7 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
         }
 //        printf("ii=%d\n",ii);
 
-        ptr = (GLuint *) selectBuffer;/*!on reinitialise le pointeur*/
+        ptr = (GLuint *) selectBuffer;  /*!on reinitialise le pointeur*/
         int indiceptr_objet = (ii*offset)+3; // mode points ou line => 6 valeurs par Hit
 //        printf("indiceptr_objet : %d\n",indiceptr_objet);
 //        printf("valeur objet    : %d (%d)\n",ptr[indiceptr_objet],ptr[indiceptr_objet]-1);
@@ -8743,9 +8889,11 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 //            printf("valeur point    : %d (%d)\n",ptr[indiceptr_objet+1],ptr[indiceptr_objet+1]-1);
 //        printf("valeur ID       : %d\n",ptr[indiceptr_objet+2]);
 
-        objet_under_mouse= ptr[indiceptr_objet];
-        if (mode_appel == 0)
+        objet_under_mouse = ptr[indiceptr_objet];
+        if (mode_appel == 0) {
             point_under_mouse = ptr[indiceptr_objet+1];
+            face_under_mouse  = -1; // par précaution : ici c'est un point qui est sélectionné, pas une facette
+        }
 
         if (mode_appel == 1) {
             face_under_mouse  = ptr[indiceptr_objet+1];
@@ -9085,10 +9233,7 @@ void BddInter::Simplification_BDD()
                                 //de facettes, car lorsqu'on remplace n sommets, le nombre de sommets diminue
                                 //de n sommets
                                 //	printf("Numéro sommet supérieur %u ",elem->ob.tab_facette[k].ind_sommets[l]);
-//                                int newval = Facette_courante->F_sommets[l];
-//                                newval--;
-//                                Facette_courante->F_sommets[l] = newval;
-                                --(Facette_courante->F_sommets[l]);         // Vérifier si ça marche plutôt que les 3 lignes ci-dessus
+                                --(Facette_courante->F_sommets[l]);
                             }
                         }
                     }
@@ -9169,7 +9314,6 @@ void BddInter::Simplification_BDD()
                 continue;                          // S'il est vide, passer à l'objet suivant
             }
             tabPoints.resize(nb_points);
-//            nbface = objet_courant->Nb_luminances;  // Ne serait-ce pas Nb_facettes plutôt ? en principe égaux (si normales aux sommets existent), mais ???
             nbface = objet_courant->Nb_facettes;
 
             // Pour supprimer les normales non utilisées .... on les marque comme des doublons du 1er vecteur
@@ -9507,7 +9651,6 @@ void BddInter::genereFacettesSphere(int Nb_Meridiens, int Nb_Paralleles, bool Ne
     i3 = i2 -m +1;
     this->str.Printf(_T("%d 3 %d %d %d"),numero,i1,i2,i3);
     this->make1face();
-
 }
 
 void BddInter::genereSommetsSphere(int Nb_Meridiens, int Nb_Paralleles, float centre[3], float rayon, float coefx, float coefy, float coefz)
@@ -9547,7 +9690,6 @@ void BddInter::genereSommetsSphere(int Nb_Meridiens, int Nb_Paralleles, float ce
     this->N_elements = numero;
     this->Setxyz(Xc, Yc-coefy*rayon, Zc);
     this->make1sommet();
-
 }
 
 void BddInter::genereNormalesSommetsSphere(int Nb_Meridiens, int Nb_Paralleles, float coefx, float coefy, float coefz)
@@ -9586,7 +9728,6 @@ void BddInter::genereNormalesSommetsSphere(int Nb_Meridiens, int Nb_Paralleles, 
     this->N_elements = numero;
     this->Setxyz(0., -1., 0.);
     this->make1vecteur();
-
 }
 
 void BddInter::GenereNormale_1_Sommet(Object *current_objet, unsigned int indice_point, unsigned int indice_vecteur)
@@ -9709,6 +9850,7 @@ bool BddInter::compare_normales(int objet, int face_1, int face_2) {
 /* renvoie true si les composantes des normales aux barycentres des facettes face_1 et face_2 ont les mêmes signes (version originale) */
 
 // Et si on vérifiait plutôt que l'angle entre n1 et n2 soit inférieur à une valeur test (+-45° par exemple !)
+// On pourrait paramétrer cette valeur dans Préférences et/ou directement dans Sélection et déplacements
 
     std::vector<float> n1, n2;
 
@@ -9722,7 +9864,6 @@ bool BddInter::compare_normales(int objet, int face_1, int face_2) {
     if (prod > seuil) return true; // L'angle entre les 2 normales est < acos(seuil)
 
     return false;
-
 }
 
 bool BddInter::points_egaux(const std::vector<float> &point_1, const std::vector<float> &point_2, float epsilon)
@@ -9883,7 +10024,8 @@ void BddInter::Selection_rectangle (GLint xa, GLint ya)
 
     for (i=0,Cursor_X=Cursor_X0 ; i<nb_points ; i++,Cursor_X+=pas_X) {
         for (j=0,Cursor_Y=Cursor_Y0 ; j<nb_points ; j++,Cursor_Y+=pas_Y) {
-            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
+            testPicking(int(Cursor_X +0.5), int(Cursor_Y +0.5), modeGL, false) ;
+//            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;   // round souci en debug !
         }
     }
 // Via tirage aléatoire, mais pas beaucoup mieux !

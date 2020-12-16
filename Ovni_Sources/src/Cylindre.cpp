@@ -276,8 +276,6 @@ void Cylindre::genereCylindre()
 
     BddInter* Element = MAIN->Element;
 
-//    int new_num = Element->Objetlist[(Element->Objetlist.size()-1)].GetValue() +1;
-//  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
     if (Element->Objetlist.size() == 0)
         new_num = 1;
     else
