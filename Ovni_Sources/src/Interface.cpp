@@ -1427,7 +1427,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             Refresh();
             break;
         }
-        m_gllist = glliste_select;
+//        m_gllist = glliste_select; // Initialisé dans Inverse_Selected_Normales (2 valeurs possibles)
         Refresh();
         break;
 
@@ -5747,7 +5747,11 @@ void BddInter::Inverse_Selected_Normales() {
         }
     }
 
-    if (no_selected) Inverser_Toutes_les_Normales(); // Si aucune facette n'est sélectionnée, tout inverser
+    if (no_selected) {
+        Inverser_Toutes_les_Normales(); // Si aucune facette n'est sélectionnée, tout inverser
+        m_gllist = 0;
+    } else
+        m_gllist = glliste_select;
 
 //    m_gllist = 0;   // Fait dans le OnMenu ...
 //    Refresh();
