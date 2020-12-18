@@ -14,11 +14,11 @@
 			<pos>8,20</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_Increment" member="yes">
-			<value>0.01</value>
+			<value>0.010</value>
 			<pos>80,16</pos>
 			<size>112,24</size>
-			<style>wxTE_RIGHT</style>
-			<handler function="OnTextCtrl_IncrementText" entry="EVT_TEXT" />
+			<style>wxTE_PROCESS_ENTER|wxTE_RIGHT</style>
+			<handler function="OnTextCtrl_IncrementText" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_Valider" member="yes">
 			<label>Valider</label>
@@ -39,7 +39,7 @@
 			<pos>16,140</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_ScaleX" member="yes">
-			<value>1.00</value>
+			<value>1.000</value>
 			<pos>144,72</pos>
 			<size>112,24</size>
 			<style>wxTE_RIGHT</style>
@@ -54,7 +54,7 @@
 			<handler function="OnSpinButton_XChangeDown" entry="EVT_SPIN_DOWN" />
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_ScaleY" member="yes">
-			<value>1.00</value>
+			<value>1.000</value>
 			<pos>144,104</pos>
 			<size>112,24</size>
 			<style>wxTE_RIGHT</style>
@@ -69,7 +69,7 @@
 			<handler function="OnSpinButton_YChangeDown" entry="EVT_SPIN_DOWN" />
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_ScaleZ" member="yes">
-			<value>1.00</value>
+			<value>1.000</value>
 			<pos>144,136</pos>
 			<size>112,24</size>
 			<style>wxTE_RIGHT</style>

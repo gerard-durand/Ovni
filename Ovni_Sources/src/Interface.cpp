@@ -816,7 +816,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
     static bool previous_right_drag = false;    // En statique pour retrouver la valeur précédente à chaque appel
                                                 // (pourrait être dans BddInter mais n'est utile que dans OnMouse !)
     mouse_position = event.GetPosition();
-    if(finishdraw == true) {
+    if (finishdraw == true) {
 
         if (event.RightUp() && !previous_right_drag) {  // Ne pas faire l'affichage des menus contextuels si juste après un drag souris bouton droit
 //            printf("Right clic\n");
@@ -1456,6 +1456,15 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         printf("gamma %8.3f deg.\n",gamma);
         break;
 
+// Raccourci Clavier pour "Sens des normales"
+    case 'N':
+// ou    case 'n';
+        show_CW_CCW = !show_CW_CCW;
+        MAIN_b->Menu_SensDesNormales->Check(show_CW_CCW);   // Cocher/décocher le menu correspondant
+        m_gllist = 0;
+        Refresh();
+        break;
+
 // Inverser seulement le sens de parcours des sommets de facettes sélectionnées
     case 'P':
 // ou    case 'p':
@@ -1468,10 +1477,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             mode_selection = old;
             m_gllist = 0;           // Regénérer toutes les listes
             Refresh();
-            break;  // m_gllist = 0; et Refresh() déjà fait via 'S'
+            break;  /// m_gllist = 0; et Refresh() déjà fait via 'S' ???
         }
-//        m_gllist = 0;   // utile ? car ne devrait rien changer à l'affichage
-//        Refresh();
+        if (show_CW_CCW) {
+            m_gllist = 0;           // Utile si Sens des normales est activé. Sans effet visuel sinon
+            Refresh();
+        }
         break;
 
 // Reset (valeurs d'initialisation)
@@ -5605,16 +5616,21 @@ Boucle:
         }
 
         glEndList();
+
         SetPosObs(reset_zoom);
         ResetProjectionMode();
-        finishdraw=true;
+
         buildAllLines();
         buildAllPoints();
         buildBoite();
         buildRepereOXYZ();
         buildAllFacettesSelected();
-        Refresh();          // S'il n'est pas là, pas d'affichage des objets la première fois !
-    }   // m_gllist == 0
+
+        finishdraw = true;
+        m_gllist   = glliste_objets; // Déjà commz ça en principe
+        Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois !
+    }   // if (m_gllist == 0)
+
     // En dehors des créations de liste => fait systématiquement
 
     if (m_gllist == glliste_lines) {
@@ -5719,17 +5735,30 @@ void BddInter::NotFlat_Selected_Facettes() {
 
 void BddInter::Inverse_Selected_Normales() {
 // Inverse les normales au barycentre et le sens de parcours des sommets des facettes sélectionnées.
-    unsigned int i,j,k;
+
+    unsigned int i,k;
     int m;
-    Face *Face_ij;
+    Face   *Face_ij;
+    Object *Objet_i;
     bool no_selected = true;
 
-    for(i=0; i<this->Objetlist.size(); i++) {
-        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-            Face_ij = &(this->Objetlist[i].Facelist[j]);
-            if(Face_ij->afficher && !Face_ij->deleted) {
-                if (Face_ij->selected) {
-                    Face_ij->normale_b[0] *= -1;                                // Inverse la normale
+    if (mode_selection != selection_facette) return;    // On n'est pas dans le bon mode
+
+    if (!(this->ToSelect.ListeSelect.empty())) {        // La liste est vide => inverser toutes les normales
+        for(i=0; i<this->ToSelect.ListeSelect.size(); i++) {
+
+            int objet = this->ToSelect.ListeSelect[i].objet;
+            int numero= this->ToSelect.ListeSelect[i].face_sommet ;
+
+//        printf("%d %d\n",objet,numero);
+
+            Objet_i = &this->Objetlist[objet];
+
+            if (Objet_i->afficher && !Objet_i->deleted) {   // Utile ?
+
+                Face_ij = &(Objet_i->Facelist[numero]);
+                if(Face_ij->afficher && !Face_ij->deleted) {
+                    Face_ij->normale_b[0] *= -1;                                // Inverser la normale
                     Face_ij->normale_b[1] *= -1;
                     Face_ij->normale_b[2] *= -1;
                     bdd_modifiee = true;
@@ -5749,9 +5778,9 @@ void BddInter::Inverse_Selected_Normales() {
 
     if (no_selected) {
         Inverser_Toutes_les_Normales(); // Si aucune facette n'est sélectionnée, tout inverser
-        m_gllist = 0;
+        m_gllist = 0;                   // Et regénérer toutes les listes
     } else
-        m_gllist = glliste_select;
+        m_gllist = glliste_select;      // Ne regénérer que les facettes sélectionnées
 
 //    m_gllist = 0;   // Fait dans le OnMenu ...
 //    Refresh();

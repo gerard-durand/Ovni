@@ -12,9 +12,9 @@
     Lien vers l' <a href="Aide.html">Aide</a>.<br>
     Lien vers <a href="About.html">à Propos de ...</a><br>
     <h3><font color="blue"><i>Fichier :</i></font></h3>
-    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (Oktal), .ply (Polygon file de
+    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (SDM d'Oktal), .ply (Polygon file de
     Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D Ascii), .g3d
-    (Format Onera G3D), .off (Object File Format de chez DEC). Quanu un fichier
+    (Format Onera G3D), .off (Object File Format de chez DEC). Quand un fichier
     a été ouvert, son extension devient celle proposée par défaut.<br>
     <b>Ajouter une Bdd</b> : Pour ajouter à la bdd courante avec un autre fichier de
     bdd. Les objets restent indépendants. Il existe une fonction de fusion de plusieurs objets
@@ -22,7 +22,7 @@
     <b>Enregistrer</b> : Enregistre avec le nom courant (seulement en .bdd,
     format Oktal).<br>
     <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd
-    seulement).<br>
+    par défaut). On peut choisir un autre format comme .off, .obj ou .g3d.<br>
     <b>Propriétés</b> : Affiche le nombre d'objets, de points, de facettes,
     d'arêtes, de groupes de toute la Bdd, quelques statistiques de nombres de
     points par facette ainsi que les dimensions de la boîte englobante.<br>
@@ -112,7 +112,7 @@
     "correctement orientées" et en rouge les facettes dont la normale est à
     l'envers [en fait c'est le sens de parcours des points qui est soit dans les
     sens des aiguilles d'une montre (GL_CW) soit dans le sens contraire
-    (GL_CCW)]<br>
+    (GL_CCW)]. Accessible aussi via un raccourci clavier (n).<br>
     <span style="text-decoration: line-through; color: red;"> </span><br>
     <span style="text-decoration: line-through;"> </span><b>Couleurs groupes</b>
     : Colorise les facettes par leur numéro de groupe.&nbsp;<br>

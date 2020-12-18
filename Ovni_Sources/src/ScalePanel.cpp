@@ -23,7 +23,7 @@ const long ScalePanel::ID_BUTTON2 = wxNewId();
 const long ScalePanel::ID_BUTTON3 = wxNewId();
 //*)
 
-wxString format_Sc=_T("%4.2f");
+wxString format_Sc=_T("%5.3f");
 
 BEGIN_EVENT_TABLE(ScalePanel,wxDialog)
 	//(*EventTable(ScalePanel)
@@ -37,18 +37,18 @@ ScalePanel::ScalePanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	SetClientSize(wxSize(285,240));
 	Move(wxPoint(30,30));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Incrément :"), wxPoint(8,20), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	TextCtrl_Increment = new wxTextCtrl(this, ID_TEXTCTRL1, _T("0.01"), wxPoint(80,16), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	TextCtrl_Increment = new wxTextCtrl(this, ID_TEXTCTRL1, _T("0.010"), wxPoint(80,16), wxSize(112,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_Valider = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(200,16), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Mise à l\'échelle en X :"), wxPoint(16,76), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Mise à l\'échelle en Y :"), wxPoint(16,108), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Mise à l\'échelle en Z :"), wxPoint(16,140), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-	TextCtrl_ScaleX = new wxTextCtrl(this, ID_TEXTCTRL2, _T("1.00"), wxPoint(144,72), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+	TextCtrl_ScaleX = new wxTextCtrl(this, ID_TEXTCTRL2, _T("1.000"), wxPoint(144,72), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	SpinButton_X = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(256,72), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton_X->SetRange(-100, 100);
-	TextCtrl_ScaleY = new wxTextCtrl(this, ID_TEXTCTRL3, _T("1.00"), wxPoint(144,104), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+	TextCtrl_ScaleY = new wxTextCtrl(this, ID_TEXTCTRL3, _T("1.000"), wxPoint(144,104), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
 	SpinButton_Y = new wxSpinButton(this, ID_SPINBUTTON2, wxPoint(256,104), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON2"));
 	SpinButton_Y->SetRange(-100, 100);
-	TextCtrl_ScaleZ = new wxTextCtrl(this, ID_TEXTCTRL4, _T("1.00"), wxPoint(144,136), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+	TextCtrl_ScaleZ = new wxTextCtrl(this, ID_TEXTCTRL4, _T("1.000"), wxPoint(144,136), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	SpinButton_Z = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(256,136), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
 	SpinButton_Z->SetRange(-100, 100);
 	CheckBox_ScaleUnique = new wxCheckBox(this, ID_CHECKBOX1, _T("Mettre la même échelle en X, Y et Z"), wxPoint(16,176), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
@@ -56,7 +56,7 @@ ScalePanel::ScalePanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	Button_Appliquer = new wxButton(this, ID_BUTTON2, _T("Appliquer"), wxPoint(32,208), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(152,208), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_IncrementText);
+	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_IncrementText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ScalePanel::OnButton_ValiderClick);
 	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleXText);
 	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&ScalePanel::OnSpinButton_XChangeUp);

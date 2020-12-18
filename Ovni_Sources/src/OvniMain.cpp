@@ -411,7 +411,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_ReperageObjet = new wxMenuItem(Menu_Reperage, ID_MENUITEM13, _T("Objet"), wxEmptyString, wxITEM_NORMAL);
     Menu_Reperage->Append(Menu_ReperageObjet);
     Menu_Reperage->AppendSeparator();
-    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
+    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
     Menu_Reperage->Append(Menu_SensDesNormales);
     Menu_SensDesNormales->Enable(false);
     Menu_Reperage->AppendSeparator();
@@ -1885,7 +1885,7 @@ void OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected(wxCommandEvent& eve
     // Inverser les normales sélectionnées
     if (Element != nullptr) {
         Element->Inverse_Selected_Normales();
-        Element->m_gllist = 0;
+//        Element->m_gllist = 0;
         Element->Refresh();
     }
 }
@@ -1915,7 +1915,7 @@ void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
     // Inverser le sens de parcours des facettes sélectionnées
     if (Element != nullptr) {
         Element->Inverser_Parcours_Selected();
-        Element->m_gllist = 0;
+        if (Element->show_CW_CCW) Element->m_gllist = 0;                  // Utile si Sens des normales est activé. Sans effet visuel sinon
         Element->Refresh();
     }
 }
