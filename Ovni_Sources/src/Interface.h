@@ -311,7 +311,7 @@ public:
 
 class Sommet {
 public:
-    int  Numero;                // Numéro du point
+    int  Numero;                // Numéro du point (en fait, c'est indice du sommet +1 en général)
     int  NNumber;               // ?? ne sert que dans Simplification_BDD_old ... A supprimer ???? Quelle est sa fonction ???
     std::vector<float> point;   // Coordonnées x, y et z du point
     int  toshow;

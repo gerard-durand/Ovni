@@ -2571,7 +2571,7 @@ void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
     int i, j;
     int indice_min, indice_max, numero_sommet;
     int NbFacettes;
-    Face * facette_courante;
+    Face *facette_courante;
 
     NbFacettes = objet_courant->Nb_facettes;
 
@@ -7511,14 +7511,15 @@ void BddInter::SaveBDD(wxString str) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue ;   // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // => on ne travaille que sur les facettes non supprimées !
-            numeros_Sommets = Face_ij->F_sommets;
+            numeros_Sommets = Face_ij->F_sommets; // <=> Face_ij->getF_sommets();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
             myfile << "\t";
             myfile << std::setw(2) << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << "\t";
-                myfile << std::setw(5) << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;
+//                myfile << std::setw(5) << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisés à la lecture
+                myfile << std::setw(5) << numeros_Sommets[k];
             }
             myfile << "\n";
         }
@@ -7843,7 +7844,8 @@ void BddInter::SaveOBJ(wxString str) {
             }
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
-                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices);
+//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisés à la lecture
+                myfile << (numeros_Sommets[k] + offset_vertices);
                 if(Face_ij->flat) continue;                         // Facette plane, ne pas enregistrer les normales aux sommets
                 if (compteur_luminances != 0) {                     // Il y des des normales aux sommets
                     if (numeros_Sommets_L.size() == 0) continue;    // Si pas de normales aux sommets sur cette facette en particulier, passer à la suivante
@@ -8018,7 +8020,8 @@ void BddInter::SaveOFF(wxString str) {
             myfile << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
-                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices);
+//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisés à la lecture
+                myfile << (numeros_Sommets[k] + offset_vertices);
             }
             myfile << "\n";
         }
@@ -8226,7 +8229,8 @@ void BddInter::SaveG3D(wxString str) {
             myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
             numeros_Sommets = Face_ij->F_sommets;
             for(k=0; k<numeros_Sommets.size(); k++) {
-                myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;
+//                myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisés à la lecture
+                myfile << numeros_Sommets[k];
                 myfile << " ";
             }
             myfile << "\"/>\n";
