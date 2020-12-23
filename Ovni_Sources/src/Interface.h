@@ -311,7 +311,7 @@ public:
 
 class Sommet {
 public:
-    int  Numero;                // Numéro du point (en fait, c'est indice du sommet +1 en général)
+    int  Numero;                // Numéro du point (en fait, c'est indice du sommet +1 en général). Initialisé, mis à jour mais au final non utilisé ! A supprimer ?
     int  NNumber;               // ?? ne sert que dans Simplification_BDD_old ... A supprimer ???? Quelle est sa fonction ???
     std::vector<float> point;   // Coordonnées x, y et z du point
     int  toshow;
@@ -501,7 +501,7 @@ public:
 
 class Vecteur {
 public:
-    int  Numero;                // Numéro de normale au sommet (ou VECTEUR)
+    int  Numero;                // Numéro de normale au sommet (ou VECTEUR) (en fait, c'est indice du sommet +1 en général). Initialisé, mis à jour mais au final non utilisé !
 //    int  NNumber;             // Sert à quoi ???
     std::vector<float> point;   // Coordonnées en x, y et z de cette normale
     int  toshow;
@@ -997,6 +997,8 @@ public :
     char *Lire_chaine(char *);
     #define nb_mat_max 4000
     char *tab_mat[nb_mat_max];
+    char *mtllib_nom;
+    bool mtllib_OK = false;
     bool ini_file_modified = false;     // Indicateur de modification du fichier Ovni.ini
     bool pal_file_modified = false;     // Indicateur de modification du fichier de palette .pal
 

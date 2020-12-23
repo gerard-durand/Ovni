@@ -1969,6 +1969,7 @@ void BddInter::create_bdd() {
     printf("create_bdd : type=%d\n",type);
 
     wxFileInputStream stream(str_nom);
+    mtllib_OK = false;                      // Ne sert que si une ligne mtllib existe dans un fichier .obj
     if(type != -1) {
         switch(type) {
         case 0:
@@ -2564,6 +2565,7 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
             facette_courante->F_sommets[j] -= indice_min;           // Renumérotation des sommets utilisés dans chaque facette
         }
     }
+    // En toute rigueur, il faudrait aussi changer les objet_courant->Sommetlist[*].Numero en les décalant de indice_min (idem sur les vecteurs)
 }
 
 void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
@@ -2607,6 +2609,7 @@ void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
             facette_courante->L_sommets[j] -= indice_min;
         }
     }
+    // En toute rigueur, il faudrait aussi changer les objet_courant->Vecteurlist[*].Numero en les décalant de indice_min (idem sur les sommets)
 }
 
 void BddInter::LoadOBJ()
@@ -2683,9 +2686,12 @@ void BddInter::LoadOBJ()
                     if(!strncmp(s1,"mtllib",6) || !strncmp(s1,"g ",2) || !strncmp(s1,"v ",2)) {
                         if(!strncmp(s1,"mtllib",6)) {
                             sprintf(Message,"Fichier Wavefront OBJ avec fichier matériau : %s",s1+7) ;
+                            mtllib_OK  = true;
+                            mtllib_nom = strdup(s1);    // Sauvegarde de la ligne mtllib
 //                            printf("Fichier Wavefront OBJ avec fichier materiau : %s",s1+7) ;
                         } else {
                             sprintf(Message,"Fichier Wavefront OBJ : %s\n",cptr) ;
+                            mtllib_OK  = false;
 //                            printf("Fichier Wavefront OBJ : %s\n",cptr) ;
                         }
                         printf(utf8_To_ibm(Message)) ;
@@ -3082,6 +3088,7 @@ void BddInter::LoadOBJ()
                     // Lancer après coup une simplification de Bdd peut aussi faire le job
                     Optimiser_Obj_Sommets (objet_courant, o, msg_optim);
                     Optimiser_Obj_Vecteurs(objet_courant, o);
+                    if (objet_courant->Nb_facettes == 0) objet_courant->deleted = true;
                 }
             }
 
@@ -7473,7 +7480,14 @@ void BddInter::SaveBDD(wxString str) {
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
-///        compteur = 0;
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
+            compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur == 0) continue;                            // Objet sans facettes => l'ignorer
+
         compteur_sommets = 0;
         NewVecteurs.clear();
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
@@ -7518,7 +7532,7 @@ void BddInter::SaveBDD(wxString str) {
             myfile << std::setw(2) << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << "\t";
-//                myfile << std::setw(5) << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisés à la lecture
+//                myfile << std::setw(5) << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << std::setw(5) << numeros_Sommets[k];
             }
             myfile << "\n";
@@ -7744,7 +7758,8 @@ void BddInter::SaveOBJ(wxString str) {
     Face   *Face_ij=nullptr;
     Object *objet_courant;
 
-    int compteur = 0;
+    int compteur   = 0;
+    int compteur_o = 0;
     int offset_vertices = 0;
     int offset_normales = 0;
     unsigned o,j,k ;
@@ -7762,13 +7777,27 @@ void BddInter::SaveOBJ(wxString str) {
         return;
     }
 
-    printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
+    printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
+
     myfile << "# Fichier Wavefront obj créé par Ovni\n";
+
+    if (mtllib_OK) myfile << "\n" << mtllib_nom ;               // Restitution de la ligne mtllib sauvegardée (entre 2 lignes blanches)
 
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
-        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
-///        compteur = 0;
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
+            compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur == 0) {
+            objet_courant->deleted = true;                      // Objet sans facettes => le marquer comme supprimé
+            continue;                                           // puis l'ignorer en passant au suivant
+        }
+        compteur_o++;
+
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
@@ -7828,9 +7857,11 @@ void BddInter::SaveOBJ(wxString str) {
             if(Face_ij->deleted) continue;
             current_groupe = Face_ij->getGroupe();
             if (current_groupe != last_groupe) {
-                myfile << "usemtl group_";
-                if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
-                myfile << current_groupe << "\n";
+                myfile << "usemtl ";//group_";
+//                myfile << "usemtl group_";
+//                if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
+//                myfile << current_groupe << "\n";
+                myfile << tab_mat[current_groupe -1];               // ne donne pas tout à fait le résultat escompté
                 last_groupe = current_groupe;
             }
 
@@ -7844,7 +7875,7 @@ void BddInter::SaveOBJ(wxString str) {
             }
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
-//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisés à la lecture
+//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << (numeros_Sommets[k] + offset_vertices);
                 if(Face_ij->flat) continue;                         // Facette plane, ne pas enregistrer les normales aux sommets
                 if (compteur_luminances != 0) {                     // Il y des des normales aux sommets
@@ -7913,6 +7944,9 @@ void BddInter::SaveOBJ(wxString str) {
         offset_normales += NbVecteurs;
 
     }
+    if ((int)this->Objetlist.size() != compteur_o)
+        printf("Nombre d'objets retenus  : %d\n",compteur_o);
+
     myfile.close();
 
     wxString Nom = wxFileNameFromPath(str);
@@ -7966,7 +8000,18 @@ void BddInter::SaveOFF(wxString str) {
 
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
-        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
+            compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur == 0) {
+            objet_courant->deleted = true;                      // Objet sans facettes => le marquer comme supprimé
+            continue;                                           // puis l'ignorer en passant au suivant
+        }
+
         compteur_sommets = 0;
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
@@ -7988,6 +8033,7 @@ void BddInter::SaveOFF(wxString str) {
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
         if (commentaires) {
 // ATTENTION : certains logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
             myfile << "# Objet initial : ";
@@ -8011,7 +8057,7 @@ void BddInter::SaveOFF(wxString str) {
     }
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
-        if (objet_courant->deleted) continue ;                          // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         for(j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
@@ -8020,7 +8066,7 @@ void BddInter::SaveOFF(wxString str) {
             myfile << numeros_Sommets.size();
             for(k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
-//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisés à la lecture
+//                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << (numeros_Sommets[k] + offset_vertices);
             }
             myfile << "\n";
@@ -8087,7 +8133,7 @@ void BddInter::SaveG3D(wxString str) {
         return;
     }
 
-    printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
+    printf("\nNombre d'objets originaux : %d\n",(int)this->Objetlist.size());
 
     time (&rawtime);
     timeinfo = localtime (&rawtime);
@@ -8130,15 +8176,26 @@ void BddInter::SaveG3D(wxString str) {
 
 	compteur = 0;
 	for(o=0; o<this->Objetlist.size(); o++) {
-	    if (!this->Objetlist[o].deleted) compteur++ ;
+        objet_courant = &(this->Objetlist[o]);
+        int compteur_F = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
+            compteur_F++;                                       // Donc compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur_F == 0) objet_courant->deleted = true;     // Objet sans facettes => le marquer comme supprimé
+
+	    if (!objet_courant->deleted) compteur++ ;
 	}
+
+    if ((int)this->Objetlist.size() != compteur)
+        printf("Nombre d'objets retenus   : %d\n",compteur);
 
     myfile << "\t\t<objets nbr=\"" << compteur << "\">\n";
 
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
-///        compteur = 0;
+
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
         for(j=0; j<objet_courant->Sommetlist.size(); j++) {
@@ -8186,7 +8243,7 @@ void BddInter::SaveG3D(wxString str) {
 //                compteur++;
                 xyz_sommet = Sommet_ij->getPoint();
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
-                myfile << Sommet_ij->Numero;
+                myfile << (j+1) ; //Sommet_ij->Numero; // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << "\" xyz=\"";
                 for(k=0; k<xyz_sommet.size(); k++) {
                     myfile << "\t";
@@ -8229,7 +8286,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
             numeros_Sommets = Face_ij->F_sommets;
             for(k=0; k<numeros_Sommets.size(); k++) {
-//                myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisés à la lecture
+//                myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << numeros_Sommets[k];
                 myfile << " ";
             }
