@@ -1495,7 +1495,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // Reset de la sélection d'objets, de facettes ou de points
     case 'S':
 // ou    case 's':
-        if (mode_selection == selection_objet) for (unsigned int objet=0; objet < Objetlist.size(); objet++) Objetlist[objet].selected = false;
+        if (mode_selection == selection_objet) {
+            for (unsigned int objet=0; objet < Objetlist.size(); objet++) Objetlist[objet].selected = false;
+            listeObjets.clear();
+        }
         // Les élements de ToSelect.Liste et ToSelect.ListeSelect vont être remis aux valeurs par défaut indépendamment du fait que ces listes soient des facettes ou des sommets
         while (this->ToSelect.ListeSelect.size() > 0) { // Faire tant que la liste ToSelect.ListeSelect n'est pas vide ...
             // On récupère le premier élément de la liste et on remet les valeurs de selected à false (par défaut)
@@ -1532,9 +1535,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             MSelect->RadioBox_TypeSelection->SetSelection(0);
         }
 
-        buildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
-        buildAllPoints();           // Idem pour les points
-        m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
+        if (mode_selection != selection_objet) {
+            buildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
+            buildAllPoints();           // Idem pour les points
+            m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
+        } else
+            m_gllist = 0;               // on est en mode selection_objet
         Refresh();
         break;
 
@@ -2636,7 +2642,6 @@ void BddInter::LoadOBJ()
 
     int num_mat=-123 ;
 //    bool Forcer_1_Seul_Objet=false ; // mis un niveau au dessus ! Si false, on crée le nombre d'objets trouvés dans la bdd, si true, on met tout dans 1 seul objet
-    int ligne_mtllib = 0 ; // On met 1 si une ligne contenant "mtllib" existe
 
     unsigned int num_min, num_max, num_tot, num_cur ;
     unsigned int *full_ind_sommets=NULL, *new_ind_sommets=NULL, *inv_ind_sommets=NULL, *p_uint ;
@@ -2715,7 +2720,7 @@ void BddInter::LoadOBJ()
             rewind(f) ;
 
             while (fgets(s1,660,f) != NULL) {
-                if (!strncmp(s1,"mtllib",6)) ligne_mtllib++;
+//                if (!strncmp(s1,"mtllib",6)) mtllib_OK = true; // Déjà fait plus tôt
                 if (!strncmp(s1,"v ", 2))  nb_p++;
                 if (!strncmp(s1,"f ", 2))  nb_fac++;
                 if (!strncmp(s1,"fo ", 3)) nb_fac++; // f et fo synonymes
@@ -2893,7 +2898,7 @@ void BddInter::LoadOBJ()
 //    printf("OK2...\n");
             npoint_courant = 1 ;
             i=0 ;
-            if (ligne_mtllib) {
+            if (mtllib_OK) {
                 do {
                     i++;
                     fgets(s1,660,f) ;
@@ -3074,12 +3079,12 @@ void BddInter::LoadOBJ()
 //!             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
-            Face   * facette_courante;
+//            Face   * facette_courante;
             bool msg_optim = true;
             for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) { // On ne commence que sur le 2ème objet les copies
 
                 objet_courant= &(this->Objetlist[o]);
-                objet_courant->Sommetlist  = PremierObjet->Sommetlist;
+                objet_courant->Sommetlist  = PremierObjet->Sommetlist ;
                 objet_courant->Vecteurlist = PremierObjet->Vecteurlist;
 
                 if (lect_obj_opt) { // Suite inutile c'est forcément le cas ... && !Forcer_1_Seul_Objet && (Nb_objets > 1)) {
@@ -3088,7 +3093,12 @@ void BddInter::LoadOBJ()
                     // Lancer après coup une simplification de Bdd peut aussi faire le job
                     Optimiser_Obj_Sommets (objet_courant, o, msg_optim);
                     Optimiser_Obj_Vecteurs(objet_courant, o);
-                    if (objet_courant->Nb_facettes == 0) objet_courant->deleted = true;
+                    if (objet_courant->Nb_facettes == 0) {
+                        objet_courant->deleted = true;
+                        objet_courant->Sommetlist.clear();        // Réinitialiser les vecteurs pour libérer de la mémoire
+                        objet_courant->Vecteurlist.clear();
+                        objet_courant->Nb_sommets = objet_courant->Nb_vecteurs = 0;
+                    }
                 }
             }
 
@@ -5748,6 +5758,15 @@ void BddInter::Inverse_Selected_Normales() {
     Face   *Face_ij;
     Object *Objet_i;
     bool no_selected = true;
+
+    if (mode_selection == selection_objet) {
+        auto it = listeObjets.begin();
+        for (i=0; i<listeObjets.size(); i++, it++) {
+            Inverser_les_Normales_Objet(*it);
+        }
+        m_gllist = 0;
+        return;
+    }
 
     if (mode_selection != selection_facette) return;    // On n'est pas dans le bon mode
 
