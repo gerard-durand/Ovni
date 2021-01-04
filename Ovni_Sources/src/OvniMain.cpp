@@ -1362,8 +1362,9 @@ void OvniFrame::Ouvrir_Fichier()
         Selector += _T("Niratam Geo (*.ply)|*.ply|");
         Selector += _T("Object File Format (*.off)|*.off|");
         Selector += _T("Milkshape 3D text (*.m3d)|*.m3d|");
+        Selector += _T("Stereolithographic (*.stl)|*.stl|");
         Selector += _T("Fichiers dxf (*.dxf)|*.dxf|");
-        Selector += _T("Tous les fichiers 3D |*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.dxf|");
+        Selector += _T("Tous les fichiers 3D |*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.stl;*.dxf|");
         Selector += _T("Tous les fichiers (*.*)|*.*");
 
 // FilterIndex dans wxFilesSelectorEx permet bien de récupérer l'indice de la sélection (encore que ?), mais pas d'imposer un choix en entrée !
@@ -1659,19 +1660,40 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     // Préparer l'enregistrement sous...
     wxString Nom_svg = Element->get_firstFile().BeforeLast('.');
     wxFileDialog saveFileDialog(this, _T("Enregistrer sous..."), _T(""), Nom_svg,
-                                _T("SDM Oktal (*.bdd)|*.bdd|Wavefront (*.obj)|*.obj|XML G3D   (*.g3d)|*.g3d|Object File Format (*.off)|*.off"),
-                                wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _T("SDM Oktal (*.bdd)|*.bdd|Wavefront (*.obj)|*.obj|XML G3D   (*.g3d)|*.g3d|Object File Format (*.off)|*.off|Stereolithographic Ascii (*.stl)|*.stl|Stereolithographic Binaire (*.stl)|*.stl"),
+        wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
         return; // L'utilisateur a changé d'idée finalement ...
 
     wxString wxNomFichier = saveFileDialog.GetPath();   // Récupérer le nom complet
+
+//    printf("Index %d\n",saveFileDialog.GetFilterIndex());
+
+    if(saveFileDialog.GetFilterIndex() >= 4) {          // Format stl => facettes triangulaires. Vérifier que c'est le cas avant d'ouvrir le fichier !
+        Object * objet_courant;
+        for(unsigned int o=0; o<Element->Objetlist.size(); o++) {
+            objet_courant = &(Element->Objetlist[o]);
+            if (objet_courant->deleted) continue ;
+
+            for(unsigned int j=0; j<objet_courant->Facelist.size(); j++) {
+                if(objet_courant->Facelist[j].deleted) continue;
+                if(objet_courant->Facelist[j].getNb_Sommets_F() != 3) {
+                    wxString wxMessage=_T("La base n'est pas triangulée. Stockage impossible en format .stl");
+                    Element->DisplayMessage(wxMessage,true);
+                    return;
+                }
+            }
+        }
+    }
+
     wxFileOutputStream output_stream(wxNomFichier);
     if (!output_stream.IsOk()) {
         printf("ERREUR d'ouverture du fichier %s !\n",(const char*)wxNomFichier.mb_str());
         return;
     }
+
     if (Element != nullptr) {
-        Element->SaveTo(wxNomFichier);
+        Element->SaveTo(wxNomFichier,saveFileDialog.GetFilterIndex());
         Element->set_file(wxNomFichier);    // Mettre à jour le nom du fichier (au cas où il aurait changé, par exemple si fusion)
     }
 }
@@ -2847,7 +2869,7 @@ void OvniFrame::OnTimer_SaveTrigger(wxTimerEvent& event)
         printf("Sauvegarde automatique ...\n");
         Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
 //        printf("Enregistrement dans : %s\n",(const char *)Fichier_svg.mb_str()) ;
-        Element->SaveTo(Fichier_svg);
+        Element->SaveTo(Fichier_svg,0);
         Element->bdd_modifiee = true;               // Garder/Forcer la valeur à true car on a enregistré la sauvegarde sous un autre nom (Autosave.bdd)
                                                     // et peut-être ailleurs que dans le répertoire d'origine du fichier bdd initial
         Element->exists_Autosave = true;            // Marquer que le fichier Autosave a été créé ici ! Mais ne détecte pas s'il y a eu une erreur dans SaveTo !

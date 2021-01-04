@@ -312,7 +312,7 @@ public:
 class Sommet {
 public:
     int  Numero;                // Numéro du point (en fait, c'est indice du sommet +1 en général). Initialisé, mis à jour mais au final non utilisé ! A supprimer ?
-    int  NNumber;               // ?? ne sert que dans Simplification_BDD_old ... A supprimer ???? Quelle est sa fonction ???
+//    int  NNumber;               // ?? ne sert que dans Simplification_BDD_old ... A supprimer ???? Quelle est sa fonction ???
     std::vector<float> point;   // Coordonnées x, y et z du point
     int  toshow;
     bool show;
@@ -322,11 +322,11 @@ public:
 // Méthodes, fonctions de la classe Sommet (traitements d'un sommet)
 
     Sommet() {
-        NNumber=-1;
+//        NNumber=-1;
     }
     void initSommet() {
         show     = true;
-        NNumber  = -1;
+//        NNumber  = -1;
         toshow   = 0;
         selected = false;
 //        color = bleu; // Pas encore défini !!!
@@ -958,11 +958,14 @@ public :
 //    ReperageMateriau        *MRepMat=nullptr; // idem
     bool OK_ToSave = false; // Mis à true lors de la lecture d'un fichier et testé dans SaveTo (pas de save si OK_ToSave = false !!!)
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
-    void SaveTo (wxString);
+    void SaveTo (wxString, int);
     void SaveBDD(wxString);
     void SaveOBJ(wxString);
     void SaveOFF(wxString);
     void SaveG3D(wxString);
+    void SaveSTL_Ascii (wxString);
+    void SaveSTL_Binary(wxString);
+
 
     bool show_light = false, show_box    = true, show_axes = true, show_plein = true;
     bool show_lines = false, show_points = false;
@@ -992,11 +995,12 @@ public :
 
     Lib3dsFile *f3ds=0;                             // Spécifique aux fichier de type 3ds
     int o_3ds;                                                  // A PLACER AILLEURS !!!
-    int nb_mat_3ds = 0;
+    int nb_mat_3ds = 0;                 // ATTENTION : interaction posssible avec nb_mat car on utilise tab_mat ddans LoadOBJ et dans Load3DS (si plusieurs fichiers !)
 
     char *Lire_chaine(char *);
     #define nb_mat_max 4000
     char *tab_mat[nb_mat_max];
+    unsigned int  nb_mat = 0;           // Nombre de matériaux enregistrés dans tab_mat
     char *mtllib_nom;
     bool mtllib_OK = false;
     bool ini_file_modified = false;     // Indicateur de modification du fichier Ovni.ini
@@ -1126,6 +1130,7 @@ private :
     void LoadPLY();
     void LoadOFF();
     void LoadM3D();
+    void LoadSTL();
 
     void makeposition();
 //    void make1position();
@@ -1134,7 +1139,7 @@ private :
 //    void selectMode(int selection1);
     void processHits(GLint , bool);//, GLuint *);
     GLuint* selectBuffer;
-    void testPicking(int, int, int, bool) ; //, int todoagain);
+    void testPicking(int, int, int, bool) ;
     void stopPicking();
     bool ifexist_facette(int, int) ;
     bool ifexist_sommet (int, int) ;

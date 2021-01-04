@@ -744,9 +744,6 @@ void BddInter::OnPaint( wxPaintEvent& event )
 
 //    event.Skip(); // ne pas faire si on a mis WXUNUSED(event) dans la déclaration de OnPaint
                     // si on met event, le Skip ne trace pas tout (ou seulement après avoir bougé la souris par ex !)
-//                        wxKeyEvent key_event;
-//                        key_event.m_keyCode = 'r';
-//                        OnKeyDown(key_event);   // Simule une pression sur la touche R au clavier => Reset de la sélection de points
 
     if (verbose) printf("Sortie BddInter::OnPaint\n");
 }
@@ -1036,13 +1033,13 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
                 /* l'orientation a changé, retracer les objets */
                 Refresh();
-            } else if(event.RightIsDown()) {    // Ici Dragging avec bouton droit de la souris (<=> Zoom sans molette). Utile si pas de molette !
+            } else if(event.RightIsDown()) {            // Ici Dragging avec bouton droit de la souris (<=> Zoom sans molette). Utile si pas de molette !
                 int signe = +1;
                 if (mouse_position.y > m_gldata.BeginY) signe = -1;     // Pour repérer le sens de déplacement, seulement en Y
                 bool Touche_Maj = event.ShiftDown();                    // Si Touche Maj du clavier enfoncée, Zoom plus rapide
                 OnMouseZoom(event, signe, Touche_Maj);
-                previous_right_drag = true;     // Marquer qu'on a fait un drag bouton droit. évite d'afficher le menu contextuel
-                                                // quand on relache ce bouton droit
+                previous_right_drag = true;             // Marquer qu'on a fait un drag bouton droit. évite d'afficher le menu contextuel
+                                                        // quand on relache ce bouton droit
             }
             m_gldata.BeginX = event.GetX();
             m_gldata.BeginY = event.GetY();
@@ -1589,32 +1586,30 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
             for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                 if (ToSelect.check_if_in_ListeSelect(objet,face)) {
-//                    if (this->Objetlist[objet].Facelist[face].selected) {   // Ne fait pas double emploi avec le test juste avant ????
-//                        printf("objet : %d, facette : %d\n",objet,face);
-                        NumerosF = this->Objetlist[objet].Facelist[face].getF_sommets();            // Récupérer les numéros de sommets de la facette "face" de l'objet "objet"
-                        sz_numF  = NumerosF.size();
-                        for (unsigned int j=0; j<this->Objetlist[objet].Facelist.size(); j++) {     // Commencer directement à face+1 plutôt que 0 ?
-                            if (j == face) continue;                                                // Passer directement au suivant (inclus dans le test ci-dessous, mais + rapide ?)
-                            if (ToSelect.check_if_in_ListeSelect(objet,j)) continue ;               // Si la facette j déjà dans la liste, passer à la suivante
-                            NumerosJ = this->Objetlist[objet].Facelist[j].getF_sommets();           // Récupérer les numéros de sommets de la facette "j" de l'objet "objet"
-                            sz_numJ  = NumerosJ.size();
-                            for (int nn=0; nn<sz_numF; nn++) {
-                                int Numeros_nn = NumerosF[nn];
-                                for (int nj=0 ; nj<sz_numJ ; nj++) {
-                                    if (Numeros_nn != NumerosJ[nj]) continue ;      // Ne faire la suite (comparaison des normales) que si 1 point commun entre les facettes j et face
-                                    if (compare_normales(objet,face,j)) {           // Test sur les normales
+//                    printf("objet : %d, facette : %d\n",objet,face);
+                    NumerosF = this->Objetlist[objet].Facelist[face].getF_sommets();            // Récupérer les numéros de sommets de la facette "face" de l'objet "objet"
+                    sz_numF  = NumerosF.size();
+                    for (unsigned int j=0; j<this->Objetlist[objet].Facelist.size(); j++) {     // Commencer directement à face+1 plutôt que 0 ?
+                        if (j == face) continue;                                                // Passer directement au suivant (inclus dans le test ci-dessous, mais + rapide ?)
+                        if (ToSelect.check_if_in_ListeSelect(objet,j)) continue ;               // Si la facette j déjà dans la liste, passer à la suivante
+                        NumerosJ = this->Objetlist[objet].Facelist[j].getF_sommets();           // Récupérer les numéros de sommets de la facette "j" de l'objet "objet"
+                        sz_numJ  = NumerosJ.size();
+                        for (int nn=0; nn<sz_numF; nn++) {
+                            int Numeros_nn = NumerosF[nn];
+                            for (int nj=0 ; nj<sz_numJ ; nj++) {
+                                if (Numeros_nn != NumerosJ[nj]) continue ;      // Ne faire la suite (comparaison des normales) que si 1 point commun entre les facettes j et face
+                                if (compare_normales(objet,face,j)) {           // Test sur les normales
 //                                   printf("OK  %d\n",j);
-                                        if (!ToSelect.check_if_in_ListeSelect(objet,j)) {   // N'ajouter que si non déjà présent dans la Liste
-                                            ToSelect.add_one(objet,j);
-                                            extend_auto = true;                             // Marquer qu'on a ajouté une facette dans la liste
-                                            this->Objetlist[objet].Facelist[j].selected = true;
+                                    if (!ToSelect.check_if_in_ListeSelect(objet,j)) {   // N'ajouter que si non déjà présent dans la Liste
+                                        ToSelect.add_one(objet,j);
+                                        extend_auto = true;                             // Marquer qu'on a ajouté une facette dans la liste
+                                        this->Objetlist[objet].Facelist[j].selected = true;
 //                                            colorface(objet,j);   // Maintenant <=> ligne ci-dessus
-                                        }
                                     }
                                 }
                             }
                         }
-//                    }
+                    }
                 }
             }
         }
@@ -1762,12 +1757,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
     default:
         if (evkey != 0x0132 && evkey != 0x0133 && evkey != 0x0134 ) { // on passe si Shift, Alt ou Ctrl
-            /*            wxString p;
-                            p=wxString::Format(wxT("%#06x"), evkey);
-                            std::cout << "code : " << evkey << ", " << (char)evkey << ", " ;
-                            for (int i=0; p[i] != 0 ; ++i) std::cout << (char)p[i] ; // On doit pouvoir faire mieux !!!
-                            std::cout<< std::endl; */
-// La même chose en + facile !
             printf("code : %3d, %c, %#06x\n", (int)evkey,char(evkey),(int)evkey);
         }
         break;
@@ -1969,6 +1958,8 @@ void BddInter::create_bdd() {
         type=6;
     } else if(str_nom.EndsWith(_T(".m3d"))) {
         type=7;
+    } else if(str_nom.EndsWith(_T(".stl"))) {
+        type=8;
     } else if(str_nom.EndsWith(_T(".dxf"))) {
         type=0;
     }
@@ -2032,6 +2023,10 @@ void BddInter::create_bdd() {
         case 7:
             printf("\nChargement d'un fichier .m3d !!! \n");
             this->LoadM3D();
+            break;
+        case 8:
+            printf("\nChargement d'un fichier .stl !!! \n");
+            this->LoadSTL();
             break;
         }
     }
@@ -2630,7 +2625,7 @@ void BddInter::LoadOBJ()
     char sc[100];//,s1[666],buffer[1000] ;			//chaines de caractères
     char nom_obj[512];
     char newline='\\' ;
-    unsigned int i, n, nfac, nfac_t, npoint, nb_fac, nb_p, nb_mat,found, first, npoint_courant ;
+    unsigned int i, n, nfac, nfac_t, npoint, nb_fac, nb_p, found, first, npoint_courant ;
     unsigned int nb_norm, nnorm ;
     unsigned int npoint_t, nnorm_t ;
     unsigned int o=0, oo=0;		            // pour compter le nombre d'objets
@@ -3039,12 +3034,7 @@ void BddInter::LoadOBJ()
 // Ci-dessous : OK si dans tous les cas autant de normales que de sommets. Si nnorm==0 pas de pb, sinon, si à la lecture
 // certaines facettes n'ont pas de normales aux sommets => soucis ! N'arrive dans aucun fichier testé mais ....
 // après introduction de nb_normp_fac, c'est un peu mieux, mais à vérifier ...
-//                    cel->tab_objet[o].tab_facette[nfac].nb_normales  = nb_normp_fac ;
-//                    cel->tab_objet[o].tab_facette[nfac].ind_normales = (unsigned int *)malloc((n+1)*sizeof(int)); //Création du tableau de normales
-//                    if (cel->tab_objet[o].tab_facette[nfac].ind_normales == NULL) {
-//                        fprintf(stderr,"\aFonction lecture d'une facette: memoire insuffisante pour creer le tableau de normales de l'objet numero %d\n",o);
-//                        return(9);
-//                    }
+
                     Numeros.resize(nb_normp_fac);
                     if (nb_normp_fac != 0 && nb_normp_fac != n) {
                         fprintf(stderr,"Attention : la facette %d a un nombre de points (%d) et de normales aux sommets (%d) different !\n",nfac,n,nb_normp_fac);
@@ -3079,8 +3069,8 @@ void BddInter::LoadOBJ()
 //!             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
-//            Face   * facette_courante;
             bool msg_optim = true;
+
             for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) { // On ne commence que sur le 2ème objet les copies
 
                 objet_courant= &(this->Objetlist[o]);
@@ -3745,9 +3735,262 @@ void BddInter::LoadOFF()
     if(verbose) printf("Sortie de BddInter::LoadOFF\n");
 }
 
+void BddInter::LoadSTL() {
+/*
+ * Lecture d'un fichier STL (stereolithographic, ou encore Standard Triangles Language ou encore Standard Tessellation Language)
+ * 2 formats reconnus : Ascii et Binaire
+ * 1 seul objet, que des facettes triangulaires, coordonnées des sommets dans chaque facette => plusieurs fois le même point => simplification possible
+ */
+
+    bool binary;            // Pour identifier/différentier un fichier .stl de type Ascii ou Binaire
+    char *cptr, *nom_obj;
+    unsigned int i,j,ilen;
+    unsigned int numero_facette;
+    unsigned int numero_sommet,numero_sommetB;
+    std::vector<int> Numeros;
+    float vx,vy,vz;
+    Face *facette_courante;
+    unsigned int nb_facettes_loc=0;
+    unsigned int nb_sommets_loc=0;
+
+    if(verbose) printf("Entree de BddInter::LoadSTL\n");
+
+    wxCharBuffer buffer=this->file.mb_str();
+
+    if(m_gllist != 0) {
+        glDeleteLists(glliste_objets,1);
+        m_gllist = 0;
+    }
+    f=fopen(buffer.data(),"r"); //ouverture du fichier
+    cptr=fgets(s1,81,f) ;            // 80 caractères +1 pour permettre un \n
+    s1[81] = '\0';              // Simple précaution
+    printf("longueur de la ligne : %d\n",(int)strlen(s1));
+    if (cptr == NULL) {
+        printf("Fichier vide !\n");
+        fclose(f);
+        type = -1;
+        return;
+    }
+
+    binary = true;
+    cptr   = s1;
+    for (i=0;i<80;i++,cptr++) {
+        if (*cptr == 0x0A) {
+            binary = false;     // Si le caractère LF est trouvé dans les 80 premiers du fichier, c'est que ce n'est pas un fichier binaire, mais plutôt Ascii !
+            break;              // => Inutile de poursuivre la recherche
+        }
+    }
+
+    if (!binary && strncmp(s1,"solid ",6)) {    // Fichier Ascii, mais ne contenant pas la chaîne "solid " sur les 6 premiers caractères !
+        printf("Fichier .stl, mais pas de type Ascii stereolithographic !\n");
+        fclose(f);
+        type = -1;
+        return ;
+    }
+
+    if (binary) {
+        printf("Fichier .stl binaire !\n");
+        if (!strncmp(s1,"solid ",6)) {      // Débute par "solid ", mais c'est un fichier binaire
+            nom_obj = strdup(s1+6);         // Le nom commence donc au 7ème caractère
+        } else {
+            nom_obj = strdup(s1);           // Retenir toute la chaîne comme nom
+        }
+    } else {
+        printf("Fichier .stl Ascii !\n");
+        nom_obj = strdup(s1+6);             // Le nom commence donc au 7ème caractère
+    }
+    ilen = strlen(nom_obj);
+    cptr = nom_obj + ilen-1;
+    while (*cptr == '\n') {                 // éliminer un \n de fin (ou evt. plusieurs)
+        *cptr = '\0';
+        cptr--;
+    }
+    while (*cptr == ' ') {                  // éliminer les espaces de fin
+        *cptr = '\0';
+        cptr--;
+    }
+
+    printf("Nom de l'objet : %s\n",nom_obj);
+
+    if (!binary) {
+
+// Lecture d'un fichier STL Ascii
+
+        // Compter le nombre de facettes et sommets (1ère lecture)
+        rewind(f);
+        fgets(s1,160,f) ;                   // Les lignes contiennent moins de 160 caractères (plutôt 60). On prévoie large donc.
+        while (strncmp(s1,"endsolid ",9)) { // Lire tant que la chaîne endsolid n'a pas été trouvée. ERREUR : Que se passe t-il si elle n'existe pas ???
+            cptr=fgets(s1,160,f) ;          // Peut-il y avoir des lignes vides ?
+            if (cptr == NULL) {
+                printf("Erreur\n");         // Ligne "endsolid " non trouvée ?
+                return;
+            }
+            cptr = s1;
+            while (*cptr == ' ') cptr++;    // Pour éliminer les espaces de début
+            if (!strncmp(cptr,"facet normal ",13)) nb_facettes_loc++;
+            if (!strncmp(cptr,"vertex ",7))        nb_sommets_loc++ ;
+        }
+        rewind(f);
+
+        // Remplir l'objet (2ème lecture)
+
+#if wxCHECK_VERSION(3,0,0)
+        wxString NomObj=wxString(nom_obj);
+#else
+        wxString NomObj=wxString::FromAscii(nom_obj);
+#endif // wxCHECK_VERSION
+
+        str.Printf(_T("<OBJET> %d "),0+Numero_base);    // Voir si Numero_base est utile (en cas de lecture de plusieurs fichiers ?)
+        str += NomObj;
+        makeobjet();
+
+        // Création des sommets et des facettes
+
+        this->Objetlist[indiceObjet_courant].Nb_sommets = nb_sommets_loc;
+        this->N_elements = nb_sommets_loc;
+        str.clear();
+        makesommet();
+
+        this->N_elements = nb_facettes_loc;
+        makeface();
+        makenormale();
+        makeaspect_face();
+
+        fgets(s1,160,f) ;
+        numero_sommet = 1;
+        numero_sommetB= 1;
+        numero_facette= 1;
+        Numeros.resize(3);
+
+        while (strncmp(s1,"endsolid ",9)) {
+            fgets(s1,160,f) ;
+            cptr = s1;
+            while (*cptr == ' ') cptr++;
+            if (!strncmp(cptr,"facet normal ",13)) {
+                cptr+=13;
+                for (i=0 ; i< 3 ; i++) {
+                    Numeros[i] = numero_sommet++;
+                }
+                str.clear();
+                this->N_elements = numero_facette;
+                this->Set_numeros(Numeros) ;
+                make1face();
+                facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
+                facette_courante->flat       = true; // provisoire
+                facette_courante->groupe     = groupe_def;
+                facette_courante->codmatface = codmatface_def;
+
+                sscanf(cptr,"%f%f%f", &vx, &vy, &vz);   // 3 composantes de la normale à la facette
+                this->Setxyz(vx,vy,vz);
+                make1normale();
+
+                numero_facette++;
+            }
+            if (!strncmp(cptr,"vertex ",7)) {           // Normalement 3 lignes vertex consécutives => 3 sommets d'un triangle
+                cptr+=7;
+                str.clear();
+                sscanf(cptr,"%f%f%f", &vx, &vy, &vz);
+                this->N_elements = numero_sommetB;
+                this->Setxyz(vx,vy,vz);
+                make1sommet();
+
+                numero_sommetB++;
+            }
+        }
+
+    } else {
+
+// Lecture d'un fichier STL Binaire
+
+        fclose(f);                      // Fermer le fichier car ouvert précédemment en Ascii
+        f=fopen(buffer.data(),"rb");    // Le réouvrir en mode lecture+binaire
+        fseek(f,80,0);                  // passer les 80 premiers octets d'entête
+        UINT32 nb_triangles;            // C'est un Unsigned Integer sur 32 bits (en fait <=> int sur gcc 32 ou 64 bits)
+        fread(&nb_triangles,sizeof(UINT32),1,f);
+        printf("Nombre de triangles : %d\n",nb_triangles);
+
+        // Remplir l'objet
+
+#if wxCHECK_VERSION(3,0,0)
+        wxString NomObj=wxString(nom_obj);
+#else
+        wxString NomObj=wxString::FromAscii(nom_obj);
+#endif // wxCHECK_VERSION
+
+        str.Printf(_T("<OBJET> %d "),0+Numero_base);    // Numero_base ?? voir plus haut.
+        str += NomObj;
+        makeobjet();
+
+        // Création des sommets et des facettes
+
+        nb_sommets_loc = nb_triangles*3;                // Facettes triangulaires, donc 3 sommets
+        nb_facettes_loc= nb_triangles;
+
+        this->Objetlist[indiceObjet_courant].Nb_sommets = nb_sommets_loc;
+        this->N_elements = nb_sommets_loc;
+        str.clear();
+        makesommet();
+
+        this->N_elements = nb_facettes_loc;
+        makeface();
+        makenormale();
+        makeaspect_face();
+
+        numero_sommet = 1;
+        numero_sommetB= 1;
+        numero_facette= 1;
+        Numeros.resize(3);
+        UINT16 Attribute,old_Attribute=0;           // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
+
+        for (i=1; i<=nb_facettes_loc; i++) {
+            for (j=0 ; j< 3 ; j++) {
+                Numeros[j] = numero_sommet++;
+            }
+            str.clear();
+            this->N_elements = numero_facette;
+            this->Set_numeros(Numeros) ;
+            make1face();
+            facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
+            facette_courante->flat       = true;    // provisoire
+            facette_courante->groupe     = groupe_def;
+            facette_courante->codmatface = codmatface_def;
+
+            fread(xyz,sizeof(float),3,f);           // Trois composantes de la normale. Ce doit être des float32 (OK sous gcc GNU 32 et 64)
+            make1normale();
+
+            numero_facette++;
+
+            for (j=0 ; j<3 ; j++) {                 // 3 sommets d'un triangle
+                fread(xyz,sizeof(float),3,f);       // 3*3 coordonnées des sommets
+                this->N_elements = numero_sommetB;
+                make1sommet();
+                numero_sommetB++;
+            }
+
+            fread(&Attribute,sizeof(UINT16),1,f);   // Entier 16 bits de réserve (très peu utilisé apparement)
+//            if (Attribute != old_Attribute) {
+//                printf("Facette : %5d, Attribute : %d\n",i,Attribute);   // On pourrait utiliser cette valeur pour coder un matériau ou un groupe (mais =! 0 que sur MQ1 Predator.stl)
+//                old_Attribute = Attribute;
+//            }
+        }
+    }
+
+    this->Objetlist[indiceObjet_courant].Nb_luminances= 0;    // Dans le format STL, il n'y a pas de normales aux sommets
+    this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;    // enregistrées dans le fichier de Bdd
+    this->Objetlist[indiceObjet_courant].flat=true;           // A la lecture, on considère que l'objet n'est composé que de facettes planes
+
+
+    m_loaded = true ; //true;
+    m_gllist = 0;
+
+    fclose(f);
+//    type = -1;  // Pour le moment
+//    Update();
+    if(verbose) printf("Sortie de BddInter::LoadSTL\n");
+}
+
 void BddInter::Load3DS()
 {
-//    static Lib3dsFile *f3ds=0;
 /*
  *  Lecture d'un Fichier de polygones au format Autodesk 3DS
  *  Identifie éventuellement plusieurs objets, crée des normales.
@@ -3949,7 +4192,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
  */
     char nom_obj[80];
     int im;
-    unsigned int i,k, nfac, npoint, nb_fac, nb_p, nb_mat,found ;
+    unsigned int i,k, nfac, npoint, nb_fac, nb_p, found ;
     unsigned int o=0;		            // pour compter le nombre d'objets
     int num_mat ;
     int index;
@@ -3968,8 +4211,6 @@ int BddInter::decoder_node (Lib3dsNode *node)
     int N0,N1,N2;
 
     Numeros.resize(3);
-
-//    assert(file);    // Vérifie que f est OK ... déjà fait avant, donc ne sert pas à grand chose !
 
     {
         Lib3dsNode *p ;
@@ -4986,7 +5227,7 @@ void BddInter::GenereTableauAretes(Object * objet)
     static bool traiter_ici = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
                                     // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
     bool en_cours;
-    unsigned int Arete_size_test=1000000; // Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
+    unsigned int Arete_size_test=200000; // 1000000 Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
 
     clock_t time_0, delta_time, time_c;
     #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
@@ -5452,8 +5693,7 @@ Boucle:
 
                     Face_ij = &(Objet_i->Facelist[j]);
 
-//                    if (Face_ij->afficher && Face_ij->show && !Face_ij->deleted) {  // Test sur show et afficher ???
-                    if (Face_ij->afficher && !Face_ij->deleted) {  // Test sur show et afficher ???
+                    if (Face_ij->afficher && !Face_ij->deleted) {
                         NormaleFacette.clear();
                         NumerosSommets.clear();
 
@@ -5677,10 +5917,10 @@ Boucle:
             glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
             showPoint();                    // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
     }
-    if (show_box)    glCallList(glliste_boite) ;    // <=> AffichageBoite() ""  ;
-    if (show_axes)   glCallList(glliste_repere);    // <=> repereOXYZ()     ""  ;
-    if (show_light)  AfficherSource();              // Une liste pourrait être utile ? pas sûr !
-    if (show_star)   GenereEtoile();
+    if (show_box)   glCallList(glliste_boite) ;     // <=> AffichageBoite() ""  ;
+    if (show_axes)  glCallList(glliste_repere);     // <=> repereOXYZ()     ""  ;
+    if (show_light) AfficherSource();               // Une liste pourrait être utile ? pas sûr !
+    if (show_star)  GenereEtoile();
 
     if (segment_surligne) showSegment();            // Pas de liste ici ; génération directe du segment surligné
 
@@ -6829,7 +7069,7 @@ void BddInter::SetPosObs(bool resetFoV) {
     if (verbose) printf("Sortie BddInter::SetPosObs\n");
 }
 
-void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) { ; //, int todoagain) {    // todoagain ne sert pas (ou plus !)
+void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
     GLfloat width;
     //build_rotmatrix( m,v);
     //glTranslatef( +m_gldata.posx, +m_gldata.posy, +m_gldata.posz );
@@ -7030,8 +7270,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
         }
 
 //        hits--; // Pourquoi ? Pour ne pas tenir compte d'un hit sur le fond ?
-//        zz = (float)z/0x7fffffff ;
-//        printf(" zz : %f\n",zz);
         if (test_print) printf("newHits %d\n",newHits);
 
         for (i = 1; i < newHits; i++) {                 // Commencer à 1, car 0 déjà fait !
@@ -7051,9 +7289,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 //            ptr += offset;
 
         }
-
-//        zz = (float)z/0x7fffffff ;
-//        printf(" zz : %f\n",zz);
 
         ptr = (GLuint *) selectBuffer;/*!on reinitialise le pointeur*/
 
@@ -7409,7 +7644,7 @@ bool BddInter::ifexist_sommet(int objet,int sommet) {
     return false;
 }
 
-void BddInter::SaveTo(wxString str) {
+void BddInter::SaveTo(wxString str, int index) {
 
 // Pour enregistrer sous différents formats, le format .bdd est celui par défaut (tous les formats lus ne sont pas accessibles en écriture)
 
@@ -7426,6 +7661,8 @@ void BddInter::SaveTo(wxString str) {
             types = 3;
         } else if (local_str.EndsWith(_T(".off"))) {    // Teste si l'extension est .off
             types = 4;
+        } else if (local_str.EndsWith(_T(".stl"))) {    // Teste si l'extension est .stl
+            types = index+1;                            // Via index on sait si c'est Ascii ou Binaire
         } else if (local_str.EndsWith(_T(".dxf"))) {    // Ne devrait jamais arriver !!!
             types = 0;
         }
@@ -7456,6 +7693,12 @@ void BddInter::SaveTo(wxString str) {
                 break;
             case 4:
                 SaveOFF(str);
+                break;
+            case 5:
+                SaveSTL_Ascii(str);
+                break;
+            case 6:
+                SaveSTL_Binary(str);
                 break;
             default:
                 break;
@@ -7853,14 +8096,16 @@ void BddInter::SaveOBJ(wxString str) {
             nouvel_indice = objet_courant->Nb_vecteurs +1 + offset_normales ;   // Indice de départ pour stocker les nouvelles normales seuillées
 //        }
         unsigned compteur_luminances = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
-            Face_ij = &(objet_courant->Facelist[j]);
-            if(!Face_ij->deleted) {
-                numeros_Sommets = Face_ij->getL_sommets();
-                compteur_luminances += numeros_Sommets.size();
+        if (objet_courant->Nb_luminances != 0) {
+            for(j=0; j<objet_courant->Facelist.size(); j++) {
+                Face_ij = &(objet_courant->Facelist[j]);
+                if(!(Face_ij->deleted || Face_ij->flat)) {
+                    numeros_Sommets = Face_ij->getL_sommets();
+                    compteur_luminances += numeros_Sommets.size();
+                }
+                // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
+                if (compteur_luminances != 0) break;
             }
-            // NOTE : on peut arrêter le comptage dès que ce compteur n'est plus nul...
-            if (compteur_luminances != 0) break;
         }
         compteur = 0;
         for(j=0; j<objet_courant->Facelist.size(); j++) {
@@ -7876,12 +8121,16 @@ void BddInter::SaveOBJ(wxString str) {
             if(Face_ij->deleted) continue;
             current_groupe = Face_ij->getGroupe();
             if (current_groupe != last_groupe) {
-                myfile << "usemtl ";//group_";
-//                myfile << "usemtl group_";
-//                if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
-//                myfile << current_groupe << "\n";
-                myfile << tab_mat[current_groupe -1];               // ne donne pas tout à fait le résultat escompté
-                last_groupe = current_groupe;
+                if ((current_groupe <= 0) || (nb_mat == 0)) {
+                    myfile << "usemtl group_";
+                    if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
+                    myfile << current_groupe << "\n";
+                    last_groupe = current_groupe;
+                } else {
+                    myfile << "usemtl ";//group_";
+                    myfile << tab_mat[current_groupe -1];               // ne donne pas tout à fait le résultat escompté
+                    last_groupe = current_groupe;
+                }
             }
 
             numeros_Sommets = Face_ij->F_sommets;
@@ -8118,6 +8367,182 @@ void BddInter::SaveOFF(wxString str) {
     bdd_modifiee = false ;
 }
 
+void BddInter::SaveSTL_Ascii(wxString str) {
+
+// Construit à partir de SaveOFF
+
+    wxCharBuffer  buffer;
+    std::vector<int>   numeros_Sommets;
+    std::vector<float> xyz_sommet;
+
+    Face   *Face_ij=nullptr;
+    Object *objet_courant;
+
+    int compteur = 0;
+    unsigned int o,i,j,k ;
+
+    buffer=str.mb_str();
+    std::ofstream myfile;
+    myfile.open (buffer.data());
+    if (!myfile.is_open()) {
+        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
+        wxMessageBox(Msg,_T("Avertissement"));
+        return;
+    }
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;
+            compteur++;                                         // Compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur == 0) {
+            objet_courant->deleted = true;                      // Objet sans facettes => le marquer comme supprimé
+            continue;                                           // puis l'ignorer en passant au suivant
+        }
+    }
+
+    printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
+
+    myfile << "solid " << this->Objetlist[0].GetName() << "\n";
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        for(i=0; i<objet_courant->Facelist.size(); i++) {
+            Face_ij = &(objet_courant->Facelist[i]);
+            if(Face_ij->deleted) continue;
+            myfile << "  facet normal";
+            xyz_sommet = Face_ij->getNormale_b();
+            for (j=0;j<3;j++) {
+                myfile << " ";
+                myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[j] ;
+            }
+            myfile << "\n" << "    outer loop\n";
+            numeros_Sommets = Face_ij->F_sommets;
+            for(j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
+                xyz_sommet = objet_courant->Sommetlist[numeros_Sommets[j]-1].getPoint();
+                myfile << "      vertex";
+                for(k=0;k<3;k++) {
+                    myfile << " ";
+                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
+                }
+                myfile << "\n";
+            }
+            myfile << "    endloop\n";
+            myfile << "  endfacet\n";
+        }
+    }
+
+    myfile << "endsolid " << this->Objetlist[0].GetName() << "\n";
+
+    myfile.close();
+
+    wxString Nom = wxFileNameFromPath(str);
+    buffer = Nom.mb_str();
+
+// Déclarations pour récupérer l'heure actuelle
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer_time [10];
+
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+
+    strftime (buffer_time,10,"%H:%M:%S",timeinfo);
+    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
+    bdd_modifiee = false ;
+}
+
+void BddInter::SaveSTL_Binary(wxString str) {
+
+// Construit à partir de SaveSTL_Ascii
+
+    wxCharBuffer  buffer;
+    std::vector<int>   numeros_Sommets;
+    std::vector<float> xyz_sommet;
+
+    Face   *Face_ij=nullptr;
+    Object *objet_courant;
+
+    UINT32 compteur = 0;
+    UINT16 Attribute= 0;
+    unsigned int o,i,j,k,len ;
+
+    buffer=str.mb_str();
+    std::ofstream myfile(buffer.data(), std::ofstream::binary);
+    if (!myfile.is_open()) {
+        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
+        wxMessageBox(Msg,_T("Avertissement"));
+        return;
+    }
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        compteur = 0;
+        for(j=0; j<objet_courant->Facelist.size(); j++) {
+            if(objet_courant->Facelist[j].deleted) continue;
+            compteur++;                                         // Compter toutes les facettes non supprimées (.show != .afficher !)
+        }
+        if (compteur == 0) {
+            objet_courant->deleted = true;                      // Objet sans facettes => le marquer comme supprimé
+            continue;                                           // puis l'ignorer en passant au suivant
+        }
+    }
+
+    printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
+
+    len = strlen(this->Objetlist[0].GetName())    ;
+    myfile.write(this->Objetlist[0].GetName(),len);
+    for(i=len+1;i<=80;i++) myfile.write(" ",1)    ;
+    myfile.write((char *)&compteur,sizeof(UINT32));
+
+    for(o=0; o<this->Objetlist.size(); o++) {
+        objet_courant = &(this->Objetlist[o]);
+        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
+
+        for(i=0; i<objet_courant->Facelist.size(); i++) {
+            Face_ij = &(objet_courant->Facelist[i]);
+            if(Face_ij->deleted) continue;
+            xyz_sommet = Face_ij->getNormale_b();
+            for (j=0;j<3;j++) {
+                myfile.write((char *)&xyz_sommet[j], sizeof(float)) ;
+            }
+            numeros_Sommets = Face_ij->F_sommets;
+            for(j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
+                xyz_sommet = objet_courant->Sommetlist[numeros_Sommets[j]-1].getPoint();
+                for(k=0;k<3;k++) {
+                    myfile.write((char *)&xyz_sommet[k],sizeof(float));
+                }
+            }
+            myfile.write((char *)&Attribute,sizeof(UINT16));
+        }
+    }
+
+    myfile.close();
+
+    wxString Nom = wxFileNameFromPath(str);
+    buffer = Nom.mb_str();
+
+// Déclarations pour récupérer l'heure actuelle
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer_time [10];
+
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+
+    strftime (buffer_time,10,"%H:%M:%S",timeinfo);
+    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
+    bdd_modifiee = false ;
+}
+
 void BddInter::SaveG3D(wxString str) {
     // En cours d'écriture ...
     wxCharBuffer  buffer;
@@ -8313,7 +8738,7 @@ void BddInter::SaveG3D(wxString str) {
             myfile.flush();
 
             numeros_Sommets_L=Face_ij->getL_sommets();
-            if ((numeros_Sommets_L.size() != 0) || Face_ij->flat) {
+            if ((numeros_Sommets_L.size() != 0) || !Face_ij->flat) {
                 bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
                 if (test_composite) {
                     NormaleFacette = Face_ij->getNormale_b();
@@ -8972,7 +9397,6 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
             if (test_print) printf("z2: %u; ", z);
         }
 
-//        for (i = 0; i < hits; i++) {
         for (i = 1; i < hits; i++) {                    // Commencer à 1, car 0 déjà fait !
             /*!on teste quel point picke est le plus proche*/
 //            printf("i=%d %u\n",i, *ptr);
@@ -9026,7 +9450,7 @@ void BddInter::Calcul_All_Normales() {
     for(unsigned int o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         objet_courant->flat = false;
-//        nbfac = objet_courant->Facelist.size();
+//        nb_fac = objet_courant->Facelist.size();
         nb_fac = objet_courant->Nb_facettes;
         nb_som = objet_courant->Nb_sommets;
         for(i=0; i<nb_fac; i++) {
