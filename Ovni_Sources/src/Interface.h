@@ -963,9 +963,7 @@ public :
     void SaveOBJ(wxString);
     void SaveOFF(wxString);
     void SaveG3D(wxString);
-    void SaveSTL_Ascii (wxString);
-    void SaveSTL_Binary(wxString);
-
+    void SaveSTL(wxString, bool);
 
     bool show_light = false, show_box    = true, show_axes = true, show_plein = true;
     bool show_lines = false, show_points = false;

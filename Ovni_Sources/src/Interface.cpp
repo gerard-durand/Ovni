@@ -3737,7 +3737,7 @@ void BddInter::LoadOFF()
 
 void BddInter::LoadSTL() {
 /*
- * Lecture d'un fichier STL (stereolithographic, ou encore Standard Triangles Language ou encore Standard Tessellation Language)
+ * Lecture d'un fichier STL (stéréolithographique, ou encore Standard Triangles Language ou encore Standard Tessellation Language)
  * 2 formats reconnus : Ascii et Binaire
  * 1 seul objet, que des facettes triangulaires, coordonnées des sommets dans chaque facette => plusieurs fois le même point => simplification possible
  */
@@ -3782,7 +3782,7 @@ void BddInter::LoadSTL() {
     }
 
     if (!binary && strncmp(s1,"solid ",6)) {    // Fichier Ascii, mais ne contenant pas la chaîne "solid " sur les 6 premiers caractères !
-        printf("Fichier .stl, mais pas de type Ascii stereolithographic !\n");
+        printf("Fichier .stl, mais pas de type Ascii stéréolithographique !\n");
         fclose(f);
         type = -1;
         return ;
@@ -7695,10 +7695,10 @@ void BddInter::SaveTo(wxString str, int index) {
                 SaveOFF(str);
                 break;
             case 5:
-                SaveSTL_Ascii(str);
+                SaveSTL(str, true);     // Appel en mode Acsii
                 break;
             case 6:
-                SaveSTL_Binary(str);
+                SaveSTL(str, false);    // Appel en mode binaire
                 break;
             default:
                 break;
@@ -8367,100 +8367,10 @@ void BddInter::SaveOFF(wxString str) {
     bdd_modifiee = false ;
 }
 
-void BddInter::SaveSTL_Ascii(wxString str) {
+void BddInter::SaveSTL(wxString str, bool ascii) {
 
 // Construit à partir de SaveOFF
-
-    wxCharBuffer  buffer;
-    std::vector<int>   numeros_Sommets;
-    std::vector<float> xyz_sommet;
-
-    Face   *Face_ij=nullptr;
-    Object *objet_courant;
-
-    int compteur = 0;
-    unsigned int o,i,j,k ;
-
-    buffer=str.mb_str();
-    std::ofstream myfile;
-    myfile.open (buffer.data());
-    if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
-        return;
-    }
-
-    for(o=0; o<this->Objetlist.size(); o++) {
-        objet_courant = &(this->Objetlist[o]);
-        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
-
-        compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
-            if(objet_courant->Facelist[j].deleted) continue;
-            compteur++;                                         // Compter toutes les facettes non supprimées (.show != .afficher !)
-        }
-        if (compteur == 0) {
-            objet_courant->deleted = true;                      // Objet sans facettes => le marquer comme supprimé
-            continue;                                           // puis l'ignorer en passant au suivant
-        }
-    }
-
-    printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
-
-    myfile << "solid " << this->Objetlist[0].GetName() << "\n";
-
-    for(o=0; o<this->Objetlist.size(); o++) {
-        objet_courant = &(this->Objetlist[o]);
-        if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
-
-        for(i=0; i<objet_courant->Facelist.size(); i++) {
-            Face_ij = &(objet_courant->Facelist[i]);
-            if(Face_ij->deleted) continue;
-            myfile << "  facet normal";
-            xyz_sommet = Face_ij->getNormale_b();
-            for (j=0;j<3;j++) {
-                myfile << " ";
-                myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[j] ;
-            }
-            myfile << "\n" << "    outer loop\n";
-            numeros_Sommets = Face_ij->F_sommets;
-            for(j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
-                xyz_sommet = objet_courant->Sommetlist[numeros_Sommets[j]-1].getPoint();
-                myfile << "      vertex";
-                for(k=0;k<3;k++) {
-                    myfile << " ";
-                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
-                }
-                myfile << "\n";
-            }
-            myfile << "    endloop\n";
-            myfile << "  endfacet\n";
-        }
-    }
-
-    myfile << "endsolid " << this->Objetlist[0].GetName() << "\n";
-
-    myfile.close();
-
-    wxString Nom = wxFileNameFromPath(str);
-    buffer = Nom.mb_str();
-
-// Déclarations pour récupérer l'heure actuelle
-    time_t rawtime;
-    struct tm * timeinfo;
-    char buffer_time [10];
-
-    time (&rawtime);
-    timeinfo = localtime (&rawtime);
-
-    strftime (buffer_time,10,"%H:%M:%S",timeinfo);
-    printf("\n%s : Enregistrement de %s OK !\n",buffer_time,buffer.data());  // on aurait pu faire directement (const char*)Nom.mb_str();
-    bdd_modifiee = false ;
-}
-
-void BddInter::SaveSTL_Binary(wxString str) {
-
-// Construit à partir de SaveSTL_Ascii
+// si ascii est true => mode Ascii, sinon mode binaire
 
     wxCharBuffer  buffer;
     std::vector<int>   numeros_Sommets;
@@ -8474,7 +8384,12 @@ void BddInter::SaveSTL_Binary(wxString str) {
     unsigned int o,i,j,k,len ;
 
     buffer=str.mb_str();
-    std::ofstream myfile(buffer.data(), std::ofstream::binary);
+    std::ofstream myfile;
+    if (ascii) {
+        myfile.open (buffer.data());
+    } else {
+        myfile.open(buffer.data(), std::ofstream::binary);
+    }
     if (!myfile.is_open()) {
         wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
         wxMessageBox(Msg,_T("Avertissement"));
@@ -8498,10 +8413,14 @@ void BddInter::SaveSTL_Binary(wxString str) {
 
     printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
 
-    len = strlen(this->Objetlist[0].GetName())    ;
-    myfile.write(this->Objetlist[0].GetName(),len);
-    for(i=len+1;i<=80;i++) myfile.write(" ",1)    ;
-    myfile.write((char *)&compteur,sizeof(UINT32));
+    if (ascii) {
+        myfile << "solid " << this->Objetlist[0].GetName() << "\n";
+    } else {
+        len = strlen(this->Objetlist[0].GetName())    ;
+        myfile.write(this->Objetlist[0].GetName(),len);
+        for(i=len+1;i<=80;i++) myfile.write(" ",1)    ;
+        myfile.write((char *)&compteur,sizeof(UINT32));
+    }
 
     for(o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
@@ -8510,20 +8429,41 @@ void BddInter::SaveSTL_Binary(wxString str) {
         for(i=0; i<objet_courant->Facelist.size(); i++) {
             Face_ij = &(objet_courant->Facelist[i]);
             if(Face_ij->deleted) continue;
+            if (ascii) myfile << "  facet normal";
             xyz_sommet = Face_ij->getNormale_b();
             for (j=0;j<3;j++) {
-                myfile.write((char *)&xyz_sommet[j], sizeof(float)) ;
+                if (ascii) {
+                    myfile << " ";
+                    myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[j] ;
+                } else {
+                    myfile.write((char *)&xyz_sommet[j], sizeof(float)) ;
+                }
             }
+            if (ascii) myfile << "\n" << "    outer loop\n";
             numeros_Sommets = Face_ij->F_sommets;
             for(j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
                 xyz_sommet = objet_courant->Sommetlist[numeros_Sommets[j]-1].getPoint();
+                if (ascii) myfile << "      vertex";
                 for(k=0;k<3;k++) {
-                    myfile.write((char *)&xyz_sommet[k],sizeof(float));
+                    if (ascii) {
+                        myfile << " ";
+                        myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
+                    } else {
+                        myfile.write((char *)&xyz_sommet[k],sizeof(float));
+                    }
                 }
+                if (ascii) myfile << "\n";
             }
-            myfile.write((char *)&Attribute,sizeof(UINT16));
+            if (ascii) {
+                myfile << "    endloop\n";
+                myfile << "  endfacet\n";
+            } else {
+                myfile.write((char *)&Attribute,sizeof(UINT16));
+            }
         }
     }
+
+    if (ascii) myfile << "endsolid " << this->Objetlist[0].GetName() << "\n";
 
     myfile.close();
 

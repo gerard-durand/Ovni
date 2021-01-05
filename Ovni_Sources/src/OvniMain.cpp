@@ -1362,7 +1362,7 @@ void OvniFrame::Ouvrir_Fichier()
         Selector += _T("Niratam Geo (*.ply)|*.ply|");
         Selector += _T("Object File Format (*.off)|*.off|");
         Selector += _T("Milkshape 3D text (*.m3d)|*.m3d|");
-        Selector += _T("Stereolithographic (*.stl)|*.stl|");
+        Selector += _T("Stéréolithographique (*.stl)|*.stl|");
         Selector += _T("Fichiers dxf (*.dxf)|*.dxf|");
         Selector += _T("Tous les fichiers 3D |*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.stl;*.dxf|");
         Selector += _T("Tous les fichiers (*.*)|*.*");
@@ -1659,9 +1659,13 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     }
     // Préparer l'enregistrement sous...
     wxString Nom_svg = Element->get_firstFile().BeforeLast('.');
-    wxFileDialog saveFileDialog(this, _T("Enregistrer sous..."), _T(""), Nom_svg,
-        _T("SDM Oktal (*.bdd)|*.bdd|Wavefront (*.obj)|*.obj|XML G3D   (*.g3d)|*.g3d|Object File Format (*.off)|*.off|Stereolithographic Ascii (*.stl)|*.stl|Stereolithographic Binaire (*.stl)|*.stl"),
-        wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    wxString Type_fichiers = _T("SDM Oktal (*.bdd)|*.bdd|");                        // index = 0
+    Type_fichiers +=         _T("Wavefront (*.obj)|*.obj|");                        // index = 1
+    Type_fichiers +=         _T("XML G3D   (*.g3d)|*.g3d|");                        // index = 2
+    Type_fichiers +=         _T("Object File Format (*.off)|*.off|");               // index = 3
+    Type_fichiers +=         _T("Stéréolithographique Ascii   (*.stl)|*.stl|");     // index = 4
+    Type_fichiers +=         _T("Stéréolithographique Binaire (*.stl)|*.stl");      // index = 5
+    wxFileDialog saveFileDialog(this, _T("Enregistrer sous..."), _T(""), Nom_svg, Type_fichiers, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
         return; // L'utilisateur a changé d'idée finalement ...
 
