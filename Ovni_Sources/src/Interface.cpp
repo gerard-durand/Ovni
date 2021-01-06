@@ -3761,10 +3761,10 @@ void BddInter::LoadSTL() {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
-    f=fopen(buffer.data(),"r"); //ouverture du fichier
-    cptr=fgets(s1,81,f) ;            // 80 caractères +1 pour permettre un \n
-    s1[81] = '\0';              // Simple précaution
-    printf("longueur de la ligne : %d\n",(int)strlen(s1));
+    f=fopen(buffer.data(),"r");     //ouverture du fichier
+    cptr=fgets(s1,81,f) ;           // 80 caractères +1 pour permettre un \n
+    s1[81] = '\0';                  // Simple précaution
+    printf("longueur de l'entête : %d\n",(int)strlen(s1));
     if (cptr == NULL) {
         printf("Fichier vide !\n");
         fclose(f);
@@ -3876,7 +3876,7 @@ void BddInter::LoadSTL() {
                 this->Set_numeros(Numeros) ;
                 make1face();
                 facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
-                facette_courante->flat       = true; // provisoire
+                facette_courante->flat       = true;
                 facette_courante->groupe     = groupe_def;
                 facette_courante->codmatface = codmatface_def;
 
@@ -3940,7 +3940,9 @@ void BddInter::LoadSTL() {
         numero_sommetB= 1;
         numero_facette= 1;
         Numeros.resize(3);
-        UINT16 Attribute,old_Attribute=0;           // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
+        UINT16 Attribute ;//,old_Attribute=0;           // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
+
+        listeMateriaux.clear();
 
         for (i=1; i<=nb_facettes_loc; i++) {
             for (j=0 ; j< 3 ; j++) {
@@ -3951,27 +3953,37 @@ void BddInter::LoadSTL() {
             this->Set_numeros(Numeros) ;
             make1face();
             facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
-            facette_courante->flat       = true;    // provisoire
+            facette_courante->flat       = true;        // provisoire
             facette_courante->groupe     = groupe_def;
             facette_courante->codmatface = codmatface_def;
 
-            fread(xyz,sizeof(float),3,f);           // Trois composantes de la normale. Ce doit être des float32 (OK sous gcc GNU 32 et 64)
+            fread(xyz,sizeof(float),3,f);               // Trois composantes de la normale. Ce doit être des float32 (OK sous gcc GNU 32 et 64)
             make1normale();
 
             numero_facette++;
 
-            for (j=0 ; j<3 ; j++) {                 // 3 sommets d'un triangle
-                fread(xyz,sizeof(float),3,f);       // 3*3 coordonnées des sommets
+            for (j=0 ; j<3 ; j++) {                     // 3 sommets d'un triangle
+                fread(xyz,sizeof(float),3,f);           // 3*3 coordonnées des sommets
                 this->N_elements = numero_sommetB;
                 make1sommet();
                 numero_sommetB++;
             }
 
-            fread(&Attribute,sizeof(UINT16),1,f);   // Entier 16 bits de réserve (très peu utilisé apparement)
-//            if (Attribute != old_Attribute) {
-//                printf("Facette : %5d, Attribute : %d\n",i,Attribute);   // On pourrait utiliser cette valeur pour coder un matériau ou un groupe (mais =! 0 que sur MQ1 Predator.stl)
-//                old_Attribute = Attribute;
-//            }
+            fread(&Attribute,sizeof(UINT16),1,f);       // Entier 16 bits de réserve (très peu utilisé apparemment)
+
+            if (Attribute > 0 || !listeMateriaux.empty()) {
+                int materiau = Attribute;
+                auto it = std::find(listeMateriaux.begin(),listeMateriaux.end(),materiau);  // Est-il déjà dans la liste ?
+                if (it == listeMateriaux.end() || listeMateriaux.empty()) {                 // Non
+                    listeMateriaux.push_back(materiau);                                     // L'ajouter à la liste des matériaux
+                }
+                int rang = 1;
+                for (it = listeMateriaux.begin(); it != listeMateriaux.end(); ++it,++rang) {
+                    if (*it == materiau) break;         // materiau identifié => sortir du for pour obtenir son rang
+                }
+                facette_courante->codmatface = rang;    // Coder le matériau pas son rang dans la liste
+                facette_courante->groupe     = rang-1;  // Pour donner une valeur différente du matériau
+            }
         }
     }
 
@@ -5884,7 +5896,7 @@ Boucle:
         buildAllFacettesSelected();
 
         finishdraw = true;
-        m_gllist   = glliste_objets; // Déjà commz ça en principe
+        m_gllist   = glliste_objets; // Déjà comme ça en principe
         Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois !
     }   // if (m_gllist == 0)
 
@@ -8124,11 +8136,12 @@ void BddInter::SaveOBJ(wxString str) {
                 if ((current_groupe <= 0) || (nb_mat == 0)) {
                     myfile << "usemtl group_";
                     if (current_groupe < 10) myfile << "0";             // Pour forcer un nom comme group_01, ... group_09, group_10,...
+                    if (current_groupe <= 0) current_groupe = 0;        // pour éviter un codage comme group_0-123 par exemple et y mettre group_00
                     myfile << current_groupe << "\n";
                     last_groupe = current_groupe;
                 } else {
                     myfile << "usemtl ";//group_";
-                    myfile << tab_mat[current_groupe -1];               // ne donne pas tout à fait le résultat escompté
+                    myfile << tab_mat[current_groupe -1];               // ne donne pas tout à fait le résultat escompté mais semble OK (?)
                     last_groupe = current_groupe;
                 }
             }
@@ -8370,7 +8383,7 @@ void BddInter::SaveOFF(wxString str) {
 void BddInter::SaveSTL(wxString str, bool ascii) {
 
 // Construit à partir de SaveOFF
-// si ascii est true => mode Ascii, sinon mode binaire
+// si ascii est true => mode Ascii, sinon mode binaire (fusion de SaveSTL_Ascii et SaveSTL_Binary)
 
     wxCharBuffer  buffer;
     std::vector<int>   numeros_Sommets;
