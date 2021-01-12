@@ -14,9 +14,9 @@
 #include "wx/txtstrm.h"
 #include "trackball.h"
 #include <GL/freeglut.h>
-//#include <GL/glext.h>       // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
-//#include <GL/gl.h>        // Pas utile car fait dans glut.h
-//#include <GL/glu.h>       // Idem
+//#include <GL/glext.h>                 // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
+//#include <GL/gl.h>                    // Pas utile car fait dans glut.h
+//#include <GL/glu.h>                   // Idem
 #include "GLCanvas.h"
 #include <float.h>
 #include <vector> //Ne pas oublier !
@@ -29,10 +29,10 @@
 #include "charset.h"
 
 #define BUFSIZE 4096
-#define gris_def 0.5f   // 0.35f version jdias
+#define gris_def 0.5f                   // 0.35f version jdias
 #define groupe_def      -123
 #define codmatface_def  -234
-#define maxGroupes 16
+#define maxGroupes      32              // a priori, devrait être égal (ou inférieur) à nb_couleurs
 
 #ifndef GL_MULTISAMPLE                  // pour éviter le include de glew.h et GL_MULTISAMPLE_ARB, sinon GL_MULTISAMPLE existe dans gl.h mais n'est pas activé sous Windows !
     #define GL_MULTISAMPLE      0x809D  // il faudrait glext.h et aussi peut-être glext.dll, mais en 64 bits !
@@ -701,7 +701,7 @@ public :
     double diagonale_save ;
 
 /*! Paramètres du matériau utilisé pour la colorisation de l'avion par groupes et/ou matériaux */
-    static const int nb_couleurs=32;
+    static const int nb_couleurs=32;    // a priori, devrait être égal (ou supérieur) à maxGroupes
 
     // Ces 2 tableaux pourraient être en private mais il faut que nb_couleurs reste en public. à donc déclarer avant !
     // => réordonner complètement public, private et protected

@@ -3901,11 +3901,15 @@ void BddInter::LoadSTL() {
     } else {
 
 // Lecture d'un fichier STL Binaire
-
-        fclose(f);                      // Fermer le fichier car ouvert précédemment en Ascii
-        f=fopen(buffer.data(),"rb");    // Le réouvrir en mode lecture+binaire
-        fseek(f,80,0);                  // passer les 80 premiers octets d'entête
+        bool erreur_couleurs = false;
+        int index=0;
         UINT32 nb_triangles;            // C'est un Unsigned Integer sur 32 bits (en fait <=> int sur gcc 32 ou 64 bits)
+        UINT16 Attribute ;              // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
+
+        fclose(f);                      // Fermer le fichier car ouvert précédemment en mode Ascii
+        f=fopen(buffer.data(),"rb");    // Le réouvrir en mode lecture+binaire
+        fseek(f,80,0);                  // passer les 80 premiers octets d'entête (déjà lus et décodés)
+
         fread(&nb_triangles,sizeof(UINT32),1,f);
         printf("Nombre de triangles : %d\n",nb_triangles);
 
@@ -3940,7 +3944,6 @@ void BddInter::LoadSTL() {
         numero_sommetB= 1;
         numero_facette= 1;
         Numeros.resize(3);
-        UINT16 Attribute ;//,old_Attribute=0;           // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
 
         listeMateriaux.clear();
 
@@ -3976,6 +3979,13 @@ void BddInter::LoadSTL() {
                 auto it = std::find(listeMateriaux.begin(),listeMateriaux.end(),materiau);  // Est-il déjà dans la liste ?
                 if (it == listeMateriaux.end() || listeMateriaux.empty()) {                 // Non
                     listeMateriaux.push_back(materiau);                                     // L'ajouter à la liste des matériaux
+                    // Les 6 lignes suivantes permettent de coder materiau avec la couleur trouvée dans Attribute
+                    index = listeMateriaux.size();
+                    if (index < nb_couleurs) {
+                        MatDiffuse_avionG[index][0] = MatAmbient_avionG[index][0] = (materiau % 32) / 31.;          // Bits  0 à 4  -> rouge entre 0. et 1.
+                        MatDiffuse_avionG[index][1] = MatAmbient_avionG[index][1] = ((materiau >>  5) % 32) / 31.;  // Bits  5 à 9  -> vert     "
+                        MatDiffuse_avionG[index][2] = MatAmbient_avionG[index][2] = ((materiau >> 10) % 32) / 31.;  // Bits 10 à 14 -> bleu     "
+                    } else erreur_couleurs = true;
                 }
                 int rang = 1;
                 for (it = listeMateriaux.begin(); it != listeMateriaux.end(); ++it,++rang) {
@@ -3985,12 +3995,19 @@ void BddInter::LoadSTL() {
                 facette_courante->groupe     = rang-1;  // Pour donner une valeur différente du matériau
             }
         }
+        if (erreur_couleurs) {
+            // les tableaux MatAmbient_avionG et MatDiffuse_avionG sont trops petits
+            wxString wxMessage;
+            wxMessage.clear();
+            wxMessage.Printf(_T("Trop de couleurs/valeurs Attribute différentes dans ce ficher .stl binaire.\n%d valeurs trouvées, maximum : %d"),index,nb_couleurs-1);
+            wxMessage  +=    _T("\nAgrandir MatAmbient_avionG et MatDiffuse_avionG");
+            DisplayMessage(wxMessage,true);
+        }
     }
 
     this->Objetlist[indiceObjet_courant].Nb_luminances= 0;    // Dans le format STL, il n'y a pas de normales aux sommets
     this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;    // enregistrées dans le fichier de Bdd
     this->Objetlist[indiceObjet_courant].flat=true;           // A la lecture, on considère que l'objet n'est composé que de facettes planes
-
 
     m_loaded = true ; //true;
     m_gllist = 0;
