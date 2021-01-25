@@ -1359,7 +1359,7 @@ void OvniFrame::Ouvrir_Fichier()
         Selector += _T("Autodesk 3DS (*.3ds)|*.3ds|");
         Selector += _T("Wavefront (*.obj)|*.obj|");
         Selector += _T("XML G3D (*.g3d)|*.g3d|");
-        Selector += _T("Niratam Geo (*.ply)|*.ply|");
+        Selector += _T("Stanford ou Niratam Geo (*.ply)|*.ply|");
         Selector += _T("Object File Format (*.off)|*.off|");
         Selector += _T("Milkshape 3D text (*.m3d)|*.m3d|");
         Selector += _T("Stéréolithographique (*.stl)|*.stl|");
@@ -1401,7 +1401,11 @@ void OvniFrame::Ouvrir_Fichier()
 //    Element->MRepGrp  = ReperageGroupe_Panel;                         // Pas utile !
 //    Element->MRepMat  = ReperageMateriau_Panel;                       // Idem
 
+    bool Erreur_lecture = true;
+
     if (!Nom_Fichier.IsEmpty()) {
+
+        Erreur_lecture = false;
 
         s_extdef = Nom_Fichier.AfterLast(_T('.'));
         s_extdef = s_extdef.Lower();                            // Forcer l'extension en minuscules
@@ -1415,52 +1419,59 @@ void OvniFrame::Ouvrir_Fichier()
 
         Element->create_bdd();
 
-        Element->OK_ToSave      = true;                         // Le fichier ouvert peut être enregistré (ré-enregistré)
-        Element->OK_FichierCree = false;                        // mais ne l'a pas encoré été !
-//        if (verbose) printf("Ouvrir_fichier : avant Show\n");
-//        Element->Show(true);                                              // Inutile ?
-//        if (verbose) printf("Ouvrir_fichier : avant Refresh\n");
-///        Element->Refresh();
+        if (Element->type < 0) Erreur_lecture = true;
 
-        this->Menu_SensDesNormales->Enable() ;
-        this->Menu_ReOpen->Enable();                            // Activer le menu "Réouvrir"
+        if (!Erreur_lecture) {
 
-// Si c'est un fichier 3ds, proposer dans le menu de le réouvrir en changeant les test de décalage
+            Element->OK_ToSave      = true;                         // Le fichier ouvert peut être enregistré (ré-enregistré)
+            Element->OK_FichierCree = false;                        // mais ne l'a pas encoré été !
+    //        if (verbose) printf("Ouvrir_fichier : avant Show\n");
+    //        Element->Show(true);                                              // Inutile ?
+    //        if (verbose) printf("Ouvrir_fichier : avant Refresh\n");
+    ///        Element->Refresh();
 
-        if (s_extdef == _T("3ds")) {                            // Création d'une entrée de menu spécifique de réouverture pour les fichiers 3ds
-            if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
-                this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
-                                                      _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
-                this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
-                this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas
+            this->Menu_SensDesNormales->Enable() ;
+            this->Menu_ReOpen->Enable();                            // Activer le menu "Réouvrir"
+
+    // Si c'est un fichier 3ds, proposer dans le menu de le réouvrir en changeant les test de décalage
+
+            if (s_extdef == _T("3ds")) {                            // Création d'une entrée de menu spécifique de réouverture pour les fichiers 3ds
+                if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
+                    this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
+                                                          _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
+                    this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
+                    this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas
+                }
+                if (this->Element->test_decalage3ds)                // Proposer de réouvrir avec le test inverse de ce qui est en cours
+                    this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds sans décalages"));
+                else
+                    this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds avec décalages"));
+
+            } else { // Si ce n'est pas un fichier 3ds supprimer l'entrée de menu spécifique de réouverture
+                if (this->Menu_ReOpen3ds) { // mais seulement si elle existe !
+                    this->MenuFile->Delete(this->Menu_ReOpen3ds);   // Suppression du menu (Remove, Destroy ou Delete ? semble donner la même chose)
+                    this->Menu_ReOpen3ds = nullptr;                 // et RAZ du pointeur
+                }
             }
-            if (this->Element->test_decalage3ds)                // Proposer de réouvrir avec le test inverse de ce qui est en cours
-                this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds sans décalages"));
-            else
-                this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds avec décalages"));
 
-        } else { // Si ce n'est pas un fichier 3ds supprimer l'entrée de menu spécifique de réouverture
-            if (this->Menu_ReOpen3ds) { // mais seulement si elle existe !
-                this->MenuFile->Delete(this->Menu_ReOpen3ds);   // Suppression du menu (Remove, Destroy ou Delete ? semble donner la même chose)
-                this->Menu_ReOpen3ds = nullptr;                 // et RAZ du pointeur
+    ///        this->Menu_AddFile->Enable();         // Activer le menu "AddFile"
+            this->Menu_Enregistrer->Enable();                   // Activer le menu "Enregistrer"
+            this->Menu_Enregistrer_Sous->Enable();              // Activer le menu "Enregistrer sous..."
+            Element->MPrefs->CheckBox_CreerBackup->Enable();    // Activer la case à cocher de création d'un fichier .bak
+            if (Element->CreerBackup)
+                Element->MPrefs->CheckBox_SupprBackup->Enable();// Activer la case à cocher de suppression du fichier .bak
+
+            if (Element->Numero_base != 0) {
+                Element->bdd_modifiee = true;                   // On a fait une fusion => marquer la bdd comme modifiée
+                Menu_Enregistrer->Enable(false);                // On désactive "Enregistrer". Seul le choix "Enregistrer sous..." restera actif.
             }
+
+            Element->Refresh(); // Le Refresh n'a de sens que si un fichier a été ouvert
+
         }
+    } //else {
 
-///        this->Menu_AddFile->Enable();         // Activer le menu "AddFile"
-        this->Menu_Enregistrer->Enable();                   // Activer le menu "Enregistrer"
-        this->Menu_Enregistrer_Sous->Enable();              // Activer le menu "Enregistrer sous..."
-        Element->MPrefs->CheckBox_CreerBackup->Enable();    // Activer la case à cocher de création d'un fichier .bak
-        if (Element->CreerBackup)
-            Element->MPrefs->CheckBox_SupprBackup->Enable();// Activer la case à cocher de suppression du fichier .bak
-
-        if (Element->Numero_base != 0) {
-            Element->bdd_modifiee = true;                   // On a fait une fusion => marquer la bdd comme modifiée
-            Menu_Enregistrer->Enable(false);                // On désactive "Enregistrer". Seul le choix "Enregistrer sous..." restera actif.
-        }
-
-        Element->Refresh(); // Le Refresh n'a de sens que si un fichier a été ouvert
-
-    } else {
+    if (Erreur_lecture) { // ou Nom_Fichier.IsEmpty())
 
         //wxMessageBox(_T("Fichier vide !"));
         if (Element->Objetlist.size() == 0) {               // On a appuyé sur Annuler mais aucun objet n'est déjà présent

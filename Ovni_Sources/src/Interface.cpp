@@ -13,6 +13,7 @@
 #include <wx/stdpaths.h>
 #include "vector3d.h"
 #include "utf8.h"
+#include "ply.h"
 
 #include "OvniMain.h"
 
@@ -2013,7 +2014,7 @@ void BddInter::create_bdd() {
             this->LoadOBJ();
             break;
         case 5:
-            printf("\nChargement d'un fichier Niratam Polygon File .ply !!! \n");
+            printf("\nChargement d'un fichier .ply Niratam ou Stanford Polygon File !!! \n");
             this->LoadPLY();
             break;
         case 6:
@@ -3350,10 +3351,15 @@ void BddInter::LoadPLY()
 
     fgets(s1,160,f);
     if (strncmp(s1,"GEO",3)) {
-        printf("Fichier .ply mais pas de type GEO Niratam !\n");
+        if (strncmp(s1,"ply",3)) {
+            printf("Fichier .ply mais pas de type GEO Niratam, ni Stanford Polygon file !\n");
+            fclose(f);
+            type = -1;
+            return ;
+        }
         fclose(f);
-        type = -1;
-        return ;
+        this->LoadPLY_Stanford();
+        return;
     }
 
     printf("Fichier GEO - Niratam : %s",s1) ;
@@ -3615,6 +3621,319 @@ void BddInter::LoadPLY()
     fclose(f);
 
     if(verbose) printf("Sortie de BddInter::LoadPLY\n");
+}
+
+void BddInter::LoadPLY_Stanford()
+{
+/*
+ *  Lecture d'un Fichier de polygones au format PLY de Stanford
+ *  Un seul objet, crée les normales aux barycentres, lecture éventuelle des normales aux sommets (si présentes)
+ *
+ *  Largement inspiré/copié de headply et ply2iv, des programmes écrit par Greg Turk (auteur original du format ply).
+ *  headply.c : Read the header from a PLY file and print it out
+ *  ply2iv.c  : Convert a PLY file to an Inventor file.
+ *
+ *  Greg Turk
+
+ * -----------------------------------------------------------------------
+
+ *  Copyright (c) 2020, Georgia Institute of Technology
+ *  All rights reserved.
+
+ */
+
+    int compteur = 0;
+    char * buf;
+    int i,j;
+    int elem_count;
+
+    char *elem_name;
+    PlyFile *in_ply;
+
+    std::vector<int> Numeros;
+    Face *facette_courante;
+
+//    bool verbose = true;  // Version locale de verbose
+
+/* vertex and face definitions for a polygonal object */
+
+    typedef struct PlyVertex {
+        float x,y,z;
+        float r,g,b;
+        float nx,ny,nz;
+        void *other_props;       /* other properties */
+    } PlyVertex;
+
+    typedef struct PlyFace {
+        unsigned char nverts;    /* number of vertex indices in list */
+        int *verts;              /* vertex index list */
+        void *other_props;       /* other properties */
+    } PlyFace;
+
+    const char *elem_names[] = { /* list of the elements in the object */
+        "vertex", "face"
+    };
+
+    PlyProperty vert_props[] = { /* list of property information for a vertex */
+        {(char*)"x",  Float32, Float32, offsetof(PlyVertex,x),  0, 0, 0, 0},
+        {(char*)"y",  Float32, Float32, offsetof(PlyVertex,y),  0, 0, 0, 0},
+        {(char*)"z",  Float32, Float32, offsetof(PlyVertex,z),  0, 0, 0, 0},
+        {(char*)"r",  Float32, Float32, offsetof(PlyVertex,r),  0, 0, 0, 0},
+        {(char*)"g",  Float32, Float32, offsetof(PlyVertex,g),  0, 0, 0, 0},
+        {(char*)"b",  Float32, Float32, offsetof(PlyVertex,b),  0, 0, 0, 0},
+        {(char*)"nx", Float32, Float32, offsetof(PlyVertex,nx), 0, 0, 0, 0},
+        {(char*)"ny", Float32, Float32, offsetof(PlyVertex,ny), 0, 0, 0, 0},
+        {(char*)"nz", Float32, Float32, offsetof(PlyVertex,nz), 0, 0, 0, 0},
+    };
+
+    PlyProperty face_props[] = { /* list of property information for a face */
+        {(char*)"vertex_indices", Int32, Int32, offsetof(PlyFace,verts), 1, Uint8, Uint8, offsetof(PlyFace,nverts)},
+        {(char*)"vertex_index"  , Int32, Int32, offsetof(PlyFace,verts), 1, Uint8, Uint8, offsetof(PlyFace,nverts)},
+    };
+// En fait, "vertex_indices" et "vertex_index" sont synonymes. La norme actuelle dit "vertex_indices", mais l'autre forme semble exister dans d'anciens fichiers.
+
+    /*** the PLY object ***/
+
+    static int nverts,nfaces;
+    static PlyVertex **vlist;
+    static PlyFace   **flist;
+
+    static PlyOtherProp *vert_other,*face_other;
+
+    static int per_vertex_color = 0;
+    static int has_normals = 0;
+
+    if(verbose)
+        printf("Entrée de BddInter::LoadPLY_Stanford\n");
+    printf("... En cours d'implémentation ...\n");
+
+    wxCharBuffer buffer=this->file.mb_str();
+
+    if(m_gllist != 0) {
+        glDeleteLists(glliste_objets,1);
+        m_gllist = 0;
+    }
+
+    f = fopen(buffer.data(),"r");	    //ouverture du fichier
+
+// Lecture et affichage du header
+
+// Ci-dessous, garder les fgets ... pour détection de problèmes de header, mais on peut mettre en commentaire les 2 printf suivants (ou via if(verbose)...)
+
+    fgets(s1,160,f);
+    printf ("%s", s1);                  // le \n est déjà dans s1
+
+    while (1) {
+        buf = fgets(s1,160,f);
+        if (buf == NULL) {
+            fprintf (stderr, "Fin de fichier atteinte ... Abandon de la lecture !\n");
+            type = -1;
+            break;
+        }
+        printf ("%s", s1);              // le \n est déjà dans s1
+
+        if (strncmp(s1, "comment", 7)) compteur++;  // Ne pas compter les lignes "comment"
+
+        if (compteur > 50) {
+            fprintf (stderr, "Le Header semble trop long ... Abandon de la lecture !\n");
+            type = -1;
+            break;
+        }
+
+        if (strncmp(s1, "end_header", 10) == 0)
+            break;
+    }
+
+    if (type < 0) {
+        fclose(f);
+        printf("Sortie en Erreur de BddInter::LoadPLY_Stanford\n");
+        return;
+    }
+
+    rewind(f);  // Repositionner le fichier à son début
+
+    /*** Read in the original PLY object ***/
+    in_ply  = read_ply (f);
+
+    if (in_ply == NULL) {
+        type = -1;
+        printf("Sortie en Erreur de BddInter::LoadPLY_Stanford\n");
+        return;
+    }
+
+    printf("num_elem_types %d\n",in_ply->num_elem_types);
+    for (i = 0; i < in_ply->num_elem_types; i++) {
+
+        /* prepare to read the i'th list of elements */
+        elem_name = setup_element_read_ply (in_ply, i, &elem_count);
+
+        if (equal_strings ((char*)"vertex", elem_name)) {
+
+            /* create a vertex list to hold all the vertices */
+            vlist = (PlyVertex **) malloc (sizeof (PlyVertex *) * elem_count);
+            nverts = elem_count;
+
+            printf("nprops         %d\n",in_ply->elems[i]->nprops);
+            printf("nverts         %d\n",nverts);
+
+            /* set up for getting vertex elements */
+
+            setup_property_ply (in_ply, &vert_props[0]);
+            setup_property_ply (in_ply, &vert_props[1]);
+            setup_property_ply (in_ply, &vert_props[2]);
+
+            for (j = 0; j < in_ply->elems[i]->nprops; j++) {
+                PlyProperty *prop;
+                prop = in_ply->elems[i]->props[j];
+                if (equal_strings ((char*)"r", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[3]);
+                    per_vertex_color = 1;
+                }
+                if (equal_strings ((char*)"g", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[4]);
+                    per_vertex_color = 1;
+                }
+                if (equal_strings ((char*)"b", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[5]);
+                    per_vertex_color = 1;
+                }
+                if (equal_strings ((char*)"nx", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[6]);
+                    has_normals = 1;
+                }
+                if (equal_strings ((char*)"ny", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[7]);
+                    has_normals = 1;
+                }
+                if (equal_strings ((char*)"nz", prop->name)) {
+                    setup_property_ply (in_ply, &vert_props[8]);
+                    has_normals = 1;
+                }
+            }
+
+            vert_other = get_other_properties_ply (in_ply, offsetof(PlyVertex, other_props));
+
+            /* grab all the vertex elements */
+            for (j = 0; j < elem_count; j++) {
+                vlist[j] = (PlyVertex *) malloc (sizeof (PlyVertex));
+                vlist[j]->r = 1;
+                vlist[j]->g = 1;
+                vlist[j]->b = 1;
+                get_element_ply (in_ply, (void *) vlist[j]);
+            }
+
+        } else if (equal_strings ((char*)"face", elem_name)) {
+
+            /* create a list to hold all the face elements */
+            flist = (PlyFace **) malloc (sizeof (PlyFace *) * elem_count);
+            nfaces = elem_count;
+
+            printf("nfaces         %d\n",nfaces);
+
+            /* set up for getting face elements */
+
+            PlyProperty *propE;
+            propE = in_ply->elems[i]->props[0];
+            if (equal_strings ((char*)"vertex_indices", propE->name)) {
+                setup_property_ply (in_ply, &face_props[0]);
+            } else {
+//            if (equal_strings ((char*)"vertex_index", propE->name)) { // vertex_indices et vertext_index (version ply antérieure ?) sont en fait synonymes
+                setup_property_ply (in_ply, &face_props[1]);
+            }
+            face_other = get_other_properties_ply (in_ply, offsetof(PlyFace, other_props));
+
+            /* grab all the face elements */
+            for (j = 0; j < elem_count; j++) {
+                flist[j] = (PlyFace *) malloc (sizeof (PlyFace));
+                get_element_ply (in_ply, (void *) flist[j]);
+            }
+        } else
+            get_other_element_ply (in_ply);
+    }
+
+    close_ply(in_ply);
+    free_ply (in_ply) ;
+
+    if (vert_other == NULL || face_other == NULL) {
+        // Ignorer ? faire quelque-chose ? Permet d'éviter un warning de compilation sur "variable set but not used" !
+    }
+
+    str.Printf(_T("<OBJET> %d "),0+Numero_base);
+    str += wxFileName(buffer.data()).GetName();     // Récupérer le nom du fichier sans l'extension .ply ni le path comme nom d'objet
+    makeobjet();
+
+    // Création des sommets et des facettes
+
+    this->Objetlist[indiceObjet_courant].Nb_sommets = nverts;
+    this->N_elements = nverts;
+    str.clear();
+    makesommet();
+    if (has_normals) makevecteur();
+
+    if (per_vertex_color) {
+        // colorisier un groupe peut-être, mais comme c'est par sommet et non par facettes ??? permet d'éviter un warning de compilation
+    }
+
+    for (i = 0; i < nverts; i++) {
+        this->N_elements = i+1;
+//        printf ("    %g %g %g \n", vlist[i]->x, vlist[i]->y, vlist[i]->z);
+        this->Setxyz(vlist[i]->x, vlist[i]->y, vlist[i]->z);
+        make1sommet();
+        if (has_normals) {
+            this->Setxyz(vlist[i]->nx, vlist[i]->ny, vlist[i]->nz);
+            make1vecteur();
+        }
+        free(vlist[i]); // Libérer la mémoire de chaque vertex (malloc de vlist[i])
+    }
+    free(vlist);        // Libérer la mémoire des vertex (malloc de vlist global)
+
+    this->N_elements = nfaces;
+    makeface();
+    makenormale();
+    makeaspect_face();
+    if (has_normals) makeluminance();
+
+    if (has_normals) {
+        this->Objetlist[indiceObjet_courant].flat=false;
+        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
+        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
+    } else {
+        this->Objetlist[indiceObjet_courant].flat=true;
+        this->Objetlist[indiceObjet_courant].Nb_luminances= 0;
+        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;
+    }
+
+    str.clear();
+
+    for (i=0; i<nfaces; i++) {
+        this->N_elements = i+1;
+        int nb_som = flist[i]->nverts;
+        Numeros.resize(nb_som);
+        for (j=0; j<nb_som; j++) Numeros[j]=(flist[i]->verts[j]) +1;
+        this->Set_numeros(Numeros) ;
+        make1face();
+        facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[i]);
+        facette_courante->groupe     = groupe_def;
+        facette_courante->codmatface = codmatface_def;
+        if (has_normals) {
+            make1luminance();
+            facette_courante->flat = false;
+        } else {
+            facette_courante->flat = true;
+        }
+        Calcul_Normale_Barycentre(indiceObjet_courant,i);
+        free(flist[i]);     // Libérer la mémoire de chaque Ply facettes (malloc de flist[i])
+    }
+    free(flist);            // Libérer la mémoire de toutes les Ply facettes (malloc de flist global)
+
+//    type = -1;  // Provisoire
+
+    m_loaded = true;
+    m_gllist = 0;
+
+    if(verbose)
+        printf("Sortie de BddInter::LoadPLY_Stanford\n");
+
 }
 
 void BddInter::LoadOFF()
@@ -9206,6 +9525,7 @@ void BddInter::Calcul_Normale_Barycentre(int i, int j) {
     int n,z;
 
     Face_ij = &(this->Objetlist[i].Facelist[j]);
+
     normal1.clear();
     normal.clear();
 

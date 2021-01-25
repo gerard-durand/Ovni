@@ -1126,6 +1126,7 @@ private :
     void Optimiser_Obj_Sommets (Object *, int, bool &);
     void Optimiser_Obj_Vecteurs(Object *, int);
     void LoadPLY();
+    void LoadPLY_Stanford();
     void LoadOFF();
     void LoadM3D();
     void LoadSTL();
