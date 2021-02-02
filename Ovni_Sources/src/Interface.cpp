@@ -189,30 +189,31 @@ void BddInter::ResetData() {
     int ival;
 
     if (verbose) printf("Entree de BddInter::ResetData\n");
-    m_gldata.BeginX     = 0;
-    m_gldata.BeginY     = 0;
-    len_axe             = len_axe_def;
-    len_normales        = len_normales_def;
-    ray_sun             = ray_sun_def;
-    angle_Gouraud       = angle_Gouraud_def;
-    fmult_Gouraud       = fmult_Gouraud_def;
-    seuil_Gouraud       = cos(angle_Gouraud*to_Rad);
+    m_gldata.BeginX         = 0;
+    m_gldata.BeginY         = 0;
+    len_axe                 = len_axe_def;
+    len_normales            = len_normales_def;
+    ray_sun                 = ray_sun_def;
+    angle_Gouraud           = angle_Gouraud_def;
+    fmult_Gouraud           = fmult_Gouraud_def;
+    seuil_Gouraud           = cos(angle_Gouraud*to_Rad);
     if (angle_Gouraud  >= 179.9) seuil_Gouraud  = -1.0f;
-    angle_Gouraud2      = angle_Gouraud*fmult_Gouraud;
-    seuil_Gouraud2      = cos(angle_Gouraud2*to_Rad);
+    angle_Gouraud2          = angle_Gouraud*fmult_Gouraud;
+    seuil_Gouraud2          = cos(angle_Gouraud2*to_Rad);
     if (angle_Gouraud2 >= 179.9) seuil_Gouraud2 = -1.0f;
-    tolerance           = tolerance_def;
-    svg_time            = svg_time_def;
-    Raz_Selection_F     = Raz_Selection_F_def;
-    msg_warning         = msg_warning_def;
+    tolerance               = tolerance_def;
+    svg_time                = svg_time_def;
+    Raz_Selection_F         = Raz_Selection_F_def;
+    msg_warning             = msg_warning_def;
+    traiter_doublons_aretes = traiter_doublons_aretes_def;
 
-    m_gldata.rotx       = 0.0f;
-    m_gldata.roty       = 0.0f;
-    m_gldata.rotz       = 0.0f;
-    m_gldata.fmult_diag = fmult_diag_def;
-    reset_zoom          = true;
+    m_gldata.rotx           = 0.0f;
+    m_gldata.roty           = 0.0f;
+    m_gldata.rotz           = 0.0f;
+    m_gldata.fmult_diag     = fmult_diag_def;
+    reset_zoom              = true;
     SetPosObs(reset_zoom);
-    mode_selection      = selection_facette;
+    mode_selection          = selection_facette;
 
     m_gldata.mode_Trackball = mode_Trackball_def;
     printf("ResetData : Mode Trackball : %d\n",m_gldata.mode_Trackball);
@@ -1392,6 +1393,16 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         printf("FoV : %f (zoom)\n",m_gldata.zoom) ;
         break;
 
+    case 'F':
+// Pour forcer la simplification des doublons d'arêtes
+        simplification_doublons_aretes = !simplification_doublons_aretes;
+        if (simplification_doublons_aretes)
+            printf("Forcer la simplification des doublons d'arêtes\n");
+        else
+            printf("Ne pas forcer la simplification des doublons d'arêtes\n");
+
+        break;
+
 // Permutation circulaire entre Coloriser les groupes, Coloriser les matériaux ou Pas de colorisation
     case 'G':
 // ou    case 'g':
@@ -1930,6 +1941,8 @@ void BddInter::create_bdd() {
     unsigned int indice_premierObjet;   // indice du premier objet de la nouvelle Bdd à charger
 
     if(verbose) printf("Entree de BddInter::create_bdd\n");
+
+    traiter_doublons_aretes = traiter_doublons_aretes_def;              // réinitialiser à chaque nouvelle lecture de fichier
 
     if (Numero_base == 0) {                                             // Ouvrir ou réouvrir un fichier
         clearall();                                                         // RAZ global
@@ -3623,13 +3636,18 @@ void BddInter::LoadPLY()
     if(verbose) printf("Sortie de BddInter::LoadPLY\n");
 }
 
+//float float_swap(float value){
+//       int temp =  __builtin_bswap32(*(unsigned int*)&value);
+//       return *(float*)&temp;
+//};
+
 void BddInter::LoadPLY_Stanford()
 {
 /*
  *  Lecture d'un Fichier de polygones au format PLY de Stanford
  *  Un seul objet, crée les normales aux barycentres, lecture éventuelle des normales aux sommets (si présentes)
  *
- *  Largement inspiré/copié de headply et ply2iv, des programmes écrit par Greg Turk (auteur original du format ply).
+ *  Largement inspiré/copié de headply et ply2iv, des programmes écrits par Greg Turk (auteur original du format ply).
  *  headply.c : Read the header from a PLY file and print it out
  *  ply2iv.c  : Convert a PLY file to an Inventor file.
  *
@@ -3703,6 +3721,10 @@ void BddInter::LoadPLY_Stanford()
     static int per_vertex_color = 0;
     static int has_normals = 0;
 
+    int nelems, file_type;
+    float version;
+    char **liste;
+
     if(verbose)
         printf("Entrée de BddInter::LoadPLY_Stanford\n");
     printf("... En cours d'implémentation ...\n");
@@ -3725,7 +3747,7 @@ void BddInter::LoadPLY_Stanford()
 
     while (1) {
         buf = fgets(s1,160,f);
-        if (buf == NULL) {
+        if (buf == nullptr) {
             fprintf (stderr, "Fin de fichier atteinte ... Abandon de la lecture !\n");
             type = -1;
             break;
@@ -3750,12 +3772,33 @@ void BddInter::LoadPLY_Stanford()
         return;
     }
 
-    rewind(f);  // Repositionner le fichier à son début
+//    rewind(f);  // Repositionner le fichier à son début
+    fclose(f);
 
     /*** Read in the original PLY object ***/
+//    in_ply  = read_ply (f);
+    in_ply = ply_open_for_reading(buffer.data(), &nelems, &liste, &file_type, &version); // Avantage / read_ply : ne décode que l'entête
+    if (in_ply->file_type == PLY_ASCII) {
+        close_ply(in_ply);
+        free_ply (in_ply) ;
+        f = fopen(buffer.data(),"r");
+    } else {
+        close_ply(in_ply);
+        free_ply (in_ply) ;
+        f = fopen(buffer.data(),"rb");
+    }
     in_ply  = read_ply (f);
 
-    if (in_ply == NULL) {
+//    fclose(f);
+//    f = fopen(buffer.data(),"rb");  // Tenter une lecture binaire tout d'abord
+//    in_ply  = read_ply (f);
+//    if (in_ply == nullptr) {        // Si ça ne fonctionne pas (in_ply = nullptr), alors revenir à une lecture standard
+//        fclose(f);
+//        f = fopen(buffer.data(),"r");
+//        in_ply  = read_ply (f);
+//    }
+
+    if (in_ply == nullptr) {
         type = -1;
         printf("Sortie en Erreur de BddInter::LoadPLY_Stanford\n");
         return;
@@ -3837,7 +3880,7 @@ void BddInter::LoadPLY_Stanford()
             if (equal_strings ((char*)"vertex_indices", propE->name)) {
                 setup_property_ply (in_ply, &face_props[0]);
             } else {
-//            if (equal_strings ((char*)"vertex_index", propE->name)) { // vertex_indices et vertext_index (version ply antérieure ?) sont en fait synonymes
+//            if (equal_strings ((char*)"vertex_index", propE->name)) { // vertex_indices et vertex_index (version ply antérieure ?) sont en fait synonymes
                 setup_property_ply (in_ply, &face_props[1]);
             }
             face_other = get_other_properties_ply (in_ply, offsetof(PlyFace, other_props));
@@ -3847,8 +3890,8 @@ void BddInter::LoadPLY_Stanford()
                 flist[j] = (PlyFace *) malloc (sizeof (PlyFace));
                 get_element_ply (in_ply, (void *) flist[j]);
             }
-        } else
-            get_other_element_ply (in_ply);
+        } /*else
+            get_other_element_ply (in_ply); */  // Inutile de lire les autres propriétés (fin du fichier) mais du coup impose que vertex et face soien en 1 et/ou 2ème position
     }
 
     close_ply(in_ply);
@@ -3891,14 +3934,14 @@ void BddInter::LoadPLY_Stanford()
     makeface();
     makenormale();
     makeaspect_face();
-    if (has_normals) makeluminance();
 
     if (has_normals) {
-        this->Objetlist[indiceObjet_courant].flat=false;
-        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
-        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
+        makeluminance();
+        this->Objetlist[indiceObjet_courant].flat = false;
+//        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
+//        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
     } else {
-        this->Objetlist[indiceObjet_courant].flat=true;
+        this->Objetlist[indiceObjet_courant].flat = true;
         this->Objetlist[indiceObjet_courant].Nb_luminances= 0;
         this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;
     }
@@ -5216,7 +5259,7 @@ void BddInter::makeface() {
     } else {
         Nb_facettes = N_elements;
     }
-    printf("%6d facettes\t\t\t(<FACE>/<POLYGON>)\n",Nb_facettes);
+    printf("%8d facettes\t\t(<FACE>/<POLYGON>)\n",Nb_facettes);
     this->Objetlist[indiceObjet_courant].Nb_facettes = Nb_facettes;  // Stocker le nombre de facettes dans l'objet
     this->Objetlist[indiceObjet_courant].Facelist.resize(Nb_facettes);
 }
@@ -5262,7 +5305,7 @@ void BddInter::makesommet() {
     } else {
         Nb_sommets = N_elements;
     }
-    printf("%6d sommets\t\t\t(<SOMMET>/<VERTEX>)\n",Nb_sommets);
+    printf("%8d sommets\t\t(<SOMMET>/<VERTEX>)\n",Nb_sommets);
     this->Objetlist[indiceObjet_courant].Nb_sommets = Nb_sommets;  // Stocker le nombre de sommets dans l'objet
     this->Objetlist[indiceObjet_courant].Sommetlist.resize(Nb_sommets);
 }
@@ -5310,7 +5353,7 @@ void BddInter::makenormale() {
     } else {
         Nb_normales = N_elements;
     }
-    printf("%6d normales aux facettes\t(<NORMALE>/<POLY_NORMAL>)\n",Nb_normales);
+    printf("%8d normales aux facettes\t(<NORMALE>/<POLY_NORMAL>)\n",Nb_normales);
 
     this->Objetlist[indiceObjet_courant].Nb_normales = Nb_normales;
 }
@@ -5354,7 +5397,7 @@ void BddInter::makeaspect_face() {
     } else {
         Nb_aspect = N_elements;
     }
-    printf("%6d attributs aux facettes\t(<ASPECT_FACE>/<POLY_ATTR>)\n",Nb_aspect);
+    printf("%8d attributs aux facettes\t(<ASPECT_FACE>/<POLY_ATTR>)\n",Nb_aspect);
     this->Objetlist[indiceObjet_courant].Nb_aspects = Nb_aspect;
 }
 
@@ -5439,7 +5482,7 @@ void BddInter::makeluminance() {
     } else {
         Nb_luminances = N_elements;
     }
-    printf("%6d valeurs de Luminances\t(<LUMINANCE>)\n",Nb_luminances);
+    printf("%8d valeurs de Luminances\t(<LUMINANCE>)\n",Nb_luminances);
 
     this->Objetlist[indiceObjet_courant].Nb_luminances = Nb_luminances;
 }
@@ -5487,7 +5530,7 @@ void BddInter::makevecteur() {
         Nb_vecteurs = N_elements;
     }
 //    this->Vecteurlist.push_back(Newvecteur);
-    printf("%6d normales aux sommets\t(<VECTEUR>/<VERT_NORMAL>)\n",Nb_vecteurs);
+    printf("%8d normales aux sommets\t(<VECTEUR>/<VERT_NORMAL>)\n",Nb_vecteurs);
     wxStringlist.clear();
 
     this->Objetlist[indiceObjet_courant].Nb_vecteurs = Nb_vecteurs;
@@ -5529,7 +5572,7 @@ void BddInter::makeposition() {
         wxStringlist.push_back(token);
     }
 //    Position Newposition(token);
-    printf("%6d matrice Position\t\t(<POSITION>/<PLACEMENT>)\n",wxAtoi(token));
+    printf("%8d matrice Position\t(<POSITION>/<PLACEMENT>)\n",wxAtoi(token));
     wxStringlist.clear();
 //    this->positionlist.push_back(Newposition);
     this->Objetlist[indiceObjet_courant].mat_position= true;            // il y a une matrice POSITION dans la BDD pour l'objet courant
@@ -5572,8 +5615,8 @@ void BddInter::GenereTableauAretes(Object * objet)
     std::vector<int>  Numeros_Sommets;
     Aretes   Arete, Arete_test, *p_Arete;
     bool verbose_local = true;      // Local ici
-    static bool traiter_ici = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
-                                    // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
+//    static bool traiter_doublons_aretes = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
+                                                // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
     bool en_cours;
     unsigned int Arete_size_test=200000; // 1000000 Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
 
@@ -5612,10 +5655,10 @@ void BddInter::GenereTableauAretes(Object * objet)
         }
     }
     Nb_avant = objet->Nb_aretes = objet->Areteslist.size();
-    if (Nb_avant >= Arete_size_test) traiter_ici = false;
-    if (!traiter_ici) {
+    if (Nb_avant >= Arete_size_test) traiter_doublons_aretes = false;
+    if (!traiter_doublons_aretes && !simplification_doublons_aretes) {
         if (verbose_local) {
-            printf("Objet : %s\nNb_aretes : %d\n",objet->GetName(),Nb_avant);
+            printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons non effectuée\n",objet->GetName(),Nb_avant);
             if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
         }
         return;

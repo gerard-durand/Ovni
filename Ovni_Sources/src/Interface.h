@@ -822,7 +822,9 @@ public :
     float angle_Gouraud_def = 35.0f;
     float fmult_Gouraud_def =  1.6f;
     int   svg_time_def      = 5;                    // en minutes
-    bool  test_seuil_gouraud_def  = false;
+    bool  test_seuil_gouraud_def       = false;
+    bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
+    bool simplification_doublons_aretes_def = false;
 
     bool  antialiasing_soft_def        = false;     // Antialiasing par défaut non fait par OpenGL pour éviter les soucis avec cartes graphiques ne le supportant pas
     bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
@@ -871,6 +873,8 @@ public :
     bool  Raz_Selection_F          = Raz_Selection_F_def;
     bool  NotFlat                  = NotFlat_def;
     bool  msg_warning              = msg_warning_def;
+    bool traiter_doublons_aretes   = traiter_doublons_aretes_def;
+    bool  simplification_doublons_aretes = simplification_doublons_aretes_def;
 
     GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 

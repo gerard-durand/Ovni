@@ -137,12 +137,12 @@ typedef struct PlyOtherElems {  /* "other" elements, not interpreted by user */
 #define RANDOM_RULE   6
 
 typedef struct PlyPropRules {   /* rules for combining "other" properties */
-    PlyElement *elem;      /* element whose rules we are making */
-    int *rule_list;        /* types of rules (AVERAGE_PLY, MAJORITY_PLY, etc.) */
-    int nprops;            /* number of properties we're combining so far */
-    int max_props;         /* maximum number of properties we have room for now */
-    void **props;          /* list of properties we're combining */
-    float *weights;        /* list of weights of the properties */
+    PlyElement *elem;             /* element whose rules we are making */
+    int *rule_list;               /* types of rules (AVERAGE_PLY, MAJORITY_PLY, etc.) */
+    int nprops;                   /* number of properties we're combining so far */
+    int max_props;                /* maximum number of properties we have room for now */
+    void **props;                 /* list of properties we're combining */
+    float *weights;               /* list of weights of the properties */
 } PlyPropRules;
 
 typedef struct PlyRuleList {
@@ -176,11 +176,11 @@ extern char *my_alloc();
 
 
 /* old routines */
-
+extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
 #if 0
 extern PlyFile *ply_write(FILE *, int, char **, int);
 extern PlyFile *ply_read(FILE *, int *, char ***);
-extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
+//extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
 extern void ply_close(PlyFile *);
 extern PlyOtherProp *ply_get_other_properties(PlyFile *, char *, int);
 #endif

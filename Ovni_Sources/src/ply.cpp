@@ -115,6 +115,7 @@ double get_item_value(char *, int);
 /* get binary or ascii item and store it according to ptr and type */
 void get_ascii_item(char *, int, int *, unsigned int *, double *);
 void get_binary_item(FILE *, int, int *, unsigned int *, double *);
+void get_binary_item_swap(FILE *, int, int *, unsigned int *, double *);
 
 /* get a bunch of elements from a file */
 void ascii_get_element (PlyFile *, char *);
@@ -1568,6 +1569,9 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
     /* the kind of element we're reading currently */
     elem = plyfile->which_elem;
 
+    bool swap_endian = false;
+    if (plyfile->file_type == PLY_BINARY_BE) swap_endian = true;
+
     /* do we need to setup for other_props? */
 
     if (elem->other_offset != NO_OTHER_PROPS) {
@@ -1597,8 +1601,12 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
         if (prop->is_list == PLY_LIST) {          /* list */
 
             /* get and store the number of items in the list */
-            get_binary_item (fp, prop->count_external,
-                             &int_val, &uint_val, &double_val);
+            if (swap_endian)
+                get_binary_item_swap (fp, prop->count_external,
+                                 &int_val, &uint_val, &double_val);
+            else
+                get_binary_item (fp, prop->count_external,
+                                 &int_val, &uint_val, &double_val);
             if (store_it) {
                 item = elem_data + prop->count_offset;
                 store_item(item, prop->count_internal, int_val, uint_val, double_val);
@@ -1620,8 +1628,12 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
 
                 /* read items and store them into the array */
                 for (k = 0; k < list_count; k++) {
-                    get_binary_item (fp, prop->external_type,
-                                     &int_val, &uint_val, &double_val);
+                    if (swap_endian)
+                        get_binary_item_swap (fp, prop->external_type,
+                                         &int_val, &uint_val, &double_val);
+                    else
+                        get_binary_item (fp, prop->external_type,
+                                         &int_val, &uint_val, &double_val);
                     if (store_it) {
                         store_item (item, prop->internal_type,
                                     int_val, uint_val, double_val);
@@ -1643,8 +1655,12 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
                 *str_ptr = str;
             }
         } else {                                    /* scalar */
-            get_binary_item (fp, prop->external_type,
-                             &int_val, &uint_val, &double_val);
+            if (swap_endian)
+                get_binary_item_swap (fp, prop->external_type,
+                                 &int_val, &uint_val, &double_val);
+            else
+                get_binary_item (fp, prop->external_type,
+                                 &int_val, &uint_val, &double_val);
             if (store_it) {
                 item = elem_data + prop->offset;
                 store_item (item, prop->internal_type, int_val, uint_val, double_val);
@@ -1727,6 +1743,10 @@ char **get_words(FILE *fp, int *nwords, char **orig_line)
         if (*ptr == '\t') {
             *ptr = ' ';
             *ptr2 = ' ';
+        } else if (*ptr2 == '\r') {  // Ajout GD pour lire en binaire des fichiers contenant CR+LF
+            *ptr = ' ';
+            *ptr2 = '\0';
+//            break;                  // la détection d'un \n n'est pas utile
         } else if (*ptr == '\n') {
             *ptr = ' ';
             *ptr2 = '\0';
@@ -2108,6 +2128,93 @@ void get_binary_item(
         break;
     default:
         fprintf (stderr, "get_binary_item: bad type = %d\n", type);
+        exit (-1);
+    }
+}
+
+template <typename T>
+T bswap(T val) {
+    T retVal;
+    char *pVal    = (char*) &val;
+    char *pRetVal = (char*) &retVal;
+    int size_val  = sizeof(T);
+    for(int i=0; i<size_val; i++) {
+        pRetVal[size_val-1-i] = pVal[i];
+    }
+    return retVal;
+}
+
+void get_binary_item_swap(
+    FILE *fp,
+    int type,
+    int *int_val,
+    unsigned int *uint_val,
+    double *double_val
+)
+{
+    char c[8];
+    void *ptr;
+    float flt_val;
+
+    ptr = (void *) c;
+
+    switch (type) {
+    case Int8:
+        fread (ptr, 1, 1, fp);
+        *int_val    = *((char *) ptr);
+        *uint_val   = *int_val;
+        *double_val = *int_val;
+        break;
+    case Uint8:
+        fread (ptr, 1, 1, fp);
+        *uint_val   = *((unsigned char *) ptr);
+        *int_val    = *uint_val;
+        *double_val = *uint_val;
+        break;
+    case Int16:
+        fread (ptr, 2, 1, fp);
+        *int_val    = *((short int *) ptr);
+        *int_val    = bswap(*int_val);
+        *uint_val   = *int_val;
+        *double_val = *int_val;
+        break;
+    case Uint16:
+        fread (ptr, 2, 1, fp);
+        *uint_val   = *((unsigned short int *) ptr);
+        *uint_val   = bswap(*uint_val);
+        *int_val    = *uint_val;
+        *double_val = *uint_val;
+        break;
+    case Int32:
+        fread (ptr, 4, 1, fp);
+        *int_val    = *((int *) ptr);
+        *int_val    = bswap(*int_val);
+        *uint_val   = *int_val;
+        *double_val = *int_val;
+        break;
+    case Uint32:
+        fread (ptr, 4, 1, fp);
+        *uint_val   = *((unsigned int *) ptr);
+        *uint_val   = bswap(*uint_val);
+        *int_val    = *uint_val;
+        *double_val = *uint_val;
+        break;
+    case Float32:
+        fread (ptr, 4, 1, fp);
+        flt_val     = *((float *) ptr);
+        *double_val = bswap(flt_val);
+        *int_val    = *double_val;
+        *uint_val   = *double_val;
+        break;
+    case Float64:
+        fread (ptr, 8, 1, fp);
+        *double_val = *((double *) ptr);
+        *double_val = bswap(*double_val);
+        *int_val    = *double_val;
+        *uint_val   = *double_val;
+        break;
+    default:
+        fprintf (stderr, "get_binary_item_swap: bad type = %d\n", type);
         exit (-1);
     }
 }
