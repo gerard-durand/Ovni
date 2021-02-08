@@ -227,10 +227,11 @@ BEGIN_EVENT_TABLE(OvniFrame,wxFrame)
 END_EVENT_TABLE()
 
 OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
+//    verbose = true;
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
     // Menus, boutons et autres contrôles gérés par wxSmith
 
-    // Note mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code pas wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
+    // Note mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code par wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
     // permet par exemple d'avoir 2 versions de GLCanvasAttributes_1[] conditionnées par un if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) testant la validité de
     // int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, 0, 0 };     // Peut-être + général que #if wxCHECK_VERSION(3,0,0)
     // En cas de changement dans wxSmith sur la frame principale OvniFrame, il suffit de réactiver le //(*, faire les changements dans wxSmith, remettre en place le //_(* et
@@ -870,6 +871,7 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
     glViewport(0, 0, iw, ih);
 
 	Element->Resize();
+
     if (verbose) printf("Sortie OvniFrame::ResizeOpenGL\n");
 }
 
@@ -1168,6 +1170,10 @@ void OvniFrame::OnButton_PointsToggle(wxCommandEvent& event) {
 
     if (Element != nullptr) {
         Element->show_points = Button_Points->GetValue();
+        if ((Element->show_points) && (!Element->liste_sommets_OK)) {
+            printf("Construction de la liste OpenGL de sommets\n");
+            Element->m_gllist = Element->glliste_points;
+        }
         Element->Refresh();
     }
 }
@@ -1183,7 +1189,26 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
 
     if (Element != nullptr) {
         Element->show_points = Menu_Affichage_Points->IsChecked();
+        if ((Element->show_points) && (!Element->liste_sommets_OK)) {
+            printf("Construction de la liste OpenGL de sommets\n");
+            Element->m_gllist = Element->glliste_points;
+        }
         Element->Refresh();
+    }
+}
+
+void OvniFrame::GenereListeAretes() {
+
+    if (!Element->GenereTableauAretes_OK) {
+        printf("Construction de GenereTableauAretes\n");
+        for(unsigned int i=0; i<Element->Objetlist.size(); ++i) {
+             Element->GenereTableauAretes(&(Element->Objetlist[i]));
+        }
+        Element->GenereTableauAretes_OK = true;
+    }
+    if (!Element->liste_aretes_OK) {
+        printf("Construction de la liste OpenGL d'arêtes\n");
+        Element->m_gllist = Element->glliste_lines;
     }
 }
 
@@ -1198,6 +1223,9 @@ void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
 
     if(Element != nullptr) {
         Element->show_lines = Button_Filaire->GetValue();
+        if (Element->show_lines) {
+            GenereListeAretes();
+        }
         Element->Refresh();
     }
 }
@@ -1213,6 +1241,9 @@ void OvniFrame::OnMenu_Affichage_FilaireSelected(wxCommandEvent& event) {
 
     if (Element != nullptr) {
         Element->show_lines = Menu_Affichage_Filaire->IsChecked();
+        if (Element->show_lines) {
+            GenereListeAretes();
+        }
         Element->Refresh();
     }
 }

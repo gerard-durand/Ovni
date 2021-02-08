@@ -1839,6 +1839,7 @@ void BddInter::ResetProjectionMode() {
 
 #if wxCHECK_VERSION(3,0,0)
     {
+//printf(" 5\n");fflush(stdout);
         SetCurrent(*m_glRC);
 #else
 #ifndef __WXMOTIF__
@@ -1847,7 +1848,7 @@ void BddInter::ResetProjectionMode() {
     {
         SetCurrent();
 #endif // wxCHECK_VERSION
-
+//printf(" 6\n");fflush(stdout);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);   /// ici .x et .y, pas .GetX et .GetY ? à vérifier peut-être
@@ -1937,6 +1938,8 @@ void BddInter::clearall() {
 }
 
 void BddInter::create_bdd() {
+    Object *objet_courant;
+    Face   *facette_courante;
 
     unsigned int indice_premierObjet;   // indice du premier objet de la nouvelle Bdd à charger
 
@@ -2048,12 +2051,22 @@ void BddInter::create_bdd() {
         type_new = 1;
         bdd_modifiee = false;   // Pas sûr que ce soit ici le meilleur endroit, surtout si on fusionne des bdd !
 
-        bool Normales_sommets_presentes=false;
+        bool Normales_sommets_presentes = false;
         unsigned int i;
+        unsigned int nb_facettes_loc = 0;
         for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
-            if ((this->Objetlist[i].Nb_vecteurs != 0) && (this->Objetlist[i].Nb_luminances != 0)) Normales_sommets_presentes = true;
-            GenereTableauPointsFacettes(&this->Objetlist[i]);
-            GenereTableauAretes(&this->Objetlist[i]);
+            nb_facettes_loc += this->Objetlist[i].Nb_facettes;
+        }
+        if (nb_facettes_loc < nb_facettes_test)
+            GenereTableauAretes_OK = true;
+        else
+            GenereTableauAretes_OK = false;
+        for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
+            objet_courant = &(this->Objetlist[i]);
+            if ((objet_courant->Nb_vecteurs != 0) && (objet_courant->Nb_luminances != 0)) Normales_sommets_presentes = true;
+            GenereTableauPointsFacettes(objet_courant);
+            if(GenereTableauAretes_OK)                              // Ne pas générer maintenant si beaucoup de facettes, mais test mal adapté et
+                GenereTableauAretes(objet_courant);                 // non compatible à ce qu'il faudrait dans OvniFrame::OnButton_FilaireToggle
         }
 
         this->searchMin_Max();
@@ -2088,6 +2101,7 @@ void BddInter::create_bdd() {
         if (CalculNormalesLectureBdd) {
             bool Forcer_calcul=false;
             for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
+                objet_courant = &(this->Objetlist[i]);
                 if (Normales_sommets_presentes) {
                     if (i == 0) {
                         wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
@@ -2102,25 +2116,26 @@ void BddInter::create_bdd() {
                 else Forcer_calcul = true;
                 if (Forcer_calcul) {
                     indiceObjet_courant = i;
-                    unsigned int nb_p = this->Objetlist[i].Nb_sommets;
+                    unsigned int nb_p = objet_courant->Nb_sommets;
                     this->N_elements = nb_p;
                     this->str.clear();
                     makevecteur();
 
-                    unsigned int nb_fac = this->Objetlist[i].Nb_facettes;
+                    unsigned int nb_fac = objet_courant->Nb_facettes;
                     this->N_elements = nb_fac;
                     makeluminance();
 
                     // Recopie des numéros de sommets des facettes dans luminances
                     for (unsigned int nfac=0; nfac < nb_fac ; nfac++) {
-                        NumerosSommets   = this->Objetlist[i].Facelist[nfac].getF_sommets();
-                        this->N_elements = this->Objetlist[i].Facelist[nfac].getNumero();
+                        facette_courante = &(this->Objetlist[i].Facelist[nfac]);
+                        NumerosSommets   = facette_courante->getF_sommets();
+                        this->N_elements = facette_courante->getNumero();
                         make1luminance();
-                        this->Objetlist[i].Facelist[nfac].flat = false ;
+                        facette_courante->flat = false ;
                     }
 
                     GenereNormalesAuxSommets(i, nb_p);
-                    this->Objetlist[i].flat=false;
+                    objet_courant->flat=false;
                 }
             }
         }
@@ -3662,7 +3677,7 @@ void BddInter::LoadPLY_Stanford()
 
     int compteur = 0;
     char * buf;
-    int i,j;
+    int i,j,k;
     int elem_count;
 
     char *elem_name;
@@ -3712,18 +3727,18 @@ void BddInter::LoadPLY_Stanford()
 
     /*** the PLY object ***/
 
-    static int nverts,nfaces;
-    static PlyVertex **vlist;
-    static PlyFace   **flist;
+    int nverts,nfaces;
+    PlyVertex *vlist;
+    PlyFace   *flist;
 
-    static PlyOtherProp *vert_other,*face_other;
+    PlyOtherProp *vert_other,*face_other;
 
-    static int per_vertex_color = 0;
-    static int has_normals = 0;
+    int per_vertex_color = 0;
+    int has_normals = 0;
 
     int nelems, file_type;
     float version;
-    char **liste;
+//    char **liste;
 
     if(verbose)
         printf("Entrée de BddInter::LoadPLY_Stanford\n");
@@ -3772,31 +3787,17 @@ void BddInter::LoadPLY_Stanford()
         return;
     }
 
-//    rewind(f);  // Repositionner le fichier à son début
-    fclose(f);
+    rewind(f);  // Repositionner le fichier à son début
 
     /*** Read in the original PLY object ***/
-//    in_ply  = read_ply (f);
-    in_ply = ply_open_for_reading(buffer.data(), &nelems, &liste, &file_type, &version); // Avantage / read_ply : ne décode que l'entête
-    if (in_ply->file_type == PLY_ASCII) {
-        close_ply(in_ply);
-        free_ply (in_ply) ;
-        f = fopen(buffer.data(),"r");
-    } else {
+    in_ply  = read_ply (f);
+
+    if (in_ply->file_type != PLY_ASCII) {   // C'est un fichier binaire (Little Endian ou Big Endian) => le réouvrir autrement
         close_ply(in_ply);
         free_ply (in_ply) ;
         f = fopen(buffer.data(),"rb");
+        in_ply  = read_ply (f);
     }
-    in_ply  = read_ply (f);
-
-//    fclose(f);
-//    f = fopen(buffer.data(),"rb");  // Tenter une lecture binaire tout d'abord
-//    in_ply  = read_ply (f);
-//    if (in_ply == nullptr) {        // Si ça ne fonctionne pas (in_ply = nullptr), alors revenir à une lecture standard
-//        fclose(f);
-//        f = fopen(buffer.data(),"r");
-//        in_ply  = read_ply (f);
-//    }
 
     if (in_ply == nullptr) {
         type = -1;
@@ -3804,7 +3805,14 @@ void BddInter::LoadPLY_Stanford()
         return;
     }
 
-    printf("num_elem_types %d\n",in_ply->num_elem_types);
+    // Créer un seul objet
+
+    str.Printf(_T("<OBJET> %d "),0+Numero_base);
+    str += wxFileName(buffer.data()).GetName();     // Récupérer le nom du fichier sans l'extension .ply ni le path comme nom d'objet
+    makeobjet();
+
+    if (verbose) printf("num_elem_types %d\n",in_ply->num_elem_types);
+
     for (i = 0; i < in_ply->num_elem_types; i++) {
 
         /* prepare to read the i'th list of elements */
@@ -3813,11 +3821,20 @@ void BddInter::LoadPLY_Stanford()
         if (equal_strings ((char*)"vertex", elem_name)) {
 
             /* create a vertex list to hold all the vertices */
-            vlist = (PlyVertex **) malloc (sizeof (PlyVertex *) * elem_count);
             nverts = elem_count;
 
-            printf("nprops         %d\n",in_ply->elems[i]->nprops);
-            printf("nverts         %d\n",nverts);
+            if(verbose) {
+                printf("nprops         %d\n",in_ply->elems[i]->nprops);
+                printf("nverts         %d\n",nverts);
+            }
+
+            // Créer les sommets
+
+            this->Objetlist[indiceObjet_courant].Nb_sommets = nverts;
+            this->N_elements = nverts;
+            str.clear();
+            makesommet();
+            if (has_normals) makevecteur();
 
             /* set up for getting vertex elements */
 
@@ -3857,23 +3874,58 @@ void BddInter::LoadPLY_Stanford()
             vert_other = get_other_properties_ply (in_ply, offsetof(PlyVertex, other_props));
 
             /* grab all the vertex elements */
+
             for (j = 0; j < elem_count; j++) {
-                vlist[j] = (PlyVertex *) malloc (sizeof (PlyVertex));
-                vlist[j]->r = 1;
-                vlist[j]->g = 1;
-                vlist[j]->b = 1;
-                get_element_ply (in_ply, (void *) vlist[j]);
+                vlist = (PlyVertex *) malloc (sizeof (PlyVertex));
+                vlist->r = 1;
+                vlist->g = 1;
+                vlist->b = 1;
+                get_element_ply (in_ply, (void *) vlist);
+
+                this->N_elements = j+1;
+                this->Setxyz(vlist->x, vlist->y, vlist->z);
+                make1sommet();
+                if (has_normals) {
+                    this->Setxyz(vlist->nx, vlist->ny, vlist->nz);
+                    make1vecteur();
+                }
+                free(vlist); // Libérer la mémoire de chaque vertex
+            }
+
+            if (vert_other == NULL || face_other == NULL) {
+                // Ignorer ? faire quelque-chose ? Permet d'éviter un warning de compilation sur "variable set but not used" !
+            }
+            if (per_vertex_color) {
+                // colorisier un groupe peut-être, mais comme c'est par sommet et non par facettes ??? permet d'éviter un warning de compilation
             }
 
         } else if (equal_strings ((char*)"face", elem_name)) {
 
-            /* create a list to hold all the face elements */
-            flist = (PlyFace **) malloc (sizeof (PlyFace *) * elem_count);
             nfaces = elem_count;
 
-            printf("nfaces         %d\n",nfaces);
+            if (verbose) printf("nfaces         %d\n",nfaces);
 
             /* set up for getting face elements */
+
+            // Créer les facettes
+
+            this->N_elements = nfaces;
+            makeface();
+            makenormale();
+            makeaspect_face();
+
+            if (has_normals) {
+                makeluminance();
+                this->Objetlist[indiceObjet_courant].flat = false;
+        //        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
+        //        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
+            } else {
+                this->Objetlist[indiceObjet_courant].flat = true;
+                this->Objetlist[indiceObjet_courant].Nb_luminances= 0;
+                this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;
+            }
+
+            str.clear();
 
             PlyProperty *propE;
             propE = in_ply->elems[i]->props[0];
@@ -3887,87 +3939,34 @@ void BddInter::LoadPLY_Stanford()
 
             /* grab all the face elements */
             for (j = 0; j < elem_count; j++) {
-                flist[j] = (PlyFace *) malloc (sizeof (PlyFace));
-                get_element_ply (in_ply, (void *) flist[j]);
+                flist = (PlyFace *) malloc (sizeof (PlyFace));
+                get_element_ply (in_ply, (void *) flist);
+
+                this->N_elements = j+1;
+                int nb_som = flist->nverts;
+                Numeros.resize(nb_som);
+                for (k=0; k<nb_som; k++) Numeros[k]=(flist->verts[k]) +1;
+                this->Set_numeros(Numeros) ;
+                make1face();
+                facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[j]);
+                facette_courante->groupe     = groupe_def;
+                facette_courante->codmatface = codmatface_def;
+                if (has_normals) {
+                    make1luminance();
+                    facette_courante->flat = false;
+                } else {
+                    facette_courante->flat = true;
+                }
+                Calcul_Normale_Barycentre(indiceObjet_courant,j);
+                free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist[i])
             }
+
         } /*else
             get_other_element_ply (in_ply); */  // Inutile de lire les autres propriétés (fin du fichier) mais du coup impose que vertex et face soien en 1 et/ou 2ème position
     }
 
     close_ply(in_ply);
     free_ply (in_ply) ;
-
-    if (vert_other == NULL || face_other == NULL) {
-        // Ignorer ? faire quelque-chose ? Permet d'éviter un warning de compilation sur "variable set but not used" !
-    }
-
-    str.Printf(_T("<OBJET> %d "),0+Numero_base);
-    str += wxFileName(buffer.data()).GetName();     // Récupérer le nom du fichier sans l'extension .ply ni le path comme nom d'objet
-    makeobjet();
-
-    // Création des sommets et des facettes
-
-    this->Objetlist[indiceObjet_courant].Nb_sommets = nverts;
-    this->N_elements = nverts;
-    str.clear();
-    makesommet();
-    if (has_normals) makevecteur();
-
-    if (per_vertex_color) {
-        // colorisier un groupe peut-être, mais comme c'est par sommet et non par facettes ??? permet d'éviter un warning de compilation
-    }
-
-    for (i = 0; i < nverts; i++) {
-        this->N_elements = i+1;
-//        printf ("    %g %g %g \n", vlist[i]->x, vlist[i]->y, vlist[i]->z);
-        this->Setxyz(vlist[i]->x, vlist[i]->y, vlist[i]->z);
-        make1sommet();
-        if (has_normals) {
-            this->Setxyz(vlist[i]->nx, vlist[i]->ny, vlist[i]->nz);
-            make1vecteur();
-        }
-        free(vlist[i]); // Libérer la mémoire de chaque vertex (malloc de vlist[i])
-    }
-    free(vlist);        // Libérer la mémoire des vertex (malloc de vlist global)
-
-    this->N_elements = nfaces;
-    makeface();
-    makenormale();
-    makeaspect_face();
-
-    if (has_normals) {
-        makeluminance();
-        this->Objetlist[indiceObjet_courant].flat = false;
-//        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
-//        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
-    } else {
-        this->Objetlist[indiceObjet_courant].flat = true;
-        this->Objetlist[indiceObjet_courant].Nb_luminances= 0;
-        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;
-    }
-
-    str.clear();
-
-    for (i=0; i<nfaces; i++) {
-        this->N_elements = i+1;
-        int nb_som = flist[i]->nverts;
-        Numeros.resize(nb_som);
-        for (j=0; j<nb_som; j++) Numeros[j]=(flist[i]->verts[j]) +1;
-        this->Set_numeros(Numeros) ;
-        make1face();
-        facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[i]);
-        facette_courante->groupe     = groupe_def;
-        facette_courante->codmatface = codmatface_def;
-        if (has_normals) {
-            make1luminance();
-            facette_courante->flat = false;
-        } else {
-            facette_courante->flat = true;
-        }
-        Calcul_Normale_Barycentre(indiceObjet_courant,i);
-        free(flist[i]);     // Libérer la mémoire de chaque Ply facettes (malloc de flist[i])
-    }
-    free(flist);            // Libérer la mémoire de toutes les Ply facettes (malloc de flist global)
 
 //    type = -1;  // Provisoire
 
@@ -5618,7 +5617,6 @@ void BddInter::GenereTableauAretes(Object * objet)
 //    static bool traiter_doublons_aretes = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
                                                 // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
     bool en_cours;
-    unsigned int Arete_size_test=200000; // 1000000 Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
 
     clock_t time_0, delta_time, time_c;
     #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
@@ -5655,10 +5653,10 @@ void BddInter::GenereTableauAretes(Object * objet)
         }
     }
     Nb_avant = objet->Nb_aretes = objet->Areteslist.size();
-    if (Nb_avant >= Arete_size_test) traiter_doublons_aretes = false;
+    if (Nb_avant >= nb_aretes_test_d) traiter_doublons_aretes = false;    // Arete_size_test
     if (!traiter_doublons_aretes && !simplification_doublons_aretes) {
         if (verbose_local) {
-            printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons non effectuée\n",objet->GetName(),Nb_avant);
+            printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons d'arêtes non effectuée\n",objet->GetName(),Nb_avant);
             if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
         }
         return;
@@ -5995,14 +5993,16 @@ void BddInter::drawOpenGL() {
     char test;
     std::vector<int>   NumerosSommets;
     std::vector<float> xyz_sommet;
-//    Vector3D      np;
     std::vector<float> NormaleFacette;
     std::vector<float> NormaleSommet;
     Face    *Face_ij;
     Object  *Objet_i;
     unsigned int i=0,j=0,k=0;
+    int grpmat, groupe, material, color_max;
     bool test2 = false; // Utilisé pour faire un double passage en mode visualisation du "Sens des normales", le premier en GL_CCW et le second en GL_CW
     bool test_np, lissage_Gouraud;
+
+    unsigned int compteur=0;
 
     if (verbose)
         printf("Entrée BddInter::drawOpenGL\n");
@@ -6077,6 +6077,8 @@ Boucle:
                 }
 
                 for(j=0; j<Objet_i->Facelist.size(); j++) {
+                    compteur++;
+                    if (verbose) if ((compteur % 100000) == 0) {printf("\r%d",compteur); fflush(stdout);}
                     glPushName(j);
 
                     // Identifier les objets courants (facette, aspect, normale à la facette, luminance si Objet/facette non plat)
@@ -6107,7 +6109,6 @@ Boucle:
 
                                 // Colorisation d'un groupe ou d'un matériau particulier en bleu
                                 if (GroupeMateriau[0] != 0) {
-                                    int grpmat;
 
                                     if (GroupeMateriau[0] == 1) grpmat = Face_ij->getGroupe();        // On est dans Repérage Groupes
                                     else                        grpmat = Face_ij->getCodmatface();    // On est dans Repérage Matériaux
@@ -6120,9 +6121,9 @@ Boucle:
                                 }
 
                             } else {
-                                int groupe   = Face_ij->getGroupe();
-                                int material = Face_ij->getCodmatface();
-                                int color_max= nb_couleurs-1;
+                                groupe   = Face_ij->getGroupe();
+                                material = Face_ij->getCodmatface();
+                                color_max= nb_couleurs-1;
 //                                  printf("objet %d facette %d groupe %d material %d\n",i,j,groupe,material);
                                 if (groupe<0) {
                                     groupe=0;
@@ -6175,16 +6176,16 @@ Boucle:
                         }
 
                         NormaleFacette = Face_ij->getNormale_b();
-
-                        switch(Face_ij->Nb_Sommets_F) {
-                        case 2:                     // Lignes simples ou facette dégénérées réduites à 2 points !
-                            glBegin(GL_LINES);
-                            NumerosSommets = Face_ij->getF_sommets();
-                            for(k=0; k<NumerosSommets.size(); k++) {
-                                glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);  // ??? BUG ??? d'où vient xyz_sommet dans ce cas ????
-                            }
-                            glEnd();
-                            break;
+//// A priori, le case 2 ne sert à rien et donc le switch est inutile => Lignes mises en commentaires par ////
+////                        switch(Face_ij->Nb_Sommets_F) {
+////                        case 2:                     // Lignes simples ou facette dégénérées réduites à 2 points !
+////                            glBegin(GL_LINES);
+////                            NumerosSommets = Face_ij->getF_sommets();
+////                            for(k=0; k<NumerosSommets.size(); k++) {
+////                                glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);  /// ??? BUG ??? d'où vient xyz_sommet dans ce cas ???? Mais a priori, on ne passe pas ici !!!
+////                            }
+////                            glEnd();
+////                            break;
 
 //! NOTE : la distinction GL_TRIANGLES, GL_QUADS n'apporte pas grand chose / GL_POLYGON : c'est le même code C++ dans chaque "case"
 //!        => ne pas le dupliquer sauf si raisons de performances !
@@ -6196,7 +6197,7 @@ Boucle:
     //                        break;
     //
 
-                        default:
+////                        default:
                             glBegin(GL_POLYGON);
                             NumerosSommets = Face_ij->getF_sommets();
                             style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
@@ -6209,7 +6210,7 @@ Boucle:
                                     NormaleSommet = Objet_i->Vecteurlist[Face_ij->L_sommets[k]-1].point;
                                     test_np = Calcul_Normale_Seuillee(i,j,k,NormaleFacette,NormaleSommet) ;
                                     if (test_np) nb_normales_seuillees++;
-                                    glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]);
+                                    glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]); // NormaleSommet est un vector => glNormal3fv(NormaleSommet) ne marche pas !
                                 } else {
                                     // Facette plane
                                     glNormal3f(NormaleFacette[0],NormaleFacette[1],NormaleFacette[2]);
@@ -6225,8 +6226,8 @@ Boucle:
                                 glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                             }
                             glEnd();
-                            break;
-                        }
+////                            break;
+////                        }
                     }
                     glPopName();
                 }
@@ -6239,6 +6240,8 @@ Boucle:
             }   // Objet_i->afficher && !Objet_i->deleted
 
         }       // for(i=0; i<this->Objetlist.size(); ...
+
+        if (verbose) {printf("\r%d\n",compteur); fflush(stdout);}
 
         // Si le mode "Sens des normales" est activé : Pour forcer une seconde exploration complète des boucles sur i et j en changeant le mode glFrontFace
         if((test2 == false) && (show_CW_CCW == true) ) {
@@ -6268,8 +6271,18 @@ Boucle:
         SetPosObs(reset_zoom);
         ResetProjectionMode();
 
-        buildAllLines();
-        buildAllPoints();
+        if (GenereTableauAretes_OK && (nb_facettes < nb_facettes_test)) {       // Si arêtes non générées, faire plutôt un test sur nb_facettes et non sur nb_aretes_test
+            buildAllLines();
+        } else {                                // Ne pas générer la liste maintenant si beaucoup d'arêtes au total
+            printf("Génération de la liste OpenGL des arêtes, différée à plus tard !\n");
+            liste_aretes_OK  = false;
+        }
+        if (nb_sommets  < nb_sommets_test)  {
+            buildAllPoints();
+        } else {                                // Idem pour le nombre total de sommets
+            printf("Génération de la liste OpenGL des sommets différée à plus tard !\n");
+            liste_sommets_OK = false;
+        }
         buildBoite();
         buildRepereOXYZ();
         buildAllFacettesSelected();
@@ -6726,7 +6739,7 @@ void BddInter::showPoint() {
         if (objet_courant->afficher && !objet_courant->deleted){
             glDisable(GL_LIGHTING);
             glBegin(GL_POINTS);
-            xyz_sommet=objet_courant->Sommetlist[Smemory->sommet].getPoint();
+            xyz_sommet = objet_courant->Sommetlist[Smemory->sommet].getPoint();
             glColor3fv(rouge);
             if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
             glEnd();
@@ -6738,7 +6751,7 @@ void BddInter::showPoint() {
         if (objet_courant->afficher && !objet_courant->deleted){
             glDisable(GL_LIGHTING);
             glBegin(GL_POINTS);
-            xyz_sommet=objet_courant->Sommetlist[point_under_mouse].getPoint();
+            xyz_sommet = objet_courant->Sommetlist[point_under_mouse].getPoint();
             glColor3fv(jaune);
             if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
             glEnd();
@@ -6758,11 +6771,13 @@ void BddInter::buildAllPoints() {
     glInitNames();
     showAllPoints();
     glEndList();
+    liste_sommets_OK = true;
 }
 
 void BddInter::showAllPoints() {
     std::vector<float> xyz_sommet;
-    Object*     objet_courant;
+    Object* objet_courant;
+    Sommet* sommet_courant;
 
     glDisable(GL_LIGHTING);
 
@@ -6772,16 +6787,17 @@ void BddInter::showAllPoints() {
 //            glPushName(i+1);                    // +1 ??
             glPushName(i);
             for(unsigned int j=0; j<objet_courant->Sommetlist.size(); j++) {
-                if (objet_courant->Sommetlist[j].show == true) {
+                sommet_courant = &(objet_courant->Sommetlist[j]);
+                if (sommet_courant->show == true) {
 //                    glPushName(j+1);            // +1 permet d'identifier par le numéro du point et non l'indice dans le tableau
                     glPushName(j);
-                    xyz_sommet=objet_courant->Sommetlist[j].getPoint();
+                    xyz_sommet = sommet_courant->getPoint();
                     glPushName(-1);
                     glBegin(GL_POINTS);
-                    glColor3fv(bleu);                                                   // Point bleu standard
-                    if (objet_courant->Sommetlist[j].selected) glColor3fv(vert);        // Point vert si on le sélectionne
+                    glColor3fv(bleu);                                       // Point bleu standard
+                    if (sommet_courant->selected) glColor3fv(vert);         // Point vert si on le sélectionne
                     if (Changer_Echelle) {
-                        if (objet_courant->Sommetlist[j].selected) {
+                        if (sommet_courant->selected) {
                             xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
                             xyz_sommet[0] *= Scale_X  ; xyz_sommet[1] *= Scale_Y  ; xyz_sommet[2] *= Scale_Z ;
                             xyz_sommet[0] += Centre_X ; xyz_sommet[1] += Centre_Y ; xyz_sommet[2] += Centre_Z;
@@ -6810,6 +6826,7 @@ void BddInter::buildAllLines() {
     glInitNames();
     showAllLines();
     glEndList();
+    liste_aretes_OK = true;
 }
 
 void BddInter::showAllLines() {
@@ -6820,7 +6837,7 @@ void BddInter::showAllLines() {
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
     Aretes*  Arete;
-    Object*     objet_courant;
+    Object*  objet_courant;
 
     if (verbose)
         printf("Entrée BddInter::showAllLines\n");
@@ -6829,10 +6846,19 @@ void BddInter::showAllLines() {
     GLfloat l_width_e = l_width_n*1.05;     // Augmenter un peu la largeur de ligne pour l'antialiasing soft. Initialement 1.75
 
     glDisable(GL_LIGHTING);
+    glLineWidth(l_width_n);
+    glColor3fv(blanc);      // initialement : cyan +clair
+
+    if (antialiasing_soft) {
+        glLineWidth(l_width_e);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
+        glEnable(GL_LINE_SMOOTH);
+        glEnable(GL_BLEND);
+        glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+    }
 
     for(i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        glLineWidth(l_width_n);
         if (objet_courant->afficher && !objet_courant->deleted){
             int Nb_lignes=0;
             glPushName(i);
@@ -6843,27 +6869,25 @@ void BddInter::showAllLines() {
                 glPushName(j);
                 glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans letscheckthemouse) !
                 if (Arete->afficher) {
-                    glColor3fv(blanc);  // cyan +clair
-                    if (antialiasing_soft) {
-                        glLineWidth(l_width_e);
-                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
-                        glEnable(GL_LINE_SMOOTH);
-                        glEnable(GL_BLEND);
-                        glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
-                    }
+//                    if (antialiasing_soft) {
+//                        glLineWidth(l_width_e);
+//                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
+//                        glEnable(GL_LINE_SMOOTH);
+//                        glEnable(GL_BLEND);
+//                        glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+//                    }
                     glBegin(GL_LINES);
-                    xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
-                    glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
-//                    xyz_sommet = objet_courant->Areteslist[j].point_b;
-                    xyz_sommet = objet_courant->Sommetlist[Arete->ind_b].getPoint();
-                    glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+                        xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
+                        glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
+                        xyz_sommet = objet_courant->Sommetlist[Arete->ind_b].getPoint();
+                        glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                     glEnd();
-                    if (antialiasing_soft) {
-                        glHint(GL_LINE_SMOOTH_HINT,GL_DONT_CARE);
-                        glDisable(GL_LINE_SMOOTH);
-                        glDisable(GL_BLEND);
-                        glLineWidth(l_width_n);
-                    }
+//                    if (antialiasing_soft) {
+//                        glHint(GL_LINE_SMOOTH_HINT,GL_DONT_CARE);
+//                        glDisable(GL_LINE_SMOOTH);
+//                        glDisable(GL_BLEND);
+//                        glLineWidth(l_width_n);
+//                    }
                 }
                 glPopName();
                 glPopName();
@@ -6871,8 +6895,14 @@ void BddInter::showAllLines() {
             if (verbose) printf("Nombre de lignes à tracer : %d\n",Nb_lignes);
         }
         glPopName();
-        glLineWidth(l_width_n); // Par précaution
     }
+    if (antialiasing_soft) {
+        glHint(GL_LINE_SMOOTH_HINT,GL_DONT_CARE);
+        glDisable(GL_LINE_SMOOTH);
+        glDisable(GL_BLEND);
+        glLineWidth(l_width_n);
+    }
+    glLineWidth(l_width_n); // Par précaution
     glEnable(GL_LIGHTING);
 }
 

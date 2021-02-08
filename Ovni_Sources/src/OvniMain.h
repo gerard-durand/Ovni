@@ -400,6 +400,7 @@ class OvniFrame: public wxFrame
         void OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event);
         bool OnBdd_modifiee();
         void OnPal_modifiee();
+        void GenereListeAretes();
 
         static const long ID_BUTTON7;
         static const long ID_BUTTON8;

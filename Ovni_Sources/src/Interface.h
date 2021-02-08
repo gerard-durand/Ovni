@@ -824,7 +824,7 @@ public :
     int   svg_time_def      = 5;                    // en minutes
     bool  test_seuil_gouraud_def       = false;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
-    bool simplification_doublons_aretes_def = false;
+    bool  simplification_doublons_aretes_def = false;
 
     bool  antialiasing_soft_def        = false;     // Antialiasing par défaut non fait par OpenGL pour éviter les soucis avec cartes graphiques ne le supportant pas
     bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
@@ -873,18 +873,25 @@ public :
     bool  Raz_Selection_F          = Raz_Selection_F_def;
     bool  NotFlat                  = NotFlat_def;
     bool  msg_warning              = msg_warning_def;
-    bool traiter_doublons_aretes   = traiter_doublons_aretes_def;
+    bool  traiter_doublons_aretes  = traiter_doublons_aretes_def;
     bool  simplification_doublons_aretes = simplification_doublons_aretes_def;
 
-    GLfloat Light0Position[4];      // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
+    GLfloat Light0Position[4];              // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
     unsigned int nb_objets;
-    unsigned int nb_objets_reels;   // Pour compter seulement les objets non supprimés (calculé dans searchMin_Max)
+    unsigned int nb_objets_reels;           // Pour compter seulement les objets non supprimés (calculé dans searchMin_Max)
     unsigned int nb_sommets;
     unsigned int nb_facettes;
     unsigned int nb_aretes;
-    unsigned int nb_3points;
-    unsigned int nb_4points;
+    unsigned int nb_sommets_test =500000;   // Si le nombre total de sommets dépasse cette valeur, on ne génnère pas d'emblée la liste OpenGL des sommets
+    unsigned int nb_facettes_test=500000;
+    unsigned int nb_aretes_test  =400000;   // Si le nombre total d'arêtes dépasse cette valeur, on ne génnère pas d'emblée la liste OpenGL des lignes
+    unsigned int nb_aretes_test_d=150000;   //Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
+    bool liste_sommets_OK;                  // Pour savoir si la liste OpenGL des sommets a été générée
+    bool liste_aretes_OK;                   // Pour savoir si la liste OpenGL des arêtes a été générée
+    bool GenereTableauAretes_OK;
+    unsigned int nb_3points;                // Comptage des facettes à 3 sommets
+    unsigned int nb_4points;                // Comptage des facettes à 4 sommets et +
     unsigned int nb_sommets_max;
     unsigned int numero_facette_max;
     unsigned int numero_objet_max;
@@ -898,9 +905,9 @@ public :
     bool Rotation_Objets = false; // Pour activer la rotation graphique des objets dans Sélections et Déplacements / Objets / Manipulations d'Objets / Rotations
     bool Changer_Echelle = false; // Pour activer la mise à l'échelle graphique des objets dans Sélections et Déplacements / Objets / Manipulations d'Objets / Mise à l'échelle
     bool Symetrie_Objets = false; // Pour activer la création par symétrisation
-    double Rot_X, Rot_Y, Rot_Z;             // Angles en degrés
-    double Scale_X, Scale_Y, Scale_Z;       // Facteurs d'échelles sur les 3 axes
-    double Centre_X, Centre_Y, Centre_Z;    // Centre de rotation du/des objets(s)
+    double Rot_X, Rot_Y, Rot_Z;                 // Angles en degrés
+    double Scale_X, Scale_Y, Scale_Z;           // Facteurs d'échelles sur les 3 axes
+    double Centre_X, Centre_Y, Centre_Z;        // Centre de rotation du/des objets(s)
     double x1_b1,x2_b1,y1_b1,y2_b1,z1_b1,z2_b1; // Boite 1 (originale)
     double x1_b2,x2_b2,y1_b2,y2_b2,z1_b2,z2_b2; // Boite 2 (symétrique)
 

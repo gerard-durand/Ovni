@@ -1569,8 +1569,12 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
     /* the kind of element we're reading currently */
     elem = plyfile->which_elem;
 
-    bool swap_endian = false;
-    if (plyfile->file_type == PLY_BINARY_BE) swap_endian = true;
+    bool swap_endian = false;                                       // Ajouts GD
+#if _WIN32
+    if (plyfile->file_type == PLY_BINARY_BE) swap_endian = true;    // OK sous Windows mais pas forcément sous Linux => ajouter une compilation conditionelle ?
+#else                                                               // Autre, donc Linux entre autres
+    if (plyfile->file_type == PLY_BINARY_LE) swap_endian = true;
+#endif
 
     /* do we need to setup for other_props? */
 

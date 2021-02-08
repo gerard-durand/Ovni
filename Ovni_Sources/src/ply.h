@@ -176,11 +176,10 @@ extern char *my_alloc();
 
 
 /* old routines */
-extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
 #if 0
 extern PlyFile *ply_write(FILE *, int, char **, int);
 extern PlyFile *ply_read(FILE *, int *, char ***);
-//extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
+extern PlyFile *ply_open_for_reading( char *, int *, char ***, int *, float *);
 extern void ply_close(PlyFile *);
 extern PlyOtherProp *ply_get_other_properties(PlyFile *, char *, int);
 #endif
