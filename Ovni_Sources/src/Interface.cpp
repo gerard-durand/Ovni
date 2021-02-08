@@ -6021,7 +6021,9 @@ void BddInter::drawOpenGL() {
 
         if (verbose) printf("Reconstruction des listes\n");
 
-        searchMin_Max();    // Pour mettre à jour les différents compteurs d'objets, facettes, points ... Met aussi à jour diagonale_save et centrage_auto
+        wxBeginBusyCursor();    // Active le curseur Busy pendant la génération des listes
+
+        searchMin_Max();        // Pour mettre à jour les différents compteurs d'objets, facettes, points ... Met aussi à jour diagonale_save et centrage_auto
         int nb_normales_seuillees = 0;      // A déclarer plutôt ailleurs, mais initialiser ici
         glDeleteLists(glliste_objets,1);    // Supprime la liste des objets
         m_gllist = glliste_objets;
@@ -6092,7 +6094,7 @@ Boucle:
 
                         if (show_CW_CCW==false) {
                             if((groupes==false)&&(materials==false)) {
-                            glColor3fv(Face_ij->color); // Etait initialisé ou modifié dans colorface
+                                glColor3fv(Face_ij->color); // Etait initialisé ou modifié dans colorface
                                 glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)  ;
                                 glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)  ;
                                 glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
@@ -6274,13 +6276,13 @@ Boucle:
         if (GenereTableauAretes_OK && (nb_facettes < nb_facettes_test)) {       // Si arêtes non générées, faire plutôt un test sur nb_facettes et non sur nb_aretes_test
             buildAllLines();
         } else {                                // Ne pas générer la liste maintenant si beaucoup d'arêtes au total
-            printf("Génération de la liste OpenGL des arêtes, différée à plus tard !\n");
+            printf("Génération de la liste OpenGL des arêtes ... différée à plus tard !\n");
             liste_aretes_OK  = false;
         }
         if (nb_sommets  < nb_sommets_test)  {
             buildAllPoints();
         } else {                                // Idem pour le nombre total de sommets
-            printf("Génération de la liste OpenGL des sommets différée à plus tard !\n");
+            printf("Génération de la liste OpenGL des sommets... différée à plus tard !\n");
             liste_sommets_OK = false;
         }
         buildBoite();
@@ -6290,9 +6292,14 @@ Boucle:
         finishdraw = true;
         m_gllist   = glliste_objets; // Déjà comme ça en principe
         Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois !
+
+        wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
+
     }   // if (m_gllist == 0)
 
     // En dehors des créations de liste => fait systématiquement
+
+    if (!wxIsBusy()) wxBeginBusyCursor();
 
     if (m_gllist == glliste_lines) {
         if (verbose) printf("Reconstruction de la liste de aretes seulement\n");
@@ -6339,6 +6346,8 @@ Boucle:
 //        printf("Facette surlignee : %d %d\n",Numero_Objet_a_Surligner, Numero_Facette_Surlignee);
         coloriserFacette(Numero_Objet_a_Surligner, Numero_Facette_Surlignee, true, jaune); // Ici tracé de la facette en jaune et des normales (si demandées)
     }
+
+    if (wxIsBusy()) wxEndBusyCursor();
 
     if (viewFps) {
         delta_time = glutGet(GLUT_ELAPSED_TIME) - timebase;

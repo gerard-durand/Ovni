@@ -1198,7 +1198,6 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
 }
 
 void OvniFrame::GenereListeAretes() {
-
     if (!Element->GenereTableauAretes_OK) {
         printf("Construction de GenereTableauAretes\n");
         for(unsigned int i=0; i<Element->Objetlist.size(); ++i) {
@@ -1375,6 +1374,7 @@ void OvniFrame::OnMenu_AddFileSelected(wxCommandEvent& event)
 void OvniFrame::Ouvrir_Fichier()
 {
     static int FilterIndex=8;
+    static bool first_time=true;
 
     if (verbose) printf("Entree OvniFrame::Ouvrir_Fichier\n");
 
@@ -1434,12 +1434,23 @@ void OvniFrame::Ouvrir_Fichier()
 
     bool Erreur_lecture = true;
 
+    if (first_time) {                                                   // Pour afficher un écran vide à fond bleu, la première fois
+        Show(true);
+        Element->m_gllist = 0;
+        Element->m_loaded = true;                                       // Faire comme si un fichier avait été chargé !
+//        Element->Refresh(true);
+        Update();
+        first_time = false;                                             // Les fois suivantes, on ne passera plus par là
+    }
+
+    wxBeginBusyCursor();
+
     if (!Nom_Fichier.IsEmpty()) {
 
         Erreur_lecture = false;
 
         s_extdef = Nom_Fichier.AfterLast(_T('.'));
-        s_extdef = s_extdef.Lower();                            // Forcer l'extension en minuscules
+        s_extdef = s_extdef.Lower();                                    // Forcer l'extension en minuscules
 
         FullPath = Nom_Fichier.BeforeLast(wxFILE_SEP_PATH) + wxFILE_SEP_PATH; //wxFileName::GetPathSeparator();
 
@@ -1528,6 +1539,8 @@ void OvniFrame::Ouvrir_Fichier()
     wxSpinEvent cmd_spin;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);  // Initialiser la valeur du spinbutton
     Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);         // Simuler un clic pour déclencher le timer de sauvegardes automatiques
+
+    wxEndBusyCursor();
 
     if (verbose) printf("Sortie OvniFrame::Ouvrir_Fichier\n");
 }
