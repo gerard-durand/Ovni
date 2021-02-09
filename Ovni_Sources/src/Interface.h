@@ -1160,8 +1160,8 @@ private :
     //opengl affichage
     void showAllPoints();
     void showAllLines();
-    void showSegment();
-    void showPoint();
+    void showSegment_Selection();
+    void showPoint_Selection();
     void buildAllPoints();
     void buildAllFacettesSelected();
 

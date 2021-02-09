@@ -1443,7 +1443,7 @@ void OvniFrame::Ouvrir_Fichier()
         first_time = false;                                             // Les fois suivantes, on ne passera plus par là
     }
 
-    wxBeginBusyCursor();
+    wxBeginBusyCursor();                                                // Active le curseur Busy
 
     if (!Nom_Fichier.IsEmpty()) {
 
@@ -1537,10 +1537,10 @@ void OvniFrame::Ouvrir_Fichier()
 ///    Element->Refresh();                                  // Pas utile ici !
 
     wxSpinEvent cmd_spin;
-    Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);  // Initialiser la valeur du spinbutton
-    Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);         // Simuler un clic pour déclencher le timer de sauvegardes automatiques
+    Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);    // Initialiser la valeur du spinbutton
+    Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);           // Simuler un clic pour déclencher le timer de sauvegardes automatiques
 
-    wxEndBusyCursor();
+    wxEndBusyCursor();                                                  // Désactive le curseur Busy
 
     if (verbose) printf("Sortie OvniFrame::Ouvrir_Fichier\n");
 }

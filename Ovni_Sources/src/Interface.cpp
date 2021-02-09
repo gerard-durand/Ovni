@@ -633,8 +633,8 @@ void BddInter::Resize() {
 //    OnPaint(event);
 //}
 
-//void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) ) {
-void BddInter::OnPaint( wxPaintEvent& event )
+void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
+//void BddInter::OnPaint( wxPaintEvent& event )
 {
     float   quat[4];
     GLfloat m[4][4];
@@ -743,6 +743,7 @@ void BddInter::OnPaint( wxPaintEvent& event )
 
     // Swap
     SwapBuffers();
+//    glFlush();
 
 //    event.Skip(); // ne pas faire si on a mis WXUNUSED(event) dans la déclaration de OnPaint
                     // si on met event, le Skip ne trace pas tout (ou seulement après avoir bougé la souris par ex !)
@@ -1080,7 +1081,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
-                        m_gllist = glliste_points;// Reconstruire toute la liste de points
+                        m_gllist = glliste_points;              // Reconstruire toute la liste de points
                         if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
@@ -6003,6 +6004,7 @@ void BddInter::drawOpenGL() {
     bool test_np, lissage_Gouraud;
 
     unsigned int compteur=0;
+    float couleurs_svg[4];
 
     if (verbose)
         printf("Entrée BddInter::drawOpenGL\n");
@@ -6027,7 +6029,7 @@ void BddInter::drawOpenGL() {
         int nb_normales_seuillees = 0;      // A déclarer plutôt ailleurs, mais initialiser ici
         glDeleteLists(glliste_objets,1);    // Supprime la liste des objets
         m_gllist = glliste_objets;
-        glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );  /// Si seulement GL_COMPILE, la sélection de facettes via clic milieu souris est en bleu au lieu de vert ! Pourquoi ?
+        glNewList( glliste_objets, GL_COMPILE);
         if (MPanel->activer_transparence) {
             glEnable(GL_BLEND);
             glDepthMask(GL_FALSE);
@@ -6299,7 +6301,7 @@ Boucle:
 
     // En dehors des créations de liste => fait systématiquement
 
-    if (!wxIsBusy()) wxBeginBusyCursor();
+    if (!wxIsBusy()) wxBeginBusyCursor();   // N'activer le curseur Busy que s'il ne l'est pas déjà
 
     if (m_gllist == glliste_lines) {
         if (verbose) printf("Reconstruction de la liste de aretes seulement\n");
@@ -6320,34 +6322,35 @@ Boucle:
 
     if (show_plein)  {
         glCallList(glliste_objets);    // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-        if ((mode_selection == selection_facette) && (!MPanel->Bool_souder))
+        if ((mode_selection == selection_facette) && (!MPanel->Bool_souder)) {
             glCallList(glliste_select);
+        }
     }
     if (show_lines)  glCallList(glliste_lines) ;    // <=> showAllLines() mais appel direct de la liste donc bien plus rapide;
     if (show_points) {
             glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
-            showPoint();                    // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
+            showPoint_Selection();          // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
     }
     if (show_box)   glCallList(glliste_boite) ;     // <=> AffichageBoite() ""  ;
     if (show_axes)  glCallList(glliste_repere);     // <=> repereOXYZ()     ""  ;
     if (show_light) AfficherSource();               // Une liste pourrait être utile ? pas sûr !
     if (show_star)  GenereEtoile();
 
-    if (segment_surligne) showSegment();            // Pas de liste ici ; génération directe du segment surligné
+    if (segment_surligne) showSegment_Selection();          // Pas de liste ici ; génération directe du segment surligné
 
-    if (Symetrie_Objets) {              // Tracer une boîte englobante rouge autour l'objet d'origine et une cyan pour matérialiser l'objet à créer
+    if (Symetrie_Objets) {                  // Tracer une boîte englobante rouge autour l'objet d'origine et une cyan pour matérialiser l'objet à créer
         glColor3fv(rouge);
         TracerBoite(x1_b1,x2_b1,y1_b1,y2_b1,z1_b1,z2_b1);   // Boîte de l'objet d'origine
         glColor3fv(cyan);
         TracerBoite(x1_b2,x2_b2,y1_b2,y2_b2,z1_b2,z2_b2);   // Boîte de l'objet à créer par symétrie
     }
 
-    if (Facette_Surlignee) {    // Faire en dehors de la génération de liste car ici, on a une seule facette à traiter
+    if (Facette_Surlignee) {                // Faire en dehors de la génération de liste car ici, on a une seule facette à traiter
 //        printf("Facette surlignee : %d %d\n",Numero_Objet_a_Surligner, Numero_Facette_Surlignee);
         coloriserFacette(Numero_Objet_a_Surligner, Numero_Facette_Surlignee, true, jaune); // Ici tracé de la facette en jaune et des normales (si demandées)
     }
 
-    if (wxIsBusy()) wxEndBusyCursor();
+    if (wxIsBusy()) wxEndBusyCursor();      // Désactiver le curseur Busy uniquement s'il est actif
 
     if (viewFps) {
         delta_time = glutGet(GLUT_ELAPSED_TIME) - timebase;
@@ -6359,8 +6362,10 @@ Boucle:
             sprintf(Message_fps,"fps=%4.1f",fps) ;
     //	    printf("%s\n",Message_fps);
         }
-        glColor3fv(bleu);       // Ecrire en bleu le message de Frames par secondes dans l'image, en bas, à gauche.
+        glGetFloatv(GL_CURRENT_COLOR, couleurs_svg);    // Conserver l'état actuel des couleurs
+        glColor3fv(bleu);                               // Ecrire en bleu le message de Frames par secondes dans l'image, en bas, à gauche.
         output_Glut_Msg(0.005,0.01,Message_fps);
+        glColor4fv(couleurs_svg);                       // Restituer les couleurs
     }
 
     if (test_rectangle_selection) draw_rectangle_selection();   // Trace un rectangle pour sélectionner les facettes qui sont internes
@@ -6643,7 +6648,7 @@ void BddInter::buildAllFacettesSelected() {
     glDeleteLists(glliste_select,1);                                // Détruire une éventuelle liste existante de facettes sélectionnées
     if (this->ToSelect.ListeSelect.empty()) return;                 // Rien de plus à faire
 
-    glNewList(glliste_select, GL_COMPILE_AND_EXECUTE) ;             // Création d'une liste de facettes sélectionnées
+    glNewList(glliste_select, GL_COMPILE_AND_EXECUTE) ;             // Création d'une liste de facettes sélectionnées : GL_COMPILE_AND_EXECUTE indispensable
 
     if (verbose)
         printf("Reconstruction de la liste des facettes sélectionnées\n");
@@ -6738,7 +6743,7 @@ void BddInter::buildAllFacettesSelected() {
     glEndList();
 }
 
-void BddInter::showPoint() {
+void BddInter::showPoint_Selection() {
 
     std::vector<float> xyz_sommet;
     Object*     objet_courant;
@@ -6775,8 +6780,8 @@ void BddInter::buildAllPoints() {
     if (verbose)
         printf("Entrée BddInter::buildAllPoints\n");
 
-    glDeleteLists(glliste_points,1);         // Détruire une éventuelle liste de points existante
-    glNewList(glliste_points, GL_COMPILE_AND_EXECUTE) ;
+    glDeleteLists(glliste_points,1);        // Détruire une éventuelle liste de points existante
+    glNewList(glliste_points, GL_COMPILE) ; // GL_COMPILE seulement ici
     glInitNames();
     showAllPoints();
     glEndList();
@@ -6831,7 +6836,7 @@ void BddInter::buildAllLines() {
         printf("Entrée BddInter::buildAllLines\n");
 
     glDeleteLists(glliste_lines,1);         // Détruire une éventuelle liste d'arêtes existante
-    glNewList(glliste_lines, GL_COMPILE) ;  // ou GL_COMPILE_AND_EXECUTE ?
+    glNewList(glliste_lines, GL_COMPILE) ;  // GL_COMPILE seulement ici
     glInitNames();
     showAllLines();
     glEndList();
@@ -6915,7 +6920,7 @@ void BddInter::showAllLines() {
     glEnable(GL_LIGHTING);
 }
 
-void BddInter::showSegment() {
+void BddInter::showSegment_Selection() {
 
 // Version GD utilisant la génération préalable des arêtes de GenereTableauAretes.
 // Reprise de l'ancien shwAllLines, générant toutes les lignes systématiquement.
@@ -7134,8 +7139,8 @@ void BddInter::buildBoite() {
 // Peut être fait une fois, puis stocké dans une liste.
 // Réinitialiser seulement si changements dans les min et max...
 
-    glDeleteLists(glliste_boite,1); // Supprimer une éventuelle liste 4 existante
-    glNewList(glliste_boite, GL_COMPILE);
+    glDeleteLists(glliste_boite,1);         // Supprimer une éventuelle liste 4 existante
+    glNewList(glliste_boite, GL_COMPILE);   // GL_COMPILE seulement ici
 
 // Modif GD : ajustement du marquage si trop fin en x, y ou z.
     dx=dy=dz = diagonale_save*0.1 ;
@@ -7422,8 +7427,8 @@ void BddInter::setMin_Max(float x, float y, float z) {
 
 void BddInter::buildRepereOXYZ() {
 
-    glDeleteLists(glliste_repere,1); // Supprimer une éventuelle liste 5 existante
-    glNewList(glliste_repere, GL_COMPILE);
+    glDeleteLists(glliste_repere,1);        // Supprimer une éventuelle liste 5 existante
+    glNewList(glliste_repere, GL_COMPILE);  // GL_COMPILE seulement ici
     float longueur = diagonale_save*len_axe; //10.0;
 
 //printf("Tracer les axes\n");
@@ -7566,14 +7571,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
-//                buildAllPoints();             // Ne suffisait pas ici ! Il y manquait le glInitNames ?
                 glCallList(glliste_points);
-//                m_gllist = glliste_points;//0;
-//                glDeleteLists(m_gllist,1);
-//                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
-//                glInitNames();
-//                showAllPoints();
-//                glEndList();
                 face_under_mouse = -1;
                 if ((MPanel->Bool_souder) && (point_under_mouse != -1)) {
                     ToSelect.ListeSelect.clear();
@@ -7588,13 +7586,6 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 glCallList(glliste_lines);
-//                m_gllist = glliste_lines;
-////                printf("liste : %d\n",m_gllist);
-//                glDeleteLists(m_gllist,1);                    <=> buildAllLines, mais superflu. glCallList est suffisant et bien plus rapide
-//                glNewList(m_gllist, GL_COMPILE_AND_EXECUTE);
-//                glInitNames();
-//                showAllLines();
-//                glEndList();
                 line_under_mouse = -1;  // Raz du numéro d'arête survolé par la souris
                 objet_under_mouse= -1;
                 Refresh();
