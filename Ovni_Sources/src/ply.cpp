@@ -113,8 +113,8 @@ void get_stored_item( void *, int, int *, unsigned int *, double *);
 double get_item_value(char *, int);
 
 /* get binary or ascii item and store it according to ptr and type */
-void get_ascii_item(char *, int, int *, unsigned int *, double *);
-void get_binary_item(FILE *, int, int *, unsigned int *, double *);
+void get_ascii_item(char *,       int, int *, unsigned int *, double *);
+void get_binary_item(FILE *,      int, int *, unsigned int *, double *);
 void get_binary_item_swap(FILE *, int, int *, unsigned int *, double *);
 
 /* get a bunch of elements from a file */
@@ -162,12 +162,12 @@ PlyFile *ply_write(
 
     plyfile = (PlyFile *) myalloc (sizeof (PlyFile));
     plyfile->file_type = file_type;
-    plyfile->num_comments = 0;
-    plyfile->num_obj_info = 0;
+    plyfile->num_comments   = 0;
+    plyfile->num_obj_info   = 0;
     plyfile->num_elem_types = nelems;
-    plyfile->version = 1.0;
-    plyfile->fp = fp;
-    plyfile->other_elems = NULL;
+    plyfile->version        = 1.0;
+    plyfile->fp             = fp;
+    plyfile->other_elems    = NULL;
 
     /* tuck aside the names of the elements */
 
@@ -175,8 +175,8 @@ PlyFile *ply_write(
     for (i = 0; i < nelems; i++) {
         elem = (PlyElement *) myalloc (sizeof (PlyElement));
         plyfile->elems[i] = elem;
-        elem->name = strdup (elem_names[i]);
-        elem->num = 0;
+        elem->name   = strdup (elem_names[i]);
+        elem->num    = 0;
         elem->nprops = 0;
     }
 
@@ -274,7 +274,7 @@ void element_layout_ply(
 
     elem->nprops = nprops;
     elem->props = (PlyProperty **) myalloc (sizeof (PlyProperty *) * nprops);
-    elem->store_prop = (char *) myalloc (sizeof (char) * nprops);
+    elem->store_prop =    (char *) myalloc (sizeof (char) * nprops);
 
     for (i = 0; i < nprops; i++) {
         prop = (PlyProperty *) myalloc (sizeof (PlyProperty));
@@ -300,7 +300,7 @@ void ply_describe_property(
     PlyProperty *prop
 )
 {
-    PlyElement *elem;
+    PlyElement  *elem;
     PlyProperty *elem_prop;
 
     /* look for appropriate element */
@@ -376,7 +376,7 @@ void header_complete_ply(PlyFile *plyfile)
 {
     int i,j;
     FILE *fp = plyfile->fp;
-    PlyElement *elem;
+    PlyElement  *elem;
     PlyProperty *prop;
 
     fprintf (fp, "ply\n");
@@ -527,7 +527,7 @@ void put_element_ply(PlyFile *plyfile, void *elem_ptr)
             } else if (prop->is_list == PLY_STRING) { /* string */
                 char **str;
                 item = elem_data + prop->offset;
-                str = (char **) item;
+                str  = (char **) item;
                 fprintf (fp, "\"%s\"", *str);
             } else {                                /* scalar */
                 item = elem_data + prop->offset;
@@ -572,7 +572,7 @@ void put_element_ply(PlyFile *plyfile, void *elem_ptr)
                 int len;
                 char **str;
                 item = elem_data + prop->offset;
-                str = (char **) item;
+                str  = (char **) item;
 
                 /* write the length */
                 len = strlen(*str) + 1;
@@ -635,13 +635,13 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 
     plyfile = (PlyFile *) myalloc (sizeof (PlyFile));
     plyfile->num_elem_types = 0;
-    plyfile->comments = NULL;
-    plyfile->num_comments = 0;
-    plyfile->obj_info = NULL;
-    plyfile->num_obj_info = 0;
-    plyfile->fp = fp;
-    plyfile->other_elems = NULL;
-    plyfile->rule_list = NULL;
+    plyfile->comments       = NULL;
+    plyfile->num_comments   = 0;
+    plyfile->obj_info       = NULL;
+    plyfile->num_obj_info   = 0;
+    plyfile->fp             = fp;
+    plyfile->other_elems    = NULL;
+    plyfile->rule_list      = NULL;
 
     /* read and parse the file's header */
 
@@ -653,10 +653,10 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 
         /* parse words */
 
-    if (equal_strings (words[0], (char*)"format")) {
+    if (equal_strings (words[0], ( char*)"format")) {
             if (nwords != 3)
                 return (NULL);
-      if (equal_strings (words[1], (char*)"ascii"))
+      if (equal_strings (words[1],(char*)"ascii"))
                 plyfile->file_type = PLY_ASCII;
       else if (equal_strings (words[1], (char*)"binary_big_endian"))
                 plyfile->file_type = PLY_BINARY_BE;
@@ -668,13 +668,13 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 //            found_format = 1;
         } else if (equal_strings (words[0], (char*)"element"))
             add_element (plyfile, words, nwords);
-        else if (equal_strings (words[0], (char*)"property"))
+        else if (equal_strings (words[0],   (char*)"property"))
             add_property (plyfile, words, nwords);
-        else if (equal_strings (words[0], (char*)"comment"))
+        else if (equal_strings (words[0],   (char*)"comment"))
             add_comment (plyfile, orig_line);
-        else if (equal_strings (words[0], (char*)"obj_info"))
+        else if (equal_strings (words[0],   (char*)"obj_info"))
             add_obj_info (plyfile, orig_line);
-        else if (equal_strings (words[0], (char*)"end_header"))
+        else if (equal_strings (words[0],   (char*)"end_header"))
             break;
 
         /* free up words space */
@@ -849,10 +849,10 @@ void get_element_setup_ply(
         }
 
         /* store its description */
-        prop->internal_type = prop_list[i].internal_type;
-        prop->offset = prop_list[i].offset;
+        prop->internal_type  = prop_list[i].internal_type;
+        prop->offset         = prop_list[i].offset;
         prop->count_internal = prop_list[i].count_internal;
-        prop->count_offset = prop_list[i].count_offset;
+        prop->count_offset   = prop_list[i].count_offset;
 
         /* specify that the user wants this property */
         elem->store_prop[index] = STORE_PROP;
@@ -900,7 +900,7 @@ void ply_get_property(
     prop_ptr->count_offset   = prop->count_offset;
 
     /* specify that the user wants this property */
-    elem->store_prop[index] = STORE_PROP;
+    elem->store_prop[index]  = STORE_PROP;
 }
 
 
@@ -917,7 +917,7 @@ Entry:
 void ply_get_element(PlyFile *plyfile, void *elem_ptr)
 {
     if (plyfile->file_type == PLY_ASCII)
-        ascii_get_element (plyfile, (char *) elem_ptr);
+        ascii_get_element  (plyfile, (char *) elem_ptr);
     else
         binary_get_element (plyfile, (char *) elem_ptr);
 }
@@ -996,7 +996,7 @@ void setup_other_props(PlyFile *plyfile, PlyElement *elem)
             prop = elem->props[i];
 
             /* internal types will be same as external */
-            prop->internal_type = prop->external_type;
+            prop->internal_type  = prop->external_type;
             prop->count_internal = prop->count_external;
 
             /* list case */
@@ -1172,7 +1172,7 @@ PlyOtherElems *get_other_element_ply (PlyFile *plyfile)
     OtherElem *other;
 
     elem = plyfile->which_elem;
-    elem_name = elem->name;
+    elem_name  = elem->name;
     elem_count = elem->num;
 
     /* create room for the new "other" element, initializing the */
@@ -1517,7 +1517,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
             if (store_it) {
                 char *str;
                 char **str_ptr;
-                str = strdup (words[which_word++]);
+                str  = strdup (words[which_word++]);
                 item = elem_data + prop->offset;
                 str_ptr = (char **) item;
                 *str_ptr = str;
@@ -1715,6 +1715,9 @@ Exit:
 
 char **get_words(FILE *fp, int *nwords, char **orig_line)
 {
+
+// Ne fonctionne correctement que si la ligne fait moins de BIG_STRING-2 caractères => Pb avec tristrips en Ascii !
+
 #define BIG_STRING 4096
 //  int i,j;
     static char str[BIG_STRING];
@@ -2361,8 +2364,8 @@ void add_element (PlyFile *plyfile, char **words, int nwords)
 
     /* create the new element */
     elem = (PlyElement *) myalloc (sizeof (PlyElement));
-    elem->name = strdup (words[1]);
-    elem->num = atoi (words[2]);
+    elem->name = strdup(words[1]);
+    elem->num  = atoi  (words[2]);
     elem->nprops = 0;
 
     /* make room for new element in the object's list of elements */
@@ -2429,18 +2432,18 @@ void add_property (PlyFile *plyfile, char **words, int nwords)
 
     if (equal_strings (words[1], (char*)"list")) {          /* list */
         prop->count_external = get_prop_type (words[2]);
-        prop->external_type = get_prop_type (words[3]);
-        prop->name = strdup (words[4]);
-        prop->is_list = PLY_LIST;
+        prop->external_type  = get_prop_type (words[3]);
+        prop->name           = strdup (words[4]);
+        prop->is_list        = PLY_LIST;
     } else if (equal_strings (words[1], (char*)"string")) { /* string */
         prop->count_external = Int8;
-        prop->external_type = Int8;
-        prop->name = strdup (words[2]);
-        prop->is_list = PLY_STRING;
+        prop->external_type  = Int8;
+        prop->name           = strdup (words[2]);
+        prop->is_list        = PLY_STRING;
     } else {                                         /* scalar */
-        prop->external_type = get_prop_type (words[1]);
-        prop->name = strdup (words[2]);
-        prop->is_list = PLY_SCALAR;
+        prop->external_type  = get_prop_type (words[1]);
+        prop->name           = strdup (words[2]);
+        prop->is_list        = PLY_SCALAR;
     }
 
     /* add this property to the list of properties of the current element */
@@ -2780,7 +2783,7 @@ Entry:
 void get_element_ply (PlyFile *plyfile, void *elem_ptr)
 {
     if (plyfile->file_type == PLY_ASCII)
-        ascii_get_element (plyfile, (char *) elem_ptr);
+        ascii_get_element (plyfile,  (char *) elem_ptr);
     else
         binary_get_element (plyfile, (char *) elem_ptr);
 }
@@ -3175,20 +3178,20 @@ void weight_props_ply (PlyFile *ply, float weight, void *other_props)
     /* allocate space for properties and weights, if necessary */
     if (rules->max_props == 0) {
         rules->max_props = 6;
-        rules->props = (void **) myalloc (sizeof (void *) * rules->max_props);
-        rules->weights = (float *) myalloc (sizeof (float) * rules->max_props);
+        rules->props   = (void **) myalloc (sizeof (void *) * rules->max_props);
+        rules->weights = (float *) myalloc (sizeof (float)  * rules->max_props);
     }
     if (rules->nprops == rules->max_props) {
         rules->max_props *= 2;
         rules->props = (void **) realloc (rules->props,
-                                          sizeof (void *) * rules->max_props);
+                                            sizeof (void *) * rules->max_props);
         rules->weights = (float *) realloc (rules->weights,
-                                            sizeof (float) * rules->max_props);
+                                            sizeof (float)  * rules->max_props);
     }
 
     /* remember these new properties and their weights */
 
-    rules->props[rules->nprops] = other_props;
+    rules->props[rules->nprops]   = other_props;
     rules->weights[rules->nprops] = weight;
     rules->nprops++;
 }
@@ -3255,15 +3258,15 @@ void *get_new_props_ply(PlyFile *ply)
         if (elem->store_prop[i])
             continue;
 
-        prop = elem->props[i];
+        prop   = elem->props[i];
         offset = prop->offset;
-        type = prop->external_type;
+        type   = prop->external_type;
 
         /* collect together all the values we're to combine */
 
         for (j = 0; j < rules->nprops; j++) {
             data = (char *) rules->props[j];
-            ptr = (void *) (data + offset);
+            ptr  = (void *) (data + offset);
             get_stored_item ((void *) ptr, type, &int_val, &uint_val, &double_val);
             vals[j] = double_val;
         }
@@ -3317,9 +3320,9 @@ void *get_new_props_ply(PlyFile *ply)
 
         /* store the combined value */
 
-        int_val = (int) double_val;
+        int_val  = (int) double_val;
         uint_val = (unsigned int) double_val;
-        ptr = (void *) (new_data + offset);
+        ptr      = (void *) (new_data + offset);
         store_item ((char *) ptr, type, int_val, uint_val, double_val);
     }
 
@@ -3375,10 +3378,10 @@ PlyRuleList *append_prop_rule (
     }
 
     rule = (PlyRuleList *) malloc (sizeof (PlyRuleList));
-    rule->name = name;
-    rule->element = str;
+    rule->name     = name;
+    rule->element  = str;
     rule->property = str2;
-    rule->next = NULL;
+    rule->next     = NULL;
 
     /* either start rule list or append to it */
 

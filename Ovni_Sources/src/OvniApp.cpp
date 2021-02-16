@@ -33,16 +33,7 @@ bool OvniApp::OnInit() {
     snprintf(Message,1024,"Chemin de l'exécutable :\n%s\n",(const char*)appPath.utf8_str());
     printf(Message);
 ///    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
-//    wxString cmd=_T("cd ") + appPath;   // Construire une commande cd dans le répertoire d'Ovni.exe
-//    system((const char*)cmd.mb_str());               // Se placer dans le répertoire d'Ovni.exe (mais ne suffit pas pour trouver les icônes)
     wxSetWorkingDirectory(appPath);
-
-//    arg_c = wxGetApp().argc;
-//    par_0 = wxGetApp().argv[0];
-//    par_1 = wxGetApp().argv[1];
-//    printf("nb args  : %d\n",arg_c);
-//    printf("commande : %s\n",(const char *)par_0.mb_str());
-//    if (arg_c >= 2) printf("fichier  : %s\n",(const char *)par_1.mb_str());
 
     //(*AppInitialize
     bool wxsOK = true;

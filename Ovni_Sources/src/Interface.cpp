@@ -743,7 +743,6 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
     // Swap
     SwapBuffers();
-//    glFlush();
 
 //    event.Skip(); // ne pas faire si on a mis WXUNUSED(event) dans la déclaration de OnPaint
                     // si on met event, le Skip ne trace pas tout (ou seulement après avoir bougé la souris par ex !)
@@ -1762,8 +1761,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         // Touche J pour divers tests provisoires ... A supprimer donc !
         test_rectangle_selection = !test_rectangle_selection;
         printf("Mode Test ");
-        if (test_rectangle_selection)   printf("on\n");
-        else                            printf("off\n");
+        if (test_rectangle_selection) printf("on\n");
+        else                          printf("off\n");
 //        Refresh();
         break;
 
@@ -1797,7 +1796,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 val = convert_rotz_LAZ();
                 MZoomSpec->SpinCtrl_LAZ->SetValue(val);
             }
-
         }
         Refresh(false);
     }
@@ -2118,12 +2116,12 @@ void BddInter::create_bdd() {
                 if (Forcer_calcul) {
                     indiceObjet_courant = i;
                     unsigned int nb_p = objet_courant->Nb_sommets;
-                    this->N_elements = nb_p;
+                    this->N_elements  = nb_p;
                     this->str.clear();
                     makevecteur();
 
                     unsigned int nb_fac = objet_courant->Nb_facettes;
-                    this->N_elements = nb_fac;
+                    this->N_elements    = nb_fac;
                     makeluminance();
 
                     // Recopie des numéros de sommets des facettes dans luminances
@@ -2656,7 +2654,7 @@ void BddInter::LoadOBJ()
     char nom_obj[512];
     char newline='\\' ;
     unsigned int i, n, nfac, nfac_t, npoint, nb_fac, nb_p, found, first, npoint_courant ;
-    unsigned int nb_norm, nnorm ;
+    unsigned int nb_norm,  nnorm ;
     unsigned int npoint_t, nnorm_t ;
     unsigned int o=0, oo=0;		            // pour compter le nombre d'objets
     int nc;
@@ -2746,9 +2744,9 @@ void BddInter::LoadOBJ()
 
             while (fgets(s1,660,f) != NULL) {
 //                if (!strncmp(s1,"mtllib",6)) mtllib_OK = true; // Déjà fait plus tôt
-                if (!strncmp(s1,"v ", 2))  nb_p++;
-                if (!strncmp(s1,"f ", 2))  nb_fac++;
-                if (!strncmp(s1,"fo ", 3)) nb_fac++; // f et fo synonymes
+                if (!strncmp(s1,"v ", 2)) nb_p++;
+                if (!strncmp(s1,"f ", 2)) nb_fac++;
+                if (!strncmp(s1,"fo ",3)) nb_fac++; // f et fo synonymes
                 if (!strncmp(s1,"g ", 2)) {
                     tab_nom[o]=strdup(s1+2) ;
                     o++;
@@ -3046,7 +3044,7 @@ void BddInter::LoadOBJ()
                         }
                     } while (nc != EOF) ;
         //            system("pause") ;
-                    n=i ;
+                    n = i ;
 
                     Numeros.resize(n);
 
@@ -3685,7 +3683,8 @@ void BddInter::LoadPLY_Stanford()
     PlyFile *in_ply;
 
     std::vector<int> Numeros;
-    Face *facette_courante;
+    Face   *facette_courante;
+    Object *objet_courant;
 
 //    bool verbose = true;  // Version locale de verbose
 
@@ -3700,12 +3699,19 @@ void BddInter::LoadPLY_Stanford()
 
     typedef struct PlyFace {
         unsigned char nverts;    /* number of vertex indices in list */
+//        unsigned int nverts;    /* number of vertex indices in list */
         int *verts;              /* vertex index list */
         void *other_props;       /* other properties */
     } PlyFace;
 
+        typedef struct PlyTris {
+        unsigned int npts;    /* number of vertex indices in list */
+        int *verts;              /* vertex index list */
+        void *other_props;       /* other properties */
+    } PlyTris;
+
     const char *elem_names[] = { /* list of the elements in the object */
-        "vertex", "face"
+        "vertex", "face", "tristrips"
     };
 
     PlyProperty vert_props[] = { /* list of property information for a vertex */
@@ -3724,6 +3730,12 @@ void BddInter::LoadPLY_Stanford()
         {(char*)"vertex_indices", Int32, Int32, offsetof(PlyFace,verts), 1, Uint8, Uint8, offsetof(PlyFace,nverts)},
         {(char*)"vertex_index"  , Int32, Int32, offsetof(PlyFace,verts), 1, Uint8, Uint8, offsetof(PlyFace,nverts)},
     };
+
+    PlyProperty tris_props[] = { /* list of property information for a tristrips */
+        {(char*)"vertex_indices", Int32, Int32, offsetof(PlyTris,verts), 1, Uint32, Uint32, offsetof(PlyTris,npts)},
+        {(char*)"vertex_index"  , Int32, Int32, offsetof(PlyTris,verts), 1, Uint32, Uint32, offsetof(PlyTris,npts)},
+    };
+
 // En fait, "vertex_indices" et "vertex_index" sont synonymes. La norme actuelle dit "vertex_indices", mais l'autre forme semble exister dans d'anciens fichiers.
 
     /*** the PLY object ***/
@@ -3731,6 +3743,7 @@ void BddInter::LoadPLY_Stanford()
     int nverts,nfaces;
     PlyVertex *vlist;
     PlyFace   *flist;
+    PlyTris   *tlist;
 
     PlyOtherProp *vert_other,*face_other;
 
@@ -3811,6 +3824,8 @@ void BddInter::LoadPLY_Stanford()
     str.Printf(_T("<OBJET> %d "),0+Numero_base);
     str += wxFileName(buffer.data()).GetName();     // Récupérer le nom du fichier sans l'extension .ply ni le path comme nom d'objet
     makeobjet();
+
+    objet_courant = &(this->Objetlist[indiceObjet_courant]);
 
     if (verbose) printf("num_elem_types %d\n",in_ply->num_elem_types);
 
@@ -3917,13 +3932,13 @@ void BddInter::LoadPLY_Stanford()
 
             if (has_normals) {
                 makeluminance();
-                this->Objetlist[indiceObjet_courant].flat = false;
-        //        this->Objetlist[indiceObjet_courant].Nb_luminances= nfaces; // déjà fait via makeluminance
-        //        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = nverts; //  ""       via makevecteur
+                objet_courant->flat = false;
+        //        objet_courant->Nb_luminances= nfaces; // déjà fait via makeluminance
+        //        objet_courant->Nb_vecteurs  = nverts; //  ""       via makevecteur
             } else {
-                this->Objetlist[indiceObjet_courant].flat = true;
-                this->Objetlist[indiceObjet_courant].Nb_luminances= 0;
-                this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;
+                objet_courant->flat = true;
+                objet_courant->Nb_luminances= 0;
+                objet_courant->Nb_vecteurs  = 0;
             }
 
             str.clear();
@@ -3959,17 +3974,101 @@ void BddInter::LoadPLY_Stanford()
                     facette_courante->flat = true;
                 }
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
-                free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist[i])
+                free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
             }
 
-        } /*else
-            get_other_element_ply (in_ply); */  // Inutile de lire les autres propriétés (fin du fichier) mais du coup impose que vertex et face soien en 1 et/ou 2ème position
+        } else if (equal_strings ((char*)"tristrips", elem_name)) {
+
+            PlyProperty *propE;
+            propE = in_ply->elems[i]->props[0];
+            if (equal_strings ((char*)"vertex_indices", propE->name)) {
+                setup_property_ply (in_ply, &tris_props[0]);
+            } else {
+//            if (equal_strings ((char*)"vertex_index", propE->name)) { // vertex_indices et vertex_index (version ply antérieure ?) sont en fait synonymes
+                setup_property_ply (in_ply, &tris_props[1]);
+            }
+
+            for (j = 0; j < elem_count; j++) {
+                tlist = (PlyTris *) malloc (sizeof (PlyTris));
+                get_element_ply (in_ply, (void *) tlist);
+
+                int nb_som = tlist->npts;
+                printf("nb sommets tristrips = %d\n",nb_som);
+                nfaces = nb_som-2;                              // provisoire et surdimensionné !
+                printf("nfaces provisoire    = %d\n",nfaces);
+//                int compteur = 0;
+
+                this->N_elements = nfaces;
+                makeface();
+                makenormale();
+                makeaspect_face();
+
+                if (has_normals) {
+                    makeluminance();
+                    objet_courant->flat = false;
+                } else {
+                    objet_courant->flat = true;
+                    objet_courant->Nb_luminances= 0;
+                    objet_courant->Nb_vecteurs  = 0;
+                }
+
+                str.clear();
+
+                Numeros.resize(3);  // Seulement des triangles
+                // Algorithme issu de https://github.com/cnr-isti-vclab/vcglib/blob/master/wrap/io_trimesh/import_ply.h
+                int remainder=0;
+                int k,kpts;
+                kpts   = nb_som-2;
+                nfaces = 0;
+                for (k=0; k<kpts; ++k) {
+                    if (tlist->verts[k+2] == -1) {
+                        k+=2;
+						if(k%2) remainder=0;
+						else    remainder=1;
+//						compteur++;
+						continue;
+                    }
+                    if((k+remainder)%2) {
+                        Numeros[0] = tlist->verts[k+1] +1;  // <=> swap 0 <-> 1
+                        Numeros[1] = tlist->verts[k+0] +1;
+                    } else {
+                        Numeros[0] = tlist->verts[k+0] +1;
+                        Numeros[1] = tlist->verts[k+1] +1;
+                    }
+                    Numeros[2] = tlist->verts[k+2] +1;
+
+                    this->N_elements = nfaces+1;
+                    this->Set_numeros(Numeros) ;
+                    make1face();
+                    facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[nfaces]);
+                    facette_courante->groupe     = groupe_def;
+                    facette_courante->codmatface = codmatface_def;
+                    if (has_normals) {
+                        make1luminance();
+                        facette_courante->flat = false;
+                    } else {
+                        facette_courante->flat = true;
+                    }
+                    Calcul_Normale_Barycentre(indiceObjet_courant,nfaces);
+                    nfaces++;
+                }
+                printf("nfaces réel          = %d\n",nfaces);
+//                printf("compteur    : %d\n",compteur);
+                objet_courant->Facelist.resize(nfaces); // Ajuster à la taille réelle
+                objet_courant->Nb_facettes = objet_courant->Nb_normales = objet_courant->Nb_aspects = nfaces;
+                if (has_normals) objet_courant->Nb_luminances = nfaces;
+                printf("Liste des facettes redimmensionnée\n");
+                free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
+            }
+
+        }/*else
+            get_other_element_ply (in_ply); */  // Inutile de lire les autres propriétés (fin du fichier) mais du coup impose que vertex et face soient en 1 et/ou 2ème position
     }
 
     close_ply(in_ply);
     free_ply (in_ply) ;
 
-//    type = -1;  // Provisoire
+//    type = -1;
 
     m_loaded = true;
     m_gllist = 0;
@@ -3994,6 +4093,10 @@ void BddInter::LoadOFF()
     unsigned int Nb_objets;
     std::vector<int>   Numeros;
     std::vector<float> xyz_point;
+    char *cptr;          //Pointeur de chaîne de caractères
+
+ // élimination du terminateur de ligne.
+
 
     if(verbose) printf("Entree de BddInter::LoadOFF\n");
 
@@ -4047,7 +4150,15 @@ void BddInter::LoadOFF()
         for (npoint = 1 ; npoint <= nb_p ; npoint++) {
             // Lecture des x, y et z
             fgets(s1,100,f) ;
-            while (s1[0] == '#') fgets(s1,100,f);
+            while (s1[0] == '#') fgets(s1,100,f);                           // élimine les lignes de commentaires
+            cptr = strrchr(s1,'\n') ; if (cptr != nullptr) *cptr = '\0' ;   // Suppression des \n de fin de ligne
+            cptr = strrchr(s1,'\r') ; if (cptr != nullptr) *cptr = '\0' ;   // Suppression des \r de fin de ligne
+            while (strlen(s1) == 0) {                                       // élimine les lignes vides
+                fgets(s1,100,f);
+                while (s1[0] == '#') fgets(s1,100,f);
+                cptr = strrchr(s1,'\n') ; if (cptr != nullptr) *cptr = '\0' ;
+                cptr = strrchr(s1,'\r') ; if (cptr != nullptr) *cptr = '\0' ;
+            }
             sscanf(s1,"%f%f%f", &vx, &vy, &vz);
             this->N_elements = npoint;
             this->Setxyz(vx,vy,vz);
@@ -4447,7 +4558,7 @@ void BddInter::Load3DS()
 //    printf("Nodes : %d\n",nnodes);
 
 // Appel de compter_nodes plutôt que faire nb_objets = nnodes
-    o_3ds=0;
+    o_3ds = 0;
     for (p = f3ds->nodes; p != 0; p = p->next) {   // Pas forcément utile car objets construits au fur et à mesure
         compter_nodes(p);
     }
@@ -4458,7 +4569,7 @@ void BddInter::Load3DS()
 ////        printf("Nombre de nodes retenus : %d, different du nombre initial : %d\n",o_3ds,nnodes);
 //    }
 //    cel->nb_objet = o_3ds ; //meshes;
-    meshes=o_3ds;
+    meshes = o_3ds;
     printf("%d objets\n",meshes);
 
     if (meshes == 0) {
@@ -4793,7 +4904,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
                     num_mat = 1 ;
                 }
             } else {
-                found=0;
+                found = 0;
                 for (im=0 ; im< nb_mat_3ds ; im++) {
                     if (!strncmp(nom_mat_tmp,tab_mat[im],strlen(tab_mat[im]))) {
                         found = 1;      // Ce matériau est déjà dans la liste
@@ -5068,7 +5179,7 @@ void BddInter::LoadBDD() {
                         sscanf(c_ligne,"%lf%lf%lf%lf",&matrice[Nb],&matrice[Nb+1],&matrice[Nb+2],&matrice[Nb+3]);           // Les 3 suivantes contiennent 4 doubles
 //                        printf("%d %12.8f %12.8f %12.8f %12.8f\n",Nb,matrice[Nb],matrice[Nb+1],matrice[Nb+2],matrice[Nb+3]);
                     }
-                    Nb +=4;
+                    Nb += 4;
                     getline(fichierBdd,ligne); // while (ligne.back() == ' ') ligne.pop_back();    // Pour supprimer les espaces de fin
                 }
             }
@@ -6159,7 +6270,6 @@ Boucle:
                                     glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
                                 }
                             }
-
                         } else {
                             // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
                             // De plus il faut les glColor3fv(color_groupe ... ci-dessus) soient présents ! Pour éviter ce double coloriage, il faudrait traiter le sens des normales
@@ -6264,7 +6374,7 @@ Boucle:
         } else {
             modeGL = standard;
         }
-//        diagonale_save = Norme3(maxx-minx, maxy-miny, maxz-minz) ;
+
         if (MPanel->activer_transparence) {
             glDepthMask(GL_TRUE);
             glDisable(GL_BLEND);
@@ -7161,114 +7271,114 @@ void BddInter::buildBoite() {
 
     /*! maxx, maxy, maxz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max,    y_max, z_max);
-    glVertex3f(x_max-dx, y_max, z_max);
+        glVertex3f(x_max,    y_max, z_max);
+        glVertex3f(x_max-dx, y_max, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_max,    z_max);
-    glVertex3f(x_max, y_max-dy, z_max);
+        glVertex3f(x_max, y_max,    z_max);
+        glVertex3f(x_max, y_max-dy, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_max, z_max)   ;
-    glVertex3f(x_max, y_max, z_max-dz);
+        glVertex3f(x_max, y_max, z_max)   ;
+        glVertex3f(x_max, y_max, z_max-dz);
     glEnd();
 
     /*! minx, maxy, maxz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min,    y_max, z_max);
-    glVertex3f(x_min+dx, y_max, z_max);
+        glVertex3f(x_min,    y_max, z_max);
+        glVertex3f(x_min+dx, y_max, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_max,    z_max);
-    glVertex3f(x_min, y_max-dy, z_max);
+        glVertex3f(x_min, y_max,    z_max);
+        glVertex3f(x_min, y_max-dy, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_max, z_max)   ;
-    glVertex3f(x_min, y_max, z_max-dz);
+        glVertex3f(x_min, y_max, z_max)   ;
+        glVertex3f(x_min, y_max, z_max-dz);
     glEnd();
 
     /*! minx, miny, maxz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min,    y_min, z_max);
-    glVertex3f(x_min+dx, y_min, z_max);
+        glVertex3f(x_min,    y_min, z_max);
+        glVertex3f(x_min+dx, y_min, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_min,    z_max);
-    glVertex3f(x_min, y_min+dy, z_max);
+        glVertex3f(x_min, y_min,    z_max);
+        glVertex3f(x_min, y_min+dy, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_min, z_max)   ;
-    glVertex3f(x_min, y_min, z_max-dz);
+        glVertex3f(x_min, y_min, z_max)   ;
+        glVertex3f(x_min, y_min, z_max-dz);
     glEnd();
 
     /*! maxx, miny, maxz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max,    y_min, z_max);
-    glVertex3f(x_max-dx, y_min, z_max);
+        glVertex3f(x_max,    y_min, z_max);
+        glVertex3f(x_max-dx, y_min, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_min,    z_max);
-    glVertex3f(x_max, y_min+dy, z_max);
+        glVertex3f(x_max, y_min,    z_max);
+        glVertex3f(x_max, y_min+dy, z_max);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_min, z_max)   ;
-    glVertex3f(x_max, y_min, z_max-dz);
+        glVertex3f(x_max, y_min, z_max)   ;
+        glVertex3f(x_max, y_min, z_max-dz);
     glEnd();
 
     /*! minx, maxy, minz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min,    y_max, z_min);
-    glVertex3f(x_min+dx, y_max, z_min);
+        glVertex3f(x_min,    y_max, z_min);
+        glVertex3f(x_min+dx, y_max, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_max,    z_min);
-    glVertex3f(x_min, y_max-dy, z_min);
+        glVertex3f(x_min, y_max,    z_min);
+        glVertex3f(x_min, y_max-dy, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_max, z_min)   ;
-    glVertex3f(x_min, y_max, z_min+dz);
+        glVertex3f(x_min, y_max, z_min)   ;
+        glVertex3f(x_min, y_max, z_min+dz);
     glEnd();
 
     /*! maxx, maxy, minz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max,    y_max, z_min);
-    glVertex3f(x_max-dx, y_max, z_min);
+        glVertex3f(x_max,    y_max, z_min);
+        glVertex3f(x_max-dx, y_max, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_max,    z_min);
+        glVertex3f(x_max, y_max,    z_min);
     glVertex3f(x_max, y_max-dy, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_max, z_min)   ;
-    glVertex3f(x_max, y_max, z_min+dz);
+        glVertex3f(x_max, y_max, z_min)   ;
+        glVertex3f(x_max, y_max, z_min+dz);
     glEnd();
 
     /*! maxx, miny, minz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max,    y_min, z_min);
-    glVertex3f(x_max-dx, y_min, z_min);
+        glVertex3f(x_max,    y_min, z_min);
+        glVertex3f(x_max-dx, y_min, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_min,    z_min);
-    glVertex3f(x_max, y_min+dy, z_min);
+        glVertex3f(x_max, y_min,    z_min);
+        glVertex3f(x_max, y_min+dy, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_max, y_min, z_min)   ;
-    glVertex3f(x_max, y_min, z_min+dz);
+        glVertex3f(x_max, y_min, z_min)   ;
+        glVertex3f(x_max, y_min, z_min+dz);
     glEnd();
 
     /*! minx, miny, minz */
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min,    y_min, z_min);
-    glVertex3f(x_min+dx, y_min, z_min);
+        glVertex3f(x_min,    y_min, z_min);
+        glVertex3f(x_min+dx, y_min, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_min,    z_min);
-    glVertex3f(x_min, y_min+dy, z_min);
+        glVertex3f(x_min, y_min,    z_min);
+        glVertex3f(x_min, y_min+dy, z_min);
     glEnd();
     glBegin(GL_LINE_LOOP);
-    glVertex3f(x_min, y_min, z_min)   ;
-    glVertex3f(x_min, y_min, z_min+dz);
+        glVertex3f(x_min, y_min, z_min)   ;
+        glVertex3f(x_min, y_min, z_min+dz);
     glEnd();
 
     glLineWidth(1.0);
@@ -7450,21 +7560,21 @@ void BddInter::buildRepereOXYZ() {
 /* On trace les 3 axes dans des couleurs différentes */
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(255, 0, 0);      // Axe X en rouge
-    glVertex3f(0,0,0);
-    glVertex3f(longueur,0,0);
+        glColor3ub(255, 0, 0);      // Axe X en rouge
+        glVertex3f(0,0,0);
+        glVertex3f(longueur,0,0);
     glEnd();
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(0, 255, 0);      // Axe Y en vert
-    glVertex3f(0,0,0);
-    glVertex3f(0,longueur,0) ;
+        glColor3ub(0, 255, 0);      // Axe Y en vert
+        glVertex3f(0,0,0);
+        glVertex3f(0,longueur,0) ;
     glEnd();
 
     glBegin(GL_LINE_LOOP);
-    glColor3ub(0, 0, 255);      // Axe Z en bleu
-    glVertex3f(0,0,0);
-    glVertex3f(0,0,longueur);
+        glColor3ub(0, 0, 255);      // Axe Z en bleu
+        glVertex3f(0,0,0);
+        glVertex3f(0,0,longueur);
     glEnd();
 
 //    glPopName();
@@ -7513,19 +7623,19 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
     if (mode == (int)standard) {
         if (verbose) printf("standard ");
         width = width_pixel;
-        style= GL_POLYGON;          //!style plein
+        style = GL_POLYGON;             //!style plein
     } else if (mode == (int)points) {
         if (verbose) printf("points ");
         width = width_point;
-        style= GL_POINTS;           //!style points
+        style = GL_POINTS;              //!style points
     } else if (mode == (int)aretes) {
         if (verbose) printf("aretes ");
         width = width_ligne;
-        style= GL_LINE_LOOP;        //!style fils de fer
+        style = GL_LINE_LOOP;           //!style fils de fer
     } else {
         if (verbose) printf("inconnu ! ");
         width = width_pixel;
-        style= GL_POLYGON;          //!style plein
+        style = GL_POLYGON;             //!style plein
     }
     if (verbose) printf("(%d)\n",mode);
 
@@ -7750,12 +7860,12 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                             if (ToSelect.ListeSelect[0].objet != ToSelect.ListeSelect[i].objet) { // Si objets différents, créer de nouveaux sommets dans le 1er objet listé
 //                                UnSeulObjet = false;                                                              // N'a plus lieu d'être
                                 indiceObjet_courant = ToSelect.ListeSelect[i].objet;
-                                objet_courant = &(this->Objetlist[indiceObjet_courant]);                            // Objet [i] différent de l'objet [0]
-                                Sommet NewSommet = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];  // Récupère le sommet du deuxième objet
+                                objet_courant       = &(this->Objetlist[indiceObjet_courant]);                       // Objet [i] différent de l'objet [0]
+                                Sommet NewSommet    = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];// Récupère le sommet du deuxième objet
                                 objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet].selected = false;    // Marque l'ancien sommet comme non sélectionné
                                 indiceObjet_courant = ToSelect.ListeSelect[0].objet;                                // Retour à l'objet [0]
-                                objet_courant = &(this->Objetlist[indiceObjet_courant]);
-                                NewSommet.Numero = objet_courant->Sommetlist.size() +1;                             // Metrre à jour le nouveau numéro du sommet à créer
+                                objet_courant       = &(this->Objetlist[indiceObjet_courant]);
+                                NewSommet.Numero    = objet_courant->Sommetlist.size() +1;                          // Metrre à jour le nouveau numéro du sommet à créer
                                 objet_courant->Sommetlist.push_back(NewSommet);                                     // Ajout de ce nouveau sommet à l'objet [0]
                                 objet_courant->Nb_sommets++;                                                        // Mise à jour du nombre de sommets dans l'objet [0]
                                 ToSelect.ListeSelect[i].objet       = ToSelect.ListeSelect[0].objet;                // Mise à jour dans ListeSelect de objet et face_sommet
@@ -8116,7 +8226,7 @@ void BddInter::SaveTo(wxString str, int index) {
                 SaveOFF(str);
                 break;
             case 5:
-                SaveSTL(str, true);     // Appel en mode Acsii
+                SaveSTL(str, true);     // Appel en mode Ascii
                 break;
             case 6:
                 SaveSTL(str, false);    // Appel en mode binaire

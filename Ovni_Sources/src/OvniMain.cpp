@@ -1384,8 +1384,6 @@ void OvniFrame::Ouvrir_Fichier()
 
     if (New_file) {
 // Si "Tous les fichiers 3D" est en 1ère position, c'est lui qui est systématiquement sélectionné !
-//        wxString Selector = _T("Tous les fichiers 3D (*.bdd,*.3ds,*.obj,*.g3d,*.ply,*.off,*.m3d,*.dxf)|*.bdd;*.3ds;*.obj;*.g3d;*.ply;*.off;*.m3d;*.dxf|");
-//        Selector += _T("SDM Oktal (*.bdd)|*.bdd|");
         wxString Selector = _T("SDM Oktal (*.bdd)|*.bdd|");
         Selector += _T("Autodesk 3DS (*.3ds)|*.3ds|");
         Selector += _T("Wavefront (*.obj)|*.obj|");
@@ -1467,10 +1465,6 @@ void OvniFrame::Ouvrir_Fichier()
 
             Element->OK_ToSave      = true;                         // Le fichier ouvert peut être enregistré (ré-enregistré)
             Element->OK_FichierCree = false;                        // mais ne l'a pas encoré été !
-    //        if (verbose) printf("Ouvrir_fichier : avant Show\n");
-    //        Element->Show(true);                                              // Inutile ?
-    //        if (verbose) printf("Ouvrir_fichier : avant Refresh\n");
-    ///        Element->Refresh();
 
             this->Menu_SensDesNormales->Enable() ;
             this->Menu_ReOpen->Enable();                            // Activer le menu "Réouvrir"
@@ -1511,7 +1505,7 @@ void OvniFrame::Ouvrir_Fichier()
             Element->Refresh(); // Le Refresh n'a de sens que si un fichier a été ouvert
 
         }
-    } //else {
+    }
 
     if (Erreur_lecture) { // ou Nom_Fichier.IsEmpty())
 
@@ -1528,13 +1522,7 @@ void OvniFrame::Ouvrir_Fichier()
         }
     }
 
-    //this->GLCanvas->Refresh();
-    //this->GLCanvas->SwapBuffers();
-///    this->GLCanvas->Show(true);
-    //Element->Show(true);
-
     this->Menu_AddFile->Enable();                         // Activer le menu "AddFile"
-///    Element->Refresh();                                  // Pas utile ici !
 
     wxSpinEvent cmd_spin;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);    // Initialiser la valeur du spinbutton
@@ -2805,13 +2793,9 @@ void OvniFrame::OnMenuItem_ImagePpmSelected(wxCommandEvent& event)
 	fclose(f);
 
 	printf("Fichier Image : Image_Ovni.ppm de taille %d*%d OK",largeur,hauteur);
-//	sprintf(Message,"Fichier Image : Image.ppm de taille %d*%d créé",larg,haut);
-//	if (strlen(work_dir) > 0) sprintf(Message+strlen(Message)," dans\n%s",work_dir) ;
 	if (strlen(p_work_dir) > 0) printf(" dans\n%s\n", p_work_dir) ;
-//	strcat(Message,"\n") ;
-//    printf(utf8_To_ibm(Message)) ;
-	// Libérer la mémoire allouée par malloc
 
+	// Libérer la mémoire allouée par malloc
 	free(pixelsRGB) ;
 	free(nom_fic_image) ;
 }

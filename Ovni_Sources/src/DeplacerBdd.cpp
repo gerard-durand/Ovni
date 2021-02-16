@@ -136,15 +136,45 @@ void DeplacerBdd::OnButton_InverserClick(wxCommandEvent& event)
 
 void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
 {
-    BddInter *Element = MAIN->Element;
-
 /// Ne fonctionne pas toujours bien ... revoir l'ordre des opérations peut-être ...
 /// + souci avec zNear zFar ... (modifiés dans SetPosObs et utilisés dans ResetProjectionMode)
 
+    BddInter *Element = MAIN->Element;
+
+    float dx,dy,dz;
+    unsigned int o,i;
+    Object *objet_courant;
+    Sommet *sommet_i;
+    wxString str;
+
     Element->centrageRotAuto = true;
     Element->m_gllist = 0;
+//    Element->searchMin_Max();
+    dx = (Element->x_min + Element->x_max)/2;   // Centre de la boîte englobante
+    dy = (Element->y_min + Element->y_max)/2;
+    dz = (Element->z_min + Element->z_max)/2;
+
+    str.Printf(_T("%5.3f"),-dx);                // Formater les nouvelles valeurs en texte
+    TextCtrl_DeplX->SetValue(str);              // et mettre à jour les fenêtres d'entrée
+    str.Printf(_T("%5.3f"),-dy);
+    TextCtrl_DeplY->SetValue(str);
+    str.Printf(_T("%5.3f"),-dz);
+    TextCtrl_DeplZ->SetValue(str);
+
+    for (o=0; o<Element->Objetlist.size(); o++) {
+        objet_courant = &(Element->Objetlist[o]);
+        for (i=0; i<objet_courant->Nb_sommets; i++) {
+            sommet_i = &(objet_courant->Sommetlist[i]);
+            if (sommet_i->point.empty()) continue;      // Ne pas tenir compte de points vides (non utilisés a priori !)
+            sommet_i->point[0] -= dx;
+            sommet_i->point[1] -= dy;
+            sommet_i->point[2] -= dz;
+        }
+    }
+    Element->centreRot[0] -= dx; Element->centreRot[1] -= dy; Element->centreRot[2] -= dz; // centre_auto mis à jour dans searchMin_Max
     Element->searchMin_Max();
     Element->SetPosObs(true);
     Element->ResetProjectionMode();
+    Element->bdd_modifiee = true;
     Element->Refresh();
 }
