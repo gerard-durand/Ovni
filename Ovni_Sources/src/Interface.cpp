@@ -120,7 +120,7 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
     selectBuffer   = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
     this->type     = -1;
     this->m_loaded = false;
-    this->MAIN_b   = dynamic_cast<OvniFrame*>((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
+    this->MAIN_b   = dynamic_cast<OvniFrame*>(this->GetGrandParent());//((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
 //    wxSize ClientSize = this->GetSize();
 //    printf("BddInter::BddInter ClientSize X/Y %d %d\n",ClientSize.x,ClientSize.y);
     //W=ClientSize.x;
@@ -314,7 +314,7 @@ void BddInter::ResetData() {
         MScale->CheckBox_ScaleUnique->SetValue(true);
     }
     if (MSelect != nullptr) {
-        MSelect->RadioBox_TypeSelection->SetSelection(0);
+        MSelect->RadioButton_TypeSelection_Both->SetValue(true);
         TypeSelection = 0;
     }
     glDisable(GL_CULL_FACE);    // Mode compatible de TypeSelection = 0
@@ -1230,10 +1230,22 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     Face    *Facette;
     Sommet  *Sommet;
     wxString wxMessage;
+//    static bool theme_b = false;
+    int next;
+//    int nb_menus;
 
     wxMouseEvent   event_mouse;
     wxCommandEvent cmd_event;
     wxKeyEvent     key_event;
+
+//    wxColour Noir     (*wxBLACK); // Déplacé dans Interface.h, dans la partie public de BddInter (après ligne 700) mais syntaxe différente
+//    wxColour Blanc    (*wxWHITE);
+//    wxColour New_Back (*wxBLACK);//(100,100,100);
+//    wxColour New_Forg (*wxWHITE); //wxCYAN
+//    wxColour BleuC(127,255,255);
+    wxColour Back ;
+    wxColour Forg ;
+    wxColour Bleu_svg ;
 
     long evkey = event.GetKeyCode();    // pas de différence entre une minuscule et une majuscule à ce niveau
     if (evkey == 0) {
@@ -1541,7 +1553,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             MSelect->TextCtrl_NumGroupe  ->SetValue(str_reset);
             MSelect->TextCtrl_NumMateriau->SetValue(str_reset);
             MSelect->Button_Fusionner    ->Disable();
-            MSelect->RadioBox_TypeSelection->SetSelection(0);
+            MSelect->RadioButton_TypeSelection_Both->SetValue(true);
         }
 
         if (mode_selection != selection_objet) {
@@ -1764,6 +1776,177 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (test_rectangle_selection) printf("on\n");
         else                          printf("off\n");
 //        Refresh();
+        break;
+
+    case 'W':
+        theme_b = !theme_b; // Test pour Basculer du thème standard vers un thème sombre !
+
+        if (theme_b) {
+            Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour();
+            Forg    = New_Forg;
+            Back    = New_Back;
+        } else {
+            Forg    = wxNullColour;
+            Back    = wxNullColour;
+        }
+
+        this->MAIN_b->SetForegroundColour(Forg);
+        this->MAIN_b->SetBackgroundColour(Back);
+        this->MAIN_b->Button_Droite     ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_Droite     ->SetBackgroundColour(Back);
+        this->MAIN_b->Button_Gauche     ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_Gauche     ->SetBackgroundColour(Back);
+        this->MAIN_b->Button_Haut       ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_Haut       ->SetBackgroundColour(Back);
+        this->MAIN_b->Button_Bas        ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_Bas        ->SetBackgroundColour(Back);
+        this->MAIN_b->Button_ZoomPlus   ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_ZoomPlus   ->SetBackgroundColour(Back);
+        this->MAIN_b->Button_ZoomMoins  ->SetForegroundColour(Forg);
+        this->MAIN_b->Button_ZoomMoins  ->SetBackgroundColour(Back);
+        this->MAIN_b->Panel1            ->SetBackgroundColour(Back);
+        this->MAIN_b->StaticText1       ->SetForegroundColour(Forg);
+        this->MAIN_b->StaticText2       ->SetForegroundColour(Forg);
+//        this->MAIN_b->Button_Points     ->SetBackgroundColour(Forg);  // Ne donne qu'un petit liseré noir autour de l'icône
+
+        this->MAIN_b->MenuBar_Globale   ->SetForegroundColour(Forg);    // Ne marche pas
+        this->MAIN_b->MenuBar_Globale   ->SetBackgroundColour(Back);    //
+
+        this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Open         ->SetBackgroundColour(Back);
+        this->MAIN_b->MenuFile->Remove (this->MAIN_b->Menu_Open);
+        this->MAIN_b->MenuFile->Prepend(this->MAIN_b->Menu_Open);
+
+        this->MAIN_b->Menu_ReOpen       ->SetTextColour(Forg);
+        this->MAIN_b->Menu_ReOpen       ->SetBackgroundColour(Back);
+        this->MAIN_b->MenuFile->Remove  (this->MAIN_b->Menu_ReOpen);
+        this->MAIN_b->MenuFile->Insert(1,this->MAIN_b->Menu_ReOpen);
+//            nb_menus = this->MAIN_b->MenuFile->GetMenuItemCount();
+        next = 2;
+//            if (nb_menus > 13) {
+        if (this->MAIN_b->Menu_ReOpen3ds != nullptr) {
+            this->MAIN_b->Menu_ReOpen3ds->SetTextColour(Forg);
+            this->MAIN_b->Menu_ReOpen3ds->SetBackgroundColour(Back);
+            this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_ReOpen3ds);
+            this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_ReOpen3ds);
+        }
+        this->MAIN_b->Menu_AddFile      ->SetTextColour(Forg);
+        this->MAIN_b->Menu_AddFile      ->SetBackgroundColour(Back);
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_AddFile);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_AddFile);
+
+        this->MAIN_b->Menu_Enregistrer  ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Enregistrer  ->SetBackgroundColour(Back);
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Enregistrer);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Enregistrer);
+
+        this->MAIN_b->Menu_Enregistrer_Sous  ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Enregistrer_Sous  ->SetBackgroundColour(Back);
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Enregistrer_Sous);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Enregistrer_Sous);
+
+        this->MAIN_b->Menu_Proprietes   ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Proprietes   ->SetBackgroundColour(Back);
+        next++;
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Proprietes);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Proprietes);
+        this->MAIN_b->Menu_Preferences  ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Preferences  ->SetBackgroundColour(Back);
+        next++;
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Preferences);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Preferences);
+        this->MAIN_b->Menu_Hardware3D   ->SetTextColour(Forg);
+        this->MAIN_b->Menu_Hardware3D   ->SetBackgroundColour(Back);
+        next++;
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Hardware3D);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Hardware3D);
+        this->MAIN_b->MenuItem_Quitter  ->SetTextColour(Forg);
+        this->MAIN_b->MenuItem_Quitter  ->SetBackgroundColour(Back);
+        next++;
+        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->MenuItem_Quitter);
+        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->MenuItem_Quitter);
+
+//            this->MAIN_b->MenuItem_Quitter->SetTextColour(wxColour(255,0,0));
+        if (theme_b)
+            this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);
+        else
+            this->MAIN_b->Slider_z->SetForegroundColour(Bleu_svg);
+
+        this->MAIN_b->StatusBar1  ->SetBackgroundColour(Back);
+
+        this->MSelect->SetForegroundColour(Forg);
+        this->MSelect->SetBackgroundColour(Back);
+        if (theme_b) {
+            this->MSelect->StaticText1              ->SetForegroundColour(New_Back);    // <=> *wxBLACK (en fait sur ces items, Forg/Back inversés)
+            this->MSelect->StaticText1              ->SetBackgroundColour(New_Forg);    // <=> *wxWHITE
+            this->MSelect->StaticText2              ->SetForegroundColour(New_Back);
+            this->MSelect->StaticText2              ->SetBackgroundColour(New_Forg);
+            this->MSelect->StaticText9              ->SetForegroundColour(New_Back);
+            this->MSelect->StaticText9              ->SetBackgroundColour(New_Forg);
+            this->MSelect->StaticText_TypeSelection ->SetForegroundColour(New_Back);
+            this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(New_Forg);
+        } else {
+            this->MSelect->StaticText1              ->SetForegroundColour(Blanc);
+            this->MSelect->StaticText1              ->SetBackgroundColour(Noir);
+            this->MSelect->StaticText2              ->SetForegroundColour(Blanc);
+            this->MSelect->StaticText2              ->SetBackgroundColour(Noir);
+            this->MSelect->StaticText9              ->SetForegroundColour(Blanc);
+            this->MSelect->StaticText9              ->SetBackgroundColour(Noir);
+            this->MSelect->StaticText_TypeSelection ->SetForegroundColour(Blanc);
+            this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(Noir);
+        }
+        this->MSelect->StaticText3                  ->SetForegroundColour(Forg);
+        this->MSelect->StaticText4                  ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_Fac               ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_Selection         ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_Grp               ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_Mat               ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_NumerosUtilises   ->SetForegroundColour(Forg);
+        this->MSelect->StaticText_Changer           ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_Selection_Objets     ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_TypeSelection_Both   ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_TypeSelection_Avant  ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_TypeSelection_Arriere->SetForegroundColour(Forg);
+        this->MSelect->CheckBox_ForcerFlat              ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_Grp                  ->SetForegroundColour(Forg);
+        this->MSelect->RadioButton_Mat                  ->SetForegroundColour(Forg);
+        this->MSelect->Button_SelectionManuelleFacettes ->SetBackgroundColour(Back);
+        this->MSelect->Button_SelectionManuelleFacettes ->SetForegroundColour(Forg);
+        this->MSelect->Button_OuvrirReperage        ->SetBackgroundColour(Back);
+        this->MSelect->Button_OuvrirReperage        ->SetForegroundColour(Forg);
+        this->MSelect->Button_Appliquer             ->SetBackgroundColour(Back);
+        this->MSelect->Button_Appliquer             ->SetForegroundColour(Forg);
+        this->MSelect->Button_InverserNormales      ->SetBackgroundColour(Back);
+        this->MSelect->Button_InverserNormales      ->SetForegroundColour(Forg);
+        this->MSelect->Button_UndoNormales          ->SetBackgroundColour(Back);
+        this->MSelect->Button_UndoNormales          ->SetForegroundColour(Forg);
+        this->MSelect->Button_Delete                ->SetBackgroundColour(Back);
+        this->MSelect->Button_Delete                ->SetForegroundColour(Forg);
+        this->MSelect->Button_UndoDelete            ->SetBackgroundColour(Back);
+        this->MSelect->Button_UndoDelete            ->SetForegroundColour(Forg);
+        this->MSelect->Button_InverserParcours      ->SetBackgroundColour(Back);
+        this->MSelect->Button_InverserParcours      ->SetForegroundColour(Forg);
+        this->MSelect->Button_Masquer               ->SetBackgroundColour(Back);
+        this->MSelect->Button_Masquer               ->SetForegroundColour(Forg);
+        this->MSelect->Button_UndoMasquer           ->SetBackgroundColour(Back);
+        this->MSelect->Button_UndoMasquer           ->SetForegroundColour(Forg);
+        this->MSelect->Button_Reafficher            ->SetBackgroundColour(Back);
+        this->MSelect->Button_Reafficher            ->SetForegroundColour(Forg);
+        this->MSelect->Button_Centrer               ->SetBackgroundColour(Back);
+        this->MSelect->Button_Centrer               ->SetForegroundColour(Forg);
+        this->MSelect->Button_Manipulations         ->SetBackgroundColour(Back);
+        this->MSelect->Button_Manipulations         ->SetForegroundColour(Forg);
+        this->MSelect->Button_Etendre               ->SetBackgroundColour(Back);
+        this->MSelect->Button_Etendre               ->SetForegroundColour(Forg);
+        this->MSelect->Button_Quitter               ->SetBackgroundColour(Back);
+        this->MSelect->Button_Quitter               ->SetForegroundColour(Forg);
+        this->MSelect->Button_Fusionner             ->SetBackgroundColour(Back);
+        this->MSelect->Button_Fusionner             ->SetForegroundColour(Forg);
+//            this->MAIN_b->SetMenuBar(this->MAIN_b->MenuBar_Globale);
+        this->MSelect->Refresh();
+        this->MAIN_b ->Refresh();
         break;
 
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
@@ -8077,7 +8260,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 wxString str_grpmat;
                 str_grpmat.clear();
                 auto it = listeGroupes.begin();;
-                if (MSelect->RadioBox_GrpMat->GetSelection() == 0) {
+                if (MSelect->RadioButton_Grp->GetValue()) {
                     // Groupe est sélectionné
                     n_val = listeGroupes.size();
 //                    it = listeGroupes.begin();
@@ -8087,7 +8270,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         str.Printf(_T(", %d"), *it++);
                         str_grpmat += str;
                     }
-                } else {
+                } else {    // <=> MSelect->RadioButton_Mat->GetValue()
                     //Matériau est sélectionné
                     n_val = listeMateriaux.size();
                     it = listeMateriaux.begin();

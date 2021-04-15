@@ -8,21 +8,26 @@
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
 		<handler function="OnClose" entry="EVT_CLOSE" />
-		<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox_Selection" member="yes">
-			<label></label>
-			<content>
-				<item>Points           </item>
-				<item>Facettes           </item>
-				<item>Objets     </item>
-			</content>
-			<default>1</default>
-			<pos>0,8</pos>
-			<size>280,40</size>
-			<style>wxRA_VERTICAL</style>
-			<handler function="OnRadioBox_SelectionSelect" entry="EVT_RADIOBOX" />
+		<object class="wxRadioButton" name="ID_RADIOBUTTON3" variable="RadioButton_Selection_Points" member="yes">
+			<label>Points</label>
+			<pos>8,24</pos>
+			<style>wxRB_GROUP</style>
+			<handler function="OnRadioButton_SelectionSelect" entry="EVT_RADIOBUTTON" />
+		</object>
+		<object class="wxRadioButton" name="ID_RADIOBUTTON4" variable="RadioButton_Selection_Facettes" member="yes">
+			<label>Facettes</label>
+			<selected>1</selected>
+			<pos>108,24</pos>
+			<handler function="OnRadioButton_SelectionSelect" entry="EVT_RADIOBUTTON" />
+		</object>
+		<object class="wxRadioButton" name="ID_RADIOBUTTON5" variable="RadioButton_Selection_Objets" member="yes">
+			<label>Objets</label>
+			<pos>208,24</pos>
+			<handler function="OnRadioButton_SelectionSelect" entry="EVT_RADIOBUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Mode de Sélection</label>
+			<pos>0,0</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
@@ -114,16 +119,17 @@
 			<size>112,24</size>
 			<style>wxTE_RIGHT</style>
 		</object>
-		<object class="wxRadioBox" name="ID_RADIOBOX2" variable="RadioBox_GrpMat" member="yes">
-			<label></label>
-			<content>
-				<item>Groupe      </item>
-				<item>Matériau</item>
-			</content>
-			<pos>56,284</pos>
-			<size>160,40</size>
-			<style>wxRA_VERTICAL</style>
-			<handler function="OnRadioBox_GrpMatSelect" entry="EVT_RADIOBOX" />
+		<object class="wxRadioButton" name="ID_RADIOBUTTON1" variable="RadioButton_Grp" member="yes">
+			<label>Groupe</label>
+			<selected>1</selected>
+			<pos>64,304</pos>
+			<style>wxRB_GROUP</style>
+			<handler function="OnRadioButton_GrpMatSelect" entry="EVT_RADIOBUTTON" />
+		</object>
+		<object class="wxRadioButton" name="ID_RADIOBUTTON2" variable="RadioButton_Mat" member="yes">
+			<label>Matériau</label>
+			<pos>136,304</pos>
+			<handler function="OnRadioButton_GrpMatSelect" entry="EVT_RADIOBUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT9" variable="StaticText9" member="yes">
 			<label>Modifier la sélection</label>
@@ -226,17 +232,22 @@
 			<size>232,24</size>
 			<handler function="OnButton_ManipulationsClick" entry="EVT_BUTTON" />
 		</object>
-		<object class="wxRadioBox" name="ID_RADIOBOX3" variable="RadioBox_TypeSelection" member="yes">
-			<label></label>
-			<content>
-				<item>Les 2 faces</item>
-				<item>Faces avant</item>
-				<item>Faces arrière</item>
-			</content>
-			<pos>0,628</pos>
-			<size>280,42</size>
-			<style>wxRA_VERTICAL</style>
-			<handler function="OnRadioBox_TypeSelectionSelect" entry="EVT_RADIOBOX" />
+		<object class="wxRadioButton" name="ID_RADIOBUTTON6" variable="RadioButton_TypeSelection_Both" member="yes">
+			<label>Les 2 faces</label>
+			<selected>1</selected>
+			<pos>8,648</pos>
+			<style>wxRB_GROUP</style>
+			<handler function="OnRadioButton_TypeSelectionSelect" entry="EVT_RADIOBUTTON" />
+		</object>
+		<object class="wxRadioButton" name="ID_RADIOBUTTON7" variable="RadioButton_TypeSelection_Avant" member="yes">
+			<label>Faces avant</label>
+			<pos>96,648</pos>
+			<handler function="OnRadioButton_TypeSelectionSelect" entry="EVT_RADIOBUTTON" />
+		</object>
+		<object class="wxRadioButton" name="ID_RADIOBUTTON8" variable="RadioButton_TypeSelection_Arriere" member="yes">
+			<label>Faces arrière</label>
+			<pos>184,648</pos>
+			<handler function="OnRadioButton_TypeSelectionSelect" entry="EVT_RADIOBUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT12" variable="StaticText_TypeSelection" member="yes">
 			<label>Type de Sélection</label>

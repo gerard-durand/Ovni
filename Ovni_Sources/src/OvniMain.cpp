@@ -263,14 +263,14 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     Panel1->SetMinSize(wxSize(-1,25));
-    Button_ZoomPlus  = new wxButton(Panel1,  ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    Button_ZoomMoins = new wxButton(Panel1,  ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    StaticText1   = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,5), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-    StaticText2   = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,5), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    Button_Gauche = new wxButton(Panel1,     ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
-    Button_Droite = new wxButton(Panel1,     ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    Button_Haut   = new wxButton(Panel1,     ID_BUTTON5, _T("Haut"),   wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
-    Button_Bas    = new wxButton(Panel1,     ID_BUTTON6, _T("Bas"),    wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,5), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    Button_ZoomPlus = new wxButton(Panel1, ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Button_ZoomMoins = new wxButton(Panel1, ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,5), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    Button_Gauche = new wxButton(Panel1, ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    Button_Droite = new wxButton(Panel1, ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    Button_Haut = new wxButton(Panel1, ID_BUTTON5, _T("Haut"), wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    Button_Bas = new wxButton(Panel1, ID_BUTTON6, _T("Bas"), wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
     BoxSizer1->Add(Panel1, 0, wxALL|wxEXPAND, 0);
     int GLCanvasAttributes_1[] = {
         WX_GL_RGBA,
@@ -296,7 +296,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1->Add(GLCanvas, 1, wxALL|wxEXPAND, 0);
     Panel_Sliders = new wxPanel(this, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL2"));
     BoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    Slider_x  = new wxSlider(Panel_Sliders, ID_SLIDER_X, 0, 0, 360, wxDefaultPosition, wxDefaultSize, wxSL_AUTOTICKS|wxSL_LABELS, wxDefaultValidator, _T("ID_SLIDER_X"));
+    Slider_x = new wxSlider(Panel_Sliders, ID_SLIDER_X, 0, 0, 360, wxDefaultPosition, wxDefaultSize, wxSL_AUTOTICKS|wxSL_LABELS, wxDefaultValidator, _T("ID_SLIDER_X"));
     Slider_x->SetTickFreq(30);
     Slider_x->SetForegroundColour(wxColour(255,0,0));
     Slider_x->SetHelpText(_T("Axe Rouge"));
@@ -317,7 +317,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1->Add(Panel_Sliders, 0, wxALL|wxEXPAND, 0);
     SetSizer(BoxSizer1);
     MenuBar_Globale = new wxMenuBar();
-    MenuFile  = new wxMenu();
+    MenuFile = new wxMenu();
     Menu_Open = new wxMenuItem(MenuFile, idOpenFile, _T("Ouvrir"), _T("Ouvrir un fichier de bdd"), wxITEM_NORMAL);
     MenuFile->Append(Menu_Open);
     Menu_ReOpen = new wxMenuItem(MenuFile, idReopenFile, _T("Réouvrir"), _T("Réouvre le fichier tel qu\'il est sur le disque"), wxITEM_NORMAL);
@@ -414,7 +414,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Reperage->AppendSeparator();
     Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
     Menu_Reperage->Append(Menu_SensDesNormales);
-    Menu_SensDesNormales->Enable(false);
     Menu_Reperage->AppendSeparator();
     Menu_Reperage_Couleurs_Facettes = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_facettes, _T("Couleurs facettes"), wxEmptyString, wxITEM_CHECK);
     Menu_Reperage->Append(Menu_Reperage_Couleurs_Facettes);
@@ -513,42 +512,42 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1->SetSizeHints(this);
     Center();
 
-    Connect(ID_BUTTON1,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
-    Connect(ID_BUTTON2,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
-    Connect(ID_BUTTON3,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
-    Connect(ID_BUTTON4,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
-    Connect(ID_BUTTON5,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
-    Connect(ID_BUTTON6,  wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
+    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
+    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
+    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
+    Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
+    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
     GLCanvas->Connect(wxEVT_PAINT,(wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint,0,this);
-    Connect(ID_SLIDER_X, wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
-    Connect(ID_SLIDER_X, wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
-    Connect(ID_SLIDER_Y, wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
-    Connect(ID_SLIDER_Y, wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
-    Connect(ID_SLIDER_Z, wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
-    Connect(ID_SLIDER_Z, wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
-    Connect(idOpenFile,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OpenSelected);
+    Connect(ID_SLIDER_X,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
+    Connect(ID_SLIDER_X,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
+    Connect(ID_SLIDER_Y,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
+    Connect(ID_SLIDER_Y,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
+    Connect(ID_SLIDER_Z,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
+    Connect(ID_SLIDER_Z,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
+    Connect(idOpenFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OpenSelected);
     Connect(idReopenFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReOpenSelected);
-    Connect(idAddFile,   wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AddFileSelected);
-    Connect(idSaveFile,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerSelected);
+    Connect(idAddFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AddFileSelected);
+    Connect(idSaveFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerSelected);
     Connect(idSaveFileAs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Enregistrer_Sous);
     Connect(idProperties,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ProprietesSelected);
-    Connect(idPrefs,     wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PreferencesSelected);
-    Connect(idHardware,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Hardware3DSelected);
-    Connect(idMenuQuit,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnQuit);
-    Connect(menu_Affichage_Points, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
+    Connect(idPrefs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PreferencesSelected);
+    Connect(idHardware,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Hardware3DSelected);
+    Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnQuit);
+    Connect(menu_Affichage_Points,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
     Connect(menu_Affichage_Filaire,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_FilaireSelected);
-    Connect(menu_Affichage_Plein,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
-    Connect(menu_Affichage_Axes,   wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
-    Connect(menu_Affichage_Boite,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
-    Connect(menu_Affichage_Source, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
-    Connect(ID_MENUITEM1, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OrigineSelected);
-    Connect(ID_MENUITEM2, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeFaceSelected);
-    Connect(ID_MENUITEM3, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeProfilSelected);
-    Connect(ID_MENUITEM4, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeDessusSelected);
-    Connect(ID_MENUITEM5, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionObservateurSelected);
-    Connect(ID_MENUITEM6, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZoomSpecifiqueSelected);
-    Connect(ID_MENUITEM7, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CentreRotationSelected);
-    Connect(ID_MENUITEM8, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionSourceSelected);
+    Connect(menu_Affichage_Plein,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
+    Connect(menu_Affichage_Axes,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
+    Connect(menu_Affichage_Boite,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
+    Connect(menu_Affichage_Source,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
+    Connect(ID_MENUITEM1,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OrigineSelected);
+    Connect(ID_MENUITEM2,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeFaceSelected);
+    Connect(ID_MENUITEM3,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeProfilSelected);
+    Connect(ID_MENUITEM4,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeDessusSelected);
+    Connect(ID_MENUITEM5,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionObservateurSelected);
+    Connect(ID_MENUITEM6,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZoomSpecifiqueSelected);
+    Connect(ID_MENUITEM7,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CentreRotationSelected);
+    Connect(ID_MENUITEM8,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionSourceSelected);
     Connect(ID_MENUITEM32,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteConeSelected);
     Connect(ID_MENUITEM33,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCubeSelected);
     Connect(ID_MENUITEM34,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCylindreSelected);
@@ -557,7 +556,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_MENUITEM37,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteSphereSelected);
     Connect(ID_MENUITEM38,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteIcosaedreSelected);
     Connect(ID_MENUITEM39,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerDerniereSelected);
-    Connect(ID_MENUITEM9, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperagePointSelected);
+    Connect(ID_MENUITEM9,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperagePointSelected);
     Connect(ID_MENUITEM10,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageFacetteSelected);
     Connect(ID_MENUITEM11,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageGroupeSelected);
     Connect(ID_MENUITEM12,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageMateriauSelected);
@@ -594,10 +593,10 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_MENUITEM45,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerPaletteSelected);
     Connect(ID_MENUITEM46,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZoomAutoSelected);
     Connect(ID_MENUITEM47,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CentrageAutoSelected);
-    Connect(idMenuHelp,   wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_AideSelected);
-    Connect(idMenuAbout,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnAbout);
-    Connect(ID_TIMER1,    wxEVT_TIMER,(wxObjectEventFunction)&OvniFrame::OnTimer_SaveTrigger);
-    Connect(wxID_ANY,     wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&OvniFrame::OnClose);
+    Connect(idMenuHelp,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_AideSelected);
+    Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnAbout);
+    Connect(ID_TIMER1,wxEVT_TIMER,(wxObjectEventFunction)&OvniFrame::OnTimer_SaveTrigger);
+    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&OvniFrame::OnClose);
     //*)
 
     // Initialement créés par wxSmith (pour wxWidgets 2.8.12) ainsi que les déclarations des ID_POPUP_*
@@ -1475,6 +1474,10 @@ void OvniFrame::Ouvrir_Fichier()
                 if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
                     this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
                                                           _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
+                    if (Element->theme_b) {
+                        this->Menu_ReOpen3ds->SetTextColour(Element->New_Forg);
+                        this->Menu_ReOpen3ds->SetBackgroundColour(Element->New_Back);
+                    }
                     this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
                     this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas
                 }
@@ -1750,10 +1753,10 @@ void OvniFrame::OnOutils_Selec_DeplSelected(wxCommandEvent& event)
     if (Element != nullptr) {
         toggle_outils = !toggle_outils;
         if (toggle_outils) {
-            Selections_Panel->RadioBox_Selection->SetSelection(1) ;         // 0 = Points, 1 = Facettes, 2 = Objet
-            Selections_Panel->RadioBox_GrpMat->SetSelection(0)    ;         // 0 = Groupe, 1 = Matériau
+            Selections_Panel->RadioButton_Selection_Facettes->SetValue(true) ;
+            Selections_Panel->RadioButton_Grp->SetValue(true)    ;          // 0 = Groupe
 //            Selections_Panel->TextCtrl_NumerosUtilises->SetLabel(_T(""));   // Provisoire
-//            Selections_Panel->RadioBox_TypeSelection->SetSelection(0) ;     // 0 = 2 faces, 1 = Faces avant, 2 = Faces arrière
+//            Selections_Panel->RadioButton_TypeSelection_Both->SetValue(true) ;
 //            Element->TypeSelection = 0;
 
             Selections_Panel->Show();

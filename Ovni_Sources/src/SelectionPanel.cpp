@@ -7,7 +7,9 @@
 //*)
 
 //(*IdInit(SelectionPanel)
-const long SelectionPanel::ID_RADIOBOX1 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON3 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON4 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON5 = wxNewId();
 const long SelectionPanel::ID_STATICTEXT1 = wxNewId();
 const long SelectionPanel::ID_BUTTON1 = wxNewId();
 const long SelectionPanel::ID_BUTTON2 = wxNewId();
@@ -26,7 +28,8 @@ const long SelectionPanel::ID_TEXTCTRL10 = wxNewId();
 const long SelectionPanel::ID_TEXTCTRL4 = wxNewId();
 const long SelectionPanel::ID_TEXTCTRL5 = wxNewId();
 const long SelectionPanel::ID_TEXTCTRL6 = wxNewId();
-const long SelectionPanel::ID_RADIOBOX2 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON1 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON2 = wxNewId();
 const long SelectionPanel::ID_STATICTEXT9 = wxNewId();
 const long SelectionPanel::ID_STATICTEXT10 = wxNewId();
 const long SelectionPanel::ID_TEXTCTRL7 = wxNewId();
@@ -44,7 +47,9 @@ const long SelectionPanel::ID_BUTTON15 = wxNewId();
 const long SelectionPanel::ID_BUTTON10 = wxNewId();
 const long SelectionPanel::ID_BUTTON11 = wxNewId();
 const long SelectionPanel::ID_BUTTON12 = wxNewId();
-const long SelectionPanel::ID_RADIOBOX3 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON6 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON7 = wxNewId();
+const long SelectionPanel::ID_RADIOBUTTON8 = wxNewId();
 const long SelectionPanel::ID_STATICTEXT12 = wxNewId();
 const long SelectionPanel::ID_BUTTON13 = wxNewId();
 const long SelectionPanel::ID_BUTTON14 = wxNewId();
@@ -64,15 +69,11 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Create(parent, wxID_ANY, _T("Sélection - Déplacements"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(280,724));
 	Move(wxPoint(20,20));
-	wxString __wxRadioBoxChoices_1[3] =
-	{
-		_T("Points           "),
-		_T("Facettes           "),
-		_T("Objets     ")
-	};
-	RadioBox_Selection = new wxRadioBox(this, ID_RADIOBOX1, wxEmptyString, wxPoint(0,8), wxSize(280,40), 3, __wxRadioBoxChoices_1, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX1"));
-	RadioBox_Selection->SetSelection(1);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Mode de Sélection"), wxDefaultPosition, wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
+	RadioButton_Selection_Points = new wxRadioButton(this, ID_RADIOBUTTON3, _T("Points"), wxPoint(8,24), wxDefaultSize, wxRB_GROUP, wxDefaultValidator, _T("ID_RADIOBUTTON3"));
+	RadioButton_Selection_Facettes = new wxRadioButton(this, ID_RADIOBUTTON4, _T("Facettes"), wxPoint(108,24), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON4"));
+	RadioButton_Selection_Facettes->SetValue(true);
+	RadioButton_Selection_Objets = new wxRadioButton(this, ID_RADIOBUTTON5, _T("Objets"), wxPoint(208,24), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON5"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Mode de Sélection"), wxPoint(0,0), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
 	Button_SelectionManuelleFacettes = new wxButton(this, ID_BUTTON1, _T("Sélection manuelle"), wxPoint(8,48), wxSize(264,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
@@ -96,13 +97,9 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	TextCtrl_Selection = new wxTextCtrl(this, ID_TEXTCTRL4, wxEmptyString, wxPoint(160,200), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	TextCtrl_NumGroupe = new wxTextCtrl(this, ID_TEXTCTRL5, wxEmptyString, wxPoint(160,224), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
 	TextCtrl_NumMateriau = new wxTextCtrl(this, ID_TEXTCTRL6, wxEmptyString, wxPoint(160,248), wxSize(112,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL6"));
-	wxString __wxRadioBoxChoices_2[2] =
-	{
-		_T("Groupe      "),
-		_T("Matériau")
-	};
-	RadioBox_GrpMat = new wxRadioBox(this, ID_RADIOBOX2, wxEmptyString, wxPoint(56,284), wxSize(160,40), 2, __wxRadioBoxChoices_2, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX2"));
-	RadioBox_GrpMat->SetSelection(0);
+	RadioButton_Grp = new wxRadioButton(this, ID_RADIOBUTTON1, _T("Groupe"), wxPoint(64,304), wxDefaultSize, wxRB_GROUP, wxDefaultValidator, _T("ID_RADIOBUTTON1"));
+	RadioButton_Grp->SetValue(true);
+	RadioButton_Mat = new wxRadioButton(this, ID_RADIOBUTTON2, _T("Matériau"), wxPoint(136,304), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON2"));
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Modifier la sélection"), wxPoint(0,280), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT9"));
 	StaticText9->SetForegroundColour(wxColour(255,255,255));
 	StaticText9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
@@ -128,14 +125,10 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Reafficher = new wxButton(this, ID_BUTTON10, _T("Tout réafficher"), wxPoint(24,544), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON10"));
 	Button_Centrer = new wxButton(this, ID_BUTTON11, _T("Centrer la rotation sur la/les facettes"), wxPoint(24,568), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
 	Button_Manipulations = new wxButton(this, ID_BUTTON12, _T("Manipulations de l\'objet"), wxPoint(24,592), wxSize(232,24), 0, wxDefaultValidator, _T("ID_BUTTON12"));
-	wxString __wxRadioBoxChoices_3[3] =
-	{
-		_T("Les 2 faces"),
-		_T("Faces avant"),
-		_T("Faces arrière")
-	};
-	RadioBox_TypeSelection = new wxRadioBox(this, ID_RADIOBOX3, wxEmptyString, wxPoint(0,628), wxSize(280,42), 3, __wxRadioBoxChoices_3, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX3"));
-	RadioBox_TypeSelection->SetSelection(0);
+	RadioButton_TypeSelection_Both = new wxRadioButton(this, ID_RADIOBUTTON6, _T("Les 2 faces"), wxPoint(8,648), wxDefaultSize, wxRB_GROUP, wxDefaultValidator, _T("ID_RADIOBUTTON6"));
+	RadioButton_TypeSelection_Both->SetValue(true);
+	RadioButton_TypeSelection_Avant = new wxRadioButton(this, ID_RADIOBUTTON7, _T("Faces avant"), wxPoint(96,648), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON7"));
+	RadioButton_TypeSelection_Arriere = new wxRadioButton(this, ID_RADIOBUTTON8, _T("Faces arrière"), wxPoint(184,648), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON8"));
 	StaticText_TypeSelection = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,624), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
 	StaticText_TypeSelection->SetForegroundColour(wxColour(255,255,255));
 	StaticText_TypeSelection->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
@@ -144,11 +137,14 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Fusionner = new wxButton(this, ID_BUTTON16, _T("Fusionner les objets sélectionnés"), wxPoint(24,472), wxSize(232,23), 0, wxDefaultValidator, _T("ID_BUTTON16"));
 	Button_Fusionner->Disable();
 
-	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_SelectionSelect);
+	Connect(ID_RADIOBUTTON3,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
+	Connect(ID_RADIOBUTTON4,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
+	Connect(ID_RADIOBUTTON5,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_SelectionManuelleFacettesClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_OuvrirReperageClick);
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SelectionPanel::OnTextCtrl_NomObjetText);
-	Connect(ID_RADIOBOX2,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_GrpMatSelect);
+	Connect(ID_RADIOBUTTON1,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
+	Connect(ID_RADIOBUTTON2,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
 	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_AppliquerClick);
 	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnCheckBox_ForcerFlatClick);
 	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_InverserNormalesClick);
@@ -161,7 +157,9 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Connect(ID_BUTTON10,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_ReafficherClick);
 	Connect(ID_BUTTON11,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_CentrerClick);
 	Connect(ID_BUTTON12,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_ManipulationsClick);
-	Connect(ID_RADIOBOX3,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioBox_TypeSelectionSelect);
+	Connect(ID_RADIOBUTTON6,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
+	Connect(ID_RADIOBUTTON7,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
+	Connect(ID_RADIOBUTTON8,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
 	Connect(ID_BUTTON13,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_EtendreClick);
 	Connect(ID_BUTTON14,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_QuitterClick);
 	Connect(ID_BUTTON16,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_FusionnerClick);
@@ -184,8 +182,7 @@ void SelectionPanel::InitPanel()
     BddInter *Element = MAIN->Element;
     int TypeSelection;
 
-    switch (RadioBox_Selection->GetSelection()) {
-    case 0:
+    if (RadioButton_Selection_Points->GetValue()) {
         Element->mode_selection = Element->selection_point;
         Element->show_points = true;
 //        Element->style = GL_POINTS;
@@ -224,14 +221,19 @@ void SelectionPanel::InitPanel()
         CheckBox_ForcerFlat->Disable();
         CheckBox_ForcerFlat->SetValue(false);
 
-        RadioBox_TypeSelection  ->Disable();
-        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+        RadioButton_TypeSelection_Both   ->Disable();
+        RadioButton_TypeSelection_Avant  ->Disable();
+        RadioButton_TypeSelection_Arriere->Disable();
+//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus (il y avait un RadioBox_TypeSelection->Enable();)
+        RadioButton_TypeSelection_Avant  ->Enable();
+        RadioButton_TypeSelection_Arriere->Enable();
+        TypeSelection = Element->TypeSelection; // ou = RadioBox_TypeSelection->GetSelection()
+
         glDisable(GL_CULL_FACE);
 
-        break;
 
-    case 1:
+    } else if (RadioButton_Selection_Facettes->GetValue()) {
         Element->mode_selection = Element->selection_facette;
         Element->show_points = false;
 //        Element->style = GL_POLYGON;
@@ -268,8 +270,10 @@ void SelectionPanel::InitPanel()
         Button_Centrer->Enable();
         Button_Centrer->SetLabel(_T("Centrer la rotation sur la/les facette(s)"));
 
-        RadioBox_TypeSelection->Enable();
-        TypeSelection = RadioBox_TypeSelection->GetSelection(); // ou = Element->TypeSelection
+        RadioButton_TypeSelection_Both   ->Enable();
+        RadioButton_TypeSelection_Avant  ->Enable();
+        RadioButton_TypeSelection_Arriere->Enable();
+        TypeSelection = Element->TypeSelection; // ou initialement RadioBox_TypeSelection->GetSelection()
         if (TypeSelection > 0) {
             glEnable(GL_CULL_FACE);
             if (TypeSelection == 1)
@@ -277,17 +281,16 @@ void SelectionPanel::InitPanel()
             else glFrontFace(GL_CW) ;
         } else glDisable(GL_CULL_FACE); // Ici si == 0
 
-        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
 
         Button_Etendre->Enable();
 
         CheckBox_ForcerFlat->Enable();
         CheckBox_ForcerFlat->SetValue(false);
 
-        break;
+    } else if (RadioButton_Selection_Objets->GetValue()) {
 
-    case 2:
         Element->mode_selection = Element->selection_objet;
         // On pourrait effacer une éventuelle sélection de facettes via key_event.m_keyCode = 's'; Element->OnKeyDown(key_event);
         Element->show_points = false;
@@ -327,9 +330,11 @@ void SelectionPanel::InitPanel()
         Button_Centrer->Enable();
         Button_Centrer->SetLabel(_T("Centrer la rotation sur l'Objet/les Objets)"));
 
-        RadioBox_TypeSelection  ->Disable();
-        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+        RadioButton_TypeSelection_Both   ->Disable();
+        RadioButton_TypeSelection_Avant  ->Disable();
+        RadioButton_TypeSelection_Arriere->Disable();
+//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
+//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
         glDisable(GL_CULL_FACE);
 
         Button_Etendre->Disable();
@@ -337,18 +342,15 @@ void SelectionPanel::InitPanel()
         CheckBox_ForcerFlat->Enable(); // A voir ?
         CheckBox_ForcerFlat->SetValue(false);
 
-        break;
-
-    default:
+    } else {
         Element->mode_selection = Element->aucune;
-        break;
     }
 
-    if (RadioBox_GrpMat->GetSelection() == 0) {
+    if (RadioButton_Grp->GetValue()) {
         // Groupe sélectionné
         StaticText_Changer->SetLabel(_T("Changer le numéro de groupe"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des groupes utilisés"));
-    } else {
+    } else {    // <=> RadioButton_Mat->GetValue()
         // Matériau sélectionné
         StaticText_Changer->SetLabel(_T("Changer le numéro de matériau"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des matériaux utilisés"));
@@ -386,10 +388,10 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
         Element->OnKeyDown(key_event);                      // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
     }
     Element->mode_selection = Element->selection_facette;   // Remettre en mode sélection de facettes
-    RadioBox_Selection->SetSelection(1);                    // aussi dans l'interface
-    RadioBox_GrpMat->SetSelection(0);                       // Remettre le choix sur Groupe/Matériau sur Groupe
+    RadioButton_Selection_Facettes->SetValue(true);         // aussi dans l'interface
+    RadioButton_Grp->SetValue(true);                        // Remettre le choix sur Groupe/Matériau sur Groupe
     wxCommandEvent new_event;
-    OnRadioBox_GrpMatSelect(new_event);                     // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
+    OnRadioButton_GrpMatSelect(new_event);                  // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
     Element->Refresh();
 }
 
@@ -400,8 +402,10 @@ void SelectionPanel::OnButton_QuitterClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
+void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
 {
+// Initialement, c'était OnRadioBox_SelectionSelect avec des RadioBox_Selection->GetSelection(xx) ...
+
     BddInter *Element = MAIN->Element;
 
     wxString str_reset;
@@ -411,6 +415,10 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     Element->listeObjets.clear();
     Element->listePoints.clear();
     for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
+
+    if (RadioButton_Selection_Points  ->GetValue()) Element->TypeSelection = 0;
+    if (RadioButton_Selection_Facettes->GetValue()) Element->TypeSelection = 1;
+    if (RadioButton_Selection_Objets  ->GetValue()) Element->TypeSelection = 2;
 
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
@@ -426,14 +434,14 @@ void SelectionPanel::OnRadioBox_SelectionSelect(wxCommandEvent& event)
     key_event.m_keyCode = 'S';
     Element->OnKeyDown(key_event);      // Simule une pression sur la touche S au clavier
 
-    RadioBox_TypeSelection->SetSelection(Element->TypeSelection);   // Remet en état le bouton Radio qui peut avoir été changé via InitPanel ou ResetData (touche S)
-
     Element->m_gllist = 0;              // on pourrait éviter un reset complet sauf si on venait du mode de sélection objets
     Element->Refresh();
 }
 
-void SelectionPanel::OnRadioBox_GrpMatSelect(wxCommandEvent& event)
+void SelectionPanel::OnRadioButton_GrpMatSelect(wxCommandEvent& event)
 {
+    // Initialement, c'était OnRadioBox_GrpMatSelect avec des RadioBox_GrpMat->GetSelection(xx) ...
+
     BddInter *Element = MAIN->Element;
 
     int n_val, i;
@@ -444,7 +452,7 @@ void SelectionPanel::OnRadioBox_GrpMatSelect(wxCommandEvent& event)
     auto it = Element->listeGroupes.begin();
     str_grpmat.clear();
 
-    if (RadioBox_GrpMat->GetSelection() == 0) {
+    if (RadioButton_Grp->GetValue()) {
         // Groupe sélectionné
         StaticText_Changer->SetLabel(_T("Changer le numéro de groupe"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des groupes utilisés"));
@@ -456,7 +464,7 @@ void SelectionPanel::OnRadioBox_GrpMatSelect(wxCommandEvent& event)
             str.Printf(_T(", %d"), *it++);  // Formattage des valeurs séparées par une virgule
             str_grpmat += str;              // Concaténation des valeurs
         }
-    } else {
+    } else {    // <=> RadioButton_Mat->GetValue()
         StaticText_Changer->SetLabel(_T("Changer le numéro de matériau"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des matériaux utilisés"));
         it = Element->listeMateriaux.begin();
@@ -488,7 +496,7 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
                 Facette_courante = &(Element->Objetlist[i].Facelist[j]);
                 if (Facette_courante->deleted) continue;                    // Ne pas traiter les facettes supprimées
                 if (Facette_courante->selected) {
-                    if (RadioBox_GrpMat->GetSelection() == 0)
+                    if (RadioButton_Grp->GetValue())
                         Facette_courante->groupe     = new_GrpMat;
                     else
                         Facette_courante->codmatface = new_GrpMat;
@@ -503,7 +511,7 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
             for (j=0; j<Element->Objetlist[*it].Facelist.size(); j++) {
                 Facette_courante = &(Element->Objetlist[*it].Facelist[j]);
                 if (Facette_courante->deleted) continue;                    // Ne pas traiter les facettes supprimées
-                if (RadioBox_GrpMat->GetSelection() == 0)
+                if (RadioButton_Grp->GetValue())
                     Facette_courante->groupe     = new_GrpMat;
                 else
                     Facette_courante->codmatface = new_GrpMat;
@@ -515,7 +523,7 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     for (i=0; i<Element->Objetlist.size(); i++) {
         Element->GenereListeGroupesMateriaux(i);
     }
-    OnRadioBox_GrpMatSelect(event) ; // Simuler un clic sur Groupe/Matériau pour regénérer la liste affichée dans l'interface
+    OnRadioButton_GrpMatSelect(event) ; // Simuler un clic sur Groupe/Matériau pour regénérer la liste affichée dans l'interface
 
     Element->bdd_modifiee = true;
     Element->m_gllist = 0;
@@ -748,11 +756,18 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
     Element->MManip->Show();
 }
 
-void SelectionPanel::OnRadioBox_TypeSelectionSelect(wxCommandEvent& event)
+void SelectionPanel::OnRadioButton_TypeSelectionSelect(wxCommandEvent& event)
 {
-    BddInter *Element = MAIN->Element;
+// Initialement, c'était OnRadioBox_TypeSelectionSelect avec des RadioBox_TypeSelection->GetSelection(xx) ...
 
-    int TypeSelection = Element->TypeSelection = RadioBox_TypeSelection->GetSelection();    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
+    BddInter *Element = MAIN->Element;
+    int TypeSelection;
+
+    if (RadioButton_TypeSelection_Both   ->GetValue()) TypeSelection = 0;
+    if (RadioButton_TypeSelection_Avant  ->GetValue()) TypeSelection = 1;
+    if (RadioButton_TypeSelection_Arriere->GetValue()) TypeSelection = 2;
+
+    Element->TypeSelection = TypeSelection;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
 //    printf("Radio TypeSelection %d\n",TypeSelection);
 
     if (TypeSelection > 0) {        // Fait ici plutôt que dans drawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh

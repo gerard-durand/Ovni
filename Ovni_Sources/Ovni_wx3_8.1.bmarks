@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<BrowseTracker_layout_file>
-	<ActiveTarget name="Release_64_8.1.0" />
-	<File name="src\Interface.h" open="1" top="1" tabpos="1">
-		<Cursor position="275" topLine="0" />
-		<BrowseMarks positions="" />
-	</File>
-</BrowseTracker_layout_file>

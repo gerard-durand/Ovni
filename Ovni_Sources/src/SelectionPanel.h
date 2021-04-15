@@ -5,7 +5,7 @@
 #include <wx/button.h>
 #include <wx/checkbox.h>
 #include <wx/dialog.h>
-#include <wx/radiobox.h>
+#include <wx/radiobut.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -39,9 +39,14 @@ class SelectionPanel: public wxDialog
 		wxButton* Button_UndoMasquer;
 		wxButton* Button_UndoNormales;
 		wxCheckBox* CheckBox_ForcerFlat;
-		wxRadioBox* RadioBox_GrpMat;
-		wxRadioBox* RadioBox_Selection;
-		wxRadioBox* RadioBox_TypeSelection;
+		wxRadioButton* RadioButton_Grp;
+		wxRadioButton* RadioButton_Mat;
+		wxRadioButton* RadioButton_Selection_Facettes;
+		wxRadioButton* RadioButton_Selection_Objets;
+		wxRadioButton* RadioButton_Selection_Points;
+		wxRadioButton* RadioButton_TypeSelection_Arriere;
+		wxRadioButton* RadioButton_TypeSelection_Avant;
+		wxRadioButton* RadioButton_TypeSelection_Both;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
@@ -69,7 +74,9 @@ class SelectionPanel: public wxDialog
 	protected:
 
 		//(*Identifiers(SelectionPanel)
-		static const long ID_RADIOBOX1;
+		static const long ID_RADIOBUTTON3;
+		static const long ID_RADIOBUTTON4;
+		static const long ID_RADIOBUTTON5;
 		static const long ID_STATICTEXT1;
 		static const long ID_BUTTON1;
 		static const long ID_BUTTON2;
@@ -88,7 +95,8 @@ class SelectionPanel: public wxDialog
 		static const long ID_TEXTCTRL4;
 		static const long ID_TEXTCTRL5;
 		static const long ID_TEXTCTRL6;
-		static const long ID_RADIOBOX2;
+		static const long ID_RADIOBUTTON1;
+		static const long ID_RADIOBUTTON2;
 		static const long ID_STATICTEXT9;
 		static const long ID_STATICTEXT10;
 		static const long ID_TEXTCTRL7;
@@ -106,7 +114,9 @@ class SelectionPanel: public wxDialog
 		static const long ID_BUTTON10;
 		static const long ID_BUTTON11;
 		static const long ID_BUTTON12;
-		static const long ID_RADIOBOX3;
+		static const long ID_RADIOBUTTON6;
+		static const long ID_RADIOBUTTON7;
+		static const long ID_RADIOBUTTON8;
 		static const long ID_STATICTEXT12;
 		static const long ID_BUTTON13;
 		static const long ID_BUTTON14;
@@ -117,12 +127,10 @@ class SelectionPanel: public wxDialog
 
 		//(*Handlers(SelectionPanel)
 		void OnInit(wxInitDialogEvent& event);
-		void OnRadioBox2Select(wxCommandEvent& event);
-		void OnRadioBox1Select(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		void OnButton_QuitterClick(wxCommandEvent& event);
-		void OnRadioBox_SelectionSelect(wxCommandEvent& event);
-		void OnRadioBox_GrpMatSelect(wxCommandEvent& event);
+		void OnRadioButton_SelectionSelect(wxCommandEvent& event);
+		void OnRadioButton_GrpMatSelect(wxCommandEvent& event);
 		void OnButton_AppliquerClick(wxCommandEvent& event);
 		void OnButton_InverserNormalesClick(wxCommandEvent& event);
 		void OnButton_UndoNormalesClick(wxCommandEvent& event);
@@ -132,7 +140,7 @@ class SelectionPanel: public wxDialog
 		void OnButton_ReafficherClick(wxCommandEvent& event);
 		void OnButton_CentrerClick(wxCommandEvent& event);
 		void OnButton_ManipulationsClick(wxCommandEvent& event);
-		void OnRadioBox_TypeSelectionSelect(wxCommandEvent& event);
+		void OnRadioButton_TypeSelectionSelect(wxCommandEvent& event);
 		void OnButton_EtendreClick(wxCommandEvent& event);
 		void OnButton_UndoMasquerClick(wxCommandEvent& event);
 		void OnButton_InversionParcoursClick(wxCommandEvent& event);

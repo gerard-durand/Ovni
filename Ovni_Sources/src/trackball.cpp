@@ -94,7 +94,7 @@ vsub(const float *src1, const float *src2, float *dst)
 void
 vcopy(const float *v1, float *v2)
 {
-    register int i;
+    int i;
     for (i = 0 ; i < 3 ; i++)
         v2[i] = v1[i];
 }
@@ -287,7 +287,7 @@ add_quats(float q1[4], float q2[4], float dest[4])
 void
 normalize_quat(float q[4])
 {
-    register int i;
+    int i;
     float mag;
 
     mag = (q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3]);

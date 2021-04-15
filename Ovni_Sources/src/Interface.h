@@ -700,6 +700,15 @@ public :
     unsigned int Numero_base;
     double diagonale_save ;
 
+// Tests de thème
+    bool theme_b = false;
+
+    wxColour Noir     = wxColour(*wxBLACK);// = wxColour(0,0,0);//    (*wxBLACK);
+    wxColour Blanc    = wxColour(*wxWHITE);
+    wxColour New_Back = wxColour(*wxBLACK);//(100,100,100);
+    wxColour New_Forg = wxColour(*wxCYAN); ; //(*wxWHITE);
+//
+
 /*! Paramètres du matériau utilisé pour la colorisation de l'avion par groupes et/ou matériaux */
     static const int nb_couleurs=32;    // a priori, devrait être égal (ou supérieur) à maxGroupes
 
@@ -996,6 +1005,7 @@ public :
              long style            = 0,
              bool main_verbose     = false,
              const wxString& name  = wxT("TestGLCanvas"));
+
     wxString wxWorkDir, wxOvniPath;     // Doit-on garder les 2 ? à l'usage semble être la même chose ! Pas sûr, notamment si OvniPath est protégé en écriture !
                                         // Peut-être créer aussi un wxBddPath pour conserver le dernier path d'accès à une bdd !
     wxString wxNomsFichiers;            // Pour assembler les noms des fichiers (sans Path). Utile en cas de fusion de Bdds.
