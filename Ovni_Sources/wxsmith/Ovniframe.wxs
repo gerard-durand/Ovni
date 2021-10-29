@@ -293,6 +293,10 @@
 					<label>Icosaèdre</label>
 					<handler function="OnMenu_AjouteIcosaedreSelected" entry="EVT_MENU" />
 				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM51" variable="Menu_AjouteTore" member="yes">
+					<label>Tore</label>
+					<handler function="OnMenu_AjouteToreSelected" entry="EVT_MENU" />
+				</object>
 				<object class="separator" />
 				<object class="wxMenuItem" name="ID_MENUITEM39" variable="Menu_SupprimerDerniere" member="yes">
 					<label>Supprimer la dernière</label>
@@ -347,7 +351,7 @@
 					<checkable>1</checkable>
 				</object>
 			</object>
-			<object class="wxMenu" variable="Menu2" member="yes">
+			<object class="wxMenu" variable="Menu_Image" member="yes">
 				<label>Image</label>
 				<object class="wxMenuItem" name="ID_MENUITEM50" variable="MenuItem_ImageJpeg" member="yes">
 					<label>Enregistrer au format jpeg</label>
@@ -404,33 +408,33 @@
 			</object>
 			<object class="wxMenu" variable="Menu_Transformations" member="yes">
 				<label>Transformations</label>
-				<object class="wxMenuItem" name="ID_MENUITEM17" variable="MenuItem3" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM17" variable="MenuItem_SigneX" member="yes">
 					<label>X =&gt; - X</label>
 					<handler function="OnMenu_XminusX" entry="EVT_MENU" />
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM18" variable="MenuItem9" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM18" variable="MenuItem_SigneY" member="yes">
 					<label>Y =&gt; - Y</label>
 					<handler function="OnMenu_YminusY" entry="EVT_MENU" />
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM19" variable="MenuItem24" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM19" variable="MenuItem_SigneZ" member="yes">
 					<label>Z =&gt; - Z</label>
 					<handler function="OnMenu_ZminusZ" entry="EVT_MENU" />
 				</object>
 				<object class="separator" />
-				<object class="wxMenuItem" name="ID_MENUITEM20" variable="MenuItem25" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM20" variable="MenuItem_PermXY" member="yes">
 					<label>X &lt;=&gt; Y</label>
 					<handler function="OnMenu_XtoY" entry="EVT_MENU" />
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM21" variable="MenuItem26" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM21" variable="MenuItem_PermXZ" member="yes">
 					<label>X &lt;=&gt; Z</label>
 					<handler function="OnMenu_XtoZ" entry="EVT_MENU" />
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM22" variable="MenuItem27" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM22" variable="MenuItem_PermYZ" member="yes">
 					<label>Y &lt;=&gt; Z</label>
 					<handler function="OnMenu_YtoZ" entry="EVT_MENU" />
 				</object>
 				<object class="separator" />
-				<object class="wxMenuItem" name="ID_MENUITEM23" variable="MenuItem28" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM23" variable="MenuItem_PermXYZ" member="yes">
 					<label>X=&gt;Y=&gt;Z=&gt;X</label>
 					<handler function="OnMenu_XtoYtoZ" entry="EVT_MENU" />
 				</object>

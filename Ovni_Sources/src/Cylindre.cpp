@@ -95,7 +95,7 @@ void Cylindre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cylindre::genereSommets(BddInter* Element, int indiceObjet)
+void Cylindre::genereSommets(BddInter* Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -110,7 +110,7 @@ void Cylindre::genereSommets(BddInter* Element, int indiceObjet)
     Element->N_elements = NbSommets;
     Element->makesommet();
 
-    Element->Objetlist[indiceObjet].Nb_sommets = NbSommets;
+    p_Objet->Nb_sommets = NbSommets;
 
     // Sommets
     numero = 1;
@@ -127,40 +127,7 @@ void Cylindre::genereSommets(BddInter* Element, int indiceObjet)
     }
 }
 
-void Cylindre::genereNormalesFacettes(BddInter* Element, int indiceObjet)
-{
-    int numero;
-    float angle,pas_angle;
-
-    pas_angle = 2.*M_PI/NbPoints;
-
-    // Normales aux facettes
-    Element->str.clear();
-    Element->N_elements = NbPoints*n_secteurs;
-    if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;
-    Element->Objetlist[indiceObjet].Nb_normales = Element->N_elements;
-    Element->makenormale();
-    numero = 1;
-    for (int j=0; j<n_slices;j++) {
-        angle  = pas_angle/2;
-        for (int i=0; i<NbPoints; i++) {
-            Element->N_elements=numero; Element->Setxyz(0.,cos(angle),sin(angle)); Element->make1normale();
-            angle += pas_angle;
-            numero++;
-        }
-    }
-    if (CheckBox_FermerCylindre->IsChecked()) {
-        Element->N_elements=numero;
-        Element->Setxyz(1.,0.,0.);
-        Element->make1normale();
-        numero++;
-        Element->N_elements=numero;
-        Element->Setxyz(-1.,0.,0.);
-        Element->make1normale();
-    }
-}
-
-void Cylindre::genereLuminances(BddInter* Element, int indiceObjet)
+void Cylindre::genereLuminances(BddInter* Element)
 {
     wxString str_loc;
     int numero,i1,i,j;
@@ -193,7 +160,7 @@ void Cylindre::genereLuminances(BddInter* Element, int indiceObjet)
     }
 }
 
-void Cylindre::genereNormalesSommets(BddInter* Element, int indiceObjet)
+void Cylindre::genereNormalesSommets(BddInter* Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -204,7 +171,8 @@ void Cylindre::genereNormalesSommets(BddInter* Element, int indiceObjet)
     Element->str.clear();
     Element->N_elements = NbPoints;                                      // Autant que de sommets sur 1 seul cercle générateur
     if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;   // et 2 de plus en cas de fermeture du cylindre par 2 facettes
-    Element->Objetlist[indiceObjet].Nb_vecteurs = Element->N_elements;
+
+    p_Objet->Nb_vecteurs = Element->N_elements;
     Element->makevecteur();
     numero= 1;
     angle = 0.;
@@ -224,7 +192,7 @@ void Cylindre::genereNormalesSommets(BddInter* Element, int indiceObjet)
     }
 }
 
-void Cylindre::genereFacettes(BddInter* Element, int indiceObjet)
+void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -236,7 +204,7 @@ void Cylindre::genereFacettes(BddInter* Element, int indiceObjet)
     if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;
     Element->makeface();
 
-    Element->Objetlist[indiceObjet].Nb_facettes = Element->N_elements;
+    p_Objet->Nb_facettes = Element->N_elements;
     numero = 1;
 
     for (int j=0; j < n_secteurs ; j++) {
@@ -272,7 +240,7 @@ void Cylindre::genereCylindre()
 {
     wxString num_obj;
     int new_num;
-
+    Object *p_Objet;
 
     BddInter* Element = MAIN->Element;
 
@@ -294,17 +262,21 @@ void Cylindre::genereCylindre()
     int Nb_facettes = NbPoints*n_secteurs ;
     if (CheckBox_FermerCylindre->IsChecked()) Nb_facettes +=2;
 
-    genereFacettes(Element, indiceObjet);
-    genereSommets (Element, indiceObjet);
-    Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
-    Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
-    genereLuminances(Element, indiceObjet);
-    Element->Objetlist[indiceObjet].flat = false;
-    genereNormalesSommets(Element, indiceObjet);
+    p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
-    Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);
-    Element->GenereListeGroupesMateriaux(indiceObjet);
+    genereSommets (Element, p_Objet);
+    genereFacettes(Element, p_Objet);
+
+    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
+    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    genereNormalesSommets(Element, p_Objet);
+    genereLuminances(Element);
+    p_Objet->flat = false;
+
+    Element->GenereTableauPointsFacettes(p_Objet);
+    Element->GenereTableauAretes_OK = true;
+    Element->GenereTableauAretes(p_Objet);
+    Element->GenereListeGroupesMateriaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }

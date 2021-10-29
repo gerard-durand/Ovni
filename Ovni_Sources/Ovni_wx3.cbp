@@ -19,8 +19,6 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=gnu++20" />
-					<Add option="-m64" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DWXUSINGDLL" />
 					<Add option="-DwxUSE_UNICODE" />
@@ -37,8 +35,8 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-m64" />
 					<Add option="-lopengl32 -lglu32 -lfreeglut" />
+					<Add option="-Wl,--allow-multiple-definition" />
 					<Add library="lib3ds-2_0_64.a" />
 					<Add library="libwxexpat.a" />
 					<Add library="libwxmsw31u.a" />
@@ -60,8 +58,6 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=gnu++20" />
-					<Add option="-m64" />
 					<Add option="-D__MINGW64__" />
 					<Add option="-DFREEGLUT_STATIC" />
 					<Add option="-DwxUSE_UNICODE" />
@@ -81,7 +77,7 @@
 					<Add option="-static-libstdc++" />
 					<Add option="-static-libgcc" />
 					<Add option="-static" />
-					<Add option="-m64" />
+					<Add option="-Wl,--allow-multiple-definition" />
 					<Add library="lib3ds-2_0_64.a" />
 					<Add library="libwxexpat.a" />
 					<Add library="libfreeglut_static.a" />
@@ -118,16 +114,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=gnu++20" />
+			<Add option="-m64" />
 			<Add option="-Wno-comment" />
 			<Add option="-Wno-unused-variable" />
+			<Add option="-Wno-deprecated-enum-enum-conversion" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
+			<Add option="-fopenmp" />
 			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
 		</Compiler>
 		<Linker>
+			<Add option="-m64" />
 			<Add option="-mthreads" />
+			<Add library="gomp" />
 		</Linker>
 		<Unit filename="src/Aide_html.cpp" />
 		<Unit filename="src/Aide_html.h" />
@@ -194,6 +196,8 @@
 		<Unit filename="src/SelectionPanel.h" />
 		<Unit filename="src/Sphere.cpp" />
 		<Unit filename="src/Sphere.h" />
+		<Unit filename="src/Tore.cpp" />
+		<Unit filename="src/Tore.h" />
 		<Unit filename="src/TranslationPanel.cpp" />
 		<Unit filename="src/TranslationPanel.h" />
 		<Unit filename="src/ZoomSpecifique.cpp" />
@@ -212,7 +216,6 @@
 		</Unit>
 		<Unit filename="src/resource_64.rc">
 			<Option compilerVar="WINDRES" />
-			<Option target="Release_64_8.1.0_Static" />
 			<Option target="Release_64" />
 			<Option target="Release_64_static" />
 		</Unit>
@@ -251,6 +254,7 @@
 		<Unit filename="wxsmith/SelectionManuelleObjets.wxs" />
 		<Unit filename="wxsmith/SelectionPanel.wxs" />
 		<Unit filename="wxsmith/Sphere.wxs" />
+		<Unit filename="wxsmith/Tore.wxs" />
 		<Unit filename="wxsmith/TranslationPanel.wxs" />
 		<Unit filename="wxsmith/ZoomSpecifique.wxs" />
 		<Extensions>
@@ -295,6 +299,7 @@
 					<wxDialog wxs="wxsmith/TranslationPanel.wxs" src="src\TranslationPanel.cpp" hdr="src\TranslationPanel.h" fwddecl="0" i18n="1" name="TranslationPanel" language="CPP" />
 					<wxDialog wxs="wxsmith/ZoomSpecifique.wxs" src="src\ZoomSpecifique.cpp" hdr="src\ZoomSpecifique.h" fwddecl="0" i18n="1" name="ZoomSpecifique" language="CPP" />
 					<wxDialog wxs="wxsmith/Aide_html.wxs" src="src\Aide_html.cpp" hdr="src\Aide_html.h" fwddecl="0" i18n="1" name="Aide_html" language="CPP" />
+					<wxDialog wxs="wxsmith/Tore.wxs" src="src\Tore.cpp" hdr="src\Tore.h" fwddecl="0" i18n="1" name="Tore" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

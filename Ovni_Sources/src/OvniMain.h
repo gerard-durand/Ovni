@@ -53,6 +53,7 @@
 #include "Sphere.h"
 #include "Icosaedre.h"
 #include "Ellipsoide.h"
+#include "Tore.h"
 #include "ChoixAffichageObjets.h"
 #include "DeplacerBdd.h"
 #include "ChangerEchelleBdd.h"
@@ -78,10 +79,10 @@ class OvniFrame: public wxFrame
          wxButton* Button_ZoomMoins;
          wxButton* Button_ZoomPlus;
          wxGLCanvas* GLCanvas;
-         wxMenu* Menu2;
          wxMenu* MenuFile;
          wxMenu* Menu_Affichage;
          wxMenu* Menu_Aide;
+         wxMenu* Menu_Image;
          wxMenu* Menu_Options;
          wxMenu* Menu_Outils;
          wxMenu* Menu_Primitive;
@@ -90,19 +91,19 @@ class OvniFrame: public wxFrame
          wxMenuBar* MenuBar_Globale;
          wxMenuItem* Inverse_All_Selected_Normales;
          wxMenuItem* Inverser_Toutes_les_Normales;
-         wxMenuItem* MenuItem24;
-         wxMenuItem* MenuItem25;
-         wxMenuItem* MenuItem26;
-         wxMenuItem* MenuItem27;
-         wxMenuItem* MenuItem28;
-         wxMenuItem* MenuItem3;
-         wxMenuItem* MenuItem9;
          wxMenuItem* MenuItem_About;
          wxMenuItem* MenuItem_Aide;
          wxMenuItem* MenuItem_ImageJpeg;
          wxMenuItem* MenuItem_ImagePng;
          wxMenuItem* MenuItem_ImagePpm;
+         wxMenuItem* MenuItem_PermXY;
+         wxMenuItem* MenuItem_PermXYZ;
+         wxMenuItem* MenuItem_PermXZ;
+         wxMenuItem* MenuItem_PermYZ;
          wxMenuItem* MenuItem_Quitter;
+         wxMenuItem* MenuItem_SigneX;
+         wxMenuItem* MenuItem_SigneY;
+         wxMenuItem* MenuItem_SigneZ;
          wxMenuItem* Menu_AddFile;
          wxMenuItem* Menu_Affichage_Axes;
          wxMenuItem* Menu_Affichage_Boite;
@@ -117,6 +118,7 @@ class OvniFrame: public wxFrame
          wxMenuItem* Menu_AjouteFacette;
          wxMenuItem* Menu_AjouteIcosaedre;
          wxMenuItem* Menu_AjouteSphere;
+         wxMenuItem* Menu_AjouteTore;
          wxMenuItem* Menu_CentrageAuto;
          wxMenuItem* Menu_CentreRotation;
          wxMenuItem* Menu_CouleurDesGroupes;
@@ -208,37 +210,40 @@ class OvniFrame: public wxFrame
         wxPoint wxPrefs_pos;
         wxPoint wxModificationPanel_pos;
         wxPoint wxPropertiesPanel_pos;
+
+        CentreRotation*             CentreRotation_Panel;
+        ChangerEchelleBdd*          ChangerEchelleBdd_Panel;
+        ChoixAffichageObjets*       ChoixAffichageObjets_Panel;
+        Cone*                       Cone_Panel;
+        CouleursGroupes*            CouleursGroupes_Panel;
+        Cube*                       Cube_Panel;
+        Cylindre*                   Cylindre_Panel;
+        DeplacerBdd*                DeplacerBdd_Panel;
+        Ellipsoide*                 Ellipsoide_Panel;
+        Facette*                    Facette_Panel;
+        Icosaedre*                  Icosaedre_Panel;
+        ManipulationsPanel*         Manipulations_Panel;
         ModificationPanel*          Modifications_Panel;
-        TranslationPanel*           Translation_Panel;
+        PositionObs_AzimutSite*     PositionObsAzimutSite_Panel;
+        PositionSource*             PositionSource_Panel;
+        Prefs_Dialog*               Preferences_Panel;
+        PropertiesPanel*            Properties_Panel;
+        ReperageFacette*            ReperageFacette_Panel;
+        ReperageGroupe*             ReperageGroupe_Panel;
+        ReperageMateriau*           ReperageMateriau_Panel;
+        ReperageObjet*              ReperageObjet_Panel;
+        ReperagePoint*              ReperagePoint_Panel;
         RotationPanel*              Rotation_Panel;
         ScalePanel*                 Scale_Panel;
         SelectionPanel*             Selections_Panel;
         SelectionManuelleFacettes*  Selections_Manuelles_Facettes;
         SelectionManuelleObjets*    Selections_Manuelles_Objets;
-        PropertiesPanel*            Properties_Panel;
-        Prefs_Dialog*               Preferences_Panel;
-        PositionObs_AzimutSite*     PositionObsAzimutSite_Panel;
-        PositionSource*             PositionSource_Panel;
-        CentreRotation*             CentreRotation_Panel;
-        ReperagePoint*              ReperagePoint_Panel;
-        ReperageFacette*            ReperageFacette_Panel;
-        ReperageGroupe*             ReperageGroupe_Panel;
-        ReperageMateriau*           ReperageMateriau_Panel;
-        ReperageObjet*              ReperageObjet_Panel;
-        ManipulationsPanel*         Manipulations_Panel;
-        Cone*                       Cone_Panel;
-        Cube*                       Cube_Panel;
-        Cylindre*                   Cylindre_Panel;
-        Facette*                    Facette_Panel;
         Sphere*                     Sphere_Panel;
-        Ellipsoide*                 Ellipsoide_Panel;
-        Icosaedre*                  Icosaedre_Panel;
-        ChoixAffichageObjets*       ChoixAffichageObjets_Panel;
-        DeplacerBdd*                DeplacerBdd_Panel;
-        ChangerEchelleBdd*          ChangerEchelleBdd_Panel;
-        CouleursGroupes*            CouleursGroupes_Panel;
+        Tore*                       Tore_Panel;
+        TranslationPanel*           Translation_Panel;
         ZoomSpecifique*             ZoomSpecifique_Panel;
         Aide_html*                  AideHtml_Panel;
+
         bool toggle_modif = false;
         bool toggle_outils= false;
         bool New_file     = true;
@@ -388,6 +393,7 @@ class OvniFrame: public wxFrame
         void OnMenuItem_HelpSelected(wxCommandEvent& event);
         void OnMenuItem_AideSelected(wxCommandEvent& event);
         void OnMenu_ReOpen3dsSelected(wxCommandEvent& event);
+        void OnMenu_AjouteToreSelected(wxCommandEvent& event);
         //*)
 
         void Lire_Image(int &, int &);
@@ -462,6 +468,7 @@ class OvniFrame: public wxFrame
 		static const long ID_MENUITEM36;
 		static const long ID_MENUITEM37;
 		static const long ID_MENUITEM38;
+		static const long ID_MENUITEM51;
 		static const long ID_MENUITEM39;
 		static const long ID_MENUITEM9;
 		static const long ID_MENUITEM10;

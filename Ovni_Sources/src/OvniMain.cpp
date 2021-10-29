@@ -159,6 +159,7 @@ const long OvniFrame::ID_MENUITEM35 = wxNewId();
 const long OvniFrame::ID_MENUITEM36 = wxNewId();
 const long OvniFrame::ID_MENUITEM37 = wxNewId();
 const long OvniFrame::ID_MENUITEM38 = wxNewId();
+const long OvniFrame::ID_MENUITEM51 = wxNewId();
 const long OvniFrame::ID_MENUITEM39 = wxNewId();
 const long OvniFrame::ID_MENUITEM9 = wxNewId();
 const long OvniFrame::ID_MENUITEM10 = wxNewId();
@@ -396,6 +397,8 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Primitive->Append(Menu_AjouteSphere);
     Menu_AjouteIcosaedre = new wxMenuItem(Menu_Primitive, ID_MENUITEM38, _T("Icosaèdre"), wxEmptyString, wxITEM_NORMAL);
     Menu_Primitive->Append(Menu_AjouteIcosaedre);
+    Menu_AjouteTore = new wxMenuItem(Menu_Primitive, ID_MENUITEM51, _T("Tore"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Primitive->Append(Menu_AjouteTore);
     Menu_Primitive->AppendSeparator();
     Menu_SupprimerDerniere = new wxMenuItem(Menu_Primitive, ID_MENUITEM39, _T("Supprimer la dernière"), _T("Pour supprimer la dernière primitive ajoutée"), wxITEM_NORMAL);
     Menu_Primitive->Append(Menu_SupprimerDerniere);
@@ -423,14 +426,14 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Reperage_Couleurs_Materiaux = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_materiaux, _T("Couleurs matériaux"), wxEmptyString, wxITEM_CHECK);
     Menu_Reperage->Append(Menu_Reperage_Couleurs_Materiaux);
     MenuBar_Globale->Append(Menu_Reperage, _T("Repérage"));
-    Menu2 = new wxMenu();
-    MenuItem_ImageJpeg = new wxMenuItem(Menu2, ID_MENUITEM50, _T("Enregistrer au format jpeg"), wxEmptyString, wxITEM_NORMAL);
-    Menu2->Append(MenuItem_ImageJpeg);
-    MenuItem_ImagePng = new wxMenuItem(Menu2, ID_MENUITEM49, _T("Enregistrer au format png"), wxEmptyString, wxITEM_NORMAL);
-    Menu2->Append(MenuItem_ImagePng);
-    MenuItem_ImagePpm = new wxMenuItem(Menu2, ID_MENUITEM48, _T("Enregistrer au format ppm"), wxEmptyString, wxITEM_NORMAL);
-    Menu2->Append(MenuItem_ImagePpm);
-    MenuBar_Globale->Append(Menu2, _T("Image"));
+    Menu_Image = new wxMenu();
+    MenuItem_ImageJpeg = new wxMenuItem(Menu_Image, ID_MENUITEM50, _T("Enregistrer au format jpeg"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Image->Append(MenuItem_ImageJpeg);
+    MenuItem_ImagePng = new wxMenuItem(Menu_Image, ID_MENUITEM49, _T("Enregistrer au format png"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Image->Append(MenuItem_ImagePng);
+    MenuItem_ImagePpm = new wxMenuItem(Menu_Image, ID_MENUITEM48, _T("Enregistrer au format ppm"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Image->Append(MenuItem_ImagePpm);
+    MenuBar_Globale->Append(Menu_Image, _T("Image"));
     Menu_Outils = new wxMenu();
     Menu_RAZ_SelectionFacettes = new wxMenuItem(Menu_Outils, ID_MENUITEM40, _T("RAZ de sélection de facettes"), wxEmptyString, wxITEM_NORMAL);
     Menu_Outils->Append(Menu_RAZ_SelectionFacettes);
@@ -453,22 +456,22 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Outils->Append(Outils_UnDelete);
     MenuBar_Globale->Append(Menu_Outils, _T("Outils"));
     Menu_Transformations = new wxMenu();
-    MenuItem3 = new wxMenuItem(Menu_Transformations, ID_MENUITEM17, _T("X => - X"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem3);
-    MenuItem9 = new wxMenuItem(Menu_Transformations, ID_MENUITEM18, _T("Y => - Y"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem9);
-    MenuItem24 = new wxMenuItem(Menu_Transformations, ID_MENUITEM19, _T("Z => - Z"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem24);
+    MenuItem_SigneX = new wxMenuItem(Menu_Transformations, ID_MENUITEM17, _T("X => - X"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_SigneX);
+    MenuItem_SigneY = new wxMenuItem(Menu_Transformations, ID_MENUITEM18, _T("Y => - Y"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_SigneY);
+    MenuItem_SigneZ = new wxMenuItem(Menu_Transformations, ID_MENUITEM19, _T("Z => - Z"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_SigneZ);
     Menu_Transformations->AppendSeparator();
-    MenuItem25 = new wxMenuItem(Menu_Transformations, ID_MENUITEM20, _T("X <=> Y"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem25);
-    MenuItem26 = new wxMenuItem(Menu_Transformations, ID_MENUITEM21, _T("X <=> Z"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem26);
-    MenuItem27 = new wxMenuItem(Menu_Transformations, ID_MENUITEM22, _T("Y <=> Z"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem27);
+    MenuItem_PermXY = new wxMenuItem(Menu_Transformations, ID_MENUITEM20, _T("X <=> Y"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_PermXY);
+    MenuItem_PermXZ = new wxMenuItem(Menu_Transformations, ID_MENUITEM21, _T("X <=> Z"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_PermXZ);
+    MenuItem_PermYZ = new wxMenuItem(Menu_Transformations, ID_MENUITEM22, _T("Y <=> Z"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_PermYZ);
     Menu_Transformations->AppendSeparator();
-    MenuItem28 = new wxMenuItem(Menu_Transformations, ID_MENUITEM23, _T("X=>Y=>Z=>X"), wxEmptyString, wxITEM_NORMAL);
-    Menu_Transformations->Append(MenuItem28);
+    MenuItem_PermXYZ = new wxMenuItem(Menu_Transformations, ID_MENUITEM23, _T("X=>Y=>Z=>X"), wxEmptyString, wxITEM_NORMAL);
+    Menu_Transformations->Append(MenuItem_PermXYZ);
     Menu_Transformations->AppendSeparator();
     Inverser_Toutes_les_Normales = new wxMenuItem(Menu_Transformations, ID_MENUITEM24, _T("Inverser toutes les normales"), wxEmptyString, wxITEM_NORMAL);
     Menu_Transformations->Append(Inverser_Toutes_les_Normales);
@@ -555,6 +558,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_MENUITEM36,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteFacetteSelected);
     Connect(ID_MENUITEM37,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteSphereSelected);
     Connect(ID_MENUITEM38,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteIcosaedreSelected);
+    Connect(ID_MENUITEM51,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteToreSelected);
     Connect(ID_MENUITEM39,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerDerniereSelected);
     Connect(ID_MENUITEM9,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperagePointSelected);
     Connect(ID_MENUITEM10,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageFacetteSelected);
@@ -722,51 +726,53 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     InitOpenGL();
     int argc=1;
     char *argv=(char*)"Ovni";
-    glutInit(&argc,&argv);
+    glutInit(&argc,&argv);  // On pourrait récupérer les véritables arguments via wxGetApp().argc et wxGetApp.argv[*], mais peu d'intérêt ici pout glutInit, de + ce sont des wxString
 //    glutSetOption(GLUT_MULTISAMPLE,4);    // à faire avant tracé de fenêtre Glut, mais fait aussi dans wxGLCanvas
 //    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);   // Ajout 02/2020 pour test : serait déjà fait dans wxGLCanvas ?
     InitBoutons();
 //    wxPrefs_pos=wxDefaultPosition;
 //    wxModificationPanel_pos= wxDefaultPosition;
 //    wxPropertiesPanel_pos  = wxDefaultPosition;
-    Preferences_Panel               = new Prefs_Dialog(this,wxID_ANY);//,wxPrefs_pos);
+    CentreRotation_Panel            = new CentreRotation(this,wxID_ANY);
+    ChangerEchelleBdd_Panel         = new ChangerEchelleBdd(this,wxID_ANY);
+    ChoixAffichageObjets_Panel      = new ChoixAffichageObjets(this,wxID_ANY);
+    Cone_Panel                      = new Cone(this,wxID_ANY);
+    CouleursGroupes_Panel           = new CouleursGroupes(this,wxID_ANY);
+    Cube_Panel                      = new Cube(this,wxID_ANY);
+    Cylindre_Panel                  = new Cylindre(this,wxID_ANY);
+    DeplacerBdd_Panel               = new DeplacerBdd(this,wxID_ANY);
+    Ellipsoide_Panel                = new Ellipsoide(this,wxID_ANY);
+    Facette_Panel                   = new Facette(this,wxID_ANY);
+    Icosaedre_Panel                 = new Icosaedre(this,wxID_ANY);
+    Manipulations_Panel             = new ManipulationsPanel(this,wxID_ANY);
     Modifications_Panel             = new ModificationPanel(this,wxID_ANY);
-    Selections_Panel                = new SelectionPanel(this,wxID_ANY);
-    Selections_Manuelles_Facettes   = new SelectionManuelleFacettes(this,wxID_ANY);
-    Selections_Manuelles_Objets     = new SelectionManuelleObjets(this,wxID_ANY);
-    Properties_Panel                = new PropertiesPanel(this,wxID_ANY);
     PositionObsAzimutSite_Panel     = new PositionObs_AzimutSite(this,wxID_ANY);
     PositionSource_Panel            = new PositionSource(this,wxID_ANY);
-    CentreRotation_Panel            = new CentreRotation(this,wxID_ANY);
-    ReperagePoint_Panel             = new ReperagePoint(this,wxID_ANY);
+    Preferences_Panel               = new Prefs_Dialog(this,wxID_ANY);//,wxPrefs_pos);
+    Properties_Panel                = new PropertiesPanel(this,wxID_ANY);
     ReperageFacette_Panel           = new ReperageFacette(this,wxID_ANY);
     ReperageGroupe_Panel            = new ReperageGroupe(this,wxID_ANY);
     ReperageMateriau_Panel          = new ReperageMateriau(this,wxID_ANY);
     ReperageObjet_Panel             = new ReperageObjet(this,wxID_ANY);
-    Manipulations_Panel             = new ManipulationsPanel(this,wxID_ANY);
-    Translation_Panel               = new TranslationPanel(this,wxID_ANY);
+    ReperagePoint_Panel             = new ReperagePoint(this,wxID_ANY);
     Rotation_Panel                  = new RotationPanel(this,wxID_ANY);
     Scale_Panel                     = new ScalePanel(this,wxID_ANY);
-    Cone_Panel                      = new Cone(this,wxID_ANY);
-    Cube_Panel                      = new Cube(this,wxID_ANY);
-    Cylindre_Panel                  = new Cylindre(this,wxID_ANY);
-    Facette_Panel                   = new Facette(this,wxID_ANY);
+    Selections_Panel                = new SelectionPanel(this,wxID_ANY);
+    Selections_Manuelles_Facettes   = new SelectionManuelleFacettes(this,wxID_ANY);
+    Selections_Manuelles_Objets     = new SelectionManuelleObjets(this,wxID_ANY);
     Sphere_Panel                    = new Sphere(this,wxID_ANY);
-    Icosaedre_Panel                 = new Icosaedre(this,wxID_ANY);
-    Ellipsoide_Panel                = new Ellipsoide(this,wxID_ANY);
-    ChoixAffichageObjets_Panel      = new ChoixAffichageObjets(this,wxID_ANY);
-    DeplacerBdd_Panel               = new DeplacerBdd(this,wxID_ANY);
-    ChangerEchelleBdd_Panel         = new ChangerEchelleBdd(this,wxID_ANY);
-    CouleursGroupes_Panel           = new CouleursGroupes(this,wxID_ANY);
+    Tore_Panel                      = new Tore(this,wxID_ANY);
+    Translation_Panel               = new TranslationPanel(this,wxID_ANY);
     ZoomSpecifique_Panel            = new ZoomSpecifique(this,wxID_ANY);
     AideHtml_Panel                  = new Aide_html(this,wxID_ANY);
+
     New_file = true;
 //    s_extFileDef = wxEmptyString;
 
-    int  arg_c = wxGetApp().argc;
-    wxString par_0(wxGetApp().argv[0]);
+    int arg_c = wxGetApp().argc;
+    wxString par_0(wxGetApp().argv[0]);         // Nom de la commande
     wxString par_1;
-    if (arg_c >= 2) par_1=wxGetApp().argv[1];
+    if (arg_c >= 2) par_1=wxGetApp().argv[1];   // Nom du fichier passé éventuellement en ligne de commande
 
 #ifdef __WXMSW__
     SetIcon(wxICON(avion)); // Pour afficher l'icône des fenètres : barre de tâche, en haut des fenètres,... Utile ou déjà fait en partie ? à ne faire que sous Windows ?
@@ -841,6 +847,8 @@ OvniFrame::~OvniFrame() {
     //*)
     Timer_Save.Stop();          // Arrêt du timer en sortie de programme (peut être utile en cas de plantage car, apparemment, évite de laisser le timer actif après la sortie).
     Timer_Save.Disconnect();    // et déconnexion de précaution
+    DeletePendingEvents();      // Utile ?
+    wxTheApp->ExitMainLoop();   // Pour voir si utile en cas de crash dans Ovni
 }
 
 void OvniFrame::InitOpenGL(void) {
@@ -1029,7 +1037,7 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
     glGetIntegerv(GL_GREEN_BITS, &greenBits);
     glGetIntegerv(GL_BLUE_BITS,  &blueBits);
 
-    str.Printf(_T("\n\nProfondeur du Z-Buffer :\t\t%d bits\n"),depth);
+    str.Printf(_T("\n\nProfondeur du Z-Buffer : \t\t%d bits\n"),depth);
     msg << str;
 
     str.Printf(_T("Profondeur couleur (R,G,B) détectée : \t%d, %d, %d\n"), redBits, greenBits, blueBits);
@@ -1199,7 +1207,7 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
 void OvniFrame::GenereListeAretes() {
     if (!Element->GenereTableauAretes_OK) {
         printf("Construction de GenereTableauAretes\n");
-        for(unsigned int i=0; i<Element->Objetlist.size(); ++i) {
+        for (unsigned int i=0; i<Element->Objetlist.size(); ++i) {
              Element->GenereTableauAretes(&(Element->Objetlist[i]));
         }
         Element->GenereTableauAretes_OK = true;
@@ -1336,8 +1344,10 @@ void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event
 
 void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 {
-    New_file = false;                                   // => le nom du fichier est déjà connu (via get_file)
-    Element->Numero_base = 0;                           // Réinitialisation complète
+    New_file = false;                           // => le nom du fichier est déjà connu (via get_file)
+    Element->Numero_base = 0;                   // Réinitialisation complète
+    Button_Points->SetValue(false);             // Forcer la suppression d'affichage des points (sinon l'affichage devient vide si c'était actif !)
+    OnButton_PointsToggle(event);               // Faute de mieux car on n'a pas ce souci avec l'affichage des arêtes !
     Ouvrir_Fichier();
 }
 
@@ -1414,20 +1424,37 @@ void OvniFrame::Ouvrir_Fichier()
     Element->Slider_x = Slider_x;
     Element->Slider_y = Slider_y;
     Element->Slider_z = Slider_z;
+    Element->MPosCRot = CentreRotation_Panel;
+    Element->MScale_0 = ChangerEchelleBdd_Panel;
+    Element->MChoice_O= ChoixAffichageObjets_Panel;
+    Element->MCone    = Cone_Panel;
+    Element->MCGroup  = CouleursGroupes_Panel;
+    Element->MCube    = Cube_Panel;
+    Element->MCylindre= Cylindre_Panel;
+    Element->MDeplacer= DeplacerBdd_Panel;
+    Element->MEllips  = Ellipsoide_Panel;
+    Element->MFacet   = Facette_Panel;
+    Element->MIcosa   = Icosaedre_Panel;
+    Element->MManip   = Manipulations_Panel;
     Element->MPanel   = Modifications_Panel;
-    Element->MSelect  = Selections_Panel;
-    Element->MSelObj  = Selections_Manuelles_Objets;
-    Element->MPrefs   = Preferences_Panel;
     Element->MPosObs  = PositionObsAzimutSite_Panel;
     Element->MPosLight= PositionSource_Panel;
-    Element->MManip   = Manipulations_Panel;
-    Element->MTrans   = Translation_Panel;
+    Element->MPrefs   = Preferences_Panel;
+    Element->MProps   = Properties_Panel;
+    Element->MRepFacet= ReperageFacette_Panel;
+    Element->MRepGrp  = ReperageGroupe_Panel;
+    Element->MRepMat  = ReperageMateriau_Panel;
+    Element->MRepObj  = ReperageObjet_Panel;
+    Element->MRepPoint= ReperagePoint_Panel;
     Element->MRotation= Rotation_Panel;
     Element->MScale   = Scale_Panel;
+    Element->MSelect  = Selections_Panel;
+    Element->MSelFac  = Selections_Manuelles_Facettes;
+    Element->MSelObj  = Selections_Manuelles_Objets;
+    Element->MSphere  = Sphere_Panel;
+    Element->MTrans   = Translation_Panel;
     Element->MZoomSpec= ZoomSpecifique_Panel;
-//    Element->MRepFacet= ReperageFacette_Panel;
-//    Element->MRepGrp  = ReperageGroupe_Panel;                         // Pas utile !
-//    Element->MRepMat  = ReperageMateriau_Panel;                       // Idem
+    Element->MHelp    = AideHtml_Panel;
 
     bool Erreur_lecture = true;
 
@@ -1721,11 +1748,11 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
 
     if(saveFileDialog.GetFilterIndex() >= 4) {          // Format stl => facettes triangulaires. Vérifier que c'est le cas avant d'ouvrir le fichier !
         Object * objet_courant;
-        for(unsigned int o=0; o<Element->Objetlist.size(); o++) {
+        for (unsigned int o=0; o<Element->Objetlist.size(); o++) {
             objet_courant = &(Element->Objetlist[o]);
             if (objet_courant->deleted) continue ;
 
-            for(unsigned int j=0; j<objet_courant->Facelist.size(); j++) {
+            for (unsigned int j=0; j<objet_courant->Facelist.size(); j++) {
                 if(objet_courant->Facelist[j].deleted) continue;
                 if(objet_courant->Facelist[j].getNb_Sommets_F() != 3) {
                     wxString wxMessage=_T("La base n'est pas triangulée. Stockage impossible en format .stl");
@@ -2301,7 +2328,7 @@ void OvniFrame::OnOutils_choix_afficherSelected(wxCommandEvent& event)
     unsigned int i,n,indice_ListBox;
     wxString str_loc;
     n = ChoixAffichageObjets_Panel->CheckListBox1->GetCount();// Récupère le nombre d'items actuels
-    for (i=0 ; i<n ; i++)
+    for (i=0; i<n; i++)
         ChoixAffichageObjets_Panel->CheckListBox1->Delete(0); // Supprime ces "anciens" items
 
     indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
@@ -2489,6 +2516,13 @@ void OvniFrame::OnMenu_AjouteSphereSelected(wxCommandEvent& event)
     Sphere_Panel->Show();
 }
 
+void OvniFrame::OnMenu_AjouteToreSelected(wxCommandEvent& event)
+{
+    Tore_Panel->SpinCtrl_Groupe  ->SetMax(maxGroupes-1);
+    Tore_Panel->SpinCtrl_Materiau->SetMax(maxGroupes-1);
+    Tore_Panel->Show();
+}
+
 void OvniFrame::OnMenu_AjouteIcosaedreSelected(wxCommandEvent& event)
 {
     Icosaedre_Panel->SpinCtrl_Groupe  ->SetMax(maxGroupes-1);
@@ -2674,10 +2708,10 @@ void OvniFrame::OnMenu_EnregistrerPaletteSelected(wxCommandEvent& event)
         if (myfile.is_open()) {
             for (i=0; i<Element->nb_couleurs; i++) {
                 myfile << std::setw(3) << i ;
-                for (j=0; j<4 ; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatAmbient_avionG[i][j];
+                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatAmbient_avionG[i][j];
                 myfile << "\n";
                 myfile << std::setw(3) << i ;
-                for (j=0; j<4 ; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatDiffuse_avionG[i][j];
+                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatDiffuse_avionG[i][j];
                 myfile << "\n";
             }
             myfile.close();
@@ -2708,17 +2742,17 @@ void OvniFrame::OnMenu_RelirePaletteSelected(wxCommandEvent& event)
         for (i=0; i<Element->nb_couleurs; i++) {
             myfile >> k;
             if (myfile.eof()) break;    // Fin de fichier atteinte trop tôt !
-            for (j=0 ; j<4 ; j++) myfile >> Element->MatAmbient_avionG[i][j];
+            for (j=0; j<4; j++) myfile >> Element->MatAmbient_avionG[i][j];
             myfile >> k;
             if (myfile.eof()) break;    // Fin de fichier atteinte trop tôt !
-            for (j=0 ; j<4 ; j++) myfile >> Element->MatDiffuse_avionG[i][j];
+            for (j=0; j<4; j++) myfile >> Element->MatDiffuse_avionG[i][j];
         }
         if (myfile.eof()) printf("Seulement %d groupes dans ce fichier !!\n",i-1) ;
 
         myfile.close();
 
         if((Element->groupes) || (Element->materials)) {    // A ne faire que si l'un des modes affichage des groupes ou matériaux est actif
-            Element->m_gllist  = 0;                         // Mettre l'affichage à jour
+            Element->m_gllist = 0;                         // Mettre l'affichage à jour
             Element->Refresh();
         }
     }

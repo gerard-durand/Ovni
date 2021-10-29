@@ -64,12 +64,12 @@ TranslationPanel::TranslationPanel(wxWindow* parent,wxWindowID id,const wxPoint&
 	SpinButton_XF = new wxSpinButton(this, ID_SPINBUTTON2, wxPoint(416,88), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON2"));
 	SpinButton_XF->SetRange(-10, 10);
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Translation en Y"), wxPoint(8,124), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-	StaticText5->SetForegroundColour(wxColour(0,128,0));
+	StaticText5->SetForegroundColour(wxColour(0,191,0));
 	TextCtrl_YG = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0.0"), wxPoint(104,120), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
 	SpinButton_YG = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(200,120), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
 	SpinButton_YG->SetRange(-10, 1000);
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Affiner en Y"), wxPoint(248,124), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
-	StaticText6->SetForegroundColour(wxColour(0,128,0));
+	StaticText6->SetForegroundColour(wxColour(0,191,0));
 	TextCtrl_YF = new wxTextCtrl(this, ID_TEXTCTRL6, _T("0.000"), wxPoint(320,120), wxSize(96,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL6"));
 	TextCtrl_YF->Disable();
 	SpinButton_YF = new wxSpinButton(this, ID_SPINBUTTON4, wxPoint(416,120), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON4"));
@@ -380,7 +380,9 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
         }
         auto it = Element->listeObjets.begin();
         for (i=0; i<Element->listeObjets.size(); i++, it++) {
-            for (j=0; j<Element->Objetlist[*it].Sommetlist.size(); j++) {
+            unsigned int nbsom = Element->Objetlist[*it].Sommetlist.size();
+#pragma omp parallel for private(sommet_courant)
+            for (j=0; j<nbsom; j++) {
                 sommet_courant = &(Element->Objetlist[*it].Sommetlist[j]);
                 sommet_courant->point[0] += tx;
                 sommet_courant->point[1] += ty;

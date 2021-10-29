@@ -93,6 +93,7 @@ void Sphere::genereSphere()
 {
     wxString num_obj;
     int new_num;
+    Object *p_Objet;
 
     BddInter* Element = MAIN->Element;
 
@@ -116,15 +117,19 @@ void Sphere::genereSphere()
 
     Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
     Element->genereSommetsSphere (Nb_Meridiens, Nb_Paralleles, centre_primitive, rayon, 1.0, 1.0, 1.0);
-    Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
-    Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
-    Element->genereLuminances(indiceObjet, Nb_facettes);
-    Element->Objetlist[indiceObjet].flat = false;
+
+    p_Objet = &(Element->Objetlist[indiceObjet]);
+
+    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
+    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Element->genereLuminances(p_Objet, Nb_facettes);
+    p_Objet->flat = false;
     Element->genereNormalesSommetsSphere(Nb_Meridiens, Nb_Paralleles, 1.0, 1.0, 1.0);
 
-    Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
-    Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);
-    Element->GenereListeGroupesMateriaux(indiceObjet);
+    Element->GenereTableauPointsFacettes(p_Objet);
+    Element->GenereTableauAretes_OK = true;
+    Element->GenereTableauAretes(p_Objet);
+    Element->GenereListeGroupesMateriaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }

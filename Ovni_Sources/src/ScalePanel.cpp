@@ -340,6 +340,7 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
     int indice;
     Object *objet_courant;
     Sommet *sommet_courant;
+    Points *p_Point;
     std::vector<int> NumerosSommets;
 
     if (Element->mode_selection == Element->selection_objet) {
@@ -373,7 +374,7 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
             if (!Synchrones) {  // Si les 3 Scale_* sont identiques, les normales ne changent pas
             // Calcul des normales aux barycentre des facettes
                 nb_fac = objet_courant->Nb_facettes;
-                for(j=0; j<nb_fac; j++) {
+                for (j=0; j<nb_fac; j++) {
                     Element->Calcul_Normale_Barycentre(o,j);
     //              objet_courant->Facelist[j].flat = false;      // Ne pas changer a priori !
                 }
@@ -419,9 +420,10 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
                 sommet_courant->point[1] += Element->Centre_Y;
                 sommet_courant->point[2] += Element->Centre_Z;
 
-                unsigned int n_fac = objet_courant->Pointslist[*jt].IndicesFacettes.size();
+                p_Point = &(objet_courant->Pointslist[*jt]);
+                unsigned int n_fac = p_Point->IndicesFacettes.size();
                 for (i=0; i<n_fac; i++) {
-                    indice  = objet_courant->Pointslist[*jt].IndicesFacettes[i];
+                    indice  = p_Point->IndicesFacettes[i];
                     auto ft = std::find(Element->listeFacettes.begin(),Element->listeFacettes.end(),indice);// La facette est-elle déjà dans la liste ?
                     if (ft == Element->listeFacettes.end() || Element->listeFacettes.empty()) {                 // Non
                         Element->listeFacettes.push_front(indice);                                              // L'ajouter à la liste des facettes
@@ -481,9 +483,10 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
                     sommet_courant->point[1] += Element->Centre_Y;
                     sommet_courant->point[2] += Element->Centre_Z;
 
-                    unsigned int n_fac = objet_courant->Pointslist[j].IndicesFacettes.size();
+                    p_Point = &(objet_courant->Pointslist[j]);
+                    unsigned int n_fac = p_Point->IndicesFacettes.size();
                     for (i=0; i<n_fac; i++) {
-                        indice  = objet_courant->Pointslist[j].IndicesFacettes[i];
+                        indice  = p_Point->IndicesFacettes[i];
                         auto ft = std::find(Element->listeFacettes.begin(),Element->listeFacettes.end(),indice);// La facette est-elle déjà dans la liste ?
                         if (ft == Element->listeFacettes.end() || Element->listeFacettes.empty()) {                 // Non
                             Element->listeFacettes.push_front(indice);                                              // L'ajouter à la liste des facettes
@@ -491,10 +494,10 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
                     }
                 }
             }
-            // Calcul des normales aux barycentre des facettes modifiées
+            // Calcul des normales au barycentre des facettes modifiées
             nb_fac = Element->listeFacettes.size();
             auto ft= Element->listeFacettes.begin();
-            for(j=0; j<nb_fac; j++,ft++) {
+            for (j=0; j<nb_fac; j++,ft++) {
                 Element->Calcul_Normale_Barycentre(o,*ft);
     //          objet_courant->Facelist[j].flat = false;      // Ne pas changer a priori !
             }

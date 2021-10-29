@@ -74,12 +74,14 @@ void ChangerEchelleBdd::OnButton_OKClick(wxCommandEvent& event)
     val = wxAtof(TextCtrl_scale->GetValue());                                               // Récupérer le facteur d'échelle
     for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
-        for (i=0;i<objet_courant->Nb_sommets;i++) {                                         // L'appliquer sur les 3 coordonnées des sommets
+        unsigned int nbsom = objet_courant->Nb_sommets;
+#pragma omp parallel for
+        for (i=0;i<nbsom;i++) {                                                             // L'appliquer sur les 3 coordonnées des sommets
             if (objet_courant->Sommetlist[i].point.empty()) continue;                       // Ne pas tenir compte de points vides (non utilisés a priori !)
             for (j=0;j<3;j++) objet_courant->Sommetlist[i].point[j] *= val;
         }
     }
-    for (j=0; j<3; j++) Element->centreRot[j] *= val;                                 // centre_auto mis à jour dans searchMin_Max;
+    for (j=0; j<3; j++) Element->centreRot[j] *= val;                                       // centre_auto mis à jour dans searchMin_Max;
 
     Element->m_gllist = 0;
     Element->searchMin_Max();
@@ -93,11 +95,11 @@ void ChangerEchelleBdd::OnButton_InverserClick(wxCommandEvent& event)
     float val;
     wxString str;
 
-    val = wxAtof(TextCtrl_scale->GetValue());                           // Récupérer le facteur d'échelle
-    if (val != 0.0) {                                                   // L'inverser s'il n'est pas nul !
+    val = wxAtof(TextCtrl_scale->GetValue());                                               // Récupérer le facteur d'échelle
+    if (val != 0.0) {                                                                       // L'inverser s'il n'est pas nul !
         val = 1.0/val;
         str.Printf(_T("%5.2f"),val);
-        TextCtrl_scale->SetValue(str);                                  // Modifier l'affichage
-        OnButton_OKClick(event);                                        // Lancer OKClick sur cette nouvelle valeur
+        TextCtrl_scale->SetValue(str);                                                      // Modifier l'affichage
+        OnButton_OKClick(event);                                                            // Lancer OKClick sur cette nouvelle valeur
     }
 }

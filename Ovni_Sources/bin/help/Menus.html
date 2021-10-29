@@ -12,16 +12,17 @@
     Lien vers l' <a href="Aide.html">Aide</a>.<br>
     Lien vers <a href="About.html">à Propos de ...</a><br>
     <h3><font color="blue"><i>Fichier :</i></font></h3>
-    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (Oktal), .ply (Polygon file de
+    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (SDM d'Oktal), .ply (Polygon file de
     Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D Ascii), .g3d
-    (Format Onera G3D), .off (Object File Format de chez DEC). Quanu un fichier
+    (Format Onera G3D), .off (Object File Format de chez DEC). Quand un fichier
     a été ouvert, son extension devient celle proposée par défaut.<br>
-    <b>Fusionner</b> : Pour fusionner la bdd courante avec un autre fichier de
-    bdd. Les objets restent indépendants.<br>
+    <b>Ajouter une Bdd</b> : Pour ajouter à la bdd courante avec un autre fichier de
+    bdd. Les objets restent indépendants. Il existe une fonction de fusion de plusieurs objets
+    accessible via le menu (ou l'icône) de "Sélection et déplacement".<br>
     <b>Enregistrer</b> : Enregistre avec le nom courant (seulement en .bdd,
     format Oktal).<br>
     <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd
-    seulement).<br>
+    par défaut). On peut choisir un autre format comme .off, .obj ou .g3d.<br>
     <b>Propriétés</b> : Affiche le nombre d'objets, de points, de facettes,
     d'arêtes, de groupes de toute la Bdd, quelques statistiques de nombres de
     points par facette ainsi que les dimensions de la boîte englobante.<br>
@@ -30,8 +31,9 @@
     suivant.<br>
     L'option de gestion d'antialiasing par OpenGL est utile si la carte
     graphique ne gère pas seule par hardware cette fonction, via le driver.
-    Toutefois, ne fonctionne correctement que sur des segments, pas sur les
-    bords de polygones.<br>
+    Fonctionne correctement sur des segments dans tous les cas. Sur les
+    bords de polygones, le fonctionnement n'écessite que le driver de la carte
+    graphique supporte l'option GL_MULTISAMPLE d'OpenGL.<br>
     <b>Hardware 3D</b> : Affiche les caractéristiques du Hardware (carte
     graphique) supportant OpenGL.<br>
     <b>Quitter</b> : Pour sortir d'Ovni.<br>
@@ -68,13 +70,13 @@
     <br>
     <h3><font color="blue"><i>Primitive :</i></font></h3>
     Construction d'objets simples (cône, cube, cylindre, ellipsoïde, facette,
-    sphère, icosaèdre...)<br>
+    sphère, icosaèdre, tore...)<br>
     <i><b>Note :</b></i> un icosaèdre est composé de triangles. Chaque triangle
     peut être subdivisé en 4 sous-triangles. Les sommets intermédiaires créés au
     milieu de chaque arête sont alors ramenés sur une sphère. On obtient ainsi
-    une sphère plus homogène que via la sphère de base, utilisant des méridiens
-    et des parallèles. Le nombre de subdivisions est limité à 8 car au-delà le
-    nombre de facettes total devient trop important, long à créer par une
+    une appoximation de sphère plus homogène que via la sphère de base, utilisant
+    des méridiens et des parallèles. Le nombre de subdivisions est limité à 8 car
+    au-delà lenombre de facettes total devient trop important, long à créer par une
     procédure récurssive et difficile à gérer.<br>
     Les primitives créées peuvent être supprimées une à une dans l'ordre inverse
     de leur création.<br>
@@ -109,8 +111,8 @@
     <b>Sens des Normales</b> : Swith ON/OFF colorisant en bleu des facettes
     "correctement orientées" et en rouge les facettes dont la normale est à
     l'envers [en fait c'est le sens de parcours des points qui est soit dans les
-    sens des aiguilles d'une montre (GL_CW) soit dans le sens contraire
-    (GL_CCW)]<br>
+    sens des aiguilles d'une montre (GL_CW et alors colorisé en rouge) soit dans le sens contraire
+    ou trigonométrique (GL_CCW et alors colorisé en bleu)]. Accessible aussi via un raccourci clavier (<b>n</b>).<br>
     <span style="text-decoration: line-through; color: red;"> </span><br>
     <span style="text-decoration: line-through;"> </span><b>Couleurs groupes</b>
     : Colorise les facettes par leur numéro de groupe.&nbsp;<br>
@@ -128,7 +130,10 @@
     aussi de déplacer la sélection, ou encore d'effectuer, via le bouton
     "Manipulations de l'objet", la translation, la rotation, la création par
     symétrie d'un objet ou encore, directement, le masquage ou la suppression
-    d'un objet/facette.<br>
+    d'un objet/facette. Quand plusieurs objets sont sélectionnés, on peut aussi
+    les fusionner en 1 seul onjet (fusion des tableaux de points, facettes, ...).
+    Il peut être utile, mais pas nécessaire, de faire suivre cette action par
+    une simplification de la base de données pour éliminer les doublons de points, normales,...<br>
     La plupart des fonctions ont un UNDO, <b>sauf la suppression d'un groupe de
       facettes</b><br>
     Tout comme dans Repérage, on peut effectuer une permutation circulaire de

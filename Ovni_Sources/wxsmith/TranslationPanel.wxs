@@ -80,7 +80,7 @@
 		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 			<label>Translation en Y</label>
 			<pos>8,124</pos>
-			<fg>#008000</fg>
+			<fg>#00BF00</fg>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="TextCtrl_YG" member="yes">
 			<value>0.0</value>
@@ -100,7 +100,7 @@
 		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
 			<label>Affiner en Y</label>
 			<pos>248,124</pos>
-			<fg>#008000</fg>
+			<fg>#00BF00</fg>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="TextCtrl_YF" member="yes">
 			<value>0.000</value>

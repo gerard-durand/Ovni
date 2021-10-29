@@ -113,6 +113,7 @@ void Facette::genereFacette()
 {
     wxString num_obj, str_loc;
     int new_num;
+    Object *p_Objet;
 
     BddInter* Element = MAIN->Element;
 
@@ -127,20 +128,22 @@ void Facette::genereFacette()
     Element->Objetlist.rbegin()->primitive = true;
     int indiceObjet = Element->indiceObjet_courant;
 
+    p_Objet = &(Element->Objetlist[indiceObjet]);
+
 // Facette
     Element->str.clear();
     Element->N_elements = 1;
     Element->makeface();
-    Element->Objetlist[indiceObjet].Nb_facettes = 1;
+    p_Objet->Nb_facettes = 1;
     Element->str = _T("1 3 1 2 3"); Element->make1face();
 
-    Element->Objetlist[indiceObjet].Facelist[0].flat = true;   // On force le mode facette plane
+    p_Objet->Facelist[0].flat = true;   // On force le mode facette plane
 
 // Sommets
     Element->str.clear();
     Element->N_elements = 3;
     Element->makesommet();
-    Element->Objetlist[indiceObjet].Nb_sommets = 3;
+    p_Objet->Nb_sommets = 3;
     float X, Y, Z;
     X = wxAtof(TextCtrl_P1X->GetValue()); Y = wxAtof(TextCtrl_P1Y->GetValue()); Z = wxAtof(TextCtrl_P1Z->GetValue());
     Vector3D P1(X,Y,Z);
@@ -162,20 +165,21 @@ void Facette::genereFacette()
     Element->str.clear();
     Element->N_elements = 1;
     Element->makenormale();
-    Element->Objetlist[indiceObjet].Nb_normales = 1;
+    p_Objet->Nb_normales = 1;
     Element->N_elements = 1; Element->Setxyz( vn.X, vn.Y, vn.Z); Element->make1normale();
 
 // Attributs de la facette
-    Element->genereAttributsFacettes(indiceObjet, 1, numeroGroupe, numeroMateriau);
+    Element->genereAttributsFacettes(p_Objet, 1, numeroGroupe, numeroMateriau);
 
 // Luminance
-    Element->Objetlist[indiceObjet].flat = true; // En fait serait de toutes façons plat avec les normales aux sommets ci-dessous
-    Element->Objetlist[indiceObjet].Nb_vecteurs   = 0;
-    Element->Objetlist[indiceObjet].Nb_luminances = 0;
+    p_Objet->flat = true; // En fait serait de toutes façons plat avec les normales aux sommets ci-dessous
+    p_Objet->Nb_vecteurs   = 0;
+    p_Objet->Nb_luminances = 0;
 
-    Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
-    Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);
-    Element->GenereListeGroupesMateriaux(indiceObjet);
+    Element->GenereTableauPointsFacettes(p_Objet);
+    Element->GenereTableauAretes_OK = true;
+    Element->GenereTableauAretes(p_Objet);
+    Element->GenereListeGroupesMateriaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }

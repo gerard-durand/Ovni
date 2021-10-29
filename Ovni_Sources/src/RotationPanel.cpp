@@ -186,11 +186,11 @@ void RotationPanel::Init_Centre_Rotation()
         Nb_p= 0;
         for (i=0; i<n_val; i++, it++) {
             objet_courant = &(Element->Objetlist[*it]);
-            if (objet_courant->deleted) continue ;                   // Ne pas traiter les objets supprimés
-            for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-                cx1 += objet_courant->Sommetlist[j].point[0];
-                cy1 += objet_courant->Sommetlist[j].point[1];
-                cz1 += objet_courant->Sommetlist[j].point[2];
+            if (objet_courant->deleted) continue ;                  // Ne pas traiter les objets supprimés
+            for (j=0; j<objet_courant->Sommetlist.size(); j++) {    // Non parallélisable ? car somme cumulée des c*1 et nb_p (critical sans intérêt)
+                cx1 +=  objet_courant->Sommetlist[j].point[0];
+                cy1 +=  objet_courant->Sommetlist[j].point[1];
+                cz1 +=  objet_courant->Sommetlist[j].point[2];
                 Nb_p++;
             }
         }
@@ -382,6 +382,7 @@ void RotationPanel::Rotation_Objet_X(int indiceObjet, double angle)
     objet_courant = &(MAIN->Element->Objetlist[indiceObjet]);
     cos_a = cos(angle) ; sin_a = sin(angle);
     ns = objet_courant->Sommetlist.size();
+#pragma omp parallel for private(sommet_courant,yy,zz)
 	for(j=0; j<ns; j++) {
 	    sommet_courant = &(objet_courant->Sommetlist[j]);
 	    yy = sommet_courant->point[1] ;    // y
@@ -408,6 +409,7 @@ void RotationPanel::Rotation_Objet_Y(int indiceObjet, double angle)
     objet_courant = &(MAIN->Element->Objetlist[indiceObjet]);
     cos_a = cos(angle) ; sin_a = sin(angle);
     ns = objet_courant->Sommetlist.size();
+#pragma omp parallel for private(sommet_courant,xx,zz)
 	for(j=0; j<ns; j++)	{
 	    sommet_courant = &(objet_courant->Sommetlist[j]);
 	    xx = sommet_courant->point[0] ;    // x
@@ -434,6 +436,7 @@ void RotationPanel::Rotation_Objet_Z(int indiceObjet, double angle)
     objet_courant = &(MAIN->Element->Objetlist[indiceObjet]);
     cos_a = cos(angle) ; sin_a = sin(angle);
     ns = objet_courant->Sommetlist.size();
+#pragma omp parallel for private(sommet_courant,xx,yy)
 	for(j=0; j<ns; j++)	{
 	    sommet_courant = &(objet_courant->Sommetlist[j]);
 	    xx = sommet_courant->point[0] ;    // x
@@ -461,6 +464,7 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
         unsigned int ns = objet_courant->Sommetlist.size();
 //        printf(", Nb Sommets : %d\n",objet_courant->Sommetlist.size());
         // Recentrer l'objet en 0,0,0
+#pragma omp parallel for private(sommet_courant)
         for (j=0; j<ns; j++) {
             sommet_courant = &(objet_courant->Sommetlist[j]);
             sommet_courant->point[0] -= Element->Centre_X;
@@ -472,6 +476,7 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
         Rotation_Objet_Y(*it,RotY*to_Rad);
         Rotation_Objet_Z(*it,RotZ*to_Rad);
         // Remettre l'objet en place (translation inverse)
+#pragma omp parallel for private(sommet_courant)
         for (j=0; j<ns; j++) {
             sommet_courant = &(objet_courant->Sommetlist[j]);
             sommet_courant->point[0] += Element->Centre_X;

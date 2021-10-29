@@ -96,7 +96,9 @@ void DeplacerBdd::OnButton_OKClick(wxCommandEvent& event)
 
     for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
-        for (i=0; i<objet_courant->Nb_sommets; i++) {
+        unsigned int nbsom = objet_courant->Nb_sommets;
+#pragma omp parallel for private(sommet_i)
+        for (i=0; i<nbsom; i++) {
             sommet_i = &(objet_courant->Sommetlist[i]);
             if (sommet_i->point.empty()) continue;      // Ne pas tenir compte de points vides (non utilisés a priori !)
             sommet_i->point[0] += dx;
@@ -163,7 +165,9 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
 
     for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
-        for (i=0; i<objet_courant->Nb_sommets; i++) {
+        unsigned int nbsom = objet_courant->Nb_sommets;
+#pragma omp parallel for private(sommet_i)
+        for (i=0; i<nbsom; i++) {
             sommet_i = &(objet_courant->Sommetlist[i]);
             if (sommet_i->point.empty()) continue;      // Ne pas tenir compte de points vides (non utilisés a priori !)
             sommet_i->point[0] -= dx;

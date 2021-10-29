@@ -14,8 +14,10 @@
 #include "vector3d.h"
 #include "utf8.h"
 #include "ply.h"
+#include <filesystem>
 
 #include "OvniMain.h"
+
 
 const float to_Deg = 180.0f/M_PI;
 const float to_Rad = 1.0f/to_Deg;
@@ -58,6 +60,7 @@ FILE* f;                                // Doit être ici pour pouvoir être uti
 char XML_Buff[BUFFSIZE];
 int  XML_Depth;
 int  i_objetXML_courant=0;              // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
+static int id_timer=1000;
 
 char s1[666]; //,buffer[1000] ;			// chaines de caractères. Déclarée ici car utilisée aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -71,6 +74,7 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_KEY_DOWN( BddInter::OnKeyDown )
     EVT_MOUSE_EVENTS(BddInter::OnMouse)
     EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved)
+    EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)
 END_EVENT_TABLE()
 
 BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
@@ -105,8 +109,8 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
     centre_auto.resize(3);  // Idem
 
     // Initialiser les tables de couleurs avec les valeurs par défaut
-    for (int j=0;  j<4 ; j++) {
-        for (int i=0 ; i<nb_couleurs ; i++) {
+    for (int j=0; j<4; j++) {
+        for (int i=0; i<nb_couleurs; i++) {
             MatAmbient_avionG[i][j] = MatAmbient_avionG_def[i][j];
             MatDiffuse_avionG[i][j] = MatDiffuse_avionG_def[i][j];
         }
@@ -277,7 +281,7 @@ void BddInter::ResetData() {
            MZoomSpec->TextCtrl_Distance->SetValue(str);
         }
     }
-    for (int i=0 ; i<4 ; i++) Light0Position[i] = Light0Position_def[i];
+    for (int i=0; i<4; i++) Light0Position[i] = Light0Position_def[i];
     if (MPosLight != nullptr) {
         MPosLight->SpinCtrlDouble_PosX->SetValue(Light0Position[0]);
         MPosLight->SpinCtrlDouble_PosY->SetValue(Light0Position[1]);
@@ -328,7 +332,7 @@ void BddInter::ResetData() {
 	sprintf(Message_fps," ");
 
 // Initialisation des couleurs des groupes/matériaux via MatAmbient_avionG
-//    for (int i=0; i<nb_couleurs ; i++) {
+//    for (int i=0; i<nb_couleurs; i++) {
 //        for (int j=0; j<3; j++) color_groupe_material[i][j] = MatAmbient_avionG[i][j];
 //    }
 
@@ -768,7 +772,7 @@ void BddInter::CalculMatriceRot() {
     add_quats(q,quat,quat);
     quat[2] *=-1.;                                      // Pourquoi changer de signe seulement cette composante ?
 
-    for (int i=0;i<4;i++) m_gldata.quat[i]=quat[i];
+    for (int i=0; i<4; i++) m_gldata.quat[i]=quat[i];
 
 // Construire la matrice de rotation
     build_rotmatrix( matquat, quat );
@@ -834,88 +838,127 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             long ID_POPUP_NORM_S     = MAIN_b->ID_POPUP_NORM_S;
             long ID_POPUP_FLAT       = MAIN_b->ID_POPUP_FLAT;
             long ID_POPUP_NOT_FLAT   = MAIN_b->ID_POPUP_NOT_FLAT;
+            wxColour Forg;
+            wxColour Back;
+            if (theme_b) {
+                Forg    = New_Forg;
+                Back    = New_Back;
+            } else {
+                Forg    = wxNullColour;
+                Back    = wxNullColour;
+            }
+
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
             wxMenuItem * Popup_RAZ;
             if (mode_selection == selection_point)
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, _T("RAZ de sélection des points\t(s)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, "RAZ de sélection des points\t(s)",   wxEmptyString, wxITEM_NORMAL);
             else if (mode_selection == selection_objet)
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, _T("RAZ de sélection des objets\t(s)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, "RAZ de sélection des objets\t(s)",   wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, _T("RAZ de sélection des facettes\t(s)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, "RAZ de sélection des facettes\t(s)", wxEmptyString, wxITEM_NORMAL);
+            Popup_RAZ->SetBackgroundColour(Back);
+            Popup_RAZ->SetTextColour(Forg);
             My_popupmenu.Append(Popup_RAZ);
 
             wxMenuItem * Popup_Centrer;
             if (this->ToSelect.ListeSelect.size() > 0)
-                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, _T("Centrer la rotation sur la sélection\t(c)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, "Centrer la rotation sur la sélection\t(c)", wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, _T("Recentrer sur la rotation par défaut\t(c)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, "Recentrer sur la rotation par défaut\t(c)", wxEmptyString, wxITEM_NORMAL);
+            Popup_Centrer->SetBackgroundColour(Back);
+            Popup_Centrer->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Centrer);
 
-            wxMenuItem * Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, _T("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem * Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, "Étendre la sélection\t(x)", wxEmptyString, wxITEM_NORMAL);
+            Popup_Etendre->SetBackgroundColour(Back);
+            Popup_Etendre->SetTextColour(Forg);
+
             My_popupmenu.Append(Popup_Etendre);
             if (this->ToSelect.ListeSelect.size() == 0) Popup_Etendre->Enable(false);
 
             My_popupmenu.AppendSeparator();
 
-            wxMenuItem * Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, _T("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem * Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, "Masquer les facettes sélectionnées\t(Numpad Suppr)", wxEmptyString, wxITEM_NORMAL);
+            Popup_Masquer->SetBackgroundColour(Back);
+            Popup_Masquer->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Masquer);
 
-            wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  _T("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  "Supprimer les facettes sélectionnées\t(Suppr)",      wxEmptyString, wxITEM_NORMAL);
+            Popup_Delete->SetBackgroundColour(Back);
+            Popup_Delete->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Delete);
 
             My_popupmenu.AppendSeparator();
 
             wxMenuItem * Popup_Inverser ;
             if (this->ToSelect.ListeSelect.size() > 0)
-                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, _T("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, "Inverser les normales sélectionnées\t(i)", wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, _T("Inverser toutes les normales\t(i)"),        wxEmptyString, wxITEM_NORMAL);
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, "Inverser toutes les normales\t(i)",        wxEmptyString, wxITEM_NORMAL);
+            Popup_Inverser->SetBackgroundColour(Back);
+            Popup_Inverser->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Inverser);
 
-            wxMenuItem * Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, _T("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem * Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, "Inverser le sens de parcours des facettes sélectionnées\t(p)", wxEmptyString, wxITEM_NORMAL);
+            Popup_Reverse->SetBackgroundColour(Back);
+            Popup_Reverse->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Reverse);
 
             wxMenuItem * Popup_Raz_Select;
             if (this->Raz_Selection_F)
-                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, _T("Désactiver la désélection automatique\t(z)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, "Désactiver la désélection automatique\t(z)", wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, _T("Activer la désélection automatique\t(z)"),    wxEmptyString, wxITEM_NORMAL);
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, "Activer la désélection automatique\t(z)",    wxEmptyString, wxITEM_NORMAL);
+            Popup_Raz_Select->SetBackgroundColour(Back);
+            Popup_Raz_Select->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Raz_Select);
 
             My_popupmenu.AppendSeparator();
 
             wxMenuItem * Popup_Afficher_Normales;
             if (AfficherNormaleFacette)
-                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Ne pas afficher les normales aux barycentres"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, "Ne pas afficher les normales aux barycentres", wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, _T("Afficher les normales aux barycentres"),        wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, "Afficher les normales aux barycentres",        wxEmptyString, wxITEM_NORMAL);
+            Popup_Afficher_Normales->SetBackgroundColour(Back);
+            Popup_Afficher_Normales->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Afficher_Normales);
 
             wxMenuItem * Popup_Afficher_NormalesSommets;
             if (AfficherNormalesSommets)
-                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, _T("Ne pas afficher les normales aux sommets"),  wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, "Ne pas afficher les normales aux sommets",  wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, _T("Afficher les normales aux sommets"),         wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, "Afficher les normales aux sommets",         wxEmptyString, wxITEM_NORMAL);
+            Popup_Afficher_NormalesSommets->SetBackgroundColour(Back);
+            Popup_Afficher_NormalesSommets->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Afficher_NormalesSommets);
 
             wxMenuItem * Popup_Forcer_Facettes_Planes;
-            Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         _T("Forcer les facettes à être planes"),  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         "Forcer les facettes à être planes",  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_Planes->SetBackgroundColour(Back);
+            Popup_Forcer_Facettes_Planes->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Forcer_Facettes_Planes);
 
             wxMenuItem * Popup_Forcer_Facettes_NonPlanes;
-            Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  _T("Forcer les facettes à être non planes"),  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  "Forcer les facettes à être non planes",  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_NonPlanes->SetBackgroundColour(Back);
+            Popup_Forcer_Facettes_NonPlanes->SetTextColour(Forg);
             My_popupmenu.Append(Popup_Forcer_Facettes_NonPlanes);
 
             if (Elements_Masques || Elements_Supprimes)
                 My_popupmenu.AppendSeparator(); // Ajout d'un séparateur si des élements de menu suivent ...
 
             if (Elements_Masques) {             // S'il y a au moins une facette masquée, proposer de les réafficher
-                wxMenuItem * Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, _T("Réafficher les facettes masquées"), wxEmptyString, wxITEM_NORMAL);
+                wxMenuItem * Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, "Réafficher les facettes masquées", wxEmptyString, wxITEM_NORMAL);
+                Popup_Demasquer->SetBackgroundColour(Back);
+                Popup_Demasquer->SetTextColour(Forg);
                 My_popupmenu.Append(Popup_Demasquer);
             }
             if (Elements_Supprimes) {           // S'il y a au moins une facette supprimée, proposer de les restituer
-                wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE, _T("Restituer les facettes supprimées"),  wxEmptyString, wxITEM_NORMAL);
+                wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE, "Restituer les facettes supprimées",  wxEmptyString, wxITEM_NORMAL);
+                Popup_Undelete->SetBackgroundColour(Back);
+                Popup_Undelete->SetTextColour(Forg);
                 My_popupmenu.Append(Popup_Undelete);
             }
             PopupMenu(&My_popupmenu, mouse_position.x, mouse_position.y);
@@ -1227,25 +1270,17 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     int   Nb_Valeurs;
     int   GrpMat;
     bool  Touche_Maj;
-    Face    *Facette;
-    Sommet  *Sommet;
+    Object  *Objet_courant;
+    Face    *Facette_courante;
+    Sommet  *Sommet_courant;
     wxString wxMessage;
 //    static bool theme_b = false;
-    int next;
+//    int next;
 //    int nb_menus;
 
     wxMouseEvent   event_mouse;
     wxCommandEvent cmd_event;
     wxKeyEvent     key_event;
-
-//    wxColour Noir     (*wxBLACK); // Déplacé dans Interface.h, dans la partie public de BddInter (après ligne 700) mais syntaxe différente
-//    wxColour Blanc    (*wxWHITE);
-//    wxColour New_Back (*wxBLACK);//(100,100,100);
-//    wxColour New_Forg (*wxWHITE); //wxCYAN
-//    wxColour BleuC(127,255,255);
-    wxColour Back ;
-    wxColour Forg ;
-    wxColour Bleu_svg ;
 
     long evkey = event.GetKeyCode();    // pas de différence entre une minuscule et une majuscule à ce niveau
     if (evkey == 0) {
@@ -1407,8 +1442,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
     case 'F':
 // Pour forcer la simplification des doublons d'arêtes
-        simplification_doublons_aretes = !simplification_doublons_aretes;
-        if (simplification_doublons_aretes)
+        forcer_simplification_doublons_aretes = !forcer_simplification_doublons_aretes;
+        if (forcer_simplification_doublons_aretes)
             printf("Forcer la simplification des doublons d'arêtes\n");
         else
             printf("Ne pas forcer la simplification des doublons d'arêtes\n");
@@ -1527,15 +1562,15 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             int numero= ToSelect.ListeSelect[0].face_sommet ;
             if (mode_selection == selection_point) {
                 if (ifexist_sommet(objet,numero)) {
-                    Sommet = &(this->Objetlist[objet].Sommetlist[numero]);
-                    Sommet->selected = false;                               // si numero peut correspondre à un sommet, mettre selected à false
+                    Sommet_courant = &(this->Objetlist[objet].Sommetlist[numero]);
+                    Sommet_courant->selected = false;                               // si numero peut correspondre à un sommet, mettre selected à false
                 }
             }
             if (mode_selection == selection_facette) {
                 if (ifexist_facette(objet,numero)) {
-                    Facette = &(this->Objetlist[objet].Facelist[numero]);
-                    Facette->selected = false;                              // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
-                    Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def;   // Ne sert plus ?
+                    Facette_courante = &(this->Objetlist[objet].Facelist[numero]);
+                    Facette_courante->selected = false;                              // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
+                    Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def;   // Ne sert plus ?
                 }
             }
             ToSelect.ListeSelect.erase(ToSelect.ListeSelect.begin());   // On supprime le premier élément de la liste => la liste se décale d'un cran.
@@ -1607,27 +1642,35 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         extend_auto = false;                                               // Initialiser le marqueur d'ajouts de facettes
         // Du fait des boucles imbriquées ce test peut-être long (et même très long sur de grosses Bdds)
+        // Paralléliser ? pas sûr ... mais ça semble fonctionner !
         for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
-            for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
+            Objet_courant = &(this->Objetlist[objet]);
+            unsigned int nbfacettes = Objet_courant->Facelist.size();
+            for (unsigned int face=0; face < nbfacettes; face++) {
                 if (ToSelect.check_if_in_ListeSelect(objet,face)) {
 //                    printf("objet : %d, facette : %d\n",objet,face);
-                    NumerosF = this->Objetlist[objet].Facelist[face].getF_sommets();            // Récupérer les numéros de sommets de la facette "face" de l'objet "objet"
+                    NumerosF = Objet_courant->Facelist[face].getF_sommets();    // Récupérer les numéros de sommets de la facette "face" de l'objet "objet"
                     sz_numF  = NumerosF.size();
-                    for (unsigned int j=0; j<this->Objetlist[objet].Facelist.size(); j++) {     // Commencer directement à face+1 plutôt que 0 ?
-                        if (j == face) continue;                                                // Passer directement au suivant (inclus dans le test ci-dessous, mais + rapide ?)
-                        if (ToSelect.check_if_in_ListeSelect(objet,j)) continue ;               // Si la facette j déjà dans la liste, passer à la suivante
-                        NumerosJ = this->Objetlist[objet].Facelist[j].getF_sommets();           // Récupérer les numéros de sommets de la facette "j" de l'objet "objet"
+#pragma omp parallel for private(Facette_courante,NumerosJ,sz_numJ)
+                    for (unsigned int j=0; j<nbfacettes; j++) {                 // Commencer directement à face+1 plutôt que 0 ? ... Non, ne suffit pas
+                        if (j == face) continue;                                // Passer directement au suivant (inclus dans le test ci-dessous, mais + rapide ?)
+                        if (ToSelect.check_if_in_ListeSelect(objet,j)) continue;// Si la facette j déjà dans la liste, passer à la suivante
+                        Facette_courante = &(Objet_courant->Facelist[j]);
+                        NumerosJ = Facette_courante->getF_sommets();            // Récupérer les numéros de sommets de la facette "j" de l'objet "objet"
                         sz_numJ  = NumerosJ.size();
                         for (int nn=0; nn<sz_numF; nn++) {
                             int Numeros_nn = NumerosF[nn];
-                            for (int nj=0 ; nj<sz_numJ ; nj++) {
+                            for (int nj=0; nj<sz_numJ; nj++) {
                                 if (Numeros_nn != NumerosJ[nj]) continue ;      // Ne faire la suite (comparaison des normales) que si 1 point commun entre les facettes j et face
                                 if (compare_normales(objet,face,j)) {           // Test sur les normales
 //                                   printf("OK  %d\n",j);
                                     if (!ToSelect.check_if_in_ListeSelect(objet,j)) {   // N'ajouter que si non déjà présent dans la Liste
+#pragma omp critical
+{
                                         ToSelect.add_one(objet,j);
+}
                                         extend_auto = true;                             // Marquer qu'on a ajouté une facette dans la liste
-                                        this->Objetlist[objet].Facelist[j].selected = true;
+                                        Facette_courante->selected = true;
 //                                            colorface(objet,j);   // Maintenant <=> ligne ci-dessus
                                     }
                                 }
@@ -1647,10 +1690,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (!extend_auto) {                                                 // La sélection n'a pas été modifiée : afficher un message
 //            printf("Extension automatique : limite atteinte\n");
             if (ToSelect.ListeSelect.size() == 0)
-                wxMessage = _T("La sélection de facettes est vide. Pas d'extension possible");
+                wxMessage = "La sélection de facettes est vide. Pas d'extension possible";
             else {
-                wxMessage = _T("L'extension automatique de la sélection a atteind sa limite :\n");
-                wxMessage+= _T("pas ou plus de points communs avec les facettes voisines");
+                wxMessage = "L'extension automatique de la sélection a atteind sa limite :\n";
+                wxMessage+= "pas ou plus de points communs avec les facettes voisines";
             }
             DisplayMessage(wxMessage,false);
         }
@@ -1670,7 +1713,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 unsigned int i,n,indice_ListBox;
                 wxString str_loc;
                 n = MSelObj->CheckListBox1->GetCount(); // Récupère le nombre d'items actuels
-                for (i=0 ; i<n ; i++)
+                for (i=0; i<n; i++)
                     MSelObj->CheckListBox1->Delete(0);  // Supprime ces "anciens" items
 
                 indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
@@ -1695,10 +1738,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                     for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                         if (ToSelect.check_if_in_ListeSelect(objet,face)) {
         //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
-                            Facette = &(this->Objetlist[objet].Facelist[face]);
-                            Facette->selected = false;
-//                            Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def;     // Ne sert plus ?
-                            Facette->deleted  = true;
+                            Facette_courante = &(this->Objetlist[objet].Facelist[face]);
+                            Facette_courante->selected = false;
+//                            Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def;     // Ne sert plus ?
+                            Facette_courante->deleted  = true;
                             Elements_Supprimes= true;              // Au moins une facette supprimée
                             ToSelect.erase_one_ListeSelect(objet,face);
                         }
@@ -1732,11 +1775,11 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
                     for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                         if (ToSelect.check_if_in_ListeSelect(objet,face)) {
-                            Facette = &(this->Objetlist[objet].Facelist[face]);
+                            Facette_courante = &(this->Objetlist[objet].Facelist[face]);
         //                    printf("%d %d %d\n",ToSelect.check_if_in_ListeSelect(objet,face),objet,face);
-                            Facette->selected = false;
-//                            Facette->color[0] = Facette->color[1] = Facette->color[2] = gris_def; // Ne sert plus ?
-                            Facette->afficher = false;
+                            Facette_courante->selected = false;
+//                            Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def; // Ne sert plus ?
+                            Facette_courante->afficher = false;
                             Elements_Masques  = true;               // Au moins une facette masquée
                             ToSelect.erase_one_ListeSelect(objet,face);
                         }
@@ -1779,174 +1822,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         break;
 
     case 'W':
-        theme_b = !theme_b; // Test pour Basculer du thème standard vers un thème sombre !
-
-        if (theme_b) {
-            Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour();
-            Forg    = New_Forg;
-            Back    = New_Back;
-        } else {
-            Forg    = wxNullColour;
-            Back    = wxNullColour;
-        }
-
-        this->MAIN_b->SetForegroundColour(Forg);
-        this->MAIN_b->SetBackgroundColour(Back);
-        this->MAIN_b->Button_Droite     ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_Droite     ->SetBackgroundColour(Back);
-        this->MAIN_b->Button_Gauche     ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_Gauche     ->SetBackgroundColour(Back);
-        this->MAIN_b->Button_Haut       ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_Haut       ->SetBackgroundColour(Back);
-        this->MAIN_b->Button_Bas        ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_Bas        ->SetBackgroundColour(Back);
-        this->MAIN_b->Button_ZoomPlus   ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_ZoomPlus   ->SetBackgroundColour(Back);
-        this->MAIN_b->Button_ZoomMoins  ->SetForegroundColour(Forg);
-        this->MAIN_b->Button_ZoomMoins  ->SetBackgroundColour(Back);
-        this->MAIN_b->Panel1            ->SetBackgroundColour(Back);
-        this->MAIN_b->StaticText1       ->SetForegroundColour(Forg);
-        this->MAIN_b->StaticText2       ->SetForegroundColour(Forg);
-//        this->MAIN_b->Button_Points     ->SetBackgroundColour(Forg);  // Ne donne qu'un petit liseré noir autour de l'icône
-
-        this->MAIN_b->MenuBar_Globale   ->SetForegroundColour(Forg);    // Ne marche pas
-        this->MAIN_b->MenuBar_Globale   ->SetBackgroundColour(Back);    //
-
-        this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Open         ->SetBackgroundColour(Back);
-        this->MAIN_b->MenuFile->Remove (this->MAIN_b->Menu_Open);
-        this->MAIN_b->MenuFile->Prepend(this->MAIN_b->Menu_Open);
-
-        this->MAIN_b->Menu_ReOpen       ->SetTextColour(Forg);
-        this->MAIN_b->Menu_ReOpen       ->SetBackgroundColour(Back);
-        this->MAIN_b->MenuFile->Remove  (this->MAIN_b->Menu_ReOpen);
-        this->MAIN_b->MenuFile->Insert(1,this->MAIN_b->Menu_ReOpen);
-//            nb_menus = this->MAIN_b->MenuFile->GetMenuItemCount();
-        next = 2;
-//            if (nb_menus > 13) {
-        if (this->MAIN_b->Menu_ReOpen3ds != nullptr) {
-            this->MAIN_b->Menu_ReOpen3ds->SetTextColour(Forg);
-            this->MAIN_b->Menu_ReOpen3ds->SetBackgroundColour(Back);
-            this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_ReOpen3ds);
-            this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_ReOpen3ds);
-        }
-        this->MAIN_b->Menu_AddFile      ->SetTextColour(Forg);
-        this->MAIN_b->Menu_AddFile      ->SetBackgroundColour(Back);
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_AddFile);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_AddFile);
-
-        this->MAIN_b->Menu_Enregistrer  ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Enregistrer  ->SetBackgroundColour(Back);
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Enregistrer);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Enregistrer);
-
-        this->MAIN_b->Menu_Enregistrer_Sous  ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Enregistrer_Sous  ->SetBackgroundColour(Back);
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Enregistrer_Sous);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Enregistrer_Sous);
-
-        this->MAIN_b->Menu_Proprietes   ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Proprietes   ->SetBackgroundColour(Back);
-        next++;
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Proprietes);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Proprietes);
-        this->MAIN_b->Menu_Preferences  ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Preferences  ->SetBackgroundColour(Back);
-        next++;
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Preferences);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Preferences);
-        this->MAIN_b->Menu_Hardware3D   ->SetTextColour(Forg);
-        this->MAIN_b->Menu_Hardware3D   ->SetBackgroundColour(Back);
-        next++;
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->Menu_Hardware3D);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->Menu_Hardware3D);
-        this->MAIN_b->MenuItem_Quitter  ->SetTextColour(Forg);
-        this->MAIN_b->MenuItem_Quitter  ->SetBackgroundColour(Back);
-        next++;
-        this->MAIN_b->MenuFile->Remove       (this->MAIN_b->MenuItem_Quitter);
-        this->MAIN_b->MenuFile->Insert(next++,this->MAIN_b->MenuItem_Quitter);
-
-//            this->MAIN_b->MenuItem_Quitter->SetTextColour(wxColour(255,0,0));
-        if (theme_b)
-            this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);
-        else
-            this->MAIN_b->Slider_z->SetForegroundColour(Bleu_svg);
-
-        this->MAIN_b->StatusBar1  ->SetBackgroundColour(Back);
-
-        this->MSelect->SetForegroundColour(Forg);
-        this->MSelect->SetBackgroundColour(Back);
-        if (theme_b) {
-            this->MSelect->StaticText1              ->SetForegroundColour(New_Back);    // <=> *wxBLACK (en fait sur ces items, Forg/Back inversés)
-            this->MSelect->StaticText1              ->SetBackgroundColour(New_Forg);    // <=> *wxWHITE
-            this->MSelect->StaticText2              ->SetForegroundColour(New_Back);
-            this->MSelect->StaticText2              ->SetBackgroundColour(New_Forg);
-            this->MSelect->StaticText9              ->SetForegroundColour(New_Back);
-            this->MSelect->StaticText9              ->SetBackgroundColour(New_Forg);
-            this->MSelect->StaticText_TypeSelection ->SetForegroundColour(New_Back);
-            this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(New_Forg);
-        } else {
-            this->MSelect->StaticText1              ->SetForegroundColour(Blanc);
-            this->MSelect->StaticText1              ->SetBackgroundColour(Noir);
-            this->MSelect->StaticText2              ->SetForegroundColour(Blanc);
-            this->MSelect->StaticText2              ->SetBackgroundColour(Noir);
-            this->MSelect->StaticText9              ->SetForegroundColour(Blanc);
-            this->MSelect->StaticText9              ->SetBackgroundColour(Noir);
-            this->MSelect->StaticText_TypeSelection ->SetForegroundColour(Blanc);
-            this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(Noir);
-        }
-        this->MSelect->StaticText3                  ->SetForegroundColour(Forg);
-        this->MSelect->StaticText4                  ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_Fac               ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_Selection         ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_Grp               ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_Mat               ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_NumerosUtilises   ->SetForegroundColour(Forg);
-        this->MSelect->StaticText_Changer           ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_Selection_Objets     ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_TypeSelection_Both   ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_TypeSelection_Avant  ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_TypeSelection_Arriere->SetForegroundColour(Forg);
-        this->MSelect->CheckBox_ForcerFlat              ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_Grp                  ->SetForegroundColour(Forg);
-        this->MSelect->RadioButton_Mat                  ->SetForegroundColour(Forg);
-        this->MSelect->Button_SelectionManuelleFacettes ->SetBackgroundColour(Back);
-        this->MSelect->Button_SelectionManuelleFacettes ->SetForegroundColour(Forg);
-        this->MSelect->Button_OuvrirReperage        ->SetBackgroundColour(Back);
-        this->MSelect->Button_OuvrirReperage        ->SetForegroundColour(Forg);
-        this->MSelect->Button_Appliquer             ->SetBackgroundColour(Back);
-        this->MSelect->Button_Appliquer             ->SetForegroundColour(Forg);
-        this->MSelect->Button_InverserNormales      ->SetBackgroundColour(Back);
-        this->MSelect->Button_InverserNormales      ->SetForegroundColour(Forg);
-        this->MSelect->Button_UndoNormales          ->SetBackgroundColour(Back);
-        this->MSelect->Button_UndoNormales          ->SetForegroundColour(Forg);
-        this->MSelect->Button_Delete                ->SetBackgroundColour(Back);
-        this->MSelect->Button_Delete                ->SetForegroundColour(Forg);
-        this->MSelect->Button_UndoDelete            ->SetBackgroundColour(Back);
-        this->MSelect->Button_UndoDelete            ->SetForegroundColour(Forg);
-        this->MSelect->Button_InverserParcours      ->SetBackgroundColour(Back);
-        this->MSelect->Button_InverserParcours      ->SetForegroundColour(Forg);
-        this->MSelect->Button_Masquer               ->SetBackgroundColour(Back);
-        this->MSelect->Button_Masquer               ->SetForegroundColour(Forg);
-        this->MSelect->Button_UndoMasquer           ->SetBackgroundColour(Back);
-        this->MSelect->Button_UndoMasquer           ->SetForegroundColour(Forg);
-        this->MSelect->Button_Reafficher            ->SetBackgroundColour(Back);
-        this->MSelect->Button_Reafficher            ->SetForegroundColour(Forg);
-        this->MSelect->Button_Centrer               ->SetBackgroundColour(Back);
-        this->MSelect->Button_Centrer               ->SetForegroundColour(Forg);
-        this->MSelect->Button_Manipulations         ->SetBackgroundColour(Back);
-        this->MSelect->Button_Manipulations         ->SetForegroundColour(Forg);
-        this->MSelect->Button_Etendre               ->SetBackgroundColour(Back);
-        this->MSelect->Button_Etendre               ->SetForegroundColour(Forg);
-        this->MSelect->Button_Quitter               ->SetBackgroundColour(Back);
-        this->MSelect->Button_Quitter               ->SetForegroundColour(Forg);
-        this->MSelect->Button_Fusionner             ->SetBackgroundColour(Back);
-        this->MSelect->Button_Fusionner             ->SetForegroundColour(Forg);
-//            this->MAIN_b->SetMenuBar(this->MAIN_b->MenuBar_Globale);
-        this->MSelect->Refresh();
-        this->MAIN_b ->Refresh();
+        theme_b = !theme_b; // Test pour Basculer du thème standard vers un thème sombre.
+        Switch_theme(theme_b);
         break;
 
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
@@ -1985,6 +1862,1325 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
 ///    event.Skip();   // Avec ou sans ne semble rien changer !!!
     if(verbose) printf("Sortie de BddInter::OnKeyDown\n");
+}
+
+void BddInter::Switch_theme(bool theme_b)
+{
+// Test pour Basculer du thème standard vers un thème sombre. Mais semble assez laborieux !
+
+//    int next;
+    wxColour Forg;
+    wxColour Back;
+    wxColour Gris;
+    wxColour Bleu_svg ;
+    bool methode_boucle = true;    // Pour tester 2 méthodes, une avec boucles, + élégante mais qui plante parfois, et une très bourrine, mais plus fiable !
+
+    if (theme_b) {
+        Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour(); // Sur ce slider en Z, le bleu original est trop foncé
+        Forg    = New_Forg;
+        Back    = New_Back;
+        Gris    = New_Gris;
+    } else {
+        Forg    = wxNullColour;
+        Back    = wxNullColour;
+        Gris    = wxNullColour;
+    }
+
+//this->SetThemeEnabled(true);
+//this->MAIN_b->SetThemeEnabled(true);
+
+// Colorisation de l'interface de base et des menus
+    this->MAIN_b->SetForegroundColour(Forg);
+    this->MAIN_b->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Droite     ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Droite     ->SetBackgroundColour(Gris);
+    this->MAIN_b->Button_Gauche     ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Gauche     ->SetBackgroundColour(Gris);
+    this->MAIN_b->Button_Haut       ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Haut       ->SetBackgroundColour(Gris);
+    this->MAIN_b->Button_Bas        ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Bas        ->SetBackgroundColour(Gris);
+    this->MAIN_b->Button_ZoomPlus   ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_ZoomPlus   ->SetBackgroundColour(Gris);
+    this->MAIN_b->Button_ZoomMoins  ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_ZoomMoins  ->SetBackgroundColour(Gris);
+    this->MAIN_b->Panel1            ->SetBackgroundColour(Back);
+    this->MAIN_b->StaticText1       ->SetForegroundColour(Forg);
+    this->MAIN_b->StaticText2       ->SetForegroundColour(Forg);
+//    this->MAIN_b->Button_Points     ->SetBackgroundColour(Back);    // Ne donne qu'un petit liseré noir autour de l'icône
+//    this->MAIN_b->Button_Filaire    ->SetBackgroundColour(Back);
+
+    this->MAIN_b->MenuBar_Globale   ->SetForegroundColour(Forg);    // Ne marche pas (ou il manque quelquechose ?)
+    this->MAIN_b->MenuBar_Globale   ->SetBackgroundColour(Gris);    //
+//    this->MAIN_b->MenuBar_Globale->SetThemeEnabled(true);
+//    this->MAIN_b->MenuBar_Globale->Remove(0);
+//    this->MAIN_b->MenuBar_Globale->Insert(0,this->MAIN_b->MenuFile,"Fichier");
+//    this->MAIN_b->MenuBar_Globale->UpdateWindowUI();
+//    this->MAIN_b->MenuBar_Globale->Update();
+//    this->MAIN_b->MenuBar_Globale->UpdateMenus();
+//    this->MAIN_b->MenuBar_Globale->Refresh();
+
+// Tests pour explorer tous les items de MenuFile, Mene_Affichage,...!
+// Mieux avec des boucles, mais ça plante parfois et + de flicker ... De plus, ne colorise bien pas le séparateur (seulement une petite marge en haut) : dommage !
+
+    if (methode_boucle) {
+
+    int nb,num_menu;
+    wxMenu * menu;
+    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
+    wxMenuItem * item;
+    int nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
+//    printf("menus : %d\n",nb_menus);
+
+//    wxMenu * menu = this->MAIN_b->MenuFile;
+
+//    int nb_items  = menu->GetMenuItemCount();
+//    wxMenuItemList menu_liste=this->MAIN_b->MenuFile->GetMenuItems();
+//    printf("size = %d %d\n",nb_items,(int)menu_liste.size());
+
+    for (num_menu=0; num_menu<nb_menus; num_menu++) {
+        menu = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
+        for (nb=0, node = menu->GetMenuItems().GetFirst(); node; nb++,node = node->GetNext()) {
+            item = node->GetData();
+            if (item->IsSeparator()) continue;  // ne faire la suite que si n'est pas un séparateur, car les Set*Colour n'y fonctionnent pas bien
+            item->SetTextColour(Forg);
+            item->SetBackgroundColour(Back);
+            if (nb == 0) {
+                menu->Remove(item);             // Il suffit de le faire sur le 1er menu, mais il faut le UpdateUI ensuite (sinon faire chaque fois mais flicker)
+                menu->Insert(nb,item);          // Prepend suffit pour nb == 0
+            }
+        }
+        menu->UpdateUI();
+    }
+
+//    menu = this->MAIN_b->Menu_Affichage;
+//...
+//    menu = this->MAIN_b->Menu_Primitive;
+//...
+//    menu = this->MAIN_b->Menu_Reperage;
+//...
+//    menu = this->MAIN_b->Menu_Image;
+//...
+//    menu = this->MAIN_b->Menu_Outils;
+//...
+//    menu = this->MAIN_b->Menu_Transformations;
+//...
+//    menu = this->MAIN_b->Menu_Options;
+//...
+//    menu = this->MAIN_b->Menu_Aide;
+//...
+
+    } else {
+
+    this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Open         ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuFile->Remove (this->MAIN_b->Menu_Open);       // Il en faut au moins 1 pour que UpdateUI() fonctionne
+    this->MAIN_b->MenuFile->Prepend(this->MAIN_b->Menu_Open);
+
+    this->MAIN_b->Menu_ReOpen       ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReOpen       ->SetBackgroundColour(Back);
+    if (this->MAIN_b->Menu_ReOpen3ds != nullptr) {
+        this->MAIN_b->Menu_ReOpen3ds->SetTextColour(Forg);
+        this->MAIN_b->Menu_ReOpen3ds->SetBackgroundColour(Back);
+    }
+    this->MAIN_b->Menu_AddFile      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AddFile      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Enregistrer  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Enregistrer  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Enregistrer_Sous->SetTextColour(Forg);
+    this->MAIN_b->Menu_Enregistrer_Sous->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Proprietes   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Proprietes   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Preferences  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Preferences  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Hardware3D   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Hardware3D   ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_Quitter  ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_Quitter  ->SetBackgroundColour(Back);
+
+    this->MAIN_b->MenuFile->UpdateUI();
+
+    this->MAIN_b->Menu_Affichage_Points ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Points ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage->Remove (this->MAIN_b->Menu_Affichage_Points); // Il en faut au moins 1, sinon UpdateUI ne fait rien !
+    this->MAIN_b->Menu_Affichage->Prepend(this->MAIN_b->Menu_Affichage_Points);
+    this->MAIN_b->Menu_Affichage_Filaire->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Filaire->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Plein  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Plein  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Axes   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Axes   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Boite  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Boite  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Source ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Source ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Origine          ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Origine          ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeFace        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeFace        ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeProfil      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeProfil      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeDessus      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeDessus      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_PositionObservateur->SetTextColour(Forg);
+    this->MAIN_b->Menu_PositionObservateur->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ZoomSpecifique   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomSpecifique   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_CentreRotation   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentreRotation   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_PositionSource   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_PositionSource   ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Affichage->UpdateUI();
+
+    this->MAIN_b->Menu_AjouteCone       ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCone       ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Primitive->Remove (this->MAIN_b->Menu_AjouteCone);
+    this->MAIN_b->Menu_Primitive->Prepend(this->MAIN_b->Menu_AjouteCone);
+    this->MAIN_b->Menu_AjouteCube       ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCube       ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteCylindre   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCylindre   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteEllipsoide ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteEllipsoide ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteFacette    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteFacette    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteSphere     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteSphere     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteIcosaedre  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteIcosaedre  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_SupprimerDerniere->SetTextColour(Forg);
+    this->MAIN_b->Menu_SupprimerDerniere->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Primitive->UpdateUI();
+
+    this->MAIN_b->Menu_ReperagePoint                ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperagePoint                ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Reperage->Remove (this->MAIN_b->Menu_ReperagePoint);
+    this->MAIN_b->Menu_Reperage->Prepend(this->MAIN_b->Menu_ReperagePoint);
+    this->MAIN_b->Menu_ReperageFacette              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageFacette              ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ReperageGroupe               ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageGroupe               ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ReperageMateriau             ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageMateriau             ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ReperageObjet                ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageObjet                ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_SensDesNormales              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SensDesNormales              ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Reperage_Couleurs_Facettes   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Facettes   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Reperage_Couleurs_Groupes    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Groupes    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Reperage_Couleurs_Materiaux  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Materiaux  ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Reperage->UpdateUI();
+
+    this->MAIN_b->MenuItem_ImageJpeg->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_ImageJpeg->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Image->Remove (this->MAIN_b->MenuItem_ImageJpeg);
+    this->MAIN_b->Menu_Image->Prepend(this->MAIN_b->MenuItem_ImageJpeg);
+    this->MAIN_b->MenuItem_ImagePng ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_ImagePng ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_ImagePpm ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_ImagePpm ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Image->UpdateUI();
+
+    this->MAIN_b->Menu_RAZ_SelectionFacettes->SetTextColour(Forg);
+    this->MAIN_b->Menu_RAZ_SelectionFacettes->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Outils->Remove (this->MAIN_b->Menu_RAZ_SelectionFacettes);
+    this->MAIN_b->Menu_Outils->Prepend(this->MAIN_b->Menu_RAZ_SelectionFacettes);
+    this->MAIN_b->Menu_MasquerFacettes      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_MasquerFacettes      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_SupprimerFacettes    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SupprimerFacettes    ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_Selec_Depl         ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Selec_Depl         ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_Modifications      ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Modifications      ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_choix_afficher     ->SetTextColour(Forg);
+    this->MAIN_b->Outils_choix_afficher     ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_Reafficher         ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Reafficher         ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_Supprimer_Masques  ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Supprimer_Masques  ->SetBackgroundColour(Back);
+    this->MAIN_b->Outils_UnDelete           ->SetTextColour(Forg);
+    this->MAIN_b->Outils_UnDelete           ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Outils->UpdateUI();
+
+    this->MAIN_b->MenuItem_SigneX ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_SigneX ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Transformations->Remove (this->MAIN_b->MenuItem_SigneX);
+    this->MAIN_b->Menu_Transformations->Prepend(this->MAIN_b->MenuItem_SigneX);
+    this->MAIN_b->MenuItem_SigneY ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_SigneY ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_SigneZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_SigneZ ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_PermXY ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXY ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_PermXZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXZ ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_PermYZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermYZ ->SetBackgroundColour(Back);
+    this->MAIN_b->MenuItem_PermXYZ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXYZ->SetBackgroundColour(Back);
+    this->MAIN_b->Inverser_Toutes_les_Normales  ->SetTextColour(Forg);
+    this->MAIN_b->Inverser_Toutes_les_Normales  ->SetBackgroundColour(Back);
+    this->MAIN_b->Inverse_All_Selected_Normales ->SetTextColour(Forg);
+    this->MAIN_b->Inverse_All_Selected_Normales ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_DeplacerBdd              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_DeplacerBdd              ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_FacteurEchelleBdd        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_FacteurEchelleBdd        ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Transformations->UpdateUI();
+
+    this->MAIN_b->Menu_CouleurDesGroupes->SetTextColour(Forg);
+    this->MAIN_b->Menu_CouleurDesGroupes->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Options->Remove (this->MAIN_b->Menu_CouleurDesGroupes);
+    this->MAIN_b->Menu_Options->Prepend(this->MAIN_b->Menu_CouleurDesGroupes);
+    this->MAIN_b->Menu_RelirePalette    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_RelirePalette    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_EnregistrerPalette->SetTextColour(Forg);
+    this->MAIN_b->Menu_EnregistrerPalette->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ZoomAuto         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomAuto         ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_CentrageAuto     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentrageAuto     ->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Options->UpdateUI();
+
+    this->MAIN_b->MenuItem_Aide ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_Aide ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Aide->Remove (this->MAIN_b->MenuItem_Aide);
+    this->MAIN_b->Menu_Aide->Prepend(this->MAIN_b->MenuItem_Aide);
+    this->MAIN_b->MenuItem_About->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_About->SetBackgroundColour(Back);
+
+    this->MAIN_b->Menu_Aide->UpdateUI();
+    }
+
+    if (theme_b)
+        this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);   // Trop foncé, mettre plutôt Cyan
+    else
+        this->MAIN_b->Slider_z->SetForegroundColour(Bleu_svg);  // Reset de la couleur originale
+
+    this->MAIN_b->StatusBar1  ->SetBackgroundColour(Back);
+
+// Popup menus : fait directement dans OnMouse, if (event.RightUp() ...
+
+// Colorisation des dialogues
+// CentreRotation
+    this->MPosCRot->SetForegroundColour(Forg);
+    this->MPosCRot->SetBackgroundColour(Back);
+    this->MPosCRot->StaticText1->SetForegroundColour(Forg);
+    if (theme_b)
+        this->MPosCRot->StaticText4->SetForegroundColour(*wxCYAN);
+    else
+        this->MPosCRot->StaticText4->SetForegroundColour(Bleu_svg);
+
+    this->MPosCRot->SpinCtrlDouble_X->SetForegroundColour(Forg);
+    this->MPosCRot->SpinCtrlDouble_Y->SetForegroundColour(Forg);
+    this->MPosCRot->SpinCtrlDouble_Z->SetForegroundColour(Forg);
+    this->MPosCRot->SpinCtrlDouble_X->SetBackgroundColour(Gris);
+    this->MPosCRot->SpinCtrlDouble_Y->SetBackgroundColour(Gris);
+    this->MPosCRot->SpinCtrlDouble_Z->SetBackgroundColour(Gris);
+    this->MPosCRot->Button_Defs     ->SetForegroundColour(Forg);
+    this->MPosCRot->Button_Defs     ->SetBackgroundColour(Gris);
+    this->MPosCRot->Button_OK       ->SetForegroundColour(Forg);
+    this->MPosCRot->Button_OK       ->SetBackgroundColour(Gris);
+    this->MPosCRot->Refresh();
+
+// ChangerEchelleBdd
+    this->MScale_0->SetForegroundColour(Forg);
+    this->MScale_0->SetBackgroundColour(Back);
+    this->MScale_0->StaticText1     ->SetForegroundColour(Forg);
+    this->MScale_0->StaticText2     ->SetForegroundColour(Forg);
+    this->MScale_0->TextCtrl_scale  ->SetForegroundColour(Forg);
+    this->MScale_0->TextCtrl_scale  ->SetBackgroundColour(Gris);
+    this->MScale_0->Button_OK       ->SetForegroundColour(Forg);
+    this->MScale_0->Button_OK       ->SetBackgroundColour(Gris);
+    this->MScale_0->Button_Inverser ->SetForegroundColour(Forg);
+    this->MScale_0->Button_Inverser ->SetBackgroundColour(Gris);
+    this->MScale_0->Button_Quitter  ->SetForegroundColour(Forg);
+    this->MScale_0->Button_Quitter  ->SetBackgroundColour(Gris);
+    this->MScale_0->Refresh();
+
+// ChoixAffichageObjets
+    this->MChoice_O->SetForegroundColour(Forg);
+    this->MChoice_O->SetBackgroundColour(Back);
+    this->MChoice_O->StaticText1    ->SetForegroundColour(Forg);
+//    this->MChoice_O->CheckListBox1->SetForegroundColour(Forg);    // Ne marche pas
+//    this->MChoice_O->CheckListBox1  ->SetBackgroundColour(Back);
+    this->MChoice_O->Button_Aucun   ->SetForegroundColour(Forg);
+    this->MChoice_O->Button_Aucun   ->SetBackgroundColour(Gris);
+    this->MChoice_O->Button_Tous    ->SetForegroundColour(Forg);
+    this->MChoice_O->Button_Tous    ->SetBackgroundColour(Gris);
+    this->MChoice_O->Button_Quitter ->SetForegroundColour(Forg);
+    this->MChoice_O->Button_Quitter ->SetBackgroundColour(Gris);
+    this->MChoice_O->Refresh();
+
+// Cone
+    this->MCone->SetForegroundColour(Forg);
+    this->MCone->SetBackgroundColour(Back);
+    this->MCone->StaticText1->SetForegroundColour(Forg);
+    this->MCone->StaticText2->SetForegroundColour(Forg);
+    this->MCone->StaticText3->SetForegroundColour(Forg);
+    this->MCone->StaticText4->SetForegroundColour(Forg);
+    this->MCone->StaticText5->SetForegroundColour(Forg);
+    this->MCone->StaticText6->SetForegroundColour(Forg);
+    this->MCone->StaticText7->SetForegroundColour(Forg);
+    this->MCone->StaticText8->SetForegroundColour(Forg);
+    this->MCone->StaticText9->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_Longueur  ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_Longueur  ->SetBackgroundColour(Gris);
+    this->MCone->TextCtrl_Rayon     ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_Rayon     ->SetBackgroundColour(Gris);
+    this->MCone->TextCtrl_X         ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_X         ->SetBackgroundColour(Gris);
+    this->MCone->TextCtrl_Y         ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_Y         ->SetBackgroundColour(Gris);
+    this->MCone->TextCtrl_Z         ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_Z         ->SetBackgroundColour(Gris);
+    this->MCone->TextCtrl_NbPoints  ->SetForegroundColour(Forg);
+    this->MCone->TextCtrl_NbPoints  ->SetBackgroundColour(Gris);
+    this->MCone->SpinCtrl_Groupe    ->SetForegroundColour(Forg);
+    this->MCone->SpinCtrl_Groupe    ->SetBackgroundColour(Gris);
+    this->MCone->SpinCtrl_Materiau  ->SetForegroundColour(Forg);
+    this->MCone->SpinCtrl_Materiau  ->SetBackgroundColour(Back);
+    this->MCone->SpinCtrl_NbSecteurs->SetForegroundColour(Forg);
+    this->MCone->SpinCtrl_NbSecteurs->SetBackgroundColour(Gris);
+    this->MCone->CheckBox_FermerCone->SetForegroundColour(Forg);
+    this->MCone->CheckBox_FermerCone->SetBackgroundColour(Gris);
+    this->MCone->Button_OK          ->SetForegroundColour(Forg);
+    this->MCone->Button_OK          ->SetBackgroundColour(Gris);
+    this->MCone->Button_Annuler     ->SetForegroundColour(Forg);
+    this->MCone->Button_Annuler     ->SetBackgroundColour(Gris);
+    this->MCone->Refresh();
+
+// CouleursGroupes
+    this->MCGroup->SetForegroundColour(Forg);
+    this->MCGroup->SetBackgroundColour(Back);
+    this->MCGroup->StaticText1->SetForegroundColour(Forg);
+    this->MCGroup->StaticText2->SetForegroundColour(Forg);
+    this->MCGroup->StaticText3->SetForegroundColour(Forg);
+    this->MCGroup->StaticText4->SetForegroundColour(Forg);
+    this->MCGroup->StaticText5->SetForegroundColour(Forg);
+    this->MCGroup->SpinCtrl_Groupes ->SetForegroundColour(Forg);
+    this->MCGroup->SpinCtrl_Groupes ->SetBackgroundColour(Gris);
+    this->MCGroup->TextCtrl_Materiau->SetForegroundColour(Forg);
+    this->MCGroup->TextCtrl_Materiau->SetBackgroundColour(Gris);
+    this->MCGroup->Button_Reset     ->SetForegroundColour(Forg);
+    this->MCGroup->Button_Reset     ->SetBackgroundColour(Gris);
+    this->MCGroup->Button_Quitter   ->SetForegroundColour(Forg);
+    this->MCGroup->Button_Quitter   ->SetBackgroundColour(Gris);
+    this->MCGroup->Refresh();
+
+// Cube
+    this->MCube->SetForegroundColour(Forg);
+    this->MCube->SetBackgroundColour(Back);
+    this->MCube->StaticText1->SetForegroundColour(Forg);
+    this->MCube->StaticText2->SetForegroundColour(Forg);
+    this->MCube->StaticText3->SetForegroundColour(Forg);
+    this->MCube->StaticText4->SetForegroundColour(Forg);
+    this->MCube->StaticText5->SetForegroundColour(Forg);
+    this->MCube->StaticText6->SetForegroundColour(Forg);
+    this->MCube->StaticText7->SetForegroundColour(Forg);
+    this->MCube->TextCtrl_Arete     ->SetForegroundColour(Forg);
+    this->MCube->TextCtrl_Arete     ->SetBackgroundColour(Gris);
+    this->MCube->TextCtrl_X         ->SetForegroundColour(Forg);
+    this->MCube->TextCtrl_X         ->SetBackgroundColour(Gris);
+    this->MCube->TextCtrl_Y         ->SetForegroundColour(Forg);
+    this->MCube->TextCtrl_Y         ->SetBackgroundColour(Gris);
+    this->MCube->TextCtrl_Z         ->SetForegroundColour(Forg);
+    this->MCube->TextCtrl_Z         ->SetBackgroundColour(Gris);
+    this->MCube->SpinCtrl_Groupe    ->SetForegroundColour(Forg);
+    this->MCube->SpinCtrl_Groupe    ->SetBackgroundColour(Gris);
+    this->MCube->SpinCtrl_Materiau  ->SetForegroundColour(Forg);
+    this->MCube->SpinCtrl_Materiau  ->SetBackgroundColour(Gris);
+    this->MCube->Button_OK          ->SetForegroundColour(Forg);
+    this->MCube->Button_OK          ->SetBackgroundColour(Gris);
+    this->MCube->Button_Annuler     ->SetForegroundColour(Forg);
+    this->MCube->Button_Annuler     ->SetBackgroundColour(Gris);
+    this->MCube->Refresh();
+
+// Cylindre
+    this->MCylindre->SetForegroundColour(Forg);
+    this->MCylindre->SetBackgroundColour(Back);
+    this->MCylindre->StaticText1->SetForegroundColour(Forg);
+    this->MCylindre->StaticText2->SetForegroundColour(Forg);
+    this->MCylindre->StaticText3->SetForegroundColour(Forg);
+    this->MCylindre->StaticText4->SetForegroundColour(Forg);
+    this->MCylindre->StaticText5->SetForegroundColour(Forg);
+    this->MCylindre->StaticText6->SetForegroundColour(Forg);
+    this->MCylindre->StaticText7->SetForegroundColour(Forg);
+    this->MCylindre->StaticText8->SetForegroundColour(Forg);
+    this->MCylindre->StaticText9->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_Arete     ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_Arete     ->SetBackgroundColour(Gris);
+    this->MCylindre->TextCtrl_Rayon     ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_Rayon     ->SetBackgroundColour(Gris);
+    this->MCylindre->TextCtrl_X         ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_X         ->SetBackgroundColour(Gris);
+    this->MCylindre->TextCtrl_Y         ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_Y         ->SetBackgroundColour(Gris);
+    this->MCylindre->TextCtrl_Z         ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_Z         ->SetBackgroundColour(Gris);
+    this->MCylindre->TextCtrl_NbPoints  ->SetForegroundColour(Forg);
+    this->MCylindre->TextCtrl_NbPoints  ->SetBackgroundColour(Gris);
+    this->MCylindre->SpinCtrl_Groupe    ->SetForegroundColour(Forg);
+    this->MCylindre->SpinCtrl_Groupe    ->SetBackgroundColour(Gris);
+    this->MCylindre->SpinCtrl_Materiau  ->SetForegroundColour(Forg);
+    this->MCylindre->SpinCtrl_Materiau  ->SetBackgroundColour(Gris);
+    this->MCylindre->SpinCtrl_NbSecteurs->SetForegroundColour(Forg);
+    this->MCylindre->SpinCtrl_NbSecteurs->SetBackgroundColour(Gris);
+    this->MCylindre->CheckBox_FermerCylindre->SetForegroundColour(Forg);
+    this->MCylindre->CheckBox_FermerCylindre->SetBackgroundColour(Back);
+    this->MCylindre->Button_OK          ->SetForegroundColour(Forg);
+    this->MCylindre->Button_OK          ->SetBackgroundColour(Gris);
+    this->MCylindre->Button_Annuler     ->SetForegroundColour(Forg);
+    this->MCylindre->Button_Annuler     ->SetBackgroundColour(Gris);
+    this->MCylindre->Refresh();
+
+// DeplacerBdd
+    this->MDeplacer->SetForegroundColour(Forg);
+    this->MDeplacer->SetBackgroundColour(Back);
+    this->MDeplacer->StaticText1  ->SetForegroundColour(Forg);
+    if (theme_b) {
+        this->MDeplacer->StaticText4->SetForegroundColour(*wxCYAN);
+     } else {
+        this->MDeplacer->StaticText4->SetForegroundColour(Bleu_svg);
+     }
+    this->MDeplacer->TextCtrl_DeplX ->SetForegroundColour(Forg);
+    this->MDeplacer->TextCtrl_DeplX ->SetBackgroundColour(Gris);
+    this->MDeplacer->TextCtrl_DeplY ->SetForegroundColour(Forg);
+    this->MDeplacer->TextCtrl_DeplY ->SetBackgroundColour(Gris);
+    this->MDeplacer->TextCtrl_DeplZ ->SetForegroundColour(Forg);
+    this->MDeplacer->TextCtrl_DeplZ ->SetBackgroundColour(Gris);
+    this->MDeplacer->Button_Centrer ->SetForegroundColour(Forg);
+    this->MDeplacer->Button_Centrer ->SetBackgroundColour(Gris);
+    this->MDeplacer->Button_OK      ->SetForegroundColour(Forg);
+    this->MDeplacer->Button_OK      ->SetBackgroundColour(Gris);
+    this->MDeplacer->Button_Inverser->SetForegroundColour(Forg);
+    this->MDeplacer->Button_Inverser->SetBackgroundColour(Gris);
+    this->MDeplacer->Button_Quitter ->SetForegroundColour(Forg);
+    this->MDeplacer->Button_Quitter ->SetBackgroundColour(Gris);
+    this->MDeplacer->Refresh();
+
+// Ellipsoide
+    this->MEllips->SetForegroundColour(Forg);
+    this->MEllips->SetBackgroundColour(Back);
+    this->MEllips->StaticText1  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText2  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText3  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText4  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText5  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText6  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText7  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText8  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText9  ->SetForegroundColour(Forg);
+    this->MEllips->StaticText10 ->SetForegroundColour(Forg);
+    this->MEllips->StaticText11 ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_Rayon       ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_Rayon       ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_X           ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_X           ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_Y           ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_Y           ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_Z           ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_Z           ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_NbMeridiens ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_NbMeridiens ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_NbParalleles->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_NbParalleles->SetBackgroundColour(Gris);
+    this->MEllips->CheckBox_NewSphere   ->SetForegroundColour(Forg);
+    this->MEllips->CheckBox_NewSphere   ->SetBackgroundColour(Back);
+    this->MEllips->TextCtrl_CoefX       ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_CoefX       ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_CoefY       ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_CoefY       ->SetBackgroundColour(Gris);
+    this->MEllips->TextCtrl_CoefZ       ->SetForegroundColour(Forg);
+    this->MEllips->TextCtrl_CoefZ       ->SetBackgroundColour(Gris);
+    this->MEllips->SpinCtrl_Groupe      ->SetForegroundColour(Forg);
+    this->MEllips->SpinCtrl_Groupe      ->SetBackgroundColour(Gris);
+    this->MEllips->SpinCtrl_Materiau    ->SetForegroundColour(Forg);
+    this->MEllips->SpinCtrl_Materiau    ->SetBackgroundColour(Gris);
+    this->MEllips->Button_OK            ->SetForegroundColour(Forg);
+    this->MEllips->Button_OK            ->SetBackgroundColour(Gris);
+    this->MEllips->Button_Annuler       ->SetForegroundColour(Forg);
+    this->MEllips->Button_Annuler       ->SetBackgroundColour(Gris);
+    this->MEllips->Refresh();
+
+// Facette
+    this->MFacet->SetForegroundColour(Forg);
+    this->MFacet->SetBackgroundColour(Back);
+    this->MFacet->StaticText1  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText2  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText3  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText4  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText5  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText6  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText7  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText8  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText9  ->SetForegroundColour(Forg);
+    this->MFacet->StaticText10 ->SetForegroundColour(Forg);
+    this->MFacet->StaticText11 ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1X ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1X ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P1Y ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1Y ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P1Z ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1Z ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2X ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2X ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2Y ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2Y ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2Z ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2Z ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3X ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3X ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3Y ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3Y ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3Z ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3Z ->SetBackgroundColour(Gris);
+    this->MFacet->SpinCtrl_Groupe  ->SetForegroundColour(Forg);
+    this->MFacet->SpinCtrl_Groupe  ->SetBackgroundColour(Gris);
+    this->MFacet->SpinCtrl_Materiau->SetForegroundColour(Forg);
+    this->MFacet->SpinCtrl_Materiau->SetBackgroundColour(Gris);
+    this->MFacet->Button_OK        ->SetForegroundColour(Forg);
+    this->MFacet->Button_OK        ->SetBackgroundColour(Gris);
+    this->MFacet->Button_Annuler   ->SetForegroundColour(Forg);
+    this->MFacet->Button_Annuler   ->SetBackgroundColour(Gris);
+    this->MFacet->Refresh();
+
+// Icosaedre
+    this->MIcosa->SetForegroundColour(Forg);
+    this->MIcosa->SetBackgroundColour(Back);
+    this->MIcosa->StaticText1   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText2   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText3   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText4   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText5   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText7   ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText8   ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_X    ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_X    ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Y    ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Y    ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Z    ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Z    ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Rayon->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Rayon->SetBackgroundColour(Gris);
+    this->MIcosa->SpinCtrl_Subdiv   ->SetForegroundColour(Forg);
+    this->MIcosa->SpinCtrl_Subdiv   ->SetBackgroundColour(Gris);
+    this->MIcosa->SpinCtrl_Groupe   ->SetForegroundColour(Forg);
+    this->MIcosa->SpinCtrl_Groupe   ->SetBackgroundColour(Gris);
+    this->MIcosa->SpinCtrl_Materiau ->SetForegroundColour(Forg);
+    this->MIcosa->SpinCtrl_Materiau ->SetBackgroundColour(Gris);
+    this->MIcosa->Button_OK         ->SetForegroundColour(Forg);
+    this->MIcosa->Button_OK         ->SetBackgroundColour(Gris);
+    this->MIcosa->Button_Annuler    ->SetForegroundColour(Forg);
+    this->MIcosa->Button_Annuler    ->SetBackgroundColour(Gris);
+    this->MIcosa->Refresh();
+
+// ManipulationsPanel
+    this->MManip->SetForegroundColour(Forg);
+    this->MManip->SetBackgroundColour(Back);
+    this->MManip->Button_Creer      ->SetForegroundColour(Forg);
+    this->MManip->Button_Creer      ->SetBackgroundColour(Gris);
+    this->MManip->Button_Quitter    ->SetForegroundColour(Forg);
+    this->MManip->Button_Quitter    ->SetBackgroundColour(Gris);
+    this->MManip->Button_Raz        ->SetForegroundColour(Forg);
+    this->MManip->Button_Raz        ->SetBackgroundColour(Gris);
+    this->MManip->Button_Rotation   ->SetForegroundColour(Forg);
+    this->MManip->Button_Rotation   ->SetBackgroundColour(Gris);
+    this->MManip->Button_Translation->SetForegroundColour(Forg);
+    this->MManip->Button_Translation->SetBackgroundColour(Gris);
+    this->MManip->Button_Scale      ->SetForegroundColour(Forg);
+    this->MManip->Button_Scale      ->SetBackgroundColour(Gris);
+    if (theme_b) {
+        this->MManip->StaticText1   ->SetForegroundColour(New_Back);
+        this->MManip->StaticText1   ->SetBackgroundColour(New_Forg);
+        this->MManip->StaticText2   ->SetForegroundColour(New_Back);
+        this->MManip->StaticText2   ->SetBackgroundColour(New_Forg);
+        this->MManip->CheckBox_Z    ->SetForegroundColour(*wxCYAN);
+    } else {
+        this->MManip->StaticText1   ->SetForegroundColour(Blanc);
+        this->MManip->StaticText1   ->SetBackgroundColour(Noir);
+        this->MManip->StaticText2   ->SetForegroundColour(Blanc);
+        this->MManip->StaticText2   ->SetBackgroundColour(Noir);
+        this->MManip->CheckBox_Z    ->SetForegroundColour(Bleu_svg);
+    }
+    this->MManip->Refresh();
+
+// ModificationPanel
+    this->MPanel->SetForegroundColour(Forg);
+    this->MPanel->SetBackgroundColour(Back);
+    if (theme_b) {
+        this->MPanel->StaticText1   ->SetForegroundColour(New_Back);
+        this->MPanel->StaticText1   ->SetBackgroundColour(New_Forg);
+        this->MPanel->StaticText3   ->SetForegroundColour(New_Back);
+        this->MPanel->StaticText3   ->SetBackgroundColour(New_Forg);
+        this->MPanel->StaticText6   ->SetForegroundColour(New_Back);
+        this->MPanel->StaticText6   ->SetBackgroundColour(New_Forg);
+        this->MPanel->StaticText7   ->SetForegroundColour(New_Back);
+        this->MPanel->StaticText7   ->SetBackgroundColour(New_Forg);
+        this->MPanel->Panel9        ->SetBackgroundColour(New_Forg);
+    } else {
+        this->MPanel->StaticText1   ->SetForegroundColour(Blanc);
+        this->MPanel->StaticText1   ->SetBackgroundColour(Noir);
+        this->MPanel->StaticText3   ->SetForegroundColour(Blanc);
+        this->MPanel->StaticText3   ->SetBackgroundColour(Noir);
+        this->MPanel->StaticText6   ->SetForegroundColour(Blanc);
+        this->MPanel->StaticText6   ->SetBackgroundColour(Noir);
+        this->MPanel->StaticText7   ->SetForegroundColour(Blanc);
+        this->MPanel->StaticText7   ->SetBackgroundColour(Noir);
+        this->MPanel->Panel9        ->SetBackgroundColour(Noir);
+    }
+    this->MPanel->ToggleButton_Ajouter      ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Ajouter      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Diviser      ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Diviser      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Souder       ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Souder       ->SetForegroundColour(Forg);
+    this->MPanel->Button_Undo               ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Undo               ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_CreerFacette ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_CreerFacette ->SetForegroundColour(Forg);
+    this->MPanel->Button_Annuler            ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Annuler            ->SetForegroundColour(Forg);
+    this->MPanel->Button_SupprimerFacette   ->SetBackgroundColour(Gris);
+    this->MPanel->Button_SupprimerFacette   ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserNormale    ->SetBackgroundColour(Gris);
+    this->MPanel->Button_InverserNormale    ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserTout       ->SetBackgroundColour(Gris);
+    this->MPanel->Button_InverserTout       ->SetForegroundColour(Forg);
+    this->MPanel->Button_Trianguler         ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Trianguler         ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerNormales ->SetBackgroundColour(Gris);
+    this->MPanel->Button_RecalculerNormales ->SetForegroundColour(Forg);
+    this->MPanel->Button_Simplification     ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Simplification     ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerAretes   ->SetBackgroundColour(Gris);
+    this->MPanel->Button_RecalculerAretes   ->SetForegroundColour(Forg);
+    this->MPanel->Button_Quitter            ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Quitter            ->SetForegroundColour(Forg);
+    this->MPanel->StaticText2               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText4               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText5               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText8               ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_FacettePlane     ->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_FacettePlane     ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_NotFlat          ->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_NotFlat          ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_Transparence     ->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_Transparence     ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_Groupe           ->SetBackgroundColour(Gris);
+    this->MPanel->SpinCtrl_Groupe           ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_Materiau         ->SetBackgroundColour(Gris);
+    this->MPanel->SpinCtrl_Materiau         ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_NbSegments       ->SetBackgroundColour(Gris);
+    this->MPanel->SpinCtrl_NbSegments       ->SetForegroundColour(Forg);
+    this->MPanel->TextCtrl_Tolerance        ->SetBackgroundColour(Gris);
+    this->MPanel->TextCtrl_Tolerance        ->SetForegroundColour(Forg);
+    this->MPanel->StaticLine1               ->SetForegroundColour(Forg);    // Pas d'effet ?
+    this->MPanel->StaticLine1               ->SetBackgroundColour(Back);
+    this->MPanel->Refresh();
+
+// PositionObs_AzimutSite
+    this->MPosObs->SetForegroundColour(Forg);
+    this->MPosObs->SetBackgroundColour(Back);
+    this->MPosObs->StaticText1  ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText2  ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText3  ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText4  ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText5  ->SetForegroundColour(Forg);
+    this->MPosObs->SpinCtrl_LAZ ->SetBackgroundColour(Gris);
+    this->MPosObs->SpinCtrl_LAZ ->SetForegroundColour(Forg);
+    this->MPosObs->SpinCtrl_LSI ->SetBackgroundColour(Gris);
+    this->MPosObs->SpinCtrl_LSI ->SetForegroundColour(Forg);
+    this->MPosObs->Button_Quit  ->SetForegroundColour(Forg);
+    this->MPosObs->Button_Quit  ->SetBackgroundColour(Gris);
+//    this->MPosObs->StaticText_Warn->SetForegroundColour(Forg);    // Ne pas changer, reste en rouge
+    this->MPosObs->Refresh();
+
+// PositionSource
+    this->MPosLight->SetForegroundColour(Forg);
+    this->MPosLight->SetBackgroundColour(Back);
+    this->MPosLight->StaticText1->SetForegroundColour(Forg);
+    this->MPosLight->Pos_W      ->SetForegroundColour(Forg);
+    if (theme_b) {
+        this->MPosLight->Pos_Z  ->SetForegroundColour(*wxCYAN);
+    } else {
+        this->MPosLight->Pos_Z  ->SetForegroundColour(Bleu_svg);
+    }
+    this->MPosLight->SpinCtrlDouble_PosX->SetBackgroundColour(Gris);
+    this->MPosLight->SpinCtrlDouble_PosX->SetForegroundColour(Forg);
+    this->MPosLight->SpinCtrlDouble_PosY->SetBackgroundColour(Gris);
+    this->MPosLight->SpinCtrlDouble_PosY->SetForegroundColour(Forg);
+    this->MPosLight->SpinCtrlDouble_PosZ->SetBackgroundColour(Gris);
+    this->MPosLight->SpinCtrlDouble_PosZ->SetForegroundColour(Forg);
+    this->MPosLight->SpinCtrlDouble_PosW->SetBackgroundColour(Gris);
+    this->MPosLight->SpinCtrlDouble_PosW->SetForegroundColour(Forg);
+    this->MPosLight->Button_Quitter     ->SetForegroundColour(Forg);
+    this->MPosLight->Button_Quitter     ->SetBackgroundColour(Gris);
+    this->MPosLight->Button_Defaut      ->SetForegroundColour(Forg);
+    this->MPosLight->Button_Defaut      ->SetBackgroundColour(Gris);
+    this->MPosLight->Refresh();
+
+// Prefs_Dialog
+    this->MPrefs->SetForegroundColour(Forg);
+    this->MPrefs->SetBackgroundColour(Back);
+    this->MPrefs->StaticText1->SetForegroundColour(Forg);
+    this->MPrefs->StaticText2->SetForegroundColour(Forg);
+    this->MPrefs->StaticText3->SetForegroundColour(Forg);
+    this->MPrefs->StaticText4->SetForegroundColour(Forg);
+    this->MPrefs->StaticText7->SetForegroundColour(Forg);
+    this->MPrefs->StaticText8->SetForegroundColour(Forg);
+    this->MPrefs->StaticText9->SetForegroundColour(Forg);
+    this->MPrefs->StaticText_Gouraud    ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText_Gouraud2   ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_axes   ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_axes   ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_norm   ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_norm   ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_src        ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_src        ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrl_PasSvg           ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrl_PasSvg           ->SetBackgroundColour(Gris);
+    this->MPrefs->CheckBox_1SeulObjet3D     ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_1SeulObjet3D     ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_AntialiasingSoft ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_AntialiasingSoft ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_CalculNormales   ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CalculNormales   ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_CreerBackup      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_DisplayFps       ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_LectureOptimisee ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_NotFlat          ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_RecNormales_Seuillees->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_Seuillage        ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_SupprBackup      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TestDecalage3DS  ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CreerBackup      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CreerBackup      ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_SupprBackup      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_SupprBackup      ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_Trackball        ->SetForegroundColour(Forg);    // Les 2 choix restent en noir => On ne peut pas les lire ! BUG signalé
+    this->MPrefs->RadioBox_Trackball        ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_Triangulation    ->SetForegroundColour(Forg);    // Les 3 choix restent en noir => Idem
+    this->MPrefs->RadioBox_Triangulation    ->SetBackgroundColour(Back);
+    this->MPrefs->TextCtrl_WorkDir  ->SetForegroundColour(Forg);
+    this->MPrefs->TextCtrl_WorkDir  ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_tmp_rep    ->SetForegroundColour(Forg);
+    this->MPrefs->Button_tmp_rep    ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_OK         ->SetForegroundColour(Forg);
+    this->MPrefs->Button_OK         ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_Reset      ->SetForegroundColour(Forg);
+    this->MPrefs->Button_Reset      ->SetBackgroundColour(Gris);
+    this->MPrefs->Refresh();
+
+// PropertiesPanel
+    this->MProps->SetForegroundColour(Forg);
+    this->MProps->SetBackgroundColour(Back);
+    if (theme_b) {
+        this->MProps->StaticText1       ->SetForegroundColour(New_Back);
+        this->MProps->StaticText1       ->SetBackgroundColour(New_Forg);
+        this->MProps->StaticTextNomBdd  ->SetForegroundColour(New_Back);
+        this->MProps->StaticTextNomBdd  ->SetBackgroundColour(New_Forg);
+        this->MProps->StaticText8       ->SetForegroundColour(New_Back);
+        this->MProps->StaticText8       ->SetBackgroundColour(New_Forg);
+        this->MProps->StaticText14      ->SetForegroundColour(New_Back);
+        this->MProps->StaticText14      ->SetBackgroundColour(New_Forg);
+    } else {
+        this->MProps->StaticText1       ->SetForegroundColour(Blanc);
+        this->MProps->StaticText1       ->SetBackgroundColour(Noir);
+        this->MProps->StaticTextNomBdd  ->SetForegroundColour(Blanc);
+        this->MProps->StaticTextNomBdd  ->SetBackgroundColour(Noir);
+        this->MProps->StaticText8       ->SetForegroundColour(Blanc);
+        this->MProps->StaticText8       ->SetBackgroundColour(Noir);
+        this->MProps->StaticText14      ->SetForegroundColour(Blanc);
+        this->MProps->StaticText14      ->SetBackgroundColour(Noir);
+    }
+    this->MProps->StaticText2   ->SetForegroundColour(Forg);
+    this->MProps->StaticText3   ->SetForegroundColour(Forg);
+    this->MProps->StaticText4   ->SetForegroundColour(Forg);
+    this->MProps->StaticText5   ->SetForegroundColour(Forg);
+    this->MProps->StaticText6   ->SetForegroundColour(Forg);
+    this->MProps->StaticText7   ->SetForegroundColour(Forg);
+    this->MProps->StaticText9   ->SetForegroundColour(Forg);
+    this->MProps->StaticText10  ->SetForegroundColour(Forg);
+    this->MProps->StaticText11  ->SetForegroundColour(Forg);
+    this->MProps->StaticText12  ->SetForegroundColour(Forg);
+    this->MProps->StaticText13  ->SetForegroundColour(Forg);
+    this->MProps->Texte_Box     ->SetForegroundColour(Forg);
+    this->MProps->nb_objets     ->SetForegroundColour(Forg);
+    this->MProps->nb_points     ->SetForegroundColour(Forg);
+    this->MProps->nb_facettes   ->SetForegroundColour(Forg);
+    this->MProps->nb_aretes     ->SetForegroundColour(Forg);
+    this->MProps->nb_groupes    ->SetForegroundColour(Forg);
+    this->MProps->nb_materiaux  ->SetForegroundColour(Forg);
+    this->MProps->nb_3Points    ->SetForegroundColour(Forg);
+    this->MProps->nb_4Points    ->SetForegroundColour(Forg);
+    this->MProps->nb_maxPoints  ->SetForegroundColour(Forg);
+    this->MProps->numero_facette->SetForegroundColour(Forg);
+    this->MProps->numero_objet  ->SetForegroundColour(Forg);
+    this->MProps->BoutonOK      ->SetForegroundColour(Forg);
+    this->MProps->BoutonOK      ->SetBackgroundColour(Gris);
+    this->MProps->Refresh();
+
+// ReperageFacette
+    this->MRepFacet->SetForegroundColour(Forg);
+    this->MRepFacet->SetBackgroundColour(Back);
+    this->MRepFacet->StaticText1    ->SetForegroundColour(Forg);
+    this->MRepFacet->StaticText2    ->SetForegroundColour(Forg);
+    this->MRepFacet->StaticText3    ->SetForegroundColour(Forg);
+    this->MRepFacet->StaticText4    ->SetForegroundColour(Forg);
+//    this->MRepFacet->StaticText_Warning->SetForegroundColour(Forg);   // Laisser tel que
+    this->MRepFacet->Text_NomObjet  ->SetForegroundColour(Forg);
+    this->MRepFacet->Text_NomObjet  ->SetBackgroundColour(Gris);
+    this->MRepFacet->Text_NbSommets ->SetForegroundColour(Forg);
+    this->MRepFacet->Text_NbSommets ->SetBackgroundColour(Gris);
+    this->MRepFacet->Text_NumeroObjet   ->SetForegroundColour(Forg);
+    this->MRepFacet->Text_NumeroObjet   ->SetBackgroundColour(Gris);
+    this->MRepFacet->SpinCtrl_IndiceFacette ->SetForegroundColour(Forg);
+    this->MRepFacet->SpinCtrl_IndiceFacette ->SetBackgroundColour(Gris);
+    this->MRepFacet->SpinCtrl_IndiceObjet   ->SetForegroundColour(Forg);
+    this->MRepFacet->SpinCtrl_IndiceObjet   ->SetBackgroundColour(Gris);
+    this->MRepFacet->SpinCtrl_IndiceSommet  ->SetForegroundColour(Forg);
+    this->MRepFacet->SpinCtrl_IndiceSommet  ->SetBackgroundColour(Gris);
+    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser       ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_VisuNormale   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormale   ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_VisuSommets   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuSommets   ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_VisuNormales_Sommets  ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormales_Sommets  ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_Laisser   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser   ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_Laisser   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser   ->SetBackgroundColour(Back);
+    this->MRepFacet->Button_InvNormale  ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_InvNormale  ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_DelFacette  ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_DelFacette  ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_CentrerRotation ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_CentrerRotation ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_UndoDel ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_UndoDel ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_Masquer ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_Masquer ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_Permuter->SetForegroundColour(Forg);
+    this->MRepFacet->Button_Permuter->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_Reset   ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_Reset   ->SetBackgroundColour(Gris);
+    this->MRepFacet->Button_Quitter ->SetForegroundColour(Forg);
+    this->MRepFacet->Button_Quitter ->SetBackgroundColour(Gris);
+    this->MRepFacet->Refresh();
+
+// ReperageGroupe
+    this->MRepGrp->SetForegroundColour(Forg);
+    this->MRepGrp->SetBackgroundColour(Back);
+    this->MRepGrp->StaticText1->SetForegroundColour(Forg);
+    this->MRepGrp->TextCtrl1  ->SetForegroundColour(Forg);
+    this->MRepGrp->TextCtrl1  ->SetBackgroundColour(Gris);
+    this->MRepGrp->SpinButton1->SetForegroundColour(Forg);
+    this->MRepGrp->SpinButton1->SetBackgroundColour(Gris);
+    this->MRepGrp->Button_OK  ->SetForegroundColour(Forg);
+    this->MRepGrp->Button_OK  ->SetBackgroundColour(Gris);
+    this->MRepGrp->Button_Quit->SetForegroundColour(Forg);
+    this->MRepGrp->Button_Quit->SetBackgroundColour(Gris);
+    this->MRepGrp->Refresh();
+
+// ReperageMateriau
+    this->MRepMat->SetForegroundColour(Forg);
+    this->MRepMat->SetBackgroundColour(Back);
+    this->MRepMat->StaticText1->SetForegroundColour(Forg);
+    this->MRepMat->TextCtrl1  ->SetForegroundColour(Forg);
+    this->MRepMat->TextCtrl1  ->SetBackgroundColour(Gris);
+    this->MRepMat->SpinButton1->SetForegroundColour(Forg);
+    this->MRepMat->SpinButton1->SetBackgroundColour(Gris);
+    this->MRepMat->Button_OK  ->SetForegroundColour(Forg);
+    this->MRepMat->Button_OK  ->SetBackgroundColour(Gris);
+    this->MRepMat->Button_Quit->SetForegroundColour(Forg);
+    this->MRepMat->Button_Quit->SetBackgroundColour(Gris);
+    this->MRepMat->Refresh();
+
+// ReperageObjet
+    this->MRepObj->SetForegroundColour(Forg);
+    this->MRepObj->SetBackgroundColour(Back);
+    this->MRepObj->StaticText1      ->SetForegroundColour(Forg);
+    this->MRepObj->StaticText2      ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_NomObjet->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NomObjet->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_indice  ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_indice  ->SetBackgroundColour(Gris);
+    this->MRepObj->SpinButton_indice->SetForegroundColour(Forg);
+    this->MRepObj->SpinButton_indice->SetBackgroundColour(Gris);
+    this->MRepObj->CheckBox_masquer     ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_masquer     ->SetBackgroundColour(Back);
+    this->MRepObj->CheckBox_supprimer   ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_supprimer   ->SetBackgroundColour(Back);
+    this->MRepObj->Button_OK            ->SetForegroundColour(Forg);
+    this->MRepObj->Button_OK            ->SetBackgroundColour(Gris);
+    this->MRepObj->Button_InverserNormales->SetForegroundColour(Forg);
+    this->MRepObj->Button_InverserNormales->SetBackgroundColour(Gris);
+    this->MRepObj->Refresh();
+
+// ReperagePoint
+    this->MRepPoint->SetForegroundColour(Forg);
+    this->MRepPoint->SetBackgroundColour(Back);
+    this->MRepPoint->StaticText1    ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText2    ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText3    ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText4    ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText5    ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText6    ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NomObjet  ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NomObjet  ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_NumeroObjet->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NumeroObjet->SetBackgroundColour(Back);
+    this->MRepPoint->Text_ValeurX   ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurX   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_ValeurY   ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurY   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_ValeurZ   ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurZ   ->SetBackgroundColour(Gris);
+    this->MRepPoint->CheckBox_X     ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_X     ->SetBackgroundColour(Back);
+    this->MRepPoint->CheckBox_Y     ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Y     ->SetBackgroundColour(Back);
+    this->MRepPoint->CheckBox_Z     ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Z     ->SetBackgroundColour(Back);
+    this->MRepPoint->CheckBox_Laisser   ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Laisser   ->SetBackgroundColour(Back);
+    this->MRepPoint->Text_NumeroObjet   ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NumeroObjet   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_NomObjet      ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NomObjet      ->SetBackgroundColour(Gris);
+    this->MRepPoint->SpinCtrl_IndiceObjet   ->SetForegroundColour(Forg);
+    this->MRepPoint->SpinCtrl_IndiceObjet   ->SetBackgroundColour(Gris);
+    this->MRepPoint->SpinCtrl_IndicePoint   ->SetForegroundColour(Forg);
+    this->MRepPoint->SpinCtrl_IndicePoint   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_ModifierX   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_ModifierX   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_ModifierY   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_ModifierY   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_ModifierZ   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_ModifierZ   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoX   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoX   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoY   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoY   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoZ   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoZ   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Centrer ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Centrer ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Reset   ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Reset   ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Quitter ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Quitter ->SetBackgroundColour(Gris);
+    this->MRepPoint->Refresh();
+
+// RotationPanel
+    this->MRotation->SetForegroundColour(Forg);
+    this->MRotation->SetBackgroundColour(Back);
+    this->MRotation->StaticText1->SetForegroundColour(Forg);
+    this->MRotation->StaticText2->SetForegroundColour(Forg);
+    this->MRotation->StaticText3->SetForegroundColour(Forg);
+    this->MRotation->StaticText4->SetForegroundColour(Forg);
+    this->MRotation->StaticText5->SetForegroundColour(Forg);
+    this->MRotation->StaticText6->SetForegroundColour(Forg);
+    this->MRotation->StaticText7->SetForegroundColour(Forg);
+    this->MRotation->RadioBox_Centre->SetForegroundColour(Forg);
+    this->MRotation->RadioBox_Centre->SetBackgroundColour(Back);
+    this->MRotation->TextCtrl_PasAngulaire->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_PasAngulaire->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleX->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleX->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleY->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleY->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleZ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleZ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_X     ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_X     ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_Y     ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_Y     ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_Z     ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_Z     ->SetBackgroundColour(Gris);
+    this->MRotation->Button_Annuler ->SetForegroundColour(Forg);
+    this->MRotation->Button_Annuler ->SetBackgroundColour(Gris);
+    this->MRotation->Button_Appliquer   ->SetForegroundColour(Forg);
+    this->MRotation->Button_Appliquer   ->SetBackgroundColour(Gris);
+    this->MRotation->Button_ValiderPas  ->SetForegroundColour(Forg);
+    this->MRotation->Button_ValiderPas  ->SetBackgroundColour(Gris);
+    this->MRotation->Button_ValiderPoint->SetForegroundColour(Forg);
+    this->MRotation->Button_ValiderPoint->SetBackgroundColour(Gris);
+    this->MRotation->Refresh();
+
+// ScalePanel
+    this->MScale->SetForegroundColour(Forg);
+    this->MScale->SetBackgroundColour(Back);
+    this->MScale->StaticText1->SetForegroundColour(Forg);
+    this->MScale->StaticText2->SetForegroundColour(Forg);
+    this->MScale->StaticText3->SetForegroundColour(Forg);
+    this->MScale->StaticText4->SetForegroundColour(Forg);
+    this->MScale->TextCtrl_Increment->SetForegroundColour(Forg);
+    this->MScale->TextCtrl_Increment->SetBackgroundColour(Gris);
+    this->MScale->TextCtrl_ScaleX   ->SetForegroundColour(Forg);
+    this->MScale->TextCtrl_ScaleX   ->SetBackgroundColour(Gris);
+    this->MScale->TextCtrl_ScaleY   ->SetForegroundColour(Forg);
+    this->MScale->TextCtrl_ScaleY   ->SetBackgroundColour(Gris);
+    this->MScale->TextCtrl_ScaleZ   ->SetForegroundColour(Forg);
+    this->MScale->TextCtrl_ScaleZ   ->SetBackgroundColour(Gris);
+    this->MScale->SpinButton_X      ->SetForegroundColour(Forg);
+    this->MScale->SpinButton_X      ->SetBackgroundColour(Gris);
+    this->MScale->SpinButton_Y      ->SetForegroundColour(Forg);
+    this->MScale->SpinButton_Y      ->SetBackgroundColour(Gris);
+    this->MScale->SpinButton_Z      ->SetForegroundColour(Forg);
+    this->MScale->SpinButton_Z      ->SetBackgroundColour(Gris);
+    this->MScale->CheckBox_ScaleUnique->SetForegroundColour(Forg);
+    this->MScale->CheckBox_ScaleUnique->SetBackgroundColour(Back);
+    this->MScale->Button_Valider    ->SetForegroundColour(Forg);
+    this->MScale->Button_Valider    ->SetBackgroundColour(Gris);
+    this->MScale->Button_Appliquer  ->SetForegroundColour(Forg);
+    this->MScale->Button_Appliquer  ->SetBackgroundColour(Gris);
+    this->MScale->Button_Annuler    ->SetForegroundColour(Forg);
+    this->MScale->Button_Annuler    ->SetBackgroundColour(Gris);
+    this->MScale->Refresh();
+
+// SelectionPanel
+    this->MSelect->SetForegroundColour(Forg);
+    this->MSelect->SetBackgroundColour(Back);
+    if (theme_b) {
+        this->MSelect->StaticText1              ->SetForegroundColour(New_Back);    // <=> *wxBLACK (en fait sur ces items, Forg/Back inversés)
+        this->MSelect->StaticText1              ->SetBackgroundColour(New_Forg);    // <=> *wxWHITE
+        this->MSelect->StaticText2              ->SetForegroundColour(New_Back);
+        this->MSelect->StaticText2              ->SetBackgroundColour(New_Forg);
+        this->MSelect->StaticText9              ->SetForegroundColour(New_Back);
+        this->MSelect->StaticText9              ->SetBackgroundColour(New_Forg);
+        this->MSelect->StaticText_TypeSelection ->SetForegroundColour(New_Back);
+        this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(New_Forg);
+    } else {
+        this->MSelect->StaticText1              ->SetForegroundColour(Blanc);
+        this->MSelect->StaticText1              ->SetBackgroundColour(Noir);
+        this->MSelect->StaticText2              ->SetForegroundColour(Blanc);
+        this->MSelect->StaticText2              ->SetBackgroundColour(Noir);
+        this->MSelect->StaticText9              ->SetForegroundColour(Blanc);
+        this->MSelect->StaticText9              ->SetBackgroundColour(Noir);
+        this->MSelect->StaticText_TypeSelection ->SetForegroundColour(Blanc);
+        this->MSelect->StaticText_TypeSelection ->SetBackgroundColour(Noir);
+    }
+    this->MSelect->StaticText3                  ->SetForegroundColour(Forg);
+    this->MSelect->StaticText4                  ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_Fac               ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_Selection         ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_Grp               ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_Mat               ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_NumerosUtilises   ->SetForegroundColour(Forg);
+    this->MSelect->StaticText_Changer           ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Selection_Objets     ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Both   ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Avant  ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Arriere->SetForegroundColour(Forg);
+    this->MSelect->CheckBox_ForcerFlat              ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Grp                  ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Mat                  ->SetForegroundColour(Forg);
+    this->MSelect->Button_SelectionManuelleFacettes ->SetBackgroundColour(Gris);
+    this->MSelect->Button_SelectionManuelleFacettes ->SetForegroundColour(Forg);
+    this->MSelect->Button_OuvrirReperage        ->SetBackgroundColour(Gris);
+    this->MSelect->Button_OuvrirReperage        ->SetForegroundColour(Forg);
+    this->MSelect->Button_Appliquer             ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Appliquer             ->SetForegroundColour(Forg);
+    this->MSelect->Button_InverserNormales      ->SetBackgroundColour(Gris);
+    this->MSelect->Button_InverserNormales      ->SetForegroundColour(Forg);
+    this->MSelect->Button_UndoNormales          ->SetBackgroundColour(Gris);
+    this->MSelect->Button_UndoNormales          ->SetForegroundColour(Forg);
+    this->MSelect->Button_Delete                ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Delete                ->SetForegroundColour(Forg);
+    this->MSelect->Button_UndoDelete            ->SetBackgroundColour(Gris);
+    this->MSelect->Button_UndoDelete            ->SetForegroundColour(Forg);
+    this->MSelect->Button_InverserParcours      ->SetBackgroundColour(Gris);
+    this->MSelect->Button_InverserParcours      ->SetForegroundColour(Forg);
+    this->MSelect->Button_Masquer               ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Masquer               ->SetForegroundColour(Forg);
+    this->MSelect->Button_UndoMasquer           ->SetBackgroundColour(Gris);
+    this->MSelect->Button_UndoMasquer           ->SetForegroundColour(Forg);
+    this->MSelect->Button_Reafficher            ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Reafficher            ->SetForegroundColour(Forg);
+    this->MSelect->Button_Centrer               ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Centrer               ->SetForegroundColour(Forg);
+    this->MSelect->Button_Manipulations         ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Manipulations         ->SetForegroundColour(Forg);
+    this->MSelect->Button_Etendre               ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Etendre               ->SetForegroundColour(Forg);
+    this->MSelect->Button_Quitter               ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Quitter               ->SetForegroundColour(Forg);
+    this->MSelect->Button_Fusionner             ->SetBackgroundColour(Gris);
+    this->MSelect->Button_Fusionner             ->SetForegroundColour(Forg);
+    this->MSelect->Refresh();
+
+// SelectionManuelleFacettes
+    this->MSelFac->SetForegroundColour(Forg);
+    this->MSelFac->SetBackgroundColour(Back);
+    this->MSelFac->StaticText_NomObjet->SetForegroundColour(Forg);
+    this->MSelFac->StaticText_Numeros ->SetForegroundColour(Forg);
+    this->MSelFac->StaticText1      ->SetForegroundColour(Forg);
+    this->MSelFac->StaticText2      ->SetForegroundColour(Forg);
+    this->MSelFac->SpinCtrl_NumObjet->SetForegroundColour(Forg);
+    this->MSelFac->SpinCtrl_NumObjet->SetBackgroundColour(Gris);
+    this->MSelFac->TextCtrl_Numeros ->SetForegroundColour(Forg);
+    this->MSelFac->TextCtrl_Numeros ->SetBackgroundColour(Gris);
+    this->MSelFac->Button_Valider   ->SetForegroundColour(Forg);
+    this->MSelFac->Button_Valider   ->SetBackgroundColour(Gris);
+    this->MSelFac->Button_Reset     ->SetForegroundColour(Forg);
+    this->MSelFac->Button_Reset     ->SetBackgroundColour(Gris);
+    this->MSelFac->Button_Quitter   ->SetForegroundColour(Forg);
+    this->MSelFac->Button_Quitter   ->SetBackgroundColour(Gris);
+    this->MSelFac->Refresh();
+
+// SelectionManuelleObjets
+    this->MSelObj->SetForegroundColour(Forg);
+    this->MSelObj->SetBackgroundColour(Back);
+    this->MSelObj->Button_Aucun     ->SetForegroundColour(Forg);
+    this->MSelObj->Button_Aucun     ->SetBackgroundColour(Gris);
+    this->MSelObj->Button_Tous      ->SetForegroundColour(Forg);
+    this->MSelObj->Button_Tous      ->SetBackgroundColour(Gris);
+    this->MSelObj->Button_Quitter   ->SetForegroundColour(Forg);
+    this->MSelObj->Button_Quitter   ->SetBackgroundColour(Gris);
+    this->MSelObj->Refresh();
+
+// Sphere
+    this->MSphere->SetForegroundColour(Forg);
+    this->MSphere->SetBackgroundColour(Back);
+    this->MSphere->StaticText1  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText2  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText3  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText4  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText5  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText6  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText7  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText8  ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_Rayon       ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_Rayon       ->SetBackgroundColour(Gris);
+    this->MSphere->TextCtrl_X           ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_X           ->SetBackgroundColour(Gris);
+    this->MSphere->TextCtrl_Y           ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_Y           ->SetBackgroundColour(Gris);
+    this->MSphere->TextCtrl_Z           ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_Z           ->SetBackgroundColour(Gris);
+    this->MSphere->TextCtrl_NbMeridiens ->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_NbMeridiens ->SetBackgroundColour(Gris);
+    this->MSphere->TextCtrl_NbParalleles->SetForegroundColour(Forg);
+    this->MSphere->TextCtrl_NbParalleles->SetBackgroundColour(Gris);
+    this->MSphere->CheckBox_NewSphere   ->SetForegroundColour(Forg);
+    this->MSphere->CheckBox_NewSphere   ->SetBackgroundColour(Gris);
+    this->MSphere->SpinCtrl_Groupe      ->SetForegroundColour(Forg);
+    this->MSphere->SpinCtrl_Groupe      ->SetBackgroundColour(Gris);
+    this->MSphere->SpinCtrl_Materiau    ->SetForegroundColour(Forg);
+    this->MSphere->SpinCtrl_Materiau    ->SetBackgroundColour(Gris);
+    this->MSphere->Button_OK            ->SetForegroundColour(Forg);
+    this->MSphere->Button_OK            ->SetBackgroundColour(Gris);
+    this->MSphere->Button_Annuler       ->SetForegroundColour(Forg);
+    this->MSphere->Button_Annuler       ->SetBackgroundColour(Gris);
+    this->MSphere->Refresh();
+
+// Tranlation Panel
+    this->MTrans->SetForegroundColour(Forg);
+    this->MTrans->SetBackgroundColour(Back);
+    this->MTrans->StaticText1->SetForegroundColour(Forg);
+    this->MTrans->StaticText2->SetForegroundColour(Forg);
+    if (theme_b) {
+        this->MTrans->StaticText7->SetForegroundColour(*wxCYAN);
+        this->MTrans->StaticText8->SetForegroundColour(*wxCYAN);
+     } else {
+        this->MTrans->StaticText7->SetForegroundColour(Bleu_svg);
+        this->MTrans->StaticText8->SetForegroundColour(Bleu_svg);
+     }
+    this->MTrans->TextCtrl_PasFin       ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_PasFin       ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_PasGrossier  ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_PasGrossier  ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_XG   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_XG   ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_XF   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_XF   ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_YG   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_YG   ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_YF   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_YF   ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_ZG   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_ZG   ->SetBackgroundColour(Gris);
+    this->MTrans->TextCtrl_ZF   ->SetForegroundColour(Forg);
+    this->MTrans->TextCtrl_ZF   ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_XG ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_XG ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_XF ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_XF ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_YG ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_YG ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_YF ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_YF ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_ZG ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_ZG ->SetBackgroundColour(Gris);
+    this->MTrans->SpinButton_ZF ->SetForegroundColour(Forg);
+    this->MTrans->SpinButton_ZF ->SetBackgroundColour(Gris);
+    this->MTrans->Button_Valider->SetForegroundColour(Forg);
+    this->MTrans->Button_Valider->SetBackgroundColour(Gris);
+    this->MTrans->Button_OK     ->SetForegroundColour(Forg);
+    this->MTrans->Button_OK     ->SetBackgroundColour(Gris);
+    this->MTrans->Button_Annuler->SetForegroundColour(Forg);
+    this->MTrans->Button_Annuler->SetBackgroundColour(Gris);
+    this->MTrans->Refresh();
+
+// ZoomSpecifique
+    this->MZoomSpec->SetForegroundColour(Forg);
+    this->MZoomSpec->SetBackgroundColour(Back);
+    this->MZoomSpec->StaticText1    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText2    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText3    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText4    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText5    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText6    ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText7    ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LAZ   ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LAZ   ->SetBackgroundColour(Gris);
+    this->MZoomSpec->SpinCtrl_LSI   ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LSI   ->SetBackgroundColour(Gris);
+    this->MZoomSpec->TextCtrl_Distance  ->SetForegroundColour(Forg);
+    this->MZoomSpec->TextCtrl_Distance  ->SetBackgroundColour(Gris);
+    this->MZoomSpec->TextCtrl_FoV       ->SetForegroundColour(Forg);
+    this->MZoomSpec->TextCtrl_FoV       ->SetBackgroundColour(Gris);
+    this->MZoomSpec->Button_Appliquer   ->SetForegroundColour(Forg);
+    this->MZoomSpec->Button_Appliquer   ->SetBackgroundColour(Gris);
+    this->MZoomSpec->Button_Reset       ->SetForegroundColour(Forg);
+    this->MZoomSpec->Button_Reset       ->SetBackgroundColour(Gris);
+    this->MZoomSpec->Button_Quit        ->SetForegroundColour(Forg);
+    this->MZoomSpec->Button_Quit        ->SetBackgroundColour(Gris);
+    this->MZoomSpec->Refresh();
+
+// Aide_html
+    this->MHelp->SetForegroundColour(Forg);
+    this->MHelp->SetBackgroundColour(Back);
+    this->MHelp->Button_OK->SetForegroundColour(Forg);
+    this->MHelp->Button_OK->SetBackgroundColour(Gris);
+    this->MHelp->Refresh();
+
+// About : c'est un wxMessageBox dans void OvniFrame::OnAbout : ne semble pas pouvoir se coloriser via SetForegroundColour / SetBackgroundColour
+
+    this->MAIN_b ->Refresh();
 }
 
 void BddInter::Reset_Sliders() {
@@ -2119,6 +3315,41 @@ void BddInter::clearall() {
     m_gldata.initialized = false;
 }
 
+void BddInter::Update_Dialog(long position, long max_value)
+{
+    #define NB_DELTA_TICKS_Dialog CLOCKS_PER_SEC/2 // 1/2 secondes
+
+    if (!dialog_en_cours) {
+        if ((clock() - time_deb_dialog) > NB_DELTA_TICKS_Dialog) {
+            dialog = new wxProgressDialog("Lecture du fichier",
+                                          "",
+                                          100,        // range
+                                          this,       // parent
+//                                          wxPD_CAN_ABORT |
+//                                          wxPD_APP_MODAL// |
+//                                          wxPD_ELAPSED_TIME |
+//                                          wxPD_ESTIMATED_TIME |
+//                                          wxPD_REMAINING_TIME |
+                                          wxPD_AUTO_HIDE
+                                         );
+            dialog->Update(0);   // Par précaution
+            dialog_en_cours = true;
+            int new_val = round(position*100./max_value);
+            dialog->Update(new_val);
+        }
+    } else {
+        int old_val = dialog->GetValue();
+        int new_val = round(position*100./max_value);
+        if (old_val != new_val) {
+            if (new_val == 100) {
+                dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
+            } else {
+                dialog->Update(new_val);
+            }
+        }
+    }
+}
+
 void BddInter::create_bdd() {
     Object *objet_courant;
     Face   *facette_courante;
@@ -2236,14 +3467,14 @@ void BddInter::create_bdd() {
         bool Normales_sommets_presentes = false;
         unsigned int i;
         unsigned int nb_facettes_loc = 0;
-        for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
+        for (i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
             nb_facettes_loc += this->Objetlist[i].Nb_facettes;
         }
-        if (nb_facettes_loc < nb_facettes_test)
+        if (nb_facettes_loc < nb_facettes_test) // Si trop de facettes, éviter de le faire ici car c'est long et pas toujours utile
             GenereTableauAretes_OK = true;
         else
             GenereTableauAretes_OK = false;
-        for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
+        for (i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
             objet_courant = &(this->Objetlist[i]);
             if ((objet_courant->Nb_vecteurs != 0) && (objet_courant->Nb_luminances != 0)) Normales_sommets_presentes = true;
             GenereTableauPointsFacettes(objet_courant);
@@ -2258,7 +3489,7 @@ void BddInter::create_bdd() {
         listeMateriaux.clear();
         listeObjets.clear();
         listePoints.clear();
-        for(i=0; i<this->Objetlist.size(); ++i) {
+        for (i=0; i<this->Objetlist.size(); ++i) {
             GenereListeGroupesMateriaux(i);
         }
         listeGroupes.sort();                                            // Trier les listes
@@ -2282,13 +3513,13 @@ void BddInter::create_bdd() {
 
         if (CalculNormalesLectureBdd) {
             bool Forcer_calcul=false;
-            for(i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
+            for (i=indice_premierObjet; i<this->Objetlist.size(); ++i) {
                 objet_courant = &(this->Objetlist[i]);
                 if (Normales_sommets_presentes) {
                     if (i == 0) {
-                        wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
-                        wxMessage         += _T("Le calcul refait à la lecture du fichier va les remplacer...\n");
-                        wxMessage         += _T("Est-ce bien ce que vous voulez ?");
+                        wxString wxMessage = "Les Vecteurs et Luminances sont déjà présents dans la BDD.\n";
+                        wxMessage         += "Le calcul refait à la lecture du fichier va les remplacer...\n";
+                        wxMessage         += "Est-ce bien ce que vous voulez ?";
                         wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question"),
                                                  wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
                         if (query->ShowModal() == wxID_YES) Forcer_calcul = true;
@@ -2308,11 +3539,13 @@ void BddInter::create_bdd() {
                     makeluminance();
 
                     // Recopie des numéros de sommets des facettes dans luminances
+#pragma omp parallel for private(facette_courante)
                     for (unsigned int nfac=0; nfac < nb_fac ; nfac++) {
                         facette_courante = &(this->Objetlist[i].Facelist[nfac]);
-                        NumerosSommets   = facette_courante->getF_sommets();
-                        this->N_elements = facette_courante->getNumero();
-                        make1luminance();
+//                        NumerosSommets   = facette_courante->getF_sommets();
+//                        this->N_elements = facette_courante->getNumero();
+//                        make1luminance();
+                        make1luminance(facette_courante->getNumero(),facette_courante->getF_sommets()); // OK ici
                         facette_courante->flat = false ;
                     }
 
@@ -2615,7 +3848,16 @@ void BddInter::LectureXML_G3d (FILE *f)
     XML_Parser p;
     unsigned int indice_premierObjet;
 
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
     rewind(f);
+
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+    printf("Taille : %lld\n",fichierBdd_length);
+
     indice_premierObjet = this->Objetlist.size();   // Pour utilisation en cas de fusion
 
     sprintf(Message,"\nNon complètement testé : pas assez de fichiers de test ...\n");
@@ -2641,6 +3883,7 @@ void BddInter::LectureXML_G3d (FILE *f)
             fprintf(stderr, "Erreur de lecture du fichier XML\n");
             exit(-1);
         }
+        Update_Dialog(ftell(f), fichierBdd_length);
         done = feof(f);
 
         if (XML_Parse(p, XML_Buff, len, done) == XML_STATUS_ERROR) {
@@ -2650,6 +3893,8 @@ void BddInter::LectureXML_G3d (FILE *f)
 #ifdef WIN32
             system("pause") ;
 #endif
+            dialog->Update(100);
+            wxDELETE(dialog);
             exit(-1);
         }
 
@@ -2669,7 +3914,7 @@ void BddInter::LectureXML_G3d (FILE *f)
 
 //    if (indice_premierObjet != 0) printf("Recapitulatif de tous les objets :\n");
 
-    for (o=indice_premierObjet ; o< nb_objets ; o++) {
+    for (o=indice_premierObjet; o< nb_objets; o++) {
 		indiceObjet_courant = o;
         sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetValue());
         printf(utf8_To_ibm(Message));
@@ -2687,6 +3932,11 @@ void BddInter::LectureXML_G3d (FILE *f)
     printf("Nombre total de normales aux sommets : %d\n",nb_T_norml   );
     printf("Nombre total de facettes             : %d\n",nb_T_facettes);
 
+    if(dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
+
     sprintf(Message,"Non encore totalement opérationnel/testé\n\n");
     printf(utf8_To_ibm(Message));
 /*#ifdef WIN32
@@ -2696,6 +3946,9 @@ void BddInter::LectureXML_G3d (FILE *f)
 }
 
 //******************************************************************************
+// NOTE : dans les fonctions Load* la parallélisation des boucles for n'est probablement pas faisable en général car la lecture des fichiers est forcément séquentielle
+//        à moins que l'attribut ordered puisse être utilsé, mais ce n'est pas sûr
+
 
 void BddInter::LoadG3D()
 {
@@ -2752,12 +4005,16 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
     }
     indice_max = -1;
     indice_min = objet_courant->Nb_sommets;                     // On traite d'abord les sommets de facettes
+#pragma omp parallel for private(facette_courante,numero_sommet)
     for (i=0; i<NbFacettes; i++) {                              // Recherche des numéros de sommets min et max utilisés dans l'objet
         facette_courante = &(objet_courant->Facelist[i]);
         for (j=0; j < facette_courante->Nb_Sommets_F; j++) {
             numero_sommet = facette_courante->F_sommets[j];
+#pragma omp critical
+            {
             indice_min = std::min(indice_min, numero_sommet);
             indice_max = std::max(indice_max, numero_sommet);
+            }
         }
     }
     printf("Objet %3d, Sommets  : indice_min=%5d, indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
@@ -2771,6 +4028,7 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
     if (objet_courant->Nb_sommets != objet_courant->Sommetlist.size()) printf("Oups tailles != Nb_sommets\n");  // Au cas où ...
     // Changer les numéros de sommets des facettes
     indice_min--;
+#pragma omp parallel for private(facette_courante)
     for (i=0; i<NbFacettes; i++) {
         facette_courante = &(objet_courant->Facelist[i]);
         for (int j=0; j < facette_courante->Nb_Sommets_F; j++) {
@@ -2798,12 +4056,16 @@ void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
         objet_courant->Nb_luminances = 0;                           // et Nb_luminances par précaution ici !
         return;                                                     // Passer à l'objet suivant car pas de normales aux sommets des facettes
     }
+#pragma omp parallel for private(facette_courante) // pb avec indice_* si 2 threads le modifient en même temps => tester avec omp critical ?
     for (i=0; i<NbFacettes; i++) {
         facette_courante = &(objet_courant->Facelist[i]);
         for (j=0; j < facette_courante->Nb_Sommets_L; j++) {
             numero_sommet = facette_courante->L_sommets[j];
+#pragma omp critical
+            {
             indice_min = std::min(indice_min, numero_sommet);
             indice_max = std::max(indice_max, numero_sommet);
+            }
         }
     }
     printf("Objet %3d, Vecteurs : indice_min=%5d, indice_max=%5d, Nouvelles valeurs [1,%d]\n",o,indice_min,indice_max,indice_max-indice_min+1);
@@ -2815,6 +4077,7 @@ void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
     if (objet_courant->Nb_vecteurs != objet_courant->Vecteurlist.size()) printf("Oups tailles != Nb_vecteurs\n");
     // Changer les numéros de sommets des facettes
     indice_min--;
+#pragma omp parallel for private(facette_courante)
     for (i=0; i<NbFacettes; i++) {
         facette_courante = &(objet_courant->Facelist[i]);
         for (j=0; j < facette_courante->Nb_Sommets_L; j++) {
@@ -2854,7 +4117,7 @@ void BddInter::LoadOBJ()
     int indice, num_min1, num_min2;
     int indice_min,indice_max;
     unsigned norm_point_fac_existe, nb_normp_fac;
-    int compt=0, speed=200 ;
+    int  compt=0, speed=200 ;
 
     unsigned int Nb_objets, indice_premierObjet;
     float vx,vy,vz;
@@ -2884,11 +4147,21 @@ void BddInter::LoadOBJ()
     printf("Nom du fichier : %s\n", cptr);
     nom_fichier = cptr;                         // a simplifier ?
 
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
+
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+//    printf("Taille : %lld %lld\n",fichierBdd_length,std::filesystem::file_size(buffer.data()));
+    printf("Taille : %lld\n",fichierBdd_length);
+
     fgets(s1,160,f) ;
     if (!strncmp(s1,"#",1) || !strncmp(s1,"mtllib",6) || !strncmp(s1,"g ",2) || !strncmp(s1,"v ",2)) {
         if (s1[0] == '#') {
@@ -2948,7 +4221,7 @@ void BddInter::LoadOBJ()
                         tab_mat[nb_mat++] = strdup(s1+7);
                     } else {
                         found=0;
-                        for (i=0 ; i< nb_mat ; i++) {
+                        for (i=0; i< nb_mat; i++) {
                             if (!strncmp(s1+7,tab_mat[i],strlen(tab_mat[i]))) {
                                 found = 1;  // Ce matériau est déjà dans la liste
                                 break;
@@ -2975,7 +4248,7 @@ void BddInter::LoadOBJ()
                 sprintf(Message,"Liste des nom lus:\n");
                 printf(utf8_To_ibm(Message));
 //                printf("Liste des nom lus:\n");
-                for (i=0 ; i< o ; i++) {
+                for (i=0; i< o; i++) {
                     str_loc  = wxString(tab_nom[i]);
                     nom_utf8 = is_utf8(tab_nom[i]) ;
                     if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
@@ -2995,7 +4268,7 @@ void BddInter::LoadOBJ()
                 sprintf(Message,"Liste des matériaux :\n");
                 printf(utf8_To_ibm(Message));
 //                printf("Liste des materiaux:\n");
-                for (i=0 ; i< nb_mat ; i++) {
+                for (i=0; i< nb_mat; i++) {
                     str_loc  = wxString(tab_mat[i]);
                     nom_utf8 = is_utf8(tab_mat[i]);
                     if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom du matériau n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
@@ -3157,7 +4430,7 @@ void BddInter::LoadOBJ()
                     continue;
                 }
                 if (!strncmp(s1,"usemtl ",7)) {         // Lecture du nom de matériau
-                    for (i=0 ; i< nb_mat ; i++) {
+                    for (i=0; i< nb_mat; i++) {
                         if (!strncmp(s1+7,tab_mat[i],strlen(tab_mat[i]))) {
                             num_mat = i+1;  // Le matériau est déjà dans la liste => num_mat = rang dans le tableau pour commencer à 1
                             // Cas particulier où le nom est group_* (conversion en .obj par Ovni)
@@ -3238,6 +4511,7 @@ void BddInter::LoadOBJ()
                     this->N_elements = nfac;
                     this->Set_numeros(Numeros);
                     make1face();
+//                    make1face(nfac,Numeros);
 
                     this->Setxyz(1.,0.,0.);
                     make1normale();             // Normale bidon
@@ -3251,17 +4525,18 @@ void BddInter::LoadOBJ()
                         fprintf(stderr,"Attention : la facette %d a un nombre de points (%d) et de normales aux sommets (%d) different !\n",nfac,n,nb_normp_fac);
                         // Non this->Objetlist[o].Nb_normales = 0 ;    // Forcer à 0 car il y a certainement une erreur !!
                     }
-                    for (i=0 ; i<n ; i++) {
+                    for (i=0; i<n; i++) {
                         if(nb_norm != 0 && nb_normp_fac == n) Numeros[i]=valn[i+1];// - nnorm_t;
                         else                                  Numeros[i]=valp[i+1];// - npoint_t;
                     }
 //                    printf("%d %d\n",nb_normp_fac,n);
                     Face_ij = &(this->Objetlist[o].Facelist[nfac-1]);
                     if (nb_normp_fac == n) {            // Pas sûr que ce soit le bon test !!!
-                        this->str.clear();
-                        this->N_elements = nfac;
-                        this->Set_numeros(Numeros);
-                        this->make1luminance();
+//                        this->str.clear();
+//                        this->N_elements = nfac;
+//                        this->Set_numeros(Numeros);
+//                        this->make1luminance();
+                        this->make1luminance(nfac,Numeros);                 // OK ici
                         Face_ij->flat = false;              // Facette non plane
                         this->Objetlist[o].flat = false;    // donc l'objet aussi
                     } else {
@@ -3271,8 +4546,12 @@ void BddInter::LoadOBJ()
                     Face_ij->codmatface = num_mat;
                     continue;
                 }
+
+                Update_Dialog(ftell(f), fichierBdd_length);
             }
             nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
+            dialog->Update(100);
+            wxDELETE(dialog);
 
 //! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
 //! ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
@@ -3282,7 +4561,7 @@ void BddInter::LoadOBJ()
             Object * objet_courant;
             bool msg_optim = true;
 
-            for (o=1+indice_premierObjet ; o<Nb_objets+indice_premierObjet ; o++) { // On ne commence que sur le 2ème objet les copies
+            for (o=1+indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {   // On ne commence que sur le 2ème objet les copies
 
                 objet_courant= &(this->Objetlist[o]);
                 objet_courant->Sommetlist  = PremierObjet->Sommetlist ;
@@ -3338,6 +4617,10 @@ void BddInter::LoadOBJ()
         type = -1;
     }
     fclose(f);
+    if (dialog) {               // au cas où ...
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
     if(verbose) printf("Sortie de BddInter::LoadOBJ\n");
 }
 
@@ -3351,6 +4634,7 @@ void BddInter::LoadM3D()
  *  Une création de groupes faite ?????????????????????????????????
  */
 
+    Object *Objet_courant;
     char nom_obj[80];
     int sommet[3] ;
     int normal[3] ;
@@ -3368,12 +4652,21 @@ void BddInter::LoadM3D()
 
     wxCharBuffer buffer=this->file.mb_str();
 
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
 
     f = fopen(buffer.data(),"r");   //ouverture du fichier
+
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+    printf("Taille : %lld\n",fichierBdd_length);
+
     fgets(s1,160,f);
     if (!strncmp(s1+3,"MilkShape 3D ASCII",18)) {
         printf("Fichier de type : MilkShape 3D en Ascii\n") ;
@@ -3413,7 +4706,7 @@ void BddInter::LoadM3D()
 //        fprintf(temp,"#### Fichier Oktal : Transformation d'un Fichier MilkShape 3D Ascii ####\n\n") ;
 //    }
 
-    for (o=0 ; o< Nb_objets ; o++) {
+    for (o=0; o< Nb_objets; o++) {
         fgets(s1,100,f) ;
         strcpy(nom_obj, Lire_chaine(s1)+1) ;        //+1 pour enlever le " de début
         cptr = strchr(nom_obj,'\0') ;               // Pointe la fin de chaîne
@@ -3432,6 +4725,8 @@ void BddInter::LoadM3D()
         this->makeobjet();
 //        indiceObjet_courant = this->Objetlist.size()-1;//o;
 
+        Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
         // Lecture du nombre de points
         fgets(s1,100,f) ;
         sscanf(s1,"%d",&nb_p) ;
@@ -3441,7 +4736,7 @@ void BddInter::LoadM3D()
 
         this->makesommet();
         // Lectures des points
-        for (npoint = 1 ; npoint <= nb_p ; npoint++) {
+        for (npoint = 1; npoint <= nb_p; npoint++) {
             fgets(s1,200,f) ;
             // Lecture des x, y et z
             sscanf(s1,"%d%f%f%f", &i, &vx, &vy, &vz);
@@ -3449,6 +4744,8 @@ void BddInter::LoadM3D()
             this->Setxyz(vx,vy,vz);
             this->make1sommet();
         }
+
+        Update_Dialog(ftell(f), fichierBdd_length);
 
         // Lecture du nombre de Normales aux sommets
         fgets(s1,100,f) ;
@@ -3458,7 +4755,7 @@ void BddInter::LoadM3D()
         this->makevecteur();
 
         // Lectures des normales
-        for (npoint = 1 ; npoint <= NbVecteurs ; npoint++) {
+        for (npoint = 1; npoint <= NbVecteurs; npoint++) {
             fgets(s1,200,f) ;
             // Lecture des x, y et z
             sscanf(s1,"%f%f%f", &vx, &vy, &vz);
@@ -3467,11 +4764,13 @@ void BddInter::LoadM3D()
             this->make1vecteur();
         }
 
+        Update_Dialog(ftell(f), fichierBdd_length);
+
         // Lecture du nombre de facettes
         fgets(s1,100,f) ;
         sscanf(s1,"%d",&nb_fac) ;
         this->N_elements = nb_fac;
-        this->Objetlist[indiceObjet_courant].Nb_facettes = nb_fac;
+        Objet_courant->Nb_facettes = nb_fac;
 
         this->makeface();
         this->makenormale();
@@ -3479,16 +4778,17 @@ void BddInter::LoadM3D()
         this->makeaspect_face();
 
         // Lecture des facettes
-        for (nfac=1 ; nfac <= nb_fac ; nfac++) {
+        for (nfac=1; nfac <= nb_fac; nfac++) {
             this->str.clear();
             fgets(s1,200,f) ;
-            for (i=0 ; i<3 ; i++) normal[i] = 0;
+            for (i=0; i<3; i++) normal[i] = 0;
             sscanf(s1,"%d%d%d%d%d%d%d", &norm, &sommet[0], &sommet[1],&sommet[2], &normal[0], &normal[1] , &normal[2]) ;
 
             for (i=0; i<3; i++) Numeros[i] = sommet[i]+1;// Ajouter 1 au n°, car on commence à 1 et non 0
             this->N_elements = nfac;
             this->Set_numeros(Numeros);
             this->make1face();
+//            this->make1face(nfac,Numeros);
 
             test_flat = false;
             for (i=0; i<3; i++) {
@@ -3496,23 +4796,31 @@ void BddInter::LoadM3D()
                 Numeros[i] = n;
                 if (n > NbVecteurs) test_flat = true ; // incompatibilité de numéro => forcer cette facette à être plane
             }
-            this->Set_numeros(Numeros);
-            this->make1luminance();
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].flat = test_flat; // Facette non plane si le numéro de vecteurs est compatible
+//            this->Set_numeros(Numeros);
+//            this->make1luminance();
+            this->make1luminance(nfac,Numeros); // OK ici
+            Objet_courant->Facelist[nfac-1].flat = test_flat; // Facette non plane si le numéro de vecteurs est compatible
 
             Calcul_Normale_Barycentre(indiceObjet_courant,nfac-1);
 
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].groupe     = groupe_def;
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].codmatface = codmatface_def;
+            Objet_courant->Facelist[nfac-1].groupe     = groupe_def;
+            Objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
+
+            Update_Dialog(ftell(f), fichierBdd_length);
+
         }
-        this->Objetlist[indiceObjet_courant].Nb_facettes  = nb_fac;
-        this->Objetlist[indiceObjet_courant].Nb_normales  = nb_fac;
-        this->Objetlist[indiceObjet_courant].Nb_luminances= nb_fac;
-        this->Objetlist[indiceObjet_courant].flat         = false;    // Objet a priori avec normales aux sommets, mais peut être invalidé facette/facette
+        Objet_courant->Nb_facettes  = nb_fac;
+        Objet_courant->Nb_normales  = nb_fac;
+        Objet_courant->Nb_luminances= nb_fac;
+        Objet_courant->flat         = false;    // Objet a priori avec normales aux sommets, mais peut être invalidé facette/facette
     }
     m_loaded = true;
     m_gllist = 0;
     fclose(f);
+    if (dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf(utf8_To_ibm(Message));
     if(verbose) printf("Sortie de BddInter::LoadM3D\n");
@@ -3530,7 +4838,8 @@ void BddInter::LoadPLY()
 
     char ident[80] ;			//chaînes de caractères  s1[666],
     char nom_obj[80], nom_prec[80] ;
-    char *cptr ;
+    char   *cptr = nullptr ;
+    Object *Objet_courant;
     int i0, n_OK, ittem ;
     unsigned int i, nfac, npoint, nb_fac, nb_p, n, indice_premierObjet ;
     int materi ;
@@ -3559,6 +4868,11 @@ void BddInter::LoadPLY()
 
     f=fopen(buffer.data(),"r");	//ouverture du fichier
 
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+    printf("Taille : %lld\n",fichierBdd_length);
+
     fgets(s1,160,f);
     if (strncmp(s1,"GEO",3)) {
         if (strncmp(s1,"ply",3)) {
@@ -3575,7 +4889,10 @@ void BddInter::LoadPLY()
     printf("Fichier GEO - Niratam : %s",s1) ;
     unsigned int nb_grp_ply = 0 ;
 
-    for (i=0 ; i <= 4 ; i++) {
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
+    for (i=0; i <= 4; i++) {
         fgets(s1,100,f) ;    // Le nom de l'avion est à la seconde ligne, donc pour i=0
         printf("%s",s1) ;
         if (i == 0) strcpy(ident,s1) ;
@@ -3591,7 +4908,7 @@ void BddInter::LoadPLY()
         }
     }
     sscanf(cptr+7,"%d",&ittem) ;
-    for (i=0 ; i <= 10 ; i++) {
+    for (i=0; i <= 10; i++) {
         fgets(s1,100,f)   ;
         printf("%s",s1) ;
         if ((cptr=strstr(s1,"Start")) != NULL) break ;
@@ -3639,7 +4956,7 @@ void BddInter::LoadPLY()
             npoint = 0 ;
             nfac   = 0 ;
         }
-        for (i=1 ; i <= n ; i++) fgets(s1,100,f) ;
+        for (i=1; i <= n; i++) fgets(s1,100,f) ;
         npoint = npoint + n ;
         nb_p   = nb_p + n ;
         nfac ++ ;
@@ -3698,6 +5015,8 @@ void BddInter::LoadPLY()
             fgets(s1,100,f) ;   // Passer le cr
         }
 
+        Update_Dialog(ftell(f), fichierBdd_length);
+
 // Différentiation des groupes
         if (nb_grp_ply == 0) {
             nb_grp_ply = 1 ;
@@ -3705,7 +5024,7 @@ void BddInter::LoadPLY()
             Groupe_ply[1] = materi ;
         } else {
             i0 = 0 ;
-            for (i=1 ; i <= nb_grp_ply ; i++) {
+            for (i=1; i <= nb_grp_ply; i++) {
                 if (materi == Groupe_ply[i]) {
                     i0 = 1 ;
                     index_ply = i ;
@@ -3751,16 +5070,17 @@ void BddInter::LoadPLY()
             str += wxNom;
             makeobjet();
 //            indiceObjet_courant = this->Objetlist.size()-1; //o;
-            this->Objetlist[indiceObjet_courant].Nb_facettes = o_nfac[o+1];
-            this->Objetlist[indiceObjet_courant].Nb_sommets  = o_npoint[o+1];
+            Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+            Objet_courant->Nb_facettes = o_nfac[o+1];
+            Objet_courant->Nb_sommets  = o_npoint[o+1];
 
-            this->N_elements = this->Objetlist[indiceObjet_courant].Nb_facettes;
+            this->N_elements = Objet_courant->Nb_facettes;
             str.clear();
             makeface();
             makenormale();
 //            makeaspect_face();
 
-            this->N_elements = this->Objetlist[indiceObjet_courant].Nb_sommets;
+            this->N_elements = Objet_courant->Nb_sommets;
             makesommet();
 
             nfac   = 0;
@@ -3770,13 +5090,15 @@ void BddInter::LoadPLY()
         n = (n-2)/3 ; // Nombre de sommets à lire
         if (n < 3) code_facette = 1 ;
 
+        Objet_courant = &(this->Objetlist[indiceObjet_courant]);    // Par précaution, car c'est normalement déjà initialisé
+
         Numeros_Sommets.resize(n);
-        for (i=0 ; i < n ; i++) {
+        this->str.clear();
+        for (i=0; i < n; i++) {
             ++npoint ;                // Il serait intéressant de vérifier ici si le point n'existe pas déjà (limiter les doublons)
             fscanf(f,"%f",&vx);		// Lecture du x du point
             fscanf(f,"%f",&vy);		// Lecture du y du point
             fscanf(f,"%f",&vz);		// Lecture du z du point
-            this->str.clear();
             this->Setxyz(vx,vy,vz);
             this->N_elements = npoint;
             this->make1sommet();
@@ -3785,12 +5107,13 @@ void BddInter::LoadPLY()
         N_elements = nfac;
         this->Set_numeros(Numeros_Sommets);
         make1face();
-        this->Objetlist[indiceObjet_courant].Facelist[nfac-1].flat = true;  // provisoire
+//        this->make1face(nfac, Numeros_Sommets);
+        Objet_courant->Facelist[nfac-1].flat = true;  // provisoire
         this->Setxyz(1.,0.,0.); // Provisoire
         make1normale();
 
-        this->Objetlist[indiceObjet_courant].Facelist[nfac-1].groupe     = index_ply;
-        this->Objetlist[indiceObjet_courant].Facelist[nfac-1].codmatface = index_ply;
+        Objet_courant->Facelist[nfac-1].groupe     = index_ply;
+        Objet_courant->Facelist[nfac-1].codmatface = index_ply;
 
         fscanf(f,"%d",&n) ;
 
@@ -3803,16 +5126,25 @@ void BddInter::LoadPLY()
             n = 0 ;
             printf("Warning : Trop de facettes dans le fichier ( > %d)\n",nfac) ;
         }
+
+        Update_Dialog(ftell(f), fichierBdd_length);
     }
+
+    if (dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
+
     for (o=0; o<Nb_objets; o++) {
         indiceObjet_courant = indice_premierObjet + o;
-        for (i=0 ; i < Objetlist[indiceObjet_courant].Facelist.size();i++) Calcul_Normale_Barycentre(indiceObjet_courant,i);
+        Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+        for (i=0; i < Objet_courant->Facelist.size(); i++) Calcul_Normale_Barycentre(indiceObjet_courant,i);
     }
     free(o_nfac)   ; // Libérer la mémoire obtenue par malloc/realloc ...
     sprintf(Message,"Nombre de groupes identifiés : %d\n",nb_grp_ply) ;
     printf(utf8_To_ibm(Message)) ;
 
-    for (i=1 ; i<=nb_grp_ply ; i++) printf("%2d %8d\n",i,Groupe_ply[i]) ;
+    for (i=1; i<=nb_grp_ply; i++) printf("%2d %8d\n",i,Groupe_ply[i]) ;
     free(o_npoint) ;
 
     m_loaded = true;
@@ -4002,6 +5334,16 @@ void BddInter::LoadPLY_Stanford()
         return;
     }
 
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
+    fichierBdd_length = 0; // à défaut de traiter la taille du fichier
+    for (i = 0; i < in_ply->num_elem_types; i++) {
+        elem_name = setup_element_read_ply (in_ply, i, &elem_count);
+        fichierBdd_length += elem_count;
+    }
+    long compteur_ply = 0;
+
     // Créer un seul objet
 
     str.Printf(_T("<OBJET> %d "),0+Numero_base);
@@ -4029,7 +5371,7 @@ void BddInter::LoadPLY_Stanford()
 
             // Créer les sommets
 
-            this->Objetlist[indiceObjet_courant].Nb_sommets = nverts;
+            objet_courant->Nb_sommets = nverts;
             this->N_elements = nverts;
             str.clear();
             makesommet();
@@ -4089,6 +5431,8 @@ void BddInter::LoadPLY_Stanford()
                     make1vecteur();
                 }
                 free(vlist); // Libérer la mémoire de chaque vertex
+                compteur_ply++;
+                Update_Dialog(compteur_ply, fichierBdd_length);
             }
 
             if (vert_other == NULL || face_other == NULL) {
@@ -4141,23 +5485,27 @@ void BddInter::LoadPLY_Stanford()
                 flist = (PlyFace *) malloc (sizeof (PlyFace));
                 get_element_ply (in_ply, (void *) flist);
 
-                this->N_elements = j+1;
                 int nb_som = flist->nverts;
                 Numeros.resize(nb_som);
                 for (k=0; k<nb_som; k++) Numeros[k]=(flist->verts[k]) +1;
+                this->N_elements = j+1;
                 this->Set_numeros(Numeros) ;
                 make1face();
-                facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[j]);
+//                make1face(j+1,Numeros);
+                facette_courante = &(objet_courant->Facelist[j]);
                 facette_courante->groupe     = groupe_def;
                 facette_courante->codmatface = codmatface_def;
                 if (has_normals) {
-                    make1luminance();
+//                    make1luminance();
+                    make1luminance(j+1,Numeros);
                     facette_courante->flat = false;
                 } else {
                     facette_courante->flat = true;
                 }
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
                 free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
+                compteur_ply++;
+                Update_Dialog(compteur_ply, fichierBdd_length);
             }
 
         } else if (equal_strings ((char*)"tristrips", elem_name)) {
@@ -4223,11 +5571,13 @@ void BddInter::LoadPLY_Stanford()
                     this->N_elements = nfaces+1;
                     this->Set_numeros(Numeros) ;
                     make1face();
-                    facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[nfaces]);
+//                    make1face(nfaces+1,Numeros);
+                    facette_courante = &(objet_courant->Facelist[nfaces]);
                     facette_courante->groupe     = groupe_def;
                     facette_courante->codmatface = codmatface_def;
                     if (has_normals) {
-                        make1luminance();
+//                        make1luminance();
+                        make1luminance(nfaces+1,Numeros);
                         facette_courante->flat = false;
                     } else {
                         facette_courante->flat = true;
@@ -4242,6 +5592,8 @@ void BddInter::LoadPLY_Stanford()
                 if (has_normals) objet_courant->Nb_luminances = nfaces;
                 printf("Liste des facettes redimmensionnée\n");
                 free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
+                compteur_ply++;
+                Update_Dialog(compteur_ply, fichierBdd_length);
             }
 
         }/*else
@@ -4255,6 +5607,11 @@ void BddInter::LoadPLY_Stanford()
 
     m_loaded = true;
     m_gllist = 0;
+
+    if(dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
 
     if(verbose)
         printf("Sortie de BddInter::LoadPLY_Stanford\n");
@@ -4277,9 +5634,7 @@ void BddInter::LoadOFF()
     std::vector<int>   Numeros;
     std::vector<float> xyz_point;
     char *cptr;          //Pointeur de chaîne de caractères
-
- // élimination du terminateur de ligne.
-
+    Object *objet_courant;
 
     if(verbose) printf("Entree de BddInter::LoadOFF\n");
 
@@ -4290,6 +5645,12 @@ void BddInter::LoadOFF()
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
+
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+    printf("Taille : %lld\n",fichierBdd_length);
+
     fgets(s1,160,f) ;
     if (strncmp(s1,"OFF",3)) {
         printf("Fichier .off, mais pas de type Object File Format !\n");    // Doit obligatoirement commencer par OFF en 1ère ligne
@@ -4298,13 +5659,16 @@ void BddInter::LoadOFF()
         return ;
     }
 
-     printf("Fichier de type Object File Format : %s",s1) ;
-     Nb_objets = 1 ;     // A priori, 1 seul objet par fichier
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
+    printf("Fichier de type Object File Format : %s",s1) ;
+    Nb_objets = 1 ;     // A priori, 1 seul objet par fichier
 //    if (svg_entete && temp != NULL) {
 //        fprintf(temp,"#### Fichier Oktal : Transformation d'un Fichier OFF ####\n\n") ;
 //    }
 
-    for (o=0 ; o< Nb_objets ; o++) {
+    for (o=0; o< Nb_objets; o++) {
         sprintf(nom_obj, "Objet OFF - %d",o) ;
 
 #if wxCHECK_VERSION(3,0,0)
@@ -4317,20 +5681,21 @@ void BddInter::LoadOFF()
         str += NomObj;
         makeobjet();
 //        indiceObjet_courant = this->Objetlist.size() -1; //o;
+        objet_courant = &(this->Objetlist[indiceObjet_courant]);
 
         // Lecture du nombre de sommets et de facettes
         fgets(s1,100,f) ;
         while (s1[0] == '#') fgets(s1,100,f);   // Sauter les lignes commençant par # ... Il faudrait aussi sauter les lignes blanches (vides ou que des espaces)
         sscanf(s1,"%d%d",&nb_p,&nb_fac) ;
 
-        this->Objetlist[indiceObjet_courant].Nb_sommets = nb_p;
+        objet_courant->Nb_sommets = nb_p;
         this->N_elements = nb_p;
         str.clear();
         makesommet();
 
         // Lecture des points
         str.clear();
-        for (npoint = 1 ; npoint <= nb_p ; npoint++) {
+        for (npoint = 1; npoint <= nb_p; npoint++) {
             // Lecture des x, y et z
             fgets(s1,100,f) ;
             while (s1[0] == '#') fgets(s1,100,f);                           // élimine les lignes de commentaires
@@ -4346,6 +5711,8 @@ void BddInter::LoadOFF()
             this->N_elements = npoint;
             this->Setxyz(vx,vy,vz);
             this->make1sommet();
+
+            Update_Dialog(ftell(f), fichierBdd_length);
         }
 
         this->N_elements = nb_fac;
@@ -4354,10 +5721,10 @@ void BddInter::LoadOFF()
         makeaspect_face();
 
         // Lecture des facettes
-        for (nfac=1 ; nfac <= nb_fac ; nfac++) {
-            fscanf(f,"%d",&nsommets) ;
+        for (nfac=1; nfac <= nb_fac; nfac++) {
+            fscanf(f,"%d",&nsommets);
             Numeros.resize(nsommets);
-            for (i=0 ; i< nsommets ; i++) {
+            for (i=0; i< nsommets; i++) {
                 fscanf(f,"%d", &n) ;
                 Numeros[i] = n+1; // Ajouter 1 au n°, car on commence à 1 et non 0
             }
@@ -4365,18 +5732,21 @@ void BddInter::LoadOFF()
             this->N_elements = nfac;
             this->Set_numeros(Numeros) ;
             make1face();
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].flat = true; // provisoire
+//            make1face(nfac,Numeros);
+            objet_courant->Facelist[nfac-1].flat = true; // provisoire
 
             fgets(s1,200,f) ; //Terminer la lecture de cette ligne. Il reste parfois des données (normales ? autres ?)
 
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].groupe     = groupe_def;
-            this->Objetlist[indiceObjet_courant].Facelist[nfac-1].codmatface = codmatface_def;
+            objet_courant->Facelist[nfac-1].groupe     = groupe_def;
+            objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
+
+            Update_Dialog(ftell(f), fichierBdd_length);
         }
-        this->Objetlist[indiceObjet_courant].Nb_facettes  = nb_fac;
-        this->Objetlist[indiceObjet_courant].Nb_normales  = nb_fac;
-        this->Objetlist[indiceObjet_courant].Nb_luminances= 0;    // Dans le format OFF, il n'y a pas de normales aux sommets
-        this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;    // enregistrées dans le fichier de Bdd
-        this->Objetlist[indiceObjet_courant].flat=true;           // A la lecture, on considère que l'objet n'est composé que de facettes planes
+        objet_courant->Nb_facettes  = nb_fac;
+        objet_courant->Nb_normales  = nb_fac;
+        objet_courant->Nb_luminances= 0;        // Dans le format OFF, il n'y a pas de normales aux sommets
+        objet_courant->Nb_vecteurs  = 0;        // enregistrées dans le fichier de Bdd
+        objet_courant->flat=true;               // A la lecture, on considère que l'objet n'est composé que de facettes planes
         for (i=0; i<nb_fac; i++) Calcul_Normale_Barycentre(indiceObjet_courant,i);
 
         // Il n'y a pas de normales aux sommets dans ce format.
@@ -4388,6 +5758,12 @@ void BddInter::LoadOFF()
     m_gllist = 0;
 
     fclose(f);
+
+    if(dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
+
     if(verbose) printf("Sortie de BddInter::LoadOFF\n");
 }
 
@@ -4405,7 +5781,8 @@ void BddInter::LoadSTL() {
     unsigned int numero_sommet,numero_sommetB;
     std::vector<int> Numeros;
     float vx,vy,vz;
-    Face *facette_courante;
+    Object *objet_courant;
+    Face   *facette_courante;
     unsigned int nb_facettes_loc=0;
     unsigned int nb_sommets_loc=0;
 
@@ -4413,11 +5790,20 @@ void BddInter::LoadSTL() {
 
     wxCharBuffer buffer=this->file.mb_str();
 
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
+
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
     f=fopen(buffer.data(),"r");     //ouverture du fichier
+
+    fseek(f,0,SEEK_END);
+    fichierBdd_length = ftell(f);
+    rewind(f);
+    printf("Taille : %lld\n",fichierBdd_length);
+
     cptr=fgets(s1,81,f) ;           // 80 caractères +1 pour permettre un \n
     s1[81] = '\0';                  // Simple précaution
     printf("longueur de l'entête : %d\n",(int)strlen(s1));
@@ -4430,7 +5816,7 @@ void BddInter::LoadSTL() {
 
     binary = true;
     cptr   = s1;
-    for (i=0;i<80;i++,cptr++) {
+    for (i=0; i<80; i++, cptr++) {
         if (*cptr == 0x0A) {
             binary = false;     // Si le caractère LF est trouvé dans les 80 premiers du fichier, c'est que ce n'est pas un fichier binaire, mais plutôt Ascii !
             break;              // => Inutile de poursuivre la recherche
@@ -4499,10 +5885,11 @@ void BddInter::LoadSTL() {
         str.Printf(_T("<OBJET> %d "),0+Numero_base);    // Voir si Numero_base est utile (en cas de lecture de plusieurs fichiers ?)
         str += NomObj;
         makeobjet();
+        objet_courant = &(this->Objetlist[indiceObjet_courant]);
 
         // Création des sommets et des facettes
 
-        this->Objetlist[indiceObjet_courant].Nb_sommets = nb_sommets_loc;
+        objet_courant->Nb_sommets = nb_sommets_loc;
         this->N_elements = nb_sommets_loc;
         str.clear();
         makesommet();
@@ -4524,14 +5911,15 @@ void BddInter::LoadSTL() {
             while (*cptr == ' ') cptr++;
             if (!strncmp(cptr,"facet normal ",13)) {
                 cptr+=13;
-                for (i=0 ; i< 3 ; i++) {
+                for (i=0; i< 3; i++) {
                     Numeros[i] = numero_sommet++;
                 }
                 str.clear();
                 this->N_elements = numero_facette;
                 this->Set_numeros(Numeros) ;
                 make1face();
-                facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
+//                make1face(numero_facette,Numeros);
+                facette_courante = &(objet_courant->Facelist[numero_facette-1]);
                 facette_courante->flat       = true;
                 facette_courante->groupe     = groupe_def;
                 facette_courante->codmatface = codmatface_def;
@@ -4552,6 +5940,8 @@ void BddInter::LoadSTL() {
 
                 numero_sommetB++;
             }
+
+            Update_Dialog(ftell(f), fichierBdd_length);
         }
 
     } else {
@@ -4581,12 +5971,14 @@ void BddInter::LoadSTL() {
         str += NomObj;
         makeobjet();
 
+        objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
         // Création des sommets et des facettes
 
         nb_sommets_loc = nb_triangles*3;                // Facettes triangulaires, donc 3 sommets
         nb_facettes_loc= nb_triangles;
 
-        this->Objetlist[indiceObjet_courant].Nb_sommets = nb_sommets_loc;
+        objet_courant->Nb_sommets = nb_sommets_loc;
         this->N_elements = nb_sommets_loc;
         str.clear();
         makesommet();
@@ -4604,14 +5996,15 @@ void BddInter::LoadSTL() {
         listeMateriaux.clear();
 
         for (i=1; i<=nb_facettes_loc; i++) {
-            for (j=0 ; j< 3 ; j++) {
+            for (j=0; j< 3; j++) {
                 Numeros[j] = numero_sommet++;
             }
             str.clear();
             this->N_elements = numero_facette;
             this->Set_numeros(Numeros) ;
             make1face();
-            facette_courante = &(this->Objetlist[indiceObjet_courant].Facelist[numero_facette-1]);
+//            make1face(numero_facette,Numeros);
+            facette_courante = &(objet_courant->Facelist[numero_facette-1]);
             facette_courante->flat       = true;        // provisoire
             facette_courante->groupe     = groupe_def;
             facette_courante->codmatface = codmatface_def;
@@ -4621,7 +6014,7 @@ void BddInter::LoadSTL() {
 
             numero_facette++;
 
-            for (j=0 ; j<3 ; j++) {                     // 3 sommets d'un triangle
+            for (j=0; j<3; j++) {                       // 3 sommets d'un triangle
                 fread(xyz,sizeof(float),3,f);           // 3*3 coordonnées des sommets
                 this->N_elements = numero_sommetB;
                 make1sommet();
@@ -4650,20 +6043,22 @@ void BddInter::LoadSTL() {
                 facette_courante->codmatface = rang;    // Coder le matériau pas son rang dans la liste
                 facette_courante->groupe     = rang-1;  // Pour donner une valeur différente du matériau
             }
+
+            Update_Dialog(ftell(f), fichierBdd_length);
         }
         if (erreur_couleurs) {
             // les tableaux MatAmbient_avionG et MatDiffuse_avionG sont trops petits
             wxString wxMessage;
             wxMessage.clear();
-            wxMessage.Printf(_T("Trop de couleurs/valeurs Attribute différentes dans ce ficher .stl binaire.\n%d valeurs trouvées, maximum : %d"),index,nb_couleurs-1);
-            wxMessage  +=    _T("\nAgrandir MatAmbient_avionG et MatDiffuse_avionG");
+            wxMessage.Printf("Trop de couleurs/valeurs Attribute différentes dans ce ficher .stl binaire.\n%d valeurs trouvées, maximum : %d",index,nb_couleurs-1);
+            wxMessage  +=    "\nAgrandir MatAmbient_avionG et MatDiffuse_avionG";
             DisplayMessage(wxMessage,true);
         }
     }
 
-    this->Objetlist[indiceObjet_courant].Nb_luminances= 0;    // Dans le format STL, il n'y a pas de normales aux sommets
-    this->Objetlist[indiceObjet_courant].Nb_vecteurs  = 0;    // enregistrées dans le fichier de Bdd
-    this->Objetlist[indiceObjet_courant].flat=true;           // A la lecture, on considère que l'objet n'est composé que de facettes planes
+    objet_courant->Nb_luminances= 0;   // Dans le format STL, il n'y a pas de normales aux sommets
+    objet_courant->Nb_vecteurs  = 0;   // enregistrées dans le fichier de Bdd
+    objet_courant->flat=true;          // A la lecture, on considère que l'objet n'est composé que de facettes planes
 
     m_loaded = true ; //true;
     m_gllist = 0;
@@ -4671,6 +6066,10 @@ void BddInter::LoadSTL() {
     fclose(f);
 //    type = -1;  // Pour le moment
 //    Update();
+    if(dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
     if(verbose) printf("Sortie de BddInter::LoadSTL\n");
 }
 
@@ -4704,6 +6103,8 @@ void BddInter::Load3DS()
         type = -1;
         return;
     }
+    fichierBdd_length = std::filesystem::file_size(buffer.data());
+    printf("Taille : %lld\n",fichierBdd_length);
 
     /* Pas de nodes?  En fabriquer pour favoriser l'affichage (cf 3dsplay.c). */
     if( !f3ds->nodes ) {
@@ -4712,7 +6113,7 @@ void BddInter::Load3DS()
         sprintf(Message,"Création de Nodes, car ce fichier .3ds n'en a pas !\n") ;
         printf(utf8_To_ibm(Message)) ;
 
-        for (i = 0 ; i < f3ds->nmeshes; ++i) {
+        for (i = 0; i < f3ds->nmeshes; ++i) {
             Lib3dsMesh *mesh = f3ds->meshes[i];
             node = lib3ds_node_new(LIB3DS_NODE_MESH_INSTANCE);
             strcpy(node->name, mesh->name);
@@ -4725,10 +6126,10 @@ void BddInter::Load3DS()
     lib3ds_file_eval(f3ds, 0.0f);   // Indispensable pour configurer proprement les matrices des nodes
 
     // Code pas très utile ! Sert juste à vérifier 2 méthodes de comptage qui ne donnent pas toujours la même chose !
-//    for (node=f3ds->nodes ; node!=NULL ; node=node->next ) {
+//    for (node=f3ds->nodes; node!=NULL; node=node->next ) {
 //        nnodes++;                               // Compter le nombre de nodes (noeuds)
 //        printf("Node : %s\n",node->name);
-//        for (p=node->childs ; p!=NULL ; p=p->next) {
+//        for (p=node->childs; p!=NULL; p=p->next) {
 //            nnodes++;
 //            printf("Node : %s\n",p->name);
 //        }
@@ -4814,7 +6215,7 @@ int BddInter::compter_nodes (Lib3dsNode *node)
 {
     Lib3dsNode *p ;
 
-    for (p = node->childs; p != 0 ; p = p->next) {
+    for (p = node->childs; p != 0; p = p->next) {
         compter_nodes(p);
     }
 
@@ -4861,8 +6262,8 @@ char * BddInter::Lire_chaine( char st [])
 
 void BddInter::Affiche_Matrice(float M[4][4]) {
     int i,j;
-    for (i=0;i<4;i++) {
-        for (j=0;j<4;j++) printf("%12.5f ",M[j][i]);
+    for (i=0; i<4; i++) {
+        for (j=0; j<4; j++) printf("%12.5f ",M[j][i]);
         printf("\n");
     }
     printf("\n");
@@ -4899,7 +6300,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
 
     {
         Lib3dsNode *p ;
-        for (p = node->childs; p != 0 ; p = p->next) {
+        for (p = node->childs; p != 0; p = p->next) {
             decoder_node(p);
         }
     }
@@ -4998,7 +6399,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
         }
 
         // Lecture et transformation des points
-        for (i = 0 ; i < nb_p ; i++) {
+        for (i = 0; i < nb_p; i++) {
             if (test_decalage3ds) {
                 lib3ds_vector_copy(pos2, mesh->vertices[i]);
                 lib3ds_vector_transform(pos,matrice,pos2);
@@ -5038,12 +6439,13 @@ int BddInter::decoder_node (Lib3dsNode *node)
             Numeros[0] = N0 = mesh->faces[i].index[0];  // Garder ces indices dans N0,... car ils vont reservir
             Numeros[1] = N1 = mesh->faces[i].index[1];
             Numeros[2] = N2 = mesh->faces[i].index[2];
-            for (k=0;k<3;k++) Numeros[k]++;             // Ajouter 1 au n°, car on commence à 1 et non 0
+            for (k=0; k<3; k++) Numeros[k]++;           // Ajouter 1 au n°, car on commence à 1 et non 0
             this->N_elements = nfac;
             Set_numeros(Numeros);
 //            printf("Numeros Sommets : %d %d %d\n",Numeros[0],Numeros[1],Numeros[2]);
             str.clear();
             make1face();
+//            make1face(nfac,Numeros);
 
 // Calcul de la normale au barycentre de la facette via lib3ds_mesh_calculate_face_normals
             lib3ds_vector_copy(this->xyz, normal_B[i]);
@@ -5063,11 +6465,12 @@ int BddInter::decoder_node (Lib3dsNode *node)
                 str.clear();
                 this->make1vecteur();
             }
-            this->N_elements = nfac;
             Numeros[0]=Numeros[1]=Numeros[2] = 3*i+1;  Numeros[1] += 1 ; Numeros[2] += 2;
-            Set_numeros(Numeros);
-            str.clear();
-            make1luminance();
+//            Set_numeros(Numeros);
+//            str.clear();
+//            this->N_elements = nfac;
+//            make1luminance();
+            make1luminance(nfac,Numeros);   // OK ici
 
 // Identification des matériaux (s'il y en a)
             num_mat = -123 ;
@@ -5088,7 +6491,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
                 }
             } else {
                 found = 0;
-                for (im=0 ; im< nb_mat_3ds ; im++) {
+                for (im=0; im< nb_mat_3ds; im++) {
                     if (!strncmp(nom_mat_tmp,tab_mat[im],strlen(tab_mat[im]))) {
                         found = 1;      // Ce matériau est déjà dans la liste
                         break;
@@ -5130,6 +6533,31 @@ int BddInter::decoder_node (Lib3dsNode *node)
     return (0);
 }
 
+void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
+{
+    int old_val = m_gauge->GetValue();
+    long pos = fichierBdd.tellg();
+    int new_val = (pos*100./fichierBdd_length) +0.5;
+    printf("%d %d\n",old_val,new_val);
+    if (old_val < 100) {
+        if (old_val != new_val) {
+            m_gauge->SetValue(new_val);
+            m_gauge->Update();
+        }
+//        m_gauge->Update();                              // Non indispensable mais peut donner un affichage plus fluide
+//        wxLogStatus(_("i %d %d"),i,m_gauge->GetValue());
+    } else {                        // On est arrivé au max
+        m_timer->Stop();
+        if (timer_bis) {            // La première fois, timer_bis est false
+            wxDELETE(m_gauge);
+            wxDELETE(m_timer);
+        } else {
+            timer_bis = true;       // Pour un second passage
+            m_timer->Start(1500);   // Démarrer un second timer pour laisser un peu de temps à l'affichage des wxGauge arrivés au max
+        }
+    }
+}
+
 void BddInter::LoadBDD() {
 
 /// ATTENTION : la lecture originale via tfile pose problème s'il y a des caractères accentués dans un fichier ANSI => Plante car agit comme si on avait trouvé un Eof !
@@ -5143,6 +6571,7 @@ void BddInter::LoadBDD() {
 
 //! On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
 
+    Object *objet_courant;
     int x1=0;
     unsigned int i;
     int mode_lecture= 0;
@@ -5169,7 +6598,39 @@ void BddInter::LoadBDD() {
     if(verbose) printf("Entree de BddInter::LoadBdd\n");
 
     wxCharBuffer buffer=this->file.mb_str();
-    std::ifstream fichierBdd (buffer.data());
+    fichierBdd.open (buffer.data());
+
+    fichierBdd.seekg(0,fichierBdd.end);     // Se positionner en fin de fichier
+    fichierBdd_length = fichierBdd.tellg(); // Récupérer la position dans le fichier, donc ici sa taille
+    fichierBdd.seekg(0,fichierBdd.beg);     // Revenir au début du fichier
+    printf("Taille : %lld\n",fichierBdd_length);
+
+///    wxRect rect;
+///    this->MAIN_b->GetStatusBar()->GetFieldRect(0, rect);              // Récupérer la taille et position du premier champ de la StatusBar
+
+///    if (m_gauge) wxDELETE(m_gauge);
+// PROBLEME : si pas de timer, il faut mettre une valeur max < 100, mais le timer ne fonctionne pas ici. Pourquoi ?
+///    m_gauge = new wxGauge(this->MAIN_b->GetStatusBar(), wxID_ANY, 100, rect.GetPosition(), rect.GetSize(), wxGA_HORIZONTAL|wxNO_BORDER );
+//    m_gauge->SetSize(rect.x + margin, rect.y + margin, rect.width - 2*margin, rect.height - 2*margin);  // Changer position et taille pour laisser une petite marge autour
+///    m_gauge->SetSize(rect.x + margin, rect.y + margin, 300, rect.height - 2*margin);  // Changer position et taille pour laisser une petite marge autour
+///    m_gauge->SetValue(0);
+// Divers tests d'init du timer ...
+///    if (!m_timer) m_timer = new wxTimer();//(this->MAIN_b,wxID_ANY);   // Créer un timer
+////    id_timer= m_timer->GetId();
+////    m_timer->SetOwner(this->MAIN_b,id_timer);
+//////    Connect(wxID_ANY,wxEVT_TIMER,(wxObjectEventFunction)&BddInter::OnTimer_Bdd);
+////    printf("id_timer : %d\n",m_timer->GetId());
+////    m_timer->Bind(wxEVT_TIMER, &BddInter::OnTimer_Bdd, this);
+//    if (m_timer->IsRunning())   printf("Timer On\n") ;
+//    else                        printf("Timer Off\n");
+///    m_timer->Start(100);
+//    if (m_timer->IsRunning())   printf("Timer On\n") ;
+//    else                        printf("Timer Off\n");
+///    timer_bis = false;
+///    m_gauge->Update();
+
+    time_deb_dialog = clock();
+    dialog_en_cours = false;
 
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
@@ -5208,10 +6669,11 @@ void BddInter::LoadBDD() {
             mode_lecture = 0;
             indiceObjet  = Objetlist.size() -1;      // Numéro d'indice de l'objet à lire
 //            indiceObjet_courant = indiceObjet;      // Enregistrer ce numéro d'indice dans BddInter
+            objet_courant = &(this->Objetlist[indiceObjet]);
         } else if((ligne.find("<FACE>") != notFound) || (ligne.find("<POLYGON>") != notFound)) {
             makeface();
             mode_lecture = 1;
-            NbFacettes   = this->Objetlist[indiceObjet].Nb_facettes;
+            NbFacettes   = objet_courant->Nb_facettes;
             for (i=0; i<NbFacettes; i++) {
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();    // Eliminer les éventuels espaces de fin de ligne
                 while (ligne.empty()) {
@@ -5223,14 +6685,14 @@ void BddInter::LoadBDD() {
                 ss >> N_elements;   // en fait ici, numéro de la facette
                 ss >> Nb;           // ici, nombre de sommets de la facette
                 NumerosSommets.resize(Nb);
-                for (j=0; j<Nb ; j++) ss >> NumerosSommets[j];
+                for (j=0; j<Nb; j++) ss >> NumerosSommets[j];
                 make1face();
             }
             mode_lecture = -1;
         } else if((ligne.find("<SOMMET>") != notFound) || (ligne.find("<VERTEX>") != notFound)) {
             makesommet();
             mode_lecture = 2;
-            NbSommets = this->Objetlist[indiceObjet].Nb_sommets;
+            NbSommets = objet_courant->Nb_sommets;
             str.clear();
             N_elements_prec = 0;
             for (i=0; i<NbSommets; i++) {
@@ -5251,7 +6713,7 @@ void BddInter::LoadBDD() {
         } else if((ligne.find("<NORMALE>") != notFound) || (ligne.find("<POLY_NORMAL>") != notFound)) {
             makenormale();
             mode_lecture = 3;
-            NbNormales   = this->Objetlist[indiceObjet].Nb_normales;
+            NbNormales   = objet_courant->Nb_normales;
             str.clear();
             for (i=0; i<NbNormales; i++) {
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
@@ -5262,13 +6724,13 @@ void BddInter::LoadBDD() {
                 sscanf(c_ligne,"%d%f%f%f",&N_elements,&xyz[0],&xyz[1],&xyz[2]);
 //                make1normale();
                 int indiceFacette = N_elements-1;
-                this->Objetlist[indiceObjet].Facelist[indiceFacette].setNormale_b(xyz);
+                objet_courant->Facelist[indiceFacette].setNormale_b(xyz);
             }
             mode_lecture = -1;
         } else if((ligne.find("<ASPECT_FACE>") != notFound) || (ligne.find("<POLY_ATTR>") != notFound)) {
             makeaspect_face();
             mode_lecture = 4;
-            NbAspectFaces = this->Objetlist[indiceObjet].Nb_aspects;
+            NbAspectFaces = objet_courant->Nb_aspects;
             for (i=0; i<NbAspectFaces;) { //; i++) {
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
                 while (ligne.empty()) {
@@ -5288,7 +6750,7 @@ void BddInter::LoadBDD() {
         } else if((ligne.find("<VECTEUR>") != notFound) || (ligne.find("<VERT_NORMAL>") != notFound)) {
             makevecteur();
             mode_lecture = 5;
-            NbVecteurs   = this->Objetlist[indiceObjet].Nb_vecteurs;
+            NbVecteurs   = objet_courant->Nb_vecteurs;
             str.clear();
             N_elements_prec = 0;
             for (i=0; i<NbVecteurs; i++) {
@@ -5308,12 +6770,12 @@ void BddInter::LoadBDD() {
         } else if(ligne.find("<LUMINANCE>") != notFound) {
             makeluminance();
             mode_lecture = 6;
-            this->Objetlist[indiceObjet].flat = false;                  // L'objet peut être tracé en mode smooth car <LUMINANCE> est présent
-            unsigned int NbLuminances_a_lire = this->Objetlist[indiceObjet].Nb_luminances;
+            objet_courant->flat = false;                  // L'objet peut être tracé en mode smooth car <LUMINANCE> est présent
+            unsigned int NbLuminances_a_lire = objet_courant->Nb_luminances;
             if (NbLuminances_a_lire < NbFacettes) {                    // C'est le cas de F16.bdd original
                 printf("-> Nombre de luminances a lire : %d, Nouvelle dimension : %d\n",NbLuminances_a_lire, NbFacettes);
-                this->Objetlist[indiceObjet].Nb_luminances = NbFacettes;
-                for (unsigned int nfac=0 ; nfac < NbFacettes ; nfac++) this->Objetlist[indiceObjet].Facelist[nfac].flat = true; // Tout initialiser à plat
+                objet_courant->Nb_luminances = NbFacettes;
+                for (unsigned int nfac=0; nfac < NbFacettes; nfac++) objet_courant->Facelist[nfac].flat = true; // Tout initialiser à plat
             }
             for (i=0; i<NbLuminances_a_lire; i++) {                     // Mais ne lire que les NbLuminances données
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
@@ -5326,30 +6788,31 @@ void BddInter::LoadBDD() {
                 ss >> Nb;           // ici, nombre de sommets de la facette
                 NumerosSommets.resize(Nb);
                 for (j=0; j<Nb ; j++) ss >> NumerosSommets[j];
-                make1luminance();
-                this->Objetlist[indiceObjet].Facelist[N_elements-1].flat = false; // Smooth possible uniquement pour les facettes avec Luminances données
+                make1luminance();   // peut être à changer en make1luminance(Nb,Numeros_Sommets) avec un tableau local Numeros_Sommet plutôt que global NumerosSommets
+                objet_courant->Facelist[N_elements-1].flat = false; // Smooth possible uniquement pour les facettes avec Luminances données
                 // Test de vérification de facette plane (tous numéros égaux)
                 bool Facette_plane = true;
                 int Num_0 = NumerosSommets[0];
                 for (j=1; j<Nb ; j++) {
                     if (NumerosSommets[j] != Num_0) Facette_plane = false;
                 }
-                if (Facette_plane) this->Objetlist[indiceObjet].Facelist[N_elements-1].flat = true;
+                if (Facette_plane) objet_courant->Facelist[N_elements-1].flat = true;
             }
             mode_lecture = -1;
         } else if((ligne.find("<POSITION>") != notFound) || (ligne.find("<PLACEMENT>") != notFound)) {
             makeposition(); // Ne sert pas à grand chose !
             mode_lecture = 7;
-            NbMatrices = this->Objetlist[indiceObjet].Nb_matrices;
+            objet_courant = &(this->Objetlist[indiceObjet]);        // Déjà comme ça, mais évite un warning
+            NbMatrices = objet_courant->Nb_matrices;
             printf("Nombre de matrices a lire : %d\n",NbMatrices);  // Il ne devrait y en avoir qu'une seule par objet ! ATTENTION ici seulement le type MAT_POSITION !
-            for (i=0 ; i<NbMatrices ; i++) {                        // Toutefois, on va toutes les lire (au cas où ...) mais ne garder que la dernière
+            for (i=0; i<NbMatrices; i++) {                          // Toutefois, on va toutes les lire (au cas où ...) mais ne garder que la dernière
                 getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();        // Lire 1 ligne mais supprimer tous les espaces de fin
                 while (ligne.empty()) {
                     getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();    // Passer la(les) ligne(s) vide(s)
                 }
                 Nb = 0;
 //                while (!ligne.empty()) {    // Lire et décoder jusqu'à ce qu'on trouve une ligne vide (ATTENTION s'il n'y en a pas !!!)
-                for (j = 0 ; j<4 ; j++) { // Lire et décoder 4 lignes.
+                for (j = 0; j<4; j++) {     // Lire et décoder 4 lignes.
                     str.clear();
                     str=wxString::FromAscii(ligne.c_str());
                     strcpy(c_ligne,ligne.c_str());
@@ -5366,10 +6829,10 @@ void BddInter::LoadBDD() {
                     getline(fichierBdd,ligne); // while (ligne.back() == ' ') ligne.pop_back();    // Pour supprimer les espaces de fin
                 }
             }
-            for (i=0 ; i<16 ; i++) this->Objetlist[indiceObjet].matrice[i] = matrice[i];        // Enregistrer la matrice dans l'objet
+            for (i=0; i<16; i++) objet_courant->matrice[i] = matrice[i];          // Enregistrer la matrice dans l'objet
             // Vérification
-//            for (i=0 ; i<16 ; i++) {
-//                printf("%12.8f ",this->Objetlist[indiceObjet].matrice[i]);
+//            for (i=0; i<16; i++) {
+//                printf("%12.8f ",objet_courant->matrice[i]);
 //                if (i%4 == 3) printf("\n");
 //            }
             mode_lecture = -1;
@@ -5378,7 +6841,28 @@ void BddInter::LoadBDD() {
         }
         x1++;
 //        printf("ligne : %d\n",x1);
+
+//        int val  = m_gauge->GetValue();
+//        val = dialog.GetValue();
+//        pos = fichierBdd.tellg();
+//        new_val = round(pos*100./fichierBdd_length);// +0.5;
+////        printf("%d %d\n",val,new_val);
+////        if (val < 100) {
+//            if ((val != new_val) && (new_val < 100)) {
+/////                m_gauge->SetValue(new_val);
+/////                m_gauge->Update();
+//                dialog.Update(new_val);
+////                val = new_val;
+////                MAIN_b->UpdateWindowUI();
+////                m_gauge->HandleDisplayChange();
+////                m_gauge->Refresh();
+//            }
+////        }
+        Update_Dialog(fichierBdd.tellg(), fichierBdd_length);
     }
+///    m_gauge->SetValue(100);
+///    m_gauge->Update();
+//    MAIN_b->UpdateWindowUI();
 
     if (Objetlist.size() == 0) {
         printf("Le fichier ne comporte aucun objet !\n");
@@ -5402,7 +6886,7 @@ void BddInter::LoadBDD() {
 
     printf("\nNb objets      %d\n",(int)this->Objetlist.size());
 
-    for(i=0; i<this->Objetlist.size(); ++i) {
+    for (i=0; i<this->Objetlist.size(); ++i) {
         printf("Objet %2d, numero %2d, Nb_facettes : %4d\n",i,this->Objetlist[i].GetValue(), this->Objetlist[i].Nb_facettes);
 
         if (this->Objetlist[i].mat_position) TraiterMatricePosition(i) ;
@@ -5417,6 +6901,22 @@ void BddInter::LoadBDD() {
     m_gllist = 0;
     fichierBdd.close();
 
+//    Sleep(1000);
+
+//    if (wxTheApp && m_pendingEvents && !m_pendingEvents->IsEmpty()) ProcessPendingEvents();   // provoque un affichage debug mais pourtant semble finir l'affichage de m_gauge !!!
+//    MAIN_b->Refresh();
+//    m_gauge->UpdateWindowUI();
+//    Update();
+//    UpdateWindowUI();
+//    MAIN_b->StatusBar1->UpdateWindowUI();
+//    RefreshRect(rect);
+///    if (m_gauge) wxDELETE(m_gauge);
+///    if (m_timer) wxDELETE(m_timer);
+    if (dialog_en_cours) {
+        dialog->Update(100); // Le plus tard possible car fermeture automatique de dialog via le wxPD_AUTO_HIDE
+        wxDELETE(dialog);
+    }
+
     if(verbose) printf("Sortie de BddInter::LoadBdd\n");
 }
 
@@ -5428,20 +6928,24 @@ void BddInter::TraiterMatricePosition(unsigned int i)
     std::vector<float> Normale;
     std::vector<float> xyz_point;
     double matrice[16];
+    Object * objet_courant;
     unsigned int j, NbSommets, NbFacettes, NbVecteurs;
 
-    for (j=0; j<16 ; j++) matrice[j] = this->Objetlist[i].matrice[j] ; // Copie locale de la matrice
+    objet_courant = &(this->Objetlist[i]);
+
+    for (j=0; j<16 ; j++) matrice[j] = objet_courant->matrice[j] ; // Copie locale de la matrice
 
     // Traitement des sommets/points par la matrice de position
 
-    NbSommets = this->Objetlist[i].Nb_sommets;
+    NbSommets = objet_courant->Nb_sommets;
+#pragma omp parallel for private(xyz_point)
     for (j=0 ; j<NbSommets ; j++) {
-        xyz_point = this->Objetlist[i].Sommetlist[j].getPoint();
+        xyz_point = objet_courant->Sommetlist[j].getPoint();
         Vector3D P1(xyz_point[0],xyz_point[1],xyz_point[2]);
         Vector3D P2 = P1.MultPoint4dMatrice4x4(matrice);
 //        xyz_point[0] = P2.X ; xyz_point[1] = P2.Y ; xyz_point[2] = P2.Z ;
         xyz_point = {(float)P2.X, (float)P2.Y, (float)P2.Z} ;          // cast (float) sinon Warnings car P2 en double
-        this->Objetlist[i].Sommetlist[j].setPoint(xyz_point);
+        objet_courant->Sommetlist[j].setPoint(xyz_point);
     }
 
     // Modification de la matrice locale pour y supprimer les translations (sans objet sur des normales) ;
@@ -5468,9 +6972,10 @@ void BddInter::TraiterMatricePosition(unsigned int i)
             V2 = (0,0,1) en fait n'est pas différent du cas b != 0
 */
 
-    NbFacettes = this->Objetlist[i].Nb_facettes;
-    for (j=0 ; j<NbFacettes ; j++){
-        Normale = this->Objetlist[i].Facelist[j].getNormale_b();
+    NbFacettes = objet_courant->Nb_facettes;
+#pragma omp parallel for private(Normale,V1,V2,New_Norm)
+    for (j=0; j<NbFacettes; j++){
+        Normale = objet_courant->Facelist[j].getNormale_b();
         if (Normale[2] != 0.0) {
             V1 = Vector3D(1.0,        0.0, -Normale[0]/Normale[2]);  // <=> V1.X = 1.0 ; V1.Y = 0.0 ; V1.Z = -Normale[0]/Normale[2];
             V2 = Vector3D(0.0, Normale[2], -Normale[1]);
@@ -5484,13 +6989,14 @@ void BddInter::TraiterMatricePosition(unsigned int i)
         New_Norm.normalize();                       // Normalisation à 1.
 
         Normale = {(float)New_Norm.X, (float)New_Norm.Y, (float)New_Norm.Z} ;
-        this->Objetlist[i].Facelist[j].setNormale_b(Normale);
+        objet_courant->Facelist[j].setNormale_b(Normale);
     }
 
     // Traitement des normales aux sommets
-    NbVecteurs = this->Objetlist[i].Nb_vecteurs;
-    for (j=0 ; j<NbVecteurs ; j++){
-        Normale = this->Objetlist[i].Vecteurlist[j].getPoint();
+    NbVecteurs = objet_courant->Nb_vecteurs;
+#pragma omp parallel for private(Normale,V1,V2,New_Norm)
+    for (j=0; j<NbVecteurs; j++){
+        Normale = objet_courant->Vecteurlist[j].getPoint();
         if (Normale[2] != 0.0) {
             V1 = Vector3D(1.0,        0.0, -Normale[0]/Normale[2]);
             V2 = Vector3D(0.0, Normale[2], -Normale[1]);
@@ -5504,7 +7010,7 @@ void BddInter::TraiterMatricePosition(unsigned int i)
         New_Norm.normalize();                       // Normalisation à 1.
 
         Normale = {(float)New_Norm.X, (float)New_Norm.Y, (float)New_Norm.Z} ;
-        this->Objetlist[i].Vecteurlist[j].setPoint(Normale);
+        objet_courant->Vecteurlist[j].setPoint(Normale);
     }
 }
 
@@ -5518,7 +7024,7 @@ void BddInter::makeobjet() {
     std::cout << '\n' << "Objet ";
     wxString Nom_Objet;
     unsigned int last = this->wxStringlist.size()-1;
-    for(unsigned int i=1; i<=last; i++) {
+    for (unsigned int i=1; i<=last; i++) {
         wxString *mystring= new wxString(wxStringlist[i]);
         std::string stl_string = std::string(mystring->mb_str());
         std::cout <<" "+stl_string;
@@ -5561,6 +7067,7 @@ void BddInter::makeface() {
 void BddInter::make1face() {
     int Numero;
     Face New1Face;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5575,18 +7082,33 @@ void BddInter::make1face() {
         Numero   = N_elements;
         New1Face = Face(Numero, NumerosSommets);
     }
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
 
-    if (Numero > (int)this->Objetlist[indiceObjet_courant].Facelist.size()) {
-        this->Objetlist[indiceObjet_courant].Facelist.push_back(New1Face) ; // Taille initiale trop petite (on est en création de facettes) => procéder par push_back !
-        this->Objetlist[indiceObjet_courant].Nb_facettes++;
+    if (Numero > (int)Objet_courant->Facelist.size()) {
+        Objet_courant->Facelist.push_back(New1Face) ; // Taille initiale trop petite (on est en création de facettes) => procéder par push_back !
+        Objet_courant->Nb_facettes++;
     }
     else
-        this->Objetlist[indiceObjet_courant].Facelist[Numero-1] = New1Face;
+        Objet_courant->Facelist[Numero-1] = New1Face;
 }
+
+//void BddInter::make1face(int Numero, const std::vector<int> &Numeros_Sommets) {
+//    Face New1Face;
+//
+//    New1Face = Face(Numero, Numeros_Sommets);
+//
+//    if (Numero > (int)this->Objetlist[indiceObjet_courant].Facelist.size()) {
+//        this->Objetlist[indiceObjet_courant].Facelist.push_back(New1Face) ; // Taille initiale trop petite (on est en création de facettes) => procéder par push_back !
+//        this->Objetlist[indiceObjet_courant].Nb_facettes++;
+//    }
+//    else
+//        this->Objetlist[indiceObjet_courant].Facelist[Numero-1] = New1Face;
+//}
 
 void BddInter::makesommet() {
 // Dans cette version, on dimensionne la liste Sommetlist et on initialise Nb_sommets dans Objetlist[indiceObjet_courant].
     int Nb_sommets;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5599,9 +7121,10 @@ void BddInter::makesommet() {
     } else {
         Nb_sommets = N_elements;
     }
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
     printf("%8d sommets\t\t(<SOMMET>/<VERTEX>)\n",Nb_sommets);
-    this->Objetlist[indiceObjet_courant].Nb_sommets = Nb_sommets;  // Stocker le nombre de sommets dans l'objet
-    this->Objetlist[indiceObjet_courant].Sommetlist.resize(Nb_sommets);
+    Objet_courant->Nb_sommets = Nb_sommets;  // Stocker le nombre de sommets dans l'objet
+    Objet_courant->Sommetlist.resize(Nb_sommets);
 }
 
 void BddInter::make1sommet() {
@@ -5610,6 +7133,7 @@ void BddInter::make1sommet() {
 // sinon, on incrémente la taille de Sommetlist
     int Numero;
     Sommet New1Sommet;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5624,12 +7148,13 @@ void BddInter::make1sommet() {
         Numero = N_elements;
         New1Sommet = Sommet(Numero,xyz);
     }
-    if (Numero > (int)this->Objetlist[indiceObjet_courant].Sommetlist.size()) {
-        this->Objetlist[indiceObjet_courant].Sommetlist.push_back(New1Sommet) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
-        this->Objetlist[indiceObjet_courant].Nb_sommets++;
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+    if (Numero > (int)Objet_courant->Sommetlist.size()) {
+        Objet_courant->Sommetlist.push_back(New1Sommet) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
+        Objet_courant->Nb_sommets++;
     }
     else
-        this->Objetlist[indiceObjet_courant].Sommetlist[Numero-1] = New1Sommet;
+        Objet_courant->Sommetlist[Numero-1] = New1Sommet;
 }
 
 void BddInter::makenormale() {
@@ -5672,7 +7197,7 @@ void BddInter::make1normale() {
     }
     this->Objetlist[indiceObjet_courant].Facelist[Numero-1].normale_b = New1Normale.getPoint();
 //    printf("%d ",Numero-1);
-//    for (int i=0;i<3;i++) printf("%f ",this->Objetlist[indiceObjet_courant].Facelist[Numero-1].normale_b[i]);
+//    for (int i=0; i<3; i++) printf("%f ",this->Objetlist[indiceObjet_courant].Facelist[Numero-1].normale_b[i]);
 //    printf("\n");
 }
 
@@ -5699,6 +7224,7 @@ void BddInter::make1aspect_face() {
     int indice;
     int val;
     int grp_mat;
+    Object *Objet_courant;
 
 // Pour l'instant ne gère pas str.IsEmpty() comme les autres fonctions make1* !
 // car Aspect_face ne gère que wxStringlist actuellement.
@@ -5727,11 +7253,12 @@ void BddInter::make1aspect_face() {
             token = tokenizer.GetNextToken();
             wxStringlist.push_back(token);
         }
+        Objet_courant = &(this->Objetlist[indiceObjet_courant]);
         if (n_tokens == 3) {                                                    // Une ligne peut contenir à ce niveau 2 ou 3 champs (ou tokens)
             Aspect_face New1aspect_face(wxStringlist);                          // S'il y en a 3, il faut créer un nouveau aspect_face1
             indice = this->indiceAspect = wxAtoi(wxStringlist[0]) -1;           // Sauvegarder indice dans indiceAspect pour usage ultérieur
-            this->Objetlist[indiceObjet_courant].Facelist[indice].groupe = 0;
-            this->Objetlist[indiceObjet_courant].Facelist[indice].codmatface = codmatface_def;
+            Objet_courant->Facelist[indice].groupe = 0;
+            Objet_courant->Facelist[indice].codmatface = codmatface_def;
             New_aspect_face = true;
         } else {
             indice = this->indiceAspect;
@@ -5739,14 +7266,14 @@ void BddInter::make1aspect_face() {
         }
         val = wxAtoi(token);                                                    // Récupère le numéro de groupe ou de matériau sous forme d'entier
         if (grp_mat == 1) {
-            this->Objetlist[indiceObjet_courant].Facelist[indice].groupe = val;
+            Objet_courant->Facelist[indice].groupe = val;
 //            auto it = std::find(listeGroupes.begin(),listeGroupes.end(),val);   // Est-il déjà dans la liste ?
 //            if (it == listeGroupes.end() || listeGroupes.empty()) {                                         // Non
 //                listeGroupes.push_front(val);                                   // L'ajouter à la liste des groupes
 //                listeGroupes.sort();                                            // Trier la liste (on pourrait le faire plus tard !)
 //            }
         } else if (grp_mat == 2) {
-            this->Objetlist[indiceObjet_courant].Facelist[indice].codmatface = val;
+            Objet_courant->Facelist[indice].codmatface = val;
 //            auto it = std::find(listeMateriaux.begin(),listeMateriaux.end(),val);   // Est-il déjà dans la liste ?
 //            if (it == listeMateriaux.end() || listeMateriaux.empty()) {                                       // Non
 //                listeMateriaux.push_front(val);                                     // L'ajouter à la liste des matériaux
@@ -5785,6 +7312,7 @@ void BddInter::make1luminance() {
 // ici reste avec des push_back, pas comme dans make1face ... peut-être à revoir !
     int Numero;
     Luminance New1luminance;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5800,10 +7328,27 @@ void BddInter::make1luminance() {
         New1luminance = Luminance(Numero, NumerosSommets) ;
     }
 
-    this->Objetlist[indiceObjet_courant].Facelist[Numero-1].Nb_Sommets_L = New1luminance.Nb_Sommets_L;
-    this->Objetlist[indiceObjet_courant].Facelist[Numero-1].L_sommets.clear();  // Forcer un clear ici car peut avoir été déjà initialisé ailleurs => push_back ne ferait pas ce qu'il faut !
-    for(int i=0; i<New1luminance.Nb_Sommets_L; i++) {
-        this->Objetlist[indiceObjet_courant].Facelist[Numero-1].L_sommets.push_back(New1luminance.L_sommets[i]);
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    Objet_courant->Facelist[Numero-1].Nb_Sommets_L = New1luminance.Nb_Sommets_L;
+    Objet_courant->Facelist[Numero-1].L_sommets.clear();  // Forcer un clear ici car peut avoir été déjà initialisé ailleurs => push_back ne ferait pas ce qu'il faut !
+    for (int i=0; i<New1luminance.Nb_Sommets_L; i++) {
+        Objet_courant->Facelist[Numero-1].L_sommets.push_back(New1luminance.L_sommets[i]);
+    }
+}
+
+void BddInter::make1luminance(int Numero, const std::vector<int> &Numeros_Sommets) {
+// ici reste avec des push_back, pas comme dans make1face ... peut-être à revoir !
+    Luminance New1luminance;
+    Object *Objet_courant;
+
+    New1luminance = Luminance(Numero, Numeros_Sommets) ;
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    Objet_courant->Facelist[Numero-1].Nb_Sommets_L = New1luminance.Nb_Sommets_L;
+    Objet_courant->Facelist[Numero-1].L_sommets.clear();  // Forcer un clear ici car peut avoir été déjà initialisé ailleurs => push_back ne ferait pas ce qu'il faut !
+    for (int i=0; i<New1luminance.Nb_Sommets_L; i++) {
+        Objet_courant->Facelist[Numero-1].L_sommets.push_back(New1luminance.L_sommets[i]);
     }
 }
 
@@ -5811,6 +7356,7 @@ void BddInter::makevecteur() {
 // Dans cette version, on dimensionne la liste Vecteurlist et on initialise Nb_vecteurs dans Objetlist[indiceObjet_courant].
     int Nb_vecteurs;
 //    Vecteur Newvecteur;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5827,8 +7373,10 @@ void BddInter::makevecteur() {
     printf("%8d normales aux sommets\t(<VECTEUR>/<VERT_NORMAL>)\n",Nb_vecteurs);
     wxStringlist.clear();
 
-    this->Objetlist[indiceObjet_courant].Nb_vecteurs = Nb_vecteurs;
-    this->Objetlist[indiceObjet_courant].Vecteurlist.resize(Nb_vecteurs);
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    Objet_courant->Nb_vecteurs = Nb_vecteurs;
+    Objet_courant->Vecteurlist.resize(Nb_vecteurs);
 }
 
 void BddInter::make1vecteur() {
@@ -5837,6 +7385,7 @@ void BddInter::make1vecteur() {
 // sinon, on incrémente la taille de Vecteurlist
     int Numero;
     Vecteur New1Vecteur;
+    Object *Objet_courant;
 
     if (!str.IsEmpty()) {
         wxStringTokenizer tokenizer(str);
@@ -5851,15 +7400,19 @@ void BddInter::make1vecteur() {
         Numero = N_elements;
         New1Vecteur = Vecteur(Numero,xyz);
     }
-    if (Numero > (int)this->Objetlist[indiceObjet_courant].Vecteurlist.size()) {
-        this->Objetlist[indiceObjet_courant].Vecteurlist.push_back(New1Vecteur) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
-        this->Objetlist[indiceObjet_courant].Nb_vecteurs++;
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    if (Numero > (int)Objet_courant->Vecteurlist.size()) {
+        Objet_courant->Vecteurlist.push_back(New1Vecteur) ; // Taille initiale trop petite (on ajoute des points) => procéder par push_back !
+        Objet_courant->Nb_vecteurs++;
     }
     else
-        this->Objetlist[indiceObjet_courant].Vecteurlist[Numero-1] = New1Vecteur;
+        Objet_courant->Vecteurlist[Numero-1] = New1Vecteur;
 }
 
 void BddInter::makeposition() {
+    Object *Objet_courant;
+
     wxStringTokenizer tokenizer(str);
     while ( tokenizer.HasMoreTokens() ) {
         token = tokenizer.GetNextToken();
@@ -5869,8 +7422,10 @@ void BddInter::makeposition() {
     printf("%8d matrice Position\t(<POSITION>/<PLACEMENT>)\n",wxAtoi(token));
     wxStringlist.clear();
 //    this->positionlist.push_back(Newposition);
-    this->Objetlist[indiceObjet_courant].mat_position= true;            // il y a une matrice POSITION dans la BDD pour l'objet courant
-    this->Objetlist[indiceObjet_courant].Nb_matrices = wxAtoi(token);   // Nombre de transformations (normalement 1 seule si <MAT_POSITION>
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    Objet_courant->mat_position= true;            // il y a une matrice POSITION dans la BDD pour l'objet courant
+    Objet_courant->Nb_matrices = wxAtoi(token);   // Nombre de transformations (normalement 1 seule si <MAT_POSITION>
 }
 
 void BddInter::GenereTableauPointsFacettes(Object * objet)
@@ -5885,12 +7440,14 @@ void BddInter::GenereTableauPointsFacettes(Object * objet)
     nb_fac = objet->Facelist.size();    //Nb_facettes;
     objet->Pointslist.clear();
     objet->Pointslist.resize(nb_p);
+#pragma omp parallel for private(Face_i,j,indice_sommet)                    // Boucle for en parallèle
     for (i=0; i<nb_fac; i++) {
         Face_i = &(objet->Facelist[i]);
         if (Face_i->deleted) continue;
-        for (j=0; j<Face_i->F_sommets.size();j++) {
-            indice_sommet = Face_i->F_sommets[j] -1;                            // <=> numero_sommet -1
-            objet->Pointslist[indice_sommet].IndicesFacettes.push_back(i);      // numero_sommet-1 = indice du sommet, i=indice / i+1 = numéro de la facette
+        for (j=0; j<Face_i->F_sommets.size(); j++) {
+            indice_sommet = Face_i->F_sommets[j] -1;                        // <=> numero_sommet -1
+#pragma omp critical                                                        // instruction suivante critique => une seule execution à la fois tous threads confondus
+            objet->Pointslist[indice_sommet].IndicesFacettes.push_back(i);  // numero_sommet-1 = indice du sommet, i=indice / i+1 = numéro de la facette
         }
     }
     if (verbose) printf("Sortie BddInter::GenereTableauPointsFacettes\n");
@@ -5909,9 +7466,7 @@ void BddInter::GenereTableauAretes(Object * objet)
     std::vector<int>  Numeros_Sommets;
     Aretes   Arete, Arete_test, *p_Arete;
     bool verbose_local = true;      // Local ici
-//    static bool traiter_doublons_aretes = true; // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
-                                                // mis en static pour conserver la valeur si elle a été modifiée (dès qu'un objet dépasse un nombre d'arêtes spécifié)
-    bool en_cours;
+    bool print_en_cours;    // un peu le même usage que dialog_en_cours qui pourrait être suffisant
 
     clock_t time_0, delta_time, time_c;
     #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
@@ -5920,11 +7475,12 @@ void BddInter::GenereTableauAretes(Object * objet)
 // La seconde partie permet de décoder les doublons et de les éliminer
 
     if (verbose) printf("Entree BddInter::GenereTableauAretes\n");
-    en_cours     = false;
+    print_en_cours     = false;
 //    indice_point = 0;
     nb_fac = objet->Nb_facettes;
     objet->Areteslist.clear();
-    for (i=0; i< nb_fac ; i++) {
+#pragma omp parallel for default(shared) private(Numeros_Sommets,nb_p,j,Arete,indice_a,indice_b,j_b)
+    for (i=0; i< nb_fac; i++) {
         if (objet->Facelist[i].deleted) continue;   // Facette supprimée => Passer à la suivante
         Numeros_Sommets = objet->Facelist[i].getF_sommets();
         nb_p = Numeros_Sommets.size();
@@ -5944,12 +7500,14 @@ void BddInter::GenereTableauAretes(Object * objet)
             }
 //            Arete.point_a  = &(objet->Sommetlist[Arete.ind_a].point);   // A supprimer si non utilisé ??? point_a est un pointeur (enfin c'est ce qu'on voudrait !)
 //            Arete.point_b  = &(objet->Sommetlist[Arete.ind_b].point);   // sur les coordonnées des sommets d'indices ind_a et ind_b, extrémités de l'arête.
+#pragma omp critical
             objet->Areteslist.push_back(Arete);
         }
     }
     Nb_avant = objet->Nb_aretes = objet->Areteslist.size();
-    if (Nb_avant >= nb_aretes_test_d) traiter_doublons_aretes = false;    // Arete_size_test
-    if (!traiter_doublons_aretes && !simplification_doublons_aretes) {
+    if (Nb_avant >= nb_aretes_test_d) traiter_doublons_aretes = false;  // Arete_size_test
+    else                              traiter_doublons_aretes = true;   // avec cette ligne, revalide la possibilité de traitement à chaque objet, sinon abandon dès qu'un objet déborde
+    if (!traiter_doublons_aretes && !forcer_simplification_doublons_aretes) {
         if (verbose_local) {
             printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons d'arêtes non effectuée\n",objet->GetName(),Nb_avant);
             if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
@@ -5959,22 +7517,33 @@ void BddInter::GenereTableauAretes(Object * objet)
     if (verbose_local) sprintf(Message,"Objet : %s\nNb_aretes avant : %d\n",objet->GetName(),Nb_avant);
     Nb_deleted = 0;
 
-
 // Boucles imbriquées qui peuvent être longues à l'exécution sur de grosses bdd ( >10' sur ellipsoide_260000.bdd ou Millenium_Falcon !).
 
-// Notes : on pourrait stocker avec ind_a < ind_b (car l'ordre n'a pas d'importance) et du coup le test ci-dessous serait + simple. On pourrait même tester
-//          d'abord l'égalité sur le 1er indice, puis celui sur le second => moins de test => plus rapide !
-//         On pourrait aussi arrêter de tester les indices et sortir de la boucle en j, dès que 2 correspondances ont été trouvées car dans la majorité des
+// Notes : on a stocké avec ind_a < ind_b (car l'ordre n'a pas d'importance) et du coup le test ci-dessous est + simple. On peut même tester
+//         d'abord l'égalité sur le 1er indice, puis celui sur le second => moins de test => plus rapide !
+//         On peut aussi arrêter de tester les indices et sortir de la boucle en j, dès que 2 correspondances ont été trouvées car dans la majorité des
 //         cas une arête n'est utilisée que 2 fois au plus car commune à 2 facettes.
 
     time_0 = time_c = clock();
-    for (i=0; i<objet->Areteslist.size(); i++) {
-        Arete_test = objet->Areteslist[i];
+// boucle for suivante probablement non parallélisable car les 2 boucles imbriquées travaillent sur la même Areteslist qui change quand un doublon est trouvé.
+// de plus, le break a beaucoup moins d'intérêt car les threads qui n'y passent pas continuent jusqu'à la fin => perte de temps globale.
+// Enfin, comme Areteslist est passé de <vector> à <list> plus de parallélisation possible !
+    unsigned int nbaretes = objet->Areteslist.size();
+    std::list<Aretes>::iterator itArete, itArete2;
+    itArete = objet->Areteslist.begin();
+    for (i=0; i<nbaretes; i++,itArete++) {
+//        Arete_test = objet->Areteslist[i]; // Si Aretelist est un vector, sinon à supprimer
+        Arete_test = *itArete;
         if (Arete_test.deleted) continue;   // Arête déjà supprimée. Passer à la suivante ... test sans doute inutile car ça n'arrive jamais tel que c'est construit !
         indice_a = Arete_test.ind_a;
         indice_b = Arete_test.ind_b;
-        for (j=i+1; j<objet->Areteslist.size(); j++) {
-            p_Arete = &(objet->Areteslist[j]);  // Ici, il vaut mieux travailler sur un pointeur, surtout avec la méthode 2 ci-dessous, sinon on ne modifie qu'une copie !
+        itArete2 = itArete;
+        ++itArete2; // Se positionner sur l'arête suivante (<=> i+1)
+//#pragma omp parallel for private(p_Arete) // break incompatible avec la boucle for dans openmp
+        for (j=i+1; j<nbaretes; j++,itArete2++) {
+//        for (j=i+1; j<objet->Areteslist.size(); j++) {    // Si Aretelist est un vector, sinon à supprimer
+//            p_Arete = &(objet->Areteslist[j]);  // Ici, il vaut mieux travailler sur un pointeur, surtout avec la méthode 2 ci-dessous, sinon on ne modifie qu'une copie !
+            p_Arete = &(*itArete2);             // Ici, il vaut mieux travailler sur un pointeur, surtout avec la méthode 2 ci-dessous, sinon on ne modifie qu'une copie !
             if (Arete.deleted) continue ;       // Arête déjà supprimée. Passer à la suivante
             // Doublon si les 2 indices a et b sont identiques (ou inversés)
 //            if (((p_Arete->ind_a == Arete_test.ind_a) && (p_Arete->ind_b == Arete_test.ind_b)) ||
@@ -5988,27 +7557,42 @@ void BddInter::GenereTableauAretes(Object * objet)
 //                Nb_deleted++;
 //                printf("aretes %d et %d en doublons\n",i,j);
 //        // Méthode 2 : on supprime physiquement l'arête de la liste et on réajuste la taille
-                    objet->Areteslist.erase(objet->Areteslist.begin()+j);   // Supprimer l'arête en doublon
+//                    objet->Areteslist.erase(objet->Areteslist.begin()+j);   // Supprimer l'arête en doublon
+                    objet->Areteslist.erase(itArete2);   // Supprimer l'arête en doublon
 //                    j-- ; // poursuivre la boucle for avec le même indice j car ils ont été décalés d'une unité par le erase de la ligne ci-dessus
-                    break; // doublon trouvé => abandonner le for j et passer au i suivant ! => ignorer des arêtes en triple !
+                    nbaretes--; // changer la borne max en j (fait automatiquement si on laisse objet->Areteslist.size() )
+                    break; // doublon trouvé => abandonner le for j et passer au i suivant ! => ignore des arêtes en triple !
                 }
             }
 //            indice_point++;   // Pour ajouter éventuellement un indicateur de progression (un . affiché toutes les indice_test valeurs testées)
                                 // L'affichage dépend du temps d'exécution => plutôt utiliser un timer et donc n'afficher un '.' que toutes les x secondes
             delta_time = clock() - time_c;
             if (delta_time >= NB_DELTA_TICKS && verbose_local) {
-                if (!en_cours) {                                    // Seulement la 1ère fois
-                    en_cours = true;
+                if (!print_en_cours) {                                    // Seulement la 1ère fois
+                    print_en_cours = true;
 //                    printf("%s",Message);
 //                    printf("Detection d'aretes en doublon ");
                     printf(utf8_To_ibm(Message));                       // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
                     sprintf(Message,"Détection d'arêtes en doublon ");  // et le début de l'indicateur de progression
                     printf(utf8_To_ibm(Message));
+                    dialog = new wxProgressDialog(wxS("Détection d'arêtes en doublon"),
+                                                  "",
+                                                  100,        // range
+                                                  this,       // parent
+                                                  wxPD_AUTO_HIDE
+                                                 );
+                    dialog->Update(0);   // Par précaution
+                    dialog_en_cours = true;
                 }
                 printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
                 time_c = clock();
-            }
+           }
         }
+        if(print_en_cours) Update_Dialog((long)i, (long)nbaretes);
+    }
+    if (dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
     }
     Nb_apres = objet->Nb_aretes = objet->Areteslist.size();
     if (Nb_deleted != 0) {
@@ -6017,9 +7601,9 @@ void BddInter::GenereTableauAretes(Object * objet)
     // On n'affiche que si verbose est true et Nb_avant != Nb_après, sauf si "en_cours" est true car Nb_avant est déjà à l'écran avec l'indication de progression.
     if (verbose_local) {
 //        if (!en_cours && (Nb_avant != Nb_apres)) printf("%s",Message);
-        if (!en_cours && (Nb_avant != Nb_apres)) printf(utf8_To_ibm(Message));
-        if (en_cours) printf("\n");
-        if (en_cours  || (Nb_avant != Nb_apres)) {
+        if (!print_en_cours && (Nb_avant != Nb_apres)) printf(utf8_To_ibm(Message));
+        if (print_en_cours) printf("\n");
+        if (print_en_cours  || (Nb_avant != Nb_apres)) {
 //            printf("Nb_aretes apres : %d\n",Nb_apres);
             sprintf(Message,"Nb_aretes après : %d\n",Nb_apres);
             printf(utf8_To_ibm(Message));
@@ -6028,10 +7612,11 @@ void BddInter::GenereTableauAretes(Object * objet)
 
     delta_time = clock() - time_0;
     objet->Temps_Calcul_Aretes = delta_time;
-    if (delta_time >= CLOCKS_PER_SEC) { // N'afficher ce temps que si >= 1 seconde
+    if (delta_time >= CLOCKS_PER_SEC) {     // N'afficher ce temps que si >= 1 seconde
         printf("Temps de filtrage des doublons : %ld ticks (soit %3.1f secondes)\n\n", delta_time, float(delta_time)/CLOCKS_PER_SEC);
     }
-
+    dialog_en_cours = false;
+    traiter_doublons_aretes = traiter_doublons_aretes_def;          // Remettre à l'état par défaut
     if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
 }
 
@@ -6094,6 +7679,7 @@ void BddInter::searchMin_Max() {
     std::vector<float>Point_XYZ;
     std::vector<int>numSommets;
     unsigned int i=0,j=0,k=0;
+    Object * objet_courant;
 
     if (verbose) printf("Entree BddInter::searchMin_Max\n");
 
@@ -6101,20 +7687,25 @@ void BddInter::searchMin_Max() {
     nb_objets = this->Objetlist.size();
     nb_objets_reels = nb_objets;
     nb_3points=nb_4points=nb_aretes=nb_facettes=nb_sommets=nb_sommets_max=numero_facette_max=numero_objet_max=0 ;
-    for(i=0; i<nb_objets; i++) {
-        if (this->Objetlist[i].deleted) {
+    for (i=0; i<nb_objets; i++) {
+        objet_courant = &(this->Objetlist[i]);
+        if (objet_courant->deleted) {
             nb_objets_reels--;
         } else {
-            nb_facettes += this->Objetlist[i].Facelist.size();      // On pourrait utiliser this->Objetlist[i].Nb_facettes
-            nb_sommets  += this->Objetlist[i].Sommetlist.size();    // idem Nb_sommets
-            nb_aretes   += this->Objetlist[i].Areteslist.size();    // idem Nb_aretes
-            for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
-                if (this->Objetlist[i].Facelist[j].deleted) nb_facettes-- ; // Décompter les facettes supprimées
-                if (this->Objetlist[i].Facelist[j].afficher && !this->Objetlist[i].Facelist[j].deleted) {
+            nb_facettes += objet_courant->Facelist.size();              // On pourrait utiliser objet_courant->Nb_facettes
+            nb_sommets  += objet_courant->Sommetlist.size();            // idem Nb_sommets
+            nb_aretes   += objet_courant->Areteslist.size();            // idem Nb_aretes
+            unsigned int nb_fac = objet_courant->Facelist.size();
+#pragma omp parallel for private(numSommets,Point_XYZ)
+            for (j=0; j<nb_fac; j++) {
+                if (objet_courant->Facelist[j].deleted) nb_facettes-- ; // Décompter les facettes supprimées
+                if (objet_courant->Facelist[j].afficher && !objet_courant->Facelist[j].deleted) {
                     numSommets.clear();
-                    numSommets=this->Objetlist[i].Facelist[j].getF_sommets();
+                    numSommets = objet_courant->Facelist[j].getF_sommets();
                     unsigned int nombreSommets = numSommets.size();
 //                    nb_sommets += nombreSommets ;   // Non car chaque point est compté plusieurs fois (1 par facette)
+#pragma omp critical
+{
                     if (nombreSommets == 3) nb_3points += 1 ;
                     else                    nb_4points += 1 ;
 
@@ -6123,9 +7714,13 @@ void BddInter::searchMin_Max() {
                         numero_objet_max   = i ;
                         numero_facette_max = j ;
                     }
-                    for(k=0; k<nombreSommets; k++) {
-                        Point_XYZ = this->Objetlist[i].Sommetlist[numSommets[k]-1].getPoint();
+}
+                   for (k=0; k<nombreSommets; k++) {
+                        Point_XYZ = objet_courant->Sommetlist[numSommets[k]-1].getPoint();
+#pragma omp critical
+{
                         setMin_Max(Point_XYZ[0],Point_XYZ[1],Point_XYZ[2]);
+}
                     }
                 }
             }
@@ -6213,9 +7808,10 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
     Object *Objet_courant;
     Face   *Facette_courante;
 
-    if (this->Objetlist[indiceObjet].deleted) return;   // Ne rien faire sur un objet supprimé
-
     Objet_courant    = &(this->Objetlist[indiceObjet]);
+
+    if (Objet_courant->deleted) return;   // Ne rien faire sur un objet supprimé
+
     Facette_courante = &(this->Objetlist[indiceObjet].Facelist[indiceFacette]);
     glGetFloatv(GL_CURRENT_COLOR, couleurs);            // Sauvegarde de la couleur actuelle (R G B alpha)
     glDisable(GL_LIGHTING);
@@ -6231,7 +7827,7 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
     NumerosSommets  = Facette_courante->getF_sommets();
 //    selectMode(mode);
     unsigned int ns = NumerosSommets.size();
-    for(k=0; k<ns; k++) {
+    for (k=0; k<ns; k++) {
         xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
         if (tracerFacette) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
         if (k == 0)
@@ -6252,13 +7848,13 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
             NormaleFacette = Facette_courante->getNormale_b();
             if (Facette_courante->flat || Objet_courant->flat) {
             // La facette est plane => tracer la normale à la facette sur les ns sommets
-                for(k=0; k<ns; k++) {
+                for (k=0; k<ns; k++) {
                     xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                     Tracer_normale(xyz_sommet,NormaleFacette,1);
                 }
             } else {
             // La facette n'est pas plane ...
-                for(k=0; k<ns; k++) {
+                for (k=0; k<ns; k++) {
                     xyz_sommet    = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                     NormaleSommet = Objet_courant->Vecteurlist[Facette_courante->L_sommets[k]-1].point;
                     Calcul_Normale_Seuillee(indiceObjet,indiceFacette,k,NormaleFacette,NormaleSommet) ;
@@ -6270,7 +7866,7 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
             glColor3fv(vert);
             glPointSize(8);
             glBegin(GL_POINTS);
-            for(k=0; k<ns; k++) {
+            for (k=0; k<ns; k++) {
                 xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                 glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                 if (NumerosSommets[k] == Numero_Sommet_a_Surligner) point_star = xyz_sommet;
@@ -6300,6 +7896,9 @@ void BddInter::drawOpenGL() {
     unsigned int compteur=0;
     float couleurs_svg[4];
 
+    volatile DWORD dwStart;
+    bool test_timing = false;
+
     if (verbose)
         printf("Entrée BddInter::drawOpenGL\n");
 
@@ -6311,7 +7910,10 @@ void BddInter::drawOpenGL() {
         glFrontFace(GL_CCW);
     }
 
+
 //    printf("smooth : %d\n",smooth);
+
+    if (test_timing) dwStart = GetTickCount();
 
     if( m_gllist == 0 ) {
 
@@ -6333,7 +7935,7 @@ void BddInter::drawOpenGL() {
 
 // C'est ici qu'on revient pour le second passage en mode de visualisation du "Sens des normales"
 Boucle:
-        for(i=0; i<this->Objetlist.size(); i++) {
+        for (i=0; i<this->Objetlist.size(); i++) {
 
             // Objet courant
             Objet_i = &this->Objetlist[i];
@@ -6374,7 +7976,7 @@ Boucle:
                     }
                 }
 
-                for(j=0; j<Objet_i->Facelist.size(); j++) {
+                for (j=0; j<Objet_i->Facelist.size(); j++) {
                     compteur++;
                     if (verbose) if ((compteur % 100000) == 0) {printf("\r%d",compteur); fflush(stdout);}
                     glPushName(j);
@@ -6478,7 +8080,7 @@ Boucle:
 ////                        case 2:                     // Lignes simples ou facette dégénérées réduites à 2 points !
 ////                            glBegin(GL_LINES);
 ////                            NumerosSommets = Face_ij->getF_sommets();
-////                            for(k=0; k<NumerosSommets.size(); k++) {
+////                            for (k=0; k<NumerosSommets.size(); k++) {
 ////                                glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);  /// ??? BUG ??? d'où vient xyz_sommet dans ce cas ???? Mais a priori, on ne passe pas ici !!!
 ////                            }
 ////                            glEnd();
@@ -6495,13 +8097,14 @@ Boucle:
     //
 
 ////                        default:
+
                             glBegin(GL_POLYGON);
                             NumerosSommets = Face_ij->getF_sommets();
                             style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
 
                             lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
                             // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
-                            for(k=0; k<NumerosSommets.size(); k++) {
+                            for (k=0; k<NumerosSommets.size(); k++) {
                                 if (lissage_Gouraud) {
                                     // Facette non plane => utiliser le lissage de Gouraud (et donc les normales aux sommets)
                                     NormaleSommet = Objet_i->Vecteurlist[Face_ij->L_sommets[k]-1].point;
@@ -6536,7 +8139,9 @@ Boucle:
                 glPopName();
             }   // Objet_i->afficher && !Objet_i->deleted
 
-        }       // for(i=0; i<this->Objetlist.size(); ...
+        }       // for (i=0; i<this->Objetlist.size(); ...
+
+        if (test_timing) {printf("0-1 %6lu millisecondes\n", GetTickCount() - dwStart); dwStart = GetTickCount();}
 
         if (verbose) {printf("\r%d\n",compteur); fflush(stdout);}
 
@@ -6586,11 +8191,13 @@ Boucle:
 
         finishdraw = true;
         m_gllist   = glliste_objets; // Déjà comme ça en principe
-        Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois !
+        Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
 
         wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
 
     }   // if (m_gllist == 0)
+
+    if (test_timing) {printf("1-2 %6lu millisecondes\n", GetTickCount() - dwStart); dwStart = GetTickCount();}
 
     // En dehors des créations de liste => fait systématiquement
 
@@ -6665,6 +8272,8 @@ Boucle:
 
     SetFocus(); // Donne le focus à la fenètre OpenGL => utilisation des touches de raccourcis clavier
 
+    if (test_timing) {printf("2-3 %6lu millisecondes\n", GetTickCount() - dwStart); dwStart = GetTickCount();}
+
     if (verbose)
         printf("Sortie BddInter::drawOpenGL\n");
 }
@@ -6674,8 +8283,8 @@ void BddInter::Flat_Selected_Facettes() {
     unsigned int i,j;
     Face *Face_ij;
 
-    for(i=0; i<this->Objetlist.size(); i++) {
-        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
+        for (j=0; j<this->Objetlist[i].Facelist.size(); j++) {
             Face_ij = &(this->Objetlist[i].Facelist[j]);
             if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
                 if (Face_ij->selected) Face_ij->flat = true;
@@ -6690,8 +8299,8 @@ void BddInter::NotFlat_Selected_Facettes() {
     unsigned int i,j;
     Face *Face_ij;
 
-    for(i=0; i<this->Objetlist.size(); i++) {
-        for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
+        for (j=0; j<this->Objetlist[i].Facelist.size(); j++) {
             Face_ij = &(this->Objetlist[i].Facelist[j]);
             if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
                 if (Face_ij->selected) Face_ij->flat = false;
@@ -6722,7 +8331,7 @@ void BddInter::Inverse_Selected_Normales() {
     if (mode_selection != selection_facette) return;    // On n'est pas dans le bon mode
 
     if (!(this->ToSelect.ListeSelect.empty())) {        // La liste est vide => inverser toutes les normales
-        for(i=0; i<this->ToSelect.ListeSelect.size(); i++) {
+        for (i=0; i<this->ToSelect.ListeSelect.size(); i++) {
 
             int objet = this->ToSelect.ListeSelect[i].objet;
             int numero= this->ToSelect.ListeSelect[i].face_sommet ;
@@ -6742,7 +8351,7 @@ void BddInter::Inverse_Selected_Normales() {
                     no_selected  = false;
                     int base = Face_ij->F_sommets[0];
                     Face_ij->F_sommets[0] = Face_ij->F_sommets[Face_ij->F_sommets.size()-1];    // Puis le sens de parcours des points
-                    for(k=1; k<(Face_ij->F_sommets.size()/2); k++) {
+                    for (k=1; k<(Face_ij->F_sommets.size()/2); k++) {
                         m = Face_ij->F_sommets[k];
                         Face_ij->F_sommets[k] = Face_ij->F_sommets[Face_ij->F_sommets.size()-k-1];
                         Face_ij->F_sommets[Face_ij->F_sommets.size()-k-1] = m;
@@ -6783,12 +8392,12 @@ void BddInter::Inverser_Parcours_Selected() {
 
     if (mode_selection == selection_facette) {
         if (ToSelect.ListeSelect.empty()) {
-            wxMessage = _T("Aucune Facette sélectionnée !");
+            wxMessage = "Aucune Facette sélectionnée !";
             DisplayMessage(wxMessage,true);
             return;
         }
 //        printf("Inverser parcours des facettes sélectionnées\n");
-        for(i=0; i<this->Objetlist.size(); i++) {
+        for (i=0; i<this->Objetlist.size(); i++) {
             Inverser_Parcours_Facettes_Objet(i, false);         // Seulement les facettes sélectionnées
         }
         bdd_modifiee = true;
@@ -6796,7 +8405,7 @@ void BddInter::Inverser_Parcours_Selected() {
 
     if (mode_selection == selection_objet) {
         if (listeObjets.empty()) {
-            wxMessage = _T("Aucun Objet sélectionné !");
+            wxMessage = "Aucun Objet sélectionné !";
             DisplayMessage(wxMessage,true);
             return;
         }
@@ -6825,8 +8434,9 @@ void BddInter::Inverser_Parcours_Facettes_Objet(unsigned int i, bool all) {
     bool test_print = false;
 
 //    printf("Inverser parcours\n");
-
-    for(j=0; j<this->Objetlist[i].Facelist.size(); j++) {
+    unsigned int nb_fac = this->Objetlist[i].Facelist.size();
+#pragma omp parallel for private(Face_ij,NumerosSommets,ReverseSommets,k)
+    for (j=0; j<nb_fac; j++) {
         Face_ij = &(this->Objetlist[i].Facelist[j]);
         if(Face_ij->afficher && !Face_ij->deleted) {
             if (Face_ij->selected || all) {
@@ -6858,7 +8468,7 @@ void BddInter::Inverser_Parcours_Facettes_Objet(unsigned int i, bool all) {
 
 void BddInter::Inverser_Toutes_les_Normales() {
     unsigned int o;
-    for(o=0; o<this->Objetlist.size(); o++) Inverser_les_Normales_Objet(o);
+    for (o=0; o<this->Objetlist.size(); o++) Inverser_les_Normales_Objet(o);
 }
 
 void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
@@ -6872,7 +8482,9 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
     objet_courant = &(this->Objetlist[o]);
 
 // Inversion des normales au barycentre et du sens de parcours
-    for(j=0; j<objet_courant->Nb_facettes; j++) {
+    unsigned int nb_fac = objet_courant->Nb_facettes;
+#pragma omp parallel for private(Face_ij,k,m)
+    for (j=0; j<nb_fac; j++) {
         Face_ij = &(objet_courant->Facelist[j]);
         if(Face_ij->afficher && !Face_ij->deleted) {
             Face_ij->normale_b[0] *= -1;                                    // Inverse le signe de la normale
@@ -6880,7 +8492,7 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
             Face_ij->normale_b[2] *= -1;
             int base = Face_ij->F_sommets[0];
             Face_ij->F_sommets[0] = Face_ij->F_sommets[Face_ij->F_sommets.size()-1];    // Puis le sens de parcours des points
-            for(k=1; k<(Face_ij->F_sommets.size()/2); k++) {
+            for (k=1; k<(Face_ij->F_sommets.size()/2); k++) {
                 m = Face_ij->F_sommets[k];
                 Face_ij->F_sommets[k] = Face_ij->F_sommets[Face_ij->F_sommets.size()-k-1];
                 Face_ij->F_sommets[Face_ij->F_sommets.size()-k-1] = m;
@@ -6890,7 +8502,9 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
     }
 
 // Inversion du signe des normales aux sommets (vecteurs)
-    for(j=0; j<objet_courant->Nb_vecteurs; j++) {
+    unsigned int nb_vec = objet_courant->Nb_vecteurs;
+#pragma omp parallel for private(Vecteur_ij)
+    for (j=0; j<nb_vec; j++) {
         Vecteur_ij = &(objet_courant->Vecteurlist[j]);
         if (!Vecteur_ij->point.empty()) {
             Vecteur_ij->point[0] *= -1;
@@ -6899,13 +8513,14 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
         }
     }
 
-//    for(j=0; j<objet_courant->Nb_luminances; j++) {   // Souci si différent du nombre de facettes !
-    for(j=0; j<objet_courant->Nb_facettes; j++) {
+//    for (j=0; j<objet_courant->Nb_luminances; j++) {   // Souci si différent du nombre de facettes !
+#pragma omp parallel for private(Luminance_ij,k,m)
+    for (j=0; j<nb_fac; j++) {
         Luminance_ij = &(objet_courant->Facelist[j]);
         if (!Luminance_ij->L_sommets.empty()) {
             int base = Luminance_ij->L_sommets[0];
             Luminance_ij->L_sommets[0] = Luminance_ij->L_sommets[Luminance_ij->L_sommets.size()-1];    // Puis le sens de parcours des points
-            for(k=1; k<(Luminance_ij->L_sommets.size()/2); k++) {
+            for (k=1; k<(Luminance_ij->L_sommets.size()/2); k++) {
                 m = Luminance_ij->L_sommets[k];
                 Luminance_ij->L_sommets[k] = Luminance_ij->L_sommets[Luminance_ij->L_sommets.size()-k-1];
                 Luminance_ij->L_sommets[Luminance_ij->L_sommets.size()-k-1] = m;
@@ -6948,7 +8563,7 @@ void BddInter::buildAllFacettesSelected() {
 
 //    int nb_normales_seuillees = 0; // A déclarer plutôt ailleurs, mais initialiser ici
 
-    for(i=0; i<this->ToSelect.ListeSelect.size(); i++) {
+    for (i=0; i<this->ToSelect.ListeSelect.size(); i++) {
 
         int objet = this->ToSelect.ListeSelect[i].objet;
         int numero= this->ToSelect.ListeSelect[i].face_sommet ;
@@ -6984,7 +8599,7 @@ void BddInter::buildAllFacettesSelected() {
                 case 2:                     // Lignes simples ou facette dégénérées réduites à 2 points !
                     glBegin(GL_LINES);
                     NumerosSommets = Face_ij->getF_sommets();
-                    for(k=0; k<NumerosSommets.size(); k++) {
+                    for (k=0; k<NumerosSommets.size(); k++) {
                         glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);  // ??? BUG ??? d'où vient xyz_sommet dans ce cas ????
                     }
                     glEnd();
@@ -6997,7 +8612,7 @@ void BddInter::buildAllFacettesSelected() {
 
                     lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
                     // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
-                    for(k=0; k<NumerosSommets.size(); k++) {
+                    for (k=0; k<NumerosSommets.size(); k++) {
                         if (lissage_Gouraud) {
                             // Facette non plane => utiliser le lissage de Gouraud (et donc les normales aux sommets)
                             NormaleSommet = Objet_i->Vecteurlist[Face_ij->L_sommets[k]-1].point;
@@ -7031,7 +8646,7 @@ void BddInter::buildAllFacettesSelected() {
 
         }   // Objet_i->afficher && !Objet_i->deleted
 
-    }       // for(i=0; i<this->ToSelect.ListeSelect.size() ...
+    }       // for (i=0; i<this->ToSelect.ListeSelect.size() ...
 
     glEndList();
 }
@@ -7088,12 +8703,12 @@ void BddInter::showAllPoints() {
 
     glDisable(GL_LIGHTING);
 
-    for(unsigned int i=0; i<this->Objetlist.size(); i++) {
+    for (unsigned int i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         if (objet_courant->afficher && !objet_courant->deleted){
 //            glPushName(i+1);                    // +1 ??
             glPushName(i);
-            for(unsigned int j=0; j<objet_courant->Sommetlist.size(); j++) {
+            for (unsigned int j=0; j<objet_courant->Sommetlist.size(); j++) {
                 sommet_courant = &(objet_courant->Sommetlist[j]);
                 if (sommet_courant->show == true) {
 //                    glPushName(j+1);            // +1 permet d'identifier par le numéro du point et non l'indice dans le tableau
@@ -7143,14 +8758,14 @@ void BddInter::showAllLines() {
 
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
-    Aretes*  Arete;
+    Aretes*  p_Arete;
     Object*  objet_courant;
 
     if (verbose)
         printf("Entrée BddInter::showAllLines\n");
 
     GLfloat l_width_n = 1.;                 // Largeur de ligne normale (1 devrait aller mais un peu juste pour sélectionner !)
-    GLfloat l_width_e = l_width_n*1.05;     // Augmenter un peu la largeur de ligne pour l'antialiasing soft. Initialement 1.75
+    GLfloat l_width_e = l_width_n*1.25;     // Augmenter un peu la largeur de ligne pour l'antialiasing soft. Initialement 1.75
 
     glDisable(GL_LIGHTING);
     glLineWidth(l_width_n);
@@ -7164,18 +8779,25 @@ void BddInter::showAllLines() {
         glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
     }
 
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         if (objet_courant->afficher && !objet_courant->deleted){
             int Nb_lignes=0;
             glPushName(i);
-            for(j=0; j<objet_courant->Areteslist.size(); j++) {
-                Arete = &(objet_courant->Areteslist[j]);
-                if (Arete->deleted) continue;       // L'arête a été supprimée (doublon ou autre raison), passer à la suivante
+            unsigned int nbAretes = objet_courant->Areteslist.size();
+            std::list<Aretes>::iterator itArete = objet_courant->Areteslist.begin();
+//            int tid;
+//#pragma omp parallel for private(p_Arete,xyz_sommet,tid)    // Ne marche pas ici car liste OpenGL
+            for (j=0; j<nbAretes; j++,itArete++) {
+//                p_Arete = &(objet_courant->Areteslist[j]);
+                p_Arete = &(*itArete);
+//                tid = omp_get_thread_num();
+                if (p_Arete->deleted) continue;       // L'arête a été supprimée (doublon ou autre raison), passer à la suivante
+//                printf("j:%d n:%d\n",j,tid);
                 Nb_lignes++;
                 glPushName(j);
                 glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans letscheckthemouse) !
-                if (Arete->afficher) {
+                if (p_Arete->afficher) {
 //                    if (antialiasing_soft) {
 //                        glLineWidth(l_width_e);
 //                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); // A mettre ailleurs ?
@@ -7184,9 +8806,9 @@ void BddInter::showAllLines() {
 //                        glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
 //                    }
                     glBegin(GL_LINES);
-                        xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
+                        xyz_sommet = objet_courant->Sommetlist[p_Arete->ind_a].getPoint();
                         glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
-                        xyz_sommet = objet_courant->Sommetlist[Arete->ind_b].getPoint();
+                        xyz_sommet = objet_courant->Sommetlist[p_Arete->ind_b].getPoint();
                         glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
                     glEnd();
 //                    if (antialiasing_soft) {
@@ -7220,7 +8842,7 @@ void BddInter::showSegment_Selection() {
 
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
-    Aretes* Arete;
+    Aretes* p_Arete;
     Object* objet_courant;
 
     GLfloat l_width_n = 1.;     // Largeur de ligne normale
@@ -7230,10 +8852,13 @@ void BddInter::showSegment_Selection() {
 
     objet_courant = &(this->Objetlist[objet_under_mouse]);
     if (objet_courant->afficher && !objet_courant->deleted){
-        Arete = &(objet_courant->Areteslist[line_under_mouse]);
-        if (Arete->deleted) return;       // L'arête a été supprimée : ignorer
+//        p_Arete = &(objet_courant->Areteslist[line_under_mouse]);
+        std::list<Aretes>::iterator itArete = objet_courant->Areteslist.begin();
+        std::advance(itArete,line_under_mouse);
+        p_Arete = &(*itArete);
+        if (p_Arete->deleted) return;           // L'arête a été supprimée : ignorer
 
-        if (Arete->afficher) {
+        if (p_Arete->afficher) {
             glDisable(GL_LIGHTING);
             glLineWidth(l_width_e);
             glColor3fv(vert);
@@ -7244,9 +8869,9 @@ void BddInter::showSegment_Selection() {
                 glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
             }
             glBegin(GL_LINES);
-            xyz_sommet = objet_courant->Sommetlist[Arete->ind_a].getPoint();
+            xyz_sommet = objet_courant->Sommetlist[p_Arete->ind_a].getPoint();
             glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
-            xyz_sommet = objet_courant->Sommetlist[Arete->ind_b].getPoint();
+            xyz_sommet = objet_courant->Sommetlist[p_Arete->ind_b].getPoint();
             glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
             glEnd();
             if (antialiasing_soft) {
@@ -7351,14 +8976,14 @@ void BddInter::glutSolidSphere_local(GLdouble radius, GLint slices, GLint stacks
 
     /* Cover each stack with a quad strip, except the top and bottom stacks */
 
-    for( i=1; i<stacks-1; i++ )
+    for (i=1; i<stacks-1; i++ )
     {
         z0 = z1; z1 = cost2[i+1];
         r0 = r1; r1 = sint2[i+1];
 
         glBegin(GL_QUAD_STRIP);
 
-            for(j=0; j<=slices; j++)
+            for (j=0; j<=slices; j++)
             {
                 glNormal3d(cost1[j]*r1,        sint1[j]*r1,        z1       );
                 glVertex3d(cost1[j]*r1*radius, sint1[j]*r1*radius, z1*radius);
@@ -8039,7 +9664,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         printf("Bouclage sur le premier point\n");
                         unsigned int new_size, new_indice;
                         bool UnSeulObjet=true;
-                        for(i=1; i<(int)ToSelect.ListeSelect.size(); i++) {
+                        for (i=1; i<(int)ToSelect.ListeSelect.size(); i++) {
                             if (ToSelect.ListeSelect[0].objet != ToSelect.ListeSelect[i].objet) { // Si objets différents, créer de nouveaux sommets dans le 1er objet listé
 //                                UnSeulObjet = false;                                                              // N'a plus lieu d'être
                                 indiceObjet_courant = ToSelect.ListeSelect[i].objet;
@@ -8063,10 +9688,10 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         N_elements = new_size;
                         str.clear();
                         NumerosSommets.resize(ToSelect.ListeSelect.size());
-                        for(i=0; i<(int)ToSelect.ListeSelect.size();i++) NumerosSommets[i] = ToSelect.ListeSelect[i].face_sommet +1; // Numéros décalés d'1 cran / indices
+                        for (i=0; i<(int)ToSelect.ListeSelect.size(); i++) NumerosSommets[i] = ToSelect.ListeSelect[i].face_sommet +1; // Numéros décalés d'1 cran / indices
                         make1face();
                         objet_courant->Nb_facettes = new_size;
-                        Calcul_Normale_Barycentre(objet,new_indice);                // Ici la facette créée est plane
+                        Calcul_Normale_Barycentre(indiceObjet_courant,new_indice);                // Ici la facette créée est plane
                         objet_courant->Facelist[new_indice].selected = true;
                         GenereTableauPointsFacettes(objet_courant);
                         GenereTableauAretes(objet_courant);
@@ -8079,11 +9704,11 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         new_facette->Nb_Sommets_L = new_facette->L_sommets.size();  //                                       et luminances
                         // Augmenter le nombre de vecteurs car les nouvelles normales aux sommets ne remplacent pas forcément les anciennes, notamment
                         // quand une normale spécifique est utilisée par 2 sommets ou plus. Peut arriver en cas de simplification de Bdd !
-                        indice_vec = this->Objetlist[objet].Vecteurlist.size();     // Initialise indice_vec avec la taille actuelle des vecteurs
+                        indice_vec = objet_courant->Vecteurlist.size();             // Initialise indice_vec avec la taille actuelle des vecteurs
                         new_size   = indice_vec + new_facette->Nb_Sommets_L;        // Nouvelle taille
-                        this->Objetlist[objet].Vecteurlist.resize(new_size);        // Resize dzs vecteurs
-                        this->Objetlist[objet].Nb_vecteurs = new_size;              // et maj de Nb_vecteurs
-                        for(i=0; i<(int)NumerosSommets.size();i++) {
+                        objet_courant->Vecteurlist.resize(new_size);                // Resize dzs vecteurs
+                        objet_courant->Nb_vecteurs = new_size;                      // et maj de Nb_vecteurs
+                        for (i=0; i<(int)NumerosSommets.size(); i++) {
 //                               printf("indice %d, Numero de sommet : %d\n",i,NumerosSommets[i]);
                             indice_pt = NumerosSommets[i]-1;
                             GenereNormale_1_Sommet(objet_courant,indice_pt,indice_vec);
@@ -8228,7 +9853,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     str.Printf(_T("%d"),nb_Objets_selected) ;
                     if (nb_Objets_selected >= 2) {
                         MSelect->Button_Fusionner->Enable();    // Activer le bouton de fusion d'objets si le nombre d'objets sélectionnés est >= 2
-                        MSelect->TextCtrl_NomObjet->ChangeValue(_T("Sélection multiple"));  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
+                        MSelect->TextCtrl_NomObjet->ChangeValue("Sélection multiple");  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
                     } else {
                         MSelect->Button_Fusionner->Disable();   // Le désactiver sinon (rien à fusionner).
                         if ((nb_Objets_selected == 0) && (objet >= 0)) MSelect->TextCtrl_NomObjet->SetValue(""); // Le clic sur l'objet restant l'a déselectionné !
@@ -8296,7 +9921,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
 //                    wxString str_loc;                                       // Recréer la liste : ne sert à rien à ce niveau semble t-il !
 //                    unsigned int n = MSelObj->CheckListBox1->GetCount();    // Récupère le nombre d'items actuels
-//                    for (iobj=0 ; iobj<n ; iobj++)
+//                    for (iobj=0; iobj<n; iobj++)
 //                        MSelObj->CheckListBox1->Delete(0);    // Supprime ces "anciens" items
 
                     indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
@@ -8424,6 +10049,8 @@ void BddInter::SaveTo(wxString str, int index) {
     }
 }
 
+// Les boucles for des fonctions Save* ne sont a priori pas parallélisables : les fichiers créés doivent être séquentiels
+
 void BddInter::SaveBDD(wxString str) {
     wxCharBuffer  buffer;
     std::vector<int>   numeros_Sommets;
@@ -8446,19 +10073,19 @@ void BddInter::SaveBDD(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
+        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
+        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
     printf("\nNombre d'objets : %d\n",(int)this->Objetlist.size());
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -8466,7 +10093,7 @@ void BddInter::SaveBDD(wxString str) {
 
         compteur_sommets = 0;
         NewVecteurs.clear();
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
 ///                compteur++;                                 // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
@@ -8486,7 +10113,7 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -8497,7 +10124,7 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue ;   // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // => on ne travaille que sur les facettes non supprimées !
@@ -8506,7 +10133,7 @@ void BddInter::SaveBDD(wxString str) {
             myfile << std::setw(5) << compteur;
             myfile << "\t";
             myfile << std::setw(2) << numeros_Sommets.size();
-            for(k=0; k<numeros_Sommets.size(); k++) {
+            for (k=0; k<numeros_Sommets.size(); k++) {
                 myfile << "\t";
 //                myfile << std::setw(5) << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << std::setw(5) << numeros_Sommets[k];
@@ -8522,14 +10149,14 @@ void BddInter::SaveBDD(wxString str) {
         myfile << compteur_sommets;
         myfile << "\n";
         myfile << "\n";
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {      // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 compteur++;
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t";
                 myfile << std::setw(5) << compteur;
 //                myfile << std::setw(5) << objet_courant->Sommetlist[j].Numero;
-                for(k=0; k<xyz_sommet.size(); k++) {
+                for (k=0; k<xyz_sommet.size(); k++) {
                     myfile << "\t";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
@@ -8543,15 +10170,15 @@ void BddInter::SaveBDD(wxString str) {
         myfile << std::setw(5) << compteur_facettes;
         myfile << "\n";
         myfile << "\n";
-//        for(j=0; j<compteur_facettes; j++) {                  // NON car en cas de soudure, on saute des facettes
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+//        for (j=0; j<compteur_facettes; j++) {                  // NON car en cas de soudure, on saute des facettes
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue ;
             compteur++;
             xyz_sommet = Face_ij->getNormale_b();
             myfile << "\t";
             myfile << std::setw(5) << compteur;
-            for(k=0; k<xyz_sommet.size(); k++) {
+            for (k=0; k<xyz_sommet.size(); k++) {
                 myfile << "\t";
                 myfile << std::fixed << std::setprecision(8)<< std::setw(11) << xyz_sommet[k];
             }
@@ -8562,7 +10189,7 @@ void BddInter::SaveBDD(wxString str) {
         myfile << compteur_facettes ;
         myfile << "\n";
         myfile << "\n";
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue ;
             compteur++;
@@ -8586,7 +10213,7 @@ void BddInter::SaveBDD(wxString str) {
             nouvel_indice = objet_courant->Nb_vecteurs +1;
 //        }
         unsigned compteur_luminances = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
            if (!objet_courant->Facelist[j].deleted) {
                 numeros_Sommets = objet_courant->Facelist[j].getL_sommets();
                 compteur_luminances += numeros_Sommets.size();
@@ -8604,7 +10231,7 @@ void BddInter::SaveBDD(wxString str) {
         myfile.flush(); // Forcer l'écriture sur le fichier
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) {
 //                printf("j=%d ",j);  // Bug : si on le met, OK quand souder a été fait, sinon plante (du moins avec g++ 8.1, car semble OK en 9.3 de Msys2 !)
@@ -8621,7 +10248,7 @@ void BddInter::SaveBDD(wxString str) {
             if (test_composite) {
                 NormaleFacette = Face_ij->getNormale_b();
             }
-            for(k=0; k<numeros_Sommets.size(); k++) {
+            for (k=0; k<numeros_Sommets.size(); k++) {
                 myfile << "\t";
                 if (test_composite) {
                     if (Face_ij->flat) {
@@ -8673,13 +10300,13 @@ void BddInter::SaveBDD(wxString str) {
         myfile << std::setw(5) << NbVecteurs;
         myfile << "\n";
         myfile << "\n";
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
 //            if(objet_courant->Vecteurlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 compteur++;
                 NormaleSommet = objet_courant->Vecteurlist[j].point;
                 myfile << "\t";
                 myfile << std::setw(5) << compteur;
-                for(k=0; k<3; k++) {
+                for (k=0; k<3; k++) {
                     myfile << "\t";
                     myfile << std::fixed << std::setprecision(8) << std::setw(11) << NormaleSommet[k];
                 }
@@ -8748,8 +10375,8 @@ void BddInter::SaveOBJ(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
+        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
+        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
@@ -8759,12 +10386,12 @@ void BddInter::SaveOBJ(wxString str) {
 
     if (mtllib_OK) myfile << "\n" << mtllib_nom ;               // Restitution de la ligne mtllib sauvegardée (entre 2 lignes blanches)
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -8776,7 +10403,7 @@ void BddInter::SaveOBJ(wxString str) {
 
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
 ///                compteur++;                                         // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
@@ -8792,11 +10419,11 @@ void BddInter::SaveOBJ(wxString str) {
 
         myfile << "# " << compteur_sommets << " Sommets\n";
 
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "v";
-                for(k=0; k<xyz_sommet.size(); k++) {
+                for (k=0; k<xyz_sommet.size(); k++) {
                     myfile << " ";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
@@ -8811,7 +10438,7 @@ void BddInter::SaveOBJ(wxString str) {
 //        }
         unsigned compteur_luminances = 0;
         if (objet_courant->Nb_luminances != 0) {
-            for(j=0; j<objet_courant->Facelist.size(); j++) {
+            for (j=0; j<objet_courant->Facelist.size(); j++) {
                 Face_ij = &(objet_courant->Facelist[j]);
                 if(!(Face_ij->deleted || Face_ij->flat)) {
                     numeros_Sommets = Face_ij->getL_sommets();
@@ -8822,7 +10449,7 @@ void BddInter::SaveOBJ(wxString str) {
             }
         }
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(!objet_courant->Facelist[j].deleted) {   // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
                 compteur++;                             // Donc compter toutes les facettes non supprimées (.show original != .afficher !)
             }
@@ -8830,7 +10457,7 @@ void BddInter::SaveOBJ(wxString str) {
 
         myfile << "\n# " << compteur << " Elements\n";
 
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue;
             current_groupe = Face_ij->getGroupe();
@@ -8856,7 +10483,7 @@ void BddInter::SaveOBJ(wxString str) {
                     NormaleFacette = Face_ij->getNormale_b();
                 }
             }
-            for(k=0; k<numeros_Sommets.size(); k++) {
+            for (k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
 //                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << (numeros_Sommets[k] + offset_vertices);
@@ -8904,10 +10531,10 @@ void BddInter::SaveOBJ(wxString str) {
         if (NbVecteurs != 0) {                                      // Enregistrer les normales aux sommets
             myfile << "\n# " << NbVecteurs << " Normales aux sommets\n";
 
-            for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+            for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
                     NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "vn";
-                    for(k=0; k<3; k++) {
+                    for (k=0; k<3; k++) {
                         myfile << " ";
                         myfile << std::fixed << std::setprecision(8) << std::setw(11) << NormaleSommet[k];
                     }
@@ -8971,8 +10598,8 @@ void BddInter::SaveOFF(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
+        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
+        wxMessageBox(Msg,"Avertissement");
         return;
     }
     printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
@@ -8981,12 +10608,12 @@ void BddInter::SaveOFF(wxString str) {
 // ATTENTION : certain logiciels (par ex Deep Exploration) n'acceptent pas les lignes de commentaires
     if (commentaires) myfile << "# Fichier Object File Format off créé par Ovni\n";
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -8996,7 +10623,7 @@ void BddInter::SaveOFF(wxString str) {
         }
 
         compteur_sommets = 0;
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur_sommets++;
 ///            }
@@ -9004,7 +10631,7 @@ void BddInter::SaveOFF(wxString str) {
         total_vertices += compteur_sommets;
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Test original sur .show, mais une facette masquée ne l'est qu'à l'affichage !
             compteur++;                                         // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -9013,7 +10640,7 @@ void BddInter::SaveOFF(wxString str) {
     }
     myfile << total_vertices << " " << total_facettes << " 0\n";
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
@@ -9027,10 +10654,10 @@ void BddInter::SaveOFF(wxString str) {
             myfile << "\n";
         }
 
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
-                for(k=0; k<xyz_sommet.size(); k++) {
+                for (k=0; k<xyz_sommet.size(); k++) {
                     myfile << " ";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
@@ -9038,16 +10665,16 @@ void BddInter::SaveOFF(wxString str) {
 ///            }
         }
     }
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue;
             numeros_Sommets = Face_ij->F_sommets;
             myfile << numeros_Sommets.size();
-            for(k=0; k<numeros_Sommets.size(); k++) {
+            for (k=0; k<numeros_Sommets.size(); k++) {
                 myfile << " ";
 //                myfile << (objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero + offset_vertices); // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << (numeros_Sommets[k] + offset_vertices);
@@ -9056,7 +10683,7 @@ void BddInter::SaveOFF(wxString str) {
         }
 
         compteur_sommets = 0;
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur_sommets++;
 ///            }
@@ -9106,17 +10733,17 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
         myfile.open(buffer.data(), std::ofstream::binary);
     }
     if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
+        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
+        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;
             compteur++;                                         // Compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -9133,20 +10760,20 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
     } else {
         len = strlen(this->Objetlist[0].GetName())    ;
         myfile.write(this->Objetlist[0].GetName(),len);
-        for(i=len+1;i<=80;i++) myfile.write(" ",1)    ;
+        for (i=len+1; i<=80; i++) myfile.write(" ",1)    ;
         myfile.write((char *)&compteur,sizeof(UINT32));
     }
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
-        for(i=0; i<objet_courant->Facelist.size(); i++) {
+        for (i=0; i<objet_courant->Facelist.size(); i++) {
             Face_ij = &(objet_courant->Facelist[i]);
             if(Face_ij->deleted) continue;
             if (ascii) myfile << "  facet normal";
             xyz_sommet = Face_ij->getNormale_b();
-            for (j=0;j<3;j++) {
+            for (j=0; j<3; j++) {
                 if (ascii) {
                     myfile << " ";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[j] ;
@@ -9156,10 +10783,10 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
             }
             if (ascii) myfile << "\n" << "    outer loop\n";
             numeros_Sommets = Face_ij->F_sommets;
-            for(j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
+            for (j=0; j<3; j++) {    // numeros_Sommets.size() doit être = 3
                 xyz_sommet = objet_courant->Sommetlist[numeros_Sommets[j]-1].getPoint();
                 if (ascii) myfile << "      vertex";
-                for(k=0;k<3;k++) {
+                for (k=0; k<3; k++) {
                     if (ascii) {
                         myfile << " ";
                         myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
@@ -9227,8 +10854,8 @@ void BddInter::SaveG3D(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = _T("Écriture dans le fichier ") + wxNomsFichiers + _T(" impossible !");
-        wxMessageBox(Msg,_T("Avertissement"));
+        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
+        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
@@ -9274,10 +10901,10 @@ void BddInter::SaveG3D(wxString str) {
 	myfile << "\t</types_valeurs>\n";
 
 	compteur = 0;
-	for(o=0; o<this->Objetlist.size(); o++) {
+	for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         int compteur_F = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;    // Original de jdias sur .show, mais au final synonyme de !deleted
             compteur_F++;                                       // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -9291,13 +10918,13 @@ void BddInter::SaveG3D(wxString str) {
 
     myfile << "\t\t<objets nbr=\"" << compteur << "\">\n";
 
-    for(o=0; o<this->Objetlist.size(); o++) {
+    for (o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                  // Ne pas enregistrer un objet supprimé, donc passer directement au o suivant
 
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
 ///            if(objet_courant->Sommetlist[j].show == true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
 ///                compteur++;                                     // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
@@ -9309,7 +10936,7 @@ void BddInter::SaveG3D(wxString str) {
         nouvel_indice = objet_courant->Nb_vecteurs +1;          // Premier indice libre au-dessus de NB_vecteurs pour l'objet courant
 
         unsigned compteur_luminances = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(!Face_ij->deleted) {
                 numeros_Sommets_L = Face_ij->getL_sommets();
@@ -9336,7 +10963,7 @@ void BddInter::SaveG3D(wxString str) {
         myfile << "\t\t\t\t\t<sommets nbr=\"";
         myfile << compteur_sommets;
         myfile << "\">\n";
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             Sommet_ij = &(objet_courant->Sommetlist[j]);
 ///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier.
 //                compteur++;
@@ -9344,7 +10971,7 @@ void BddInter::SaveG3D(wxString str) {
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
                 myfile << (j+1) ; //Sommet_ij->Numero; // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << "\" xyz=\"";
-                for(k=0; k<xyz_sommet.size(); k++) {
+                for (k=0; k<xyz_sommet.size(); k++) {
                     myfile << "\t";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
@@ -9355,7 +10982,7 @@ void BddInter::SaveG3D(wxString str) {
         myfile.flush();
 
         compteur=0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             if(objet_courant->Facelist[j].deleted) continue;        // Test original sur .show
             compteur++;                                             // Donc compter toutes les facettes non supprimées (.show != .afficher !)
         }
@@ -9365,7 +10992,7 @@ void BddInter::SaveG3D(wxString str) {
         myfile << "\">\n";
 
         compteur = 0;
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             Face_ij = &(objet_courant->Facelist[j]);
             if(Face_ij->deleted) continue;
             compteur++;
@@ -9375,7 +11002,7 @@ void BddInter::SaveG3D(wxString str) {
 
             xyz_sommet = Face_ij->getNormale_b();
             myfile << "\t\t\t\t\t\t\t<normale_b xyz=\"";
-            for(k=0; k<xyz_sommet.size(); k++) {
+            for (k=0; k<xyz_sommet.size(); k++) {
                 myfile << std::fixed << std::setprecision(8)<< std::setw(11) << xyz_sommet[k];
                 myfile << " ";
             }
@@ -9384,7 +11011,7 @@ void BddInter::SaveG3D(wxString str) {
 
             myfile << "\t\t\t\t\t\t\t<sommets ref=\"";
             numeros_Sommets = Face_ij->F_sommets;
-            for(k=0; k<numeros_Sommets.size(); k++) {
+            for (k=0; k<numeros_Sommets.size(); k++) {
 //                myfile << objet_courant->Sommetlist[numeros_Sommets[k]-1].Numero;     // Ne marche pas sur fichier .obj optimisé à la lecture
                 myfile << numeros_Sommets[k];
                 myfile << " ";
@@ -9399,7 +11026,7 @@ void BddInter::SaveG3D(wxString str) {
                     NormaleFacette = Face_ij->getNormale_b();
                 }
                 myfile << "\t\t\t\t\t\t\t<normales_s ref=\"";
-                for(k=0; k<numeros_Sommets_L.size(); k++) {
+                for (k=0; k<numeros_Sommets_L.size(); k++) {
                     if (test_composite) {
                         if (Face_ij->flat) {
                             NormaleSommet = NormaleFacette; // Dans ce cas, on remplace la normale au sommet par la normale au barycentre de la facette
@@ -9468,14 +11095,14 @@ void BddInter::SaveG3D(wxString str) {
             NbVecteurs += NewVecteurs.size();
             myfile << NbVecteurs;
             myfile << "\">\n";
-            for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+            for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
     //            if(objet_courant->Vecteurlist[j].show == true) {   // A vérifier.
                     compteur++;
                     NormaleSommet = objet_courant->Vecteurlist[j].point;
                     myfile << "\t\t\t\t\t\t<normale_s id=\"";
                     myfile << compteur;
                     myfile << "\" xyz=\"";
-                    for(k=0; k<3; k++) {
+                    for (k=0; k<3; k++) {
                         myfile << std::fixed << std::setprecision(8) << std::setw(11) << NormaleSommet[k];
                         myfile << " ";
                     }
@@ -9548,8 +11175,12 @@ void BddInter::diviserArete(int objet, int face, int line) {
 
     objet_cible = &(this->Objetlist[indice_objet_cible]);
 
-    indice_a = objet_cible->Areteslist[line].ind_a;
-    indice_b = objet_cible->Areteslist[line].ind_b;
+//    indice_a = objet_cible->Areteslist[line].ind_a;
+//    indice_b = objet_cible->Areteslist[line].ind_b;
+    std::list<Aretes>::iterator itArete = objet_cible->Areteslist.begin();
+    std::advance(itArete,line);
+    indice_a = (*itArete).ind_a;
+    indice_b = (*itArete).ind_b;
     numero_a = indice_a +1;
     numero_b = indice_b +1;
     Sommet_a = objet_cible->Sommetlist[indice_a];
@@ -9579,10 +11210,10 @@ void BddInter::diviserArete(int objet, int face, int line) {
         vecteurs_presents = true;
         objet_cible->Nb_vecteurs += div_limit-1;
     } else vecteurs_presents = false;
-    for(l=1; l<div_limit; l++) {
+    for (l=1; l<div_limit; l++) {
         NewSommet = Sommet_a;
         if (MPanel->division != -1) t = (float)l/div_limit;
-        for(k=0; k<NewSommet.point.size(); k++) {
+        for (k=0; k<NewSommet.point.size(); k++) {
             NewSommet.point[k] = Sommet_a.point[k] + (Sommet_b.point[k]-Sommet_a.point[k])*t;
         }
         if (vecteurs_presents) {
@@ -9605,11 +11236,11 @@ void BddInter::diviserArete(int objet, int face, int line) {
 //        }
 
         unsigned int limit = objet_cible->Facelist.size();
-        for(j=0; j<limit; j++) {
+        for (j=0; j<limit; j++) {
             NumerosSommets = objet_cible->Facelist[j].getF_sommets();
             unsigned int k_fin = NumerosSommets.size();
             unsigned int k_suiv;
-            for(k=0; k<k_fin; k++) {
+            for (k=0; k<k_fin; k++) {
                 k_suiv = k+1;
                 if (k_suiv >= k_fin) k_suiv = 0; // Pour boucler entre le dernier point et le point 0
                 if(((NumerosSommets[k] == numero_a && NumerosSommets[k_suiv] == numero_b) ||
@@ -9716,12 +11347,12 @@ void BddInter::souderPoints(int objet, int point) {
         printf("Soudure interne dans un objet\n");
 //        fflush(stdout);
 
-        for(j=0; j<nb_Fac_initial; j++) {
+        for (j=0; j<nb_Fac_initial; j++) {
             if(objet_origine->Facelist[j].deleted) continue ;               // Passer à la facette suivante
             toUp1 = -1;
             toUp2 = -1;
             NumerosSommets = objet_origine->Facelist[j].getF_sommets();
-            for(k=0; k<(int)NumerosSommets.size(); k++) {
+            for (k=0; k<(int)NumerosSommets.size(); k++) {
                 if(NumerosSommets[k] == numero_point_cible) {
                     toUp1 = k;
                     if (verbose) printf("toUp1 = %d\n",toUp1);
@@ -9766,12 +11397,12 @@ void BddInter::souderPoints(int objet, int point) {
         printf("Soudure entre 2 objets\n");
 //        fflush(stdout);
 
-        for(j=0; j<nb_Fac_initial; j++) {
+        for (j=0; j<nb_Fac_initial; j++) {
         if(objet_origine->Facelist[j].deleted) continue ;                   // Passer à la facette suivante
 //            toUp1 = -1;
             toUp2 = -1;
             NumerosSommets = objet_origine->Facelist[j].getF_sommets();
-            for(k=0; k<(int)NumerosSommets.size(); k++) {
+            for (k=0; k<(int)NumerosSommets.size(); k++) {
                 if(NumerosSommets[k] == numero_point_origine) {
                     toUp2 = k;
                     if (verbose) printf("toUp2 = %d\n",toUp2);
@@ -9818,9 +11449,9 @@ void BddInter::UNDO_ONE() {
     Object* objet_courant;
 
     if(undo_memory != 0) {
-        for(i=0; i<this->Objetlist.size(); i++) {   /// est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
+        for (i=0; i<this->Objetlist.size(); i++) {   /// est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
             objet_courant = &(this->Objetlist[i]);
-            for(j=0; j<objet_courant->Facelist.size(); j++) {
+            for (j=0; j<objet_courant->Facelist.size(); j++) {
                 if (objet_courant->Facelist[j].toshow == undo_memory) {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
@@ -9833,7 +11464,7 @@ void BddInter::UNDO_ONE() {
             }
             bool vecteurs_presents = true;
             if (objet_courant->Vecteurlist.size() == 0) vecteurs_presents = false;
-            for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+            for (j=0; j<objet_courant->Sommetlist.size(); j++) {
                 if (objet_courant->Sommetlist[j].toshow == undo_memory) {
                     objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+j);
                     if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
@@ -9876,53 +11507,6 @@ void BddInter::UNDO_ONE() {
     Refresh();
 }
 
-void BddInter::Calcul_Normale_Barycentre(int i, int j) {
-
-// Calcul d'une normale d'une facette d'indice j dans l'objet d'indice i
-// La normale est une "moyenne" si la facette possède plus de 3 points => tolérance aux facettes non planes.
-
-    Face *Face_ij;
-    float vector1[3];
-    float vector2[3];
-    float mag;
-    std::vector<float> normalf(3,0.0);
-    std::vector< std::vector<float> > normal;
-    std::vector<float> normal1;
-    int n,z;
-
-    Face_ij = &(this->Objetlist[i].Facelist[j]);
-
-    normal1.clear();
-    normal.clear();
-
-    for(n=2; n<(int)Face_ij->F_sommets.size(); n++) {    // n= Face_ij.point.size() nombre de sommets de la facette
-        for(z=0; z<3; z++) {
-            vector1[z]=
-                 this->Objetlist[i].Sommetlist[Face_ij->F_sommets[n-1]-1].point[z]
-                -this->Objetlist[i].Sommetlist[Face_ij->F_sommets[0]  -1].point[z];     //! Vecteur P1-P0 si n=2, puis P2-P0 si n=3, ...
-            vector2[z]=
-                 this->Objetlist[i].Sommetlist[Face_ij->F_sommets[n]-1].point[z]        //! Vecteur P2-P0 si n=2, puis P3-P0 si n=3, ..., Pn-P0 avec n >= 2
-                -this->Objetlist[i].Sommetlist[Face_ij->F_sommets[0]-1].point[z];
-        }
-        normal1.push_back(vector1[1]*vector2[2]-vector1[2]*vector2[1]);             //! Calcul de n-2 sous-normales
-        normal1.push_back(vector1[2]*vector2[0]-vector1[0]*vector2[2]);
-        normal1.push_back(vector1[0]*vector2[1]-vector1[1]*vector2[0]);
-        normal.push_back(normal1);
-        normal1.clear();
-    }
-
-    // Calcul d'une normale moyenne : Pb: le vecteur Point1-Point0 a un rôle prépondérant.
-    // Voir si besoin la fonction correspondante dans la version Tcl.
-
-    for(n=0; n<(int)normal.size(); n++) {
-        for(z=0; z<3; z++) normalf[z] += normal[n][z];      // La version originale faisait une moyenne, mais une somme suffit car la normalisation à 1 est faite ci-dessous
-    }
-    mag = sqrt(normalf[0]*normalf[0] + normalf[1]*normalf[1] + normalf[2]*normalf[2]);
-    if (mag != 0.0) for(z=0; z<3; z++) normalf[z] /= mag;   // Normalisation à 1 (si mag différent de 0 !)
-    Face_ij->normale_b = normalf;
-    bdd_modifiee = true ;
-}
-
 bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int ind_P, std::vector<float> &NormaleFacette, std::vector<float> &NormaleSommet)
 {
     bool test_np ;
@@ -9931,6 +11515,7 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
     std::vector<float> pa, pb, pc;
     Vector3D v1, v2, vp, np;
     Object *objet_cur;
+    Points *p_Point;
     Face cur_fac ;
     int  NbFacettes;
 
@@ -9939,10 +11524,13 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
     np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                             // Initialisation
     if (test_seuil_gouraud) {
         if (!((produit_scalaire(NormaleFacette,NormaleSommet) > seuil_Gouraud) || (seuil_Gouraud <= -0.999 ))) {
-            npoint = objet_cur->Facelist[ind_fac].F_sommets[ind_P] -1;              // Ici c'est le numéro d'indice du sommet qu'il faut récupérer
-            NbFacettes = objet_cur->Pointslist[npoint].IndicesFacettes.size();      // Nombre de facettes qui utilisent ce sommet
+            npoint  = objet_cur->Facelist[ind_fac].F_sommets[ind_P] -1;              // Ici c'est le numéro d'indice du sommet qu'il faut récupérer
+            p_Point = &(objet_cur->Pointslist[npoint]);
+//            NbFacettes = objet_cur->Pointslist[npoint].IndicesFacettes.size();      // Nombre de facettes qui utilisent ce sommet
+            NbFacettes = p_Point->IndicesFacettes.size();                           // Nombre de facettes qui utilisent ce sommet
             for (k=0; k< NbFacettes ; k++) {
-                nfac    = objet_cur->Pointslist[npoint].IndicesFacettes[k] ;
+//                nfac    = objet_cur->Pointslist[npoint].IndicesFacettes[k] ;
+                nfac = p_Point->IndicesFacettes[k] ;
                 /* Ne pas prendre en compte les facettes dont l'angle entre la normale avec celle de
                 la facette en cours est trop fort */
                 if ((produit_scalaire(objet_cur->Facelist[ind_fac].normale_b, objet_cur->Facelist[nfac].normale_b) > seuil_Gouraud2)  ||
@@ -9953,7 +11541,7 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
                     pa      = objet_cur->Sommetlist[cur_fac.F_sommets[0]-1].getPoint() ;
                     pb      = objet_cur->Sommetlist[cur_fac.F_sommets[1]-1].getPoint() ;
                     v1.X    = (double)(pb[0] - pa[0]); v1.Y = (double)(pb[1] - pa[1]); v1.Z = (double)(pb[2] - pa[2]);
-                    for (k2=2 ; k2 < nbs ; k2++) {
+                    for (k2=2; k2 < nbs; k2++) {
                         pc = objet_cur->Sommetlist[cur_fac.F_sommets[k2]-1].getPoint() ;
                         v2.X = (double)(pc[0] - pa[0]); v2.Y = (double)(pc[1] - pa[1]); v2.Z = (double)(pc[2] - pa[2]);
 //                      coef += Norme(produit_vect(&v1,&v2)) ; // En toute rigueur diviser par 2 !
@@ -10100,16 +11688,18 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 void BddInter::Calcul_All_Normales() {
     unsigned int o,i,nb_fac,nb_som;
     Object * objet_courant;
+    Face   * facette_courante;
 
     printf("\nCalcul de toutes les normales\n");
 
-    for(unsigned int o=0; o<this->Objetlist.size(); o++) {
+    for (unsigned int o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
         objet_courant->flat = false;
 //        nb_fac = objet_courant->Facelist.size();
         nb_fac = objet_courant->Nb_facettes;
         nb_som = objet_courant->Nb_sommets;
-        for(i=0; i<nb_fac; i++) {
+#pragma omp parallel for
+        for (i=0; i<nb_fac; i++) {
             Calcul_Normale_Barycentre(o,i);
             if (NotFlat) objet_courant->Facelist[i].flat = false;  // Garder plutôt ce qu'il y avait, sinon force le lissage de Gouraud partout : pas forcément souhaitable !
         }
@@ -10124,11 +11714,14 @@ void BddInter::Calcul_All_Normales() {
         objet_courant->Nb_vecteurs   = nb_som;
         objet_courant->Nb_luminances = nb_fac;
         indiceObjet_courant = o;
-        str.clear();
+//        str.clear();
+#pragma omp parallel for private(facette_courante)
         for (i=0; i<nb_fac; i++) {
-            NumerosSommets = objet_courant->Facelist[i].getF_sommets();
-            N_elements     = objet_courant->Facelist[i].getNumero();
-            make1luminance();
+            facette_courante = &(objet_courant->Facelist[i]);
+//            NumerosSommets = objet_courant->Facelist[i].getF_sommets();
+//            N_elements     = objet_courant->Facelist[i].getNumero();
+//            make1luminance();
+            make1luminance(facette_courante->getNumero(),facette_courante->getF_sommets()); // OK ici
         }
 //        printf("%d vl %d %d\n",o,objet_courant->Nb_vecteurs,objet_courant->Nb_luminances);
     }
@@ -10139,17 +11732,17 @@ void BddInter::Calcul_All_Normales() {
 void BddInter::InverseX() {
     Object * objet_courant;
     unsigned int i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
                 objet_courant->Vecteurlist[j].point[0] *= -1;
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
                 objet_courant->Sommetlist[j].point[0]  *= -1;
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[0] *= -1;
         }
     }
@@ -10159,17 +11752,17 @@ void BddInter::InverseX() {
 void BddInter::InverseY() {
     Object * objet_courant;
     unsigned i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
                 objet_courant->Vecteurlist[j].point[1] *= -1;
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
                 objet_courant->Sommetlist[j].point[1]  *= -1;
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[1] *= -1;
         }
     }
@@ -10179,17 +11772,17 @@ void BddInter::InverseY() {
 void BddInter::InverseZ() {
     Object * objet_courant;
     unsigned i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3)
                 objet_courant->Vecteurlist[j].point[2] *= -1;
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3)
                 objet_courant->Sommetlist[j].point[2]  *= -1;
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             objet_courant->Facelist[j].normale_b[2] *= -1;
         }
     }
@@ -10200,23 +11793,23 @@ void BddInter::XtoY() {
     Object * objet_courant;
     float memory;
     unsigned int i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3) {
                 memory=objet_courant->Vecteurlist[j].point[0];
                 objet_courant->Vecteurlist[j].point[0]=objet_courant->Vecteurlist[j].point[1];
                 objet_courant->Vecteurlist[j].point[1]=memory;
             }
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3) {
                 memory=objet_courant->Sommetlist[j].point[0];
                 objet_courant->Sommetlist[j].point[0]=objet_courant->Sommetlist[j].point[1];
                 objet_courant->Sommetlist[j].point[1]=memory;
             }
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             memory=objet_courant->Facelist[j].normale_b[0];
             objet_courant->Facelist[j].normale_b[0]=objet_courant->Facelist[j].normale_b[1];
             objet_courant->Facelist[j].normale_b[1]=memory;
@@ -10229,23 +11822,23 @@ void BddInter::XtoZ() {
     Object * objet_courant;
     float memory;
     unsigned i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3) {
                 memory=objet_courant->Vecteurlist[j].point[0];
                 objet_courant->Vecteurlist[j].point[0]=objet_courant->Vecteurlist[j].point[2];
                 objet_courant->Vecteurlist[j].point[2]=memory;
             }
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3) {
                 memory=objet_courant->Sommetlist[j].point[0];
                 objet_courant->Sommetlist[j].point[0]=objet_courant->Sommetlist[j].point[2];
                 objet_courant->Sommetlist[j].point[2]=memory;
             }
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             memory=objet_courant->Facelist[j].normale_b[0];
             objet_courant->Facelist[j].normale_b[0]=objet_courant->Facelist[j].normale_b[2];
             objet_courant->Facelist[j].normale_b[2]=memory;
@@ -10258,23 +11851,23 @@ void BddInter::YtoZ() {
     Object * objet_courant;
     float memory;
     unsigned int i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3) {
                 memory=objet_courant->Vecteurlist[j].point[1];
                 objet_courant->Vecteurlist[j].point[1]=objet_courant->Vecteurlist[j].point[2];
                 objet_courant->Vecteurlist[j].point[2]=memory;
             }
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3) {
                 memory=objet_courant->Sommetlist[j].point[1];
                 objet_courant->Sommetlist[j].point[1]=objet_courant->Sommetlist[j].point[2];
                 objet_courant->Sommetlist[j].point[2]=memory;
             }
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             memory=objet_courant->Facelist[j].normale_b[1];
             objet_courant->Facelist[j].normale_b[1]=objet_courant->Facelist[j].normale_b[2];
             objet_courant->Facelist[j].normale_b[2]=memory;
@@ -10287,9 +11880,9 @@ void BddInter::XtoYtoZ() {
     Object * objet_courant;
     float memory;
     unsigned int i,j;
-    for(i=0; i<this->Objetlist.size(); i++) {
+    for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
-        for(j=0; j<objet_courant->Vecteurlist.size(); j++) {
+        for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
             if (objet_courant->Vecteurlist[j].point.size() >= 3) {
                 memory=objet_courant->Vecteurlist[j].point[2];
                 objet_courant->Vecteurlist[j].point[2]=objet_courant->Vecteurlist[j].point[1];
@@ -10297,7 +11890,7 @@ void BddInter::XtoYtoZ() {
                 objet_courant->Vecteurlist[j].point[0]=memory;
             }
         }
-        for(j=0; j<objet_courant->Sommetlist.size(); j++) {
+        for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             if (objet_courant->Sommetlist[j].point.size() >= 3) {
                 memory=objet_courant->Sommetlist[j].point[2];
                 objet_courant->Sommetlist[j].point[2]=objet_courant->Sommetlist[j].point[1];
@@ -10305,7 +11898,7 @@ void BddInter::XtoYtoZ() {
                 objet_courant->Sommetlist[j].point[0]=memory;
             }
         }
-        for(j=0; j<objet_courant->Facelist.size(); j++) {
+        for (j=0; j<objet_courant->Facelist.size(); j++) {
             memory=objet_courant->Facelist[j].normale_b[2];
             objet_courant->Facelist[j].normale_b[2]=objet_courant->Facelist[j].normale_b[1];
             objet_courant->Facelist[j].normale_b[1]=objet_courant->Facelist[j].normale_b[0];
@@ -10343,7 +11936,7 @@ void BddInter::Simplification_BDD()
     printf("Tolerance d'egalite des sommets : relative : %8.3f%%, absolue : %7.2e\n",tolerance,epsilon);
     nbp_changes = nbv_changes = 0;
 
-    for(o=0; o<this->Objetlist.size(); o++) {                       // On parcoure tous les objets en mémoire
+    for (o=0; o<this->Objetlist.size(); o++) {                       // On parcoure tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         printf("\nObjet : %s\n",objet_courant->GetName());
         if (objet_courant->deleted) continue ;                      // Ne pas traiter un objet supprimé (mais encore en mémoire), et donc passer au suivant
@@ -10361,13 +11954,13 @@ void BddInter::Simplification_BDD()
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
         int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;      // -1 pour passer d'un numéro de sommet à un indice de sommet
         Point_1  = objet_courant->Sommetlist[ind1].getPoint();      // Coordonnées du 1er sommet de la 1ère facette dans Point_1
-        for(i=1; i<=nb_points; ++i) {                               // Ici, i est un numéro de point (décalé de 1 / indice)
+        for (i=1; i<=nb_points; ++i) {                               // Ici, i est un numéro de point (décalé de 1 / indice)
         //pour chaque point d'un objet
             cpt = 0 ;
             for (k=0 ; k<nbface ; k++ ) {
                 Facette_courante = &(objet_courant->Facelist[k]);
                 nbsom = Facette_courante->Nb_Sommets_F;
-                for (l=0 ; l<nbsom; l++) {
+                for (l=0; l<nbsom; l++) {
                     if (Facette_courante->F_sommets[l] == (int)i) {
                         cpt++ ;         // i est utilisé
                         break ;         // Ne pas continuer
@@ -10384,13 +11977,13 @@ void BddInter::Simplification_BDD()
             }
         }
         if (verbose) printf("\n");
-        for(i=0; i<nb_points; ++i) {
+        for (i=0; i<nb_points; ++i) {
             //pour chaque point d'un objet
 //            objet_courant->Sommetlist[i].toshow = 0 ; // Raz
             Point_i = objet_courant->Sommetlist[i].getPoint();
             if (Point_i.empty()) continue;          // Point vide, non initialisé, non utilisé ?
             cpt = 0;
-            for(j=(i+1); j<(nb_points-nb_modifs); ++j) {
+            for (j=(i+1); j<(nb_points-nb_modifs); ++j) {
             //on regarde si des points de la liste de sommets lui sont égaux (à epsilon près)
                 Point_j = objet_courant->Sommetlist[j].getPoint();
                 if (Point_j.empty()) continue;      // Point vide, non initialisé, non utilisé ?            A Vérifier ... si cela se produit ! Il faudrait l'éliminer plutôt !
@@ -10407,12 +12000,12 @@ void BddInter::Simplification_BDD()
                 modification = true;
                 indic        = false;
 
-                for(j=0; j<cpt; ++j) {
-                    for(k=0; k<nbface; ++k) {
+                for (j=0; j<cpt; ++j) {
+                    for (k=0; k<nbface; ++k) {
                         //on parcourt chaque face de l'objet
                         Facette_courante = &(objet_courant->Facelist[k]);
                         nbsom = Facette_courante->Nb_Sommets_F;
-                        for(l=0; l<nbsom; ++l) {
+                        for (l=0; l<nbsom; ++l) {
                             if (Facette_courante->F_sommets[l] == tabPoints[j]) {
                                 Facette_courante->F_sommets[l] = i+1; // Numéro de sommet et non indice ! décalé de 1 !!
                                 if (verbose) {
@@ -10436,7 +12029,7 @@ void BddInter::Simplification_BDD()
                         //Si les sommets suivants (après le rang j) de tabPoints sont supérieurs
                         //à tabPoints[j], alors on les décrémente aussi, pour que les sommets
                         //corrects soient remplacés
-                        for(m=(j+1); m<cpt; ++m) {
+                        for (m=(j+1); m<cpt; ++m) {
                             if (tabPoints[m] > tabPoints[j]) {
                             //	printf("Dans le tableau de sommet, le sommet %u ",tabPoints[m]);
                                 tabPoints[m] -= 1;
@@ -10498,7 +12091,7 @@ void BddInter::Simplification_BDD()
             }
 //            if (nb_points >= 0) continue ;                          /// pour test <=> désactive la simplification des normales aux sommets qui fait bugguer dans certains cas
 //            printf("Nombre de normales aux sommets (vecteurs) avant le traitement   : %u\n",nb_points);
-            for (k=0; k<nb_points;k++) {
+            for (k=0; k<nb_points; k++) {
                 Point_1 = objet_courant->Vecteurlist[k].getPoint();     // Coordonnées du 1er vecteur dans Point_1
                 if (!Point_1.empty()) break;                            // En fait, on prend la 1ère normale aux sommets qui a été définie
             }
@@ -10510,14 +12103,14 @@ void BddInter::Simplification_BDD()
             nbface = objet_courant->Nb_facettes;
 
             // Pour supprimer les normales non utilisées .... on les marque comme des doublons du 1er vecteur
-            for(i=1; i<=nb_points; ++i) {                           // Ici i est un numéro de vecteur, donc décalé de 1 / indice
+            for (i=1; i<=nb_points; ++i) {                           // Ici i est un numéro de vecteur, donc décalé de 1 / indice
             //pour chaque normale au sommet d'un objet (vecteur au sens SDM)
                 cpt = 0 ;
-                for (k=0 ; k<nbface ; k++ ) {
+                for (k=0; k<nbface; k++ ) {
                     Facette_courante = &(objet_courant->Facelist[k]);
                     Facette_courante->toshow = 0;   // Raz de précaution
                     nbsom = Facette_courante->Nb_Sommets_L;
-                    for (l=0 ; l<nbsom; l++) {
+                    for (l=0; l<nbsom; l++) {
                         if (Facette_courante->L_sommets[l] == (int)i) {
                             cpt++ ;         // i est utilisé
                             break ;         // Ne pas continuer
@@ -10535,12 +12128,12 @@ void BddInter::Simplification_BDD()
                 }
             }
             if (verbose) printf("\n");
-            for(i=0; i<nb_points; ++i) {
+            for (i=0; i<nb_points; ++i) {
                 //pour chaque vecteur d'un objet
                 cpt     = 0;
                 Point_i = objet_courant->Vecteurlist[i].getPoint();
                 if (Point_i.empty()) continue;                      // Ne pas tenir compte des vecteurs vides
-                for(j=(i+1); j<(nb_points-nb_modifs); ++j) {
+                for (j=(i+1); j<(nb_points-nb_modifs); ++j) {
                 //on regarde si des points de la liste de vecteurs lui sont égaux (à epsilon près)
                     if (points_egaux(Point_i, objet_courant->Vecteurlist[j].getPoint(), epsilon)) {
                         tabPoints[cpt++] = j+1; // Numéro de vecteur et non indice ! décalé de 1 !!
@@ -10556,12 +12149,12 @@ void BddInter::Simplification_BDD()
                     modification = true;
                     indic        = false;
 
-                    for(j=0; j<cpt; ++j) {
-                        for(k=0; k<nbface; ++k) {
+                    for (j=0; j<cpt; ++j) {
+                        for (k=0; k<nbface; ++k) {
                             //on parcourt chaque face (luminance) de l'objet
                             Facette_courante = &(objet_courant->Facelist[k]);
                             nbsom = Facette_courante->Nb_Sommets_L;
-                            for(l=0; l<nbsom; ++l) {                // Si la facette n'a pas de normales aux sommets, nbsom vaut 0 et on ne passe pas dans la boucle
+                            for (l=0; l<nbsom; ++l) {                // Si la facette n'a pas de normales aux sommets, nbsom vaut 0 et on ne passe pas dans la boucle
                                 if (Facette_courante->L_sommets[l] == tabPoints[j]) {
                                     Facette_courante->L_sommets[l] = i+1; // Numéro de vecteur et non indice ! décalé de 1 !!
                                     if (verbose) {
@@ -10578,7 +12171,7 @@ void BddInter::Simplification_BDD()
                         }
                         //on traite aussi les sommets qui sont dans tabPoints
                         if (j<(cpt-1)) {
-                            for(m=(j+1); m<cpt; ++m) {
+                            for (m=(j+1); m<cpt; ++m) {
                                 if (tabPoints[m] > tabPoints[j]) {
                                 //	printf("Dans le tableau de vecteurs, le vecteur %u ",tabPoints[m]);
                                     tabPoints[m] -= 1;
@@ -10605,7 +12198,7 @@ void BddInter::Simplification_BDD()
         }
     }   // boucle for sur les objets (o)
 
-    for(o=0; o<this->Objetlist.size(); o++) {                       // On parcourt tous les objets en mémoire
+    for (o=0; o<this->Objetlist.size(); o++) {                       // On parcourt tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                      // Passer au suivant
         GenereTableauPointsFacettes(objet_courant);
@@ -10644,14 +12237,23 @@ void BddInter::Simplification_BDD()
 void BddInter::genereAttributsFacettes(int indiceObjet, int Nb_facettes, int numeroGroupe, int numeroMateriau)
 {
     // Groupes dans Aspect_face
+    Object *Objet_courant;
+
+    Objet_courant = &(this->Objetlist[indiceObjet]);
+    genereAttributsFacettes(Objet_courant, Nb_facettes, numeroGroupe, numeroMateriau);
+}
+
+void BddInter::genereAttributsFacettes(Object *Objet_courant, int Nb_facettes, int numeroGroupe, int numeroMateriau)
+{
+    // Groupes dans Aspect_face
     this->str.clear();
     this->N_elements = Nb_facettes;
-    this->Objetlist[indiceObjet].Nb_aspects = Nb_facettes;
+    Objet_courant->Nb_aspects = Nb_facettes;
 
     this->makeaspect_face();
     for (int i=1; i <= this->N_elements ; i++) {
-        this->Objetlist[indiceObjet].Facelist[i-1].groupe     = numeroGroupe;
-        this->Objetlist[indiceObjet].Facelist[i-1].codmatface = numeroMateriau;
+        Objet_courant->Facelist[i-1].groupe     = numeroGroupe;
+        Objet_courant->Facelist[i-1].codmatface = numeroMateriau;
     }
 }
 
@@ -10659,52 +12261,125 @@ void BddInter::genereLuminances(int indiceObjet, int Nb_facettes)
 {
 // Ici, ce sont les mêmes indices que pour les facettes
 
+    Object * objet_courant;
+
+    objet_courant = &(this->Objetlist[indiceObjet]);
+    genereLuminances(objet_courant, Nb_facettes);
+}
+
+void BddInter::genereLuminances(Object *objet_courant, int Nb_facettes)
+{
+// Ici, ce sont les mêmes indices que pour les facettes
+
     this->str.clear();
     this->N_elements = Nb_facettes;
-    this->Objetlist[indiceObjet].Nb_luminances = Nb_facettes;
+    objet_courant->Nb_luminances = Nb_facettes;
     this->makeluminance();
     int numero = 0;
 
+#pragma omp parallel for
     for (int i=0; i<Nb_facettes; i++) {
-        std::vector<int> NumerosSommets = this->Objetlist[indiceObjet].Facelist[i].getF_sommets();
-        numero++;
-        this->N_elements = numero;
-        this->Set_numeros(NumerosSommets);
-        this->make1luminance();
+//        std::vector<int> NumerosSommets = objet_courant->Facelist[i].getF_sommets();
+//        numero++;
+//        this->N_elements = numero;
+//        this->Set_numeros(NumerosSommets);
+//        this->make1luminance();
+        this->make1luminance(i+1,objet_courant->Facelist[i].getF_sommets());  // OK ici
     }
+}
+
+void BddInter::Calcul_Normale_Barycentre(int indice_objet, int indice_facette) {
+
+// Calcul d'une normale d'une facette d'indice j dans l'objet d'indice i
+// La normale est une "moyenne" si la facette possède plus de 3 points => tolérance aux facettes non planes.
+
+    Face   *Face_ij;
+    Object *Objet_i;
+    float vector1[3];
+    float vector2[3];
+    float mag;
+    std::vector<float> normalf(3,0.0);
+    std::vector< std::vector<float> > normal;
+    std::vector<float> normal1;
+    int n,z;
+    Objet_i = &(this->Objetlist[indice_objet]);
+    Face_ij = &(Objet_i->Facelist[indice_facette]);
+
+    normal1.clear();
+    normal.clear();
+
+    for (n=2; n<(int)Face_ij->F_sommets.size(); n++) {    // n= Face_ij.point.size() nombre de sommets de la facette
+        for (z=0; z<3; z++) {
+            vector1[z]=
+                 Objet_i->Sommetlist[Face_ij->F_sommets[n-1]-1].point[z]
+                -Objet_i->Sommetlist[Face_ij->F_sommets[0]  -1].point[z];       //! Vecteur P1-P0 si n=2, puis P2-P0 si n=3, ...
+            vector2[z]=
+                 Objet_i->Sommetlist[Face_ij->F_sommets[n]-1].point[z]          //! Vecteur P2-P0 si n=2, puis P3-P0 si n=3, ..., Pn-P0 avec n >= 2
+                -Objet_i->Sommetlist[Face_ij->F_sommets[0]-1].point[z];
+        }
+        normal1.push_back(vector1[1]*vector2[2]-vector1[2]*vector2[1]);         //! Calcul de n-2 sous-normales
+        normal1.push_back(vector1[2]*vector2[0]-vector1[0]*vector2[2]);
+        normal1.push_back(vector1[0]*vector2[1]-vector1[1]*vector2[0]);
+        normal.push_back(normal1);
+        normal1.clear();
+    }
+
+    // Calcul d'une normale moyenne : Pb: le vecteur Point1-Point0 a un rôle prépondérant.
+    // Voir si besoin la fonction correspondante dans la version Tcl.
+
+    for (n=0; n<(int)normal.size(); n++) {
+        for (z=0; z<3; z++) normalf[z] += normal[n][z];      // La version originale faisait une moyenne, mais une somme suffit car la normalisation à 1 est faite ci-dessous
+    }
+    mag = sqrt(normalf[0]*normalf[0] + normalf[1]*normalf[1] + normalf[2]*normalf[2]);
+    if (mag != 0.0) for (z=0; z<3; z++) normalf[z] /= mag;   // Normalisation à 1 (si mag différent de 0 !)
+    Face_ij->normale_b = normalf;
+    bdd_modifiee = true ;
 }
 
 void BddInter::genereNormalesFacettes(int indiceObjet, int Nb_facettes)
 {
-// Génère une normale à partir des 3 premiers points de la facette (peut ne pas être suffisant si points doublés, facette très allongée, ...)
+// Génère les normales à partir des 3 premiers points de chaque facette
+// N'est plus utilisé sous cette forme. Cf version avec pointeur sur objet_courant
+    Object * objet_courant;
+
+    objet_courant = &(this->Objetlist[indiceObjet]);
+    genereNormalesFacettes(objet_courant, Nb_facettes);
+}
+
+void BddInter::genereNormalesFacettes(Object *objet_courant, int Nb_facettes)
+{
+// Génère les normales à partir des 3 premiers points de chaque facette (peut ne pas être suffisant si points doublés, facette très allongée, ...)
 // Peut poser des soucis sur des facettes très allongées : voir dans la version Tcl comment est contourné ce problème !
 
-    int numero;
+// ***> Voir éventuellement comment fusionner avec Calcul_Normale_Barycentre. Toutefois, uniquement appelé dans les primitives => donc pas de soucis normalement
+
     std::vector<float> xyz_point;
     std::vector<int>   NumerosSommets;
 
     // Normales aux facettes
     this->str.clear();
     this->N_elements = Nb_facettes;
-    this->Objetlist[indiceObjet].Nb_facettes = Nb_facettes;
+    objet_courant->Nb_facettes = Nb_facettes;
     this->makenormale();
 
-    numero = 0;
+#pragma omp parallel for private(NumerosSommets,xyz_point)
     for (int i=0; i<Nb_facettes; i++) {
-        numero++;
-        this->Objetlist[indiceObjet].Facelist[i].flat = false;   // Sphère ou ellipsoïde => non plat
-        NumerosSommets = this->Objetlist[indiceObjet].Facelist[i].getF_sommets();
-        xyz_point = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[0]-1].getPoint();
+        objet_courant->Facelist[i].flat = false;   // Sphère ou ellipsoïde => non plat
+        NumerosSommets = objet_courant->Facelist[i].getF_sommets();
+        xyz_point = objet_courant->Sommetlist[NumerosSommets[0]-1].getPoint();
         Vector3D P1(xyz_point[0],xyz_point[1],xyz_point[2]);
-        xyz_point = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[1]-1].getPoint();
+        xyz_point = objet_courant->Sommetlist[NumerosSommets[1]-1].getPoint();
         Vector3D P2(xyz_point[0],xyz_point[1],xyz_point[2]);
-        xyz_point = this->Objetlist[indiceObjet].Sommetlist[NumerosSommets[2]-1].getPoint();
+        xyz_point = objet_courant->Sommetlist[NumerosSommets[2]-1].getPoint();
         Vector3D P3(xyz_point[0],xyz_point[1],xyz_point[2]);
         P1 -= P3;
         P2 -= P3;
         Vector3D Vn = P1.crossProduct(P2);
         Vn.normalize();
-        this->N_elements=numero; this->Setxyz(Vn.X,Vn.Y,Vn.Z); this->make1normale();
+#pragma omp critical
+{
+        this->N_elements=i+1; this->Setxyz(Vn.X,Vn.Y,Vn.Z); this->make1normale();
+}
     }
 }
 
@@ -10935,13 +12610,16 @@ void BddInter::GenereNormale_1_Sommet(Object *current_objet, unsigned int indice
     Vector3D v1, v2, vp, np;
     Face cur_fac;
     int  NbFacettes;
+    Points *p_Point;
 
-    test_np   = false ;
+    test_np = false ;
     np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                               // Initialisation
 
-    NbFacettes = current_objet->Pointslist[indice_point].IndicesFacettes.size();
-    for (k=0; k < NbFacettes ; k++) {
-        nfac    = current_objet->Pointslist[indice_point].IndicesFacettes[k] ;
+    p_Point    = &(current_objet->Pointslist[indice_point]);
+    NbFacettes = p_Point->IndicesFacettes.size();
+////#pragma omp parallel for private(nfac,cur_fac,nbs,coef,pa,pb,pc,v1,v2,vp,k2) // Pas très intéressant ici car NbFacettes petit en général et appel depuis GenereNormalesAuxSommets
+    for (k=0; k < NbFacettes; k++) {
+        nfac    = p_Point->IndicesFacettes[k] ;
         cur_fac = current_objet->Facelist[nfac];
         nbs     = cur_fac.Nb_Sommets_F;
 // ATTENTION : si vecteur + son opposé => Norme nulle !! cas de 2 facettes confondues (dessus et dessous) ...
@@ -10971,7 +12649,7 @@ void BddInter::GenereNormale_1_Sommet(Object *current_objet, unsigned int indice
         pa   = current_objet->Sommetlist[cur_fac.F_sommets[0]-1].getPoint() ;
         pb   = current_objet->Sommetlist[cur_fac.F_sommets[1]-1].getPoint() ;
         v1.X    = (double)(pb[0] - pa[0]); v1.Y = (double)(pb[1] - pa[1]); v1.Z = (double)(pb[2] - pa[2]);
-        for (k2=2 ; k2 < nbs ; k2++) {
+        for (k2=2; k2 < nbs; k2++) {
             pc = current_objet->Sommetlist[cur_fac.F_sommets[k2]-1].getPoint() ;
 //            v2 = SoustractionPoint(pc,pa) ;
             v2.X = (double)(pc[0] - pa[0]); v2.Y = (double)(pc[1] - pa[1]); v2.Z = (double)(pc[2] - pa[2]);
@@ -11013,8 +12691,9 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
     objet_courant = &(this->Objetlist[o]) ;
     objet_courant->Vecteurlist.clear();         // On remet à 0 la liste de vecteurs (normales aux sommets)
     objet_courant->Vecteurlist.resize(nb_p);    // La liste des vecteurs a donc la même dimension que la liste de sommets
-    for (indice_point=0 ; indice_point < nb_p ; indice_point++) {
-        if ((indice_point%500000) == 0 && verbose) { // 500 à l'origine, histoire de faire patienter, mais n'est plus très utile maintenant.
+#pragma omp parallel for
+    for (indice_point=0; indice_point < nb_p; indice_point++) {
+        if ((indice_point%500000) == 0 && verbose) { // 500 à l'origine, histoire de faire patienter, mais n'est plus très utile maintenant.(encore + avec omp !!)
             sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d",
                     objet_courant->GetValue(), indice_point);
             printf(utf8_To_ibm(Message));
@@ -11025,7 +12704,9 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
                                                                             // => synchroniser les numéros de sommets des facettes et des luminances
     }
     // Recopie des numéros de sommets de facettes dans numéros de sommets des luminances (doivent être les mêmes du fait de l'appel à GenereNormale_1_Sommet ci-dessus !)
-    for (unsigned int nfac=0; nfac<objet_courant->Facelist.size(); nfac++) {    // <=> Nb_facettes
+    unsigned nb_fac = objet_courant->Facelist.size();
+#pragma omp parallel for private(facette_courante)
+    for (unsigned int nfac=0; nfac<nb_fac; nfac++) {    // <=> Nb_facettes
         facette_courante = &(objet_courant->Facelist[nfac]);
         facette_courante->L_sommets.clear();                                // Pas sûr que ce soit utile (libération de la mémoire)
         facette_courante->L_sommets    = facette_courante->F_sommets;
@@ -11033,7 +12714,8 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
     }
     if (verbose) {
         sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d\n",
-                objet_courant->GetValue(), indice_point);
+                objet_courant->GetValue(), nb_p);
+//                objet_courant->GetValue(), indice_point);
         printf(utf8_To_ibm(Message));
 //        printf("\rCalcul des normales aux sommets de l'objet %2d : %8d\n", objet_courant->GetValue(), indice_point);
     }
@@ -11046,12 +12728,14 @@ bool BddInter::compare_normales(int objet, int face_1, int face_2) {
 // On pourrait paramétrer cette valeur dans Préférences et/ou directement dans Sélection et déplacements
 
     std::vector<float> n1, n2;
+    Object *Objet_courant;
 
     const float seuil=0.5;//707f; // 0.707 = cos(45°) , 0.5 = cos(60°)
     float prod;
 
-    n1   = this->Objetlist[objet].Facelist[face_1].getNormale_b();
-    n2   = this->Objetlist[objet].Facelist[face_2].getNormale_b();
+    Objet_courant = &(this->Objetlist[objet]);
+    n1   = Objet_courant->Facelist[face_1].getNormale_b();
+    n2   = Objet_courant->Facelist[face_2].getNormale_b();
     prod = produit_scalaire(n1,n2);
 
     if (prod > seuil) return true; // L'angle entre les 2 normales est < acos(seuil)
@@ -11086,11 +12770,11 @@ void BddInter::simplification_doublons_points(unsigned int objet)
 
     objet_courant = &(this->Objetlist[objet]) ;
 
-	for(i=0; i<objet_courant->Nb_facettes; ++i) {
-        facette   = &(objet_courant->Facelist[i]);
+	for (i=0; i<objet_courant->Nb_facettes; ++i) {
+        facette = &(objet_courant->Facelist[i]);
 		nbsom   = facette->Nb_Sommets_F;
-		for(j=0; j<nbsom; ++j) {
-			for(k=0; k<nbsom; ++k) { // Faut-il reprendre à partir de 0 ou seulement de j+1 ?
+		for (j=0; j<nbsom; ++j) {
+			for (k=0; k<nbsom; ++k) { // Faut-il reprendre à partir de 0 ou seulement de j+1 ?
 				if(k!=j) {
 					if(facette->F_sommets[j] == facette->F_sommets[k] ) {
                         test = false;                               // true si pas de normales aux sommets ???
@@ -11127,7 +12811,7 @@ void BddInter::simplification_facettes(unsigned int objet)
 
 	nbface  = objet_courant->Nb_facettes;
 	decalage=0 ;
-	for(i=0; i<nbface; ++i)	{
+	for (i=0; i<nbface; ++i)	{
         objet_courant->Facelist[i].toshow = 0;              // Raz de cette valeur pour éviter qu'un éventuel futur Undo de souder trouve quelque chose à faire !
 		if(objet_courant->Facelist[i].Nb_Sommets_F < 3) {
 		/* On supprime la facette i */
@@ -11150,13 +12834,19 @@ void BddInter::simplification_facettes(unsigned int objet)
 	}
 }
 
-void BddInter::GenereListeGroupesMateriaux(unsigned int objet)
+void BddInter::GenereListeGroupesMateriaux(unsigned int indice_objet)
 {
-    Object      * objet_courant;
+    Object *objet_courant;
+
+    objet_courant = &(this->Objetlist[indice_objet]) ;
+    GenereListeGroupesMateriaux(objet_courant);
+}
+
+void BddInter::GenereListeGroupesMateriaux(Object *objet_courant)
+{
     unsigned int indice;
     int groupe, materiau;
 
-    objet_courant = &(this->Objetlist[objet]) ;
     for (indice=0; indice < objet_courant->Nb_facettes; indice++) {
         groupe = objet_courant->Facelist[indice].groupe;
         auto it = std::find(listeGroupes.begin(),listeGroupes.end(),groupe);    // Est-il déjà dans la liste ?
@@ -11224,7 +12914,7 @@ void BddInter::Selection_rectangle (GLint xa, GLint ya)
 // Via tirage aléatoire, mais pas beaucoup mieux !
 //	srand (time(NULL));
 //	nb_points*=2;
-//    for (i=0;i<nb_points;i++) {
+//    for (i=0; i<nb_points; i++) {
 //        Cursor_X = Cursor_X0 + float(rand())/RAND_MAX*select_largeur;
 //        Cursor_Y = Cursor_Y0 + float(rand())/RAND_MAX*select_hauteur;
 //        testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;

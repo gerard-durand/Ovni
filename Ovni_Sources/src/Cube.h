@@ -83,11 +83,10 @@ class Cube: public wxDialog
 		float arete;
 
 		void genereCube();
-		void genereFacettes(BddInter*, int);
-		void genereSommets(BddInter*, int);
-        void genereNormalesFacettes(BddInter*, int);
-        void genereLuminances(BddInter*, int);
-        void genereNormalesSommets(BddInter*, int);
+		void genereFacettes(BddInter*, Object*);//int);
+		void genereSommets (BddInter*, Object*);//int);
+//      void genereLuminances      (BddInter*, int);
+//      void genereNormalesSommets (BddInter*, int);
 
 		DECLARE_EVENT_TABLE()
 };

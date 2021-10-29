@@ -85,7 +85,7 @@ void Icosaedre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Icosaedre::genereNormalesSommets(BddInter* Element, unsigned int indiceObjet)
+void Icosaedre::genereNormalesSommets(BddInter* Element, Object * p_Objet)
 {
     int i, numero;
     std::vector<float> xyz_sommet;
@@ -94,13 +94,13 @@ void Icosaedre::genereNormalesSommets(BddInter* Element, unsigned int indiceObje
     int NbPoints = (Element->Objetlist.end()-1)->Nb_sommets;
     Element->str.clear();
     Element->N_elements = NbPoints;
-    Element->Objetlist[indiceObjet].Nb_normales = NbPoints;
+    p_Objet->Nb_normales = NbPoints;
     Element->makevecteur();
 
     Element->N_elements = 3;
     numero = 1;
     for (i=0; i<NbPoints ; i++) {
-        xyz_sommet = Element->Objetlist[indiceObjet].Sommetlist[i].getPoint();
+        xyz_sommet = p_Objet->Sommetlist[i].getPoint();
         Vector3D Vs(xyz_sommet[0]-Xc, xyz_sommet[1]-Yc, xyz_sommet[2]-Zc);
         Vs.normalize();
         Element->N_elements = numero;
@@ -111,7 +111,7 @@ void Icosaedre::genereNormalesSommets(BddInter* Element, unsigned int indiceObje
 
 }
 
-void Icosaedre::genereSommets(BddInter* Element, int indiceObjet)
+void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
 {
 // Génère un icosaèdre, via des points sur une sphère de rayon donné
 // NOTE : cette figure peut servir de point de départ à une génération de sphère en subdivisant les arêtes de façon récursive
@@ -130,7 +130,7 @@ void Icosaedre::genereSommets(BddInter* Element, int indiceObjet)
     Element->N_elements = NbPoints;
     Element->makesommet();
 
-    Element->Objetlist[indiceObjet].Nb_sommets = NbPoints;
+    p_Objet->Nb_sommets = NbPoints;
 
     // Pôle Nord
     numero = 1;
@@ -138,7 +138,7 @@ void Icosaedre::genereSommets(BddInter* Element, int indiceObjet)
     Element->Setxyz(Xc, Yc+rayon, Zc);
     Element->make1sommet();
 
-    phi   = M_PI_2 - atan(0.5) ;    // Phi n'est pas la latitude ici : latitude = +- artan(1/2)
+    phi   = M_PI/2 - atan(0.5) ;    // Phi n'est pas la latitude ici : latitude = +- artan(1/2) M_PI_2 = M_PI/2 mais seulement pour Gnu C
     s_phi = sin(phi);
     c_phi = cos(phi);
 
@@ -173,6 +173,7 @@ void Icosaedre::genereIcosaedre()
 
     wxString num_obj;
     int new_num;
+    Object *p_Objet;
 
     if (Element->Objetlist.size() == 0)
         new_num = 1;
@@ -192,16 +193,20 @@ void Icosaedre::genereIcosaedre()
 
     bool New_typeSphere = false;
     Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
-    genereSommets(Element, indiceObjet);
-    Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
-    Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
-    Element->genereLuminances(indiceObjet, Nb_facettes);
-    Element->Objetlist[indiceObjet].flat = false; // Si true, vrai Icosaèdre à facettes planes
-    genereNormalesSommets(Element, indiceObjet);
 
-    Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
-    Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);
-    Element->GenereListeGroupesMateriaux(indiceObjet);
+    p_Objet = &(Element->Objetlist[indiceObjet]);
+
+    genereSommets(Element, p_Objet);
+    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
+    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Element->genereLuminances(p_Objet, Nb_facettes);
+    p_Objet->flat = false; // Si true, vrai Icosaèdre à facettes planes
+    genereNormalesSommets(Element, p_Objet);
+
+    Element->GenereTableauPointsFacettes(p_Objet);
+    Element->GenereTableauAretes_OK = true;
+    Element->GenereTableauAretes(p_Objet);
+    Element->GenereListeGroupesMateriaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }

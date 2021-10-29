@@ -123,7 +123,7 @@ void TestGLCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))
 
 void TestGLCanvas::OnMouse(wxMouseEvent& event)
 {
-// Déplacement de la souris
+// DÃ©placement de la souris
     if (event.Dragging()) {
         wxSize sz(GetClientSize());
 
@@ -135,15 +135,15 @@ void TestGLCanvas::OnMouse(wxMouseEvent& event)
          (2.0*m_gldata.beginx - sz.x) / sz.x,
          (sz.y - 2.0*m_gldata.beginy) / sz.y,
          (2.0*event.GetX() - sz.x)    / sz.x,
-         (sz.y - 2.0*event.GetY())    / sz.y); // Pour augmenter la sensibilité, multiplier par 2 ou 3 chacune des 4 valeurs
+         (sz.y - 2.0*event.GetY())    / sz.y); // Pour augmenter la sensibilitÃ©, multiplier par 2 ou 3 chacune des 4 valeurs
 
      add_quats(spin_quat, m_gldata.quat, m_gldata.quat);
 
  } else {
 
      /* Mode rotation directe : seulement 2 axes possibles, ici X et Y */
-/*   m_gldata.roty += (float)(event.GetX()-m_gldata.beginx)/(float)sz.x*120.; // Amplitude totale fenêtre = 120°
-   m_gldata.rotx += (float)(event.GetY()-m_gldata.beginy)/(float)sz.y*120.; // a peu près compatible de Trackball
+/*   m_gldata.roty += (float)(event.GetX()-m_gldata.beginx)/(float)sz.x*120.; // Amplitude totale fenÃªtre = 120Â°
+   m_gldata.rotx += (float)(event.GetY()-m_gldata.beginy)/(float)sz.y*120.; // a peu prÃ¨s compatible de Trackball
 }
 
 /* orientation has changed, redraw mesh */
@@ -189,7 +189,7 @@ event.Skip();
     long evkey = event.GetKeyCode();
     if (evkey == 0) return;
 
-// Décodage de la Touche
+// DÃ©codage de la Touche
     switch (evkey) {
 // Zoom -
         case WXK_NUMPAD_SUBTRACT:       // Touche - du Numpad ou 0x0186
@@ -198,7 +198,7 @@ event.Skip();
             break;
         case 0x0036:                    // Touche 6 (ou -)
 //        case '-':     // ne marche pas en fait !
-            if (!event.ShiftDown()) {   // Ne retenir cette touche que si Shift NON enfoncée
+            if (!event.ShiftDown()) {   // Ne retenir cette touche que si Shift NON enfoncÃ©e
                 m_gldata.zoom += 1.0;
                 test=1;
             }
@@ -210,16 +210,16 @@ event.Skip();
             break;
         case 0x002b:                    // Touche + (ou = )
 //        case '+':
-            if (event.ShiftDown()) {    // Ne retenir cette touche que si Shift enfoncée
+            if (event.ShiftDown()) {    // Ne retenir cette touche que si Shift enfoncÃ©e
                 m_gldata.zoom -= 1.0;
                 test=1;
             }
             break;
-// Déplacement ou Rotation
+// DÃ©placement ou Rotation
 // Vers la droite
-        case WXK_RIGHT:         // Flèche droite ou 0x013c (défini dans defs.h, wxKeyCode : non unicode)
-        case WXK_NUMPAD_RIGHT:  // Flèche droite du Numpad (si Num Lock non enfoncé) ou 0x017a
-            if (event.ShiftDown()) {    // Si touche Shift enfoncée => Déplacement
+        case WXK_RIGHT:         // FlÃ¨che droite ou 0x013c (dÃ©fini dans defs.h, wxKeyCode : non unicode)
+        case WXK_NUMPAD_RIGHT:  // FlÃ¨che droite du Numpad (si Num Lock non enfoncÃ©) ou 0x017a
+            if (event.ShiftDown()) {    // Si touche Shift enfoncÃ©e => DÃ©placement
                 m_gldata.posx += 1.0f;
             } else {                    // Sinon Rotation
                 if (m_gldata.mode_Trackball) {
@@ -232,8 +232,8 @@ event.Skip();
             test=2;
             break;
 // Vers la gauche
-        case WXK_LEFT:          // Flèche gauche ou 0x013a
-        case WXK_NUMPAD_LEFT:   // Flèche gauche du Numpad (si Num Lock non enfoncé) ou 0x0178
+        case WXK_LEFT:          // FlÃ¨che gauche ou 0x013a
+        case WXK_NUMPAD_LEFT:   // FlÃ¨che gauche du Numpad (si Num Lock non enfoncÃ©) ou 0x0178
             if (event.ShiftDown()) {
                 m_gldata.posx -= 1.0f;
             } else {
@@ -247,8 +247,8 @@ event.Skip();
             test=2;
             break;
 // Vers le haut
-        case WXK_UP:            // Flèche haut ou 0x013b
-        case WXK_NUMPAD_UP:     // Flèche haut du Numpad (si Num Lock non enfoncé) ou 0x0179
+        case WXK_UP:            // FlÃ¨che haut ou 0x013b
+        case WXK_NUMPAD_UP:     // FlÃ¨che haut du Numpad (si Num Lock non enfoncÃ©) ou 0x0179
             if (event.ShiftDown()) {
                 m_gldata.posy += 1.0f;
             } else {
@@ -262,8 +262,8 @@ event.Skip();
             test=2;
             break;
  // Vers le bas
-        case WXK_DOWN:          // Flèche bas ou 0x013d
-        case WXK_NUMPAD_DOWN:   // Flèche bas du Numpad (si Num Lock non enfoncé) ou 0x017b
+        case WXK_DOWN:          // FlÃ¨che bas ou 0x013d
+        case WXK_NUMPAD_DOWN:   // FlÃ¨che bas du Numpad (si Num Lock non enfoncÃ©) ou 0x017b
             if (event.ShiftDown()) {
                 m_gldata.posy -= 1.0f;
             } else {
@@ -299,7 +299,7 @@ event.Skip();
             if (m_gldata.mode_Trackball) {
                 printf("Mode Trackball\n");
 
-            // Calcul du quaternion d'après les rotations dans l'ordre Z, Y et X
+            // Calcul du quaternion d'aprÃ¨s les rotations dans l'ordre Z, Y et X
                 vset(a,0.,0.,1.);
                 axis_to_quat(a,+m_gldata.rotz/to_Deg,m_gldata.quat);
 
@@ -317,7 +317,7 @@ event.Skip();
 /*      } else {
           printf("Mode Rotation directe\n");
 
-      // Calcul des rotations à partir de la matrice MODELVIEW
+      // Calcul des rotations Ã  partir de la matrice MODELVIEW
           CalculAngles(m_gldata.rotx,m_gldata.roty,m_gldata.rotz);
   /*        float q_r[4];
 
@@ -335,7 +335,7 @@ event.Skip();
           printf("%8.4f %8.4f %8.4f %8.4f\n",m_gldata.quat[0],m_gldata.quat[1],m_gldata.quat[2],m_gldata.quat[3]);
           printf("%8.4f %8.4f %8.4f %8.4f\n",q_r[0],q_r[1],q_r[2],q_r[3]);*/
 // }
-/*       test=1; // Forcer un Refresh (ne devrait rien changer sur l'écran ....)
+/*       test=1; // Forcer un Refresh (ne devrait rien changer sur l'Ã©cran ....)
        break;
 // Afficher la Matrice et les angles
    case 'm':
@@ -360,12 +360,12 @@ event.Skip();
          printf("beta  %8.3f deg.\n",beta);
          printf("gamma %8.3f deg.\n",gamma);
          break;
-// Quitter par les touches Q ou Escape (en plus de Alt-X déjà programmé et les icônes X de fermeture)
+// Quitter par les touches Q ou Escape (en plus de Alt-X dÃ©jÃ  programmÃ© et les icÃ´nes X de fermeture)
      case 'Q':
      case WXK_ESCAPE:
          wxTheApp->ExitMainLoop();
          break;
-// Touche non reconnue : rien de spécial à faire (sauf l'afficher)
+// Touche non reconnue : rien de spÃ©cial Ã  faire (sauf l'afficher)
      default:
          if (evkey != 0x0132 && evkey != 0x0133 && evkey != 0x0134 ) { // on passe si Shift, Alt ou Ctrl
 /*            wxString p;
@@ -373,13 +373,13 @@ event.Skip();
              std::cout << "code : " << evkey << ", " << (char)evkey << ", " ;
              for (int i=0; p[i] != 0 ; ++i) std::cout << (char)p[i] ; // On doit pouvoir faire mieux !!!
              std::cout<< std::endl; */
-// La même chose en + facile !
+// La mÃªme chose en + facile !
 /*           printf("code : %3d, %c, %#06x\n", (int)evkey,char(evkey),(int)evkey);
        }
        break;
 }
 
-if (test) { // Quelque chose à changé (rotation, déplacement, Zoom). Il faut redessiner la fenêtre OpenGL
+if (test) { // Quelque chose Ã  changÃ© (rotation, dÃ©placement, Zoom). Il faut redessiner la fenÃªtre OpenGL
    if (test == 1) ResetProjectionMode();
    Refresh(false);
 }
@@ -391,7 +391,7 @@ event.Skip();
 /*void TestGLCanvas::CalculAngles(float &alpha, float &beta, float &gamma)
 {
 
-// D'après Matrix and Quaternions (http://www.flipcode.com/documents/matrfaq.html, Question 37)
+// D'aprÃ¨s Matrix and Quaternions (http://www.flipcode.com/documents/matrfaq.html, Question 37)
 
 double sin_beta, cos_beta ;
 GLfloat m[16];
@@ -404,20 +404,20 @@ glGetFloatv(GL_MODELVIEW_MATRIX, m);
        printf("%8.3f %8.3f %8.3f %8.3f\n", m[3],m[7],m[11],m[15]) ;*/
 
 /*  sin_beta = -m[2];
-  beta = asin(sin_beta)*to_Deg;                   // suffisant car -90 <= beta <= 90°
+  beta = asin(sin_beta)*to_Deg;                   // suffisant car -90 <= beta <= 90Â°
   cos_beta = sqrt(1.0f-sin_beta*sin_beta);        // cos_beta est donc toujours >= 0
 
-  if (fabs(cos_beta) > 0.0005f) {                 // En fait <> 0. mais ici avec une certaine tolérance
-                                                  // Signes changés / article ... + au lieu de -
+  if (fabs(cos_beta) > 0.0005f) {                 // En fait <> 0. mais ici avec une certaine tolÃ©rance
+                                                  // Signes changÃ©s / article ... + au lieu de -
       alpha=atan2(+m[6],m[10])*to_Deg;            // en fait -m[6]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
       gamma=atan2(+m[1],m[0] )*to_Deg;            // Idem
-  } else {                                        // ici sin(beta) = 1 ou -1 (à epsilon près)
+  } else {                                        // ici sin(beta) = 1 ou -1 (Ã  epsilon prÃ¨s)
       beta =( sin_beta < 0.0f ? -90.0f : +90.0f); // Forcer la valeur de beta
-      alpha=0.0f;                                 // Cas dégénéré (Gimball lock => alpha et gamma sur le même axe)
+      alpha=0.0f;                                 // Cas dÃ©gÃ©nÃ©rÃ© (Gimball lock => alpha et gamma sur le mÃªme axe)
       gamma=atan2(-m[4],m[5]);
       gamma=gamma*to_Deg;
   }
-  Clamp(alpha,0.0f,360.0f);   // Recadrer les angles dans l'intervalle [0,360°[
+  Clamp(alpha,0.0f,360.0f);   // Recadrer les angles dans l'intervalle [0,360Â°[
   Clamp(beta ,0.0f,360.0f);
   Clamp(gamma,0.0f,360.0f);
 }
@@ -425,7 +425,7 @@ glGetFloatv(GL_MODELVIEW_MATRIX, m);
 /*void TestGLCanvas::Clamp(float &angle, const float vmin, const float vmax)
 {
 // Recadre les valeurs de angle dans l'intervalle [vmin, vmax[
-// ATTENTION : si vmin vmax mal entré, peut boucler à l'infini....
+// ATTENTION : si vmin vmax mal entrÃ©, peut boucler Ã  l'infini....
   float ampl=vmax-vmin;
   while(angle <  vmin) angle+=ampl;
   while(angle >= vmax) angle-=ampl;
@@ -449,7 +449,7 @@ void TestGLCanvas::InitGL()
 
    /* speedups */
 /*  glEnable(GL_DITHER);
-  glShadeModel(GL_SMOOTH);                // En fait le modèle penguin est GL_FLAT (pas de normales aux sommets ?)
+  glShadeModel(GL_SMOOTH);                // En fait le modÃ¨le penguin est GL_FLAT (pas de normales aux sommets ?)
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
   glHint(GL_POLYGON_SMOOTH_HINT, GL_FASTEST);
 

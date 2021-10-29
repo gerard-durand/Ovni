@@ -47,7 +47,7 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Create(parent, id, _T("Propriétés de la Bdd"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
 	SetClientSize(wxSize(335,463));
 	Move(wxDefaultPosition);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Fichier(s) de base de données :"), wxPoint(0,1), wxSize(335,20), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Fichier(s) de base de données :"), wxPoint(0,1), wxSize(336,20), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetMinSize(wxSize(325,20));
 	StaticText1->SetMaxSize(wxSize(325,20));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));

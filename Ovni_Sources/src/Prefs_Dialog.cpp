@@ -215,7 +215,6 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer3->Add(Button_OK, 1, wxALL|wxALIGN_BOTTOM, 5);
 	BoxSizer1->Add(BoxSizer3, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL, 5);
 	SetSizer(BoxSizer1);
-	BoxSizer1->Fit(this);
 	BoxSizer1->SetSizeHints(this);
 
 	Connect(ID_SPINCTRLDOUBLE1,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrlDouble_axesChange);

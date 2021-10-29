@@ -92,11 +92,10 @@ class Cylindre: public wxDialog
 		int   n_secteurs;
 
 		void genereCylindre();
-		void genereFacettes(BddInter*, int);
-		void genereSommets(BddInter*, int);
-        void genereNormalesFacettes(BddInter*, int);
-        void genereLuminances(BddInter*, int);
-        void genereNormalesSommets(BddInter*, int);
+		void genereFacettes        (BddInter*, Object*);
+		void genereSommets         (BddInter*, Object*);
+        void genereLuminances      (BddInter*);
+        void genereNormalesSommets (BddInter*, Object*);
 
 		DECLARE_EVENT_TABLE()
 };

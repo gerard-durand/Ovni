@@ -1,4 +1,4 @@
-#include "Cone.h"
+﻿#include "Cone.h"
 #include "vector3d.h"
 
 //(*InternalHeaders(Cone)
@@ -97,7 +97,7 @@ void Cone::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cone::genereSommets(BddInter* Element, int indiceObjet)
+void Cone::genereSommets(BddInter* Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -113,7 +113,7 @@ void Cone::genereSommets(BddInter* Element, int indiceObjet)
     Element->N_elements = NbSommets;
     Element->makesommet();
 
-    Element->Objetlist[indiceObjet].Nb_sommets = NbSommets;
+    p_Objet->Nb_sommets = NbSommets;
 
     // Sommets du/des cercles générateurs
     numero = 1;
@@ -128,28 +128,48 @@ void Cone::genereSommets(BddInter* Element, int indiceObjet)
             numero++;
         }
 		Xp += XStep;                // Plans suivants
-}
+    }
     // Sommet du cône
     Element->N_elements=numero; Element->Setxyz(Xc+longueur/2,Yc,Zc); Element->make1sommet();
 
 }
 
-void Cone::genereLuminances(BddInter* Element, int indiceObjet)
+// Si TRUE secteur du sommet à 3 points, si FALSE, secteur du sommet à 4 points dont 1 doublé
+#define Last_3Points TRUE
+//#define Last_3Points FALSE
+
+void Cone::genereLuminances(BddInter* Element)
 {
     wxString str_loc;
-    int numero,i1,i,j;
+    int numero,i1,i,j,i2;
 
     Element->str.clear();
     Element->N_elements = NbPoints*n_slices;
     if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
+#if Last_3Points
+    i2 = NbPoints+1;
+    bool last_j = false;
+    int  last_secteur = n_secteurs-1;
+#endif
     Element->makeluminance();
     numero= 1;
 
-// Traité comme un cylindre, y compris sur les facettes contenant le sommet du cône, car considérées à 4 points (sommet doublé !)
+// Traité comme un cylindre, y compris sur les facettes contenant le sommet du cône si Last_3Points est FALSE, car considérées à 4 points (sommet doublé !)
+// si Last_3Points est TRUE sedrnier secteurs à 3 points seulement
+
     for (j=0; j < n_secteurs ; j++) {
+#if Last_3Points
+        if (j == last_secteur) last_j = true;
+#endif
         for (i=1; i <= NbPoints ; i++) {
             i1 = i+1 ; if (i1 > NbPoints) i1=1;
-            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i,i1,i1,i) ; Element->make1luminance();
+#if Last_3Points
+            if (last_j)
+                Element->str.Printf(_T("%d 3 %d %d %d"),numero,i,i1,i2++) ;   // ici, dernier secteur avec 3 points
+            else
+#endif
+                Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i,i1,i1,i) ;
+            Element->make1luminance();
             numero++;
         }
     }
@@ -161,7 +181,7 @@ void Cone::genereLuminances(BddInter* Element, int indiceObjet)
     }
 }
 
-void Cone::genereNormalesSommets(BddInter* Element, int indiceObjet)
+void Cone::genereNormalesSommets(BddInter* Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -176,8 +196,10 @@ void Cone::genereNormalesSommets(BddInter* Element, int indiceObjet)
     Element->str.clear();
     Element->N_elements = NbPoints;
     if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
-
-    Element->Objetlist[indiceObjet].Nb_vecteurs = Element->N_elements;
+#if Last_3Points
+    Element->N_elements += NbPoints;    // Place pour NbPoints normales aux sommets supplémentaires, égales aux normales au barycentre de chaque facette
+#endif
+    p_Objet->Nb_vecteurs = Element->N_elements;
     Element->makevecteur();
     numero= 1;
     angle = 0.;
@@ -187,15 +209,23 @@ void Cone::genereNormalesSommets(BddInter* Element, int indiceObjet)
         angle += pas_angle;
         numero++;
 	}
+#if Last_3Points
+    std::vector <float> Normale3;
+    for (int i=0; i<NbPoints; i++) {
+        Normale3 = p_Objet->Facelist[i].getNormale_b();         // Récupérer la normale au barycentre de la facette
+        Element->N_elements=numero++;
+        Element->Setxyz(Normale3[0],Normale3[1],Normale3[2]);   // En faire une normale au sommet du cône
+        Element->make1vecteur();
+    }
+#endif
     if (CheckBox_FermerCone->IsChecked()) {
-        Element->N_elements=numero;
+        Element->N_elements=numero++;
         Element->Setxyz(-1.,0.,0.);
         Element->make1vecteur();
     }
 }
 
-//void Cone::genereFacettes(OvniFrame* MAIN, int indiceObjet)
-void Cone::genereFacettes(BddInter* Element, int indiceObjet)
+void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -207,7 +237,7 @@ void Cone::genereFacettes(BddInter* Element, int indiceObjet)
     if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
     Element->makeface();
 
-    Element->Objetlist[indiceObjet].Nb_facettes = Element->N_elements;
+    p_Objet->Nb_facettes = Element->N_elements;
     numero = 1;
 
     // Facettes à 4 points (inter-secteurs)
@@ -229,7 +259,11 @@ void Cone::genereFacettes(BddInter* Element, int indiceObjet)
         i1 = i+1 ; if (i1 > NbPoints) i1 = 1;
         i0 = i+istep;
         i1 += istep;
+#if Last_3Points
+        Element->str.Printf(_T("%d 3 %d %d %d"),numero,i0,i1,i2);  // Sommet non doublé => traiter les luminances pour 3 valeurs à la dernière itération en j
+#else
         Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i1,i2,i2);  // Sommet doublé : n'est pas optimal mais évite des soucis en cas de recalcul des normales
+#endif
         Element->make1face();
         numero++;
 	}
@@ -246,6 +280,7 @@ void Cone::genereCone()
 {
     wxString num_obj;
     int new_num;
+    Object *p_Objet;
 
     BddInter* Element = MAIN->Element;
 
@@ -271,17 +306,21 @@ void Cone::genereCone()
     int Nb_facettes = NbPoints*n_secteurs ;
     if (CheckBox_FermerCone->IsChecked()) Nb_facettes +=1;
 
-    genereFacettes(Element, indiceObjet);
-    genereSommets (Element, indiceObjet);
-    Element->genereNormalesFacettes (indiceObjet, Nb_facettes);
-    Element->genereAttributsFacettes(indiceObjet, Nb_facettes, numeroGroupe, numeroMateriau);
-    genereLuminances(Element, indiceObjet);
-    Element->Objetlist[indiceObjet].flat = false;
-    genereNormalesSommets(Element, indiceObjet);
+    p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    Element->GenereTableauPointsFacettes(&Element->Objetlist[indiceObjet]);
-    Element->GenereTableauAretes(&Element->Objetlist[indiceObjet]);
-    Element->GenereListeGroupesMateriaux(indiceObjet);
+    genereSommets (Element, p_Objet);
+    genereFacettes(Element, p_Objet);
+
+    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
+    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    genereNormalesSommets(Element, p_Objet);
+    genereLuminances(Element);
+    p_Objet->flat = false;
+
+    Element->GenereTableauPointsFacettes(p_Objet);
+    Element->GenereTableauAretes_OK = true;
+    Element->GenereTableauAretes(p_Objet);
+    Element->GenereListeGroupesMateriaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }

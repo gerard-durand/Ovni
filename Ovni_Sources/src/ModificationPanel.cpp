@@ -163,8 +163,8 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
 
 // RAZ de l'attribut "selected" des facettes en entrée
-    for(o=0; o<Element->Objetlist.size(); o++) {
-        for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
+    for (o=0; o<Element->Objetlist.size(); o++) {
+        for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
     }
 }
 
@@ -217,8 +217,8 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
 //    printf("mode_selection : %d %d\n",old_mode_selection,Element->mode_selection);
 
 // RAZ l'attribut "selected" des facettes en sortie (par précaution)
-    for(o=0; o<Element->Objetlist.size(); o++) {
-        for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
+    for (o=0; o<Element->Objetlist.size(); o++) {
+        for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
     }
     Hide();
     // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser GenereTableauPointsFacettes et GenereTableauAretes
@@ -378,7 +378,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 
     methode_triangulation = Element->methode_Triangulation;
     printf("Methode de Triangulation numero %d\n",methode_triangulation+1);
-    for(o=0; o<Element->Objetlist.size(); o++) {
+    for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
         if (objet_courant->deleted) continue;   // Objet supprimé mais encore en mémoire => passer au suivant
         nb_facettes_loc = objet_courant->Facelist.size();
@@ -389,7 +389,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
         new_points = 0;
         new_numero_facette = nb_facettes_loc ;
         IndicesFacettes.clear();
-        for(i=0; i<nb_facettes_loc; i++) {
+        for (i=0; i<nb_facettes_loc; i++) {
             if (objet_courant->Facelist[i].deleted) continue;       // Facette supprimée ... passer à la suivante
             nb_sommets_loc = objet_courant->Facelist[i].Nb_Sommets_F;
             if (nb_sommets_loc > 3) {
@@ -414,7 +414,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 
             new_numero_facette = nb_facettes_loc;
 
-            for(i=0; i<nb_facettes_loc; i++) {
+            for (i=0; i<nb_facettes_loc; i++) {
                 nb_sommets_loc = objet_courant->Facelist[i].Nb_Sommets_F;
                 if (nb_sommets_loc <= 3) continue ;                 // On ne change rien, c'est déjà un triangle
 
@@ -426,10 +426,10 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 if (facette_courante->deleted) continue;        // Facette supprimée ... passer à la suivante
                 if (Element->verbose) {
                     printf("Facette originale :\nSommets de     %3d :",i+1);         // i+1 = Numéro
-                    for(j=0;j<(unsigned int)facette_courante->Nb_Sommets_F;j++) printf(" %3d",facette_courante->F_sommets[j]);
+                    for (j=0; j<(unsigned int)facette_courante->Nb_Sommets_F; j++) printf(" %3d",facette_courante->F_sommets[j]);
                     printf("\n");
                     printf("Vecteurs de    %3d :",i+1);
-                    for(j=0;j<(unsigned int)facette_courante->Nb_Sommets_L;j++) printf(" %3d",facette_courante->L_sommets[j]);
+                    for (j=0; j<(unsigned int)facette_courante->Nb_Sommets_L; j++) printf(" %3d",facette_courante->L_sommets[j]);
                     printf("\n");
                 }
                 jj1 = 0;
@@ -441,7 +441,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                 if (methode_triangulation == 2) {
                 // Créer un nouveau point au centre de la facette
                     std::fill_n(xyz,3,0.0); // <=> xyz[0] = xyz[1] = xyz[2] = 0.0;
-                    for(j=0;j<nb_sommets_loc;j++) {
+                    for (j=0; j<nb_sommets_loc; j++) {
                         jj      = facette_courante->F_sommets[j]-1; // jj : indice = numero-1
                         xyz_pt  = objet_courant->Sommetlist[jj].getPoint();
                         xyz[0] += xyz_pt[0]; xyz[1] += xyz_pt[1]; xyz[2] += xyz_pt[2];
@@ -449,7 +449,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     xyz[0] /= nb_sommets_loc; xyz[1] /= nb_sommets_loc; xyz[2] /= nb_sommets_loc;
 
                     new_numero = objet_courant->Nb_sommets +1;      // Nouveau numéro = ancienne taille +1
-                    for(k=0;k<3;k++) Element->xyz[k] = xyz[k];      // Recopie du xyz local dans le vecteur xyz de Element
+                    for (k=0; k<3; k++) Element->xyz[k] = xyz[k];   // Recopie du xyz local dans le vecteur xyz de Element
                     Element->str.clear();
                     Element->N_elements = new_numero;
                     Element->make1sommet();                         // Ici on va augmenter la taille de Sommetlist via push_back
@@ -466,11 +466,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     if (Element->verbose) {
                         printf("Originale modifiee :\n");
                         printf("Sommets de     %3d :",i+1);  // Numéro de la facette courante qui sera modifiée en place pour n'avoir plus que 3 sommets
-                        for(k=0;k<2;k++) printf(" %3d",facette_courante->F_sommets[k]);
+                        for (k=0; k<2; k++) printf(" %3d",facette_courante->F_sommets[k]);
                         printf(" %3d\n",jj3);
                         if (!facette_plane) {
                             printf("Vecteurs de    %3d :",i+1);
-                            for(k=0;k<2;k++) printf(" %3d",facette_courante->L_sommets[k]);
+                            for (k=0; k<2; k++) printf(" %3d",facette_courante->L_sommets[k]);
                             printf(" %3d\n",jj3v);
                         }
                     }
@@ -481,11 +481,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     if (Element->verbose) {
                         printf("Originale modifiee :\n");
                         printf("Sommets de     %3d :",i+1);  // Numéro de la facette courante qui sera modifiée en place pour n'avoir plus que 3 sommets
-                        for(k=0;k<3;k++) printf(" %3d",facette_courante->F_sommets[k]);
+                        for (k=0; k<3; k++) printf(" %3d",facette_courante->F_sommets[k]);
                         printf("\n");
                         if (!facette_plane) {
                             printf("Vecteurs de    %3d :",i+1);
-                            for(k=0;k<3;k++) printf(" %3d",facette_courante->L_sommets[k]);
+                            for (k=0; k<3; k++) printf(" %3d",facette_courante->L_sommets[k]);
                             printf("\n");
                         }
                     }
@@ -496,7 +496,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     parite = false;
                 }
                 if (Element->verbose) printf("Nouvelles facettes:\n");
-                for(j=0; j<nb_new; j++) {
+                for (j=0; j<nb_new; j++) {
                     new_numero_facette++;
                     if (methode_triangulation == 0) {       // Méthode la + simple 0,1,2 puis 0,2,3, ... et 0, n-2, n-1
                         jj1 = 0 ;
@@ -532,11 +532,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     }
                     if (Element->verbose) {
                         printf("New sommets  : %3d :",new_numero_facette);
-                        for(k=0;k<3;k++) printf(" %3d",NumerosSommets[k]);
+                        for (k=0; k<3; k++) printf(" %3d",NumerosSommets[k]);
                         printf("\n");
                         if (!facette_plane) {
                             printf("New vecteurs : %3d :",new_numero_facette);
-                            for(k=0;k<3;k++) printf(" %3d",NumerosVecteurs[k]);
+                            for (k=0; k<3; k++) printf(" %3d",NumerosVecteurs[k]);
                             printf("\n");
                         }
                     }
@@ -548,6 +548,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     if (!facette_plane) {
                         Element->NumerosSommets = NumerosVecteurs;
                         Element->make1luminance();
+//                        Element->make1luminance(new_numero_facette,NumerosVecteurs);
                     }
                     facette_courante = &(objet_courant->Facelist[i]);   // Facelist a changé donc peut avoir changé de place en mémoire => réinit du pointeur facette_courante
                     facette_nouvelle = &(objet_courant->Facelist[new_indice_facette]);
@@ -605,11 +606,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 //            auto kt=IndicesSommets.begin();
 //            if (methode_triangulation == 2) {   // Il faut redimensionner les vecteurs car de nouveaux sommets ont été créés et donc il va y avoir de nouveaux vecteurs !
 //                printf("avant :");
-//                for (k=0;k<IndicesSommets.size();k++,kt++) printf(" %d",*kt);
+//                for (k=0; k<IndicesSommets.size(); k++,kt++) printf(" %d",*kt);
 //                printf("\napres :");
 //                IndicesSommets.sort();
 //                kt=IndicesSommets.begin();
-//                for (k=0;k<IndicesSommets.size();k++,kt++) printf(" %d",*kt);
+//                for (k=0; k<IndicesSommets.size(); k++, kt++) printf(" %d",*kt);
 //                printf("\n");
 //                kt=IndicesSommets.end();
 //                kt--;   // Pointer la dernière valeur correcte
@@ -622,7 +623,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 ////                }
 //                kt=IndicesSommets.begin();
 //            }
-//            for (k=0;k<IndicesVecteurs.size();k++,kt++) Element->GenereNormale_1_Sommet(objet_courant,*kt,*kt);
+//            for (k=0; k<IndicesVecteurs.size(); k++, kt++) Element->GenereNormale_1_Sommet(objet_courant,*kt,*kt);
 //            Element->searchMin_Max();   // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
         }
     }
@@ -682,8 +683,8 @@ void ModificationPanel::OnToggleButton_CreerFacetteToggle(wxCommandEvent& event)
         CheckBox_FacettePlane ->Disable();                              // On garde son état coché/décoché
         Button_InverserNormale->Disable();
         // RAZ de l'attribut "selected" des facettes en sortie de Créer facette
-        for(o=0; o<Element->Objetlist.size(); o++) {
-            for(i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
+        for (o=0; o<Element->Objetlist.size(); o++) {
+            for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
         }
     }
 //    Element->m_gllist = 0;    // Inutile ici ?
@@ -700,16 +701,18 @@ void ModificationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 void ModificationPanel::OnButton_SupprimerFacetteClick(wxCommandEvent& event)
 {
+    Object *Objet_courant;
     BddInter *Element = MAIN->Element;
 
     unsigned int indice = Element->indiceObjet_courant;
-    unsigned int Nb_facettes_original = Element->Objetlist[indice].Nb_facettes_original;
-    printf("Nb_facettes_old = %d, Nb_facettes = %d\n",Nb_facettes_original,Element->Objetlist[indice].Nb_facettes);
-    Element->Objetlist[indice].Facelist.pop_back();
-    Element->Objetlist[indice].Nb_facettes = Element->Objetlist[indice].Facelist.size();
-    if (Element->Objetlist[indice].Nb_facettes == Nb_facettes_original) {
+    Objet_courant = &(Element->Objetlist[indice]);
+    unsigned int Nb_facettes_original = Objet_courant->Nb_facettes_original;
+    printf("Nb_facettes_old = %d, Nb_facettes = %d\n",Nb_facettes_original,Objet_courant->Nb_facettes);
+    Objet_courant->Facelist.pop_back();
+    Objet_courant->Nb_facettes = Objet_courant->Facelist.size();
+    if (Objet_courant->Nb_facettes == Nb_facettes_original) {
         Button_SupprimerFacette->Disable();
-        Element->Objetlist[indice].Nb_facettes_original = 0;
+        Objet_courant->Nb_facettes_original = 0;
     }
     Element->m_gllist = 0;
     Element->Refresh();
@@ -735,7 +738,7 @@ void ModificationPanel::OnButton_RecalculerAretesClick(wxCommandEvent& event)
     Object   *objet_courant;
     unsigned int o;
 
-    for(o=0; o<Element->Objetlist.size(); o++) {
+    for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
         if (objet_courant->deleted) continue;   // Objet supprimé mais encore en mémoire => passer au suivant
         Element->GenereTableauPointsFacettes(objet_courant);

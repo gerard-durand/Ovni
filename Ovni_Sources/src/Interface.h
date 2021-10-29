@@ -12,6 +12,7 @@
 #include <wx/tokenzr.h>
 #include "wx/wfstream.h"
 #include "wx/txtstrm.h"
+#include "wx/progdlg.h"
 #include "trackball.h"
 #include <GL/freeglut.h>
 //#include <GL/glext.h>                 // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
@@ -27,6 +28,10 @@
 #include "lib3ds/lib3ds.h"
 #include "libexpat/expat.h"
 #include "charset.h"
+#include <sstream>
+#include <fstream>
+
+#include <omp.h>
 
 #define BUFSIZE 4096
 #define gris_def 0.5f                   // 0.35f version jdias
@@ -45,38 +50,42 @@
 #endif // GL_SAMPLES
 
 
-class Aide_html;
 class BddInter;
 class OvniFrame;
+class Object;
+
 class CentreRotation;
 class ChangerEchelleBdd;
 class ChoixAffichageObjets;
-class CouleursGroupes;
 class Cone;
+class CouleursGroupes;
 class Cube;
 class Cylindre;
 class DeplacerBdd;
 class Ellipsoide;
 class Facette;
 class Icosaedre;
+class ManipulationsPanel;
 class ModificationPanel;
 class PositionObs_AzimutSite;
 class PositionSource;
 class Prefs_Dialog;
+class PropertiesPanel;
 class ReperageFacette;
 class ReperageGroupe;
 class ReperageMateriau;
 class ReperageObjet;
 class ReperagePoint;
+class RotationPanel;
+class ScalePanel;
 class SelectionPanel;
 class SelectionManuelleFacettes;
 class SelectionManuelleObjets;
-class ManipulationsPanel;
-class TranslationPanel;
-class RotationPanel;
-class ScalePanel;
 class Sphere;
+class Tore;
+class TranslationPanel;
 class ZoomSpecifique;
+class Aide_html;
 
 class Face;
 class Sommet;
@@ -127,7 +136,7 @@ public:
     std::vector<Sommet>  Sommetlist;
     std::vector<Vecteur> Vecteurlist;
     std::vector<Points>  Pointslist;
-    std::vector<Aretes>  Areteslist;
+    std::list<Aretes>    Areteslist;        // Ici, traitements plus rapides que si <vector>
 
 // Méthodes, fonctions de la classe Object
 
@@ -235,7 +244,7 @@ public:
         initFace();
         Numero       = wxAtoi(wxStringlist[0]);
         Nb_Sommets_F = wxAtoi(wxStringlist[1]);
-        for(int i=0; i<Nb_Sommets_F; i++) {
+        for (int i=0; i<Nb_Sommets_F; i++) {
             F_sommets.push_back(wxAtoi(wxStringlist[i+2]));
         }
     }
@@ -243,7 +252,7 @@ public:
         initFace();
         Numero       = number;
         Nb_Sommets_F = NumerosSommets.size();
-        for(int i=0; i<Nb_Sommets_F; i++) {
+        for (int i=0; i<Nb_Sommets_F; i++) {
             F_sommets.push_back(NumerosSommets[i]);
         }
     }
@@ -336,7 +345,7 @@ public:
         double a;
         initSommet();
         Numero = wxAtoi(wxStringlist[0]);
-        for(int i=0; i<3; i++) {
+        for (int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
@@ -344,12 +353,12 @@ public:
     Sommet(int& number, float xyz[3]) {
         initSommet();
         Numero = number;
-        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+        for (int i=0; i<3; i++) point.push_back(xyz[i]);
      }
     Sommet(int& number, std::vector<float> xyz) {
         initSommet();
         Numero = number;
-        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+        for (int i=0; i<3; i++) point.push_back(xyz[i]);
     }
     int getNumero() {
         return this->Numero;
@@ -381,7 +390,7 @@ public:
         double  a;
         initNormale();
         Numero = wxAtoi(wxStringlist[0]);
-        for(int i=0; i<3; i++) {
+        for (int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
@@ -389,7 +398,7 @@ public:
     Normale(int& number, float xyz[3]) {
         initNormale();
         Numero = number;
-        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+        for (int i=0; i<3; i++) point.push_back(xyz[i]);
     }
     int getNumero() {
         return this->Numero;
@@ -473,7 +482,7 @@ public:
         show         = true;
         Numero       = wxAtoi(wxStringlist[0]);
         Nb_Sommets_L = wxAtoi(wxStringlist[1]);
-        for(int i(0); i<Nb_Sommets_L; i++) {
+        for (int i(0); i<Nb_Sommets_L; i++) {
             L_sommets.push_back(wxAtoi(wxStringlist[i+2]));
         }
     }
@@ -481,7 +490,7 @@ public:
         show         = true;
         Numero       = number;
         Nb_Sommets_L = NumerosSommets.size();
-        for(int i=0; i<Nb_Sommets_L; i++) {
+        for (int i=0; i<Nb_Sommets_L; i++) {
             L_sommets.push_back(NumerosSommets[i]);
         }
     }
@@ -521,7 +530,7 @@ public:
         double a;
         initVecteur();
         Numero = wxAtoi(wxStringlist[0]);
-        for(int i=0; i<3; i++) {
+        for (int i=0; i<3; i++) {
             wxStringlist[i+1].ToDouble(&a);
             point.push_back(a);
         }
@@ -529,12 +538,12 @@ public:
     Vecteur(int& number, float xyz[3]) {
         initVecteur();
         Numero = number;
-        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+        for (int i=0; i<3; i++) point.push_back(xyz[i]);
     }
     Vecteur(int& number, std::vector<float> xyz) {
         initVecteur();
         Numero = number;
-        for(int i=0; i<3; i++) point.push_back(xyz[i]);
+        for (int i=0; i<3; i++) point.push_back(xyz[i]);
     }
     int getNumero() {
         return this->Numero;
@@ -576,7 +585,7 @@ public:
         if(ListeSelect.size()==0) {
             return false;
         }
-        for(i=0; i<ListeSelect.size(); i++) {
+        for (i=0; i<ListeSelect.size(); i++) {
             if((ListeSelect[i].objet==objet) && (ListeSelect[i].face_sommet==face_sommet)) {
                 return true;
             }
@@ -608,10 +617,19 @@ class BddInter: public wxGLCanvas {
     wxString first_file;
     wxString token;
     wxCharBuffer buffer;
+    wxGauge *m_gauge = nullptr;
+    wxTimer *m_timer = nullptr;
+    wxProgressDialog * dialog = nullptr;
+    clock_t time_deb_dialog;
+    bool dialog_en_cours;
 //    Sommetmemory *Smemory;
 ///    std::vector<std::vector<StoF> > StofM;
 
     std::vector<wxString>     wxStringlist;
+    std::ifstream fichierBdd;
+    unsigned long long fichierBdd_length;
+    bool timer_bis = false;
+    int margin = 2;
 
     bool finishdraw = false;    // Sert dans OnMouse à tout court-circuiter si rien d'affiché à l'écran. Pourrait être supprimé car pas de souci si toujours à true !
     float matquat[4][4];
@@ -705,7 +723,8 @@ public :
 
     wxColour Noir     = wxColour(*wxBLACK);// = wxColour(0,0,0);//    (*wxBLACK);
     wxColour Blanc    = wxColour(*wxWHITE);
-    wxColour New_Back = wxColour(*wxBLACK);//(100,100,100);
+    wxColour New_Back = wxColour(*wxBLACK);
+    wxColour New_Gris = wxColour(70,70,70);
     wxColour New_Forg = wxColour(*wxCYAN); ; //(*wxWHITE);
 //
 
@@ -833,7 +852,7 @@ public :
     int   svg_time_def      = 5;                    // en minutes
     bool  test_seuil_gouraud_def       = false;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
-    bool  simplification_doublons_aretes_def = false;
+    bool  forcer_simplification_doublons_aretes_def = false;
 
     bool  antialiasing_soft_def        = false;     // Antialiasing par défaut non fait par OpenGL pour éviter les soucis avec cartes graphiques ne le supportant pas
     bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
@@ -883,7 +902,7 @@ public :
     bool  NotFlat                  = NotFlat_def;
     bool  msg_warning              = msg_warning_def;
     bool  traiter_doublons_aretes  = traiter_doublons_aretes_def;
-    bool  simplification_doublons_aretes = simplification_doublons_aretes_def;
+    bool  forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
 
     GLfloat Light0Position[4];              // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
@@ -892,10 +911,10 @@ public :
     unsigned int nb_sommets;
     unsigned int nb_facettes;
     unsigned int nb_aretes;
-    unsigned int nb_sommets_test =500000;   // Si le nombre total de sommets dépasse cette valeur, on ne génnère pas d'emblée la liste OpenGL des sommets
+    unsigned int nb_sommets_test =500000;   // Si le nombre total de sommets dépasse cette valeur, on ne génère pas d'emblée la liste OpenGL des sommets
     unsigned int nb_facettes_test=500000;
-    unsigned int nb_aretes_test  =400000;   // Si le nombre total d'arêtes dépasse cette valeur, on ne génnère pas d'emblée la liste OpenGL des lignes
-    unsigned int nb_aretes_test_d=150000;   //Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
+    unsigned int nb_aretes_test  =800000;   // Si le nombre total d'arêtes dépasse cette valeur, on ne génère pas d'emblée la liste OpenGL des lignes
+    unsigned int nb_aretes_test_d=400000;   //Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
     bool liste_sommets_OK;                  // Pour savoir si la liste OpenGL des sommets a été générée
     bool liste_aretes_OK;                   // Pour savoir si la liste OpenGL des arêtes a été générée
     bool GenereTableauAretes_OK;
@@ -944,38 +963,55 @@ public :
 
     GLData m_gldata;
     GLint  m_gllist;    // GLuint
-    GLint glliste_objets = 1;
-    GLint glliste_lines  = 2;
-    GLint glliste_points = 3;
-    GLint glliste_boite  = 4;
-    GLint glliste_repere = 5;
-    GLint glliste_select = 6;
-    GLint glliste_segment= 7;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
+    GLint glliste_lines  = 1;
+    GLint glliste_points = 2;
+    GLint glliste_boite  = 3;
+    GLint glliste_repere = 4;
+    GLint glliste_select = 5;
+    GLint glliste_segment= 6;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
+    GLint glliste_objets = 7;   // Numéro le plus haut pour pouvoir gérer plusieurs listes d'objets (en particulier via OpenMP)
 
-    bool   materials = false;
-    bool   groupes   = false;
-    bool   smooth    = false;
+    bool materials = false;
+    bool groupes   = false;
+    bool smooth    = false;
 
     bool segment_surligne   = false;
     bool click_sur_segment  = false;
     bool Elements_Masques   = false; // à l'initialisation, rien n'est masqué
     bool Elements_Supprimes = false; // ni supprimé. Ces 2 indicateurs sont globaux. Pour les détails, voir dans chaque objet et chaque facette
 
-    ModificationPanel       *MPanel   = nullptr;
-    SelectionPanel          *MSelect  = nullptr;
+    CentreRotation          *MPosCRot = nullptr;
+    ChangerEchelleBdd       *MScale_0 = nullptr;
+    ChoixAffichageObjets    *MChoice_O= nullptr;
+    Cone                    *MCone    = nullptr;
+    Cube                    *MCube    = nullptr;
+    CouleursGroupes         *MCGroup  = nullptr;
+    Cylindre                *MCylindre= nullptr;
+    DeplacerBdd             *MDeplacer=nullptr;
+    Ellipsoide              *MEllips  = nullptr;
+    Facette                 *MFacet   = nullptr;
+    Icosaedre               *MIcosa   = nullptr;
     ManipulationsPanel      *MManip   = nullptr;
-    TranslationPanel        *MTrans   = nullptr;
-    RotationPanel           *MRotation= nullptr;
-    ScalePanel              *MScale   = nullptr;
-    Prefs_Dialog            *MPrefs   = nullptr;
+    ModificationPanel       *MPanel   = nullptr;
     PositionObs_AzimutSite  *MPosObs  = nullptr;
     PositionSource          *MPosLight= nullptr;
-    SelectionManuelleObjets *MSelObj  = nullptr; // Non utilisé ?
-    CentreRotation          *MPosCRot = nullptr;
+    Prefs_Dialog            *MPrefs   = nullptr;
+    PropertiesPanel         *MProps   = nullptr;
+    ReperageFacette         *MRepFacet= nullptr;
+    ReperageGroupe          *MRepGrp  = nullptr;
+    ReperageMateriau        *MRepMat  = nullptr;
+    ReperageObjet           *MRepObj  = nullptr;
+    ReperagePoint           *MRepPoint= nullptr;
+    RotationPanel           *MRotation= nullptr;
+    ScalePanel              *MScale   = nullptr;
+    SelectionPanel          *MSelect  = nullptr;
+    SelectionManuelleFacettes *MSelFac= nullptr;
+    SelectionManuelleObjets *MSelObj  = nullptr;
+    Sphere                  *MSphere  = nullptr;
+    TranslationPanel        *MTrans   = nullptr;
     ZoomSpecifique          *MZoomSpec= nullptr;
-//    ReperageFacette         *MRepFacet=nullptr;
-//    ReperageGroupe          *MRepGrp=nullptr; // Pas utile !
-//    ReperageMateriau        *MRepMat=nullptr; // idem
+    Aide_html               *MHelp    = nullptr;
+
     bool OK_ToSave = false; // Mis à true lors de la lecture d'un fichier et testé dans SaveTo (pas de save si OK_ToSave = false !!!)
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
     void SaveTo (wxString, int);
@@ -1070,9 +1106,11 @@ public :
     void coloriserFacette(unsigned int, unsigned int, bool, GLfloat couleur[3]);
     void draw_rectangle_selection();
     void Selection_rectangle(GLint, GLint);
+    void Switch_theme(bool);
 
     void GenereTableauPointsFacettes(Object *);
     void GenereTableauAretes(Object *);
+    void GenereListeGroupesMateriaux(Object *);
     void GenereListeGroupesMateriaux(unsigned int);
     bool Calcul_Normale_Seuillee(int, int, int, std::vector<float> &, std::vector<float> &);
 //    bool Calcul_Normale_Seuillee(int, int, int, std::vector<float> &, std::vector<float> &, Vector3D & );
@@ -1083,12 +1121,15 @@ public :
     void make1sommet();
     void makeface();
     void make1face();
+    void make1face(int , const std::vector<int> &);
     void makenormale();
     void make1normale();
     void makeaspect_face();
     void make1aspect_face();
     void makeluminance();
     void make1luminance();
+    void make1luminance(int , const std::vector<int> &);
+
     void makevecteur();
     void make1vecteur();
 
@@ -1103,8 +1144,11 @@ public :
     void simplification_facettes(unsigned int);
     void TraiterMatricePosition(unsigned int);
     void genereAttributsFacettes(int, int, int, int );
+    void genereAttributsFacettes(Object *, int, int, int );
     void genereNormalesFacettes (int, int);
+    void genereNormalesFacettes (Object *, int);
     void genereLuminances(int, int ) ;
+    void genereLuminances(Object *, int ) ;
 
 // Fonctions communes Sphere - Ellipsoide
     void genereFacettesSphere(int, int, bool);
@@ -1120,6 +1164,9 @@ public :
     void TracerBoite(double, double, double, double, double, double);
 
 //    void Forcer_OnPaint(wxPaintEvent& event);
+    void OnTimer_Bdd(wxTimerEvent& event);
+    void Update_Dialog(long, long);
+
 
 
 protected:

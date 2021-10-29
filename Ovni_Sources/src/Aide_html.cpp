@@ -1,4 +1,4 @@
-#include "Aide_html.h"
+ï»¿#include "Aide_html.h"
 
 //(*InternalHeaders(Aide_html)
 #include <wx/intl.h>
@@ -66,18 +66,18 @@ void Aide_html::OnResize(wxSizeEvent& event)
     int offset_x, offset_y;
     wxSize  s;
     wxPoint p;
-    s = event.GetSize();    // Récupère la taille de la fenêtre globale
+    s = event.GetSize();    // RÃ©cupÃ¨re la taille de la fenÃªtre globale
 //    printf("NewH : %d %d\n",s.GetWidth(),s.GetHeight()); // s.x = s.GetWidth()
-    offset_x = s.x - sizex_html -16;        // Pourquoi soustrait-on ces valeurs ? (sinon bouton pas bien placé)
+    offset_x = s.x - sizex_html -16;        // Pourquoi soustrait-on ces valeurs ? (sinon bouton pas bien placÃ©)
     offset_y = s.y - sizey_html -38;
 
-    // Déplacement du bouton
+    // DÃ©placement du bouton
     p.x = posx_button + offset_x;
     p.y = posy_button + offset_y;
 //    printf("newB : %d %d\n",p.x,p.y);
     Button_OK->SetPosition(p);
 
-    // Ajustement de la taille de la fenêtre html
+    // Ajustement de la taille de la fenÃªtre html
     s.x = sizex_html + offset_x -16;        // Idem ? (sinon taille trop grande)
     s.y = sizey_html + offset_y -50;
     HtmlWindow_Aide->SetSize(s);

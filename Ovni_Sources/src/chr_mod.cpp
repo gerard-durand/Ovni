@@ -9,21 +9,21 @@ ISO-8859-1 et retour: */
      *
      *     The character is modified !!!!  (Pointer )
      *
-     *   René Cougnenc 1990    - Public Domain -
+     *   RenÃ© Cougnenc 1990    - Public Domain -
      */
 
-/* Ajout Gérard Durand .....
- * les fonctions ibm_To_iso et iso_To_ibm traitent une chaîne de caractères délimitée par \0
- * Elles retournent un pointeur vers la chaîne modifiée en place.
- * Exemple d'appel :    sprintf(Texte,"Chaîne avec caractères accentués") ;
+/* Ajout GÃ©rard Durand .....
+ * les fonctions ibm_To_iso et iso_To_ibm traitent une chaÃ®ne de caractÃ¨res dÃ©limitÃ©e par \0
+ * Elles retournent un pointeur vers la chaÃ®ne modifiÃ©e en place.
+ * Exemple d'appel :    sprintf(Texte,"ChaÃ®ne avec caractÃ¨res accentuÃ©s") ;
  *                      printf(iso_To_ibm(Texte)) ;
- * ATTENTION : La chaîne de texte ne peut être une constante, il faut d'abord la dupliquer par strdup
- * Exemple faux :       printf(iso_To_ibm("Chaîne avec caractères accentués") ;
- * Exemples OK :        printf(iso_To_ibm(strdup("Chaîne avec caractères accentués")) ;
- *                      printf(iso_To_ibm(strdup("Chaîne avec accents et variables : x= %f y=%f \n")),x,y) ;
- * Déclarer ces fonctions : char * iso_To_ibm(char *) ;
+ * ATTENTION : La chaÃ®ne de texte ne peut Ãªtre une constante, il faut d'abord la dupliquer par strdup
+ * Exemple faux :       printf(iso_To_ibm("ChaÃ®ne avec caractÃ¨res accentuÃ©s") ;
+ * Exemples OK :        printf(iso_To_ibm(strdup("ChaÃ®ne avec caractÃ¨res accentuÃ©s")) ;
+ *                      printf(iso_To_ibm(strdup("ChaÃ®ne avec accents et variables : x= %f y=%f \n")),x,y) ;
+ * DÃ©clarer ces fonctions : char * iso_To_ibm(char *) ;
  *
- * Modification : avec wxWidgets, il vaut mieux travailler en UTF8 sous Windows. D'où les fonctions issues de CPPFRANCE et la réécriture en
+ * Modification : avec wxWidgets, il vaut mieux travailler en UTF8 sous Windows. D'oÃ¹ les fonctions issues de CPPFRANCE et la rÃ©Ã©criture en
  *                char * utf8_To_ibm(char *) ;
  */
 
@@ -142,10 +142,10 @@ char *ibm_To_iso (char *Texte)
     return (Texte) ;
 }
 
-/* Nouveaux et codes modifiés ... */
+/* Nouveaux et codes modifiÃ©s ... */
  char *utf8_To_ibm (char *Texte)
 {
-/* Fonction invalidée car maintenant la console Windows sort les caractères en utf8 à cause du chcp 65001 > nul ; ajouté en début de OvniApp.cpp
+/* Fonction invalidÃ©e car maintenant la console Windows sort les caractÃ¨res en utf8 Ã  cause du chcp 65001 > nul ; ajoutÃ© en dÃ©but de OvniApp.cpp
 #ifdef WIN32    // Ne concerne que Windows
     unsigned int nb = utf8ToEascii(Texte, strlen(Texte), Message_iso, 1024);
     return (Message_iso);
@@ -155,7 +155,7 @@ char *ibm_To_iso (char *Texte)
 }
 
 /**
- * D'après un code original de Julien Folly sur CPPFrance.com (cppfrance_CHARSET-CONVERTER-LIBRARY___Page.zip)
+ * D'aprÃ¨s un code original de Julien Folly sur CPPFrance.com (cppfrance_CHARSET-CONVERTER-LIBRARY___Page.zip)
  * maintenant sur https://codes-sources.commentcamarche.net/source/36876-charset-converter-library
  *
  * Convert from UTF8 to Iso8859
@@ -176,7 +176,7 @@ unsigned int utf8ToIso8859(const char * capSrc,unsigned int iSrcLen,char * capDe
 
     if(iDestLen < iSrcLen) return DEST_TOO_SMALL;
 
-    for(i = 0 ; i<iSrcLen ; ++i){
+    for (i = 0; i<iSrcLen; ++i){
 
         // Found 3 bytes sequence
         if((unsigned char)capSrc[i] >= UTF8_1ST_OF_3){
@@ -210,16 +210,16 @@ unsigned int utf8ToIso8859(const char * capSrc,unsigned int iSrcLen,char * capDe
         capDest[iNbUnicode++] = wcapDest;
         if(iNbUnicode > iDestLen) return DEST_TOO_SMALL;
     }
-    capDest[iNbUnicode] = 0;   // Par précaution
+    capDest[iNbUnicode] = 0;   // Par prÃ©caution
     return iNbUnicode;
 }
 
 unsigned int utf8ToEascii(const char * capSrc,unsigned int iSrcLen,char * capDest,unsigned int iDestLen){
 /**
- * D'après un code original de Julien Folly sur CPPFrance.com (cppfrance_CHARSET-CONVERTER-LIBRARY___Page.zip)
+ * D'aprÃ¨s un code original de Julien Folly sur CPPFrance.com (cppfrance_CHARSET-CONVERTER-LIBRARY___Page.zip)
  * maintenant sur https://codes-sources.commentcamarche.net/source/36876-charset-converter-library
  *
- * Convert from UTF8 to Extended Ascii (pour imprimer des caractères accentués dans une fenêtre DOS, l'entrée étant en UTF8)
+ * Convert from UTF8 to Extended Ascii (pour imprimer des caractÃ¨res accentuÃ©s dans une fenÃªtre DOS, l'entrÃ©e Ã©tant en UTF8)
  * Return the number of character, DEST_TOO_SMALL if the destination is too small,
  * or UTF8_BAD_STRING if the UTF8 String is invalid
  * The iDestLen should be equal to iSrcLen
@@ -237,7 +237,7 @@ unsigned int utf8ToEascii(const char * capSrc,unsigned int iSrcLen,char * capDes
 
     if(iDestLen < iSrcLen) return DEST_TOO_SMALL;
 
-    for(i = 0 ; i<iSrcLen ; ++i){
+    for (i = 0; i<iSrcLen; ++i){
 
         // Found 3 bytes sequence
         if((unsigned char)capSrc[i] >= UTF8_1ST_OF_3){
@@ -375,12 +375,12 @@ unsigned int utf8ToEascii(const char * capSrc,unsigned int iSrcLen,char * capDes
         if(iNbUnicode > iDestLen) return DEST_TOO_SMALL;
     }
     if (ret == 0) ret = iNbUnicode;
-    capDest[ret] = 0;   // Par précaution
+    capDest[ret] = 0;   // Par prÃ©caution
     return ret;
 }
 
-// d'après https://stackoverflow.com/questions/1031645/how-to-detect-utf-8-in-plain-c
-// Teste si une chaine est valide en codage utf8 : attention ; il peut y avoir de faux positifs d'près ce forum !
+// d'aprÃ¨s https://stackoverflow.com/questions/1031645/how-to-detect-utf-8-in-plain-c
+// Teste si une chaine est valide en codage utf8 : attention ; il peut y avoir de faux positifs d'prÃ¨s ce forum !
 
 bool is_utf8(const char * string)
 {
