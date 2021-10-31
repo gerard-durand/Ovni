@@ -26,6 +26,7 @@
 #include <ctime>
 #include "vector3d.h"
 #include "lib3ds/lib3ds.h"
+//#include "lib3ds/lib3ds_impl.h"
 #include "libexpat/expat.h"
 #include "charset.h"
 #include <sstream>
@@ -622,6 +623,8 @@ class BddInter: public wxGLCanvas {
     wxProgressDialog * dialog = nullptr;
     clock_t time_deb_dialog;
     bool dialog_en_cours;
+    Lib3dsIo *io;
+
 //    Sommetmemory *Smemory;
 ///    std::vector<std::vector<StoF> > StofM;
 
@@ -1184,8 +1187,8 @@ private :
 //read BDD
     void LoadBDD();
     void Load3DS();
-    int  compter_nodes (Lib3dsNode *);//, Lib3dsFile *);
-    int  decoder_node  (Lib3dsNode *);//, Lib3dsFile *);
+    int  compter_nodes (Lib3dsNode *);
+    int  decoder_node  (Lib3dsNode *);
     int  mesh_count_smoothing(Lib3dsMesh *);
     void Affiche_Matrice(float Mat4x4[4][4]);
     void LoadG3D();

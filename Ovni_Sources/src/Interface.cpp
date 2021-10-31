@@ -3341,7 +3341,7 @@ void BddInter::Update_Dialog(long position, long max_value)
         int old_val = dialog->GetValue();
         int new_val = round(position*100./max_value);
         if (old_val != new_val) {
-            if (new_val == 100) {
+            if (new_val >= 100) {
                 dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
             } else {
                 dialog->Update(new_val);
@@ -4807,7 +4807,6 @@ void BddInter::LoadM3D()
             Objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
 
             Update_Dialog(ftell(f), fichierBdd_length);
-
         }
         Objet_courant->Nb_facettes  = nb_fac;
         Objet_courant->Nb_normales  = nb_fac;
@@ -5319,7 +5318,7 @@ void BddInter::LoadPLY_Stanford()
     rewind(f);  // Repositionner le fichier à son début
 
     /*** Read in the original PLY object ***/
-    in_ply  = read_ply (f);
+    in_ply  = read_ply (f);                 // Lit l'entête et prépare les structures et tableaux de données
 
     if (in_ply->file_type != PLY_ASCII) {   // C'est un fichier binaire (Little Endian ou Big Endian) => le réouvrir autrement
         close_ply(in_ply);
@@ -5337,12 +5336,12 @@ void BddInter::LoadPLY_Stanford()
     time_deb_dialog = clock();
     dialog_en_cours = false;
 
-    fichierBdd_length = 0; // à défaut de traiter la taille du fichier
+//    fichierBdd_length = 0; // à défaut de traiter la taille du fichier. OK car initialisé dans LoadPLY
     for (i = 0; i < in_ply->num_elem_types; i++) {
         elem_name = setup_element_read_ply (in_ply, i, &elem_count);
-        fichierBdd_length += elem_count;
+//        fichierBdd_length += elem_count;
     }
-    long compteur_ply = 0;
+//    long compteur_ply = 0;
 
     // Créer un seul objet
 
@@ -5431,8 +5430,9 @@ void BddInter::LoadPLY_Stanford()
                     make1vecteur();
                 }
                 free(vlist); // Libérer la mémoire de chaque vertex
-                compteur_ply++;
-                Update_Dialog(compteur_ply, fichierBdd_length);
+//                compteur_ply++;
+//                Update_Dialog(compteur_ply, fichierBdd_length);
+                Update_Dialog(ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
             }
 
             if (vert_other == NULL || face_other == NULL) {
@@ -5504,8 +5504,9 @@ void BddInter::LoadPLY_Stanford()
                 }
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
                 free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
-                compteur_ply++;
-                Update_Dialog(compteur_ply, fichierBdd_length);
+//                compteur_ply++;
+//                Update_Dialog(compteur_ply, fichierBdd_length);
+                Update_Dialog(ftell(f), fichierBdd_length);
             }
 
         } else if (equal_strings ((char*)"tristrips", elem_name)) {
@@ -5592,8 +5593,9 @@ void BddInter::LoadPLY_Stanford()
                 if (has_normals) objet_courant->Nb_luminances = nfaces;
                 printf("Liste des facettes redimmensionnée\n");
                 free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
-                compteur_ply++;
-                Update_Dialog(compteur_ply, fichierBdd_length);
+//                compteur_ply++;
+//                Update_Dialog(compteur_ply, fichierBdd_length);
+                Update_Dialog(ftell(f), fichierBdd_length);
             }
 
         }/*else
@@ -6073,6 +6075,12 @@ void BddInter::LoadSTL() {
     if(verbose) printf("Sortie de BddInter::LoadSTL\n");
 }
 
+//static long
+//fileio_tell_func(void *self) {
+//    FILE *f = (FILE*)self;
+//    return(ftell(f));
+//}
+
 void BddInter::Load3DS()
 {
 /*
@@ -6166,11 +6174,22 @@ void BddInter::Load3DS()
         return;
     }
 
+//    io = new Lib3dsIo();
+//    lib3ds_io_setup(io);
+//    f = fopen(buffer.data(),"rb");
+//    if (!f) printf("fopen ne marche pas\n");
+//    io->self = f;
+//    io->tell_func = fileio_tell_func;
+
 // Seconde analyse des objets avec appel récursif des nodes
+    time_deb_dialog = clock();
     o_3ds      = 0 ; //indiceObjet_courant = o_3ds;
     nb_mat_3ds = 0 ;
-    for (p = f3ds->nodes; p != 0; p = p->next) {
+    dialog_en_cours = false;
+    long cpt;
+    for (p = f3ds->nodes,cpt=0; p != 0; p = p->next,cpt++) {
         decoder_node(p);
+        Update_Dialog(cpt,meshes);                          // Faute d'avoir accès à la position en lecture dans f3ds (ou f)
     }
 
 //    numObjet_suiv += ((o_3ds+10)/10)*10 ; // Pour arrondir à la dizaine supérieure
@@ -6188,6 +6207,12 @@ void BddInter::Load3DS()
     printf(utf8_To_ibm(Message));
 
     lib3ds_file_free(f3ds);
+//    fclose(f);
+//    delete io;
+    if(dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+    }
 
     m_loaded = true;
     m_gllist = 0;
@@ -6297,6 +6322,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
     int N0,N1,N2;
 
     Numeros.resize(3);
+//    printf("%ld\n",lib3ds_io_tell(io));
 
     {
         Lib3dsNode *p ;
@@ -6348,9 +6374,8 @@ int BddInter::decoder_node (Lib3dsNode *node)
         str += wxNom;
         makeobjet();
 
-//        o_3ds = Objetlist.size() -1;
-        o = Objetlist.size() -1;
-//        o = o_3ds ;   // Plus simple que o_3ds à écrire dans les indices de tableaux
+        o_3ds = o = Objetlist.size() -1;
+//      Plus simple que o_3ds à écrire dans les indices de tableaux
 
         printf("Objet :%4d, Nom : %s\n",o,nom_obj);
 //        indiceObjet_courant = o;
@@ -6516,6 +6541,8 @@ int BddInter::decoder_node (Lib3dsNode *node)
             facette_courante->afficher   = true;       // Pour afficher la facette
             facette_courante->deleted    = false;
             facette_courante->flat       = false;      // En réalité, la facette peut être plane : les 3 normales calculées aux sommets = normale au barycentre/
+//            printf("%ld\n",ftell(f));                 // retourne toujours 0 avec f = fopen(buffer.data(),"rb"); fait dans Load_3DS
+
         }
 
 // Désallocation de la mémoire de calcul des normales
@@ -7475,7 +7502,8 @@ void BddInter::GenereTableauAretes(Object * objet)
 // La seconde partie permet de décoder les doublons et de les éliminer
 
     if (verbose) printf("Entree BddInter::GenereTableauAretes\n");
-    print_en_cours     = false;
+    dialog_en_cours = print_en_cours = false;
+
 //    indice_point = 0;
     nb_fac = objet->Nb_facettes;
     objet->Areteslist.clear();
@@ -7505,6 +7533,7 @@ void BddInter::GenereTableauAretes(Object * objet)
         }
     }
     Nb_avant = objet->Nb_aretes = objet->Areteslist.size();
+    bool traiter_doublons_aretes_svg = traiter_doublons_aretes;
     if (Nb_avant >= nb_aretes_test_d) traiter_doublons_aretes = false;  // Arete_size_test
     else                              traiter_doublons_aretes = true;   // avec cette ligne, revalide la possibilité de traitement à chaque objet, sinon abandon dès qu'un objet déborde
     if (!traiter_doublons_aretes && !forcer_simplification_doublons_aretes) {
@@ -7512,6 +7541,7 @@ void BddInter::GenereTableauAretes(Object * objet)
             printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons d'arêtes non effectuée\n",objet->GetName(),Nb_avant);
             if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
         }
+        traiter_doublons_aretes = traiter_doublons_aretes_svg;
         return;
     }
     if (verbose_local) sprintf(Message,"Objet : %s\nNb_aretes avant : %d\n",objet->GetName(),Nb_avant);
@@ -7588,7 +7618,7 @@ void BddInter::GenereTableauAretes(Object * objet)
                 time_c = clock();
            }
         }
-        if(print_en_cours) Update_Dialog((long)i, (long)nbaretes);
+        if(dialog_en_cours) Update_Dialog((long)i, (long)nbaretes);
     }
     if (dialog_en_cours) {
         dialog->Update(100);
@@ -7616,7 +7646,7 @@ void BddInter::GenereTableauAretes(Object * objet)
         printf("Temps de filtrage des doublons : %ld ticks (soit %3.1f secondes)\n\n", delta_time, float(delta_time)/CLOCKS_PER_SEC);
     }
     dialog_en_cours = false;
-    traiter_doublons_aretes = traiter_doublons_aretes_def;          // Remettre à l'état par défaut
+    traiter_doublons_aretes = traiter_doublons_aretes_svg;;          // Remettre à l'état initial
     if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
 }
 

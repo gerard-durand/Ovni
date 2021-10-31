@@ -12,9 +12,9 @@ REM echo _ >> log.txt
 set CB_ID=cb_64
 
 echo %time% >> 00_test.txt
-mingw32-make -f makefile.gcc -j 4 USE_XRC=1 SHARED=1 MONOLITHIC=1 BUILD=release UNICODE=1 USE_OPENGL=1 VENDOR=%CB_ID% clean
+mingw32-make -f makefile.gcc -j 4 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% clean
 echo %time% >> 00_test.txt
-mingw32-make -f makefile.gcc -j 4 USE_XRC=1 SHARED=1 MONOLITHIC=1 BUILD=release UNICODE=1 USE_OPENGL=1 VENDOR=%CB_ID% CXXFLAGS="-fpermissive -fno-keep-inline-dllexport -std=gnu++20 -Wno-deprecated-declarations" LDFLAGS="-Wl,--allow-multiple-definition"
+mingw32-make -f makefile.gcc -j 4 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% CXXFLAGS="-std=gnu++20"
 rem >log.txt 2>&1
 echo %time% >> 00_test.txt
 strip ..\..\lib\gcc_dll\wxmsw315u_gcc_%CB_ID%.dll
