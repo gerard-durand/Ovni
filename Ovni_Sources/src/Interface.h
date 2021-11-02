@@ -32,7 +32,7 @@
 #include <sstream>
 #include <fstream>
 
-#include <omp.h>
+#include <omp.h>                        // Header de OpenMP pour la parallélisation des boucles sur plusieurs processeurs/threads
 
 #define BUFSIZE 4096
 #define gris_def 0.5f                   // 0.35f version jdias
