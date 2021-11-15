@@ -1187,8 +1187,8 @@ private :
 //read BDD
     void LoadBDD();
     void Load3DS();
-    int  compter_nodes (Lib3dsNode *);
-    int  decoder_node  (Lib3dsNode *);
+    int  compter_nodes_mesh  (Lib3dsNode *);
+    int  decoder_node        (Lib3dsNode *);
     int  mesh_count_smoothing(Lib3dsMesh *);
     void Affiche_Matrice(float Mat4x4[4][4]);
     void LoadG3D();

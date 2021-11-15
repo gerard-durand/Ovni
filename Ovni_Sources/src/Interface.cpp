@@ -1688,10 +1688,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (!extend_auto) {                                                 // La sélection n'a pas été modifiée : afficher un message
 //            printf("Extension automatique : limite atteinte\n");
             if (ToSelect.ListeSelect.size() == 0)
-                wxMessage = "La sélection de facettes est vide. Pas d'extension possible";
+                wxMessage = _T("La sélection de facettes est vide. Pas d'extension possible");
             else {
-                wxMessage = "L'extension automatique de la sélection a atteind sa limite :\n";
-                wxMessage+= "pas ou plus de points communs avec les facettes voisines";
+                wxMessage = _T("L'extension automatique de la sélection a atteind sa limite :\n");
+                wxMessage+= _T("pas ou plus de points communs avec les facettes voisines");
             }
             DisplayMessage(wxMessage,false);
         }
@@ -3515,9 +3515,9 @@ void BddInter::create_bdd() {
                 objet_courant = &(this->Objetlist[i]);
                 if (Normales_sommets_presentes) {
                     if (i == 0) {
-                        wxString wxMessage = "Les Vecteurs et Luminances sont déjà présents dans la BDD.\n";
-                        wxMessage         += "Le calcul refait à la lecture du fichier va les remplacer...\n";
-                        wxMessage         += "Est-ce bien ce que vous voulez ?";
+                        wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
+                        wxMessage         += _T("Le calcul refait à la lecture du fichier va les remplacer...\n");
+                        wxMessage         += _T("Est-ce bien ce que vous voulez ?");
                         wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question"),
                                                  wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
                         if (query->ShowModal() == wxID_YES) Forcer_calcul = true;
@@ -6051,7 +6051,7 @@ void BddInter::LoadSTL() {
             wxString wxMessage;
             wxMessage.clear();
             wxMessage.Printf("Trop de couleurs/valeurs Attribute différentes dans ce ficher .stl binaire.\n%d valeurs trouvées, maximum : %d",index,nb_couleurs-1);
-            wxMessage  +=    "\nAgrandir MatAmbient_avionG et MatDiffuse_avionG";
+            wxMessage  += _T("\nAgrandir MatAmbient_avionG et MatDiffuse_avionG");
             DisplayMessage(wxMessage,true);
         }
     }
@@ -6086,12 +6086,15 @@ void BddInter::Load3DS()
  *  Identifie éventuellement plusieurs objets, crée des normales.
  *  Une création de groupes faite ?????????????????????????????????
  *  Utilise la librairie lib3ds (d'après l'exemple 3ds2m et 3dsplay)
+ *  Certains fichiers sont mal lus, y compris par 3dsplay alors que DeepExploration s'en sort.
+ *  Ouvrir donc par DeepExploration et réenregistrer en 3ds en y ajoutant _b au nom par exemple
  */
     int im ;
     Lib3dsNode *p, *node ;
     int meshes=0;
     int nnodes=0;
     int i;
+    bool make_nodes = false;
 //    int indiceObjet;
 
     if(verbose) printf("Entree de BddInter::Load3DS\n");
@@ -6112,8 +6115,18 @@ void BddInter::Load3DS()
     fichierBdd_length = std::filesystem::file_size(buffer.data());
     printf("Taille : %lld\n",fichierBdd_length);
 
-    /* Pas de nodes?  En fabriquer pour favoriser l'affichage (cf 3dsplay.c). */
-    if( !f3ds->nodes ) {
+    /* Pas de nodes ?  En fabriquer pour favoriser l'affichage (cf 3dsplay.c). */
+    if (!f3ds->nodes ) {
+        make_nodes = true;                  // pas de nodes du tout !
+    } else {
+        o_3ds = 0;
+        for (p = f3ds->nodes; p != 0; p = p->next) {
+            compter_nodes_mesh(p);
+        }
+        if (o_3ds == 0) make_nodes = true;  // Il y a des nodes mais pas de nodes de type mesh => en construire
+    }
+//    if( !f3ds->nodes ) {
+    if( make_nodes ) {
 //        Lib3dsNode *node;
 
         sprintf(Message,"Création de Nodes, car ce fichier .3ds n'en a pas !\n") ;
@@ -6131,7 +6144,7 @@ void BddInter::Load3DS()
 
     lib3ds_file_eval(f3ds, 0.0f);   // Indispensable pour configurer proprement les matrices des nodes
 
-    // Code pas très utile ! Sert juste à vérifier 2 méthodes de comptage qui ne donnent pas toujours la même chose !
+    // Code pas très utile ! Sert juste à vérifier 2 méthodes de comptage qui ne donnent pas toujours la même chose ! Différents types : meshes, cameras, ...
 //    for (node=f3ds->nodes; node!=NULL; node=node->next ) {
 //        nnodes++;                               // Compter le nombre de nodes (noeuds)
 //        printf("Node : %s\n",node->name);
@@ -6147,12 +6160,12 @@ void BddInter::Load3DS()
 //    }
 //    printf("Nodes : %d\n",nnodes);
 
-// Appel de compter_nodes plutôt que faire nb_objets = nnodes
+// Appel de compter_nodes_mesh plutôt que faire nb_objets = nnodes
     o_3ds = 0;
-    for (p = f3ds->nodes; p != 0; p = p->next) {   // Pas forcément utile car objets construits au fur et à mesure
-        compter_nodes(p);
+    for (p = f3ds->nodes; p != 0; p = p->next) {   // Pas forcément utile car objets construits au fur et à mesure. Laissé par précaution
+        compter_nodes_mesh(p);
     }
-    printf("sortie de compter_nodes : o_3ds = %d\n",o_3ds);
+    printf("sortie de compter_nodes_mesh : o_3ds = %d\n",o_3ds);
 //    if (o_3ds != nnodes) {
 //        sprintf(Message,"Nombre de nodes retenus : %d, différent du nombre initial : %d\n",o_3ds,nnodes);
 //        printf(utf8_To_ibm(Message)) ;
@@ -6234,12 +6247,12 @@ int BddInter::mesh_count_smoothing(Lib3dsMesh *mesh)
     return (compteur_smoothing);
 }
 
-int BddInter::compter_nodes (Lib3dsNode *node)
+int BddInter::compter_nodes_mesh (Lib3dsNode *node)
 {
     Lib3dsNode *p ;
 
     for (p = node->childs; p != 0; p = p->next) {
-        compter_nodes(p);
+        compter_nodes_mesh(p);
     }
 
     if (node->type == LIB3DS_NODE_MESH_INSTANCE) {
@@ -8420,7 +8433,7 @@ void BddInter::Inverser_Parcours_Selected() {
 
     if (mode_selection == selection_facette) {
         if (ToSelect.ListeSelect.empty()) {
-            wxMessage = "Aucune Facette sélectionnée !";
+            wxMessage = _T("Aucune Facette sélectionnée !");
             DisplayMessage(wxMessage,true);
             return;
         }
@@ -8433,7 +8446,7 @@ void BddInter::Inverser_Parcours_Selected() {
 
     if (mode_selection == selection_objet) {
         if (listeObjets.empty()) {
-            wxMessage = "Aucun Objet sélectionné !";
+            wxMessage = _T("Aucun Objet sélectionné !");
             DisplayMessage(wxMessage,true);
             return;
         }
