@@ -28,6 +28,7 @@ class Prefs_Dialog: public wxDialog
 		//(*Declarations(Prefs_Dialog)
 		wxBoxSizer* BoxSizer1;
 		wxBoxSizer* BoxSizer2;
+		wxBoxSizer* BoxSizer6;
 		wxButton* Button_OK;
 		wxButton* Button_Reset;
 		wxButton* Button_tmp_rep;
@@ -45,6 +46,7 @@ class Prefs_Dialog: public wxDialog
 		wxRadioBox* RadioBox_Trackball;
 		wxRadioBox* RadioBox_Triangulation;
 		wxSpinCtrl* SpinCtrl_PasSvg;
+		wxSpinCtrl* SpinCtrl_Threads;
 		wxSpinCtrlDouble* SpinCtrlDouble_SeuilGouraud2;
 		wxSpinCtrlDouble* SpinCtrlDouble_SeuilGouraud;
 		wxSpinCtrlDouble* SpinCtrlDouble_axes;
@@ -52,6 +54,7 @@ class Prefs_Dialog: public wxDialog
 		wxSpinCtrlDouble* SpinCtrlDouble_src;
 		wxStaticLine* StaticLine10;
 		wxStaticLine* StaticLine11;
+		wxStaticLine* StaticLine12;
 		wxStaticLine* StaticLine1;
 		wxStaticLine* StaticLine2;
 		wxStaticLine* StaticLine3;
@@ -65,6 +68,7 @@ class Prefs_Dialog: public wxDialog
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
 		wxStaticText* StaticText4;
+		wxStaticText* StaticText5;
 		wxStaticText* StaticText7;
 		wxStaticText* StaticText8;
 		wxStaticText* StaticText9;
@@ -120,6 +124,9 @@ class Prefs_Dialog: public wxDialog
 		static const long ID_TEXTCTRL10;
 		static const long ID_BUTTON1;
 		static const long ID_STATICLINE9;
+		static const long ID_STATICTEXT10;
+		static const long ID_SPINCTRL2;
+		static const long ID_STATICLINE12;
 		static const long ID_BUTTON2;
 		static const long ID_BUTTON3;
 		//*)
@@ -159,6 +166,8 @@ class Prefs_Dialog: public wxDialog
 		void OnTextCtrl_WorkDirText(wxCommandEvent& event);
 		void OnSpinCtrl_PasSvgChange(wxSpinEvent& event);
 		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
+		void OnInit(wxInitDialogEvent& event);
+		void OnSpinCtrl_ThreadsChange(wxSpinEvent& event);
 		//*)
 		OvniFrame* MAIN;
 

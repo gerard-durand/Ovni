@@ -55,6 +55,9 @@ const long Prefs_Dialog::ID_STATICTEXT9 = wxNewId();
 const long Prefs_Dialog::ID_TEXTCTRL10 = wxNewId();
 const long Prefs_Dialog::ID_BUTTON1 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE9 = wxNewId();
+const long Prefs_Dialog::ID_STATICTEXT10 = wxNewId();
+const long Prefs_Dialog::ID_SPINCTRL2 = wxNewId();
+const long Prefs_Dialog::ID_STATICLINE12 = wxNewId();
 const long Prefs_Dialog::ID_BUTTON2 = wxNewId();
 const long Prefs_Dialog::ID_BUTTON3 = wxNewId();
 //*)
@@ -208,6 +211,16 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(BoxSizer2, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine9 = new wxStaticLine(this, ID_STATICLINE9, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE9"));
 	BoxSizer1->Add(StaticLine9, 0, wxALL|wxEXPAND, 0);
+	BoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
+	StaticText5 = new wxStaticText(this, ID_STATICTEXT10, _T("Nombre de threads OpenMP (0 <=> auto)"), wxDefaultPosition, wxSize(251,16), 0, _T("ID_STATICTEXT10"));
+	BoxSizer6->Add(StaticText5, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+	SpinCtrl_Threads = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxDefaultPosition, wxSize(78,23), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
+	SpinCtrl_Threads->SetValue(_T("0"));
+	SpinCtrl_Threads->SetMaxSize(wxSize(78,0));
+	BoxSizer6->Add(SpinCtrl_Threads, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer1->Add(BoxSizer6, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
+	StaticLine12 = new wxStaticLine(this, ID_STATICLINE12, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE12"));
+	BoxSizer1->Add(StaticLine12, 0, wxALL|wxEXPAND, 0);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
 	Button_Reset = new wxButton(this, ID_BUTTON2, _T("Reset"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	BoxSizer3->Add(Button_Reset, 1, wxALL|wxALIGN_BOTTOM, 5);
@@ -238,6 +251,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Connect(ID_CHECKBOX10,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_SupprBackupClick);
 	Connect(ID_TEXTCTRL10,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&Prefs_Dialog::OnTextCtrl_WorkDirText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnButton_tmp_repClick);
+	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrl_ThreadsChange);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnButton_ResetClick);
 	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnButton_OKClick);
 	//*)
@@ -531,6 +545,10 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     printf(utf8_To_ibm(Message));
     TextCtrl_WorkDir->SetLabel(Element->wxOvniPath);
 
+    Element->nb_threads      = Element->nb_threads_def;
+    SpinCtrl_Threads->SetValue(Element->nb_threads);
+    omp_set_dynamic(1);
+
     Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
@@ -623,5 +641,26 @@ void Prefs_Dialog::OnCheckBox_NotFlatClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->NotFlat = CheckBox_NotFlat->GetValue();
+    Element->ini_file_modified = true ;
+}
+
+void Prefs_Dialog::OnInit(wxInitDialogEvent& event)
+{
+}
+
+void Prefs_Dialog::OnSpinCtrl_ThreadsChange(wxSpinEvent& event)
+{
+    BddInter *Element = MAIN->Element;
+
+    int ival = SpinCtrl_Threads->GetValue();
+    if ((ival <= 0) || (ival >= Element->nb_max_threads)) {
+        omp_set_dynamic(1);         // Nombre de threads automatique, soit le maximum
+        if (ival >= Element->nb_max_threads) ival = Element->nb_max_threads;
+        omp_set_num_threads(Element->nb_max_threads);                       // Par précaution, mais pas indispensable !
+    } else {
+        omp_set_dynamic(0);         // Forcer le nombre de threads
+        omp_set_num_threads(ival);
+    }
+    Element->nb_threads        = ival;
     Element->ini_file_modified = true ;
 }

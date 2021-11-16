@@ -45,24 +45,25 @@ const char *initD="Temps_sauveg=";
 const char *initE="Methode_triangles=";
 const char *initF="Mode_Trackball=";
 const char *initG="View_OpenGL_FPS=";
-const char *initH="Rep_travail=";       // Répertoire où est le fichier Bdd (pas Ovni.exe !)
+const char *initH="Rep_travail=";           // Répertoire où est le fichier Bdd (pas Ovni.exe !)
 const char *initI="Creer_Backup=";
 const char *initJ="Suppr_Backup=";
 const char *initK="Msg_Warning=";
 const char *initL="Raz_Selection_F=";
 const char *initM="FacettesNotFlat=";
+const char *initN="Nb_Threads=";
 
-FILE* f;                                // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
+FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
 #define XML_FMT_INT_MOD "l"
 #define BUFFSIZE        8192
 
 char XML_Buff[BUFFSIZE];
 int  XML_Depth;
-int  i_objetXML_courant=0;              // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
+int  i_objetXML_courant=0;                  // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
 static int id_timer=1000;
 
-char s1[666]; //,buffer[1000] ;			// chaines de caractères. Déclarée ici car utilisée aussi dans la lecture des fichiers G3D (hors BddInter)
+char s1[666]; //,buffer[1000] ;			    // chaines de caractères. Déclarée ici car utilisée aussi dans la lecture des fichiers G3D (hors BddInter)
 
 unsigned int codegroupe,codemateriau;
 int message_multi_sample_actif = 0;
@@ -116,9 +117,18 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
         }
     }
 
-    ResetData();                // Remettre aux valeurs par défaut
-    Ouvrir_ini_file();          // Lire dans le fichier .ini les valeurs éventuellement modifiées / défaut
-    pal_file_modified = false;  // Fichier palette non lu, donc par défaut, non modifié !
+    nb_max_threads = omp_get_max_threads(); // Récupérer en entrée le nombre max de threads/processeurs pour OpenMP
+    ResetData();                            // Remettre aux valeurs par défaut
+    Ouvrir_ini_file();                      // Lire dans le fichier .ini les valeurs éventuellement modifiées / défaut
+    pal_file_modified = false;              // Fichier palette non lu, donc par défaut, non modifié !
+    if ((nb_threads <= 0) || (nb_threads >= nb_max_threads)) {
+        omp_set_dynamic(1);                 // Nombre de threads automatique, soit le maximum
+//        if (nb_threads >= nb_max_threads) nb_threads = nb_max_threads;
+//        omp_set_num_threads(nb_max_threads);
+    } else {
+        omp_set_dynamic(0);                 // Forcer le nombre de threads
+        omp_set_num_threads(nb_threads);
+    }
 
     Smemory = nullptr;
     selectBuffer   = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
@@ -211,6 +221,16 @@ void BddInter::ResetData() {
     msg_warning             = msg_warning_def;
     traiter_doublons_aretes = traiter_doublons_aretes_def;
 
+    nb_threads              = nb_threads_def;
+    if ((nb_threads <= 0) || (nb_threads >= nb_max_threads)) {
+        omp_set_dynamic(1);                     // Nombre de threads automatique, soit le maximum
+//        if (nb_threads >= nb_max_threads) nb_threads = nb_max_threads;
+        omp_set_num_threads(nb_max_threads);    // Par précaution
+    } else {
+        omp_set_dynamic(0);                     // Pour forcer/limiter le nombre de threads pour OpenMP
+        omp_set_num_threads(nb_threads);
+    }
+
     m_gldata.rotx           = 0.0f;
     m_gldata.roty           = 0.0f;
     m_gldata.rotz           = 0.0f;
@@ -260,6 +280,7 @@ void BddInter::ResetData() {
         MPrefs->SpinCtrl_PasSvg->SetValue(svg_time);
         // Reset du répertoire de travail par défaut = chemin de l'exécutable
         MPrefs->TextCtrl_WorkDir->SetLabel(wxWorkDir);
+        MPrefs->SpinCtrl_Threads->SetValue(nb_threads);
     }
     if (MPosObs != nullptr) {
         ival = convert_rotx_LSI();
@@ -493,7 +514,7 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initH);
-            icmp= strncmp(initH,Message,len) ;                  // Test sur 16ème mot clé
+            icmp= strncmp(initH,Message,len) ;                  // Test sur 17ème mot clé
             if (!icmp) {
                 p_txt_wrk = Lire_chaine(&Message[len]) ;
                 sprintf(Message,"%s",p_txt_wrk) ;               // Récupère le répertoire de travail
@@ -505,7 +526,7 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initI);
-            icmp= strncmp(initI,Message,len) ;                  // Test sur 16ème mot clé
+            icmp= strncmp(initI,Message,len) ;                  // Test sur 18ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de viewFps
@@ -515,7 +536,7 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initJ);
-            icmp= strncmp(initJ,Message,len) ;                  // Test sur 16ème mot clé
+            icmp= strncmp(initJ,Message,len) ;                  // Test sur 19ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de viewFps
@@ -525,7 +546,7 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initK);
-            icmp= strncmp(initK,Message,len) ;                  // Test sur 17ème mot clé
+            icmp= strncmp(initK,Message,len) ;                  // Test sur 20ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de msg_warning
@@ -535,7 +556,7 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initL);
-            icmp= strncmp(initL,Message,len) ;                  // Test sur 18ème mot clé
+            icmp= strncmp(initL,Message,len) ;                  // Test sur 21ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de Raz_Selection_F
@@ -545,13 +566,20 @@ void BddInter::Ouvrir_ini_file()
                 continue;   // Passer au while suivant
             }
             len = strlen( initM);
-            icmp= strncmp(initM,Message,len) ;                  // Test sur 19ème mot clé
+            icmp= strncmp(initM,Message,len) ;                  // Test sur 22ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de NotFlat
                 if (ibool == 0)
                      NotFlat = false;
                 else NotFlat = true ;
+                continue;   // Passer au while suivant
+            }
+            len = strlen( initN);
+            icmp= strncmp(initN,Message,len) ;                  // Test sur 23ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&nb_threads) ;            // Récupère la valeur de nb_threads
                 continue;   // Passer au while suivant
             }
         }
@@ -575,13 +603,13 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",init4,antialiasing_soft);
         fprintf(f_init,"%s%d\n",init5,Forcer_1_Seul_Objet);
         fprintf(f_init,"%s%d\n",init6,lect_obj_opt);
-        fprintf(f_init,"%s%d\n",init7,test_decalage3ds);            // Ne pas stocker tant que ce n'est pas suffisament fiable
+        fprintf(f_init,"%s%d\n",init7,test_decalage3ds);
         fprintf(f_init,"%s%d\n",init8,test_seuil_gouraud);
         fprintf(f_init,"%s%f\n",init9,angle_Gouraud);
         fprintf(f_init,"%s%f\n",initA,fmult_Gouraud);
         fprintf(f_init,"%s%d\n",initB,Enr_Normales_Seuillees);
         fprintf(f_init,"%s%d\n",initC,CalculNormalesLectureBdd);
-        fprintf(f_init,"%s%d\n",initD,svg_time);                        // Pas encore implémenté
+        fprintf(f_init,"%s%d\n",initD,svg_time);
         fprintf(f_init,"%s%d\n",initE,methode_Triangulation);
         fprintf(f_init,"%s%d\n",initF,m_gldata.mode_Trackball);
         fprintf(f_init,"%s%d\n",initG,viewFps);
@@ -593,6 +621,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initK,msg_warning);
         fprintf(f_init,"%s%d\n",initL,Raz_Selection_F);
         fprintf(f_init,"%s%d\n",initM,NotFlat);
+        fprintf(f_init,"%s%d\n",initN,nb_threads) ;
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -11730,8 +11759,10 @@ void BddInter::Calcul_All_Normales() {
     unsigned int o,i,nb_fac,nb_som;
     Object * objet_courant;
     Face   * facette_courante;
+    double tdeb,tfin;
 
     printf("\nCalcul de toutes les normales\n");
+    tdeb = omp_get_wtime();
 
     for (unsigned int o=0; o<this->Objetlist.size(); o++) {
         objet_courant = &(this->Objetlist[o]);
@@ -11767,6 +11798,8 @@ void BddInter::Calcul_All_Normales() {
 //        printf("%d vl %d %d\n",o,objet_courant->Nb_vecteurs,objet_courant->Nb_luminances);
     }
     bdd_modifiee = true;
+    tfin = omp_get_wtime();
+    printf("temps : %lf s via %d threads\n",tfin-tdeb,omp_get_max_threads());
     printf("Fin\n");
 }
 

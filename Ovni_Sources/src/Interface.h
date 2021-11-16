@@ -853,7 +853,7 @@ public :
     float angle_Gouraud_def = 35.0f;
     float fmult_Gouraud_def =  1.6f;
     int   svg_time_def      = 5;                    // en minutes
-    bool  test_seuil_gouraud_def       = false;
+    bool  test_seuil_gouraud_def       = true;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
     bool  forcer_simplification_doublons_aretes_def = false;
 
@@ -862,7 +862,7 @@ public :
     bool  lect_obj_opt_def             = false;     // Pour activer une lecture optimisée des fichiers .obj (suppression des sommets/vecteurs inutiles sur objets multiples)
     bool  test_decalage3ds_def         = true;      // Tenir compte d'un éventuel décalage d'objet 3ds (prise en compte du pivot). Ne marche pas toujours bien ...
     bool  CalculNormalesLectureBdd_def = false;     // Pour forcer le calcul (recalcul) des normales dès la lecture du fichier
-    bool  Enr_Normales_Seuillees_def   = false;
+    bool  Enr_Normales_Seuillees_def   = true;      // Force l'enregistrement des normales seuillées dans le fichier bdd
     bool  reset_zoom                   = true;
     bool  bdd_modifiee                 = false;     // Pour indiquer que la base de données a été modifiée => proposer de l'enregistrer si ça n'a pas été fait
     bool  creation_facette             = false;     // Pour traiter différement le sélection de points en mode de création de facettes
@@ -878,6 +878,7 @@ public :
     int   mode_Trackball_def=1;                     // mode par défaut : 1 = Trackball, 0 = Rotation directe
     int   methode_Triangulation_def=1;              // mode par défaut 0, 1 ou 2
     float fmult_diag_def = 10.0f;                   // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
+    int   nb_threads_def = 0;                       // Nombre max de threads pour OpenMP. 0 => non limité => sera pris égal au nombre de processeurs/max_threads via omp_set_num_threads
 
 // Valeurs de travail
     float len_axe;
@@ -906,6 +907,8 @@ public :
     bool  msg_warning              = msg_warning_def;
     bool  traiter_doublons_aretes  = traiter_doublons_aretes_def;
     bool  forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
+    int   nb_threads               = nb_threads_def;
+    int   nb_max_threads;
 
     GLfloat Light0Position[4];              // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 

@@ -1636,6 +1636,9 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 //    Preferences_Panel->TextCtrl_WorkDir->SetStyle(-1,-1,wxTextAttr(wxTE_RIGHT)); // A revoir : Ne marche pas. L'idée est de cadrer à droite pour voir la fin du nom de répertoire
 //    wxTextAttr* style=wxTE_RIGHT;
 
+    Preferences_Panel->SpinCtrl_Threads->SetMax  (Element->nb_max_threads);
+    Preferences_Panel->SpinCtrl_Threads->SetValue(Element->nb_threads);
+
     Element->ini_file_modified = svg;   // Restitution de la valeur qu'il y avait en entrée
 
     Preferences_Panel->Show();
