@@ -4435,6 +4435,8 @@ void BddInter::LoadOBJ()
             first = 1 ;
             while (fgets(s1,660,f) != NULL) { // Jusqu'à la fin de fichier
         //        printf("%s",s1) ;
+                Update_Dialog(ftell(f), fichierBdd_length);
+
                 if (!strncmp(s1,"g ",2) && !Forcer_1_Seul_Objet) {
                     if (first) {
                         first = 0 ;
@@ -4577,8 +4579,10 @@ void BddInter::LoadOBJ()
                 Update_Dialog(ftell(f), fichierBdd_length);
             }
             nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
-            dialog->Update(100);
-            wxDELETE(dialog);
+            if (dialog_en_cours) {
+                dialog->Update(100);
+                wxDELETE(dialog);
+            }
 
 //! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
 //! ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
@@ -4644,7 +4648,7 @@ void BddInter::LoadOBJ()
         type = -1;
     }
     fclose(f);
-    if (dialog) {               // au cas où ...
+    if (dialog_en_cours) {               // au cas où ...
         dialog->Update(100);
         wxDELETE(dialog);
     }
@@ -11799,7 +11803,7 @@ void BddInter::Calcul_All_Normales() {
     }
     bdd_modifiee = true;
     tfin = omp_get_wtime();
-    printf("temps : %lf s via %d threads\n",tfin-tdeb,omp_get_max_threads());
+    printf("temps de calcul : %lf s via %d threads\n",tfin-tdeb,omp_get_max_threads());
     printf("Fin\n");
 }
 
