@@ -1052,6 +1052,9 @@ public :
                                         // Peut-être créer aussi un wxBddPath pour conserver le dernier path d'accès à une bdd !
     wxString wxNomsFichiers;            // Pour assembler les noms des fichiers (sans Path). Utile en cas de fusion de Bdds.
     wxString Fichier_Autosvg = _T("Autosave.bdd");  // Nom du fichier de sauvegarde automatique utilisé via le wxTimer
+    wxString Dialog_Titre, Dialog_Comment;
+    clock_t  Dialog_Delay;
+
     bool exists_Autosave = false;                   // Sera mis à true par la première sauvegarde automatique
 
     Lib3dsFile *f3ds=0;                             // Spécifique aux fichier de type 3ds

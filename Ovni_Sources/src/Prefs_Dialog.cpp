@@ -38,6 +38,7 @@ const long Prefs_Dialog::ID_SPINCTRLDOUBLE5 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX6 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX5 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX11 = wxNewId();
+const long Prefs_Dialog::ID_CHECKBOX12 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE6 = wxNewId();
 const long Prefs_Dialog::ID_STATICTEXT7 = wxNewId();
 const long Prefs_Dialog::ID_STATICTEXT8 = wxNewId();
@@ -142,13 +143,16 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	CheckBox_RecNormales_Seuillees = new wxCheckBox(this, ID_CHECKBOX6, _T("Enregistrement dans la Bdd des normales aux sommets seuillées"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX6"));
 	CheckBox_RecNormales_Seuillees->SetValue(false);
 	CheckBox_RecNormales_Seuillees->Disable();
-	BoxSizer1->Add(CheckBox_RecNormales_Seuillees, 0, wxALL|wxEXPAND, 5);
+	BoxSizer1->Add(CheckBox_RecNormales_Seuillees, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	CheckBox_CalculNormales = new wxCheckBox(this, ID_CHECKBOX5, _T("Calcul des normales aux sommets dès la lecture de la Bdd"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX5"));
 	CheckBox_CalculNormales->SetValue(false);
-	BoxSizer1->Add(CheckBox_CalculNormales, 0, wxALL|wxEXPAND, 5);
+	BoxSizer1->Add(CheckBox_CalculNormales, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	CheckBox_NotFlat = new wxCheckBox(this, ID_CHECKBOX11, _T("Forcer toutes les facettes à être NON planes"), wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX11"));
 	CheckBox_NotFlat->SetValue(false);
 	BoxSizer1->Add(CheckBox_NotFlat, 0, wxALL, 5);
+	CheckBox_TraiterDoublonsAretes = new wxCheckBox(this, ID_CHECKBOX12, _T("Supprimer les doublons d\'arêtes des facettes"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX12"));
+	CheckBox_TraiterDoublonsAretes->SetValue(false);
+	BoxSizer1->Add(CheckBox_TraiterDoublonsAretes, 1, wxBOTTOM|wxLEFT|wxRIGHT, 5);
 	StaticLine6 = new wxStaticLine(this, ID_STATICLINE6, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE6"));
 	BoxSizer1->Add(StaticLine6, 0, wxALL|wxEXPAND, 0);
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Intervalle de temps des sauvegardes automatiques en minutes :"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT7"));
@@ -179,7 +183,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	};
 	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxDefaultSize, 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
 	RadioBox_Trackball->SetSelection(1);
-	BoxSizer1->Add(RadioBox_Trackball, 1, wxLEFT|wxRIGHT|wxEXPAND, 5);
+	BoxSizer1->Add(RadioBox_Trackball, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
 	BoxSizer1->Add(StaticLine8, 0, wxALL|wxEXPAND, 0);
 	CheckBox_DisplayFps = new wxCheckBox(this, ID_CHECKBOX7, _T("Affichage du nombre de frames OpenGL par secondes (fps)"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX7"));
@@ -192,13 +196,13 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	CheckBox_CreerBackup->Disable();
 	CheckBox_CreerBackup->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_CreerBackup->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
-	BoxSizer1->Add(CheckBox_CreerBackup, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 5);
+	BoxSizer1->Add(CheckBox_CreerBackup, 0, wxALL|wxEXPAND, 5);
 	CheckBox_SupprBackup = new wxCheckBox(this, ID_CHECKBOX10, _T("Supprimer le fichier de backup *.bdd.bak en quittant Ovni"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX10"));
 	CheckBox_SupprBackup->SetValue(false);
 	CheckBox_SupprBackup->Disable();
 	CheckBox_SupprBackup->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_SupprBackup->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
-	BoxSizer1->Add(CheckBox_SupprBackup, 0, wxALL|wxEXPAND, 5);
+	BoxSizer1->Add(CheckBox_SupprBackup, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine11 = new wxStaticLine(this, ID_STATICLINE11, wxDefaultPosition, wxSize(380,1), wxLI_HORIZONTAL, _T("ID_STATICLINE11"));
 	BoxSizer1->Add(StaticLine11, 0, wxALL|wxEXPAND, 0);
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Répertoire des fichiers temporaires de travail"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE, _T("ID_STATICTEXT9"));
@@ -223,10 +227,10 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(StaticLine12, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 2);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
 	Button_Reset = new wxButton(this, ID_BUTTON2, _T("Reset"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
-	BoxSizer3->Add(Button_Reset, 1, wxALL|wxALIGN_BOTTOM, 5);
+	BoxSizer3->Add(Button_Reset, 1, wxALL|wxALIGN_BOTTOM, 2);
 	Button_OK = new wxButton(this, ID_BUTTON3, _T("OK"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
-	BoxSizer3->Add(Button_OK, 1, wxALL|wxALIGN_BOTTOM, 5);
-	BoxSizer1->Add(BoxSizer3, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL, 5);
+	BoxSizer3->Add(Button_OK, 1, wxALL|wxALIGN_BOTTOM, 2);
+	BoxSizer1->Add(BoxSizer3, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL, 2);
 	SetSizer(BoxSizer1);
 	BoxSizer1->SetSizeHints(this);
 
@@ -243,6 +247,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Connect(ID_CHECKBOX6,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_RecNormales_SeuilleesClick);
 	Connect(ID_CHECKBOX5,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_CalculNormalesClick);
 	Connect(ID_CHECKBOX11,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_NotFlatClick);
+	Connect(ID_CHECKBOX12,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_TraiterDoublonsAretesClick);
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrl_PasSvgChange);
 	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TriangulationSelect);
 	Connect(ID_RADIOBOX2,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TrackballSelect);
@@ -474,6 +479,10 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     chkB = Element->CalculNormalesLectureBdd = Element->CalculNormalesLectureBdd_def;
     CheckBox_CalculNormales->SetValue(chkB);
 
+// Case à cocher du traitement des doublons d'arêtes
+    chkB = Element->traiter_doublons_aretes = Element->traiter_doublons_aretes_def;
+    CheckBox_TraiterDoublonsAretes->SetValue(chkB);
+
 // Case à cocher de Test du seuillage de Gouraud et activation/désactivation des valeurs de seuil
     chkB = Element->test_seuil_gouraud = Element->test_seuil_gouraud_def;
     CheckBox_Seuillage->SetValue(chkB);
@@ -663,4 +672,12 @@ void Prefs_Dialog::OnSpinCtrl_ThreadsChange(wxSpinEvent& event)
     }
     Element->nb_threads        = ival;
     Element->ini_file_modified = true ;
+}
+
+void Prefs_Dialog::OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event)
+{
+    BddInter *Element = MAIN->Element;
+
+    Element->traiter_doublons_aretes = CheckBox_TraiterDoublonsAretes->GetValue();
+    Element->ini_file_modified       = true ;
 }

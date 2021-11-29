@@ -52,6 +52,7 @@ const char *initK="Msg_Warning=";
 const char *initL="Raz_Selection_F=";
 const char *initM="FacettesNotFlat=";
 const char *initN="Nb_Threads=";
+const char *initO="TestDbAretes=";
 
 FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -252,7 +253,8 @@ void BddInter::ResetData() {
     test_decalage3ds    = test_decalage3ds_def;
     Forcer_1_Seul_Objet = Forcer_1_Seul_Objet_def;
     lect_obj_opt        = lect_obj_opt_def;
-    if (Forcer_1_Seul_Objet) lect_obj_opt=false;                // Pas d'optimisation si 1 seul Objet 3D dans un fichier .obj
+    forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
+    if (Forcer_1_Seul_Objet) lect_obj_opt = false;              // Pas d'optimisation si 1 seul Objet 3D dans un fichier .obj
     CalculNormalesLectureBdd = CalculNormalesLectureBdd_def;
     Enr_Normales_Seuillees   = Enr_Normales_Seuillees_def;
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());
@@ -274,6 +276,7 @@ void BddInter::ResetData() {
         MPrefs->CheckBox_DisplayFps->SetValue(viewFps_def);
         MPrefs->CheckBox_CalculNormales->SetValue(CalculNormalesLectureBdd);
         MPrefs->CheckBox_RecNormales_Seuillees->SetValue(Enr_Normales_Seuillees);
+        MPrefs->CheckBox_TraiterDoublonsAretes->SetValue(traiter_doublons_aretes);
         if (test_seuil_gouraud) MPrefs->CheckBox_RecNormales_Seuillees->Enable();
         else                    MPrefs->CheckBox_RecNormales_Seuillees->Disable();
 
@@ -582,6 +585,16 @@ void BddInter::Ouvrir_ini_file()
                 sscanf(p_txt_wrk,"%d",&nb_threads) ;            // Récupère la valeur de nb_threads
                 continue;   // Passer au while suivant
             }
+            len = strlen( initO);
+            icmp= strncmp(initO,Message,len) ;                  // Test sur 24ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de traiter_doublons_aretes
+                if (ibool == 0)
+                     traiter_doublons_aretes = false;
+                else traiter_doublons_aretes = true ;
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
@@ -622,6 +635,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initL,Raz_Selection_F);
         fprintf(f_init,"%s%d\n",initM,NotFlat);
         fprintf(f_init,"%s%d\n",initN,nb_threads) ;
+        fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -1712,7 +1726,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         m_gllist = glliste_select; // 0;
         Refresh();
 //        printf("C'est fini\n");
-        wxEndBusyCursor();                                                  // Supprime le curseur animé... C'est terminé !
+        if (wxIsBusy()) wxEndBusyCursor();                                                  // Supprime le curseur animé... C'est terminé !
 
         if (!extend_auto) {                                                 // La sélection n'a pas été modifiée : afficher un message
 //            printf("Extension automatique : limite atteinte\n");
@@ -2668,6 +2682,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->StaticText7->SetForegroundColour(Forg);
     this->MPrefs->StaticText8->SetForegroundColour(Forg);
     this->MPrefs->StaticText9->SetForegroundColour(Forg);
+    this->MPrefs->StaticText5->SetForegroundColour(Forg);
     this->MPrefs->StaticText_Gouraud    ->SetForegroundColour(Forg);
     this->MPrefs->StaticText_Gouraud2   ->SetForegroundColour(Forg);
     this->MPrefs->SpinCtrlDouble_axes   ->SetForegroundColour(Forg);
@@ -2682,6 +2697,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->SpinCtrlDouble_src        ->SetBackgroundColour(Gris);
     this->MPrefs->SpinCtrl_PasSvg           ->SetForegroundColour(Forg);
     this->MPrefs->SpinCtrl_PasSvg           ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrl_Threads          ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrl_Threads          ->SetBackgroundColour(Gris);
     this->MPrefs->CheckBox_1SeulObjet3D     ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_1SeulObjet3D     ->SetBackgroundColour(Back);
     this->MPrefs->CheckBox_AntialiasingSoft ->SetForegroundColour(Forg);
@@ -2692,6 +2709,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->CheckBox_DisplayFps       ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_LectureOptimisee ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_NotFlat          ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TraiterDoublonsAretes->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_RecNormales_Seuillees->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_Seuillage        ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_SupprBackup      ->SetForegroundColour(Forg);
@@ -3344,14 +3362,14 @@ void BddInter::clearall() {
 
 void BddInter::Update_Dialog(long position, long max_value)
 {
-    #define NB_DELTA_TICKS_Dialog CLOCKS_PER_SEC/2 // 1/2 secondes
-
     if (!dialog_en_cours) {
-        if ((clock() - time_deb_dialog) > NB_DELTA_TICKS_Dialog) {
-            dialog = new wxProgressDialog("Lecture du fichier",
-                                          wxFileNameFromPath(get_file()),   // Pour afficher le npm du fichier
-                                          100,        // range
-                                          this,       // parent
+        if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
+//            dialog = new wxProgressDialog(wxS("Lecture du fichier"),
+//                                          wxFileNameFromPath(get_file()),   // Pour afficher le npm du fichier
+            dialog = new wxProgressDialog(Dialog_Titre,
+                                          Dialog_Comment,   // Pour afficher le npm du fichier
+                                          100,              // range
+                                          this,             // parent
 //                                          wxPD_CAN_ABORT |
 //                                          wxPD_APP_MODAL// |
 //                                          wxPD_ELAPSED_TIME |
@@ -3359,6 +3377,10 @@ void BddInter::Update_Dialog(long position, long max_value)
 //                                          wxPD_REMAINING_TIME |
                                           wxPD_AUTO_HIDE
                                          );
+//            if (theme_b) {
+//                dialog->SetForegroundColour(New_Forg);    // Sans effet
+//                dialog->SetBackgroundColour(New_Back);
+//            }
             dialog->Update(0);   // Par précaution
             dialog_en_cours = true;
             int new_val = round(position*100./max_value);
@@ -3385,7 +3407,7 @@ void BddInter::create_bdd() {
 
     if(verbose) printf("Entree de BddInter::create_bdd\n");
 
-    traiter_doublons_aretes = traiter_doublons_aretes_def;              // réinitialiser à chaque nouvelle lecture de fichier
+//    traiter_doublons_aretes = traiter_doublons_aretes_def;              // réinitialiser à chaque nouvelle lecture de fichier
 
     if (Numero_base == 0) {                                             // Ouvrir ou réouvrir un fichier
         clearall();                                                         // RAZ global
@@ -3421,6 +3443,10 @@ void BddInter::create_bdd() {
         type=0;
     }
     printf("create_bdd : type=%d\n",type);
+
+    Dialog_Titre   = wxS("Lecture du fichier");
+    Dialog_Comment = wxFileNameFromPath(get_file());
+    Dialog_Delay   = CLOCKS_PER_SEC/2;      // 1/2 seconde
 
     wxFileInputStream stream(str_nom);
     mtllib_OK = false;                      // Ne sert que si une ligne mtllib existe dans un fichier .obj
@@ -3920,8 +3946,10 @@ void BddInter::LectureXML_G3d (FILE *f)
 #ifdef WIN32
             system("pause") ;
 #endif
-            dialog->Update(100);
-            wxDELETE(dialog);
+            if(dialog_en_cours) {
+                dialog->Update(100);
+                wxDELETE(dialog);
+            }
             exit(-1);
         }
 
@@ -4576,7 +4604,7 @@ void BddInter::LoadOBJ()
                     continue;
                 }
 
-                Update_Dialog(ftell(f), fichierBdd_length);
+//                Update_Dialog(ftell(f), fichierBdd_length); // pas efficace ici à cause des continue
             }
             nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
             if (dialog_en_cours) {
@@ -5953,7 +5981,7 @@ void BddInter::LoadSTL() {
                 make1face();
 //                make1face(numero_facette,Numeros);
                 facette_courante = &(objet_courant->Facelist[numero_facette-1]);
-                facette_courante->flat       = true;
+                facette_courante->flat       = false;   // Pas de normales aux sommets dans un STL => activer la possibilité de les calculer
                 facette_courante->groupe     = groupe_def;
                 facette_courante->codmatface = codmatface_def;
 
@@ -6038,7 +6066,7 @@ void BddInter::LoadSTL() {
             make1face();
 //            make1face(numero_facette,Numeros);
             facette_courante = &(objet_courant->Facelist[numero_facette-1]);
-            facette_courante->flat       = true;        // provisoire
+            facette_courante->flat       = false;   // Pas de normales aux sommets dans un STL => activer la possibilité de les calculer
             facette_courante->groupe     = groupe_def;
             facette_courante->codmatface = codmatface_def;
 
@@ -6091,7 +6119,7 @@ void BddInter::LoadSTL() {
 
     objet_courant->Nb_luminances= 0;   // Dans le format STL, il n'y a pas de normales aux sommets
     objet_courant->Nb_vecteurs  = 0;   // enregistrées dans le fichier de Bdd
-    objet_courant->flat=true;          // A la lecture, on considère que l'objet n'est composé que de facettes planes
+    objet_courant->flat = true;        // A la lecture, l'objet n'est composé que de facettes planes => Il faudra recalculer toutes les normales
 
     m_loaded = true ; //true;
     m_gllist = 0;
@@ -7579,7 +7607,7 @@ void BddInter::GenereTableauAretes(Object * objet)
     Nb_avant = objet->Nb_aretes = objet->Areteslist.size();
     bool traiter_doublons_aretes_svg = traiter_doublons_aretes;
     if (Nb_avant >= nb_aretes_test_d) traiter_doublons_aretes = false;  // Arete_size_test
-    else                              traiter_doublons_aretes = true;   // avec cette ligne, revalide la possibilité de traitement à chaque objet, sinon abandon dès qu'un objet déborde
+//    else                              traiter_doublons_aretes = true;   // avec cette ligne, revalide la possibilité de traitement à chaque objet, sinon abandon dès qu'un objet déborde
     if (!traiter_doublons_aretes && !forcer_simplification_doublons_aretes) {
         if (verbose_local) {
             printf("Objet : %s\nNb_aretes : %d\nSimplification des doublons d'arêtes non effectuée\n",objet->GetName(),Nb_avant);
@@ -7598,7 +7626,7 @@ void BddInter::GenereTableauAretes(Object * objet)
 //         On peut aussi arrêter de tester les indices et sortir de la boucle en j, dès que 2 correspondances ont été trouvées car dans la majorité des
 //         cas une arête n'est utilisée que 2 fois au plus car commune à 2 facettes.
 
-    time_0 = time_c = clock();
+    time_0 = time_c = time_deb_dialog = clock();
 // boucle for suivante probablement non parallélisable car les 2 boucles imbriquées travaillent sur la même Areteslist qui change quand un doublon est trouvé.
 // de plus, le break a beaucoup moins d'intérêt car les threads qui n'y passent pas continuent jusqu'à la fin => perte de temps globale.
 // Enfin, comme Areteslist est passé de <vector> à <list> plus de parallélisation possible !
@@ -7642,21 +7670,18 @@ void BddInter::GenereTableauAretes(Object * objet)
                                 // L'affichage dépend du temps d'exécution => plutôt utiliser un timer et donc n'afficher un '.' que toutes les x secondes
             delta_time = clock() - time_c;
             if (delta_time >= NB_DELTA_TICKS && verbose_local) {
-                if (!print_en_cours) {                                    // Seulement la 1ère fois
+                if (!print_en_cours) {                                  // Seulement la 1ère fois
                     print_en_cours = true;
 //                    printf("%s",Message);
 //                    printf("Detection d'aretes en doublon ");
                     printf(utf8_To_ibm(Message));                       // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
                     sprintf(Message,"Détection d'arêtes en doublon ");  // et le début de l'indicateur de progression
                     printf(utf8_To_ibm(Message));
-                    dialog = new wxProgressDialog(wxS("Détection d'arêtes en doublon"),
-                                                  "Objet : "+objet->GetwxName(),
-                                                  100,        // range
-                                                  this,       // parent
-                                                  wxPD_AUTO_HIDE
-                                                 );
-                    dialog->Update(0);   // Par précaution
-                    dialog_en_cours = true;
+                    Dialog_Titre    = wxS("Détection d'arêtes en doublon");
+                    Dialog_Comment  = wxS("Objet : ")+objet->GetwxName();
+                    Dialog_Delay    = NB_DELTA_TICKS;                   // Ce sera forcément le cas car test sur delta_time la première fois
+                    dialog_en_cours = false;
+                    Update_Dialog((long)i, (long)nbaretes);
                 }
                 printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
                 time_c = clock();
@@ -8267,7 +8292,7 @@ Boucle:
         m_gllist   = glliste_objets; // Déjà comme ça en principe
         Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
 
-        wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
+        if (wxIsBusy()) wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
 
     }   // if (m_gllist == 0)
 
@@ -9927,7 +9952,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     str.Printf(_T("%d"),nb_Objets_selected) ;
                     if (nb_Objets_selected >= 2) {
                         MSelect->Button_Fusionner->Enable();    // Activer le bouton de fusion d'objets si le nombre d'objets sélectionnés est >= 2
-                        MSelect->TextCtrl_NomObjet->ChangeValue("Sélection multiple");  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
+                        MSelect->TextCtrl_NomObjet->ChangeValue(_T("Sélection multiple"));  // Ici ChangeValue plutôt que SetValue sinon active SelectionPanel::OnTextCtrl_NomObjetText
                     } else {
                         MSelect->Button_Fusionner->Disable();   // Le désactiver sinon (rien à fusionner).
                         if ((nb_Objets_selected == 0) && (objet >= 0)) MSelect->TextCtrl_NomObjet->SetValue(""); // Le clic sur l'objet restant l'a déselectionné !
@@ -12002,6 +12027,7 @@ void BddInter::Simplification_BDD()
     std::vector<float> Point_1, Point_i, Point_j;
     Object * objet_courant;
     Face   * Facette_courante;
+    int Nb_test,compteur;
 
     bool modification, indic;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
@@ -12014,25 +12040,56 @@ void BddInter::Simplification_BDD()
     printf("Tolerance d'egalite des sommets : relative : %8.3f%%, absolue : %7.2e\n",tolerance,epsilon);
     nbp_changes = nbv_changes = 0;
 
-    for (o=0; o<this->Objetlist.size(); o++) {                       // On parcoure tous les objets en mémoire
+// Dans l'idéal, il ne faudrait ne créer dialog que plus tard (1 ou 2s) : éviterait de l'afficher si c'est très court ! Mais serait à faire dans 1 seul thread ou encore plus tard !
+//    dialog = new wxProgressDialog(wxS("Simplification de la Bdd"),
+//                                  wxS("Patience, ça peut être long... et même très long !"),
+//                                  100,        // range
+//                                  this,       // parent
+//                                  wxPD_AUTO_HIDE
+//                                 );
+//    dialog->Update(0);   // Par précaution
+//    dialog_en_cours = true;
+
+    Dialog_Titre    = wxS("Simplification de la Bdd");
+    Dialog_Comment  = wxS("Patience, ça peut être long... et même très long !");
+    Dialog_Delay    = CLOCKS_PER_SEC;
+    dialog_en_cours = false;
+    time_deb_dialog = clock();
+
+// Ajouter un timing spécifique ....
+
+    compteur = 0;   // Un compteur de boucles
+    Nb_test  = 0;   // estimation du nombre de boucles (sur-évalué)
+    for (o=0; o<this->Objetlist.size(); o++) {
+        objet_courant = &(this->Objetlist[o]);
+        Nb_test += 2*objet_courant->Nb_sommets;
+        Nb_test += 2*objet_courant->Nb_vecteurs;
+//      printf("0S %d\n",objet_courant->Nb_sommets);
+//      printf("0V %d\n",objet_courant->Nb_vecteurs);
+    }
+//    printf("0  %d\n",Nb_test);
+
+
+    for (o=0; o<this->Objetlist.size(); o++) {                          // On parcourt tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         printf("\nObjet : %s\n",objet_courant->GetName());
-        if (objet_courant->deleted) continue ;                      // Ne pas traiter un objet supprimé (mais encore en mémoire), et donc passer au suivant
+        if (objet_courant->deleted) continue ;                          // Ne pas traiter un objet supprimé (mais encore en mémoire), et donc passer au suivant
         nb_modifs    = 0;
         modification = false;
-        nb_points    = objet_courant->Sommetlist.size() ;           // normalement égal à This->Objetlist[i].Nb_sommets;
+        nb_points    = objet_courant->Sommetlist.size() ;               // normalement égal à This->Objetlist[i].Nb_sommets;
         nb_points2   = objet_courant->Nb_sommets;
         if(nb_points != nb_points2) printf("Probleme sur objet %d: Sommetlist.size=%d, Nb_sommets=%d\n",o,nb_points,nb_points2);
-        if (nb_points <= 0) continue ;                              // Ne pas traiter un objet sans sommets
+        if (nb_points <= 0) continue ;                                  // Ne pas traiter un objet sans sommets
 //        printf("Nombre de sommets avant le traitement   : %u\n",nb_points);
-        tabPoints.resize(nb_points);                                // Il ne devrait pas y en avoir plus !
+        tabPoints.resize(nb_points);                                    // Il ne devrait pas y en avoir plus !
         nbface = objet_courant->Nb_facettes;
         if (nbface <= 0) continue;
 
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
-        int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;      // -1 pour passer d'un numéro de sommet à un indice de sommet
-        Point_1  = objet_courant->Sommetlist[ind1].getPoint();      // Coordonnées du 1er sommet de la 1ère facette dans Point_1
-        for (i=1; i<=nb_points; ++i) {                               // Ici, i est un numéro de point (décalé de 1 / indice)
+        int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;          // -1 pour passer d'un numéro de sommet à un indice de sommet
+        Point_1  = objet_courant->Sommetlist[ind1].getPoint();          // Coordonnées du 1er sommet de la 1ère facette dans Point_1
+#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+        for (i=1; i<=nb_points; ++i) {                                  // Ici, i est un numéro de point (décalé de 1 / indice)
         //pour chaque point d'un objet
             cpt = 0 ;
             for (k=0 ; k<nbface ; k++ ) {
@@ -12047,15 +12104,22 @@ void BddInter::Simplification_BDD()
                 if (cpt != 0) break ;   // Idem
             }
             if (cpt == 0) { // Ce point n'est pas utilisé dans l'objet. Forcer à en faire un doublon pour pouvoir ensuite l'éliminer
-                objet_courant->Sommetlist[i-1].setPoint(Point_1);   // Numero de sommet i => indice i-1
+                objet_courant->Sommetlist[i-1].setPoint(Point_1);       // Numero de sommet i => indice i-1
                 if (verbose) {
                     printf("\rPoint numero %6d non utilise dans l'objet %d",i,o) ;      // On pourrait mettre le nom de l'objet plutôt que son indice => transcription wx->Ascii
                     fflush(stdout); // Pour Sun/cc
                 }
             }
+            #pragma omp critical
+            {
+            compteur++;
+            Update_Dialog(compteur,Nb_test);
+            }
         }
+// Fin de zone calcul //
+//        printf("1 %d\n",compteur);
         if (verbose) printf("\n");
-        for (i=0; i<nb_points; ++i) {
+        for (i=0; i<nb_points; ++i) {           // Pas sûr que ce soit parallélisable !
             //pour chaque point d'un objet
 //            objet_courant->Sommetlist[i].toshow = 0 ; // Raz
             Point_i = objet_courant->Sommetlist[i].getPoint();
@@ -12079,6 +12143,7 @@ void BddInter::Simplification_BDD()
                 indic        = false;
 
                 for (j=0; j<cpt; ++j) {
+#pragma omp parallel for private(l,Facette_courante,nbsom)
                     for (k=0; k<nbface; ++k) {
                         //on parcourt chaque face de l'objet
                         Facette_courante = &(objet_courant->Facelist[k]);
@@ -12101,6 +12166,7 @@ void BddInter::Simplification_BDD()
                             }
                         }
                     }
+// Fin de zone calcul //
                     //on traite aussi les sommets qui sont dans tabPoints
                     if (j < (cpt-1)) {
                         //si on n'est pas sur le dernier sommet de tabPoints[]
@@ -12121,7 +12187,15 @@ void BddInter::Simplification_BDD()
                 }
                 if(indic && verbose) printf("\n") ;
             }
+            compteur++;
+            Update_Dialog(compteur+nb_modifs,Nb_test);
+
         }
+//        printf("2 %d\n",compteur);
+        compteur +=nb_modifs;
+        Update_Dialog(compteur,Nb_test);
+//        printf("2 %d\n",compteur);
+
         tabPoints.clear();
 
         if (modification) {
@@ -12151,9 +12225,7 @@ void BddInter::Simplification_BDD()
             printf("Il reste moins de 3 points dans l'objet => Suppression de l'objet.\n") ;
             objet_courant->deleted = true ;      // Passer à l'objet suivant ...
             bdd_modifiee = true ;
-        }
-        else {
-//            simplification_doublons_points(o);  // pour éliminer les points en doublons dans les facettes si besoin
+        } else {
             simplification_facettes(o);         // A faire même si pas de changement de sommets
 
             // Faire la même chose avec les normales aux sommets (ou vecteur selon la terminologie du format SDM)
@@ -12181,6 +12253,7 @@ void BddInter::Simplification_BDD()
             nbface = objet_courant->Nb_facettes;
 
             // Pour supprimer les normales non utilisées .... on les marque comme des doublons du 1er vecteur
+#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
             for (i=1; i<=nb_points; ++i) {                           // Ici i est un numéro de vecteur, donc décalé de 1 / indice
             //pour chaque normale au sommet d'un objet (vecteur au sens SDM)
                 cpt = 0 ;
@@ -12204,7 +12277,14 @@ void BddInter::Simplification_BDD()
                         fflush(stdout); // Pour Sun/cc
                     }
                 }
+                #pragma omp critical
+                {
+                compteur++;
+                Update_Dialog(compteur,Nb_test);
+                }
             }
+// Fin de zone calcul //
+//            printf("3 %d\n",compteur);
             if (verbose) printf("\n");
             for (i=0; i<nb_points; ++i) {
                 //pour chaque vecteur d'un objet
@@ -12228,6 +12308,7 @@ void BddInter::Simplification_BDD()
                     indic        = false;
 
                     for (j=0; j<cpt; ++j) {
+#pragma omp parallel for private(l,Facette_courante,nbsom)
                         for (k=0; k<nbface; ++k) {
                             //on parcourt chaque face (luminance) de l'objet
                             Facette_courante = &(objet_courant->Facelist[k]);
@@ -12247,6 +12328,7 @@ void BddInter::Simplification_BDD()
                                 }
                             }
                         }
+// Fin de zone calcul //
                         //on traite aussi les sommets qui sont dans tabPoints
                         if (j<(cpt-1)) {
                             for (m=(j+1); m<cpt; ++m) {
@@ -12263,7 +12345,14 @@ void BddInter::Simplification_BDD()
                     }
                     if(indic && verbose) printf("\n") ;
                 }
+                compteur++;
+                Update_Dialog(compteur+nb_modifs,Nb_test);
             }
+//            printf("4 %d\n",compteur);
+            compteur +=nb_modifs;
+            Update_Dialog(compteur,Nb_test);
+//            printf("4 %d\n",compteur);
+
             tabPoints.clear();
             if (modification) {
                 printf("Nombre de normales aux sommets (vecteurs) avant le traitement : %u\n",nb_points);
@@ -12276,7 +12365,13 @@ void BddInter::Simplification_BDD()
         }
     }   // boucle for sur les objets (o)
 
-    for (o=0; o<this->Objetlist.size(); o++) {                       // On parcourt tous les objets en mémoire
+    if (dialog_en_cours) {
+        dialog->Update(100);
+        wxDELETE(dialog);
+        dialog_en_cours = false;    // Par précaution
+    }
+
+    for (o=0; o<this->Objetlist.size(); o++) {                      // On parcourt tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                      // Passer au suivant
         GenereTableauPointsFacettes(objet_courant);
@@ -12284,7 +12379,7 @@ void BddInter::Simplification_BDD()
     }
     m_gllist = 0;
     searchMin_Max();    // Reset des comptages de facettes, points, ...
-    wxEndBusyCursor();                                              // Supprime le curseur animé... C'est terminé !
+    if (wxIsBusy()) wxEndBusyCursor();                                              // Supprime le curseur animé... C'est terminé !
 
     printf("\n");
     if((nbp_changes == 0) && (nbv_changes == 0)) {
@@ -12848,6 +12943,7 @@ void BddInter::simplification_doublons_points(unsigned int objet)
 
     objet_courant = &(this->Objetlist[objet]) ;
 
+#pragma omp parallel for private(facette,nbsom,j,k,test)
 	for (i=0; i<objet_courant->Nb_facettes; ++i) {
         facette = &(objet_courant->Facelist[i]);
 		nbsom   = facette->Nb_Sommets_F;
@@ -12864,7 +12960,10 @@ void BddInter::simplification_doublons_points(unsigned int objet)
                         }
                         if (test){
                             // Si les normales existent, 2 points sont égaux si elles sont aussi égales => Supprimer 1 des points
+#pragma omp critical
+{
                             printf("objet : %2d, doublons sur facette %u \n",objet,i);
+}
                             facette->deleteone(k);
                             nbsom   = facette->Nb_Sommets_F; // Mettre à jour la borne sup !
                             facette->Nb_Sommets_L-- ;        // Le deleteone a aussi supprimé la normale aux sommets correspondante
@@ -12889,7 +12988,7 @@ void BddInter::simplification_facettes(unsigned int objet)
 
 	nbface  = objet_courant->Nb_facettes;
 	decalage=0 ;
-	for (i=0; i<nbface; ++i)	{
+	for (i=0; i<nbface; ++i)	{               // Non parallélisable -à cause des --nbface et --i
         objet_courant->Facelist[i].toshow = 0;              // Raz de cette valeur pour éviter qu'un éventuel futur Undo de souder trouve quelque chose à faire !
 		if(objet_courant->Facelist[i].Nb_Sommets_F < 3) {
 		/* On supprime la facette i */

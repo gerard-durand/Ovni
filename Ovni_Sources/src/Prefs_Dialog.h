@@ -43,6 +43,7 @@ class Prefs_Dialog: public wxDialog
 		wxCheckBox* CheckBox_Seuillage;
 		wxCheckBox* CheckBox_SupprBackup;
 		wxCheckBox* CheckBox_TestDecalage3DS;
+		wxCheckBox* CheckBox_TraiterDoublonsAretes;
 		wxRadioBox* RadioBox_Trackball;
 		wxRadioBox* RadioBox_Triangulation;
 		wxSpinCtrl* SpinCtrl_PasSvg;
@@ -107,6 +108,7 @@ class Prefs_Dialog: public wxDialog
 		static const long ID_CHECKBOX6;
 		static const long ID_CHECKBOX5;
 		static const long ID_CHECKBOX11;
+		static const long ID_CHECKBOX12;
 		static const long ID_STATICLINE6;
 		static const long ID_STATICTEXT7;
 		static const long ID_STATICTEXT8;
@@ -168,6 +170,7 @@ class Prefs_Dialog: public wxDialog
 		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
 		void OnInit(wxInitDialogEvent& event);
 		void OnSpinCtrl_ThreadsChange(wxSpinEvent& event);
+		void OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event);
 		//*)
 		OvniFrame* MAIN;
 

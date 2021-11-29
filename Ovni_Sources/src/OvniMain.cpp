@@ -1558,7 +1558,7 @@ void OvniFrame::Ouvrir_Fichier()
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);    // Initialiser la valeur du spinbutton
     Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);           // Simuler un clic pour déclencher le timer de sauvegardes automatiques
 
-    wxEndBusyCursor();                                                  // Désactive le curseur Busy
+    if (wxIsBusy()) wxEndBusyCursor();                                  // Désactive le curseur Busy (s'il était actif)
 
     if (verbose) printf("Sortie OvniFrame::Ouvrir_Fichier\n");
 }
@@ -1611,6 +1611,7 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
     }
     Preferences_Panel->CheckBox_RecNormales_Seuillees->SetValue(Element->Enr_Normales_Seuillees);
     Preferences_Panel->CheckBox_NotFlat->SetValue(Element->NotFlat);
+    Preferences_Panel->CheckBox_TraiterDoublonsAretes->SetValue(Element->traiter_doublons_aretes);
 
     ival = Element->svg_time;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(ival);
@@ -1852,17 +1853,26 @@ void OvniFrame::Toggle_Gouraud(wxCommandEvent& event)
 
 void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
 {
-    unsigned int o;
+    unsigned int o,i;
     bool flat;
 
     if(Element != nullptr) {
         Element->smooth  = !Element->smooth;
         // On vérifie si tous les objets ne sont pas plats
         flat = true;
-        for (o=0; o<Element->Objetlist.size(); o++) if (!Element->Objetlist[o].flat) flat = false;  // Au moins 1 objet n'est pas plat !
+        for (o=0; o<Element->Objetlist.size(); o++) {
+            if (!Element->Objetlist[o].flat) flat = false;  // Au moins 1 objet n'est pas plat !
+            if (!flat) break;
+//            for (i=0;i<Element->Objetlist[o].Nb_facettes;i++) {
+//                if (!Element->Objetlist[o].Facelist[i].flat) flat = false;  // Au moins 1 facette est non plane !
+//                if (!flat) break;
+//            }
+        }
         if ((Element->smooth) && (flat)) {
             wxString Msg = _T("Lissage de Gouraud impossible.\nTous les objets sont plats : pas de normales aux sommets !\n");
-            Msg +=         _T("Recalculer les normales ou relancer la lecture en cochant la case adéquate du dialogue \"Fichier/Préférences\"");
+            Msg +=         _T("Recalculer les normales* ou relancer la lecture en cochant la case adéquate du dialogue \"Fichier/Préférences\"");
+            Msg +=         _T("\n\n* Il peut être nécessaire de simplifier d'abord la Bdd et cocher \"Forcer facettes à NON planes\"\n");
+            Msg +=         _T("  dans le panneau \"Modifications\" avant de recalculer les normales");
             Element->DisplayMessage(Msg,true);
             Button_Gouraud->SetValue(false);    // Simuler un nouveau clic sur le bouton pour le remettre à l'état initial
             Element->smooth = false;
