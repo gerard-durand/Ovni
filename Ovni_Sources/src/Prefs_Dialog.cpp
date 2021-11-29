@@ -391,16 +391,17 @@ void Prefs_Dialog::OnSpinCtrl_PasSvgChange(wxSpinEvent& event)
 void Prefs_Dialog::OnButton_tmp_repClick(wxCommandEvent& event)
 {
     defaultPath = MAIN->Element->wxWorkDir;
-    wxDirDialog Path_Dlg(this,_T("Choisir un répertoire de travail ..."),defaultPath);
-    Path_Dlg.ShowModal();
-    wxString New_Path=Path_Dlg.GetPath();
+    wxDirDialog  Path_Dlg(this,_T("Choisir un répertoire de travail ..."),defaultPath);
+    int retour = Path_Dlg.ShowModal();
+    if (retour == wxID_CANCEL) return;
+    wxString New_Path = Path_Dlg.GetPath();
     if (New_Path != _T("")) {
         New_Path += wxFILE_SEP_PATH ; // Ajouter le séparateur de path à la fin
         TextCtrl_WorkDir->ChangeValue(New_Path);
         defaultPath = MAIN->Element->wxWorkDir = New_Path ;
         MAIN->Element->ini_file_modified = true ;
     }
-    Path_Dlg.Destroy();
+//    Path_Dlg.Destroy();   // Provoque une erreur avec wxWidgets >= 3.1.4
 }
 
 void Prefs_Dialog::OnTextCtrl_WorkDirText(wxCommandEvent& event)
