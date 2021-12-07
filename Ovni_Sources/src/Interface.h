@@ -1040,13 +1040,25 @@ public :
 
     wxFileInputStream input(wxString file);
 
-    BddInter(wxWindow *parent, wxWindowID id = wxID_ANY,
-             const int* AttribList = NULL,
+//#if wxCHECK_VERSION(3,1,0)
+    BddInter(wxWindow *parent,
+             const wxGLAttributes& AttribList,
+             wxWindowID id         = wxID_ANY,
              const wxPoint& pos    = wxDefaultPosition,
              const wxSize& size    = wxDefaultSize,
              long style            = 0,
              bool main_verbose     = false,
              const wxString& name  = wxT("TestGLCanvas"));
+//#else
+    BddInter(wxWindow *parent,
+             const int* AttribList = NULL,
+             wxWindowID id         = wxID_ANY,
+             const wxPoint& pos    = wxDefaultPosition,
+             const wxSize& size    = wxDefaultSize,
+             long style            = 0,
+             bool main_verbose     = false,
+             const wxString& name  = wxT("TestGLCanvas"));
+//#endif // wxCHECK_VERSION
 
     wxString wxWorkDir, wxOvniPath;     // Doit-on garder les 2 ? à l'usage semble être la même chose ! Pas sûr, notamment si OvniPath est protégé en écriture !
                                         // Peut-être créer aussi un wxBddPath pour conserver le dernier path d'accès à une bdd !

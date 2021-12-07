@@ -79,7 +79,15 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)
 END_EVENT_TABLE()
 
-BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
+#if wxCHECK_VERSION(3,1,0)
+    BddInter::BddInter(wxWindow *parent, const wxGLAttributes& AttribList, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
+// Explicitly create a new rendering context instance for this canvas.
+    wxGLCanvas(parent, AttribList, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
+{
+    m_glRC = new wxGLContext(this);
+#else
+    BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
+
 #if wxCHECK_VERSION(3,0,0)
     wxGLCanvas(parent, id, AttribList, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
 {
@@ -90,6 +98,7 @@ BddInter::BddInter(wxWindow *parent, wxWindowID id, const int* AttribList, const
     wxGLCanvas(parent, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name, AttribList)
 {
 #endif // wxCHECK_VERSION
+#endif
 
     verbose = main_verbose; // On recopie dans verbose la valeur transmise depuis OvniMain (ou on utilise la valeur par défaut soit false !)
 
@@ -266,21 +275,22 @@ void BddInter::ResetData() {
     }
     if (MPrefs != nullptr) {
         MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft);
-        MPrefs->CheckBox_TestDecalage3DS->SetValue(test_decalage3ds);
-        MPrefs->CheckBox_1SeulObjet3D->SetValue(Forcer_1_Seul_Objet);
-        if (Forcer_1_Seul_Objet) MPrefs->CheckBox_LectureOptimisee->Disable();
-        else                     MPrefs->CheckBox_LectureOptimisee->Enable();
+        MPrefs->CheckBox_TestDecalage3DS ->SetValue(test_decalage3ds);
+        MPrefs->CheckBox_1SeulObjet3D    ->SetValue(Forcer_1_Seul_Objet);
+        if (Forcer_1_Seul_Objet) MPrefs  ->CheckBox_LectureOptimisee->Disable();
+        else                     MPrefs  ->CheckBox_LectureOptimisee->Enable();
         MPrefs->CheckBox_LectureOptimisee->SetValue(lect_obj_opt);
-        MPrefs->RadioBox_Triangulation->SetSelection(methode_Triangulation);
-        MPrefs->RadioBox_Trackball->SetSelection(m_gldata.mode_Trackball);
-        MPrefs->CheckBox_DisplayFps->SetValue(viewFps_def);
-        MPrefs->CheckBox_CalculNormales->SetValue(CalculNormalesLectureBdd);
+        MPrefs->RadioBox_Triangulation   ->SetSelection(methode_Triangulation);
+        MPrefs->RadioBox_Trackball       ->SetSelection(m_gldata.mode_Trackball);
+        MPrefs->CheckBox_DisplayFps      ->SetValue(viewFps_def);
+        MPrefs->CheckBox_CalculNormales  ->SetValue(CalculNormalesLectureBdd);
+        if (test_seuil_gouraud) MPrefs   ->CheckBox_RecNormales_Seuillees->Enable();
+        else                    MPrefs   ->CheckBox_RecNormales_Seuillees->Disable();
         MPrefs->CheckBox_RecNormales_Seuillees->SetValue(Enr_Normales_Seuillees);
         MPrefs->CheckBox_TraiterDoublonsAretes->SetValue(traiter_doublons_aretes);
-        if (test_seuil_gouraud) MPrefs->CheckBox_RecNormales_Seuillees->Enable();
-        else                    MPrefs->CheckBox_RecNormales_Seuillees->Disable();
 
-        MPrefs->SpinCtrl_PasSvg->SetValue(svg_time);
+        MPrefs->SpinCtrl_PasSvg ->SetValue(svg_time);
+
         // Reset du répertoire de travail par défaut = chemin de l'exécutable
         MPrefs->TextCtrl_WorkDir->SetLabel(wxWorkDir);
         MPrefs->SpinCtrl_Threads->SetValue(nb_threads);
@@ -322,10 +332,10 @@ void BddInter::ResetData() {
     }
     if (MPanel != nullptr) {
         str.Printf(_T("%7.1e"),tolerance);
-        MPanel->TextCtrl_Tolerance->SetValue(str);
+        MPanel->TextCtrl_Tolerance   ->SetValue(str);
         MPanel->CheckBox_Transparence->SetValue(false);
         MPanel->activer_transparence = false;
-        MPanel->CheckBox_NotFlat->SetValue(NotFlat);
+        MPanel->CheckBox_NotFlat     ->SetValue(NotFlat);
     }
     if (MRotation != nullptr) {
         MRotation->RotX = MRotation->RotY = MRotation->RotZ = 0.0;
@@ -1420,23 +1430,31 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (mode_selection == selection_point) {    // En mode selection_point, ListeSelect contient un couple "objet,sommet" et non "objet,face"
             for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
+#pragma omp parallel for private(xyz_point)
                 for (unsigned int j=0; j < Objetlist[objet].Sommetlist.size(); j++) {
                     if (ToSelect.check_if_in_ListeSelect(objet,j)) {
                         xyz_point = this->Objetlist[objet].Sommetlist[j].getPoint();
+#pragma omp critical
+{
                         X_m += xyz_point[0]; Y_m += xyz_point[1]; Z_m += xyz_point[2];
                         Nb_Valeurs++;
+}
                     }
                 }
             }
         } else if (mode_selection == selection_facette) {
             for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
+#pragma omp parallel for private(Numeros,xyz_point)
                 for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                     if (ToSelect.check_if_in_ListeSelect(objet,face)) {
                         Numeros = this->Objetlist[objet].Facelist[face].getF_sommets();
                         for (unsigned int j=0; j < Numeros.size(); j++) {
                             xyz_point = this->Objetlist[objet].Sommetlist[Numeros[j] -1].getPoint();
+#pragma omp critical
+{
                             X_m += xyz_point[0]; Y_m += xyz_point[1]; Z_m += xyz_point[2];
                             Nb_Valeurs++;
+}
                         }
                     }
                 }
@@ -1444,12 +1462,16 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         } else if (mode_selection == selection_objet) {
             for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
                 if (!Objetlist[objet].selected) continue;
+#pragma omp parallel for private(Numeros,xyz_point)
                 for (unsigned int face=0; face < Objetlist[objet].Facelist.size(); face++) {
                     Numeros = this->Objetlist[objet].Facelist[face].getF_sommets();
                     for (unsigned int j=0; j < Numeros.size(); j++) {
                         xyz_point = this->Objetlist[objet].Sommetlist[Numeros[j] -1].getPoint();
+#pragma omp critical
+{
                         X_m += xyz_point[0]; Y_m += xyz_point[1]; Z_m += xyz_point[2];
                         Nb_Valeurs++;
+}
                     }
                 }
             }
@@ -1849,8 +1871,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         break;
 
     case 'Z':
-        Raz_Selection_F   = !Raz_Selection_F; // Inverse le mode de RAZ de sélection de facettes utilisé après une inversion de normales pour garder ou remettre à 0 la sélection
-        ini_file_modified = true;             // Enregistrer ce changement dans le fichier init
+        Raz_Selection_F   = !Raz_Selection_F;   // Inverse le mode de RAZ de sélection de facettes utilisé après une inversion de normales pour garder ou remettre à 0 la sélection
+        ini_file_modified = true;               // Enregistrer ce changement dans le fichier init
         break ;
 
     case 'J':
@@ -1863,7 +1885,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         break;
 
     case 'W':
-        theme_b = !theme_b; // Test pour Basculer du thème standard vers un thème sombre.
+        theme_b = !theme_b;                     // Test pour Basculer du thème standard vers un thème sombre... Pas très fiable, plante parfois !!!
         Switch_theme(theme_b);
         break;
 
@@ -2041,57 +2063,57 @@ void BddInter::Switch_theme(bool theme_b)
 
     this->MAIN_b->MenuFile->UpdateUI();
 
-    this->MAIN_b->Menu_Affichage_Points ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Points ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Points   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Points   ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_Affichage->Remove (this->MAIN_b->Menu_Affichage_Points); // Il en faut au moins 1, sinon UpdateUI ne fait rien !
     this->MAIN_b->Menu_Affichage->Prepend(this->MAIN_b->Menu_Affichage_Points);
-    this->MAIN_b->Menu_Affichage_Filaire->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Filaire->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Plein  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Plein  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Axes   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Axes   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Boite  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Boite  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Source ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Source ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Origine          ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Origine          ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeFace        ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeFace        ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeProfil      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeProfil      ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeDessus      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeDessus      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Filaire  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Filaire  ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Plein    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Plein    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Axes     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Axes     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Boite    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Boite    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Affichage_Source   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Source   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Origine            ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Origine            ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeFace          ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeFace          ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeProfil        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeProfil        ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_VueDeDessus        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeDessus        ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_PositionObservateur->SetTextColour(Forg);
     this->MAIN_b->Menu_PositionObservateur->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ZoomSpecifique   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ZoomSpecifique   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_CentreRotation   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_CentreRotation   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_PositionSource   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_PositionSource   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ZoomSpecifique     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomSpecifique     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_CentreRotation     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentreRotation     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_PositionSource     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_PositionSource     ->SetBackgroundColour(Back);
 
     this->MAIN_b->Menu_Affichage->UpdateUI();
 
-    this->MAIN_b->Menu_AjouteCone       ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCone       ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteCone         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCone         ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_Primitive->Remove (this->MAIN_b->Menu_AjouteCone);
     this->MAIN_b->Menu_Primitive->Prepend(this->MAIN_b->Menu_AjouteCone);
-    this->MAIN_b->Menu_AjouteCube       ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCube       ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteCylindre   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCylindre   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteEllipsoide ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteEllipsoide ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteFacette    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteFacette    ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteSphere     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteSphere     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteIcosaedre  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteIcosaedre  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_SupprimerDerniere->SetTextColour(Forg);
-    this->MAIN_b->Menu_SupprimerDerniere->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteCube         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCube         ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteCylindre     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCylindre     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteEllipsoide   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteEllipsoide   ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteFacette      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteFacette      ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteSphere       ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteSphere       ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteIcosaedre    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteIcosaedre    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_SupprimerDerniere  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SupprimerDerniere  ->SetBackgroundColour(Back);
 
     this->MAIN_b->Menu_Primitive->UpdateUI();
 
@@ -2179,18 +2201,18 @@ void BddInter::Switch_theme(bool theme_b)
 
     this->MAIN_b->Menu_Transformations->UpdateUI();
 
-    this->MAIN_b->Menu_CouleurDesGroupes->SetTextColour(Forg);
-    this->MAIN_b->Menu_CouleurDesGroupes->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_CouleurDesGroupes ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CouleurDesGroupes ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_Options->Remove (this->MAIN_b->Menu_CouleurDesGroupes);
     this->MAIN_b->Menu_Options->Prepend(this->MAIN_b->Menu_CouleurDesGroupes);
-    this->MAIN_b->Menu_RelirePalette    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_RelirePalette    ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_RelirePalette     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_RelirePalette     ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_EnregistrerPalette->SetTextColour(Forg);
     this->MAIN_b->Menu_EnregistrerPalette->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ZoomAuto         ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ZoomAuto         ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_CentrageAuto     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_CentrageAuto     ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_ZoomAuto          ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomAuto          ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_CentrageAuto      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentrageAuto      ->SetBackgroundColour(Back);
 
     this->MAIN_b->Menu_Options->UpdateUI();
 
@@ -2305,11 +2327,11 @@ void BddInter::Switch_theme(bool theme_b)
 // CouleursGroupes
     this->MCGroup->SetForegroundColour(Forg);
     this->MCGroup->SetBackgroundColour(Back);
-    this->MCGroup->StaticText1->SetForegroundColour(Forg);
-    this->MCGroup->StaticText2->SetForegroundColour(Forg);
-    this->MCGroup->StaticText3->SetForegroundColour(Forg);
-    this->MCGroup->StaticText4->SetForegroundColour(Forg);
-    this->MCGroup->StaticText5->SetForegroundColour(Forg);
+    this->MCGroup->StaticText1      ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText2      ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText3      ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText4      ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText5      ->SetForegroundColour(Forg);
     this->MCGroup->SpinCtrl_Groupes ->SetForegroundColour(Forg);
     this->MCGroup->SpinCtrl_Groupes ->SetBackgroundColour(Gris);
     this->MCGroup->TextCtrl_Materiau->SetForegroundColour(Forg);
@@ -2323,13 +2345,13 @@ void BddInter::Switch_theme(bool theme_b)
 // Cube
     this->MCube->SetForegroundColour(Forg);
     this->MCube->SetBackgroundColour(Back);
-    this->MCube->StaticText1->SetForegroundColour(Forg);
-    this->MCube->StaticText2->SetForegroundColour(Forg);
-    this->MCube->StaticText3->SetForegroundColour(Forg);
-    this->MCube->StaticText4->SetForegroundColour(Forg);
-    this->MCube->StaticText5->SetForegroundColour(Forg);
-    this->MCube->StaticText6->SetForegroundColour(Forg);
-    this->MCube->StaticText7->SetForegroundColour(Forg);
+    this->MCube->StaticText1        ->SetForegroundColour(Forg);
+    this->MCube->StaticText2        ->SetForegroundColour(Forg);
+    this->MCube->StaticText3        ->SetForegroundColour(Forg);
+    this->MCube->StaticText4        ->SetForegroundColour(Forg);
+    this->MCube->StaticText5        ->SetForegroundColour(Forg);
+    this->MCube->StaticText6        ->SetForegroundColour(Forg);
+    this->MCube->StaticText7        ->SetForegroundColour(Forg);
     this->MCube->TextCtrl_Arete     ->SetForegroundColour(Forg);
     this->MCube->TextCtrl_Arete     ->SetBackgroundColour(Gris);
     this->MCube->TextCtrl_X         ->SetForegroundColour(Forg);
@@ -2351,15 +2373,15 @@ void BddInter::Switch_theme(bool theme_b)
 // Cylindre
     this->MCylindre->SetForegroundColour(Forg);
     this->MCylindre->SetBackgroundColour(Back);
-    this->MCylindre->StaticText1->SetForegroundColour(Forg);
-    this->MCylindre->StaticText2->SetForegroundColour(Forg);
-    this->MCylindre->StaticText3->SetForegroundColour(Forg);
-    this->MCylindre->StaticText4->SetForegroundColour(Forg);
-    this->MCylindre->StaticText5->SetForegroundColour(Forg);
-    this->MCylindre->StaticText6->SetForegroundColour(Forg);
-    this->MCylindre->StaticText7->SetForegroundColour(Forg);
-    this->MCylindre->StaticText8->SetForegroundColour(Forg);
-    this->MCylindre->StaticText9->SetForegroundColour(Forg);
+    this->MCylindre->StaticText1        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText2        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText3        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText4        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText5        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText6        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText7        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText8        ->SetForegroundColour(Forg);
+    this->MCylindre->StaticText9        ->SetForegroundColour(Forg);
     this->MCylindre->TextCtrl_Arete     ->SetForegroundColour(Forg);
     this->MCylindre->TextCtrl_Arete     ->SetBackgroundColour(Gris);
     this->MCylindre->TextCtrl_Rayon     ->SetForegroundColour(Forg);
@@ -2414,17 +2436,17 @@ void BddInter::Switch_theme(bool theme_b)
 // Ellipsoide
     this->MEllips->SetForegroundColour(Forg);
     this->MEllips->SetBackgroundColour(Back);
-    this->MEllips->StaticText1  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText2  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText3  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText4  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText5  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText6  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText7  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText8  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText9  ->SetForegroundColour(Forg);
-    this->MEllips->StaticText10 ->SetForegroundColour(Forg);
-    this->MEllips->StaticText11 ->SetForegroundColour(Forg);
+    this->MEllips->StaticText1          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText2          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText3          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText4          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText5          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText6          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText7          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText8          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText9          ->SetForegroundColour(Forg);
+    this->MEllips->StaticText10         ->SetForegroundColour(Forg);
+    this->MEllips->StaticText11         ->SetForegroundColour(Forg);
     this->MEllips->TextCtrl_Rayon       ->SetForegroundColour(Forg);
     this->MEllips->TextCtrl_Rayon       ->SetBackgroundColour(Gris);
     this->MEllips->TextCtrl_X           ->SetForegroundColour(Forg);
@@ -2458,63 +2480,63 @@ void BddInter::Switch_theme(bool theme_b)
 // Facette
     this->MFacet->SetForegroundColour(Forg);
     this->MFacet->SetBackgroundColour(Back);
-    this->MFacet->StaticText1  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText2  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText3  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText4  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText5  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText6  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText7  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText8  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText9  ->SetForegroundColour(Forg);
-    this->MFacet->StaticText10 ->SetForegroundColour(Forg);
-    this->MFacet->StaticText11 ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P1X ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P1X ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P1Y ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P1Y ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P1Z ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P1Z ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P2X ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P2X ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P2Y ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P2Y ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P2Z ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P2Z ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P3X ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P3X ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P3Y ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P3Y ->SetBackgroundColour(Gris);
-    this->MFacet->TextCtrl_P3Z ->SetForegroundColour(Forg);
-    this->MFacet->TextCtrl_P3Z ->SetBackgroundColour(Gris);
-    this->MFacet->SpinCtrl_Groupe  ->SetForegroundColour(Forg);
-    this->MFacet->SpinCtrl_Groupe  ->SetBackgroundColour(Gris);
-    this->MFacet->SpinCtrl_Materiau->SetForegroundColour(Forg);
-    this->MFacet->SpinCtrl_Materiau->SetBackgroundColour(Gris);
-    this->MFacet->Button_OK        ->SetForegroundColour(Forg);
-    this->MFacet->Button_OK        ->SetBackgroundColour(Gris);
-    this->MFacet->Button_Annuler   ->SetForegroundColour(Forg);
-    this->MFacet->Button_Annuler   ->SetBackgroundColour(Gris);
+    this->MFacet->StaticText1       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText2       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText3       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText4       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText5       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText6       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText7       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText8       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText9       ->SetForegroundColour(Forg);
+    this->MFacet->StaticText10      ->SetForegroundColour(Forg);
+    this->MFacet->StaticText11      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1X      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1X      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P1Y      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1Y      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P1Z      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P1Z      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2X      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2X      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2Y      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2Y      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P2Z      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P2Z      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3X      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3X      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3Y      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3Y      ->SetBackgroundColour(Gris);
+    this->MFacet->TextCtrl_P3Z      ->SetForegroundColour(Forg);
+    this->MFacet->TextCtrl_P3Z      ->SetBackgroundColour(Gris);
+    this->MFacet->SpinCtrl_Groupe   ->SetForegroundColour(Forg);
+    this->MFacet->SpinCtrl_Groupe   ->SetBackgroundColour(Gris);
+    this->MFacet->SpinCtrl_Materiau ->SetForegroundColour(Forg);
+    this->MFacet->SpinCtrl_Materiau ->SetBackgroundColour(Gris);
+    this->MFacet->Button_OK         ->SetForegroundColour(Forg);
+    this->MFacet->Button_OK         ->SetBackgroundColour(Gris);
+    this->MFacet->Button_Annuler    ->SetForegroundColour(Forg);
+    this->MFacet->Button_Annuler    ->SetBackgroundColour(Gris);
     this->MFacet->Refresh();
 
 // Icosaedre
     this->MIcosa->SetForegroundColour(Forg);
     this->MIcosa->SetBackgroundColour(Back);
-    this->MIcosa->StaticText1   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText2   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText3   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText4   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText5   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText7   ->SetForegroundColour(Forg);
-    this->MIcosa->StaticText8   ->SetForegroundColour(Forg);
-    this->MIcosa->TextCtrl_X    ->SetForegroundColour(Forg);
-    this->MIcosa->TextCtrl_X    ->SetBackgroundColour(Gris);
-    this->MIcosa->TextCtrl_Y    ->SetForegroundColour(Forg);
-    this->MIcosa->TextCtrl_Y    ->SetBackgroundColour(Gris);
-    this->MIcosa->TextCtrl_Z    ->SetForegroundColour(Forg);
-    this->MIcosa->TextCtrl_Z    ->SetBackgroundColour(Gris);
-    this->MIcosa->TextCtrl_Rayon->SetForegroundColour(Forg);
-    this->MIcosa->TextCtrl_Rayon->SetBackgroundColour(Gris);
+    this->MIcosa->StaticText1       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText2       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText3       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText4       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText5       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText7       ->SetForegroundColour(Forg);
+    this->MIcosa->StaticText8       ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_X        ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_X        ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Y        ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Y        ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Z        ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Z        ->SetBackgroundColour(Gris);
+    this->MIcosa->TextCtrl_Rayon    ->SetForegroundColour(Forg);
+    this->MIcosa->TextCtrl_Rayon    ->SetBackgroundColour(Gris);
     this->MIcosa->SpinCtrl_Subdiv   ->SetForegroundColour(Forg);
     this->MIcosa->SpinCtrl_Subdiv   ->SetBackgroundColour(Gris);
     this->MIcosa->SpinCtrl_Groupe   ->SetForegroundColour(Forg);
@@ -2862,16 +2884,16 @@ void BddInter::Switch_theme(bool theme_b)
 // ReperageObjet
     this->MRepObj->SetForegroundColour(Forg);
     this->MRepObj->SetBackgroundColour(Back);
-    this->MRepObj->StaticText1      ->SetForegroundColour(Forg);
-    this->MRepObj->StaticText2      ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NumObjet->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NumObjet->SetBackgroundColour(Gris);
-    this->MRepObj->TextCtrl_NomObjet->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NomObjet->SetBackgroundColour(Gris);
-    this->MRepObj->TextCtrl_indice  ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_indice  ->SetBackgroundColour(Gris);
-    this->MRepObj->SpinButton_indice->SetForegroundColour(Forg);
-    this->MRepObj->SpinButton_indice->SetBackgroundColour(Gris);
+    this->MRepObj->StaticText1          ->SetForegroundColour(Forg);
+    this->MRepObj->StaticText2          ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet    ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet    ->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_NomObjet    ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NomObjet    ->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_indice      ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_indice      ->SetBackgroundColour(Gris);
+    this->MRepObj->SpinButton_indice    ->SetForegroundColour(Forg);
+    this->MRepObj->SpinButton_indice    ->SetBackgroundColour(Gris);
     this->MRepObj->CheckBox_masquer     ->SetForegroundColour(Forg);
     this->MRepObj->CheckBox_masquer     ->SetBackgroundColour(Back);
     this->MRepObj->CheckBox_supprimer   ->SetForegroundColour(Forg);
@@ -2940,31 +2962,31 @@ void BddInter::Switch_theme(bool theme_b)
 // RotationPanel
     this->MRotation->SetForegroundColour(Forg);
     this->MRotation->SetBackgroundColour(Back);
-    this->MRotation->StaticText1->SetForegroundColour(Forg);
-    this->MRotation->StaticText2->SetForegroundColour(Forg);
-    this->MRotation->StaticText3->SetForegroundColour(Forg);
-    this->MRotation->StaticText4->SetForegroundColour(Forg);
-    this->MRotation->StaticText5->SetForegroundColour(Forg);
-    this->MRotation->StaticText6->SetForegroundColour(Forg);
-    this->MRotation->StaticText7->SetForegroundColour(Forg);
+    this->MRotation->StaticText1        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText2        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText3        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText4        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText5        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText6        ->SetForegroundColour(Forg);
+    this->MRotation->StaticText7        ->SetForegroundColour(Forg);
     this->MRotation->RadioBox_Centre->SetForegroundColour(Forg);
     this->MRotation->RadioBox_Centre->SetBackgroundColour(Back);
     this->MRotation->TextCtrl_PasAngulaire->SetForegroundColour(Forg);
     this->MRotation->TextCtrl_PasAngulaire->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_AngleX->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_AngleX->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_AngleY->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_AngleY->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_AngleZ->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_AngleZ->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_X     ->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_X     ->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_Y     ->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_Y     ->SetBackgroundColour(Gris);
-    this->MRotation->TextCtrl_Z     ->SetForegroundColour(Forg);
-    this->MRotation->TextCtrl_Z     ->SetBackgroundColour(Gris);
-    this->MRotation->Button_Annuler ->SetForegroundColour(Forg);
-    this->MRotation->Button_Annuler ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleX    ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleX    ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleY    ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleY    ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_AngleZ    ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_AngleZ    ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_X         ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_X         ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_Y         ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_Y         ->SetBackgroundColour(Gris);
+    this->MRotation->TextCtrl_Z         ->SetForegroundColour(Forg);
+    this->MRotation->TextCtrl_Z         ->SetBackgroundColour(Gris);
+    this->MRotation->Button_Annuler     ->SetForegroundColour(Forg);
+    this->MRotation->Button_Annuler     ->SetBackgroundColour(Gris);
     this->MRotation->Button_Appliquer   ->SetForegroundColour(Forg);
     this->MRotation->Button_Appliquer   ->SetBackgroundColour(Gris);
     this->MRotation->Button_ValiderPas  ->SetForegroundColour(Forg);
@@ -2976,10 +2998,10 @@ void BddInter::Switch_theme(bool theme_b)
 // ScalePanel
     this->MScale->SetForegroundColour(Forg);
     this->MScale->SetBackgroundColour(Back);
-    this->MScale->StaticText1->SetForegroundColour(Forg);
-    this->MScale->StaticText2->SetForegroundColour(Forg);
-    this->MScale->StaticText3->SetForegroundColour(Forg);
-    this->MScale->StaticText4->SetForegroundColour(Forg);
+    this->MScale->StaticText1       ->SetForegroundColour(Forg);
+    this->MScale->StaticText2       ->SetForegroundColour(Forg);
+    this->MScale->StaticText3       ->SetForegroundColour(Forg);
+    this->MScale->StaticText4       ->SetForegroundColour(Forg);
     this->MScale->TextCtrl_Increment->SetForegroundColour(Forg);
     this->MScale->TextCtrl_Increment->SetBackgroundColour(Gris);
     this->MScale->TextCtrl_ScaleX   ->SetForegroundColour(Forg);
@@ -3110,14 +3132,14 @@ void BddInter::Switch_theme(bool theme_b)
 // Sphere
     this->MSphere->SetForegroundColour(Forg);
     this->MSphere->SetBackgroundColour(Back);
-    this->MSphere->StaticText1  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText2  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText3  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText4  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText5  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText6  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText7  ->SetForegroundColour(Forg);
-    this->MSphere->StaticText8  ->SetForegroundColour(Forg);
+    this->MSphere->StaticText1          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText2          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText3          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText4          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText5          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText6          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText7          ->SetForegroundColour(Forg);
+    this->MSphere->StaticText8          ->SetForegroundColour(Forg);
     this->MSphere->TextCtrl_Rayon       ->SetForegroundColour(Forg);
     this->MSphere->TextCtrl_Rayon       ->SetBackgroundColour(Gris);
     this->MSphere->TextCtrl_X           ->SetForegroundColour(Forg);
@@ -3193,17 +3215,17 @@ void BddInter::Switch_theme(bool theme_b)
 // ZoomSpecifique
     this->MZoomSpec->SetForegroundColour(Forg);
     this->MZoomSpec->SetBackgroundColour(Back);
-    this->MZoomSpec->StaticText1    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText2    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText3    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText4    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText5    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText6    ->SetForegroundColour(Forg);
-    this->MZoomSpec->StaticText7    ->SetForegroundColour(Forg);
-    this->MZoomSpec->SpinCtrl_LAZ   ->SetForegroundColour(Forg);
-    this->MZoomSpec->SpinCtrl_LAZ   ->SetBackgroundColour(Gris);
-    this->MZoomSpec->SpinCtrl_LSI   ->SetForegroundColour(Forg);
-    this->MZoomSpec->SpinCtrl_LSI   ->SetBackgroundColour(Gris);
+    this->MZoomSpec->StaticText1        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText2        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText3        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText4        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText5        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText6        ->SetForegroundColour(Forg);
+    this->MZoomSpec->StaticText7        ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LAZ       ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LAZ       ->SetBackgroundColour(Gris);
+    this->MZoomSpec->SpinCtrl_LSI       ->SetForegroundColour(Forg);
+    this->MZoomSpec->SpinCtrl_LSI       ->SetBackgroundColour(Gris);
     this->MZoomSpec->TextCtrl_Distance  ->SetForegroundColour(Forg);
     this->MZoomSpec->TextCtrl_Distance  ->SetBackgroundColour(Gris);
     this->MZoomSpec->TextCtrl_FoV       ->SetForegroundColour(Forg);
@@ -4002,7 +4024,7 @@ void BddInter::LectureXML_G3d (FILE *f)
 
 //******************************************************************************
 // NOTE : dans les fonctions Load* la parallélisation des boucles for n'est probablement pas faisable en général car la lecture des fichiers est forcément séquentielle
-//        à moins que l'attribut ordered puisse être utilsé, mais ce n'est pas sûr
+//        à moins que l'attribut ordered puisse être utilisé, mais ce n'est pas sûr ... à tester
 
 
 void BddInter::LoadG3D()
@@ -5395,12 +5417,9 @@ void BddInter::LoadPLY_Stanford()
     time_deb_dialog = clock();
     dialog_en_cours = false;
 
-//    fichierBdd_length = 0; // à défaut de traiter la taille du fichier. OK car initialisé dans LoadPLY
     for (i = 0; i < in_ply->num_elem_types; i++) {
         elem_name = setup_element_read_ply (in_ply, i, &elem_count);
-//        fichierBdd_length += elem_count;
     }
-//    long compteur_ply = 0;
 
     // Créer un seul objet
 
@@ -5489,8 +5508,7 @@ void BddInter::LoadPLY_Stanford()
                     make1vecteur();
                 }
                 free(vlist); // Libérer la mémoire de chaque vertex
-//                compteur_ply++;
-//                Update_Dialog(compteur_ply, fichierBdd_length);
+
                 Update_Dialog(ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
             }
 
@@ -5563,8 +5581,7 @@ void BddInter::LoadPLY_Stanford()
                 }
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
                 free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
-//                compteur_ply++;
-//                Update_Dialog(compteur_ply, fichierBdd_length);
+
                 Update_Dialog(ftell(f), fichierBdd_length);
             }
 
@@ -5587,7 +5604,6 @@ void BddInter::LoadPLY_Stanford()
                 printf("nb sommets tristrips = %d\n",nb_som);
                 nfaces = nb_som-2;                              // provisoire et surdimensionné !
                 printf("nfaces provisoire    = %d\n",nfaces);
-//                int compteur = 0;
 
                 this->N_elements = nfaces;
                 makeface();
@@ -5616,7 +5632,6 @@ void BddInter::LoadPLY_Stanford()
                         k+=2;
 						if(k%2) remainder=0;
 						else    remainder=1;
-//						compteur++;
 						continue;
                     }
                     if((k+remainder)%2) {
@@ -5646,14 +5661,12 @@ void BddInter::LoadPLY_Stanford()
                     nfaces++;
                 }
                 printf("nfaces réel          = %d\n",nfaces);
-//                printf("compteur    : %d\n",compteur);
                 objet_courant->Facelist.resize(nfaces); // Ajuster à la taille réelle
                 objet_courant->Nb_facettes = objet_courant->Nb_normales = objet_courant->Nb_aspects = nfaces;
                 if (has_normals) objet_courant->Nb_luminances = nfaces;
                 printf("Liste des facettes redimmensionnée\n");
                 free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
-//                compteur_ply++;
-//                Update_Dialog(compteur_ply, fichierBdd_length);
+
                 Update_Dialog(ftell(f), fichierBdd_length);
             }
 
@@ -6634,6 +6647,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
 
 void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
 {
+// Pour tester une wxGauge dans la StatusBar du bas, mais pas très convainquant (le timer n'a pas l'air de se déclencher !). wxProgressDialog semble mieux
     int old_val = m_gauge->GetValue();
     long pos = fichierBdd.tellg();
     int new_val = (pos*100./fichierBdd_length) +0.5;
@@ -7192,6 +7206,7 @@ void BddInter::make1face() {
 }
 
 //void BddInter::make1face(int Numero, const std::vector<int> &Numeros_Sommets) {
+//// Cette version ne semble pas être vue par le compilateur !
 //    Face New1Face;
 //
 //    New1Face = Face(Numero, Numeros_Sommets);
@@ -7980,6 +7995,7 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
 }
 
 void BddInter::drawOpenGL() {
+// Boucles for non parallélisable à cause des listes OpenGL apparemment !
     char test;
     std::vector<int>   NumerosSommets;
     std::vector<float> xyz_sommet;
@@ -8383,6 +8399,7 @@ void BddInter::Flat_Selected_Facettes() {
     Face *Face_ij;
 
     for (i=0; i<this->Objetlist.size(); i++) {
+#pragma omp parallel for private(Face_ij)
         for (j=0; j<this->Objetlist[i].Facelist.size(); j++) {
             Face_ij = &(this->Objetlist[i].Facelist[j]);
             if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
@@ -8399,6 +8416,7 @@ void BddInter::NotFlat_Selected_Facettes() {
     Face *Face_ij;
 
     for (i=0; i<this->Objetlist.size(); i++) {
+#pragma omp parallel for private(Face_ij)
         for (j=0; j<this->Objetlist[i].Facelist.size(); j++) {
             Face_ij = &(this->Objetlist[i].Facelist[j]);
             if(Face_ij->afficher && !Face_ij->deleted) {    // Utile ?
@@ -9506,7 +9524,7 @@ void BddInter::SetPosObs(bool resetFoV) {
 //
 //    if (diagonale_save > 1000)
 //        m_gldata.posz = -4.0*diagonale_save -centreRot[2] ;
-        m_gldata.posz = -m_gldata.fmult_diag*diagonale_save -centreRot[2] ;     //Mieux que 1000 surtout sur des bases dont les min-max sont dans ces valeurs. Peut-être mettre plus 10* par exemple au lieu de 4 ?
+    m_gldata.posz = -m_gldata.fmult_diag*diagonale_save -centreRot[2] ;     //Mieux que 1000 surtout sur des bases dont les min-max sont dans ces valeurs. Peut-être mettre plus 10* par exemple au lieu de 4 ?
 
     FoV = std::max(fabs(x_max-x_min), fabs(y_max-y_min));
     m_gldata.depl_xy = FoV/100.;
@@ -9765,24 +9783,24 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         bool UnSeulObjet=true;
                         for (i=1; i<(int)ToSelect.ListeSelect.size(); i++) {
                             if (ToSelect.ListeSelect[0].objet != ToSelect.ListeSelect[i].objet) { // Si objets différents, créer de nouveaux sommets dans le 1er objet listé
-//                                UnSeulObjet = false;                                                              // N'a plus lieu d'être
+//                                UnSeulObjet = false;                                                                  // N'a plus lieu d'être
                                 indiceObjet_courant = ToSelect.ListeSelect[i].objet;
-                                objet_courant       = &(this->Objetlist[indiceObjet_courant]);                       // Objet [i] différent de l'objet [0]
-                                Sommet NewSommet    = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];// Récupère le sommet du deuxième objet
-                                objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet].selected = false;    // Marque l'ancien sommet comme non sélectionné
-                                indiceObjet_courant = ToSelect.ListeSelect[0].objet;                                // Retour à l'objet [0]
+                                objet_courant       = &(this->Objetlist[indiceObjet_courant]);                          // Objet [i] différent de l'objet [0]
+                                Sommet NewSommet    = objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet];   // Récupère le sommet du deuxième objet
+                                objet_courant->Sommetlist[ToSelect.ListeSelect[i].face_sommet].selected = false;        // Marque l'ancien sommet comme non sélectionné
+                                indiceObjet_courant = ToSelect.ListeSelect[0].objet;                                    // Retour à l'objet [0]
                                 objet_courant       = &(this->Objetlist[indiceObjet_courant]);
-                                NewSommet.Numero    = objet_courant->Sommetlist.size() +1;                          // Metrre à jour le nouveau numéro du sommet à créer
-                                objet_courant->Sommetlist.push_back(NewSommet);                                     // Ajout de ce nouveau sommet à l'objet [0]
-                                objet_courant->Nb_sommets++;                                                        // Mise à jour du nombre de sommets dans l'objet [0]
-                                ToSelect.ListeSelect[i].objet       = ToSelect.ListeSelect[0].objet;                // Mise à jour dans ListeSelect de objet et face_sommet
+                                NewSommet.Numero    = objet_courant->Sommetlist.size() +1;                              // Metrre à jour le nouveau numéro du sommet à créer
+                                objet_courant->Sommetlist.push_back(NewSommet);                                         // Ajout de ce nouveau sommet à l'objet [0]
+                                objet_courant->Nb_sommets++;                                                            // Mise à jour du nombre de sommets dans l'objet [0]
+                                ToSelect.ListeSelect[i].objet       = ToSelect.ListeSelect[0].objet;                    // Mise à jour dans ListeSelect de objet et face_sommet
                                 ToSelect.ListeSelect[i].face_sommet = NewSommet.Numero -1;
                             }
                         }
                         indiceObjet_courant = objet;
                         objet_courant = &(this->Objetlist[objet]);
                         new_size = new_indice = objet_courant->Facelist.size();
-                        if (objet_courant->Nb_facettes_original == 0) objet_courant->Nb_facettes_original = new_size; // Sauvegarde initiale du nombre de facettes
+                        if (objet_courant->Nb_facettes_original == 0) objet_courant->Nb_facettes_original = new_size;   // Sauvegarde initiale du nombre de facettes
                         new_size++;
                         N_elements = new_size;
                         str.clear();
@@ -11546,39 +11564,43 @@ void BddInter::UNDO_ONE() {
 // On va réactiver les facettes marquées .deleted, remettre en état les tableaux (vector en réalité) de facettes, sommets, vecteurs
     unsigned int i,j ;
     Object* objet_courant;
+    Face  * face_j;
+    Sommet* sommet_j;
 
     if(undo_memory != 0) {
         for (i=0; i<this->Objetlist.size(); i++) {   /// est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
             objet_courant = &(this->Objetlist[i]);
             for (j=0; j<objet_courant->Facelist.size(); j++) {
-                if (objet_courant->Facelist[j].toshow == undo_memory) {
+                face_j = &(objet_courant->Facelist[j]);
+                if (face_j->toshow == undo_memory) {
                     objet_courant->Facelist.erase(this->Objetlist[i].Facelist.begin()+j);
                     j--;    // 1 facette supprimée => passer une fois de moins dans la boucle en j
-                } else if(objet_courant->Facelist[j].toshow  == (-undo_memory)) {
-                    objet_courant->Facelist[j].deleted       = false;
-                    objet_courant->Facelist[j].toshow        = 0;
-                } else if((objet_courant->Facelist[j].toshow == undo_memory-1) && (undo_memory != 1)) {     // A vérifier : si undo_memory = 1,
-                    objet_courant->Facelist[j].deleted       = false;                                       // semble faire le undelete sur 1 facette de trop
+                } else if(face_j->toshow  == (-undo_memory)) {
+                    face_j->deleted       = false;
+                    face_j->toshow        = 0;
+                } else if((face_j->toshow == undo_memory-1) && (undo_memory != 1)) {     // A vérifier : si undo_memory = 1,
+                    face_j->deleted       = false;                                       // semble faire le undelete sur 1 facette de trop
                 }
             }
             bool vecteurs_presents = true;
             if (objet_courant->Vecteurlist.size() == 0) vecteurs_presents = false;
             for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-                if (objet_courant->Sommetlist[j].toshow == undo_memory) {
+                sommet_j = &(objet_courant->Sommetlist[j]);
+                if (sommet_j->toshow == undo_memory) {
                     objet_courant->Sommetlist.erase(objet_courant->Sommetlist.begin()+j);
                     if (vecteurs_presents) objet_courant->Vecteurlist.erase(objet_courant->Vecteurlist.begin()+j);
                     j--;    // 1 sommet effacé => passer une fois de moins dans la boucle en j
-                } else if(objet_courant->Sommetlist[j].toshow == -undo_memory) {
-                    objet_courant->Sommetlist[j].show     = true;
-                    objet_courant->Sommetlist[j].toshow   = 0;
-                    objet_courant->Sommetlist[j].selected = false;
+                } else if(sommet_j->toshow == -undo_memory) {
+                    sommet_j->show     = true;
+                    sommet_j->toshow   = 0;
+                    sommet_j->selected = false;
                     if (vecteurs_presents) {
 //                        objet_courant->Vecteurlist[j].show   = true;
                         objet_courant->Vecteurlist[j].toshow = 0;
                     }
-                } else if((objet_courant->Sommetlist[j].toshow == undo_memory-1) && (undo_memory != 1)) {   // Idem facettes
-                    objet_courant->Sommetlist[j].show     = true;
-                    objet_courant->Sommetlist[j].selected = false;
+                } else if((sommet_j->toshow == undo_memory-1) && (undo_memory != 1)) {   // Idem facettes
+                    sommet_j->show     = true;
+                    sommet_j->selected = false;
 //                    if (vecteurs_presents) objet_courant->Vecteurlist[j].show   = true;
                 }
             }
@@ -11894,28 +11916,34 @@ void BddInter::InverseZ() {
 
 void BddInter::XtoY() {
     Object * objet_courant;
+    Face   * face_j;
+    Sommet * sommet_j;
+    Vecteur* vecteur_j;
     float memory;
     unsigned int i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
-            if (objet_courant->Vecteurlist[j].point.size() >= 3) {
-                memory=objet_courant->Vecteurlist[j].point[0];
-                objet_courant->Vecteurlist[j].point[0]=objet_courant->Vecteurlist[j].point[1];
-                objet_courant->Vecteurlist[j].point[1]=memory;
+            vecteur_j = &(objet_courant->Vecteurlist[j]);
+            if (vecteur_j->point.size() >= 3) {
+                memory = vecteur_j->point[0];
+                vecteur_j->point[0] = vecteur_j->point[1];
+                vecteur_j->point[1] = memory;
             }
         }
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if (objet_courant->Sommetlist[j].point.size() >= 3) {
-                memory=objet_courant->Sommetlist[j].point[0];
-                objet_courant->Sommetlist[j].point[0]=objet_courant->Sommetlist[j].point[1];
-                objet_courant->Sommetlist[j].point[1]=memory;
+            sommet_j = &(objet_courant->Sommetlist[j]);
+            if (sommet_j->point.size() >= 3) {
+                memory = sommet_j->point[0];
+                sommet_j->point[0] = sommet_j->point[1];
+                sommet_j->point[1] = memory;
             }
         }
         for (j=0; j<objet_courant->Facelist.size(); j++) {
-            memory=objet_courant->Facelist[j].normale_b[0];
-            objet_courant->Facelist[j].normale_b[0]=objet_courant->Facelist[j].normale_b[1];
-            objet_courant->Facelist[j].normale_b[1]=memory;
+            face_j = &(objet_courant->Facelist[j]);
+            memory = face_j->normale_b[0];
+            face_j->normale_b[0] = face_j->normale_b[1];
+            face_j->normale_b[1] = memory;
         }
     }
     bdd_modifiee = true;
@@ -11923,28 +11951,34 @@ void BddInter::XtoY() {
 
 void BddInter::XtoZ() {
     Object * objet_courant;
+    Face   * face_j;
+    Sommet * sommet_j;
+    Vecteur* vecteur_j;
     float memory;
     unsigned i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
-            if (objet_courant->Vecteurlist[j].point.size() >= 3) {
-                memory=objet_courant->Vecteurlist[j].point[0];
-                objet_courant->Vecteurlist[j].point[0]=objet_courant->Vecteurlist[j].point[2];
-                objet_courant->Vecteurlist[j].point[2]=memory;
+            vecteur_j = &(objet_courant->Vecteurlist[j]);
+            if (vecteur_j->point.size() >= 3) {
+                memory =vecteur_j->point[0];
+                vecteur_j->point[0] = vecteur_j->point[2];
+                vecteur_j->point[2] = memory;
             }
         }
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if (objet_courant->Sommetlist[j].point.size() >= 3) {
-                memory=objet_courant->Sommetlist[j].point[0];
-                objet_courant->Sommetlist[j].point[0]=objet_courant->Sommetlist[j].point[2];
-                objet_courant->Sommetlist[j].point[2]=memory;
+            sommet_j = &(objet_courant->Sommetlist[j]);
+            if (sommet_j->point.size() >= 3) {
+                memory = sommet_j->point[0];
+                sommet_j->point[0] = sommet_j->point[2];
+                sommet_j->point[2] = memory;
             }
         }
         for (j=0; j<objet_courant->Facelist.size(); j++) {
-            memory=objet_courant->Facelist[j].normale_b[0];
-            objet_courant->Facelist[j].normale_b[0]=objet_courant->Facelist[j].normale_b[2];
-            objet_courant->Facelist[j].normale_b[2]=memory;
+            face_j = &(objet_courant->Facelist[j]);
+            memory = face_j->normale_b[0];
+            face_j->normale_b[0] = face_j->normale_b[2];
+            face_j->normale_b[2] = memory;
         }
     }
     bdd_modifiee = true;
@@ -11952,28 +11986,34 @@ void BddInter::XtoZ() {
 
 void BddInter::YtoZ() {
     Object * objet_courant;
+    Face   * face_j;
+    Sommet * sommet_j;
+    Vecteur* vecteur_j;
     float memory;
     unsigned int i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
-            if (objet_courant->Vecteurlist[j].point.size() >= 3) {
-                memory=objet_courant->Vecteurlist[j].point[1];
-                objet_courant->Vecteurlist[j].point[1]=objet_courant->Vecteurlist[j].point[2];
-                objet_courant->Vecteurlist[j].point[2]=memory;
+            vecteur_j = &(objet_courant->Vecteurlist[j]);
+            if (vecteur_j->point.size() >= 3) {
+                memory = vecteur_j->point[1];
+                vecteur_j->point[1] = vecteur_j->point[2];
+                vecteur_j->point[2] = memory;
             }
         }
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if (objet_courant->Sommetlist[j].point.size() >= 3) {
-                memory=objet_courant->Sommetlist[j].point[1];
-                objet_courant->Sommetlist[j].point[1]=objet_courant->Sommetlist[j].point[2];
-                objet_courant->Sommetlist[j].point[2]=memory;
+            sommet_j = &(objet_courant->Sommetlist[j]);
+            if (sommet_j->point.size() >= 3) {
+                memory = sommet_j->point[1];
+                sommet_j->point[1] = sommet_j->point[2];
+                sommet_j->point[2] = memory;
             }
         }
         for (j=0; j<objet_courant->Facelist.size(); j++) {
-            memory=objet_courant->Facelist[j].normale_b[1];
-            objet_courant->Facelist[j].normale_b[1]=objet_courant->Facelist[j].normale_b[2];
-            objet_courant->Facelist[j].normale_b[2]=memory;
+            face_j = &(objet_courant->Facelist[j]);
+            memory = face_j->normale_b[1];
+            face_j->normale_b[1] = face_j->normale_b[2];
+            face_j->normale_b[2] = memory;
         }
     }
     bdd_modifiee = true;
@@ -11981,31 +12021,37 @@ void BddInter::YtoZ() {
 
 void BddInter::XtoYtoZ() {
     Object * objet_courant;
+    Face   * face_j;
+    Sommet * sommet_j;
+    Vecteur* vecteur_j;
     float memory;
     unsigned int i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
         for (j=0; j<objet_courant->Vecteurlist.size(); j++) {
-            if (objet_courant->Vecteurlist[j].point.size() >= 3) {
-                memory=objet_courant->Vecteurlist[j].point[2];
-                objet_courant->Vecteurlist[j].point[2]=objet_courant->Vecteurlist[j].point[1];
-                objet_courant->Vecteurlist[j].point[1]=objet_courant->Vecteurlist[j].point[0];
-                objet_courant->Vecteurlist[j].point[0]=memory;
+            vecteur_j = &(objet_courant->Vecteurlist[j]);
+            if (vecteur_j->point.size() >= 3) {
+                memory = vecteur_j->point[2];
+                vecteur_j->point[2] = vecteur_j->point[1];
+                vecteur_j->point[1] = vecteur_j->point[0];
+                vecteur_j->point[0] = memory;
             }
         }
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-            if (objet_courant->Sommetlist[j].point.size() >= 3) {
-                memory=objet_courant->Sommetlist[j].point[2];
-                objet_courant->Sommetlist[j].point[2]=objet_courant->Sommetlist[j].point[1];
-                objet_courant->Sommetlist[j].point[1]=objet_courant->Sommetlist[j].point[0];
-                objet_courant->Sommetlist[j].point[0]=memory;
+            sommet_j = &(objet_courant->Sommetlist[j]);
+            if (sommet_j->point.size() >= 3) {
+                memory = sommet_j->point[2];
+                sommet_j->point[2] = sommet_j->point[1];
+                sommet_j->point[1] = sommet_j->point[0];
+                sommet_j->point[0] = memory;
             }
         }
         for (j=0; j<objet_courant->Facelist.size(); j++) {
-            memory=objet_courant->Facelist[j].normale_b[2];
-            objet_courant->Facelist[j].normale_b[2]=objet_courant->Facelist[j].normale_b[1];
-            objet_courant->Facelist[j].normale_b[1]=objet_courant->Facelist[j].normale_b[0];
-            objet_courant->Facelist[j].normale_b[0]=memory;
+            face_j = &(objet_courant->Facelist[j]);
+            memory = face_j->normale_b[2];
+            face_j->normale_b[2] = face_j->normale_b[1];
+            face_j->normale_b[1] = face_j->normale_b[0];
+            face_j->normale_b[0] = memory;
         }
     }
     bdd_modifiee = true;
@@ -12027,7 +12073,7 @@ void BddInter::Simplification_BDD()
     std::vector<float> Point_1, Point_i, Point_j;
     Object * objet_courant;
     Face   * Facette_courante;
-    int Nb_test,compteur;
+    int Nb_test,compteur,tabPoints_j;
 
     bool modification, indic;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
@@ -12040,23 +12086,11 @@ void BddInter::Simplification_BDD()
     printf("Tolerance d'egalite des sommets : relative : %8.3f%%, absolue : %7.2e\n",tolerance,epsilon);
     nbp_changes = nbv_changes = 0;
 
-// Dans l'idéal, il ne faudrait ne créer dialog que plus tard (1 ou 2s) : éviterait de l'afficher si c'est très court ! Mais serait à faire dans 1 seul thread ou encore plus tard !
-//    dialog = new wxProgressDialog(wxS("Simplification de la Bdd"),
-//                                  wxS("Patience, ça peut être long... et même très long !"),
-//                                  100,        // range
-//                                  this,       // parent
-//                                  wxPD_AUTO_HIDE
-//                                 );
-//    dialog->Update(0);   // Par précaution
-//    dialog_en_cours = true;
-
     Dialog_Titre    = wxS("Simplification de la Bdd");
     Dialog_Comment  = wxS("Patience, ça peut être long... et même très long !");
     Dialog_Delay    = CLOCKS_PER_SEC;
     dialog_en_cours = false;
     time_deb_dialog = clock();
-
-// Ajouter un timing spécifique ....
 
     compteur = 0;   // Un compteur de boucles
     Nb_test  = 0;   // estimation du nombre de boucles (sur-évalué)
@@ -12173,8 +12207,10 @@ void BddInter::Simplification_BDD()
                         //Si les sommets suivants (après le rang j) de tabPoints sont supérieurs
                         //à tabPoints[j], alors on les décrémente aussi, pour que les sommets
                         //corrects soient remplacés
+                        tabPoints_j = tabPoints[j];
+#pragma omp parallel for
                         for (m=(j+1); m<cpt; ++m) {
-                            if (tabPoints[m] > tabPoints[j]) {
+                            if (tabPoints[m] > tabPoints_j) {
                             //	printf("Dans le tableau de sommet, le sommet %u ",tabPoints[m]);
                                 tabPoints[m] -= 1;
                             //	printf("devient %u\n",tabPoints[m]);
@@ -12331,8 +12367,10 @@ void BddInter::Simplification_BDD()
 // Fin de zone calcul //
                         //on traite aussi les sommets qui sont dans tabPoints
                         if (j<(cpt-1)) {
+                            tabPoints_j = tabPoints[j];
+#pragma omp parallel for
                             for (m=(j+1); m<cpt; ++m) {
-                                if (tabPoints[m] > tabPoints[j]) {
+                                if (tabPoints[m] > tabPoints_j) {
                                 //	printf("Dans le tableau de vecteurs, le vecteur %u ",tabPoints[m]);
                                     tabPoints[m] -= 1;
                                 //	printf("devient %u\n",tabPoints[m]);
@@ -12357,7 +12395,7 @@ void BddInter::Simplification_BDD()
             if (modification) {
                 printf("Nombre de normales aux sommets (vecteurs) avant le traitement : %u\n",nb_points);
                 printf("Nouveau nombre de normales aux sommets                        : %u\n",objet_courant->Nb_vecteurs);
-                nbv_changes = nb_points - objet_courant->Nb_vecteurs;
+                nbv_changes  = nb_points - objet_courant->Nb_vecteurs;
                 bdd_modifiee = true;
             } else {
                 printf("Nombre de vecteurs : sans changement\n");
@@ -12424,6 +12462,7 @@ void BddInter::genereAttributsFacettes(Object *Objet_courant, int Nb_facettes, i
     Objet_courant->Nb_aspects = Nb_facettes;
 
     this->makeaspect_face();
+#pragma omp parallel for
     for (int i=1; i <= this->N_elements ; i++) {
         Objet_courant->Facelist[i-1].groupe     = numeroGroupe;
         Objet_courant->Facelist[i-1].codmatface = numeroMateriau;

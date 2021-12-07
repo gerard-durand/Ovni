@@ -232,15 +232,17 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
     // Menus, boutons et autres contrôles gérés par wxSmith
 
-    // Note mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code par wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
+    // Note : mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code par wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
     // permet par exemple d'avoir 2 versions de GLCanvasAttributes_1[] conditionnées par un if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) testant la validité de
     // int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, 0, 0 };     // Peut-être + général que #if wxCHECK_VERSION(3,0,0)
     // En cas de changement dans wxSmith sur la frame principale OvniFrame, il suffit de réactiver le //(*, faire les changements dans wxSmith, remettre en place le //_(* et
     // remettre en place le code qui a été supprimé par la génération automatique (voir l'exemple ci-dessous).
+    // Attention : ne semble OK que pour wxWidgets < 3.1.0 (à cause des #if wxCHECK_VERSION(3,1,0)). Il faut aussi réactiver les 3 lignes ci-dessous pour définir GLExtend
 
-    int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, WX_GL_SAMPLES, 4, 0, 0 };
+/*    int test_GLCanvasAttributes_1[] = { WX_GL_SAMPLE_BUFFERS, 1, WX_GL_SAMPLES, 4, 0, 0 };
     bool GLExtend = false;
-    if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) GLExtend = true;
+    if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) GLExtend = true; */
+
 /*  Exemple de code à remplacer/ajouter :
     int GLCanvasAttributes_1[] = {
         WX_GL_RGBA,
@@ -253,12 +255,8 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     #endif // wxCHECK_VERSION
         0, 0
         };
-    if (!GLExtend) {
-        printf("WX_GL_SAMPLE_BUFFERS non reconnu par la carte graphique et/ou son driver !\n");
-        GLCanvasAttributes_1[6] = GLCanvasAttributes_1[7] = 0;
-    }
 */
-    //_(*Initialize(OvniFrame)
+    //(*Initialize(OvniFrame)
     Create(parent, wxID_ANY, _T("OVNI Version wxWidgets"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxFULL_REPAINT_ON_RESIZE, _T("wxID_ANY"));
     Hide();
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -273,25 +271,31 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Haut = new wxButton(Panel1, ID_BUTTON5, _T("Haut"), wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
     Button_Bas = new wxButton(Panel1, ID_BUTTON6, _T("Bas"), wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
     BoxSizer1->Add(Panel1, 0, wxALL|wxEXPAND, 0);
-    int GLCanvasAttributes_1[] = {
-        WX_GL_RGBA,
-        WX_GL_DOUBLEBUFFER,
-        WX_GL_DEPTH_SIZE,      16,
-        WX_GL_STENCIL_SIZE,    0,
-    #if wxCHECK_VERSION(3,0,0)
-        WX_GL_SAMPLE_BUFFERS,  1,
-        WX_GL_SAMPLES,         4,
-    #endif // wxCHECK_VERSION
-        0, 0
-        };
-    if (!GLExtend) {
-        printf("WX_GL_SAMPLE_BUFFERS non reconnu par la carte graphique et/ou son driver !\n");
-        GLCanvasAttributes_1[6] = GLCanvasAttributes_1[7] = 0;
-    }
-    #if wxCHECK_VERSION(3,0,0)
-    	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
+    #if wxCHECK_VERSION(3,1,0)
+    	wxGLAttributes GLCanvasAttributes_1;
+    	GLCanvasAttributes_1.PlatformDefaults();
+    	GLCanvasAttributes_1.RGBA();
+    	GLCanvasAttributes_1.DoubleBuffer();
+    	GLCanvasAttributes_1.Depth(16);
+    	GLCanvasAttributes_1.Stencil(0);
+    	GLCanvasAttributes_1.SampleBuffers(1);
+    	GLCanvasAttributes_1.Samplers(4);
+    	GLCanvasAttributes_1.EndList();
+    	GLCanvas = new wxGLCanvas(this, GLCanvasAttributes_1, ID_GLCANVAS, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
     #else
-    	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"), GLCanvasAttributes_1);
+    	const int GLCanvasAttributes_1[] =
+    	{
+    		WX_GL_RGBA,
+    		WX_GL_DOUBLEBUFFER,
+    		WX_GL_DEPTH_SIZE,      16,
+    		WX_GL_STENCIL_SIZE,    0,
+    	#if wxCHECK_VERSION(3,0,0)
+    		WX_GL_SAMPLE_BUFFERS,  1,
+    		WX_GL_SAMPLES,         4,
+    	#endif // wxCHECK_VERSION
+    		0, 0
+    	};
+    	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
     #endif // wxCHECK_VERSION
     GLCanvas->SetBackgroundColour(wxColour(100,150,190));
     BoxSizer1->Add(GLCanvas, 1, wxALL|wxEXPAND, 0);
@@ -313,8 +317,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Slider_z->SetHelpText(_T("Axe Bleu"));
     BoxSizer2->Add(Slider_z, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
     Panel_Sliders->SetSizer(BoxSizer2);
-    BoxSizer2->Fit(Panel_Sliders);
-    BoxSizer2->SetSizeHints(Panel_Sliders);
     BoxSizer1->Add(Panel_Sliders, 0, wxALL|wxEXPAND, 0);
     SetSizer(BoxSizer1);
     MenuBar_Globale = new wxMenuBar();
@@ -415,7 +417,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_ReperageObjet = new wxMenuItem(Menu_Reperage, ID_MENUITEM13, _T("Objet"), wxEmptyString, wxITEM_NORMAL);
     Menu_Reperage->Append(Menu_ReperageObjet);
     Menu_Reperage->AppendSeparator();
-    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
+    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
     Menu_Reperage->Append(Menu_SensDesNormales);
     Menu_Reperage->AppendSeparator();
     Menu_Reperage_Couleurs_Facettes = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_facettes, _T("Couleurs facettes"), wxEmptyString, wxITEM_CHECK);
@@ -511,7 +513,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     SetStatusBar(StatusBar1);
     Timer_Save.SetOwner(this, ID_TIMER1);
     Timer_Save.Start(300000, false);
-    BoxSizer1->Fit(this);
     BoxSizer1->SetSizeHints(this);
     Center();
 
@@ -788,7 +789,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 
     if (Element == nullptr) {
         if (verbose) printf("Creation de BddInter Element\n");
-        Element=new BddInter(dynamic_cast<wxWindow*>(this->GLCanvas), wxID_ANY, GLCanvasAttributes_1, wxDefaultPosition,
+        Element=new BddInter(dynamic_cast<wxWindow*>(this->GLCanvas), GLCanvasAttributes_1, wxID_ANY, wxDefaultPosition,
             wxSize(1, 1), wxSUNKEN_BORDER, verbose); // Taille minimale (1 pixel) car sera ajusté par la suite (+ évite une zone blanche si pas de fichier sélectionné !)
 //          wxSize(300, 300), wxSUNKEN_BORDER);
 ///        this->GLCanvas = dynamic_cast<wxGLCanvas*>(Element); // Les this->GLCanvas commentés par /// ne semblent pas servir à quelque chose !!!
@@ -911,7 +912,7 @@ bool OvniFrame::OnBdd_modifiee() {
         for (int i=0; i < (int)Element->Objetlist.size(); i++) if (Element->Objetlist[i].deleted) ok--;
         if (ok <= 0) return(true);                      // Idem car là aussi, il ne reste rien !
     }
-    if (Element->bdd_modifiee) {
+    if (Element->bdd_modifiee || Element->Elements_Supprimes) {
         wxString wxMessage = _T("La Base de Données 3D a été modifiée.\nVoulez-vous :\n");
         wxMessage         += _T("    1 : l'enregistrer puis Quitter . . . . . . . . . (Oui)\n");
 #if wxCHECK_VERSION(3,0,0)
@@ -1366,7 +1367,6 @@ void OvniFrame::OnMenu_OpenSelected(wxCommandEvent& event)
 {
 //    printf("Entree OpenSelected\n");
     New_file = true;
-//    FilterIndex=0;
     Element->Numero_base = 0;
     Ouvrir_Fichier();
 
@@ -1520,7 +1520,6 @@ void OvniFrame::Ouvrir_Fichier()
                 }
             }
 
-    ///        this->Menu_AddFile->Enable();         // Activer le menu "AddFile"
             this->Menu_Enregistrer->Enable();                   // Activer le menu "Enregistrer"
             this->Menu_Enregistrer_Sous->Enable();              // Activer le menu "Enregistrer sous..."
             Element->MPrefs->CheckBox_CreerBackup->Enable();    // Activer la case à cocher de création d'un fichier .bak
@@ -1624,9 +1623,9 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 
     Preferences_Panel->RadioBox_Triangulation->SetSelection(Element->methode_Triangulation);
 
-    Preferences_Panel->RadioBox_Trackball->SetSelection(Element->m_gldata.mode_Trackball);
+    Preferences_Panel->RadioBox_Trackball  ->SetSelection(Element->m_gldata.mode_Trackball);
 
-    Preferences_Panel->CheckBox_DisplayFps->SetValue(Element->viewFps);
+    Preferences_Panel->CheckBox_DisplayFps ->SetValue(Element->viewFps);
 
     Preferences_Panel->CheckBox_CreerBackup->SetValue(Element->CreerBackup);
     Preferences_Panel->CheckBox_SupprBackup->SetValue(Element->SupprBackup);
@@ -2361,9 +2360,13 @@ void OvniFrame::OnOutils_choix_afficherSelected(wxCommandEvent& event)
 void OvniFrame::OnOutils_ReafficherSelected(wxCommandEvent& event)
 {
     unsigned int i,j;
+    Object * objet_i;
+
     for (i=0; i<Element->Objetlist.size(); i++) {
-        Element->Objetlist[i].afficher = true;
-        for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].afficher = true;
+        objet_i = &(Element->Objetlist[i]);
+        objet_i->afficher = true;
+#pragma omp parallel for
+        for (j=0; j<objet_i->Facelist.size(); j++) objet_i->Facelist[j].afficher = true;
     }
     Element->Elements_Masques = false;
     Element->m_gllist = 0;
@@ -2375,12 +2378,16 @@ void OvniFrame::OnOutils_Supprimer_MasquesSelected(wxCommandEvent& event)
     // Pour marquer les objets masqués comme "à supprimer" (deleted)
     // ATTENTION : les objets supprimés ne sont pas encore complètement gérés => continuent d'apparaître dans certains menus / dialogues
     unsigned int i,j;
+    Object * objet_i;
+
     for (i=0; i<Element->Objetlist.size(); i++) {
-        Element->Objetlist[i].deleted = !Element->Objetlist[i].afficher;
-        if (Element->Objetlist[i].deleted) Element->Elements_Supprimes = true;
-        for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
-            Element->Objetlist[i].Facelist[j].deleted = !Element->Objetlist[i].Facelist[j].afficher;
-            if (Element->Objetlist[i].Facelist[j].deleted) Element->Elements_Supprimes = true;
+        objet_i = &(Element->Objetlist[i]);
+        objet_i->deleted = !objet_i->afficher;
+        if (objet_i->deleted) Element->Elements_Supprimes = true;
+#pragma omp parallel for
+        for (j=0; j<objet_i->Facelist.size(); j++) {
+            objet_i->Facelist[j].deleted = !objet_i->Facelist[j].afficher;
+            if (objet_i->Facelist[j].deleted) Element->Elements_Supprimes = true;
         }
     }
     Element->m_gllist = 0;  // Peut-être pas utile car les objets supprimés ne sont déjà plus affichés
@@ -2391,12 +2398,16 @@ void OvniFrame::OnOutils_UnDeleteSelected(wxCommandEvent& event)
 {
     // Pour réactiver les objets/facettes marqués comme supprimés (deleted), car en fait toujours là en mémoire.
     unsigned int i,j;
+    Object * objet_i;
+
     for (i=0; i<Element->Objetlist.size(); i++) {
-        Element->Objetlist[i].deleted  = false;
-//        Element->Objetlist[i].afficher = true;
-        for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
-            Element->Objetlist[i].Facelist[j].deleted  = false;  // Undelete
-            Element->Objetlist[i].Facelist[j].afficher = true;   // + réafficher
+        objet_i = &(Element->Objetlist[i]);
+        objet_i->deleted  = false;
+//        objet_i->afficher = true;
+#pragma omp parallel for
+        for (j=0; j<objet_i->Facelist.size(); j++) {
+            objet_i->Facelist[j].deleted  = false;  // Undelete
+            objet_i->Facelist[j].afficher = true;   // + réafficher
         }
     }
     Element->Elements_Supprimes= false;

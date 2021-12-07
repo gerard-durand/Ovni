@@ -393,7 +393,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
         // Rien à faire sur les normales car elles ne changent pas sur un objet complet
 
     } else if(Element->mode_selection == Element->selection_facette) {
-
+// Non parallélisable, sans doute à cause des changements dans listePoints et listeFacettes (via des push_front notamment)
         for (o=0; o<Element->Objetlist.size(); o++) {               // Traiter les objets indépendamment
             Element->listePoints.clear();
             objet_courant = &(Element->Objetlist[o]);
