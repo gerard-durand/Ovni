@@ -61,9 +61,6 @@
 			</object>
 			<object class="sizeritem">
 				<object class="wxGLCanvas" name="ID_GLCANVAS" variable="GLCanvas" member="yes">
-					<mDepthSize>16</mDepthSize>
-					<mSampleBuffers>1</mSampleBuffers>
-					<mSamples>4</mSamples>
 					<size>800,400</size>
 					<bg>#6496BE</bg>
 					<style>wxFULL_REPAINT_ON_RESIZE</style>
