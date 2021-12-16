@@ -417,7 +417,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_ReperageObjet = new wxMenuItem(Menu_Reperage, ID_MENUITEM13, _T("Objet"), wxEmptyString, wxITEM_NORMAL);
     Menu_Reperage->Append(Menu_ReperageObjet);
     Menu_Reperage->AppendSeparator();
-    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
+    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
     Menu_Reperage->Append(Menu_SensDesNormales);
     Menu_Reperage->AppendSeparator();
     Menu_Reperage_Couleurs_Facettes = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_facettes, _T("Couleurs facettes"), wxEmptyString, wxITEM_CHECK);

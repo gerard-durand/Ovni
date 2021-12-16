@@ -8019,12 +8019,12 @@ void BddInter::drawOpenGL() {
 
     glPointSize(5.0);
     longueur_normales = diagonale_save*len_normales*m_gldata.zoom/FoV_auto; // Attention : diagonale_save peut être modifié dans searchMin_Max => effet indésirable potentiel ?
+    color_max = nb_couleurs-1;  // Indice de la dernière couleur (plutôt que nombre de couleurs)
 
     if(show_CW_CCW == true) {
         glEnable(GL_CULL_FACE);
         glFrontFace(GL_CCW);
     }
-
 
 //    printf("smooth : %d\n",smooth);
 
@@ -8038,6 +8038,8 @@ void BddInter::drawOpenGL() {
 
         searchMin_Max();        // Pour mettre à jour les différents compteurs d'objets, facettes, points ... Met aussi à jour diagonale_save et centrage_auto
         int nb_normales_seuillees = 0;      // A déclarer plutôt ailleurs, mais initialiser ici
+        style = GL_POLYGON; // Déplacé ici, en dehors des boucles car, en l'état, invariant
+
         glDeleteLists(glliste_objets,1);    // Supprime la liste des objets
         m_gllist = glliste_objets;
         glNewList( glliste_objets, GL_COMPILE);
@@ -8046,7 +8048,9 @@ void BddInter::drawOpenGL() {
             glDepthMask(GL_FALSE);
             glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
         }
+
         glInitNames();
+
 
 // C'est ici qu'on revient pour le second passage en mode de visualisation du "Sens des normales"
 Boucle:
@@ -8091,9 +8095,18 @@ Boucle:
                     }
                 }
 
-                for (j=0; j<Objet_i->Facelist.size(); j++) {
+                unsigned int nb_faces = Objet_i->Facelist.size();
+
+// Essai de parallélisation mais ne fonctionne pas. à cause des listes qui du coup ne sont pas générées dans le bon ordre ?
+// Des tests placés différemment pour générer autant de listes (via glNewList) que de threads n'a pas non plus fonctionné !
+// Est-ce parce qu'OpenGL ne peut gérer qu'une seule liste à la fois ? même si chaque thread gére une liste différente ?
+//#pragma omp parallel for ordered private(Face_ij,NormaleFacette,NumerosSommets,NormaleSommet,\
+                grpmat,groupe,material,lissage_Gouraud,k,test_np,xyz_sommet)
+                for (j=0; j<nb_faces; j++) {
+
                     compteur++;
                     if (verbose) if ((compteur % 100000) == 0) {printf("\r%d",compteur); fflush(stdout);}
+
                     glPushName(j);
 
                     // Identifier les objets courants (facette, aspect, normale à la facette, luminance si Objet/facette non plat)
@@ -8138,7 +8151,6 @@ Boucle:
                             } else {
                                 groupe   = Face_ij->getGroupe();
                                 material = Face_ij->getCodmatface();
-                                color_max= nb_couleurs-1;
 //                                  printf("objet %d facette %d groupe %d material %d\n",i,j,groupe,material);
                                 if (groupe<0) {
                                     groupe=0;
@@ -8215,7 +8227,7 @@ Boucle:
 
                             glBegin(GL_POLYGON);
                             NumerosSommets = Face_ij->getF_sommets();
-                            style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ????
+//                            style = GL_POLYGON; // Remplace la ligne ci-dessous ? Oui si mode=11 mais sinon ???? en l'état, à sortir des boucles de toutes façons
 
                             lissage_Gouraud = smooth && !Objet_i->flat && !Face_ij->flat && (Face_ij->Nb_Sommets_L != 0) ; // On pourrait utiliser aussi Face_ij->L_sommets.size() != 0
                             // Il faudrait peut-être aussi tester si Face_ij->Nb_Sommets_F == Face_ij->Nb_Sommets_L (ou Face_ij->F_sommets.size() == Face_ij->L_sommets.size() )
@@ -8268,14 +8280,8 @@ Boucle:
         }
 
         if (show_CW_CCW == true) {
+            glFrontFace(GL_CCW);    // Remettre la valeur par défaut
             glDisable(GL_CULL_FACE);
-        }
-        if (MPanel->Bool_souder) {
-            modeGL = points;
-        } else if(MPanel->Bool_diviser) {
-            modeGL = aretes;
-        } else {
-            modeGL = standard;
         }
 
         if (MPanel->activer_transparence) {
@@ -8284,6 +8290,14 @@ Boucle:
         }
 
         glEndList();
+
+        if (MPanel->Bool_souder) {
+            modeGL = points;
+        } else if(MPanel->Bool_diviser) {
+            modeGL = aretes;
+        } else {
+            modeGL = standard;
+        }
 
         SetPosObs(reset_zoom);
         ResetProjectionMode();
