@@ -152,6 +152,13 @@ END_EVENT_TABLE()
     if(verbose) printf("Sortie de BddInter::BddInter\n");
 }
 
+BddInter::~BddInter()
+{
+#if wxCHECK_VERSION(3,0,0)
+    delete m_glRC;
+#endif // wxCHECK_VERSION
+}
+
 void BddInter::output_Glut_Msg(GLfloat x, GLfloat y, char *text)
 {
 // Affiche un message text dans la fenetre OpenGL
@@ -379,8 +386,8 @@ void BddInter::Ouvrir_ini_file()
     int icmp, ibool, len ;
 
     f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
-    if (f_init != NULL) {
-        while ((Lu = fgets(Message,300,f_init)) != NULL) {
+    if (f_init != nullptr) {
+        while ((Lu = fgets(Message,300,f_init)) != nullptr) {
             len = strlen( init1);
             icmp= strncmp(init1,Message,len) ;                  // Test sur 1er mot clé
             if (!icmp) {
@@ -619,7 +626,7 @@ void BddInter::Stocker_ini_file()
     if (!ini_file_modified) return ;        // Ne rien faire si le fichier n'a pas été modifié
 
     f_init=fopen(fichier_init,"w") ;
-    if (f_init != NULL) {
+    if (f_init != nullptr) {
         fprintf(f_init,"%s%f\n",init1,len_axe) ;
         fprintf(f_init,"%s%f\n",init2,len_normales);
         fprintf(f_init,"%s%f\n",init3,ray_sun) ;
@@ -3595,7 +3602,7 @@ void BddInter::create_bdd() {
                         wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
                         wxMessage         += _T("Le calcul refait à la lecture du fichier va les remplacer...\n");
                         wxMessage         += _T("Est-ce bien ce que vous voulez ?");
-                        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question"),
+                        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question"),
                                                  wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
                         if (query->ShowModal() == wxID_YES) Forcer_calcul = true;
                         query->Destroy();
@@ -3942,7 +3949,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     codemateriau = -1;
     codegroupe   = -1;
 
-    p = XML_ParserCreate(NULL);
+    p = XML_ParserCreate(nullptr);
     if (!p) {
         fprintf(stderr, "Allocation memoire impossible pour le parseur\n");
         exit(-1);
@@ -4048,7 +4055,7 @@ void BddInter::LoadG3D()
 //           printf("%x %x\n",cel,&cel);
             LectureXML_G3d(f); //cel,f,entete,svg_entete) ;
             fclose(f) ;
-//            if (svg_entete && entete != NULL) fclose(entete) ;
+//            if (svg_entete && entete != nullptr) fclose(entete) ;
 //            init_liste_Materiaux(cel) ;
             m_loaded = true;
             m_gllist = 0;
@@ -4190,7 +4197,7 @@ void BddInter::LoadOBJ()
 //    bool Forcer_1_Seul_Objet=false ; // mis un niveau au dessus ! Si false, on crée le nombre d'objets trouvés dans la bdd, si true, on met tout dans 1 seul objet
 
     unsigned int num_min, num_max, num_tot, num_cur ;
-    unsigned int *full_ind_sommets=NULL, *new_ind_sommets=NULL, *inv_ind_sommets=NULL, *p_uint ;
+    unsigned int *full_ind_sommets=nullptr, *new_ind_sommets=nullptr, *inv_ind_sommets=nullptr, *p_uint ;
     int indice, num_min1, num_min2;
     int indice_min,indice_max;
     unsigned norm_point_fac_existe, nb_normp_fac;
@@ -4219,8 +4226,8 @@ void BddInter::LoadOBJ()
     token = strtok(cptr,delimiters) ;
     do {
         cptr=token;
-        token = strtok(NULL,delimiters) ;
-    } while (token != NULL) ;
+        token = strtok(nullptr,delimiters) ;
+    } while (token != nullptr) ;
     printf("Nom du fichier : %s\n", cptr);
     nom_fichier = cptr;                         // a simplifier ?
 
@@ -4243,7 +4250,7 @@ void BddInter::LoadOBJ()
     if (!strncmp(s1,"#",1) || !strncmp(s1,"mtllib",6) || !strncmp(s1,"g ",2) || !strncmp(s1,"v ",2)) {
         if (s1[0] == '#') {
             for (i=2; i<100; i++) {
-                if (fgets(s1,160,f) != NULL) {
+                if (fgets(s1,160,f) != nullptr) {
                     if(!strncmp(s1,"mtllib",6) || !strncmp(s1,"g ",2) || !strncmp(s1,"v ",2)) {
                         if(!strncmp(s1,"mtllib",6)) {
                             sprintf(Message,"Fichier Wavefront OBJ avec fichier matériau : %s",s1+7) ;
@@ -4275,7 +4282,7 @@ void BddInter::LoadOBJ()
             tab_nom[0] = strdup(buffer.data()) ;
             rewind(f) ;
 
-            while (fgets(s1,660,f) != NULL) {
+            while (fgets(s1,660,f) != nullptr) {
 //                if (!strncmp(s1,"mtllib",6)) mtllib_OK = true; // Déjà fait plus tôt
                 if (!strncmp(s1,"v ", 2)) nb_p++;
                 if (!strncmp(s1,"f ", 2)) nb_fac++;
@@ -4382,7 +4389,7 @@ void BddInter::LoadOBJ()
             }
 
 //
-//            if (svg_entete && temp != NULL) {
+//            if (svg_entete && temp != nullptr) {
 //                fprintf(temp,"#### Fichier original de type Wavefront OBJ ####\n\n") ;
 //            }
 
@@ -4395,7 +4402,7 @@ void BddInter::LoadOBJ()
             nfac   = 0 ;
             nnorm  = 0 ;
             first  = 1 ;
-            while (fgets(s1,660,f) != NULL) {   // Jusqu'à la fin de fichier
+            while (fgets(s1,660,f) != nullptr) {   // Jusqu'à la fin de fichier
                 if (!strncmp(s1,"v ", 2)) {     // Lecture des points (Les mettre tous dans l'objet 1)
                     npoint++;
                     sscanf(s1+2,"%f%f%f", &vx,&vy,&vz);
@@ -4460,7 +4467,7 @@ void BddInter::LoadOBJ()
                     fgets(s1,660,f) ;
                 } while (strncmp(s1,"mtllib",6)) ;
                 strcpy(nom_obj, Lire_chaine(s1+7)) ;      // Récupérer ce qui suit mtllib
-        //        if ((cptr=strstr(nom_obj,".mtl")) != NULL) *cptr='\0' ; // Supprime l'extension .mtl : ici capte aussi une chaine .mtl qui ne serait pas une extension (en fin de nom_obj)
+        //        if ((cptr=strstr(nom_obj,".mtl")) != nullptr) *cptr='\0' ; // Supprime l'extension .mtl : ici capte aussi une chaine .mtl qui ne serait pas une extension (en fin de nom_obj)
                 if ((cptr=strstr(nom_obj,".mtl")) == ((char *)&nom_obj+strlen(nom_obj)-4)) *cptr='\0' ; // Supprime l'extension .mtl
             } else {
                 strcpy(nom_obj,nom_fichier) ;
@@ -4483,7 +4490,7 @@ void BddInter::LoadOBJ()
             o = indice_premierObjet ;
             indiceObjet_courant = o;
             first = 1 ;
-            while (fgets(s1,660,f) != NULL) { // Jusqu'à la fin de fichier
+            while (fgets(s1,660,f) != nullptr) { // Jusqu'à la fin de fichier
         //        printf("%s",s1) ;
                 Update_Dialog(ftell(f), fichierBdd_length);
 
@@ -4688,7 +4695,7 @@ void BddInter::LoadOBJ()
             }
 
 //****************************************
-//            if (svg_entete && entete != NULL) fclose(entete) ;
+//            if (svg_entete && entete != nullptr) fclose(entete) ;
 //            init_liste_Materiaux(cel) ;
             m_loaded = true;
             m_gllist = 0;
@@ -4783,7 +4790,7 @@ void BddInter::LoadM3D()
 //#endif
 //        exit(9);
 //    }
-//    if (svg_entete && temp != NULL) {
+//    if (svg_entete && temp != nullptr) {
 //        fprintf(temp,"#### Fichier Oktal : Transformation d'un Fichier MilkShape 3D Ascii ####\n\n") ;
 //    }
 
@@ -4976,7 +4983,7 @@ void BddInter::LoadPLY()
         fgets(s1,100,f) ;    // Le nom de l'avion est à la seconde ligne, donc pour i=0
         printf("%s",s1) ;
         if (i == 0) strcpy(ident,s1) ;
-        if ((cptr=strstr(s1,"ITTEM =")) != NULL) break ;
+        if ((cptr=strstr(s1,"ITTEM =")) != nullptr) break ;
         if (i == 4) {
             sprintf(Message,"Erreur dans le Polygon File : chaîne \"ITTEM =\" non trouvée\n") ;
             printf(utf8_To_ibm(Message)) ;
@@ -4991,7 +4998,7 @@ void BddInter::LoadPLY()
     for (i=0; i <= 10; i++) {
         fgets(s1,100,f)   ;
         printf("%s",s1) ;
-        if ((cptr=strstr(s1,"Start")) != NULL) break ;
+        if ((cptr=strstr(s1,"Start")) != nullptr) break ;
         if (i == 10) {
             sprintf(Message,"Erreur dans le Polygon File : chaîne \"Start\" non trouvée\n") ;
             printf(utf8_To_ibm(Message)) ;
@@ -5019,7 +5026,7 @@ void BddInter::LoadPLY()
 
         strcpy(nom_obj, Lire_chaine(s1)) ;
         n      = (n-2)/3 ;
-        if (strstr(nom_obj,nom_prec) == NULL) {
+        if (strstr(nom_obj,nom_prec) == nullptr) {
             if (nb_fac != 0) {
                 printf(" avec %5d facettes et %5d points\n", nfac, npoint) ;
                 if (o == o_dim) {
@@ -5063,9 +5070,9 @@ void BddInter::LoadPLY()
     /* Lire jusqu'à Start */
     do {
         fgets(s1,100,f) ;
-    } while (strstr(s1,"Start") == NULL) ;
+    } while (strstr(s1,"Start") == nullptr) ;
 // printf("%s",s1) ;
-//    if (svg_entete && temp != NULL ) {
+//    if (svg_entete && temp != nullptr ) {
 //        fprintf(temp,"#### Fichier Oktal : Transformation d'un Polygon File Niratam - GEO ####\n\n") ;
 //        fprintf(temp,"#### %s\n\n", ident) ;
 //    }
@@ -5136,7 +5143,7 @@ void BddInter::LoadPLY()
         fgets( s1,100,f)  ;     // et un identifiant d'objet)
         strcpy(nom_obj, Lire_chaine(s1)) ;
 
-        if (strstr(nom_obj,nom_prec) == NULL) {
+        if (strstr(nom_obj,nom_prec) == nullptr) {
             o++ ;                                   // On change d'objet dès que l'identifiant change
             strcpy(nom_prec, nom_obj) ;
             str.Printf(_T("<OBJET> %d "),o);
@@ -5512,7 +5519,7 @@ void BddInter::LoadPLY_Stanford()
                 Update_Dialog(ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
             }
 
-            if (vert_other == NULL || face_other == NULL) {
+            if (vert_other == nullptr || face_other == nullptr) {
                 // Ignorer ? faire quelque-chose ? Permet d'éviter un warning de compilation sur "variable set but not used" !
             }
             if (per_vertex_color) {
@@ -5738,7 +5745,7 @@ void BddInter::LoadOFF()
 
     printf("Fichier de type Object File Format : %s",s1) ;
     Nb_objets = 1 ;     // A priori, 1 seul objet par fichier
-//    if (svg_entete && temp != NULL) {
+//    if (svg_entete && temp != nullptr) {
 //        fprintf(temp,"#### Fichier Oktal : Transformation d'un Fichier OFF ####\n\n") ;
 //    }
 
@@ -5881,7 +5888,7 @@ void BddInter::LoadSTL() {
     cptr=fgets(s1,81,f) ;           // 80 caractères +1 pour permettre un \n
     s1[81] = '\0';                  // Simple précaution
     printf("longueur de l'entête : %d\n",(int)strlen(s1));
-    if (cptr == NULL) {
+    if (cptr == nullptr) {
         printf("Fichier vide !\n");
         fclose(f);
         type = -1;
@@ -5937,7 +5944,7 @@ void BddInter::LoadSTL() {
         fgets(s1,160,f) ;                   // Les lignes contiennent moins de 160 caractères (plutôt 60). On prévoie large donc.
         while (strncmp(s1,"endsolid ",9)) { // Lire tant que la chaîne endsolid n'a pas été trouvée. ERREUR : Que se passe t-il si elle n'existe pas ???
             cptr=fgets(s1,160,f) ;          // Peut-il y avoir des lignes vides ?
-            if (cptr == NULL) {
+            if (cptr == nullptr) {
                 printf("Erreur\n");         // Ligne "endsolid " non trouvée ?
                 return;
             }
@@ -6210,7 +6217,7 @@ void BddInter::Load3DS()
             Lib3dsMesh *mesh = f3ds->meshes[i];
             node = lib3ds_node_new(LIB3DS_NODE_MESH_INSTANCE);
             strcpy(node->name, mesh->name);
-            lib3ds_file_insert_node(f3ds, node, NULL);
+            lib3ds_file_insert_node(f3ds, node, nullptr);
         }
         sprintf(Message,"%d meshes lus et autant de nodes créés\n",f3ds->nmeshes);
         printf(utf8_To_ibm(Message)) ;
@@ -6219,10 +6226,10 @@ void BddInter::Load3DS()
     lib3ds_file_eval(f3ds, 0.0f);   // Indispensable pour configurer proprement les matrices des nodes
 
     // Code pas très utile ! Sert juste à vérifier 2 méthodes de comptage qui ne donnent pas toujours la même chose ! Différents types : meshes, cameras, ...
-//    for (node=f3ds->nodes; node!=NULL; node=node->next ) {
+//    for (node=f3ds->nodes; node!=nullptr; node=node->next ) {
 //        nnodes++;                               // Compter le nombre de nodes (noeuds)
 //        printf("Node : %s\n",node->name);
-//        for (p=node->childs; p!=NULL; p=p->next) {
+//        for (p=node->childs; p!=nullptr; p=p->next) {
 //            nnodes++;
 //            printf("Node : %s\n",p->name);
 //        }
@@ -6346,11 +6353,11 @@ char * BddInter::Lire_chaine( char st [])
     char c ;
 
     cptr = strrchr(st,'\n') ; // élimination du terminateur de ligne.
-    if (cptr != NULL) {
+    if (cptr != nullptr) {
         *cptr = '\0' ;
     }
     cptr = strrchr(st,'\r') ; // élimination d'un éventuel cr.
-    if (cptr != NULL) {
+    if (cptr != nullptr) {
         *cptr = '\0' ;
     }
     c     = st[0] ;
@@ -8099,7 +8106,8 @@ Boucle:
 
 // Essai de parallélisation mais ne fonctionne pas. à cause des listes qui du coup ne sont pas générées dans le bon ordre ?
 // Des tests placés différemment pour générer autant de listes (via glNewList) que de threads n'a pas non plus fonctionné !
-// Est-ce parce qu'OpenGL ne peut gérer qu'une seule liste à la fois ? même si chaque thread gére une liste différente ?
+// Est-ce parce qu'OpenGL ne peut gérer qu'une seule liste à la fois ? même si chaque thread gère une liste différente ?
+
 //#pragma omp parallel for ordered private(Face_ij,NormaleFacette,NumerosSommets,NormaleSommet,\
                 grpmat,groupe,material,lissage_Gouraud,k,test_np,xyz_sommet)
                 for (j=0; j<nb_faces; j++) {
@@ -8273,7 +8281,7 @@ Boucle:
         if (verbose) {printf("\r%d\n",compteur); fflush(stdout);}
 
         // Si le mode "Sens des normales" est activé : Pour forcer une seconde exploration complète des boucles sur i et j en changeant le mode glFrontFace
-        if((test2 == false) && (show_CW_CCW == true) ) {
+        if ((test2 == false) && (show_CW_CCW == true)) {
             glFrontFace(GL_CW);
             test2 = true;
             goto Boucle;    // Pas joli, pas pour les puristes, mais c'est simple, évite un test sur l'indice i+1 et de mettre i à -1 pour forcer l'itération suivante avec i=0 ...
@@ -8508,7 +8516,7 @@ void BddInter::DisplayMessage(wxString wxMessage, bool bip)
     long style     = wxOK | wxICON_QUESTION;        // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
     if (bip) style = wxOK | wxICON_INFORMATION;
 
-    wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Avertissement"), style);
+    wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Avertissement"), style);
     query->ShowModal();
     query->Destroy();
 }

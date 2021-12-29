@@ -243,7 +243,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     bool GLExtend = false;
     if (wxGLCanvas::IsDisplaySupported(test_GLCanvasAttributes_1)) GLExtend = true; */
 
-/*  Exemple de code à remplacer/ajouter :
+/*  Exemple de code à remplacer/ajouter (pour wxWidgets < 3.1) :
     int GLCanvasAttributes_1[] = {
         WX_GL_RGBA,
         WX_GL_DOUBLEBUFFER,
@@ -811,7 +811,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         wxMessage         += _T("  *  Si Oui, il vaut mieux l'\"Enregistrer sous ...\" un autre nom dès que possible car elle\n");
         wxMessage         += _T("  *  sera écrasée à la prochaine sauvegarde automatique ou supprimée en sortie !");
 
-        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Sauvegarde automatique existante..."),
+        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Sauvegarde automatique existante..."),
                                         wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
 
         int retour_Show = query->ShowModal();
@@ -848,7 +848,9 @@ OvniFrame::~OvniFrame() {
     //*)
     Timer_Save.Stop();          // Arrêt du timer en sortie de programme (peut être utile en cas de plantage car, apparemment, évite de laisser le timer actif après la sortie).
     Timer_Save.Disconnect();    // et déconnexion de précaution
-    DeletePendingEvents();      // Utile ?
+    delete m_glcontext;         // Utile ?
+    delete GLCanvas;            // ""
+    DeletePendingEvents();      // ""
     wxTheApp->ExitMainLoop();   // Pour voir si utile en cas de crash dans Ovni
 }
 
@@ -922,7 +924,7 @@ bool OvniFrame::OnBdd_modifiee() {
 #endif // wxCHECK_VERSION
         wxMessage         += _T("    3 : ne pas l'enregistrer ni Quitter Ovni (Annuler) ?");
 
-        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question..."),
+        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question..."),
                                         wxYES_NO | wxYES_DEFAULT | wxCANCEL | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
 #if wxCHECK_VERSION(3,0,0)
         query->SetYesNoCancelLabels(_T("Oui"),_T("Quitter"),_T("Annuler"));
@@ -941,7 +943,7 @@ void OvniFrame::OnPal_modifiee() {
     if (Element->pal_file_modified) {
         wxString wxMessage = _T("Le fichier de palette des couleurs a été modifié.\n");
         wxMessage         += _T("Voulez-vous l'enregistrer avant de Quitter ?");
-        wxMessageDialog *query = new wxMessageDialog(NULL, wxMessage, _T("Question..."),
+        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question..."),
                                         wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
 
         wxCommandEvent event_cmd;
@@ -951,14 +953,19 @@ void OvniFrame::OnPal_modifiee() {
 }
 
 void OvniFrame::OnQuit(wxCommandEvent& event) {
-    bool test;
-    test = OnBdd_modifiee();
-    if (!test) return;
-    Element->bdd_modifiee = false;      // Forcer à false pour éviter une double interrogation lors du Close si on a refusé l'enregistrement sous...
-    Element->Stocker_ini_file();
-    OnPal_modifiee();
-    Element->pal_file_modified = false; // Idem
-    Close();
+//    bool test;
+//    test = OnBdd_modifiee();
+//    if (!test) return;
+//    Element->bdd_modifiee = false;      // Forcer à false pour éviter une double interrogation lors du Close si on a refusé l'enregistrement sous...
+//    Element->Stocker_ini_file();
+//    OnPal_modifiee();
+//    Element->pal_file_modified = false; // Idem
+//    Close();
+
+// OnQuit <=> onClose
+    wxCloseEvent close_event;
+    OnClose(close_event);
+
 }
 
 void OvniFrame::OnAbout(wxCommandEvent& event) {
@@ -984,7 +991,7 @@ void OvniFrame::OnClose(wxCloseEvent& event) {
         wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
         wxRemoveFile(Fichier_svg);
     }
-
+// Ici, un Close() ne suffit pas. Pourquoi ?
     Destroy();
     exit(0);
 }
@@ -1009,6 +1016,7 @@ void OvniFrame::OnMenu_NotImplemented(wxCommandEvent& event) {
 void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
 
 //! Affichage des caractéristiques de la carte graphique (Hardware 3D)
+//  NOTE : les \t (tabulations) sont ignorées semble t-il ! => remplacer par des espaces, mais alignements imparfaits
 
     char *cptr;
     int   depth=0 ;
@@ -1016,19 +1024,19 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
     char* get_glstring;
     wxString msg, str;
 
-    msg << _T("Caractéristiques de la carte Graphique :\n\n") ;
-    msg << _T("OpenGL Renderer:  \t") ;
+    msg << wxS("Caractéristiques de la carte Graphique :\n\n") ;
+    msg << wxS("OpenGL Renderer: \t") ;
 
     get_glstring = (char *)glGetString(GL_RENDERER);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
 
-    msg << _T("\nOpenGL Vendor:\t\t") ;
+    msg << wxS("\nOpenGL Vendor:    \t\t") ;
     get_glstring = (char *)glGetString(GL_VENDOR);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
 
-    msg << _T("\nOpenGL Version:\t\t") ;
+    msg << wxS("\nOpenGL Version:    \t\t") ;
     get_glstring = (char *)glGetString(GL_VERSION);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
@@ -1038,13 +1046,13 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
     glGetIntegerv(GL_GREEN_BITS, &greenBits);
     glGetIntegerv(GL_BLUE_BITS,  &blueBits);
 
-    str.Printf(_T("\n\nProfondeur du Z-Buffer : \t\t%d bits\n"),depth);
+    str.Printf(wxS("\n\nProfondeur du Z-Buffer : \t\t%d bits\n"),depth);
     msg << str;
 
-    str.Printf(_T("Profondeur couleur (R,G,B) détectée : \t%d, %d, %d\n"), redBits, greenBits, blueBits);
+    str.Printf(wxS("Profondeur couleur (R,G,B) détectée : \t%d, %d, %d\n"), redBits, greenBits, blueBits);
     msg << str ;
 
-    wxMessageBox(msg,_T("Hardware 3D"));
+    wxMessageBox(msg,wxS("Hardware 3D"));
 }
 
 void OvniFrame::OnButton_PleinToggle(wxCommandEvent& event) {
@@ -2823,7 +2831,7 @@ void OvniFrame::OnMenuItem_ImagePpmSelected(wxCommandEvent& event)
 
 	f = fopen(nom_fic_image, "wb"); // ajout du b pour forcer l'écriture binaire (pour Windows).
 
-	if (f == NULL) {
+	if (f == nullptr) {
         wxMessageBox(_T("Erreur : Ouverture en écriture du fichier Image_Ovni.ppm impossible !"),_T("Avertissement"));
         return ;
 	}

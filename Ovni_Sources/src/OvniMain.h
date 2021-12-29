@@ -203,7 +203,7 @@ class OvniFrame: public wxFrame
          wxCustomButton* Button_Source;
 #endif // wxCHECK_VERSION
 
-        BddInter *Element=NULL;
+        BddInter *Element=nullptr;
         OvniFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~OvniFrame();
         bool OnInit();

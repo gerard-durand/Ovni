@@ -155,8 +155,8 @@ PlyFile *ply_write(
     PlyElement *elem;
 
     /* check for NULL file pointer */
-    if (fp == NULL)
-        return (NULL);
+    if (fp == nullptr)
+        return (nullptr);
 
     /* create a record for this object */
 
@@ -167,7 +167,7 @@ PlyFile *ply_write(
     plyfile->num_elem_types = nelems;
     plyfile->version        = 1.0;
     plyfile->fp             = fp;
-    plyfile->other_elems    = NULL;
+    plyfile->other_elems    = nullptr;
 
     /* tuck aside the names of the elements */
 
@@ -222,15 +222,15 @@ PlyFile *open_for_writing_ply(
     /* open the file for writing */
 
     fp = fopen (name, "w");
-    if (fp == NULL) {
-        return (NULL);
+    if (fp == nullptr) {
+        return (nullptr);
     }
 
     /* create the actual PlyFile structure */
 
     plyfile = ply_write (fp, nelems, elem_names, file_type);
-    if (plyfile == NULL)
-        return (NULL);
+    if (plyfile == nullptr)
+        return (nullptr);
 
     /* return pointer to the file descriptor */
     return (plyfile);
@@ -263,7 +263,7 @@ void element_layout_ply(
 
     /* look for appropriate element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr,"element_layout_ply: can't find element '%s'\n",elem_name);
         exit (-1);
     }
@@ -305,7 +305,7 @@ void ply_describe_property(
 
     /* look for appropriate element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr, "ply_describe_property: can't find element '%s'\n",
                 elem_name);
         return;
@@ -355,7 +355,7 @@ void element_count_ply(
 
     /* look for appropriate element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr,"element_count_ply: can't find element '%s'\n",elem_name);
         exit (-1);
     }
@@ -452,7 +452,7 @@ void put_element_setup_ply(PlyFile *plyfile, char *elem_name)
     PlyElement *elem;
 
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr, "put_element_setup_ply: can't find element '%s'\n", elem_name);
         exit (-1);
     }
@@ -628,26 +628,26 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
     char *orig_line;
 
     /* check for NULL file pointer */
-    if (fp == NULL)
-        return (NULL);
+    if (fp == nullptr)
+        return (nullptr);
 
     /* create record for this object */
 
     plyfile = (PlyFile *) myalloc (sizeof (PlyFile));
     plyfile->num_elem_types = 0;
-    plyfile->comments       = NULL;
+    plyfile->comments       = nullptr;
     plyfile->num_comments   = 0;
-    plyfile->obj_info       = NULL;
+    plyfile->obj_info       = nullptr;
     plyfile->num_obj_info   = 0;
     plyfile->fp             = fp;
-    plyfile->other_elems    = NULL;
-    plyfile->rule_list      = NULL;
+    plyfile->other_elems    = nullptr;
+    plyfile->rule_list      = nullptr;
 
     /* read and parse the file's header */
 
     words = get_words (plyfile->fp, &nwords, &orig_line);
     if (!words || !equal_strings (words[0], (char*)"ply"))
-        return (NULL);
+        return (nullptr);
 
     while (words) {
 
@@ -655,7 +655,7 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 
     if (equal_strings (words[0], ( char*)"format")) {
             if (nwords != 3)
-                return (NULL);
+                return (nullptr);
       if (equal_strings (words[1],(char*)"ascii"))
                 plyfile->file_type = PLY_ASCII;
       else if (equal_strings (words[1], (char*)"binary_big_endian"))
@@ -663,7 +663,7 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
       else if (equal_strings (words[1], (char*)"binary_little_endian"))
                 plyfile->file_type = PLY_BINARY_LE;
             else
-                return (NULL);
+                return (nullptr);
             plyfile->version = atof (words[2]);
 //            found_format = 1;
         } else if (equal_strings (words[0], (char*)"element"))
@@ -746,8 +746,8 @@ PlyFile *ply_open_for_reading(
     /* open the file for reading */
 
     fp = fopen (name, "r");
-    if (fp == NULL)
-        return (NULL);
+    if (fp == nullptr)
+        return (nullptr);
 
     /* create the PlyFile data structure */
 
@@ -791,8 +791,8 @@ PlyProperty **get_element_description_ply(
 
     /* find information about the element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL)
-        return (NULL);
+    if (elem == nullptr)
+        return (nullptr);
 
     *nelems = elem->num;
     *nprops = elem->nprops;
@@ -842,7 +842,7 @@ void get_element_setup_ply(
 
         /* look for actual property */
         prop = find_property (elem, prop_list[i].name, &index);
-        if (prop == NULL) {
+        if (prop == nullptr) {
             fprintf (stderr, "Warning:  Can't find property '%s' in element '%s'\n",
                      prop_list[i].name, elem_name);
             continue;
@@ -889,7 +889,7 @@ void ply_get_property(
     /* deposit the property information into the element's description */
 
     prop_ptr = find_property (elem, prop->name, &index);
-    if (prop_ptr == NULL) {
+    if (prop_ptr == nullptr) {
         fprintf (stderr, "Warning:  Can't find property '%s' in element '%s'\n",
                  prop->name, elem_name);
         return;
@@ -1075,7 +1075,7 @@ static PlyOtherProp *get_other_properties(
 #if 0
     if (elem->other_offset == NO_OTHER_PROPS) {
         other->size = 0;
-        other->props = NULL;
+        other->props = nullptr;
         other->nprops = 0;
         return (other);
     }
@@ -1130,10 +1130,10 @@ PlyOtherProp *ply_get_other_properties(
 
     /* find information about the element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf (stderr, "ply_get_other_properties: Can't find element '%s'\n",
                  elem_name);
-        return (NULL);
+        return (nullptr);
     }
 
     other = get_other_properties (plyfile, elem, offset);
@@ -1178,7 +1178,7 @@ PlyOtherElems *get_other_element_ply (PlyFile *plyfile)
     /* create room for the new "other" element, initializing the */
     /* other data structure if necessary */
 
-    if (plyfile->other_elems == NULL) {
+    if (plyfile->other_elems == nullptr) {
         plyfile->other_elems = (PlyOtherElems *) myalloc (sizeof (PlyOtherElems));
         other_elems = plyfile->other_elems;
         other_elems->other_list = (OtherElem *) myalloc (sizeof (OtherElem));
@@ -1231,7 +1231,7 @@ void put_other_elements_ply (PlyFile *plyfile)
     OtherElem *other;
 
     /* make sure we have other elements to write */
-    if (plyfile->other_elems == NULL)
+    if (plyfile->other_elems == nullptr)
         return;
 
     /* write out the data for each "other" element */
@@ -1297,7 +1297,7 @@ Exit:
 
 void get_info_ply(PlyFile *ply, float *version, int *file_type)
 {
-    if (ply == NULL)
+    if (ply == nullptr)
         return;
 
     *version   = ply->version;
@@ -1378,7 +1378,7 @@ PlyElement *find_element(PlyFile *plyfile, char *element)
         if (equal_strings (element, plyfile->elems[i]->name))
             return (plyfile->elems[i]);
 
-    return (NULL);
+    return (nullptr);
 }
 
 
@@ -1405,7 +1405,7 @@ PlyProperty *find_property(PlyElement *elem, char *prop_name, int *index)
         }
 
     *index = -1;
-    return (NULL);
+    return (nullptr);
 }
 
 
@@ -1426,7 +1426,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
     int nwords;
     int which_word;
 //  FILE *fp = plyfile->fp;
-    char *elem_data,*item=NULL;
+    char *elem_data,*item=nullptr;
     char *item_ptr;
     int item_size;
     int int_val;
@@ -1436,7 +1436,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
     int store_it;
     char **store_array;
     char *orig_line;
-    char *other_data=NULL;
+    char *other_data=nullptr;
     int other_flag;
 
     /* the kind of element we're reading currently */
@@ -1458,7 +1458,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
     /* read in the element */
 
     words = get_words (plyfile->fp, &nwords, &orig_line);
-    if (words == NULL) {
+    if (words == nullptr) {
         fprintf (stderr, "ply_get_element: unexpected end of file\n");
         exit (-1);
     }
@@ -1493,7 +1493,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
 
             if (list_count == 0) {
                 if (store_it)
-                    *store_array = NULL;
+                    *store_array = nullptr;
             } else {
                 if (store_it) {
                     item_ptr = (char *) myalloc (sizeof (char) * item_size * list_count);
@@ -1554,7 +1554,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
     PlyProperty *prop;
     FILE *fp = plyfile->fp;
     char *elem_data;
-    char *item=NULL;
+    char *item=nullptr;
     char *item_ptr;
     int item_size;
     int int_val;
@@ -1563,7 +1563,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
     int list_count;
     int store_it;
     char **store_array;
-    char *other_data=NULL;
+    char *other_data=nullptr;
     int other_flag;
 
     /* the kind of element we're reading currently */
@@ -1622,7 +1622,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
             store_array = (char **) (elem_data + prop->offset);
             if (list_count == 0) {
                 if (store_it)
-                    *store_array = NULL;
+                    *store_array = nullptr;
             } else {
                 if (store_it) {
                     item_ptr = (char *) myalloc (sizeof (char) * item_size * list_count);
@@ -1732,10 +1732,10 @@ char **get_words(FILE *fp, int *nwords, char **orig_line)
 
     /* read in a line */
     result = fgets (str, BIG_STRING, fp);
-    if (result == NULL) {
+    if (result == nullptr) {
         *nwords = 0;
-        *orig_line = NULL;
-        return (NULL);
+        *orig_line = nullptr;
+        return (nullptr);
     }
 
     /* convert line-feed and tabs into spaces */
@@ -2813,7 +2813,7 @@ void setup_property_ply(
     /* deposit the property information into the element's description */
 
     prop_ptr = find_property (elem, prop->name, &index);
-    if (prop_ptr == NULL) {
+    if (prop_ptr == nullptr) {
         fprintf (stderr, "Warning:  Can't find property '%s' in element '%s'\n",
                  prop->name, elem->name);
         return;
@@ -2874,7 +2874,7 @@ void describe_element_ply(
 
     /* look for appropriate element */
     elem = find_element (plyfile, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr,"describe_element_ply: can't find element '%s'\n",elem_name);
         exit (-1);
     }
@@ -2944,7 +2944,7 @@ void describe_other_properties_ply(
 
     /* look for appropriate element */
     elem = find_element (plyfile, other->name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf(stderr, "describe_other_properties_ply: can't find element '%s'\n",
                 other->name);
         return;
@@ -3000,7 +3000,7 @@ void describe_other_elements_ply (
     OtherElem *other;
 
     /* ignore this call if there is no other element */
-    if (other_elems == NULL)
+    if (other_elems == nullptr)
         return;
 
     /* save pointer to this information */
@@ -3059,7 +3059,7 @@ PlyPropRules *init_rule_ply (PlyFile *ply, char *elem_name)
     int found_prop;
 
     elem = find_element (ply, elem_name);
-    if (elem == NULL) {
+    if (elem == nullptr) {
         fprintf (stderr, "init_rule_ply: Can't find element '%s'\n", elem_name);
         exit (-1);
     }
@@ -3076,12 +3076,12 @@ PlyPropRules *init_rule_ply (PlyFile *ply, char *elem_name)
 
     /* see if there are other rules we should use */
 
-    if (ply->rule_list == NULL)
+    if (ply->rule_list == nullptr)
         return (rules);
 
     /* try to match the element, property and rule name */
 
-    for (list = ply->rule_list; list != NULL; list = list->next) {
+    for (list = ply->rule_list; list != nullptr; list = list->next) {
 
         if (!equal_strings (list->element, elem->name))
             continue;
@@ -3230,7 +3230,7 @@ void *get_new_props_ply(PlyFile *ply)
 
     /* return NULL if we've got no "other" properties */
     if (elem->other_size == 0) {
-        return (NULL);
+        return (nullptr);
     }
 
     /* create room for combined other properties */
@@ -3381,15 +3381,15 @@ PlyRuleList *append_prop_rule (
     rule->name     = name;
     rule->element  = str;
     rule->property = str2;
-    rule->next     = NULL;
+    rule->next     = nullptr;
 
     /* either start rule list or append to it */
 
-    if (rule_list == NULL)
+    if (rule_list == nullptr)
         rule_list = rule;
     else {                      /* append new rule to current list */
         rule_ptr = rule_list;
-        while (rule_ptr->next != NULL)
+        while (rule_ptr->next != nullptr)
             rule_ptr = rule_ptr->next;
         rule_ptr->next = rule;
     }

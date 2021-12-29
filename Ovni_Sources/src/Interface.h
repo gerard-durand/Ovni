@@ -1051,7 +1051,7 @@ public :
              const wxString& name  = wxT("TestGLCanvas"));
 //#else
     BddInter(wxWindow *parent,
-             const int* AttribList = NULL,
+             const int* AttribList = nullptr,
              wxWindowID id         = wxID_ANY,
              const wxPoint& pos    = wxDefaultPosition,
              const wxSize& size    = wxDefaultSize,
@@ -1059,6 +1059,7 @@ public :
              bool main_verbose     = false,
              const wxString& name  = wxT("TestGLCanvas"));
 //#endif // wxCHECK_VERSION
+    ~BddInter();
 
     wxString wxWorkDir, wxOvniPath;     // Doit-on garder les 2 ? à l'usage semble être la même chose ! Pas sûr, notamment si OvniPath est protégé en écriture !
                                         // Peut-être créer aussi un wxBddPath pour conserver le dernier path d'accès à une bdd !
