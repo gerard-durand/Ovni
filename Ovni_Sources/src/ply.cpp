@@ -53,12 +53,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 #include "ply.h"
 
-const char *type_names[] = {  /* names of scalar types */
+const char *type_names[] =    /* names of scalar types */
+{
     "invalid",
     "int8", "int16", "int32", "uint8", "uint16", "uint32", "float32", "float64",
 };
 
-const char *old_type_names[] = {  /* old names of types for backward compatability */
+const char *old_type_names[] =    /* old names of types for backward compatability */
+{
     "invalid",
     "char", "short", "int", "uchar", "ushort", "uint", "float", "double",
 };
@@ -653,14 +655,14 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 
         /* parse words */
 
-    if (equal_strings (words[0], ( char*)"format")) {
+        if (equal_strings (words[0], ( char*)"format")) {
             if (nwords != 3)
                 return (nullptr);
-      if (equal_strings (words[1],(char*)"ascii"))
+            if (equal_strings (words[1],(char*)"ascii"))
                 plyfile->file_type = PLY_ASCII;
-      else if (equal_strings (words[1], (char*)"binary_big_endian"))
+            else if (equal_strings (words[1], (char*)"binary_big_endian"))
                 plyfile->file_type = PLY_BINARY_BE;
-      else if (equal_strings (words[1], (char*)"binary_little_endian"))
+            else if (equal_strings (words[1], (char*)"binary_little_endian"))
                 plyfile->file_type = PLY_BINARY_LE;
             else
                 return (nullptr);
@@ -1607,7 +1609,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
             /* get and store the number of items in the list */
             if (swap_endian)
                 get_binary_item_swap (fp, prop->count_external,
-                                 &int_val, &uint_val, &double_val);
+                                      &int_val, &uint_val, &double_val);
             else
                 get_binary_item (fp, prop->count_external,
                                  &int_val, &uint_val, &double_val);
@@ -1634,7 +1636,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
                 for (k = 0; k < list_count; k++) {
                     if (swap_endian)
                         get_binary_item_swap (fp, prop->external_type,
-                                         &int_val, &uint_val, &double_val);
+                                              &int_val, &uint_val, &double_val);
                     else
                         get_binary_item (fp, prop->external_type,
                                          &int_val, &uint_val, &double_val);
@@ -1661,7 +1663,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
         } else {                                    /* scalar */
             if (swap_endian)
                 get_binary_item_swap (fp, prop->external_type,
-                                 &int_val, &uint_val, &double_val);
+                                      &int_val, &uint_val, &double_val);
             else
                 get_binary_item (fp, prop->external_type,
                                  &int_val, &uint_val, &double_val);
@@ -2140,7 +2142,8 @@ void get_binary_item(
 }
 
 template <typename T>
-T bswap(T val) {
+T bswap(T val)
+{
     T retVal;
     char *pVal    = (char*) &val;
     char *pRetVal = (char*) &retVal;
@@ -3027,13 +3030,13 @@ typedef struct RuleName {
 } RuleName;
 
 RuleName rule_name_list[] = {
-    AVERAGE_RULE,  (char*)"avg",
-    RANDOM_RULE,   (char*)"rnd",
-    MINIMUM_RULE,  (char*)"max",
-    MAXIMUM_RULE,  (char*)"min",
-    MAJORITY_RULE, (char*)"major",
-    SAME_RULE,     (char*)"same",
-    -1,            (char*)"end_marker",
+    {AVERAGE_RULE,  (char*)"avg"    },
+    {RANDOM_RULE,   (char*)"rnd"    },
+    {MINIMUM_RULE,  (char*)"max"    },
+    {MAXIMUM_RULE,  (char*)"min"    },
+    {MAJORITY_RULE, (char*)"major"  },
+    {SAME_RULE,     (char*)"same"   },
+    {-1,            (char*)"end_marker"}
 };
 
 
@@ -3184,7 +3187,7 @@ void weight_props_ply (PlyFile *ply, float weight, void *other_props)
     if (rules->nprops == rules->max_props) {
         rules->max_props *= 2;
         rules->props = (void **) realloc (rules->props,
-                                            sizeof (void *) * rules->max_props);
+                                          sizeof (void *) * rules->max_props);
         rules->weights = (float *) realloc (rules->weights,
                                             sizeof (float)  * rules->max_props);
     }

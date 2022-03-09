@@ -28,6 +28,8 @@
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
+// avec 3.1.6 tester <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
+//#include <wx/bmpbndl.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/tglbtn.h>
@@ -609,6 +611,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 #if wxCHECK_VERSION(3,0,0)
 // wxCustomButton existe (généré via C::B + wxWidgets 3.0 et +) mais plantages. Utiliser plutôt wxBitmapToggleButton qui donne le même comportement
 // mais n'existe pas sous wxWidget 2.8.12. De plus non géré pas wxSmith => génération manuelle.
+// A partir de 3.1.6 essayer wxBitmapBundle(...) plutôt que wxBitmap(...)
     Button_Points  = new wxBitmapToggleButton(Panel1,ID_BUTTON7 ,wxBitmap(wxImage(_T("./Icones/points.png"))),    wxPoint(460,0),wxSize(24,24),0,wxDefaultValidator, _T("ID_BUTTON7"));
     Button_Filaire = new wxBitmapToggleButton(Panel1,ID_BUTTON8 ,wxBitmap(wxImage(_T("./Icones/filaire.png"))),   wxPoint(484,0),wxSize(24,24),0,wxDefaultValidator, _T("ID_BUTTON8"));
     Button_Plein   = new wxBitmapToggleButton(Panel1,ID_BUTTON9 ,wxBitmap(wxImage(_T("./Icones/plein.png"))),     wxPoint(508,0),wxSize(24,24),0,wxDefaultValidator, _T("ID_BUTTON9"));
@@ -1353,11 +1356,22 @@ void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event
 
 void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 {
+    bool points_affiches;
+
     New_file = false;                           // => le nom du fichier est déjà connu (via get_file)
     Element->Numero_base = 0;                   // Réinitialisation complète
-    Button_Points->SetValue(false);             // Forcer la suppression d'affichage des points (sinon l'affichage devient vide si c'était actif !)
-    OnButton_PointsToggle(event);               // Faute de mieux car on n'a pas ce souci avec l'affichage des arêtes !
+    points_affiches = Button_Points->GetValue();
+    if (points_affiches) {
+        Button_Points->SetValue(false);         // Forcer la suppression d'affichage des points (sinon l'affichage devient vide si c'était actif !)
+        OnButton_PointsToggle(event);           // Faute de mieux car on n'a pas ce souci avec l'affichage des arêtes !
+    }
     Ouvrir_Fichier();
+//    if (points_affiches) {                      // Ne suffit pas pour réafficher objets et points !
+//        Button_Points->SetValue(true);
+//        OnButton_PointsToggle(event);
+//        Element->m_gllist = 0 ;
+//        Element->Refresh();
+//    }
 }
 
 void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)

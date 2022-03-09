@@ -278,7 +278,7 @@ void BddInter::ResetData() {
     wxWorkDir = wxOvniPath   = appPath + wxFILE_SEP_PATH;       // Ajouter le séparateur de Path à la fin
     if (verbose) {
         sprintf(Message,"ResetData : Répertoire de travail :\n%s\n",(const char*)wxWorkDir.utf8_str());
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
     }
     if (MPrefs != nullptr) {
         MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft);
@@ -542,7 +542,7 @@ void BddInter::Ouvrir_ini_file()
                 wxString Last_Char = wxFILE_SEP_PATH ;          // <=> wxFileName::GetPathSeparator()
                 if (!wxWorkDir.EndsWith(Last_Char)) wxWorkDir += wxFILE_SEP_PATH ;          // Ajouter le séparateur de Path à la fin s'il n'y est pas déjà !
                 sprintf(Message,"Travail dans : %s\n",(const char *)wxWorkDir.utf8_str()) ; // pb avec caractères accentués dans la console windows !
-                printf(utf8_To_ibm(Message));
+                printf("%s",utf8_To_ibm(Message));
                 continue;   // Passer au while suivant
             }
             len = strlen( initI);
@@ -3585,7 +3585,7 @@ void BddInter::create_bdd() {
         printf("\n");
         it = listeMateriaux.begin();
         sprintf(Message,"Liste des matériaux : ");
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
         for (i=0; i<listeMateriaux.size(); i++,it++) {
             printf("%3d ", *it);
         }
@@ -3943,7 +3943,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     indice_premierObjet = this->Objetlist.size();   // Pour utilisation en cas de fusion
 
     sprintf(Message,"\nNon complètement testé : pas assez de fichiers de test ...\n");
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
 //    printf("\nNon completement teste : pas assez de fichiers de test ...\n");
 
     codemateriau = -1;
@@ -4001,7 +4001,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     for (o=indice_premierObjet; o< nb_objets; o++) {
 		indiceObjet_courant = o;
         sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetValue());
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
         wxCharBuffer buf_nom = this->Objetlist[o].GetName();    // Normalement déjà en utf8 dans le format g3d
         printf("Nom de l'objet %2d                    : %s\n",o,buf_nom.data());
         printf("Nombre de points de l'objet %2d       : %d\n",o,this->Objetlist[indiceObjet_courant].Nb_sommets);
@@ -4022,7 +4022,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     }
 
     sprintf(Message,"Non encore totalement opérationnel/testé\n\n");
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
 /*#ifdef WIN32
     system("pause") ;
 #endif
@@ -4050,7 +4050,7 @@ void BddInter::LoadG3D()
         fgets(s1,160,f);
         if (!strncmp(s1,"<g3d version=\"2.",16)) {           // Vérifie que la seconde ligne commence par <g3d version="2.
             sprintf(Message,"Fichier de type : XML Format g3d Version 2\n") ;
-            printf(utf8_To_ibm(Message)) ;
+            printf("%s",utf8_To_ibm(Message)) ;
 //            printf("Fichier de type : XML Format g3d Version 2\n") ;
 //           printf("%x %x\n",cel,&cel);
             LectureXML_G3d(f); //cel,f,entete,svg_entete) ;
@@ -4063,7 +4063,7 @@ void BddInter::LoadG3D()
             return; // (0) ;
         } else {
             sprintf(Message,"Fichier de type XML mais n'est pas du g3d Version 2\n") ;
-            printf(utf8_To_ibm(Message)) ;
+            printf("%s",utf8_To_ibm(Message)) ;
             type = -1; // Erreur
         }
     }
@@ -4183,10 +4183,11 @@ void BddInter::LoadOBJ()
     char sc[100];//,s1[666],buffer[1000] ;			//chaines de caractères
     char nom_obj[512];
     char newline='\\' ;
-    unsigned int i, n, nfac, nfac_t, npoint, nb_fac, nb_p, found, first, npoint_courant ;
+    unsigned int i, n, nfac, npoint, nb_fac, nb_p, first, npoint_courant ;
+//    unsigned int nfac_t;
     unsigned int nb_norm,  nnorm ;
     unsigned int npoint_t, nnorm_t ;
-    unsigned int o=0, oo=0;		            // pour compter le nombre d'objets
+    unsigned int o=0, oo=0, found=0;		        // pour compter le nombre d'objets
     int nc;
     int valp[100],valn[100] ;
 
@@ -4262,7 +4263,7 @@ void BddInter::LoadOBJ()
                             mtllib_OK  = false;
 //                            printf("Fichier Wavefront OBJ : %s\n",cptr) ;
                         }
-                        printf(utf8_To_ibm(Message)) ;
+                        printf("%s",utf8_To_ibm(Message)) ;
                         found = 1 ;
                         break ;
                     }
@@ -4292,7 +4293,7 @@ void BddInter::LoadOBJ()
                     o++;
                     if (o == nb_mat_max) {
                       sprintf(Message,"ATTENTION : Trop d'objets dans ce fichier .obj augmenter nb_mat_max > %u\n",nb_mat_max);
-                      printf(utf8_To_ibm(Message));
+                      printf("%s",utf8_To_ibm(Message));
 //                      --nb_mat ; // On utilisera le dernier indice pour tous les suivants...
 #ifdef WIN32
                         system("pause");
@@ -4315,7 +4316,7 @@ void BddInter::LoadOBJ()
                             tab_mat[nb_mat++] = strdup(s1+7);
                             if (nb_mat >= nb_mat_max) {
                                 sprintf(Message,"ATTENTION : Trop de matériaux dans ce fichier .obj nb_mat > %u\n",nb_mat_max);
-                                printf(utf8_To_ibm(Message));
+                                printf("%s",utf8_To_ibm(Message));
 //                                printf("ATTENTION : Trop de materiaux dans ce fichier .obj nb_mat > %u\n",nb_mat_max);
                                 --nb_mat ; // On utilisera le dernier indice pour tous les suivants...
 #ifdef WIN32
@@ -4330,14 +4331,14 @@ void BddInter::LoadOBJ()
             printf("Nombre total d'objets    : %d\n",o) ;
             if (o) {
                 sprintf(Message,"Liste des nom lus:\n");
-                printf(utf8_To_ibm(Message));
+                printf("%s",utf8_To_ibm(Message));
 //                printf("Liste des nom lus:\n");
                 for (i=0; i< o; i++) {
                     str_loc  = wxString(tab_nom[i]);
                     nom_utf8 = is_utf8(tab_nom[i]) ;
                     if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
                     sprintf(Message,"Numéro: %3d, %s",i+1,(const char *)str_loc.data());//tab_nom[i]); // Pas besoin de \n, il est déjà dans tab_nom
-                    printf(utf8_To_ibm(Message));
+                    printf("%s",utf8_To_ibm(Message));
 //                    printf("Numero: %3d, %s",i+1,tab_nom[i]); // Pas besoin de \n, il est déjà dans tab_nom
                 }
                 printf("\n") ;
@@ -4346,18 +4347,18 @@ void BddInter::LoadOBJ()
             printf("Nombre total de normales : %d\n",nb_norm) ;
             printf("Nombre total de facettes : %d\n",nb_fac)  ;
             sprintf(Message,"Nombre total de matériaux: %d\n",nb_mat);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
 //            printf("Nombre total de materiaux: %d\n",nb_mat);
             if (nb_mat) {
                 sprintf(Message,"Liste des matériaux :\n");
-                printf(utf8_To_ibm(Message));
+                printf("%s",utf8_To_ibm(Message));
 //                printf("Liste des materiaux:\n");
                 for (i=0; i< nb_mat; i++) {
                     str_loc  = wxString(tab_mat[i]);
                     nom_utf8 = is_utf8(tab_mat[i]);
                     if (!nom_utf8) str_loc = str_loc.utf8_str();    // Le nom du matériau n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
                     sprintf(Message,"Numéro: %3d, %s",i+1,(const char *)str_loc.data());//tab_mat[i]); // Pas besoin de \n, il est déjà dans tab_mat
-                    printf(utf8_To_ibm(Message));
+                    printf("%s",utf8_To_ibm(Message));
 //                    printf("Numero: %3d, %s",i+1,tab_mat[i]); // Pas besoin de \n, il est déjà dans tab_mat
                 }
                 printf("\n") ;
@@ -4485,7 +4486,7 @@ void BddInter::LoadOBJ()
             this->Objetlist[indice_premierObjet].SetName(wxNom);
         //    printf("OK3...\n");
             nfac    = 0 ;
-            nfac_t  = 0 ;
+//            nfac_t  = 0 ;
             nnorm   = 0 ;
             o = indice_premierObjet ;
             indiceObjet_courant = o;
@@ -4499,7 +4500,7 @@ void BddInter::LoadOBJ()
                         first = 0 ;
                     } else {
                         o++ ;
-                        nfac_t   += nfac;
+//                        nfac_t   += nfac;
                         nfac  =0 ;
                     }
 
@@ -4635,7 +4636,7 @@ void BddInter::LoadOBJ()
 
 //                Update_Dialog(ftell(f), fichierBdd_length); // pas efficace ici à cause des continue
             }
-            nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
+//            nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
             if (dialog_en_cours) {
                 dialog->Update(100);
                 wxDELETE(dialog);
@@ -4774,7 +4775,7 @@ void BddInter::LoadM3D()
     }
     if (strncmp(s1,"Meshes:",7)) {
         sprintf(Message,"Erreur dans le fichier : chaîne \"Meshes\" non trouvée\n") ;
-        printf(utf8_To_ibm(Message)) ;
+        printf("%s",utf8_To_ibm(Message)) ;
 //        printf("Erreur dans le fichier : chaine \"Meshes\" non trouvee\n") ;
 #ifdef WIN32
         system("pause") ;
@@ -4909,7 +4910,7 @@ void BddInter::LoadM3D()
         wxDELETE(dialog);
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
     if(verbose) printf("Sortie de BddInter::LoadM3D\n");
 }
 
@@ -4986,7 +4987,7 @@ void BddInter::LoadPLY()
         if ((cptr=strstr(s1,"ITTEM =")) != nullptr) break ;
         if (i == 4) {
             sprintf(Message,"Erreur dans le Polygon File : chaîne \"ITTEM =\" non trouvée\n") ;
-            printf(utf8_To_ibm(Message)) ;
+            printf("%s",utf8_To_ibm(Message)) ;
 //            printf("Erreur dans le Polygon File : chaine \"ITTEM =\" non trouvee\n") ;
 #ifdef WIN32
             system("pause") ;
@@ -5001,7 +5002,7 @@ void BddInter::LoadPLY()
         if ((cptr=strstr(s1,"Start")) != nullptr) break ;
         if (i == 10) {
             sprintf(Message,"Erreur dans le Polygon File : chaîne \"Start\" non trouvée\n") ;
-            printf(utf8_To_ibm(Message)) ;
+            printf("%s",utf8_To_ibm(Message)) ;
 //            printf("Erreur dans le Polygon File : chaine \"Start\" non trouvee\n") ;
 #ifdef WIN32
             system("pause") ;
@@ -5122,7 +5123,7 @@ void BddInter::LoadPLY()
                     if (!i_warn) {
 //                        printf("Warning : Nombre de valeurs ""materi"" differentes > %d\n",maxGroupes) ;
                         sprintf(Message,"Warning : Nombre de valeurs ""materi"" différentes > %d\n",maxGroupes) ;
-                        printf(utf8_To_ibm(Message)) ;
+                        printf("%s",utf8_To_ibm(Message)) ;
                         i_warn = true ;
                     }
                 } else nb_grp_ply++;
@@ -5229,7 +5230,7 @@ void BddInter::LoadPLY()
     }
     free(o_nfac)   ; // Libérer la mémoire obtenue par malloc/realloc ...
     sprintf(Message,"Nombre de groupes identifiés : %d\n",nb_grp_ply) ;
-    printf(utf8_To_ibm(Message)) ;
+    printf("%s",utf8_To_ibm(Message)) ;
 
     for (i=1; i<=nb_grp_ply; i++) printf("%2d %8d\n",i,Groupe_ply[i]) ;
     free(o_npoint) ;
@@ -5243,7 +5244,7 @@ void BddInter::LoadPLY()
         printf("avec certaines cartes graphiques!\n");
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
 
 //******************************************************************************
 
@@ -6211,7 +6212,7 @@ void BddInter::Load3DS()
 //        Lib3dsNode *node;
 
         sprintf(Message,"Création de Nodes, car ce fichier .3ds n'en a pas !\n") ;
-        printf(utf8_To_ibm(Message)) ;
+        printf("%s",utf8_To_ibm(Message)) ;
 
         for (i = 0; i < f3ds->nmeshes; ++i) {
             Lib3dsMesh *mesh = f3ds->meshes[i];
@@ -6220,7 +6221,7 @@ void BddInter::Load3DS()
             lib3ds_file_insert_node(f3ds, node, nullptr);
         }
         sprintf(Message,"%d meshes lus et autant de nodes créés\n",f3ds->nmeshes);
-        printf(utf8_To_ibm(Message)) ;
+        printf("%s",utf8_To_ibm(Message)) ;
     }
 
     lib3ds_file_eval(f3ds, 0.0f);   // Indispensable pour configurer proprement les matrices des nodes
@@ -6258,7 +6259,7 @@ void BddInter::Load3DS()
 
     if (meshes == 0) {
         sprintf(Message,"Erreur dans le fichier 3DS : ne contient pas d'objets (meshes)\n") ;
-        printf(utf8_To_ibm(Message)) ;
+        printf("%s",utf8_To_ibm(Message)) ;
 #ifdef WIN32
         system("pause") ;
 #endif
@@ -6288,15 +6289,15 @@ void BddInter::Load3DS()
     printf("\nnb_mat = %d\n",nb_mat_3ds) ;
     if (nb_mat_3ds >= 1) {
         sprintf(Message,"Liste des matériaux du fichier 3ds\n") ;
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
 //        printf("Liste des materiaux du fichier 3ds\n") ;
         for (im=0; im < nb_mat_3ds ; im++) {
             sprintf(Message,"%4d %s\n",im+1, tab_mat[im]);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
         }
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
 
     lib3ds_file_free(f3ds);
 //    fclose(f);
@@ -6622,7 +6623,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
                     }
                     if (nb_mat_3ds >= nb_mat_max) {
                         sprintf(Message,"ATTENTION : Trop de matériaux dans ce fichier .3ds nb_mat > %u\n",nb_mat_max);
-                        printf(utf8_To_ibm(Message));
+                        printf("%s",utf8_To_ibm(Message));
 //                        printf("ATTENTION : Trop de materiaux dans ce fichier .3ds nb_mat > %u\n",nb_mat_max);
                     }
                 }
@@ -7696,9 +7697,9 @@ void BddInter::GenereTableauAretes(Object * objet)
                     print_en_cours = true;
 //                    printf("%s",Message);
 //                    printf("Detection d'aretes en doublon ");
-                    printf(utf8_To_ibm(Message));                       // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
+                    printf("%s",utf8_To_ibm(Message));                  // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
                     sprintf(Message,"Détection d'arêtes en doublon ");  // et le début de l'indicateur de progression
-                    printf(utf8_To_ibm(Message));
+                    printf("%s",utf8_To_ibm(Message));
                     Dialog_Titre    = wxS("Détection d'arêtes en doublon");
                     Dialog_Comment  = wxS("Objet : ")+objet->GetwxName();
                     Dialog_Delay    = NB_DELTA_TICKS;                   // Ce sera forcément le cas car test sur delta_time la première fois
@@ -7722,12 +7723,12 @@ void BddInter::GenereTableauAretes(Object * objet)
     // On n'affiche que si verbose est true et Nb_avant != Nb_après, sauf si "en_cours" est true car Nb_avant est déjà à l'écran avec l'indication de progression.
     if (verbose_local) {
 //        if (!en_cours && (Nb_avant != Nb_apres)) printf("%s",Message);
-        if (!print_en_cours && (Nb_avant != Nb_apres)) printf(utf8_To_ibm(Message));
+        if (!print_en_cours && (Nb_avant != Nb_apres)) printf("%s",utf8_To_ibm(Message));
         if (print_en_cours) printf("\n");
         if (print_en_cours  || (Nb_avant != Nb_apres)) {
 //            printf("Nb_aretes apres : %d\n",Nb_apres);
             sprintf(Message,"Nb_aretes après : %d\n",Nb_apres);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
         }
     }
 
@@ -10155,7 +10156,7 @@ void BddInter::SaveTo(wxString str, int index) {
         if(types > 0) {
             buffer = str.utf8_str();
             sprintf(Message,"Enregistrement de :\n%s\n",buffer.data());
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
             switch(types) {
             case 0:                         // En réserve, mais ne peut pas se produire ici !
                 //m_renderer.Save(stream);
@@ -12095,7 +12096,8 @@ void BddInter::Simplification_BDD()
     std::vector<float> Point_1, Point_i, Point_j;
     Object * objet_courant;
     Face   * Facette_courante;
-    int Nb_test,compteur,tabPoints_j;
+    int tabPoints_j;
+    long Nb_test, compteur;
 
     bool modification, indic;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
@@ -12144,7 +12146,7 @@ void BddInter::Simplification_BDD()
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
         int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;          // -1 pour passer d'un numéro de sommet à un indice de sommet
         Point_1  = objet_courant->Sommetlist[ind1].getPoint();          // Coordonnées du 1er sommet de la 1ère facette dans Point_1
-#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+///#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
         for (i=1; i<=nb_points; ++i) {                                  // Ici, i est un numéro de point (décalé de 1 / indice)
         //pour chaque point d'un objet
             cpt = 0 ;
@@ -12166,13 +12168,19 @@ void BddInter::Simplification_BDD()
                     fflush(stdout); // Pour Sun/cc
                 }
             }
-            #pragma omp critical
-            {
+///            #pragma omp critical
+///            {
             compteur++;
-            Update_Dialog(compteur,Nb_test);
-            }
+///            }
+// semble provoquer un blocage sur certaines bdd (comme klein_glass.STL) si à l'intérieur d'un pragma omp critical. Inutile de faire sur tous les threads => seulement le 0
+// Mais ... le blocage subsiste de façon aléatoire. De plus, le gain de temps est peu sensible par rapport aux autres boucles ci-dessous.
+///            if (omp_get_thread_num() == 0)
+                Update_Dialog(compteur,Nb_test);
         }
-// Fin de zone calcul //
+/// Fin de zone calcul //
+
+//        compteur+=nb_points;
+//        Update_Dialog(compteur,Nb_test);        // mieux (si supprimé ausi dans le pragma) mais l'Update_Dialog est tardif, bien après Dialog_Delay
 //        printf("1 %d\n",compteur);
         if (verbose) printf("\n");
         for (i=0; i<nb_points; ++i) {           // Pas sûr que ce soit parallélisable !
@@ -12311,7 +12319,7 @@ void BddInter::Simplification_BDD()
             nbface = objet_courant->Nb_facettes;
 
             // Pour supprimer les normales non utilisées .... on les marque comme des doublons du 1er vecteur
-#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+///#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
             for (i=1; i<=nb_points; ++i) {                           // Ici i est un numéro de vecteur, donc décalé de 1 / indice
             //pour chaque normale au sommet d'un objet (vecteur au sens SDM)
                 cpt = 0 ;
@@ -12331,17 +12339,20 @@ void BddInter::Simplification_BDD()
                     objet_courant->Vecteurlist[i-1].setPoint(Point_1);              // Numero de sommet i => indice i-1
                     if (verbose) {
                         sprintf(Message,"\rVecteur numéro %6d non utilisé dans l'objet %d",i,o) ;
-                        printf(utf8_To_ibm(Message));
+                        printf("%s",utf8_To_ibm(Message));
                         fflush(stdout); // Pour Sun/cc
                     }
                 }
-                #pragma omp critical
-                {
+///                #pragma omp critical
+///                {
                 compteur++;
-                Update_Dialog(compteur,Nb_test);
-                }
+///                }
+//// Même problème que plus haut... blocage possible sur certaines bdd.
+///                if (omp_get_thread_num() == 0)
+                    Update_Dialog(compteur,Nb_test);
             }
-// Fin de zone calcul //
+/// Fin de zone calcul //
+
 //            printf("3 %d\n",compteur);
             if (verbose) printf("\n");
             for (i=0; i<nb_points; ++i) {
@@ -12355,7 +12366,7 @@ void BddInter::Simplification_BDD()
                         tabPoints[cpt++] = j+1; // Numéro de vecteur et non indice ! décalé de 1 !!
                         if (verbose) {
                             sprintf(Message,"\rOBJET %u | doublon : vecteur %5u à remplacer par le numéro %5u",o,j,i);
-                            printf(utf8_To_ibm(Message));
+                            printf("%s",utf8_To_ibm(Message));
                             fflush(stdout) ; // Pour Sun/cc
                         }
                     }
@@ -12450,14 +12461,14 @@ void BddInter::Simplification_BDD()
                 sprintf(Message,"%4d point a été supprimé dans la BDD\n",      nbp_changes);
             else
                 sprintf(Message,"%4d points ont été supprimés dans la BDD\n",  nbp_changes);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
         }
         if (nbv_changes != 0) {
             if (nbv_changes == 1)
                 sprintf(Message,"%4d vecteur a été supprimé dans la BDD\n",    nbv_changes);
             else
                 sprintf(Message,"%4d vecteurs ont été supprimés dans la BDD\n",nbv_changes);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
         }
     }
 
@@ -12930,7 +12941,7 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
         if ((indice_point%500000) == 0 && verbose) { // 500 à l'origine, histoire de faire patienter, mais n'est plus très utile maintenant.(encore + avec omp !!)
             sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d",
                     objet_courant->GetValue(), indice_point);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
 //            printf("\rCalcul des normales aux sommets de l'objet %2d : %8d", objet_courant->GetValue(), indice_point);
             fflush(stdout); // Nécessaire sur cc SUN, sinon la ligne n'apparaît pas
         }
@@ -12950,7 +12961,7 @@ void BddInter::GenereNormalesAuxSommets(unsigned int o, int nb_p)
         sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d\n",
                 objet_courant->GetValue(), nb_p);
 //                objet_courant->GetValue(), indice_point);
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
 //        printf("\rCalcul des normales aux sommets de l'objet %2d : %8d\n", objet_courant->GetValue(), indice_point);
     }
 }
@@ -13055,7 +13066,7 @@ void BddInter::simplification_facettes(unsigned int objet)
 		/* On supprime la facette i */
             if(decalage == 0) printf("Objet indice %d\n",objet) ;
             sprintf(Message,"facette %u a supprimer (moins de 3 points)\n",i+decalage);
-            printf(utf8_To_ibm(Message));
+            printf("%s",utf8_To_ibm(Message));
 
             objet_courant->Facelist.erase(objet_courant->Facelist.begin()+i);
             --objet_courant->Nb_facettes;                                       // Faut-il aussi changer Nb_luminances (si Nb_sommets_L = 0 ?)

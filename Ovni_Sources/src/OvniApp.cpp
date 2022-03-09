@@ -31,7 +31,7 @@ bool OvniApp::OnInit() {
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());
     wxString appPath(f.GetPath());
     snprintf(Message,1024,"Chemin de l'exécutable :\n%s\n",(const char*)appPath.utf8_str());
-    printf(Message);
+    printf("%s",Message);
 ///    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
     wxSetWorkingDirectory(appPath);
 

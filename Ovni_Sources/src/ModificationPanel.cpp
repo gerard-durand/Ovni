@@ -174,7 +174,7 @@ void ModificationPanel::OnButton_QuitterClick(wxCommandEvent& event)
     if (!aretes_calculees) {
         char Message[128];
         sprintf(Message,"===> ATTENTION : Les arêtes n'ont pas été recalculées\n");
-        printf(utf8_To_ibm(Message));
+        printf("%s",utf8_To_ibm(Message));
     }
     wxCloseEvent close_event;
     OnClose(close_event);

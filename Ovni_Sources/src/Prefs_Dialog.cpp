@@ -311,22 +311,22 @@ void Prefs_Dialog::OnCheckBox_SeuillageClick(wxCommandEvent& event)
     CheckBox_RecNormales_Seuillees->SetValue(MAIN->Element->Enr_Normales_Seuillees);
     bool chkB = CheckBox_Seuillage->GetValue();
     if (chkB) {
-        StaticText_Gouraud          ->Enable() ;
-        StaticText_Gouraud2         ->Enable() ;
-        SpinCtrlDouble_SeuilGouraud ->Enable() ;
-        SpinCtrlDouble_SeuilGouraud2->Enable() ;
+        StaticText_Gouraud            ->Enable() ;
+        StaticText_Gouraud2           ->Enable() ;
+        SpinCtrlDouble_SeuilGouraud   ->Enable() ;
+        SpinCtrlDouble_SeuilGouraud2  ->Enable() ;
         CheckBox_RecNormales_Seuillees->Enable();
     } else {
-        StaticText_Gouraud          ->Disable() ;
-        StaticText_Gouraud2         ->Disable() ;
-        SpinCtrlDouble_SeuilGouraud ->Disable();
-        SpinCtrlDouble_SeuilGouraud2->Disable();
+        StaticText_Gouraud            ->Disable() ;
+        StaticText_Gouraud2           ->Disable() ;
+        SpinCtrlDouble_SeuilGouraud   ->Disable();
+        SpinCtrlDouble_SeuilGouraud2  ->Disable();
         CheckBox_RecNormales_Seuillees->Disable();
 //        CheckBox_RecNormales_Seuillees->SetValue(chkB);
     }
 
-    Element->test_seuil_gouraud= chkB;
-    Element->ini_file_modified = true ;
+    Element->test_seuil_gouraud = chkB;
+    Element->ini_file_modified  = true ;
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -337,16 +337,16 @@ void Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraudChange(wxSpinDoubleEvent& event)
 
     float val = SpinCtrlDouble_SeuilGouraud->GetValue();
     Element->angle_Gouraud  = val;
-    float seuil= cos(val*to_Rad);
+    float seuil = cos(val*to_Rad);
     if (val >= 179.9) seuil = -1.0f;
     Element->seuil_Gouraud  = seuil;
 
     val *= MAIN->Element->fmult_Gouraud;
     if (val > 90.0) val = 180.0;
-    seuil= cos(val*to_Rad);
-    if (val >= 179.9) seuil   = -1.0f;
-    Element->seuil_Gouraud2   = seuil;
-    Element->ini_file_modified= true ;
+    seuil = cos(val*to_Rad);
+    if (val >= 179.9) seuil    = -1.0f;
+    Element->seuil_Gouraud2    = seuil;
+    Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -360,9 +360,9 @@ void Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraud2Change(wxSpinDoubleEvent& event
     val *= MAIN->Element->angle_Gouraud;
     if (val > 90.0) val = 180.0;    // Forcer les valeurs > 90° (comme en version Tcl)
     float seuil= cos(val*to_Rad);
-    if (val >= 179.9)   seuil = -1.0f;
-    Element->seuil_Gouraud2   = seuil;
-    Element->ini_file_modified= true ;
+    if (val >= 179.9)   seuil  = -1.0f;
+    Element->seuil_Gouraud2    = seuil;
+    Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -503,16 +503,16 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     ival = Element->Enr_Normales_Seuillees = Element->Enr_Normales_Seuillees_def;
     CheckBox_RecNormales_Seuillees->SetValue(ival);
     if (chkB) {
-        StaticText_Gouraud          ->Enable() ;
-        StaticText_Gouraud2         ->Enable() ;
-        SpinCtrlDouble_SeuilGouraud ->Enable() ;
-        SpinCtrlDouble_SeuilGouraud2->Enable() ;
+        StaticText_Gouraud            ->Enable() ;
+        StaticText_Gouraud2           ->Enable() ;
+        SpinCtrlDouble_SeuilGouraud   ->Enable() ;
+        SpinCtrlDouble_SeuilGouraud2  ->Enable() ;
         CheckBox_RecNormales_Seuillees->Enable();
     } else {
-        StaticText_Gouraud          ->Disable() ;
-        StaticText_Gouraud2         ->Disable() ;
-        SpinCtrlDouble_SeuilGouraud ->Disable();
-        SpinCtrlDouble_SeuilGouraud2->Disable();
+        StaticText_Gouraud            ->Disable() ;
+        StaticText_Gouraud2           ->Disable() ;
+        SpinCtrlDouble_SeuilGouraud   ->Disable();
+        SpinCtrlDouble_SeuilGouraud2  ->Disable();
         CheckBox_RecNormales_Seuillees->Disable();
 //        CheckBox_RecNormales_Seuillees->SetValue(chkB);
     }
@@ -552,7 +552,7 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     Element->wxWorkDir = Element->wxOvniPath;
     char Message[512];
     sprintf(Message,"Répertoire de travail :\n%s\n",(const char*)Element->wxOvniPath.utf8_str());
-    printf(utf8_To_ibm(Message));
+    printf("%s",utf8_To_ibm(Message));
     TextCtrl_WorkDir->SetLabel(Element->wxOvniPath);
 
     Element->nb_threads      = Element->nb_threads_def;

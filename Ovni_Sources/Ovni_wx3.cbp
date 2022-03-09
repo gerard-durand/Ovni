@@ -4,19 +4,17 @@
 	<Project>
 		<Option title="OvniW_wx3" />
 		<Option pch_mode="2" />
-		<Option compiler="gnu_gcc_compiler_64" />
+		<Option compiler="gcc" />
 		<Build>
 			<Target title="Release_64">
 				<Option output="bin/Ovni_64" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release64_Msys2/" />
 				<Option type="1" />
-				<Option compiler="gnu_gcc_compiler_64" />
+				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Option projectCompilerOptionsRelation="2" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
-				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-D__MINGW64__" />
@@ -24,38 +22,29 @@
 					<Add option="-DwxUSE_UNICODE" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DwxDEBUG_LEVEL=0" />
-					<Add directory="$(#wx315)/include" />
-					<Add directory="$(#wx315)/contrib/include" />
 					<Add directory="$(#wx315)/lib/gcc_dll/mswu" />
-					<Add directory="C:/MinGW64/include" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx315)/include" />
 					<Add directory="$(#wx315)/lib/gcc_dll/mswu" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lopengl32 -lglu32 -lfreeglut" />
 					<Add option="-Wl,--allow-multiple-definition" />
-					<Add library="lib3ds-2_0_64.a" />
-					<Add library="libwxexpat.a" />
 					<Add library="libwxmsw31u.a" />
 					<Add library="libwxmsw31u_gl.a" />
 					<Add directory="$(#wx315)/lib/gcc_dll" />
-					<Add directory="lib64" />
 				</Linker>
 			</Target>
 			<Target title="Release_64_static">
 				<Option output="bin/Ovni_64_static" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release64_Msys2_Static/" />
 				<Option type="1" />
-				<Option compiler="gnu_gcc_compiler_64" />
+				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Option projectCompilerOptionsRelation="2" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
-				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-D__MINGW64__" />
@@ -63,13 +52,9 @@
 					<Add option="-DwxUSE_UNICODE" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DwxDEBUG_LEVEL=0" />
-					<Add directory="$(#wx315)/include" />
-					<Add directory="$(#wx315)/contrib/include" />
 					<Add directory="$(#wx315)/lib/gcc_lib/mswu" />
-					<Add directory="C:/MinGW64/include" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx315)/include" />
 					<Add directory="$(#wx315)/lib/gcc_lib/mswu" />
 				</ResourceCompiler>
 				<Linker>
@@ -78,8 +63,6 @@
 					<Add option="-static-libgcc" />
 					<Add option="-static" />
 					<Add option="-Wl,--allow-multiple-definition" />
-					<Add library="lib3ds-2_0_64.a" />
-					<Add library="libwxexpat.a" />
 					<Add library="libfreeglut_static.a" />
 					<Add library="libwxmsw31u.a" />
 					<Add library="libwxmsw31u_gl.a" />
@@ -108,7 +91,6 @@
 					<Add library="libglu32.a" />
 					<Add library="libwinmm.a" />
 					<Add directory="$(#wx315)/lib/gcc_lib" />
-					<Add directory="lib64" />
 				</Linker>
 			</Target>
 		</Build>
@@ -125,11 +107,21 @@
 			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
+			<Add directory="$(#wx315)/include" />
+			<Add directory="$(#wx315)/contrib/include" />
+			<Add directory="C:/MinGW64/include" />
 		</Compiler>
+		<ResourceCompiler>
+			<Add directory="$(#wx315)/include" />
+		</ResourceCompiler>
 		<Linker>
 			<Add option="-m64" />
 			<Add option="-mthreads" />
 			<Add library="gomp" />
+			<Add library="lib3ds-2_0_64.a" />
+			<Add library="libexpat.a" />
+			<Add directory="C:/MinGW64/lib" />
+			<Add directory="lib64" />
 		</Linker>
 		<Unit filename="src/Aide_html.cpp" />
 		<Unit filename="src/Aide_html.h" />
@@ -216,8 +208,6 @@
 		</Unit>
 		<Unit filename="src/resource_64.rc">
 			<Option compilerVar="WINDRES" />
-			<Option target="Release_64" />
-			<Option target="Release_64_static" />
 		</Unit>
 		<Unit filename="src/trackball.cpp" />
 		<Unit filename="src/trackball.h" />
@@ -264,6 +254,7 @@
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>
+			<envvars set="default" />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="OvniApp.cpp" main="OvniFrame" init_handlers="necessary" language="CPP" />
 				<resources>

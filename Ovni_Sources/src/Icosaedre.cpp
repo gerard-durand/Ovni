@@ -1,5 +1,5 @@
 #include "Icosaedre.h"
-#include "vector3D.h"
+#include "vector3d.h"
 
 //(*InternalHeaders(Icosaedre)
 #include <wx/intl.h>

@@ -1,3 +1,4 @@
 libwxexpat est une copie de la librairie de même nom générée avec wxWidgets.
+On utilise maintenant libexpat.a directement intégrée à MinGW64, version de msys2 dans C:\msys64\mingw64\lib
 libfreeglut_static.a est une version statique de la version 3.2.1.
 libfreeglut.a est le compagnon de la dll 3.2.1. Ce n'est pas une librairie statique et ne contient que des références au contenu de freeglut.dll.
