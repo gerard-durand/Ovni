@@ -620,9 +620,9 @@ class BddInter: public wxGLCanvas {
     wxCharBuffer buffer;
     wxGauge *m_gauge = nullptr;
     wxTimer *m_timer = nullptr;
-    wxProgressDialog * dialog = nullptr;
+    wxProgressDialog * progress_dialog = nullptr;
     clock_t time_deb_dialog;
-    bool dialog_en_cours;
+    bool progress_dialog_en_cours;
     Lib3dsIo *io;
 
 //    Sommetmemory *Smemory;
@@ -1066,7 +1066,7 @@ public :
     wxString wxNomsFichiers;            // Pour assembler les noms des fichiers (sans Path). Utile en cas de fusion de Bdds.
     wxString Fichier_Autosvg = _T("Autosave.bdd");  // Nom du fichier de sauvegarde automatique utilisé via le wxTimer
     wxString Dialog_Titre, Dialog_Comment;
-    clock_t  Dialog_Delay;
+    clock_t  Dialog_Delay;              // Delai avant initialisation et apparition de wxProgressDialog (=> pas d'affichage si c'est plus court)
 
     bool exists_Autosave = false;                   // Sera mis à true par la première sauvegarde automatique
 

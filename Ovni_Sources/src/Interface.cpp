@@ -3391,11 +3391,11 @@ void BddInter::clearall() {
 
 void BddInter::Update_Dialog(long position, long max_value)
 {
-    if (!dialog_en_cours) {
+    if (!progress_dialog_en_cours) {
         if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
 //            dialog = new wxProgressDialog(wxS("Lecture du fichier"),
 //                                          wxFileNameFromPath(get_file()),   // Pour afficher le npm du fichier
-            dialog = new wxProgressDialog(Dialog_Titre,
+            progress_dialog = new wxProgressDialog(Dialog_Titre,
                                           Dialog_Comment,   // Pour afficher le npm du fichier
                                           100,              // range
                                           this,             // parent
@@ -3407,22 +3407,22 @@ void BddInter::Update_Dialog(long position, long max_value)
                                           wxPD_AUTO_HIDE
                                          );
 //            if (theme_b) {
-//                dialog->SetForegroundColour(New_Forg);    // Sans effet
-//                dialog->SetBackgroundColour(New_Back);
+//                progress_dialog->SetForegroundColour(New_Forg);    // Sans effet
+//                progress_dialog->SetBackgroundColour(New_Back);
 //            }
-            dialog->Update(0);   // Par précaution
-            dialog_en_cours = true;
+            progress_dialog->Update(0);   // Par précaution
+            progress_dialog_en_cours = true;
             int new_val = round(position*100./max_value);
-            dialog->Update(new_val);
+            progress_dialog->Update(new_val);
         }
     } else {
-        int old_val = dialog->GetValue();
+        int old_val = progress_dialog->GetValue();
         int new_val = round(position*100./max_value);
         if (old_val != new_val) {
             if (new_val >= 100) {
-                dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
+                progress_dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
             } else {
-                dialog->Update(new_val);
+                progress_dialog->Update(new_val);
             }
         }
     }
@@ -3931,7 +3931,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     unsigned int indice_premierObjet;
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     rewind(f);
 
@@ -3975,9 +3975,9 @@ void BddInter::LectureXML_G3d (FILE *f)
 #ifdef WIN32
             system("pause") ;
 #endif
-            if(dialog_en_cours) {
-                dialog->Update(100);
-                wxDELETE(dialog);
+            if(progress_dialog_en_cours) {
+                progress_dialog->Update(100);
+                wxDELETE(progress_dialog);
             }
             exit(-1);
         }
@@ -4016,9 +4016,9 @@ void BddInter::LectureXML_G3d (FILE *f)
     printf("Nombre total de normales aux sommets : %d\n",nb_T_norml   );
     printf("Nombre total de facettes             : %d\n",nb_T_facettes);
 
-    if(dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if(progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
 
     sprintf(Message,"Non encore totalement opérationnel/testé\n\n");
@@ -4233,7 +4233,7 @@ void BddInter::LoadOBJ()
     nom_fichier = cptr;                         // a simplifier ?
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
@@ -4637,9 +4637,9 @@ void BddInter::LoadOBJ()
 //                Update_Dialog(ftell(f), fichierBdd_length); // pas efficace ici à cause des continue
             }
 //            nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
-            if (dialog_en_cours) {
-                dialog->Update(100);
-                wxDELETE(dialog);
+            if (progress_dialog_en_cours) {
+                progress_dialog->Update(100);
+                wxDELETE(progress_dialog);
             }
 
 //! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
@@ -4706,9 +4706,9 @@ void BddInter::LoadOBJ()
         type = -1;
     }
     fclose(f);
-    if (dialog_en_cours) {               // au cas où ...
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if (progress_dialog_en_cours) {               // au cas où ...
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
     if(verbose) printf("Sortie de BddInter::LoadOBJ\n");
 }
@@ -4742,7 +4742,7 @@ void BddInter::LoadM3D()
     wxCharBuffer buffer=this->file.mb_str();
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
@@ -4905,9 +4905,9 @@ void BddInter::LoadM3D()
     m_loaded = true;
     m_gllist = 0;
     fclose(f);
-    if (dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf("%s",utf8_To_ibm(Message));
@@ -4978,7 +4978,7 @@ void BddInter::LoadPLY()
     unsigned int nb_grp_ply = 0 ;
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     for (i=0; i <= 4; i++) {
         fgets(s1,100,f) ;    // Le nom de l'avion est à la seconde ligne, donc pour i=0
@@ -5218,9 +5218,9 @@ void BddInter::LoadPLY()
         Update_Dialog(ftell(f), fichierBdd_length);
     }
 
-    if (dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
 
     for (o=0; o<Nb_objets; o++) {
@@ -5423,7 +5423,7 @@ void BddInter::LoadPLY_Stanford()
     }
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     for (i = 0; i < in_ply->num_elem_types; i++) {
         elem_name = setup_element_read_ply (in_ply, i, &elem_count);
@@ -5690,9 +5690,9 @@ void BddInter::LoadPLY_Stanford()
     m_loaded = true;
     m_gllist = 0;
 
-    if(dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if(progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
 
     if(verbose)
@@ -5742,7 +5742,7 @@ void BddInter::LoadOFF()
     }
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     printf("Fichier de type Object File Format : %s",s1) ;
     Nb_objets = 1 ;     // A priori, 1 seul objet par fichier
@@ -5841,9 +5841,9 @@ void BddInter::LoadOFF()
 
     fclose(f);
 
-    if(dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if(progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
 
     if(verbose) printf("Sortie de BddInter::LoadOFF\n");
@@ -5873,7 +5873,7 @@ void BddInter::LoadSTL() {
     wxCharBuffer buffer=this->file.mb_str();
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
@@ -6148,9 +6148,9 @@ void BddInter::LoadSTL() {
     fclose(f);
 //    type = -1;  // Pour le moment
 //    Update();
-    if(dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if(progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
     if(verbose) printf("Sortie de BddInter::LoadSTL\n");
 }
@@ -6278,7 +6278,7 @@ void BddInter::Load3DS()
     time_deb_dialog = clock();
     o_3ds      = 0 ; //indiceObjet_courant = o_3ds;
     nb_mat_3ds = 0 ;
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
     long cpt;
     for (p = f3ds->nodes,cpt=0; p != 0; p = p->next,cpt++) {
         decoder_node(p);
@@ -6302,9 +6302,9 @@ void BddInter::Load3DS()
     lib3ds_file_free(f3ds);
 //    fclose(f);
 //    delete io;
-    if(dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if(progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
 
     m_loaded = true;
@@ -6751,7 +6751,7 @@ void BddInter::LoadBDD() {
 ///    m_gauge->Update();
 
     time_deb_dialog = clock();
-    dialog_en_cours = false;
+    progress_dialog_en_cours = false;
 
     if(m_gllist != 0) {
         glDeleteLists(glliste_objets,1);
@@ -7033,9 +7033,9 @@ void BddInter::LoadBDD() {
 //    RefreshRect(rect);
 ///    if (m_gauge) wxDELETE(m_gauge);
 ///    if (m_timer) wxDELETE(m_timer);
-    if (dialog_en_cours) {
-        dialog->Update(100); // Le plus tard possible car fermeture automatique de dialog via le wxPD_AUTO_HIDE
-        wxDELETE(dialog);
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100); // Le plus tard possible car fermeture automatique de dialog via le wxPD_AUTO_HIDE
+        wxDELETE(progress_dialog);
     }
 
     if(verbose) printf("Sortie de BddInter::LoadBdd\n");
@@ -7588,7 +7588,7 @@ void BddInter::GenereTableauAretes(Object * objet)
     std::vector<int>  Numeros_Sommets;
     Aretes   Arete, Arete_test, *p_Arete;
     bool verbose_local = true;      // Local ici
-    bool print_en_cours;    // un peu le même usage que dialog_en_cours qui pourrait être suffisant
+    bool print_en_cours;    // un peu le même usage que progress_dialog_en_cours qui pourrait être suffisant
 
     clock_t time_0, delta_time, time_c;
     #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
@@ -7597,7 +7597,7 @@ void BddInter::GenereTableauAretes(Object * objet)
 // La seconde partie permet de décoder les doublons et de les éliminer
 
     if (verbose) printf("Entree BddInter::GenereTableauAretes\n");
-    dialog_en_cours = print_en_cours = false;
+    progress_dialog_en_cours = print_en_cours = false;
 
 //    indice_point = 0;
     nb_fac = objet->Nb_facettes;
@@ -7703,18 +7703,18 @@ void BddInter::GenereTableauAretes(Object * objet)
                     Dialog_Titre    = wxS("Détection d'arêtes en doublon");
                     Dialog_Comment  = wxS("Objet : ")+objet->GetwxName();
                     Dialog_Delay    = NB_DELTA_TICKS;                   // Ce sera forcément le cas car test sur delta_time la première fois
-                    dialog_en_cours = false;
+                    progress_dialog_en_cours = false;
                     Update_Dialog((long)i, (long)nbaretes);
                 }
                 printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
                 time_c = clock();
            }
         }
-        if(dialog_en_cours) Update_Dialog((long)i, (long)nbaretes);
+        if(progress_dialog_en_cours) Update_Dialog((long)i, (long)nbaretes);
     }
-    if (dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
     }
     Nb_apres = objet->Nb_aretes = objet->Areteslist.size();
     if (Nb_deleted != 0) {
@@ -7737,8 +7737,8 @@ void BddInter::GenereTableauAretes(Object * objet)
     if (delta_time >= CLOCKS_PER_SEC) {     // N'afficher ce temps que si >= 1 seconde
         printf("Temps de filtrage des doublons : %ld ticks (soit %3.1f secondes)\n\n", delta_time, float(delta_time)/CLOCKS_PER_SEC);
     }
-    dialog_en_cours = false;
-    traiter_doublons_aretes = traiter_doublons_aretes_svg;;          // Remettre à l'état initial
+    progress_dialog_en_cours = false;
+    traiter_doublons_aretes  = traiter_doublons_aretes_svg;;          // Remettre à l'état initial
     if (verbose) printf("Sortie BddInter::GenereTableauAretes\n");
 }
 
@@ -12112,9 +12112,9 @@ void BddInter::Simplification_BDD()
 
     Dialog_Titre    = wxS("Simplification de la Bdd");
     Dialog_Comment  = wxS("Patience, ça peut être long... et même très long !");
-    Dialog_Delay    = CLOCKS_PER_SEC;
-    dialog_en_cours = false;
+    Dialog_Delay    = CLOCKS_PER_SEC/2;      // 1/2 seconde
     time_deb_dialog = clock();
+    progress_dialog_en_cours = false;
 
     compteur = 0;   // Un compteur de boucles
     Nb_test  = 0;   // estimation du nombre de boucles (sur-évalué)
@@ -12436,10 +12436,10 @@ void BddInter::Simplification_BDD()
         }
     }   // boucle for sur les objets (o)
 
-    if (dialog_en_cours) {
-        dialog->Update(100);
-        wxDELETE(dialog);
-        dialog_en_cours = false;    // Par précaution
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
+        progress_dialog_en_cours = false;    // Par précaution
     }
 
     for (o=0; o<this->Objetlist.size(); o++) {                      // On parcourt tous les objets en mémoire
