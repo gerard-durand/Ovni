@@ -22,10 +22,10 @@
 					<Add option="-DwxUSE_UNICODE" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DwxDEBUG_LEVEL=0" />
-					<Add directory="$(#wx316)/lib/gcc_dll/mswu" />
+					<Add directory="$(#wx3x)/lib/gcc_dll/mswu" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx316)/lib/gcc_dll/mswu" />
+					<Add directory="$(#wx3x)/lib/gcc_dll/mswu" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
@@ -33,7 +33,7 @@
 					<Add option="-Wl,--allow-multiple-definition" />
 					<Add library="libwxmsw31u.a" />
 					<Add library="libwxmsw31u_gl.a" />
-					<Add directory="$(#wx316)/lib/gcc_dll" />
+					<Add directory="$(#wx3x)/lib/gcc_dll" />
 				</Linker>
 			</Target>
 			<Target title="Release_64_static">
@@ -52,10 +52,10 @@
 					<Add option="-DwxUSE_UNICODE" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DwxDEBUG_LEVEL=0" />
-					<Add directory="$(#wx316)/lib/gcc_lib/mswu" />
+					<Add directory="$(#wx3x)/lib/gcc_lib/mswu" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx316)/lib/gcc_lib/mswu" />
+					<Add directory="$(#wx3x)/lib/gcc_lib/mswu" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
@@ -90,7 +90,7 @@
 					<Add library="libopengl32.a" />
 					<Add library="libglu32.a" />
 					<Add library="libwinmm.a" />
-					<Add directory="$(#wx316)/lib/gcc_lib" />
+					<Add directory="$(#wx3x)/lib/gcc_lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -107,12 +107,12 @@
 			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
-			<Add directory="$(#wx316)/include" />
-			<Add directory="$(#wx316)/contrib/include" />
+			<Add directory="$(#wx3x)/include" />
+			<Add directory="$(#wx3x)/contrib/include" />
 			<Add directory="C:/MinGW64/include" />
 		</Compiler>
 		<ResourceCompiler>
-			<Add directory="$(#wx316)/include" />
+			<Add directory="$(#wx3x)/include" />
 		</ResourceCompiler>
 		<Linker>
 			<Add option="-m64" />

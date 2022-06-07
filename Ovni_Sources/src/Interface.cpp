@@ -6692,7 +6692,7 @@ void BddInter::LoadBDD() {
 
 //! On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
 
-    Object *objet_courant;
+    Object *objet_courant=nullptr;
     int x1=0;
     unsigned int i;
     int mode_lecture= 0;

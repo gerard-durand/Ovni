@@ -472,7 +472,7 @@ public:
     int  Numero;                // Numéro de facette
     int  Nb_Sommets_L=0;        // Nombre de sommets (équivallent de Nb_Sommets_F pour Face)
     std::vector<int> L_sommets; // Numéros des normales aux sommets
-    int  toshow;
+//    int  toshow;              // Ne sert plus ?
     bool show;
 
 // Méthodes, fonctions de la classe Luminance (traitements d'une Luminance <=> facette)

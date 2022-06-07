@@ -673,7 +673,7 @@ void SelectionPanel::Reset_ListeObjets()
 
     wxString str_loc;
     n = MAIN->Selections_Manuelles_Objets->CheckListBox1->GetCount();   // Récupère le nombre d'items actuels
-    for (i=0 ; i<n ; i++)
+    for (i=0; i<n; i++)
         MAIN->Selections_Manuelles_Objets->CheckListBox1->Delete(0);    // Supprime ces "anciens" items
 
     indice_ListBox = 0; // Pour découpler l'indice d'un objet de celui de la CheckListBox (en cas d'objets supprimés)
@@ -871,9 +871,9 @@ void SelectionPanel::OnCheckBox_ForcerFlatClick(wxCommandEvent& event)
     unsigned int i,j;
 
     if (Element->mode_selection == Element->selection_objet) {
-        for (i=0;i<Element->Objetlist.size(); i++) {
+        for (i=0; i<Element->Objetlist.size(); i++) {
             if (Element->Objetlist[i].selected) {                                                                           // Sur tous les objets sélectionnés,
-                for (j=0;j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = true;   // Sélectionner toutes les facettes
+                for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = true;  // Sélectionner toutes les facettes
             }
         }
     }
@@ -884,9 +884,9 @@ void SelectionPanel::OnCheckBox_ForcerFlatClick(wxCommandEvent& event)
         Element->NotFlat_Selected_Facettes();
 
     if (Element->mode_selection == Element->selection_objet) {
-        for (i=0;i<Element->Objetlist.size(); i++) {
+        for (i=0; i<Element->Objetlist.size(); i++) {
             if (Element->Objetlist[i].selected) {                                                                           // Sur tous les objets sélectionnés,
-                for (j=0;j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = false;  // Désélectionner toutes les facettes
+                for (j=0; j<Element->Objetlist[i].Facelist.size(); j++) Element->Objetlist[i].Facelist[j].selected = false; // Désélectionner toutes les facettes
             }
         }
     }
@@ -918,6 +918,7 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
     printf("Fusion des objets suivants dans %s :\n",Element->Objetlist[*it].GetName());
     for (o=0; o<Element->listeObjets.size(); ++o, it--) {
         Objet_courant = &(Element->Objetlist[*it]);
+        if (o == 0) Objet_base = Objet_courant;
         printf("Objet %d, numero %d, %s\n",o,Objet_courant->GetValue(),Objet_courant->GetName());
         if (o == 0) {
             New_Nb_sommets    = Objet_courant->Nb_sommets;
@@ -926,7 +927,7 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
             New_Nb_aspects    = Objet_courant->Nb_aspects;
             New_Nb_luminances = Objet_courant->Nb_luminances;
             New_Nb_vecteurs   = Objet_courant->Nb_vecteurs;
-            Objet_base = Objet_courant;
+//            Objet_base = Objet_courant;
         } else {
             New_Nb_sommets   += Objet_courant->Nb_sommets;
             New_Nb_facettes  += Objet_courant->Nb_facettes;
