@@ -31,8 +31,8 @@
 					<Add option="-s" />
 					<Add option="-lopengl32 -lglu32 -lfreeglut" />
 					<Add option="-Wl,--allow-multiple-definition" />
-					<Add library="libwxmsw31u.a" />
-					<Add library="libwxmsw31u_gl.a" />
+					<Add library="libwxmsw$(WX_VERSION)u.a" />
+					<Add library="libwxmsw$(WX_VERSION)u_gl.a" />
 					<Add directory="$(#wx3x)/lib/gcc_dll" />
 				</Linker>
 			</Target>
@@ -64,8 +64,8 @@
 					<Add option="-static" />
 					<Add option="-Wl,--allow-multiple-definition" />
 					<Add library="libfreeglut_static.a" />
-					<Add library="libwxmsw31u.a" />
-					<Add library="libwxmsw31u_gl.a" />
+					<Add library="libwxmsw$(WX_VERSION)u.a" />
+					<Add library="libwxmsw$(WX_VERSION)u_gl.a" />
 					<Add library="libwxpng.a" />
 					<Add library="libwxjpeg.a" />
 					<Add library="libwxtiff.a" />
@@ -93,6 +93,9 @@
 					<Add directory="$(#wx3x)/lib/gcc_lib" />
 				</Linker>
 			</Target>
+			<Environment>
+				<Variable name="WX_VERSION" value="32" />
+			</Environment>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
