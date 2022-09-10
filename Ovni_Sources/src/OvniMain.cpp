@@ -96,6 +96,14 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
 // Numéro de version du compilateur
     wxbuild << _T("\nVersion de gcc : ") << _T(__VERSION__);
 
+// Version de freeglut
+    int glut_version = glutGet(GLUT_VERSION);
+    int major   = glut_version/10000;
+    int g_minor = (glut_version - major*10000);
+    int minor   = g_minor/100;
+    int patch   = (g_minor - minor*100);
+    wxbuild << _T("\nVersion de freeglut : ") << major << "." << minor << "." << patch;
+
     return wxbuild;
 }
 

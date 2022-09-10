@@ -2,14 +2,14 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="freeglut" />
-		<Option compiler="gnu_gcc_compiler_64" />
+		<Option title="freeglut_libs" />
+		<Option compiler="gcc" />
 		<Build>
 			<Target title="freeglut">
 				<Option output="./bin/freeglut.dll" imp_lib="./lib/lib$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="0" extension_auto="0" />
 				<Option object_output="./obj/dll" />
 				<Option type="3" />
-				<Option compiler="gnu_gcc_compiler_64" />
+				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -36,7 +36,7 @@
 				<Option working_dir="" />
 				<Option object_output="./obj/static" />
 				<Option type="2" />
-				<Option compiler="gnu_gcc_compiler_64" />
+				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-m64" />
@@ -146,6 +146,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/fg_window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/mswin/fg_cmap_mswin.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/mswin/fg_cursor_mswin.c">
