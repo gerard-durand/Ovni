@@ -1,9 +1,9 @@
 [submodule "lib3ds"]
 	path = lib3ds
 	url = https://github.com/hoopoe/lib3ds
-[submodule "freeglut"]
-	path = freeglut
-	url = https://github.com/dcnieho/FreeGLUT
 [submodule "ivcon-tl-code"]
 	path = ivcon-tl-code
 	url = https://git.code.sf.net/p/ivcon-tl/code
+[submodule "freeglut"]
+	path = freeglut
+	url = https://github.com/FreeGLUTProject/freeglut
