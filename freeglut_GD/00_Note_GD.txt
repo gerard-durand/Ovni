@@ -1,0 +1,35 @@
+A priori, pas de grosses différences avec 3.2.1 : bug sur utilisation des normales aux sommets (ordre) de la sphère toujours là.
+
+Pour réinitialiser complètement la génération via cmake, il suffit de supprimer des fichiers (via 00_Reset.cmd) (pas tous forcément, mais qu'importe...) :
+config.h
+freeglut.cbp
+cmake_install.cmake
+Makefile
+CMakeCache.txt
+freeglut.pc
+CMakeFiles\cmake.check_cache
+CMakeFiles\Makefile.cmake
+CMakeFiles\Makefile2
+CMakeFiles\progress.marks
+CMakeFiles\CMakeDirectoryInformation.cmake
+CMakeFiles\TargetDirectories.txt
+CMakeFiles\CMakeOutput.log
+CMakeFiles\CMakeError.log
+
+Lancer cmake-gui dans ce répertoire
+Entrer le répertoire courant dans Where is the source code
+Choisir la case advanced (de préférence)
+configure
+Choisir Codeblocks - MinGW Makefiles
+Use default native compilers
+Finish
+modifier le chemin de l'exécutable codeblocks
+generate
+
+lancer freeglut.cbp
+génère les libs (dynamiques et statiques) et les démos en statique et via une dll.
+
+dans bin, on peut faire à la main, via la console de commande, strip * pour réduire les tailles des exe et de la dll
+ou alors ajouter -s lors de la génération.
+De plus ajouter -O2 à la compilation
+cf freeglut_libs.cbp
