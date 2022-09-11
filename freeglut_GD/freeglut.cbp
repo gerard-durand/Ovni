@@ -1,0 +1,2451 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="freeglut" />
+		<Option makefile_is_custom="1" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="CMake Files/;CMake Files/src/" />
+		<Build>
+			<Target title="all">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 all' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="subwin">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/subwin.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="subwin/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/subwin.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="resizer">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/resizer.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="resizer/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/resizer.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/libfreeglut.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+				<Option object_output="./" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DFREEGLUT_EXPORTS" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/libfreeglut.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+				<Option object_output="./" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DFREEGLUT_EXPORTS" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 install/local' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 install' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_callback.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_callback.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="subwin_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/subwin_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="subwin_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/subwin_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/smooth_opengl3.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/smooth_opengl3.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="resizer_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/resizer_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="resizer_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/resizer_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/lib/libfreeglut_static.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output="./" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/lib/libfreeglut_static.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output="./" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/CallbackMaker.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/CallbackMaker.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_random_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_random_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/CallbackMaker_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/CallbackMaker_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_callback_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_callback_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/smooth_opengl3_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/smooth_opengl3_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_random.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals_random.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Fractals.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Lorenz.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Lorenz.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/multi-touch.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/multi-touch.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Lorenz_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/Lorenz_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="joystick">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/joystick.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="joystick/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/joystick.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="shapes">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/shapes.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="shapes/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/shapes.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="One">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/One.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="One/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/One.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="joystick_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/joystick_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="joystick_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/joystick_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="shapes_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/shapes_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="shapes_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/shapes_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="One_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/One_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="One_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/One_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/multi-touch_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/multi-touch_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/spaceball.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/spaceball.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/spaceball_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/spaceball_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="timer_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/timer_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/keyboard.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/keyboard.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/keyboard_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/keyboard_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/indexed_color.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/indexed_color.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/indexed_color_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/indexed_color_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="3dview">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/3dview.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="3dview/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/3dview.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="3dview_static">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/3dview_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview_static' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="3dview_static/fast">
+				<Option output="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin/3dview_static.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/bin" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_WIN32_WINNT=0x0601" />
+					<Add option="-DWINVER=0x0601" />
+					<Add option="-DHAVE_CONFIG_H" />
+					<Add option="-DFREEGLUT_STATIC" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
+					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview_static/fast' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 edit_cache' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 rebuild_cache' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 list_install_components' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 install/strip' />
+					<CompileFile command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="CMakeLists.txt">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="FreeGLUTConfig.cmake.in">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="config.h.in">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="freeglut.pc.in">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="freeglut.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="freeglut.rc.in">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="include/GL/freeglut.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="include/GL/freeglut_ext.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="include/GL/freeglut_std.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="include/GL/freeglut_ucall.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="progs/demos/3dview/3dview.c">
+			<Option compilerVar="CC" />
+			<Option target="3dview" />
+			<Option target="3dview_static" />
+		</Unit>
+		<Unit filename="progs/demos/CallbackMaker/CallbackMaker.c">
+			<Option compilerVar="CC" />
+			<Option target="CallbackMaker" />
+			<Option target="CallbackMaker_static" />
+		</Unit>
+		<Unit filename="progs/demos/Fractals/fractals.c">
+			<Option compilerVar="CC" />
+			<Option target="Fractals_static" />
+			<Option target="Fractals" />
+		</Unit>
+		<Unit filename="progs/demos/Fractals_random/fractals_random.c">
+			<Option compilerVar="CC" />
+			<Option target="Fractals_random_static" />
+			<Option target="Fractals_random" />
+		</Unit>
+		<Unit filename="progs/demos/Lorenz/lorenz.c">
+			<Option compilerVar="CC" />
+			<Option target="Lorenz" />
+			<Option target="Lorenz_static" />
+		</Unit>
+		<Unit filename="progs/demos/One/one.c">
+			<Option compilerVar="CC" />
+			<Option target="One" />
+			<Option target="One_static" />
+		</Unit>
+		<Unit filename="progs/demos/One/one.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="One" />
+			<Option target="One_static" />
+		</Unit>
+		<Unit filename="progs/demos/indexed_color/idxcol.c">
+			<Option compilerVar="CC" />
+			<Option target="indexed_color" />
+			<Option target="indexed_color_static" />
+		</Unit>
+		<Unit filename="progs/demos/joystick/joystick.c">
+			<Option compilerVar="CC" />
+			<Option target="joystick" />
+			<Option target="joystick_static" />
+		</Unit>
+		<Unit filename="progs/demos/keyboard/keyboard.c">
+			<Option compilerVar="CC" />
+			<Option target="keyboard" />
+			<Option target="keyboard_static" />
+		</Unit>
+		<Unit filename="progs/demos/multi-touch/multi-touch.c">
+			<Option compilerVar="CC" />
+			<Option target="multi-touch" />
+			<Option target="multi-touch_static" />
+		</Unit>
+		<Unit filename="progs/demos/resizer/resizer.c">
+			<Option compilerVar="CC" />
+			<Option target="resizer" />
+			<Option target="resizer_static" />
+		</Unit>
+		<Unit filename="progs/demos/shapes/glmatrix.c">
+			<Option compilerVar="CC" />
+			<Option target="shapes" />
+			<Option target="shapes_static" />
+		</Unit>
+		<Unit filename="progs/demos/shapes/glmatrix.h">
+			<Option target="shapes" />
+			<Option target="shapes_static" />
+		</Unit>
+		<Unit filename="progs/demos/shapes/shapes.c">
+			<Option compilerVar="CC" />
+			<Option target="shapes" />
+			<Option target="shapes_static" />
+		</Unit>
+		<Unit filename="progs/demos/smooth_opengl3/smooth_opengl3.c">
+			<Option compilerVar="CC" />
+			<Option target="smooth_opengl3" />
+			<Option target="smooth_opengl3_static" />
+		</Unit>
+		<Unit filename="progs/demos/spaceball/spaceball.c">
+			<Option compilerVar="CC" />
+			<Option target="spaceball" />
+			<Option target="spaceball_static" />
+		</Unit>
+		<Unit filename="progs/demos/spaceball/vmath.c">
+			<Option compilerVar="CC" />
+			<Option target="spaceball" />
+			<Option target="spaceball_static" />
+		</Unit>
+		<Unit filename="progs/demos/spaceball/vmath.h">
+			<Option target="spaceball" />
+			<Option target="spaceball_static" />
+		</Unit>
+		<Unit filename="progs/demos/subwin/subwin.c">
+			<Option compilerVar="CC" />
+			<Option target="subwin" />
+			<Option target="subwin_static" />
+		</Unit>
+		<Unit filename="progs/demos/timer/timer.c">
+			<Option compilerVar="CC" />
+			<Option target="timer" />
+			<Option target="timer_static" />
+		</Unit>
+		<Unit filename="progs/demos/timer_callback/timer.c">
+			<Option compilerVar="CC" />
+			<Option target="timer_callback" />
+			<Option target="timer_callback_static" />
+		</Unit>
+		<Unit filename="src/fg_callback_macros.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_callbacks.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_cursor.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_display.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_ext.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_font.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_font_data.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_gamemode.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_geometry.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_gl2.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_gl2.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_init.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_init.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_input_devices.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_internal.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_joystick.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_main.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_menu.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_misc.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_overlay.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_spaceball.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_state.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_stroke_mono_roman.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_stroke_roman.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_structure.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_teapot.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_teapot_data.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_version.h.in">
+			<Option virtualFolder="CMake Files/src/" />
+		</Unit>
+		<Unit filename="src/fg_videoresize.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/fg_window.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_cmap_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_cursor_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_display_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_ext_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_gamemode_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_init_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_input_devices_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_internal_mswin.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_joystick_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_main_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_menu_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_spaceball_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_state_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_structure_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/mswin/fg_window_mswin.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/util/xparsegeometry_repl.c">
+			<Option compilerVar="CC" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Unit filename="src/util/xparsegeometry_repl.h">
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
