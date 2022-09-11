@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\shapes.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\shapes.dir/objects.a @CMakeFiles\shapes.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic -Wl,--whole-archive CMakeFiles\shapes.dir/objects.a -Wl,--no-whole-archive -o bin\shapes.exe -Wl,--out-implib,lib\libshapes.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\shapes.dir\linklibs.rsp

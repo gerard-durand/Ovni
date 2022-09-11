@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\timer_callback_static.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\timer_callback_static.dir/objects.a @CMakeFiles\timer_callback_static.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic -Wl,--whole-archive CMakeFiles\timer_callback_static.dir/objects.a -Wl,--no-whole-archive -o bin\timer_callback_static.exe -Wl,--out-implib,lib\libtimer_callback_static.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\timer_callback_static.dir\linklibs.rsp
