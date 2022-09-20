@@ -255,6 +255,7 @@ class OvniFrame: public wxFrame
         void Ouvrir_Fichier();
         void ResizeOpenGL(int , int );
         void SetAngles();
+        int  SetNewIcons(int);
         void Redisplay_Proprietes(wxCommandEvent& event);
         void Toggle_Sliders(wxCommandEvent& event); // Fonction publique pour appel externe à OvniFrame de OnButton_SlidersToggle
         void Toggle_Gouraud(wxCommandEvent& event); // Idem .  .  .  .  .  .  .  .  .  .  .  .  .  .  . de OnButton_GouraudToggle

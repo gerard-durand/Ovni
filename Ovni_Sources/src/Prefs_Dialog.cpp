@@ -46,6 +46,7 @@ const long Prefs_Dialog::ID_SPINCTRL1 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE7 = wxNewId();
 const long Prefs_Dialog::ID_RADIOBOX1 = wxNewId();
 const long Prefs_Dialog::ID_RADIOBOX2 = wxNewId();
+const long Prefs_Dialog::ID_RADIOBOX3 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE8 = wxNewId();
 const long Prefs_Dialog::ID_CHECKBOX7 = wxNewId();
 const long Prefs_Dialog::ID_STATICLINE10 = wxNewId();
@@ -169,22 +170,31 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(StaticLine7, 0, wxALL|wxEXPAND, 0);
 	wxString __wxRadioBoxChoices_1[3] =
 	{
-		_T("Méthode 1     "),
-		_T("Méthode 2     "),
-		_T("Méthode 3 ")
+	    _T("Méthode 1     "),
+	    _T("Méthode 2     "),
+	    _T("Méthode 3     ")
 	};
 	RadioBox_Triangulation = new wxRadioBox(this, ID_RADIOBOX1, _T("Méthode de triangulation"), wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX1"));
 	RadioBox_Triangulation->SetSelection(1);
 	BoxSizer1->Add(RadioBox_Triangulation, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	wxString __wxRadioBoxChoices_2[2] =
 	{
-		_T("Directe           "),
-		_T("Trackball")
+	    _T("Directe            "),
+	    _T("Trackball")
 	};
 	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxDefaultSize, 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
 	RadioBox_Trackball->SetSelection(1);
 	BoxSizer1->Add(RadioBox_Trackball, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
-	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
+	wxString __wxRadioBoxChoices_3[3] =
+	{
+	    _T("16 x16           "),
+	    _T("24 x 24            "),
+	    _T("32 x 32            ")
+	};
+	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
+	RadioBox_IconSize->SetSelection(0);
+	BoxSizer1->Add(RadioBox_IconSize, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
+	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(380,2), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
 	BoxSizer1->Add(StaticLine8, 0, wxALL|wxEXPAND, 0);
 	CheckBox_DisplayFps = new wxCheckBox(this, ID_CHECKBOX7, _T("Affichage du nombre de frames OpenGL par secondes (fps)"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX7"));
 	CheckBox_DisplayFps->SetValue(true);
@@ -251,6 +261,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Prefs_Dialog::OnSpinCtrl_PasSvgChange);
 	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TriangulationSelect);
 	Connect(ID_RADIOBOX2,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TrackballSelect);
+	Connect(ID_RADIOBOX3,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_IconSizeSelect);
 	Connect(ID_CHECKBOX7,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_DisplayFpsClick);
 	Connect(ID_CHECKBOX9,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_CreerBackupClick);
 	Connect(ID_CHECKBOX10,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_SupprBackupClick);
@@ -559,10 +570,14 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     SpinCtrl_Threads->SetValue(Element->nb_threads);
     omp_set_dynamic(1);
 
+    Element->icon_index = Element->icon_index_def;
+    Element->icon_size  = Element->icon_sizes[Element->icon_index];
+    RadioBox_IconSize->SetSelection(Element->icon_index);
+    OnRadioBox_IconSizeSelect(event);   // Simule un changement de taille d'icône
+
     Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
-
 }
 
 void Prefs_Dialog::OnCheckBox_DisplayFpsClick(wxCommandEvent& event)
@@ -681,4 +696,21 @@ void Prefs_Dialog::OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event)
 
     Element->traiter_doublons_aretes = CheckBox_TraiterDoublonsAretes->GetValue();
     Element->ini_file_modified       = true ;
+}
+
+void Prefs_Dialog::OnRadioBox_IconSizeSelect(wxCommandEvent& event)
+{
+    BddInter *Element  = MAIN->Element;
+
+    Element->icon_size = Element->icon_sizes[RadioBox_IconSize->GetSelection()];    // soit 16, 24 ou 32 car 3 choix proposés à l'affichage dans Préférences
+    int new_width      = MAIN->SetNewIcons(Element->icon_size) ;
+    int new_height     = Element->icon_size+9;
+    MAIN->Panel1->SetMinSize(wxSize(new_width,new_height));
+    MAIN->Panel1->SetSize   (wxSize(new_width,new_height));
+
+    wxRect rect          = MAIN->GetRect();                                         // récupère position et taille de la fenêtre
+    wxSize* ClientSizeXY = new wxSize(new_width,rect.height);                       // Ajuster la taille de la fenêtre
+    MAIN->SetSize(*ClientSizeXY);
+    Element->ini_file_modified = true ;
+    delete ClientSizeXY;
 }

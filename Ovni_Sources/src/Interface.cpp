@@ -53,6 +53,7 @@ const char *initL="Raz_Selection_F=";
 const char *initM="FacettesNotFlat=";
 const char *initN="Nb_Threads=";
 const char *initO="TestDbAretes=";
+const char *initP="Taille_Icones=";
 
 FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -237,6 +238,8 @@ void BddInter::ResetData() {
     Raz_Selection_F         = Raz_Selection_F_def;
     msg_warning             = msg_warning_def;
     traiter_doublons_aretes = traiter_doublons_aretes_def;
+    icon_index              = icon_index_def;
+    icon_size               = icon_sizes[icon_index];
 
     nb_threads              = nb_threads_def;
     if ((nb_threads <= 0) || (nb_threads >= nb_max_threads)) {
@@ -295,12 +298,14 @@ void BddInter::ResetData() {
         else                    MPrefs   ->CheckBox_RecNormales_Seuillees->Disable();
         MPrefs->CheckBox_RecNormales_Seuillees->SetValue(Enr_Normales_Seuillees);
         MPrefs->CheckBox_TraiterDoublonsAretes->SetValue(traiter_doublons_aretes);
+        MPrefs->RadioBox_IconSize->SetSelection(icon_index);
 
         MPrefs->SpinCtrl_PasSvg ->SetValue(svg_time);
 
         // Reset du répertoire de travail par défaut = chemin de l'exécutable
         MPrefs->TextCtrl_WorkDir->SetLabel(wxWorkDir);
         MPrefs->SpinCtrl_Threads->SetValue(nb_threads);
+        MPrefs->RadioBox_IconSize->SetSelection(icon_index);
     }
     if (MPosObs != nullptr) {
         ival = convert_rotx_LSI();
@@ -612,6 +617,16 @@ void BddInter::Ouvrir_ini_file()
                 else traiter_doublons_aretes = true ;
                 continue;   // Passer au while suivant
             }
+            len = strlen( initP);
+            icmp= strncmp(initP,Message,len) ;                  // Test sur 25ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&icon_size) ;             // Récupère la valeur de icon_size
+                icon_index = 0;
+                if(icon_size > 16)        icon_index = 1;
+                else if (icon_size >= 32) icon_index = 2;
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
@@ -653,6 +668,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initM,NotFlat);
         fprintf(f_init,"%s%d\n",initN,nb_threads) ;
         fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
+        fprintf(f_init,"%s%d\n",initP,icon_size);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -2751,6 +2767,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->RadioBox_Trackball        ->SetBackgroundColour(Back);
     this->MPrefs->RadioBox_Triangulation    ->SetForegroundColour(Forg);    // Les 3 choix restent en noir => Idem
     this->MPrefs->RadioBox_Triangulation    ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_IconSize  ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_IconSize  ->SetBackgroundColour(Back);
     this->MPrefs->TextCtrl_WorkDir  ->SetForegroundColour(Forg);
     this->MPrefs->TextCtrl_WorkDir  ->SetBackgroundColour(Gris);
     this->MPrefs->Button_tmp_rep    ->SetForegroundColour(Forg);

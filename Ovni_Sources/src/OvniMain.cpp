@@ -97,12 +97,12 @@ wxString wxbuildinfo(wxbuildinfoformat format) {
     wxbuild << _T("\nVersion de gcc : ") << _T(__VERSION__);
 
 // Version de freeglut
-    int glut_version = glutGet(GLUT_VERSION);
-    int major   = glut_version/10000;
-    int g_minor = (glut_version - major*10000);
-    int minor   = g_minor/100;
-    int patch   = (g_minor - minor*100);
-    wxbuild << _T("\nVersion de freeglut : ") << major << "." << minor << "." << patch;
+    int glut_version= glutGet(GLUT_VERSION);
+    int major       = glut_version/10000;
+    int g_minor     = glut_version - major*10000;
+    int minor       = g_minor/100;
+    int patch_level = g_minor - minor*100;
+    wxbuild << _T("\nVersion de freeglut : ") << major << "." << minor << "." << patch_level;
 
     return wxbuild;
 }
@@ -272,40 +272,40 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     Panel1->SetMinSize(wxSize(-1,25));
-    StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,5), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,4), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
     Button_ZoomPlus = new wxButton(Panel1, ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
     Button_ZoomMoins = new wxButton(Panel1, ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,5), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,4), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
     Button_Gauche = new wxButton(Panel1, ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
     Button_Droite = new wxButton(Panel1, ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
     Button_Haut = new wxButton(Panel1, ID_BUTTON5, _T("Haut"), wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
     Button_Bas = new wxButton(Panel1, ID_BUTTON6, _T("Bas"), wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
     BoxSizer1->Add(Panel1, 0, wxALL|wxEXPAND, 0);
     #if wxCHECK_VERSION(3,1,0)
-    	wxGLAttributes GLCanvasAttributes_1;
-    	GLCanvasAttributes_1.PlatformDefaults();
-    	GLCanvasAttributes_1.RGBA();
-    	GLCanvasAttributes_1.DoubleBuffer();
-    	GLCanvasAttributes_1.Depth(16);
-    	GLCanvasAttributes_1.Stencil(0);
-    	GLCanvasAttributes_1.SampleBuffers(1);
-    	GLCanvasAttributes_1.Samplers(4);
-    	GLCanvasAttributes_1.EndList();
-    	GLCanvas = new wxGLCanvas(this, GLCanvasAttributes_1, ID_GLCANVAS, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
+        wxGLAttributes GLCanvasAttributes_1;
+        GLCanvasAttributes_1.PlatformDefaults();
+        GLCanvasAttributes_1.RGBA();
+        GLCanvasAttributes_1.DoubleBuffer();
+        GLCanvasAttributes_1.Depth(16);
+        GLCanvasAttributes_1.Stencil(0);
+        GLCanvasAttributes_1.SampleBuffers(1);
+        GLCanvasAttributes_1.Samplers(4);
+        GLCanvasAttributes_1.EndList();
+        GLCanvas = new wxGLCanvas(this, GLCanvasAttributes_1, ID_GLCANVAS, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
     #else
-    	const int GLCanvasAttributes_1[] =
-    	{
-    		WX_GL_RGBA,
-    		WX_GL_DOUBLEBUFFER,
-    		WX_GL_DEPTH_SIZE,      16,
-    		WX_GL_STENCIL_SIZE,    0,
-    	#if wxCHECK_VERSION(3,0,0)
-    		WX_GL_SAMPLE_BUFFERS,  1,
-    		WX_GL_SAMPLES,         4,
-    	#endif // wxCHECK_VERSION
-    		0, 0
-    	};
-    	GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
+        const int GLCanvasAttributes_1[] =
+        {
+            WX_GL_RGBA,
+            WX_GL_DOUBLEBUFFER,
+            WX_GL_DEPTH_SIZE,      16,
+            WX_GL_STENCIL_SIZE,    0,
+        #if wxCHECK_VERSION(3,0,0)
+            WX_GL_SAMPLE_BUFFERS,  1,
+            WX_GL_SAMPLES,         4,
+        #endif // wxCHECK_VERSION
+            0, 0
+        };
+        GLCanvas = new wxGLCanvas(this, ID_GLCANVAS, GLCanvasAttributes_1, wxDefaultPosition, wxSize(800,400), wxFULL_REPAINT_ON_RESIZE, _T("ID_GLCANVAS"));
     #endif // wxCHECK_VERSION
     GLCanvas->SetBackgroundColour(wxColour(100,150,190));
     BoxSizer1->Add(GLCanvas, 1, wxALL|wxEXPAND, 0);
@@ -631,7 +631,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Gouraud = new wxBitmapToggleButton(Panel1,ID_BUTTON15,wxBitmap(wxImage(_T("./Icones/gouraud.png"))),   wxPoint(652,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON15"));
     Button_Outils  = new wxBitmapToggleButton(Panel1,ID_BUTTON16,wxBitmap(wxImage(_T("./Icones/outils.png"))),    wxPoint(676,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON16"));
     Button_Modifs  = new wxBitmapToggleButton(Panel1,ID_BUTTON17,wxBitmap(wxImage(_T("./Icones/modifs.png"))),    wxPoint(700,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON17"));
-    Button_Sliders = new wxBitmapToggleButton(Panel1,ID_BUTTON18,wxBitmap(wxImage(_T("./Icones/wxSlider16.png"))),wxPoint(724,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON18"));
+    Button_Sliders = new wxBitmapToggleButton(Panel1,ID_BUTTON18,wxBitmap(wxImage(_T("./Icones/wxSlider.png"))),  wxPoint(724,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON18"));
     Button_Groupes = new wxBitmapToggleButton(Panel1,ID_BUTTON19,wxBitmap(wxImage(_T("./Icones/groupes.png"))),   wxPoint(748,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON19"));
     Button_Materiaux=new wxBitmapToggleButton(Panel1,ID_BUTTON20,wxBitmap(wxImage(_T("./Icones/materiau.png"))),  wxPoint(772,0),wxSize(24,24),0,wxDefaultValidator,_T("ID_BUTTON20"));
 #else
@@ -668,7 +668,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Modifs = new wxCustomButton(Panel1,ID_BUTTON17,wxEmptyString,wxBitmap(wxImage(_T("./Icones/modifs.png"))),wxPoint(700,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON17"));
     Button_Modifs->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/modifs.png"))));
     Button_Modifs->SetBitmapDisabled(Button_Modifs->CreateBitmapDisabled(Button_Modifs->GetBitmapLabel()));
-    Button_Sliders = new wxCustomButton(Panel1,ID_BUTTON18,wxEmptyString,wxBitmap(wxImage(_T("./Icones/wxSlider16.png"))),wxPoint(724,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON18"));
+    Button_Sliders = new wxCustomButton(Panel1,ID_BUTTON18,wxEmptyString,wxBitmap(wxImage(_T("./Icones/wxSlider.png"))),wxPoint(724,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON18"));
     Button_Sliders->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/wxSlider16.png"))));
     Button_Sliders->SetBitmapDisabled(Button_Sliders->CreateBitmapDisabled(Button_Sliders->GetBitmapLabel()));
     Button_Groupes = new wxCustomButton(Panel1,ID_BUTTON19,wxEmptyString,wxBitmap(wxImage(_T("./Icones/groupes.png"))),wxPoint(748,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON19"));
@@ -808,6 +808,14 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         Element->Numero_base = 0;
     }
 
+/* Test de nouvelle taille d'icône */
+    if (Element->icon_size != 16) {
+        int new_width = SetNewIcons(Element->icon_size);
+        wxRect rect   = this->GetRect();                    // récupère position et taille de la fenêtre
+        int new_posx  = rect.x-(new_width-rect.width)/2;    // Calcul du nouveau début en X
+        this->SetPosition(wxPoint(new_posx ,rect.y));       // pour recentrer si besoin...
+    }
+
     if (arg_c >= 2) {
         printf("fichier  : %s\n",(const char *)par_1.mb_str());
         Element->set_file(par_1);
@@ -914,6 +922,97 @@ void OvniFrame::InitBoutons(void)
     Panel_Sliders->Show(true);          // => Sliders affichés
     Panel_Sliders->Refresh(true);
     if (verbose) printf("Sortie OvniFrame::InitBoutons\n");
+}
+
+int OvniFrame::SetNewIcons(int icon_size) {
+    wxString ext = _T(".png");                                      // NOTE : avec des fichiers .svg, on doit pouvoir éviter d'avoir un jeu de fichiers par taille.
+    int button_pos  = 460;
+    int button_size = icon_size+8;
+    Panel1->SetMinSize(wxSize(-1,button_size+1));                   // Ajuster la taille en Y de la barre de boutons
+//    Panel1->SetSize   (wxSize(-1,button_size+1));
+
+    Button_ZoomPlus ->SetSize(wxSize(45,button_size));              // Sur ces boutons, on ne change que la taille en Y
+    Button_ZoomMoins->SetSize(wxSize(45,button_size));
+    Button_Gauche   ->SetSize(wxSize(55,button_size));
+    Button_Droite   ->SetSize(wxSize(55,button_size));
+    Button_Haut     ->SetSize(wxSize(55,button_size));
+    Button_Bas      ->SetSize(wxSize(55,button_size));
+    int pos_Y = icon_size/2 -4;
+    StaticText1     ->SetPosition(wxPoint(  5,pos_Y));              // position en Y : 4 pour 16x16, 8 pour 24x24, 11 ou 12 pour 32x32
+    StaticText2     ->SetPosition(wxPoint(152,pos_Y));
+
+    wxSize* SizeXY_button = new wxSize(button_size,button_size);    // Nouvelle taille commune des boutons en XY de type wxToggleButton
+
+    if (icon_size > 16) {
+        ext.Printf(_T("_%d.png"),icon_size);    //        ext = _T("_24") + ext;
+    }
+    Button_Points   ->SetBitmap(wxImage(_T("./Icones/points")   + ext));
+    Button_Filaire  ->SetBitmap(wxImage(_T("./Icones/filaire")  + ext));
+    Button_Plein    ->SetBitmap(wxImage(_T("./Icones/plein")    + ext));
+    Button_Axes     ->SetBitmap(wxImage(_T("./Icones/axes")     + ext));
+    Button_Boite    ->SetBitmap(wxImage(_T("./Icones/boite")    + ext));
+    Button_Normale_Barycentre->SetBitmap(wxImage(_T("./Icones/B_Normales") + ext));
+    Button_Normales_Sommets  ->SetBitmap(wxImage(_T("./Icones/S_Normales") + ext));
+    Button_Source   ->SetBitmap(wxImage(_T("./Icones/sun")      + ext));
+    Button_Gouraud  ->SetBitmap(wxImage(_T("./Icones/gouraud")  + ext));
+    Button_Outils   ->SetBitmap(wxImage(_T("./Icones/outils")   + ext));
+    Button_Modifs   ->SetBitmap(wxImage(_T("./Icones/modifs")   + ext));
+    Button_Sliders  ->SetBitmap(wxImage(_T("./Icones/wxSlider") + ext));
+    Button_Groupes  ->SetBitmap(wxImage(_T("./Icones/groupes")  + ext));
+    Button_Materiaux->SetBitmap(wxImage(_T("./Icones/materiau") + ext));
+
+    Button_Points ->SetSize(*SizeXY_button);
+    Button_Points ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Filaire->SetSize(*SizeXY_button);
+    Button_Filaire->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Plein  ->SetSize(*SizeXY_button);
+    Button_Plein  ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Axes   ->SetSize(*SizeXY_button);
+    Button_Axes   ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Boite  ->SetSize(*SizeXY_button);
+    Button_Boite  ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Normale_Barycentre->SetSize(*SizeXY_button);
+    Button_Normale_Barycentre->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Normales_Sommets  ->SetSize(*SizeXY_button);
+    Button_Normales_Sommets  ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Source ->SetSize(*SizeXY_button);
+    Button_Source ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Gouraud->SetSize(*SizeXY_button);
+    Button_Gouraud->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Outils ->SetSize(*SizeXY_button);
+    Button_Outils ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Modifs ->SetSize(*SizeXY_button);
+    Button_Modifs ->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Sliders->SetSize(*SizeXY_button);
+    Button_Sliders->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Groupes->SetSize(*SizeXY_button);
+    Button_Groupes->SetPosition(wxPoint(button_pos,0));
+    button_pos +=   button_size;
+    Button_Materiaux->SetSize(*SizeXY_button);
+    Button_Materiaux->SetPosition(wxPoint(button_pos,0));
+
+    button_pos += (button_size +20);                            // Mettre un peu plus sinon le dernier bouton est tronqué
+
+    wxRect rect  = this->GetRect();                             // récupère position et taille de la fenêtre
+    wxSize* ClientSizeXY = new wxSize(button_pos,rect.height);  // Ajuster la taille minimale de la fenêtre
+    this->SetMinSize(*ClientSizeXY);
+
+    delete SizeXY_button;
+    delete ClientSizeXY;
+
+    return(button_pos);
 }
 
 bool OvniFrame::OnBdd_modifiee() {
@@ -1666,8 +1765,9 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 //    Preferences_Panel->TextCtrl_WorkDir->SetStyle(-1,-1,wxTextAttr(wxTE_RIGHT)); // A revoir : Ne marche pas. L'idée est de cadrer à droite pour voir la fin du nom de répertoire
 //    wxTextAttr* style=wxTE_RIGHT;
 
-    Preferences_Panel->SpinCtrl_Threads->SetMax  (Element->nb_max_threads);
-    Preferences_Panel->SpinCtrl_Threads->SetValue(Element->nb_threads);
+    Preferences_Panel->SpinCtrl_Threads ->SetMax  (Element->nb_max_threads);
+    Preferences_Panel->SpinCtrl_Threads ->SetValue(Element->nb_threads);
+    Preferences_Panel->RadioBox_IconSize->SetSelection(Element->icon_index);
 
     Element->ini_file_modified = svg;   // Restitution de la valeur qu'il y avait en entrée
 

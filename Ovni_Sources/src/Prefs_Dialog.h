@@ -44,6 +44,7 @@ class Prefs_Dialog: public wxDialog
 		wxCheckBox* CheckBox_SupprBackup;
 		wxCheckBox* CheckBox_TestDecalage3DS;
 		wxCheckBox* CheckBox_TraiterDoublonsAretes;
+		wxRadioBox* RadioBox_IconSize;
 		wxRadioBox* RadioBox_Trackball;
 		wxRadioBox* RadioBox_Triangulation;
 		wxSpinCtrl* SpinCtrl_PasSvg;
@@ -116,6 +117,7 @@ class Prefs_Dialog: public wxDialog
 		static const long ID_STATICLINE7;
 		static const long ID_RADIOBOX1;
 		static const long ID_RADIOBOX2;
+		static const long ID_RADIOBOX3;
 		static const long ID_STATICLINE8;
 		static const long ID_CHECKBOX7;
 		static const long ID_STATICLINE10;
@@ -136,7 +138,6 @@ class Prefs_Dialog: public wxDialog
 	private:
 
 		//(*Handlers(Prefs_Dialog)
-		void OnRadioBox1Select(wxCommandEvent& event);
 		void OnButton_OKClick(wxCommandEvent& event);
 		void OnSpinButton2Change(wxSpinEvent& event);
 		void OnSpinButton3Change(wxSpinEvent& event);
@@ -171,6 +172,7 @@ class Prefs_Dialog: public wxDialog
 		void OnInit(wxInitDialogEvent& event);
 		void OnSpinCtrl_ThreadsChange(wxSpinEvent& event);
 		void OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event);
+		void OnRadioBox_IconSizeSelect(wxCommandEvent& event);
 		//*)
 		OvniFrame* MAIN;
 

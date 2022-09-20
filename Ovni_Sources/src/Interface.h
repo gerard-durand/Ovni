@@ -853,6 +853,8 @@ public :
     float angle_Gouraud_def = 35.0f;
     float fmult_Gouraud_def =  1.6f;
     int   svg_time_def      = 5;                    // en minutes
+    int   icon_sizes[3]     = {16, 24, 32};         // 3 tailles d'icônes : 16, 24 ou 32 pixels
+    int   icon_index_def    = 0;                    // Par défaut, icônes en 16*16 pixels
     bool  test_seuil_gouraud_def       = true;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
     bool  forcer_simplification_doublons_aretes_def = false;
@@ -909,6 +911,8 @@ public :
     bool  forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
     int   nb_threads               = nb_threads_def;
     int   nb_max_threads;
+    int   icon_index               = icon_index_def;
+    int   icon_size                = icon_sizes[icon_index];
 
     GLfloat Light0Position[4];              // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
