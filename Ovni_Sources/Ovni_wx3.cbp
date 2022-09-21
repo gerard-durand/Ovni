@@ -123,8 +123,8 @@
 			<Add library="gomp" />
 			<Add library="lib3ds-2_0_64.a" />
 			<Add library="libexpat.a" />
-			<Add directory="C:/MinGW64/lib" />
 			<Add directory="lib64" />
+			<Add directory="C:/MinGW64/lib" />
 		</Linker>
 		<Unit filename="src/Aide_html.cpp" />
 		<Unit filename="src/Aide_html.h" />

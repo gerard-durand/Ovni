@@ -305,7 +305,6 @@ void BddInter::ResetData() {
         // Reset du répertoire de travail par défaut = chemin de l'exécutable
         MPrefs->TextCtrl_WorkDir->SetLabel(wxWorkDir);
         MPrefs->SpinCtrl_Threads->SetValue(nb_threads);
-        MPrefs->RadioBox_IconSize->SetSelection(icon_index);
     }
     if (MPosObs != nullptr) {
         ival = convert_rotx_LSI();
@@ -623,8 +622,9 @@ void BddInter::Ouvrir_ini_file()
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&icon_size) ;             // Récupère la valeur de icon_size
                 icon_index = 0;
-                if(icon_size > 16)        icon_index = 1;
-                else if (icon_size >= 32) icon_index = 2;
+                if (icon_size >  16) icon_index = 1 ;
+                if (icon_size >= 32) icon_index = 2 ;
+                icon_size = icon_sizes[icon_index]  ;           // par précaution, n'autoriser que les valeurs de icon_sizes
                 continue;   // Passer au while suivant
             }
         }
