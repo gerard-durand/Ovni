@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/Lorenz/lorenz.c" "CMakeFiles/Lorenz_static.dir/progs/demos/Lorenz/lorenz.c.obj" "gcc" "CMakeFiles/Lorenz_static.dir/progs/demos/Lorenz/lorenz.c.obj.d"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/Lorenz/lorenz.c" "CMakeFiles/Lorenz_static.dir/progs/demos/Lorenz/lorenz.c.obj" "gcc" "CMakeFiles/Lorenz_static.dir/progs/demos/Lorenz/lorenz.c.obj.d"
   )
 
 # Targets to which this target links.

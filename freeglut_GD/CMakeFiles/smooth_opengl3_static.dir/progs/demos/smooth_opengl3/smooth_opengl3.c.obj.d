@@ -1,7 +1,7 @@
 CMakeFiles/smooth_opengl3_static.dir/progs/demos/smooth_opengl3/smooth_opengl3.c.obj: \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\smooth_opengl3\smooth_opengl3.c \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\smooth_opengl3\smooth_opengl3.c \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
  C:/MinGW64/include/windows.h C:/MinGW64/include/_mingw.h \
  C:/MinGW64/include/_mingw_mac.h C:/MinGW64/include/_mingw_secapi.h \
  C:/MinGW64/include/vadefs.h C:/MinGW64/include/sdks/_mingw_ddk.h \
@@ -147,8 +147,8 @@ CMakeFiles/smooth_opengl3_static.dir/progs/demos/smooth_opengl3/smooth_opengl3.c
  C:/MinGW64/include/sec_api/stralign_s.h C:/MinGW64/include/winsvc.h \
  C:/MinGW64/include/mcx.h C:/MinGW64/include/imm.h \
  C:/MinGW64/include/GL/gl.h C:/MinGW64/include/GL/glu.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h \
  C:/MinGW64/include/stdio.h C:/MinGW64/include/corecrt_stdio_config.h \
  C:/MinGW64/include/_mingw_off_t.h C:/MinGW64/include/swprintf.inl \
  C:/MinGW64/include/sec_api/stdio_s.h

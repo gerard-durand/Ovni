@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,33 +70,33 @@ include CMakeFiles/shapes_static.dir/flags.make
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj: CMakeFiles/shapes_static.dir/flags.make
 CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj: CMakeFiles/shapes_static.dir/includes_C.rsp
-CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj: progs/demos/shapes/shapes.c
+CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/shapes.c
 CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj: CMakeFiles/shapes_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj -MF CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.obj.d -o CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj -MF CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.obj.d -o CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c > CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c > CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.i
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c -o CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\shapes.c -o CMakeFiles\shapes_static.dir\progs\demos\shapes\shapes.c.s
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj: CMakeFiles/shapes_static.dir/flags.make
 CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj: CMakeFiles/shapes_static.dir/includes_C.rsp
-CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj: progs/demos/shapes/glmatrix.c
+CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/glmatrix.c
 CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj: CMakeFiles/shapes_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj -MF CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.obj.d -o CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj -MF CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.obj.d -o CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c > CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c > CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.i
 
 CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c -o CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\shapes\glmatrix.c -o CMakeFiles\shapes_static.dir\progs\demos\shapes\glmatrix.c.s
 
 # Object files for target shapes_static
 shapes_static_OBJECTS = \
@@ -125,6 +125,6 @@ CMakeFiles/shapes_static.dir/clean:
 .PHONY : CMakeFiles/shapes_static.dir/clean
 
 CMakeFiles/shapes_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\shapes_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\shapes_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/shapes_static.dir/depend
 

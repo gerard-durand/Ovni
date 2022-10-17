@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <rect width="128" height="128" fill="#6596bd"/>
+ <path d="m120.5 26.5-74 12-36-19 71-13z" fill="#a5a6a6"/>
+ <path d="m10.5 19.5 36 19 1 79-36-21z" fill="#333"/>
+ <path d="m120.5 26.5 0.5 78-73.5 13-1-79z" fill="#757676"/>
+</svg>

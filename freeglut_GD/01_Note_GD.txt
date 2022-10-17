@@ -1,0 +1,5 @@
+Ce répertoire contient aussi les fichiers ajoutés ou modifiés par rapport au dépot d'origine freeglut sur https://github.com/FreeGLUTProject/freeglut
+Utilisation :
+freeglut_libs.cbp : projet Code::Blocks de génération de la librairie. Chemin et compilateurs à adapter si-besoin.
+freeglut_full.cbp : projet Code::Blocks de génération des exemples et des librairies. Chemin et compilateurs à adapter si-besoin.
+Pour Ovni, préférer la version dll 64 bits. La version statique peut aussi fonctionner.

@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,18 +70,18 @@ include CMakeFiles/timer_static.dir/flags.make
 
 CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj: CMakeFiles/timer_static.dir/flags.make
 CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj: CMakeFiles/timer_static.dir/includes_C.rsp
-CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj: progs/demos/timer/timer.c
+CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/timer/timer.c
 CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj: CMakeFiles/timer_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj -MF CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.obj.d -o CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.obj -MF CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.obj.d -o CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c
 
 CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c > CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c > CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.i
 
 CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/timer_static.dir/progs/demos/timer/timer.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c -o CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c -o CMakeFiles\timer_static.dir\progs\demos\timer\timer.c.s
 
 # Object files for target timer_static
 timer_static_OBJECTS = \
@@ -108,6 +108,6 @@ CMakeFiles/timer_static.dir/clean:
 .PHONY : CMakeFiles/timer_static.dir/clean
 
 CMakeFiles/timer_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\timer_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\timer_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/timer_static.dir/depend
 

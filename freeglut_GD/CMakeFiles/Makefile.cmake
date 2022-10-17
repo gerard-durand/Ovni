@@ -44,15 +44,15 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Program Files/CMake/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake"
   "C:/Program Files/CMake/share/cmake-3.21/Modules/ProcessorCount.cmake"
   "C:/Program Files/CMake/share/cmake-3.21/Modules/WriteBasicConfigVersionFile.cmake"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeLists.txt"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/FreeGLUTConfig.cmake.in"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/config.h.in"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/freeglut.pc.in"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/freeglut.rc.in"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_version.h.in"
   "CMakeFiles/3.21.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.21.2/CMakeRCCompiler.cmake"
   "CMakeFiles/3.21.2/CMakeSystem.cmake"
-  "CMakeLists.txt"
-  "FreeGLUTConfig.cmake.in"
-  "config.h.in"
-  "freeglut.pc.in"
-  "freeglut.rc.in"
-  "src/fg_version.h.in"
   )
 
 # The corresponding makefile is:

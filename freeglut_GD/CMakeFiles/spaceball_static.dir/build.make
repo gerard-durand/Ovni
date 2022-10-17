@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,33 +70,33 @@ include CMakeFiles/spaceball_static.dir/flags.make
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj: CMakeFiles/spaceball_static.dir/flags.make
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj: CMakeFiles/spaceball_static.dir/includes_C.rsp
-CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj: progs/demos/spaceball/spaceball.c
+CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/spaceball.c
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj: CMakeFiles/spaceball_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj -MF CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.obj.d -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj -MF CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.obj.d -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c > CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c > CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.i
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\spaceball.c -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\spaceball.c.s
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj: CMakeFiles/spaceball_static.dir/flags.make
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj: CMakeFiles/spaceball_static.dir/includes_C.rsp
-CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj: progs/demos/spaceball/vmath.c
+CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/vmath.c
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj: CMakeFiles/spaceball_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj -MF CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.obj.d -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj -MF CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.obj.d -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c > CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c > CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.i
 
 CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\spaceball\vmath.c -o CMakeFiles\spaceball_static.dir\progs\demos\spaceball\vmath.c.s
 
 # Object files for target spaceball_static
 spaceball_static_OBJECTS = \
@@ -125,6 +125,6 @@ CMakeFiles/spaceball_static.dir/clean:
 .PHONY : CMakeFiles/spaceball_static.dir/clean
 
 CMakeFiles/spaceball_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\spaceball_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\spaceball_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/spaceball_static.dir/depend
 

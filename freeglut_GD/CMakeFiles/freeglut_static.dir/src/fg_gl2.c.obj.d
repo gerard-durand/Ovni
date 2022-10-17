@@ -1,7 +1,7 @@
 CMakeFiles/freeglut_static.dir/src/fg_gl2.c.obj: \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
  C:/MinGW64/include/windows.h C:/MinGW64/include/_mingw.h \
  C:/MinGW64/include/_mingw_mac.h C:/MinGW64/include/_mingw_secapi.h \
  C:/MinGW64/include/vadefs.h C:/MinGW64/include/sdks/_mingw_ddk.h \
@@ -147,12 +147,12 @@ CMakeFiles/freeglut_static.dir/src/fg_gl2.c.obj: \
  C:/MinGW64/include/sec_api/stralign_s.h C:/MinGW64/include/winsvc.h \
  C:/MinGW64/include/mcx.h C:/MinGW64/include/imm.h \
  C:/MinGW64/include/GL/gl.h C:/MinGW64/include/GL/glu.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_internal.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_internal.h \
  D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/config.h \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_version.h \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callback_macros.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_version.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callback_macros.h \
  C:/MinGW64/include/stdio.h C:/MinGW64/include/corecrt_stdio_config.h \
  C:/MinGW64/include/_mingw_off_t.h C:/MinGW64/include/swprintf.inl \
  C:/MinGW64/include/sec_api/stdio_s.h C:/MinGW64/include/math.h \
@@ -166,7 +166,7 @@ CMakeFiles/freeglut_static.dir/src/fg_gl2.c.obj: \
  C:/MinGW64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/stdbool.h \
  C:/MinGW64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/stdint.h \
  C:/MinGW64/include/stdint.h \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin/fg_internal_mswin.h \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin/fg_internal_mswin.h \
  C:/MinGW64/include/windowsx.h C:/MinGW64/include/mmsystem.h \
  C:/MinGW64/include/tchar.h C:/MinGW64/include/sec_api/tchar_s.h \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.h
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.h

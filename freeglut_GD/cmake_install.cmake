@@ -1,4 +1,4 @@
-# Install script for directory: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git
+# Install script for directory: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -57,10 +57,10 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xDevelx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/GL" TYPE FILE FILES
-    "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h"
-    "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h"
-    "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h"
-    "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h"
+    "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h"
+    "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h"
+    "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h"
+    "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h"
     )
 endif()
 

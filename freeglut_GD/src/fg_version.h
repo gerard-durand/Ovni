@@ -37,11 +37,11 @@
 #endif
 
 #ifndef VERSION_MINOR
-#define VERSION_MINOR 2
+#define VERSION_MINOR 4
 #endif
 
 #ifndef VERSION_PATCH
-#define VERSION_PATCH 2
+#define VERSION_PATCH 0
 #endif
 
 #endif

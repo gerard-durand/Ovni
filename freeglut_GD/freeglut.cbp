@@ -30,8 +30,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -57,8 +57,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -84,8 +84,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -111,8 +111,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -139,8 +139,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -167,8 +167,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -218,8 +218,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -245,8 +245,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -273,8 +273,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -301,8 +301,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -328,8 +328,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -355,8 +355,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -383,8 +383,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -411,8 +411,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -439,8 +439,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -467,8 +467,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -494,8 +494,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -521,8 +521,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -549,8 +549,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -577,8 +577,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -605,8 +605,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -633,8 +633,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -661,8 +661,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -689,8 +689,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -717,8 +717,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -745,8 +745,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -773,8 +773,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -801,8 +801,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -828,8 +828,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -855,8 +855,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -882,8 +882,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -909,8 +909,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -936,8 +936,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -963,8 +963,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -990,8 +990,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1017,8 +1017,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1045,8 +1045,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1073,8 +1073,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1100,8 +1100,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1127,8 +1127,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1154,8 +1154,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1181,8 +1181,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1208,8 +1208,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1235,8 +1235,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1263,8 +1263,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1291,8 +1291,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1319,8 +1319,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1347,8 +1347,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1375,8 +1375,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1403,8 +1403,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1431,8 +1431,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1459,8 +1459,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1486,8 +1486,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1513,8 +1513,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1541,8 +1541,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1569,8 +1569,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1596,8 +1596,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1623,8 +1623,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1651,8 +1651,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1679,8 +1679,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1706,8 +1706,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1733,8 +1733,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1761,8 +1761,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1789,8 +1789,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1816,8 +1816,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1843,8 +1843,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1871,8 +1871,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1899,8 +1899,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1926,8 +1926,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1953,8 +1953,8 @@
 					<Add option="-D_WIN32_WINNT=0x0601" />
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -1981,8 +1981,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -2009,8 +2009,8 @@
 					<Add option="-DWINVER=0x0601" />
 					<Add option="-DHAVE_CONFIG_H" />
 					<Add option="-DFREEGLUT_STATIC" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
-					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src" />
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include" />
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include" />
 					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include" />
@@ -2077,6 +2077,11 @@
 		<Unit filename="CMakeLists.txt">
 			<Option virtualFolder="CMake Files/" />
 		</Unit>
+		<Unit filename="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/freeglut.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="freeglut" />
+			<Option target="freeglut_static" />
+		</Unit>
 		<Unit filename="FreeGLUTConfig.cmake.in">
 			<Option virtualFolder="CMake Files/" />
 		</Unit>
@@ -2085,11 +2090,6 @@
 		</Unit>
 		<Unit filename="freeglut.pc.in">
 			<Option virtualFolder="CMake Files/" />
-		</Unit>
-		<Unit filename="freeglut.rc">
-			<Option compilerVar="WINDRES" />
-			<Option target="freeglut" />
-			<Option target="freeglut_static" />
 		</Unit>
 		<Unit filename="freeglut.rc.in">
 			<Option virtualFolder="CMake Files/" />

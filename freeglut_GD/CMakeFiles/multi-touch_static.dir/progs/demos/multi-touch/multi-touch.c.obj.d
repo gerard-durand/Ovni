@@ -1,5 +1,5 @@
 CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj: \
- D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\multi-touch\multi-touch.c \
+ C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\multi-touch\multi-touch.c \
  C:/MinGW64/include/stdio.h C:/MinGW64/include/corecrt_stdio_config.h \
  C:/MinGW64/include/corecrt.h C:/MinGW64/include/_mingw.h \
  C:/MinGW64/include/_mingw_mac.h C:/MinGW64/include/_mingw_secapi.h \
@@ -12,8 +12,8 @@ CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj: \
  C:/MinGW64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/mm_malloc.h \
  C:/MinGW64/include/errno.h C:/MinGW64/include/string.h \
  C:/MinGW64/include/sec_api/string_s.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
  C:/MinGW64/include/windows.h C:/MinGW64/include/sdkddkver.h \
  C:/MinGW64/include/excpt.h \
  C:/MinGW64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/stdarg.h \
@@ -151,5 +151,5 @@ CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj: \
  C:/MinGW64/include/sec_api/stralign_s.h C:/MinGW64/include/winsvc.h \
  C:/MinGW64/include/mcx.h C:/MinGW64/include/imm.h \
  C:/MinGW64/include/GL/gl.h C:/MinGW64/include/GL/glu.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
- D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ext.h \
+ C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_ucall.h

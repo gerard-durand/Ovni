@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/spaceball.c" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj" "gcc" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj.d"
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/vmath.c" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj" "gcc" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj.d"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/spaceball.c" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj" "gcc" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/spaceball.c.obj.d"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/spaceball/vmath.c" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj" "gcc" "CMakeFiles/spaceball_static.dir/progs/demos/spaceball/vmath.c.obj.d"
   )
 
 # Targets to which this target links.

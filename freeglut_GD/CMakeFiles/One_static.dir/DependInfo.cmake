@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_RC
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.rc" "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/One_static.dir/progs/demos/One/one.rc.obj"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.rc" "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/One_static.dir/progs/demos/One/one.rc.obj"
   )
 
 # Preprocessor definitions for this target.
@@ -22,14 +22,14 @@ set(CMAKE_TARGET_DEFINITIONS_RC
 
 # The include file search paths:
 set(CMAKE_RC_TARGET_INCLUDE_PATH
-  "src"
-  "include"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"
   "."
   )
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.c" "CMakeFiles/One_static.dir/progs/demos/One/one.c.obj" "gcc" "CMakeFiles/One_static.dir/progs/demos/One/one.c.obj.d"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.c" "CMakeFiles/One_static.dir/progs/demos/One/one.c.obj" "gcc" "CMakeFiles/One_static.dir/progs/demos/One/one.c.obj.d"
   )
 
 # Targets to which this target links.

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/multi-touch/multi-touch.c" "CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj" "gcc" "CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj.d"
+  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/multi-touch/multi-touch.c" "CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj" "gcc" "CMakeFiles/multi-touch_static.dir/progs/demos/multi-touch/multi-touch.c.obj.d"
   )
 
 # Targets to which this target links.
