@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/joystick/joystick.c" "CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj" "gcc" "CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj.d"
+  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/joystick/joystick.c" "CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj" "gcc" "CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj.d"
   )
 
 # Targets to which this target links.

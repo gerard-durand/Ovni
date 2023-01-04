@@ -11,7 +11,7 @@ C_FLAGS =  -Wall -pedantic
 
 RC_DEFINES = -DFREEGLUT_STATIC -DHAVE_CONFIG_H -DWINVER=0x0601 -D_CRT_SECURE_NO_WARNINGS -D_WIN32_WINNT=0x0601
 
-RC_INCLUDES = -I C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src -I C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\include -I D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+RC_INCLUDES = -I D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src -I D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\include -I D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 RC_FLAGS = 
 

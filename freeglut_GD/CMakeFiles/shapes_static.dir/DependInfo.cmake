@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/glmatrix.c" "CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj" "gcc" "CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj.d"
-  "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/shapes.c" "CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj" "gcc" "CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj.d"
+  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/glmatrix.c" "CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj" "gcc" "CMakeFiles/shapes_static.dir/progs/demos/shapes/glmatrix.c.obj.d"
+  "D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/shapes/shapes.c" "CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj" "gcc" "CMakeFiles/shapes_static.dir/progs/demos/shapes/shapes.c.obj.d"
   )
 
 # Targets to which this target links.

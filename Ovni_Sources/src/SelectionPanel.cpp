@@ -180,7 +180,7 @@ SelectionPanel::~SelectionPanel()
 void SelectionPanel::InitPanel()
 {
     BddInter *Element = MAIN->Element;
-    int TypeSelection;
+    int TypeSelection_local;
 
     if (RadioButton_Selection_Points->GetValue()) {
         Element->mode_selection = Element->selection_point;
@@ -226,14 +226,15 @@ void SelectionPanel::InitPanel()
         RadioButton_TypeSelection_Arriere->Disable();
 //        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
 //        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus (il y avait un RadioBox_TypeSelection->Enable();)
+/*        RadioButton_TypeSelection_Both   ->Enable();
         RadioButton_TypeSelection_Avant  ->Enable();
-        RadioButton_TypeSelection_Arriere->Enable();
-        TypeSelection = Element->TypeSelection; // ou = RadioBox_TypeSelection->GetSelection()
+        RadioButton_TypeSelection_Arriere->Enable(); */
+        TypeSelection_local = Element->TypeSelection; // ou = RadioBox_TypeSelection->GetSelection()
 
         glDisable(GL_CULL_FACE);
 
-
     } else if (RadioButton_Selection_Facettes->GetValue()) {
+
         Element->mode_selection = Element->selection_facette;
         Element->show_points = false;
 //        Element->style = GL_POLYGON;
@@ -261,7 +262,6 @@ void SelectionPanel::InitPanel()
         Button_InverserParcours->Enable();
         Button_Fusionner->Disable();
 
-
         Button_Masquer->SetLabel(_T("Masquer les facettes"));
         Button_Masquer->Enable();
 
@@ -273,10 +273,10 @@ void SelectionPanel::InitPanel()
         RadioButton_TypeSelection_Both   ->Enable();
         RadioButton_TypeSelection_Avant  ->Enable();
         RadioButton_TypeSelection_Arriere->Enable();
-        TypeSelection = Element->TypeSelection; // ou initialement RadioBox_TypeSelection->GetSelection()
-        if (TypeSelection > 0) {
+        TypeSelection_local = Element->TypeSelection; // ou initialement RadioBox_TypeSelection->GetSelection()
+        if (TypeSelection_local > 0) {
             glEnable(GL_CULL_FACE);
-            if (TypeSelection == 1)
+            if (TypeSelection_local == 1)
                  glFrontFace(GL_CCW);
             else glFrontFace(GL_CW) ;
         } else glDisable(GL_CULL_FACE); // Ici si == 0
@@ -346,7 +346,7 @@ void SelectionPanel::InitPanel()
         Element->mode_selection = Element->aucune;
     }
 
-    if (RadioButton_Grp->GetValue()) {
+/*    if (RadioButton_Grp->GetValue()) {                                    // Fait aussi dans OnRadioButton_GrpMatSelect
         // Groupe sélectionné
         StaticText_Changer->SetLabel(_T("Changer le numéro de groupe"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des groupes utilisés"));
@@ -354,7 +354,9 @@ void SelectionPanel::InitPanel()
         // Matériau sélectionné
         StaticText_Changer->SetLabel(_T("Changer le numéro de matériau"));
         StaticText_NumerosUtilises->SetLabel(_T("Numéros des matériaux utilisés"));
-    }
+    } */
+    wxCommandEvent new_event;
+    OnRadioButton_GrpMatSelect(new_event);      // Simuler un clic sur le bouton radio Groupe/Matériau pour forcer/initialiser l'affichage des numéros utilisés
 
 }
 
@@ -759,20 +761,21 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
 void SelectionPanel::OnRadioButton_TypeSelectionSelect(wxCommandEvent& event)
 {
 // Initialement, c'était OnRadioBox_TypeSelectionSelect avec des RadioBox_TypeSelection->GetSelection(xx) ...
+// Mais RadioBox a un problème si changement de couleur fond/texte (le texte reste noir sur fond noir !) que n'ont pas les RadioButton. Inconvénient : plus lourd à gérer.
 
     BddInter *Element = MAIN->Element;
-    int TypeSelection;
+    int TypeSelection_local = 0;
 
-    if (RadioButton_TypeSelection_Both   ->GetValue()) TypeSelection = 0;
-    if (RadioButton_TypeSelection_Avant  ->GetValue()) TypeSelection = 1;
-    if (RadioButton_TypeSelection_Arriere->GetValue()) TypeSelection = 2;
+    if (RadioButton_TypeSelection_Both   ->GetValue()) TypeSelection_local = 0; // déjà fait ci-dessus via l'initialisation
+    if (RadioButton_TypeSelection_Avant  ->GetValue()) TypeSelection_local = 1;
+    if (RadioButton_TypeSelection_Arriere->GetValue()) TypeSelection_local = 2;
 
-    Element->TypeSelection = TypeSelection;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
-//    printf("Radio TypeSelection %d\n",TypeSelection);
+    Element->TypeSelection = TypeSelection_local;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
+//    printf("Radio TypeSelection %d\n",TypeSelection_local);
 
-    if (TypeSelection > 0) {        // Fait ici plutôt que dans drawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
+    if (TypeSelection_local > 0) {        // Fait ici plutôt que dans drawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
         glEnable(GL_CULL_FACE);
-        if (TypeSelection == 1)
+        if (TypeSelection_local == 1)
              glFrontFace(GL_CCW);
         else glFrontFace(GL_CW) ;
     } else glDisable(GL_CULL_FACE); // Ici si == 0

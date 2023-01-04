@@ -185,13 +185,14 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxDefaultSize, 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
 	RadioBox_Trackball->SetSelection(1);
 	BoxSizer1->Add(RadioBox_Trackball, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
-	wxString __wxRadioBoxChoices_3[3] =
+	wxString __wxRadioBoxChoices_3[4] =
 	{
 	    _T("16 x16           "),
 	    _T("24 x 24            "),
-	    _T("32 x 32            ")
+	    _T("32 x 32            "),
+	    _T("48 x 48")
 	};
-	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
+	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxDefaultSize, 4, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
 	RadioBox_IconSize->SetSelection(0);
 	BoxSizer1->Add(RadioBox_IconSize, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(380,2), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
@@ -702,7 +703,7 @@ void Prefs_Dialog::OnRadioBox_IconSizeSelect(wxCommandEvent& event)
 {
     BddInter *Element  = MAIN->Element;
 
-    Element->icon_size = Element->icon_sizes[RadioBox_IconSize->GetSelection()];    // soit 16, 24 ou 32 car 3 choix proposés à l'affichage dans Préférences
+    Element->icon_size = Element->icon_sizes[RadioBox_IconSize->GetSelection()];    // soit 16, 24, 32 ou 48 car 4 choix proposés à l'affichage dans Préférences
     int new_width      = MAIN->SetNewIcons(Element->icon_size) ;
     int new_height     = Element->icon_size+9;
     MAIN->Panel1->SetMinSize(wxSize(new_width,new_height));

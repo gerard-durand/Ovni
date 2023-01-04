@@ -624,6 +624,7 @@ void BddInter::Ouvrir_ini_file()
                 icon_index = 0;
                 if (icon_size >  16) icon_index = 1 ;
                 if (icon_size >= 32) icon_index = 2 ;
+                if (icon_size >= 48) icon_index = 3 ;
                 icon_size = icon_sizes[icon_index]  ;           // par précaution, n'autoriser que les valeurs de icon_sizes
                 continue;   // Passer au while suivant
             }
@@ -899,6 +900,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 //            printf("Right clic\n");
             wxMenu My_popupmenu;
             long ID_POPUP_RAZ        = MAIN_b->ID_POPUP_RAZ;
+            long ID_POPUP_COMPLEMT   = MAIN_b->ID_POPUP_COMPLEMT;
             long ID_POPUP_ETENDRE    = MAIN_b->ID_POPUP_ETENDRE;
             long ID_POPUP_CENTRER    = MAIN_b->ID_POPUP_CENTRER;
             long ID_POPUP_MASQUER    = MAIN_b->ID_POPUP_MASQUER;
@@ -934,6 +936,14 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             Popup_RAZ->SetBackgroundColour(Back);
             Popup_RAZ->SetTextColour(Forg);
             My_popupmenu.Append(Popup_RAZ);
+
+            if (mode_selection == selection_facette) {
+                wxMenuItem * Popup_COMPLEMT;
+                Popup_COMPLEMT = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_COMPLEMT->SetBackgroundColour(Back);
+                Popup_COMPLEMT->SetTextColour(Forg);
+                My_popupmenu.Append(Popup_COMPLEMT);
+            }
 
             wxMenuItem * Popup_Centrer;
             if (this->ToSelect.ListeSelect.size() > 0)
@@ -1686,6 +1696,44 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         Refresh();
         break;
 
+// Complément de la sélection de facettes dans les objets
+    case 'K':
+// ou    case 'k':
+    if (mode_selection== selection_facette) {   // seulement en mode de sélection de facettes
+        bool Inverse_Selected_Facettes = false;
+        // balayer les objets
+        for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
+            // balayer les facettes de l'objet
+            Objet_courant = &(this->Objetlist[objet]);
+            unsigned int nbfacettes = Objet_courant->Facelist.size();
+            bool facette_selected = false;
+            for (unsigned int face=0; face < nbfacettes; face++) {
+                // Rechercher si une facette est sélectionnée dans cet objet
+                if (ToSelect.check_if_in_ListeSelect(objet,face)) {
+                    facette_selected = true;
+                    Inverse_Selected_Facettes = true;
+                    break;  // Inutile de poursuivre le balayage, on a trouvé au moins une facette sélectionnée dans cet objet
+                }
+            }
+            if (facette_selected) { // Au moins une facette a été sélectionnée dans l'objet
+                for (unsigned int face=0; face < nbfacettes; face++) {
+                    if (ToSelect.check_if_in_ListeSelect(objet,face)) {
+                        ToSelect.erase_one(objet,face);     // La facette était sélectionnée => l'enlever de la liste
+                    } else {
+                        ToSelect.add_one(objet,face);       // La facette n'était pas sélectionnée => l'ajouter à la liste
+                    }
+                    Objet_courant->Facelist[face].selected = !Objet_courant->Facelist[face].selected;
+                }
+            }
+        }
+        if (Inverse_Selected_Facettes) {
+            m_gllist = glliste_select;
+            Refresh();
+        }
+    }
+    break;
+
+
 // Changer de mode Trackball <-> Direct
     case 'T':
 // ou    case 't':
@@ -1829,7 +1877,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 //                            Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def;     // Ne sert plus ?
                             Facette_courante->deleted  = true;
                             Elements_Supprimes= true;              // Au moins une facette supprimée
-                            ToSelect.erase_one_ListeSelect(objet,face);
+                            ToSelect.erase_one(objet,face);
                         }
                     }
                 }
@@ -1867,7 +1915,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 //                            Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def; // Ne sert plus ?
                             Facette_courante->afficher = false;
                             Elements_Masques  = true;               // Au moins une facette masquée
-                            ToSelect.erase_one_ListeSelect(objet,face);
+                            ToSelect.erase_one(objet,face);
                         }
                     }
                 }
@@ -2767,8 +2815,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->RadioBox_Trackball        ->SetBackgroundColour(Back);
     this->MPrefs->RadioBox_Triangulation    ->SetForegroundColour(Forg);    // Les 3 choix restent en noir => Idem
     this->MPrefs->RadioBox_Triangulation    ->SetBackgroundColour(Back);
-    this->MPrefs->RadioBox_IconSize  ->SetForegroundColour(Forg);
-    this->MPrefs->RadioBox_IconSize  ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_IconSize ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_IconSize ->SetBackgroundColour(Back);
     this->MPrefs->TextCtrl_WorkDir  ->SetForegroundColour(Forg);
     this->MPrefs->TextCtrl_WorkDir  ->SetBackgroundColour(Gris);
     this->MPrefs->Button_tmp_rep    ->SetForegroundColour(Forg);
@@ -2994,8 +3042,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MRotation->StaticText5        ->SetForegroundColour(Forg);
     this->MRotation->StaticText6        ->SetForegroundColour(Forg);
     this->MRotation->StaticText7        ->SetForegroundColour(Forg);
-    this->MRotation->RadioBox_Centre->SetForegroundColour(Forg);
-    this->MRotation->RadioBox_Centre->SetBackgroundColour(Back);
+    this->MRotation->RadioBox_Centre    ->SetForegroundColour(Forg);
+    this->MRotation->RadioBox_Centre    ->SetBackgroundColour(Back);
     this->MRotation->TextCtrl_PasAngulaire->SetForegroundColour(Forg);
     this->MRotation->TextCtrl_PasAngulaire->SetBackgroundColour(Gris);
     this->MRotation->TextCtrl_AngleX    ->SetForegroundColour(Forg);
@@ -9880,18 +9928,18 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         mode_selection = selection_point;
                         wxKeyEvent key_event;
                         key_event.m_keyCode = 'S';
-                        OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de points
+                        OnKeyDown(key_event);               // Simule une pression sur la touche S au clavier => Reset de la sélection de points
                         mode_selection = old;
 
                         m_gllist = 0;
                         Refresh();
 
                     } else if (OnOff) {
-                        ToSelect.erase_one_ListeSelect(objet,point);    // Si le point est déjà dans la liste et que ce n'est pas le 1er, le supprimer
+                        ToSelect.erase_one(objet,point);    // Si le point est déjà dans la liste et que ce n'est pas le 1er, le supprimer
                         Objetlist[objet].Sommetlist[point].selected = false;
                     }
                 } else if (OnOff) {
-                    ToSelect.erase_one_ListeSelect(objet,point);        // Si OnOff est true et si le point est déjà dans la liste, le supprimer
+                    ToSelect.erase_one(objet,point);        // Si OnOff est true et si le point est déjà dans la liste, le supprimer
                     Objetlist[objet].Sommetlist[point].selected = false;
                 }
             } else {
@@ -9958,11 +10006,11 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                             ToSelect.add_one(objet,face);                       // N'ajouter que si non déjà présent dans la Liste
                             colorface(objet, face, true);
                     } else {
-                        ToSelect.erase_one_ListeSelect(objet,face);         // Sinon, le supprimer
+                        ToSelect.erase_one(objet,face);                         // Sinon, le supprimer
                             colorface(objet, face, false);
                     }
                 } else {
-                    if (!ToSelect.check_if_in_ListeSelect(objet,face)) {    // N'ajouter que si non déjà présent dans la Liste
+                    if (!ToSelect.check_if_in_ListeSelect(objet,face)) {        // N'ajouter que si non déjà présent dans la Liste
                             ToSelect.add_one(objet,face);
                             colorface(objet, face, true);
                         }

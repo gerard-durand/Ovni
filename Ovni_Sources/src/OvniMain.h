@@ -264,6 +264,7 @@ class OvniFrame: public wxFrame
 
 // ID_POPUP_* créés par wxSmith en private initialement, puis déplacés ici en public
         static const long ID_POPUP_RAZ;
+        static const long ID_POPUP_COMPLEMT;
         static const long ID_POPUP_ETENDRE;
         static const long ID_POPUP_CENTRER;
         static const long ID_POPUP_MASQUER;
@@ -400,6 +401,7 @@ class OvniFrame: public wxFrame
         void Lire_Image(int &, int &);
         void OnModifsXYZ();
         void OnPopup_Centrer_sur_SelectionSelected(wxCommandEvent& event);
+        void OnPopup_Complementer_SelectionFacettesSelected(wxCommandEvent& event);
         void OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event);
         void OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event);
         void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);

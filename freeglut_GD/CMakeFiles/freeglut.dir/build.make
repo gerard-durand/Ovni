@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,573 +70,573 @@ include CMakeFiles/freeglut.dir/flags.make
 
 CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_callbacks.c
+CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj: src/fg_callbacks.c
 CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj -MF CMakeFiles\freeglut.dir\src\fg_callbacks.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_callbacks.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_callbacks.c.obj -MF CMakeFiles\freeglut.dir\src\fg_callbacks.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_callbacks.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c
 
 CMakeFiles/freeglut.dir/src/fg_callbacks.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_callbacks.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c > CMakeFiles\freeglut.dir\src\fg_callbacks.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c > CMakeFiles\freeglut.dir\src\fg_callbacks.c.i
 
 CMakeFiles/freeglut.dir/src/fg_callbacks.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_callbacks.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c -o CMakeFiles\freeglut.dir\src\fg_callbacks.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_callbacks.c -o CMakeFiles\freeglut.dir\src\fg_callbacks.c.s
 
 CMakeFiles/freeglut.dir/src/fg_cursor.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_cursor.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_cursor.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_cursor.c
+CMakeFiles/freeglut.dir/src/fg_cursor.c.obj: src/fg_cursor.c
 CMakeFiles/freeglut.dir/src/fg_cursor.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/freeglut.dir/src/fg_cursor.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_cursor.c.obj -MF CMakeFiles\freeglut.dir\src\fg_cursor.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_cursor.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_cursor.c.obj -MF CMakeFiles\freeglut.dir\src\fg_cursor.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_cursor.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c
 
 CMakeFiles/freeglut.dir/src/fg_cursor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_cursor.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c > CMakeFiles\freeglut.dir\src\fg_cursor.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c > CMakeFiles\freeglut.dir\src\fg_cursor.c.i
 
 CMakeFiles/freeglut.dir/src/fg_cursor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_cursor.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c -o CMakeFiles\freeglut.dir\src\fg_cursor.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_cursor.c -o CMakeFiles\freeglut.dir\src\fg_cursor.c.s
 
 CMakeFiles/freeglut.dir/src/fg_display.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_display.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_display.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_display.c
+CMakeFiles/freeglut.dir/src/fg_display.c.obj: src/fg_display.c
 CMakeFiles/freeglut.dir/src/fg_display.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/freeglut.dir/src/fg_display.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_display.c.obj -MF CMakeFiles\freeglut.dir\src\fg_display.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_display.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_display.c.obj -MF CMakeFiles\freeglut.dir\src\fg_display.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_display.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c
 
 CMakeFiles/freeglut.dir/src/fg_display.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_display.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c > CMakeFiles\freeglut.dir\src\fg_display.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c > CMakeFiles\freeglut.dir\src\fg_display.c.i
 
 CMakeFiles/freeglut.dir/src/fg_display.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_display.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c -o CMakeFiles\freeglut.dir\src\fg_display.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_display.c -o CMakeFiles\freeglut.dir\src\fg_display.c.s
 
 CMakeFiles/freeglut.dir/src/fg_ext.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_ext.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_ext.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_ext.c
+CMakeFiles/freeglut.dir/src/fg_ext.c.obj: src/fg_ext.c
 CMakeFiles/freeglut.dir/src/fg_ext.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/freeglut.dir/src/fg_ext.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_ext.c.obj -MF CMakeFiles\freeglut.dir\src\fg_ext.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_ext.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_ext.c.obj -MF CMakeFiles\freeglut.dir\src\fg_ext.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_ext.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c
 
 CMakeFiles/freeglut.dir/src/fg_ext.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_ext.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c > CMakeFiles\freeglut.dir\src\fg_ext.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c > CMakeFiles\freeglut.dir\src\fg_ext.c.i
 
 CMakeFiles/freeglut.dir/src/fg_ext.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_ext.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c -o CMakeFiles\freeglut.dir\src\fg_ext.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_ext.c -o CMakeFiles\freeglut.dir\src\fg_ext.c.s
 
 CMakeFiles/freeglut.dir/src/fg_font_data.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_font_data.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_font_data.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_font_data.c
+CMakeFiles/freeglut.dir/src/fg_font_data.c.obj: src/fg_font_data.c
 CMakeFiles/freeglut.dir/src/fg_font_data.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/freeglut.dir/src/fg_font_data.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_font_data.c.obj -MF CMakeFiles\freeglut.dir\src\fg_font_data.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_font_data.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_font_data.c.obj -MF CMakeFiles\freeglut.dir\src\fg_font_data.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_font_data.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c
 
 CMakeFiles/freeglut.dir/src/fg_font_data.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_font_data.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c > CMakeFiles\freeglut.dir\src\fg_font_data.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c > CMakeFiles\freeglut.dir\src\fg_font_data.c.i
 
 CMakeFiles/freeglut.dir/src/fg_font_data.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_font_data.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c -o CMakeFiles\freeglut.dir\src\fg_font_data.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font_data.c -o CMakeFiles\freeglut.dir\src\fg_font_data.c.s
 
 CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_gamemode.c
+CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj: src/fg_gamemode.c
 CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj -MF CMakeFiles\freeglut.dir\src\fg_gamemode.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_gamemode.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_gamemode.c.obj -MF CMakeFiles\freeglut.dir\src\fg_gamemode.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_gamemode.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c
 
 CMakeFiles/freeglut.dir/src/fg_gamemode.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_gamemode.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c > CMakeFiles\freeglut.dir\src\fg_gamemode.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c > CMakeFiles\freeglut.dir\src\fg_gamemode.c.i
 
 CMakeFiles/freeglut.dir/src/fg_gamemode.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_gamemode.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c -o CMakeFiles\freeglut.dir\src\fg_gamemode.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gamemode.c -o CMakeFiles\freeglut.dir\src\fg_gamemode.c.s
 
 CMakeFiles/freeglut.dir/src/fg_geometry.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_geometry.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_geometry.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_geometry.c
+CMakeFiles/freeglut.dir/src/fg_geometry.c.obj: src/fg_geometry.c
 CMakeFiles/freeglut.dir/src/fg_geometry.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/freeglut.dir/src/fg_geometry.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_geometry.c.obj -MF CMakeFiles\freeglut.dir\src\fg_geometry.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_geometry.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_geometry.c.obj -MF CMakeFiles\freeglut.dir\src\fg_geometry.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_geometry.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c
 
 CMakeFiles/freeglut.dir/src/fg_geometry.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_geometry.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c > CMakeFiles\freeglut.dir\src\fg_geometry.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c > CMakeFiles\freeglut.dir\src\fg_geometry.c.i
 
 CMakeFiles/freeglut.dir/src/fg_geometry.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_geometry.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c -o CMakeFiles\freeglut.dir\src\fg_geometry.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_geometry.c -o CMakeFiles\freeglut.dir\src\fg_geometry.c.s
 
 CMakeFiles/freeglut.dir/src/fg_gl2.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_gl2.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_gl2.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_gl2.c
+CMakeFiles/freeglut.dir/src/fg_gl2.c.obj: src/fg_gl2.c
 CMakeFiles/freeglut.dir/src/fg_gl2.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/freeglut.dir/src/fg_gl2.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_gl2.c.obj -MF CMakeFiles\freeglut.dir\src\fg_gl2.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_gl2.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_gl2.c.obj -MF CMakeFiles\freeglut.dir\src\fg_gl2.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_gl2.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c
 
 CMakeFiles/freeglut.dir/src/fg_gl2.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_gl2.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c > CMakeFiles\freeglut.dir\src\fg_gl2.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c > CMakeFiles\freeglut.dir\src\fg_gl2.c.i
 
 CMakeFiles/freeglut.dir/src/fg_gl2.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_gl2.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c -o CMakeFiles\freeglut.dir\src\fg_gl2.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_gl2.c -o CMakeFiles\freeglut.dir\src\fg_gl2.c.s
 
 CMakeFiles/freeglut.dir/src/fg_init.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_init.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_init.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_init.c
+CMakeFiles/freeglut.dir/src/fg_init.c.obj: src/fg_init.c
 CMakeFiles/freeglut.dir/src/fg_init.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/freeglut.dir/src/fg_init.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_init.c.obj -MF CMakeFiles\freeglut.dir\src\fg_init.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_init.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_init.c.obj -MF CMakeFiles\freeglut.dir\src\fg_init.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_init.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c
 
 CMakeFiles/freeglut.dir/src/fg_init.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_init.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c > CMakeFiles\freeglut.dir\src\fg_init.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c > CMakeFiles\freeglut.dir\src\fg_init.c.i
 
 CMakeFiles/freeglut.dir/src/fg_init.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_init.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c -o CMakeFiles\freeglut.dir\src\fg_init.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_init.c -o CMakeFiles\freeglut.dir\src\fg_init.c.s
 
 CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_input_devices.c
+CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj: src/fg_input_devices.c
 CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj -MF CMakeFiles\freeglut.dir\src\fg_input_devices.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_input_devices.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_input_devices.c.obj -MF CMakeFiles\freeglut.dir\src\fg_input_devices.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_input_devices.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c
 
 CMakeFiles/freeglut.dir/src/fg_input_devices.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_input_devices.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c > CMakeFiles\freeglut.dir\src\fg_input_devices.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c > CMakeFiles\freeglut.dir\src\fg_input_devices.c.i
 
 CMakeFiles/freeglut.dir/src/fg_input_devices.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_input_devices.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c -o CMakeFiles\freeglut.dir\src\fg_input_devices.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_input_devices.c -o CMakeFiles\freeglut.dir\src\fg_input_devices.c.s
 
 CMakeFiles/freeglut.dir/src/fg_joystick.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_joystick.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_joystick.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_joystick.c
+CMakeFiles/freeglut.dir/src/fg_joystick.c.obj: src/fg_joystick.c
 CMakeFiles/freeglut.dir/src/fg_joystick.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/freeglut.dir/src/fg_joystick.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_joystick.c.obj -MF CMakeFiles\freeglut.dir\src\fg_joystick.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_joystick.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_joystick.c.obj -MF CMakeFiles\freeglut.dir\src\fg_joystick.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_joystick.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c
 
 CMakeFiles/freeglut.dir/src/fg_joystick.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_joystick.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c > CMakeFiles\freeglut.dir\src\fg_joystick.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c > CMakeFiles\freeglut.dir\src\fg_joystick.c.i
 
 CMakeFiles/freeglut.dir/src/fg_joystick.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_joystick.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c -o CMakeFiles\freeglut.dir\src\fg_joystick.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_joystick.c -o CMakeFiles\freeglut.dir\src\fg_joystick.c.s
 
 CMakeFiles/freeglut.dir/src/fg_main.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_main.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_main.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_main.c
+CMakeFiles/freeglut.dir/src/fg_main.c.obj: src/fg_main.c
 CMakeFiles/freeglut.dir/src/fg_main.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/freeglut.dir/src/fg_main.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_main.c.obj -MF CMakeFiles\freeglut.dir\src\fg_main.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_main.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_main.c.obj -MF CMakeFiles\freeglut.dir\src\fg_main.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_main.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c
 
 CMakeFiles/freeglut.dir/src/fg_main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_main.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c > CMakeFiles\freeglut.dir\src\fg_main.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c > CMakeFiles\freeglut.dir\src\fg_main.c.i
 
 CMakeFiles/freeglut.dir/src/fg_main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_main.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c -o CMakeFiles\freeglut.dir\src\fg_main.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_main.c -o CMakeFiles\freeglut.dir\src\fg_main.c.s
 
 CMakeFiles/freeglut.dir/src/fg_misc.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_misc.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_misc.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_misc.c
+CMakeFiles/freeglut.dir/src/fg_misc.c.obj: src/fg_misc.c
 CMakeFiles/freeglut.dir/src/fg_misc.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/freeglut.dir/src/fg_misc.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_misc.c.obj -MF CMakeFiles\freeglut.dir\src\fg_misc.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_misc.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_misc.c.obj -MF CMakeFiles\freeglut.dir\src\fg_misc.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_misc.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c
 
 CMakeFiles/freeglut.dir/src/fg_misc.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_misc.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c > CMakeFiles\freeglut.dir\src\fg_misc.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c > CMakeFiles\freeglut.dir\src\fg_misc.c.i
 
 CMakeFiles/freeglut.dir/src/fg_misc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_misc.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c -o CMakeFiles\freeglut.dir\src\fg_misc.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_misc.c -o CMakeFiles\freeglut.dir\src\fg_misc.c.s
 
 CMakeFiles/freeglut.dir/src/fg_overlay.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_overlay.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_overlay.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_overlay.c
+CMakeFiles/freeglut.dir/src/fg_overlay.c.obj: src/fg_overlay.c
 CMakeFiles/freeglut.dir/src/fg_overlay.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/freeglut.dir/src/fg_overlay.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_overlay.c.obj -MF CMakeFiles\freeglut.dir\src\fg_overlay.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_overlay.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_overlay.c.obj -MF CMakeFiles\freeglut.dir\src\fg_overlay.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_overlay.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c
 
 CMakeFiles/freeglut.dir/src/fg_overlay.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_overlay.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c > CMakeFiles\freeglut.dir\src\fg_overlay.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c > CMakeFiles\freeglut.dir\src\fg_overlay.c.i
 
 CMakeFiles/freeglut.dir/src/fg_overlay.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_overlay.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c -o CMakeFiles\freeglut.dir\src\fg_overlay.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_overlay.c -o CMakeFiles\freeglut.dir\src\fg_overlay.c.s
 
 CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_spaceball.c
+CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj: src/fg_spaceball.c
 CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj -MF CMakeFiles\freeglut.dir\src\fg_spaceball.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_spaceball.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_spaceball.c.obj -MF CMakeFiles\freeglut.dir\src\fg_spaceball.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_spaceball.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c
 
 CMakeFiles/freeglut.dir/src/fg_spaceball.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_spaceball.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c > CMakeFiles\freeglut.dir\src\fg_spaceball.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c > CMakeFiles\freeglut.dir\src\fg_spaceball.c.i
 
 CMakeFiles/freeglut.dir/src/fg_spaceball.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_spaceball.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c -o CMakeFiles\freeglut.dir\src\fg_spaceball.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_spaceball.c -o CMakeFiles\freeglut.dir\src\fg_spaceball.c.s
 
 CMakeFiles/freeglut.dir/src/fg_state.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_state.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_state.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_state.c
+CMakeFiles/freeglut.dir/src/fg_state.c.obj: src/fg_state.c
 CMakeFiles/freeglut.dir/src/fg_state.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/freeglut.dir/src/fg_state.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_state.c.obj -MF CMakeFiles\freeglut.dir\src\fg_state.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_state.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_state.c.obj -MF CMakeFiles\freeglut.dir\src\fg_state.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_state.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c
 
 CMakeFiles/freeglut.dir/src/fg_state.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_state.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c > CMakeFiles\freeglut.dir\src\fg_state.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c > CMakeFiles\freeglut.dir\src\fg_state.c.i
 
 CMakeFiles/freeglut.dir/src/fg_state.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_state.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c -o CMakeFiles\freeglut.dir\src\fg_state.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_state.c -o CMakeFiles\freeglut.dir\src\fg_state.c.s
 
 CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_stroke_mono_roman.c
+CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj: src/fg_stroke_mono_roman.c
 CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj -MF CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.obj -MF CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c
 
 CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c > CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c > CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.i
 
 CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_stroke_mono_roman.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c -o CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_mono_roman.c -o CMakeFiles\freeglut.dir\src\fg_stroke_mono_roman.c.s
 
 CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_stroke_roman.c
+CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj: src/fg_stroke_roman.c
 CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj -MF CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.obj -MF CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c
 
 CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c > CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c > CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.i
 
 CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_stroke_roman.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c -o CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_stroke_roman.c -o CMakeFiles\freeglut.dir\src\fg_stroke_roman.c.s
 
 CMakeFiles/freeglut.dir/src/fg_structure.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_structure.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_structure.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_structure.c
+CMakeFiles/freeglut.dir/src/fg_structure.c.obj: src/fg_structure.c
 CMakeFiles/freeglut.dir/src/fg_structure.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/freeglut.dir/src/fg_structure.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_structure.c.obj -MF CMakeFiles\freeglut.dir\src\fg_structure.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_structure.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_structure.c.obj -MF CMakeFiles\freeglut.dir\src\fg_structure.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_structure.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c
 
 CMakeFiles/freeglut.dir/src/fg_structure.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_structure.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c > CMakeFiles\freeglut.dir\src\fg_structure.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c > CMakeFiles\freeglut.dir\src\fg_structure.c.i
 
 CMakeFiles/freeglut.dir/src/fg_structure.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_structure.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c -o CMakeFiles\freeglut.dir\src\fg_structure.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_structure.c -o CMakeFiles\freeglut.dir\src\fg_structure.c.s
 
 CMakeFiles/freeglut.dir/src/fg_teapot.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_teapot.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_teapot.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_teapot.c
+CMakeFiles/freeglut.dir/src/fg_teapot.c.obj: src/fg_teapot.c
 CMakeFiles/freeglut.dir/src/fg_teapot.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/freeglut.dir/src/fg_teapot.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_teapot.c.obj -MF CMakeFiles\freeglut.dir\src\fg_teapot.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_teapot.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_teapot.c.obj -MF CMakeFiles\freeglut.dir\src\fg_teapot.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_teapot.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c
 
 CMakeFiles/freeglut.dir/src/fg_teapot.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_teapot.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c > CMakeFiles\freeglut.dir\src\fg_teapot.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c > CMakeFiles\freeglut.dir\src\fg_teapot.c.i
 
 CMakeFiles/freeglut.dir/src/fg_teapot.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_teapot.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c -o CMakeFiles\freeglut.dir\src\fg_teapot.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_teapot.c -o CMakeFiles\freeglut.dir\src\fg_teapot.c.s
 
 CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_videoresize.c
+CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj: src/fg_videoresize.c
 CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj -MF CMakeFiles\freeglut.dir\src\fg_videoresize.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_videoresize.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_videoresize.c.obj -MF CMakeFiles\freeglut.dir\src\fg_videoresize.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_videoresize.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c
 
 CMakeFiles/freeglut.dir/src/fg_videoresize.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_videoresize.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c > CMakeFiles\freeglut.dir\src\fg_videoresize.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c > CMakeFiles\freeglut.dir\src\fg_videoresize.c.i
 
 CMakeFiles/freeglut.dir/src/fg_videoresize.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_videoresize.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c -o CMakeFiles\freeglut.dir\src\fg_videoresize.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_videoresize.c -o CMakeFiles\freeglut.dir\src\fg_videoresize.c.s
 
 CMakeFiles/freeglut.dir/src/fg_window.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_window.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_window.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_window.c
+CMakeFiles/freeglut.dir/src/fg_window.c.obj: src/fg_window.c
 CMakeFiles/freeglut.dir/src/fg_window.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/freeglut.dir/src/fg_window.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_window.c.obj -MF CMakeFiles\freeglut.dir\src\fg_window.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_window.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_window.c.obj -MF CMakeFiles\freeglut.dir\src\fg_window.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_window.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c
 
 CMakeFiles/freeglut.dir/src/fg_window.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_window.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c > CMakeFiles\freeglut.dir\src\fg_window.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c > CMakeFiles\freeglut.dir\src\fg_window.c.i
 
 CMakeFiles/freeglut.dir/src/fg_window.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_window.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c -o CMakeFiles\freeglut.dir\src\fg_window.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_window.c -o CMakeFiles\freeglut.dir\src\fg_window.c.s
 
 CMakeFiles/freeglut.dir/src/fg_font.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_font.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_font.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_font.c
+CMakeFiles/freeglut.dir/src/fg_font.c.obj: src/fg_font.c
 CMakeFiles/freeglut.dir/src/fg_font.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/freeglut.dir/src/fg_font.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_font.c.obj -MF CMakeFiles\freeglut.dir\src\fg_font.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_font.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_font.c.obj -MF CMakeFiles\freeglut.dir\src\fg_font.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_font.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c
 
 CMakeFiles/freeglut.dir/src/fg_font.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_font.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c > CMakeFiles\freeglut.dir\src\fg_font.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c > CMakeFiles\freeglut.dir\src\fg_font.c.i
 
 CMakeFiles/freeglut.dir/src/fg_font.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_font.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c -o CMakeFiles\freeglut.dir\src\fg_font.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_font.c -o CMakeFiles\freeglut.dir\src\fg_font.c.s
 
 CMakeFiles/freeglut.dir/src/fg_menu.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/fg_menu.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/fg_menu.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/fg_menu.c
+CMakeFiles/freeglut.dir/src/fg_menu.c.obj: src/fg_menu.c
 CMakeFiles/freeglut.dir/src/fg_menu.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/freeglut.dir/src/fg_menu.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_menu.c.obj -MF CMakeFiles\freeglut.dir\src\fg_menu.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_menu.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/fg_menu.c.obj -MF CMakeFiles\freeglut.dir\src\fg_menu.c.obj.d -o CMakeFiles\freeglut.dir\src\fg_menu.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c
 
 CMakeFiles/freeglut.dir/src/fg_menu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/fg_menu.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c > CMakeFiles\freeglut.dir\src\fg_menu.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c > CMakeFiles\freeglut.dir\src\fg_menu.c.i
 
 CMakeFiles/freeglut.dir/src/fg_menu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/fg_menu.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c -o CMakeFiles\freeglut.dir\src\fg_menu.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\fg_menu.c -o CMakeFiles\freeglut.dir\src\fg_menu.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_cursor_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj: src/mswin/fg_cursor_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_cursor_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_cursor_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_display_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj: src/mswin/fg_display_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_display_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_display_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_display_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_ext_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj: src/mswin/fg_ext_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_ext_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_ext_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_ext_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_gamemode_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj: src/mswin/fg_gamemode_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_gamemode_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_gamemode_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_init_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj: src/mswin/fg_init_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_init_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_init_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_init_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_input_devices_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj: src/mswin/fg_input_devices_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_input_devices_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_input_devices_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_joystick_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj: src/mswin/fg_joystick_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_joystick_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_joystick_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_main_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj: src/mswin/fg_main_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_main_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_main_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_main_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_menu_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj: src/mswin/fg_menu_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_menu_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_menu_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_menu_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_spaceball_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj: src/mswin/fg_spaceball_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_spaceball_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_spaceball_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_state_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj: src/mswin/fg_state_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_state_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_state_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_state_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_structure_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj: src/mswin/fg_structure_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_structure_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_structure_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_structure_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_window_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj: src/mswin/fg_window_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_window_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_window_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_window_mswin.c.s
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/mswin/fg_cmap_mswin.c
+CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj: src/mswin/fg_cmap_mswin.c
 CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.obj -MF CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.obj.d -o CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c > CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.i
 
 CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/mswin/fg_cmap_mswin.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c -o CMakeFiles\freeglut.dir\src\mswin\fg_cmap_mswin.c.s
 
 CMakeFiles/freeglut.dir/freeglut.rc.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/freeglut.rc.obj: freeglut.rc
@@ -645,18 +645,18 @@ CMakeFiles/freeglut.dir/freeglut.rc.obj: freeglut.rc
 
 CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj: CMakeFiles/freeglut.dir/flags.make
 CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj: CMakeFiles/freeglut.dir/includes_C.rsp
-CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src/util/xparsegeometry_repl.c
+CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj: src/util/xparsegeometry_repl.c
 CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj: CMakeFiles/freeglut.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building C object CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj -MF CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.obj.d -o CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.obj -MF CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.obj.d -o CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c
 
 CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c > CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c > CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.i
 
 CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/freeglut.dir/src/util/xparsegeometry_repl.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c -o CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\src\util\xparsegeometry_repl.c -o CMakeFiles\freeglut.dir\src\util\xparsegeometry_repl.c.s
 
 # Object files for target freeglut
 freeglut_OBJECTS = \
@@ -760,6 +760,6 @@ CMakeFiles/freeglut.dir/clean:
 .PHONY : CMakeFiles/freeglut.dir/clean
 
 CMakeFiles/freeglut.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\freeglut.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\freeglut.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/freeglut.dir/depend
 

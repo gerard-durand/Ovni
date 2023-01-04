@@ -288,17 +288,17 @@
 	<stdlib.h>
 	"xparsegeometry_repl.h"
 
-1662478549 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\freeglut.rc
+1666014271 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\freeglut.rc
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_callbacks.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_callbacks.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478360 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut.h
+1662825313 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut.h
 	"freeglut_std.h"
 	"freeglut_ext.h"
 
-1662478360 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_std.h
+1662825313 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_std.h
 	<windows.h>
 	<EGL/egl.h>
 	<GLES/gl.h>
@@ -309,15 +309,15 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1662478360 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_ext.h
+1662825313 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_ext.h
 	<stdarg.h>
 	"freeglut_ucall.h"
 
-1662478360 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_ucall.h
+1662825313 d:\users\gerard\documents\programmation\freeglut\freeglut_git\include\gl\freeglut_ucall.h
 	<stdarg.h>
 	<stdlib.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_internal.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_internal.h
 	"config.h"
 	"fg_version.h"
 	"fg_callback_macros.h"
@@ -347,11 +347,11 @@
 
 1662478549 d:\users\gerard\documents\programmation\freeglut\freeglut_git\config.h
 
-1662478493 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_version.h
+1668591769 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_version.h
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_callback_macros.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_callback_macros.h
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\wayland\fg_internal_wl.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\wayland\fg_internal_wl.h
 	"egl/fg_internal_egl.h"
 	<wayland-egl.h>
 	<wayland-client.h>
@@ -364,10 +364,10 @@
 	<sys/joystick.h>
 	<linux/joystick.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\egl\fg_internal_egl.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\egl\fg_internal_egl.h
 	<EGL/egl.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\x11\fg_internal_x11.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\x11\fg_internal_x11.h
 	"egl/fg_internal_egl.h"
 	"x11/fg_internal_x11_glx.h"
 	<X11/Xlib.h>
@@ -384,161 +384,161 @@
 	<sys/joystick.h>
 	<linux/joystick.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\x11\fg_internal_x11_glx.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\x11\fg_internal_x11_glx.h
 	<GL/glx.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_internal_mswin.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_internal_mswin.h
 	<windows.h>
 	<windowsx.h>
 	<mmsystem.h>
 	<tchar.h>
 
-1662478360 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\android\fg_internal_android.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\android\fg_internal_android.h
 	"egl/fg_internal_egl.h"
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\blackberry\fg_internal_blackberry.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\blackberry\fg_internal_blackberry.h
 	"egl/fg_internal_egl.h"
 	<screen/screen.h>
 	<bps/event.h>
 	<bps/navigator.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_cursor.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_cursor.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_display.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_display.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_ext.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_ext.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_font.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_font.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_font_data.c
+1666013950 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_font_data.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gamemode.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gamemode.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_geometry.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_geometry.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	"fg_gl2.h"
 	<math.h>
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gl2.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gl2.h
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gl2.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_gl2.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	"fg_gl2.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_init.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_init.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	"util/xparsegeometry_repl.h"
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\util\xparsegeometry_repl.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\util\xparsegeometry_repl.h
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_input_devices.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_input_devices.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_joystick.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_joystick.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	<sys/param.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_main.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_main.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	<errno.h>
 	<stdarg.h>
 	<limits.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_menu.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_menu.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_misc.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_misc.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_overlay.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_overlay.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_spaceball.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_spaceball.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_state.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_state.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_stroke_mono_roman.c
+1666013950 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_stroke_mono_roman.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_stroke_roman.c
+1666013950 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_stroke_roman.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_structure.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_structure.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_teapot.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_teapot.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	"fg_teapot_data.h"
 
-1662478361 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_teapot_data.h
+1662825314 d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_teapot_data.h
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_videoresize.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_videoresize.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_window.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\fg_window.c
 	<GL/freeglut.h>
 	"fg_internal.h"
 	"fg_gl2.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_cursor_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_display_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_display_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_ext_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_ext_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_gamemode_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_init_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_init_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c
+1666013950 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_input_devices_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 	<sys/types.h>
 	<winbase.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_joystick_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 	<windows.h>
@@ -550,21 +550,21 @@
 	"../fg_internal.h"
 	<gx.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_menu_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_menu_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_spaceball_mswin.c
 	<GL/freeglut.h>
 	<stdlib.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_state_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_state_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 	<Aygshell.h>
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_structure_mswin.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_structure_mswin.c
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
@@ -572,7 +572,11 @@
 	<GL/freeglut.h>
 	"../fg_internal.h"
 
-1662478361 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\util\xparsegeometry_repl.c
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\util\xparsegeometry_repl.c
 	<stdlib.h>
 	"xparsegeometry_repl.h"
+
+1662825314 source:d:\users\gerard\documents\programmation\freeglut\freeglut_git\src\mswin\fg_cmap_mswin.c
+	<GL/freeglut.h>
+	"../fg_internal.h"
 

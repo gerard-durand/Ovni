@@ -242,13 +242,13 @@ void ScalePanel::OnCheckBox_ScaleUniqueClick(wxCommandEvent& event)
     if (Synchrones) {
         TextCtrl_ScaleY->Disable();
         TextCtrl_ScaleZ->Disable();
-        SpinButton_Y->Disable();
-        SpinButton_Z->Disable();
+        SpinButton_Y   ->Disable();
+        SpinButton_Z   ->Disable();
     } else {
         TextCtrl_ScaleY->Enable();
         TextCtrl_ScaleZ->Enable();
-        SpinButton_Y->Enable();
-        SpinButton_Z->Enable();
+        SpinButton_Y   ->Enable();
+        SpinButton_Z   ->Enable();
     }
 }
 

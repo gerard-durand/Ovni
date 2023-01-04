@@ -292,7 +292,7 @@
 					<content>
 						<item>Méthode 1     </item>
 						<item>Méthode 2     </item>
-						<item>Méthode 3 </item>
+						<item>Méthode 3     </item>
 					</content>
 					<default>1</default>
 					<style>wxRA_SPECIFY_ROWS</style>
@@ -305,7 +305,7 @@
 				<object class="wxRadioBox" name="ID_RADIOBOX2" variable="RadioBox_Trackball" member="yes">
 					<label>Mode de rotation à la souris</label>
 					<content>
-						<item>Directe           </item>
+						<item>Directe            </item>
 						<item>Trackball</item>
 					</content>
 					<default>1</default>
@@ -316,8 +316,23 @@
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
+				<object class="wxRadioBox" name="ID_RADIOBOX3" variable="RadioBox_IconSize" member="yes">
+					<label>Taille des icônes de la barre d&apos;outils</label>
+					<content>
+						<item>16 x16           </item>
+						<item>24 x 24            </item>
+						<item>32 x 32            </item>
+						<item>48 x 48</item>
+					</content>
+					<style>wxRA_SPECIFY_ROWS</style>
+					<handler function="OnRadioBox_IconSizeSelect" entry="EVT_RADIOBOX" />
+				</object>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
 				<object class="wxStaticLine" name="ID_STATICLINE8" variable="StaticLine8" member="yes">
-					<size>10,-1</size>
+					<size>380,2</size>
 				</object>
 				<flag>wxALL|wxEXPAND</flag>
 			</object>

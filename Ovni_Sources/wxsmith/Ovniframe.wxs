@@ -14,7 +14,7 @@
 					<minsize>-1,25</minsize>
 					<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 						<label>Zoom :</label>
-						<pos>5,5</pos>
+						<pos>5,4</pos>
 					</object>
 					<object class="wxButton" name="ID_BUTTON1" variable="Button_ZoomPlus" member="yes">
 						<label>+</label>
@@ -30,7 +30,7 @@
 					</object>
 					<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 						<label>Déplacements :</label>
-						<pos>152,5</pos>
+						<pos>152,4</pos>
 					</object>
 					<object class="wxButton" name="ID_BUTTON3" variable="Button_Gauche" member="yes">
 						<label>Gauche</label>

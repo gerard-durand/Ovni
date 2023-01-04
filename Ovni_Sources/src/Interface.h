@@ -597,7 +597,7 @@ public:
         ListFace *Make=new ListFace(objet,face_sommet);
         ListeSelect.push_back(*Make);
     };
-    void erase_one_ListeSelect(int objet,int face_sommet) {
+    void erase_one(int objet,int face_sommet) {
         if (check_if_in_ListeSelect(objet,face_sommet)) ListeSelect.erase(ListeSelect.begin()+i); // On récupère l'indice i trouvé de ListeSelected
     };
 };
@@ -853,7 +853,7 @@ public :
     float angle_Gouraud_def = 35.0f;
     float fmult_Gouraud_def =  1.6f;
     int   svg_time_def      = 5;                    // en minutes
-    int   icon_sizes[3]     = {16, 24, 32};         // 3 tailles d'icônes : 16, 24 ou 32 pixels
+    int   icon_sizes[4]     = {16, 24, 32, 48};     // 4 tailles d'icônes : 16, 24, 32 ou 48 pixels
     int   icon_index_def    = 0;                    // Par défaut, icônes en 16*16 pixels
     bool  test_seuil_gouraud_def       = true;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !

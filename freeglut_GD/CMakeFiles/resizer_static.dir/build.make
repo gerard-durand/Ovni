@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,18 +70,18 @@ include CMakeFiles/resizer_static.dir/flags.make
 
 CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj: CMakeFiles/resizer_static.dir/flags.make
 CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj: CMakeFiles/resizer_static.dir/includes_C.rsp
-CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/resizer/resizer.c
+CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj: progs/demos/resizer/resizer.c
 CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj: CMakeFiles/resizer_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj -MF CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.obj.d -o CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.obj -MF CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.obj.d -o CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c
 
 CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c > CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c > CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.i
 
 CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/resizer_static.dir/progs/demos/resizer/resizer.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c -o CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\resizer\resizer.c -o CMakeFiles\resizer_static.dir\progs\demos\resizer\resizer.c.s
 
 # Object files for target resizer_static
 resizer_static_OBJECTS = \
@@ -108,6 +108,6 @@ CMakeFiles/resizer_static.dir/clean:
 .PHONY : CMakeFiles/resizer_static.dir/clean
 
 CMakeFiles/resizer_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\resizer_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\resizer_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/resizer_static.dir/depend
 

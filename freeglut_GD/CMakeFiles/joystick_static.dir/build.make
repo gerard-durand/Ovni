@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,18 +70,18 @@ include CMakeFiles/joystick_static.dir/flags.make
 
 CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj: CMakeFiles/joystick_static.dir/flags.make
 CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj: CMakeFiles/joystick_static.dir/includes_C.rsp
-CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/joystick/joystick.c
+CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj: progs/demos/joystick/joystick.c
 CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj: CMakeFiles/joystick_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj -MF CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.obj.d -o CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.obj -MF CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.obj.d -o CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c
 
 CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c > CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c > CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.i
 
 CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/joystick_static.dir/progs/demos/joystick/joystick.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c -o CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\joystick\joystick.c -o CMakeFiles\joystick_static.dir\progs\demos\joystick\joystick.c.s
 
 # Object files for target joystick_static
 joystick_static_OBJECTS = \
@@ -108,6 +108,6 @@ CMakeFiles/joystick_static.dir/clean:
 .PHONY : CMakeFiles/joystick_static.dir/clean
 
 CMakeFiles/joystick_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\joystick_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\joystick_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/joystick_static.dir/depend
 

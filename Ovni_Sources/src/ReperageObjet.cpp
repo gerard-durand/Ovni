@@ -82,9 +82,9 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
         str1.Printf(_T("Non sélectionné"));
         str2.Printf(_T(""));
         str3 = str2;
-        TextCtrl_indice->SetValue(str2);            // Vide dans ce cas (pour ne pas mettre -1 !)
-        CheckBox_masquer->  SetValue(false);        // Désactiver les fonctions
-        CheckBox_masquer->  Disable();
+        TextCtrl_indice   ->SetValue(str2);         // Vide dans ce cas (pour ne pas mettre -1 !)
+        CheckBox_masquer  ->SetValue(false);        // Désactiver les fonctions
+        CheckBox_masquer  ->Disable();
         CheckBox_supprimer->SetValue(false);
         CheckBox_supprimer->Disable();
         Button_InverserNormales->Disable();
@@ -96,9 +96,9 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
         str1.Printf(_T("%d"),num_obj);
         str2 =  wxString(Element->Objetlist[num].GetName(), wxConvUTF8);
         chkB = !Element->Objetlist[num].afficher;
-        CheckBox_masquer->SetValue(chkB);
-        CheckBox_masquer->Enable();
-        chkB = Element  ->Objetlist[num].deleted;
+        CheckBox_masquer  ->SetValue(chkB);
+        CheckBox_masquer  ->Enable();
+        chkB = Element    ->Objetlist[num].deleted;
         CheckBox_supprimer->SetValue(chkB);
         CheckBox_supprimer->Enable();
         Button_InverserNormales->Enable();
@@ -149,7 +149,7 @@ void ReperageObjet::OnCheckBox_supprimerClick(wxCommandEvent& event)
             else
                 Button_InverserNormales->Enable();
         }
-        Element->m_gllist=0;
+        Element->m_gllist = 0;
         Element->Refresh();
     }
 }

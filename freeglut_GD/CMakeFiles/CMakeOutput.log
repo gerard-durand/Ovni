@@ -1,4 +1,4 @@
-The system is: Windows - 10.0.19044 - AMD64
+The system is: Windows - 10.0.19045 - AMD64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: C:/MinGW64/bin/gcc.exe 
 Build flags: 
@@ -15,21 +15,21 @@ The C compiler identification is GNU, found in "D:/Users/Gerard/Documents/Progra
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_fc5db/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_fc5db.dir\build.make CMakeFiles/cmTC_fc5db.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_db575/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_db575.dir\build.make CMakeFiles/cmTC_db575.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_fc5db.dir/CMakeCCompilerABI.c.obj
-C:\MinGW64\bin\gcc.exe   -v -o CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c"
+Building C object CMakeFiles/cmTC_db575.dir/CMakeCCompilerABI.c.obj
+C:\MinGW64\bin\gcc.exe   -v -o CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c"
 Using built-in specs.
 COLLECT_GCC=C:\MinGW64\bin\gcc.exe
 Target: x86_64-w64-mingw32
-Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev4, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev7, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 12.2.0 (Rev4, Built by MSYS2 project) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\'
- C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/cc1.exe -quiet -v -iprefix C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/ -D_REENTRANT C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\cmTC_fc5db.dir\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o C:\Users\Gerard\AppData\Local\Temp\ccR1uiya.s
-GNU C17 (Rev4, Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)
-	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.25-GMP
+gcc version 12.2.0 (Rev7, Built by MSYS2 project) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\'
+ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/cc1.exe -quiet -v -iprefix C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/ -D_REENTRANT C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\cmTC_db575.dir\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\Users\Gerard\AppData\Local\Temp\ccKOwar6.s
+GNU C17 (Rev7, Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.25-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 ignoring nonexistent directory "C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/include"
@@ -45,35 +45,35 @@ ignoring nonexistent directory "D:/a/msys64/mingw64/include"
  C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include
  C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed
 End of search list.
-GNU C17 (Rev4, Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)
-	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.25-GMP
+GNU C17 (Rev7, Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.25-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-Compiler executable checksum: 39c20978df2ba1d4d26621188f2f3afe
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\'
- C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj C:\Users\Gerard\AppData\Local\Temp\ccR1uiya.s
+Compiler executable checksum: b862302a51768b68f4365d0a4fad28f8
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\'
+ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj C:\Users\Gerard\AppData\Local\Temp\ccKOwar6.s
 GNU assembler version 2.39 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.39
 COMPILER_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/;C:/MinGW64/bin/../lib/gcc/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/;C:/MinGW64/bin/../lib/gcc/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.'
-Linking C executable cmTC_fc5db.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_fc5db.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_fc5db.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_fc5db.dir/objects.a @CMakeFiles\cmTC_fc5db.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_fc5db.dir/objects.a -Wl,--no-whole-archive -o cmTC_fc5db.exe -Wl,--out-implib,libcmTC_fc5db.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.'
+Linking C executable cmTC_db575.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_db575.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_db575.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_db575.dir/objects.a @CMakeFiles\cmTC_db575.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_db575.dir/objects.a -Wl,--no-whole-archive -o cmTC_db575.exe -Wl,--out-implib,libcmTC_db575.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
 Using built-in specs.
 COLLECT_GCC=C:\MinGW64\bin\gcc.exe
 COLLECT_LTO_WRAPPER=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe
 Target: x86_64-w64-mingw32
-Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev4, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev7, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 12.2.0 (Rev4, Built by MSYS2 project) 
+gcc version 12.2.0 (Rev7, Built by MSYS2 project) 
 COMPILER_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/;C:/MinGW64/bin/../lib/gcc/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/;C:/MinGW64/bin/../lib/gcc/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/;C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fc5db.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fc5db.'
- C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/collect2.exe -plugin C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/liblto_plugin.dll -plugin-opt=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\cczS8mAk.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fc5db.exe C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0 -LC:/MinGW64/bin/../lib/gcc -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../.. --whole-archive CMakeFiles\cmTC_fc5db.dir/objects.a --no-whole-archive --out-implib libcmTC_fc5db.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/default-manifest.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtend.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fc5db.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fc5db.'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_db575.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_db575.'
+ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/collect2.exe -plugin C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/liblto_plugin.dll -plugin-opt=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\ccjCpZdA.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_db575.exe C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0 -LC:/MinGW64/bin/../lib/gcc -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../.. --whole-archive CMakeFiles\cmTC_db575.dir/objects.a --no-whole-archive --out-implib libcmTC_db575.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/default-manifest.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_db575.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_db575.'
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -95,21 +95,21 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_fc5db/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_fc5db.dir\build.make CMakeFiles/cmTC_fc5db.dir/build]
+  ignore line: [Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_db575/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_db575.dir\build.make CMakeFiles/cmTC_db575.dir/build]
   ignore line: [mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_fc5db.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [C:\MinGW64\bin\gcc.exe   -v -o CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c"]
+  ignore line: [Building C object CMakeFiles/cmTC_db575.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [C:\MinGW64\bin\gcc.exe   -v -o CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c"]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\MinGW64\bin\gcc.exe]
   ignore line: [Target: x86_64-w64-mingw32]
-  ignore line: [Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev4, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+  ignore line: [Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev7, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
-  ignore line: [gcc version 12.2.0 (Rev4  Built by MSYS2 project) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\']
-  ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/cc1.exe -quiet -v -iprefix C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/ -D_REENTRANT C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\cmTC_fc5db.dir\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o C:\Users\Gerard\AppData\Local\Temp\ccR1uiya.s]
-  ignore line: [GNU C17 (Rev4  Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)]
-  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.25-GMP]
+  ignore line: [gcc version 12.2.0 (Rev7  Built by MSYS2 project) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\']
+  ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/cc1.exe -quiet -v -iprefix C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/ -D_REENTRANT C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\cmTC_db575.dir\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\Users\Gerard\AppData\Local\Temp\ccKOwar6.s]
+  ignore line: [GNU C17 (Rev7  Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.25-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [ignoring nonexistent directory "C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/include"]
@@ -125,13 +125,13 @@ Parsed C implicit link information from above output:
   ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include]
   ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed]
   ignore line: [End of search list.]
-  ignore line: [GNU C17 (Rev4  Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)]
-  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.25-GMP]
+  ignore line: [GNU C17 (Rev7  Built by MSYS2 project) version 12.2.0 (x86_64-w64-mingw32)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.25-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [Compiler executable checksum: 39c20978df2ba1d4d26621188f2f3afe]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\']
-  ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj C:\Users\Gerard\AppData\Local\Temp\ccR1uiya.s]
+  ignore line: [Compiler executable checksum: b862302a51768b68f4365d0a4fad28f8]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\']
+  ignore line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj C:\Users\Gerard\AppData\Local\Temp\ccKOwar6.s]
   ignore line: [GNU assembler version 2.39 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.39]
   ignore line: [COMPILER_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/]
@@ -142,20 +142,20 @@ Parsed C implicit link information from above output:
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles\cmTC_fc5db.dir\CMakeCCompilerABI.c.']
-  ignore line: [Linking C executable cmTC_fc5db.exe]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_fc5db.dir\link.txt --verbose=1]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_fc5db.dir/objects.a]
-  ignore line: [C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_fc5db.dir/objects.a @CMakeFiles\cmTC_fc5db.dir\objects1.rsp]
-  ignore line: [C:\MinGW64\bin\gcc.exe  -v -Wl --whole-archive CMakeFiles\cmTC_fc5db.dir/objects.a -Wl --no-whole-archive -o cmTC_fc5db.exe -Wl --out-implib libcmTC_fc5db.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\cmTC_db575.dir\CMakeCCompilerABI.c.']
+  ignore line: [Linking C executable cmTC_db575.exe]
+  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_db575.dir\link.txt --verbose=1]
+  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_db575.dir/objects.a]
+  ignore line: [C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_db575.dir/objects.a @CMakeFiles\cmTC_db575.dir\objects1.rsp]
+  ignore line: [C:\MinGW64\bin\gcc.exe  -v -Wl --whole-archive CMakeFiles\cmTC_db575.dir/objects.a -Wl --no-whole-archive -o cmTC_db575.exe -Wl --out-implib libcmTC_db575.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\MinGW64\bin\gcc.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe]
   ignore line: [Target: x86_64-w64-mingw32]
-  ignore line: [Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev4, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+  ignore line: [Configured with: ../gcc-12.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev7, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --disable-libstdcxx-debug --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
-  ignore line: [gcc version 12.2.0 (Rev4  Built by MSYS2 project) ]
+  ignore line: [gcc version 12.2.0 (Rev7  Built by MSYS2 project) ]
   ignore line: [COMPILER_PATH=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/]
@@ -165,13 +165,13 @@ Parsed C implicit link information from above output:
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fc5db.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fc5db.']
-  link line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/collect2.exe -plugin C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/liblto_plugin.dll -plugin-opt=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\cczS8mAk.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fc5db.exe C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0 -LC:/MinGW64/bin/../lib/gcc -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../.. --whole-archive CMakeFiles\cmTC_fc5db.dir/objects.a --no-whole-archive --out-implib libcmTC_fc5db.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/default-manifest.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_db575.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_db575.']
+  link line: [ C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/collect2.exe -plugin C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/liblto_plugin.dll -plugin-opt=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\ccjCpZdA.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_db575.exe C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0 -LC:/MinGW64/bin/../lib/gcc -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib -LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../.. --whole-archive CMakeFiles\cmTC_db575.dir/objects.a --no-whole-archive --out-implib libcmTC_db575.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/default-manifest.o C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtend.o]
     arg [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/liblto_plugin.dll] ==> ignore
     arg [-plugin-opt=C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\cczS8mAk.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\Gerard\AppData\Local\Temp\ccjCpZdA.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
@@ -195,7 +195,7 @@ Parsed C implicit link information from above output:
     arg [i386pep] ==> ignore
     arg [-Bdynamic] ==> search dynamic
     arg [-o] ==> ignore
-    arg [cmTC_fc5db.exe] ==> ignore
+    arg [cmTC_db575.exe] ==> ignore
     arg [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o] ==> obj [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../lib/crt2.o]
     arg [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o] ==> obj [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/crtbegin.o]
     arg [-LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0] ==> dir [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0]
@@ -205,10 +205,10 @@ Parsed C implicit link information from above output:
     arg [-LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/lib]
     arg [-LC:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../..] ==> dir [C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_fc5db.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_db575.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_fc5db.dll.a] ==> ignore
+    arg [libcmTC_db575.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -257,15 +257,15 @@ Parsed C implicit link information from above output:
 Determining if files sys/types.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_ff986/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_ff986.dir\build.make CMakeFiles/cmTC_ff986.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_9347c/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_9347c.dir\build.make CMakeFiles/cmTC_9347c.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ff986.dir/HAVE_SYS_TYPES_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_ff986.dir\HAVE_SYS_TYPES_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TYPES_H.c
-Linking C executable cmTC_ff986.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_ff986.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_ff986.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_ff986.dir/objects.a @CMakeFiles\cmTC_ff986.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_ff986.dir/objects.a -Wl,--no-whole-archive -o cmTC_ff986.exe -Wl,--out-implib,libcmTC_ff986.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_ff986.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_9347c.dir/HAVE_SYS_TYPES_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_9347c.dir\HAVE_SYS_TYPES_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TYPES_H.c
+Linking C executable cmTC_9347c.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_9347c.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_9347c.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_9347c.dir/objects.a @CMakeFiles\cmTC_9347c.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_9347c.dir/objects.a -Wl,--no-whole-archive -o cmTC_9347c.exe -Wl,--out-implib,libcmTC_9347c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_9347c.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -273,15 +273,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files unistd.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_7b397/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_7b397.dir\build.make CMakeFiles/cmTC_7b397.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_fee53/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_fee53.dir\build.make CMakeFiles/cmTC_fee53.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7b397.dir/HAVE_UNISTD_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_7b397.dir\HAVE_UNISTD_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_UNISTD_H.c
-Linking C executable cmTC_7b397.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_7b397.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_7b397.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_7b397.dir/objects.a @CMakeFiles\cmTC_7b397.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_7b397.dir/objects.a -Wl,--no-whole-archive -o cmTC_7b397.exe -Wl,--out-implib,libcmTC_7b397.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_7b397.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_fee53.dir/HAVE_UNISTD_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_fee53.dir\HAVE_UNISTD_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_UNISTD_H.c
+Linking C executable cmTC_fee53.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_fee53.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_fee53.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_fee53.dir/objects.a @CMakeFiles\cmTC_fee53.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_fee53.dir/objects.a -Wl,--no-whole-archive -o cmTC_fee53.exe -Wl,--out-implib,libcmTC_fee53.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_fee53.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -289,15 +289,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files sys/time.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_691d9/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_691d9.dir\build.make CMakeFiles/cmTC_691d9.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_50458/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_50458.dir\build.make CMakeFiles/cmTC_50458.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_691d9.dir/HAVE_SYS_TIME_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_691d9.dir\HAVE_SYS_TIME_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TIME_H.c
-Linking C executable cmTC_691d9.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_691d9.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_691d9.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_691d9.dir/objects.a @CMakeFiles\cmTC_691d9.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_691d9.dir/objects.a -Wl,--no-whole-archive -o cmTC_691d9.exe -Wl,--out-implib,libcmTC_691d9.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_691d9.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_50458.dir/HAVE_SYS_TIME_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_50458.dir\HAVE_SYS_TIME_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TIME_H.c
+Linking C executable cmTC_50458.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_50458.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_50458.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_50458.dir/objects.a @CMakeFiles\cmTC_50458.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_50458.dir/objects.a -Wl,--no-whole-archive -o cmTC_50458.exe -Wl,--out-implib,libcmTC_50458.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_50458.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -305,15 +305,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files stdbool.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_0210c/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_0210c.dir\build.make CMakeFiles/cmTC_0210c.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_3db8a/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_3db8a.dir\build.make CMakeFiles/cmTC_3db8a.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0210c.dir/HAVE_STDBOOL_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_0210c.dir\HAVE_STDBOOL_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_STDBOOL_H.c
-Linking C executable cmTC_0210c.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_0210c.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_0210c.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_0210c.dir/objects.a @CMakeFiles\cmTC_0210c.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_0210c.dir/objects.a -Wl,--no-whole-archive -o cmTC_0210c.exe -Wl,--out-implib,libcmTC_0210c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_0210c.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_3db8a.dir/HAVE_STDBOOL_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_3db8a.dir\HAVE_STDBOOL_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_STDBOOL_H.c
+Linking C executable cmTC_3db8a.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_3db8a.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_3db8a.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_3db8a.dir/objects.a @CMakeFiles\cmTC_3db8a.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_3db8a.dir/objects.a -Wl,--no-whole-archive -o cmTC_3db8a.exe -Wl,--out-implib,libcmTC_3db8a.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_3db8a.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -321,15 +321,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files sys/param.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_36561/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_36561.dir\build.make CMakeFiles/cmTC_36561.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_585a2/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_585a2.dir\build.make CMakeFiles/cmTC_585a2.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_36561.dir/HAVE_SYS_PARAM_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_36561.dir\HAVE_SYS_PARAM_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_PARAM_H.c
-Linking C executable cmTC_36561.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_36561.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_36561.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_36561.dir/objects.a @CMakeFiles\cmTC_36561.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_36561.dir/objects.a -Wl,--no-whole-archive -o cmTC_36561.exe -Wl,--out-implib,libcmTC_36561.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_36561.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_585a2.dir/HAVE_SYS_PARAM_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_585a2.dir\HAVE_SYS_PARAM_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_SYS_PARAM_H.c
+Linking C executable cmTC_585a2.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_585a2.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_585a2.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_585a2.dir/objects.a @CMakeFiles\cmTC_585a2.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_585a2.dir/objects.a -Wl,--no-whole-archive -o cmTC_585a2.exe -Wl,--out-implib,libcmTC_585a2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_585a2.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -337,15 +337,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files fcntl.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_b1f4f/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_b1f4f.dir\build.make CMakeFiles/cmTC_b1f4f.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_77b88/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_77b88.dir\build.make CMakeFiles/cmTC_77b88.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b1f4f.dir/HAVE_FCNTL_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_b1f4f.dir\HAVE_FCNTL_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_FCNTL_H.c
-Linking C executable cmTC_b1f4f.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_b1f4f.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_b1f4f.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_b1f4f.dir/objects.a @CMakeFiles\cmTC_b1f4f.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_b1f4f.dir/objects.a -Wl,--no-whole-archive -o cmTC_b1f4f.exe -Wl,--out-implib,libcmTC_b1f4f.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_b1f4f.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_77b88.dir/HAVE_FCNTL_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_77b88.dir\HAVE_FCNTL_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_FCNTL_H.c
+Linking C executable cmTC_77b88.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_77b88.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_77b88.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_77b88.dir/objects.a @CMakeFiles\cmTC_77b88.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_77b88.dir/objects.a -Wl,--no-whole-archive -o cmTC_77b88.exe -Wl,--out-implib,libcmTC_77b88.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_77b88.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -353,15 +353,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if the function gettimeofday exists passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_b2478/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_b2478.dir\build.make CMakeFiles/cmTC_b2478.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_5ca2a/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_5ca2a.dir\build.make CMakeFiles/cmTC_5ca2a.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b2478.dir/CheckFunctionExists.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -o CMakeFiles\cmTC_b2478.dir\CheckFunctionExists.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CheckFunctionExists.c"
-Linking C executable cmTC_b2478.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_b2478.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_b2478.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_b2478.dir/objects.a @CMakeFiles\cmTC_b2478.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -Wl,--whole-archive CMakeFiles\cmTC_b2478.dir/objects.a -Wl,--no-whole-archive -o cmTC_b2478.exe -Wl,--out-implib,libcmTC_b2478.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_b2478.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_5ca2a.dir/CheckFunctionExists.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -o CMakeFiles\cmTC_5ca2a.dir\CheckFunctionExists.c.obj -c "C:\Program Files\CMake\share\cmake-3.21\Modules\CheckFunctionExists.c"
+Linking C executable cmTC_5ca2a.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_5ca2a.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_5ca2a.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_5ca2a.dir/objects.a @CMakeFiles\cmTC_5ca2a.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -Wl,--whole-archive CMakeFiles\cmTC_5ca2a.dir/objects.a -Wl,--no-whole-archive -o cmTC_5ca2a.exe -Wl,--out-implib,libcmTC_5ca2a.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_5ca2a.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -369,15 +369,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files stdint.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_59b4d/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_59b4d.dir\build.make CMakeFiles/cmTC_59b4d.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_54ce0/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_54ce0.dir\build.make CMakeFiles/cmTC_54ce0.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_59b4d.dir/HAVE_STDINT_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_59b4d.dir\HAVE_STDINT_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_STDINT_H.c
-Linking C executable cmTC_59b4d.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_59b4d.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_59b4d.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_59b4d.dir/objects.a @CMakeFiles\cmTC_59b4d.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_59b4d.dir/objects.a -Wl,--no-whole-archive -o cmTC_59b4d.exe -Wl,--out-implib,libcmTC_59b4d.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_59b4d.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_54ce0.dir/HAVE_STDINT_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_54ce0.dir\HAVE_STDINT_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_STDINT_H.c
+Linking C executable cmTC_54ce0.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_54ce0.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_54ce0.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_54ce0.dir/objects.a @CMakeFiles\cmTC_54ce0.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_54ce0.dir/objects.a -Wl,--no-whole-archive -o cmTC_54ce0.exe -Wl,--out-implib,libcmTC_54ce0.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_54ce0.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 
@@ -385,15 +385,15 @@ mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Free
 Determining if files inttypes.h exist passed with the following output:
 Change Dir: D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_abc01/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_abc01.dir\build.make CMakeFiles/cmTC_abc01.dir/build
+Run Build Command(s):C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_1d741/fast && C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_1d741.dir\build.make CMakeFiles/cmTC_1d741.dir/build
 mingw32-make[1]: Entering directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_abc01.dir/HAVE_INTTYPES_H.c.obj
-C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_abc01.dir\HAVE_INTTYPES_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_INTTYPES_H.c
-Linking C executable cmTC_abc01.exe
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_abc01.dir\link.txt --verbose=1
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_abc01.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_abc01.dir/objects.a @CMakeFiles\cmTC_abc01.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_abc01.dir/objects.a -Wl,--no-whole-archive -o cmTC_abc01.exe -Wl,--out-implib,libcmTC_abc01.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_abc01.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_1d741.dir/HAVE_INTTYPES_H.c.obj
+C:\MinGW64\bin\gcc.exe   -Wall -pedantic  -o CMakeFiles\cmTC_1d741.dir\HAVE_INTTYPES_H.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CheckIncludeFiles\HAVE_INTTYPES_H.c
+Linking C executable cmTC_1d741.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_1d741.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_1d741.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\cmTC_1d741.dir/objects.a @CMakeFiles\cmTC_1d741.dir\objects1.rsp
+C:\MinGW64\bin\gcc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\cmTC_1d741.dir/objects.a -Wl,--no-whole-archive -o cmTC_1d741.exe -Wl,--out-implib,libcmTC_1d741.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_1d741.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/CMakeFiles/CMakeTmp'
 
 

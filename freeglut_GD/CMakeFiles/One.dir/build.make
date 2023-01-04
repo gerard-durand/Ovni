@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,23 +70,23 @@ include CMakeFiles/One.dir/flags.make
 
 CMakeFiles/One.dir/progs/demos/One/one.c.obj: CMakeFiles/One.dir/flags.make
 CMakeFiles/One.dir/progs/demos/One/one.c.obj: CMakeFiles/One.dir/includes_C.rsp
-CMakeFiles/One.dir/progs/demos/One/one.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.c
+CMakeFiles/One.dir/progs/demos/One/one.c.obj: progs/demos/One/one.c
 CMakeFiles/One.dir/progs/demos/One/one.c.obj: CMakeFiles/One.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/One.dir/progs/demos/One/one.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/One.dir/progs/demos/One/one.c.obj -MF CMakeFiles\One.dir\progs\demos\One\one.c.obj.d -o CMakeFiles\One.dir\progs\demos\One\one.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/One.dir/progs/demos/One/one.c.obj -MF CMakeFiles\One.dir\progs\demos\One\one.c.obj.d -o CMakeFiles\One.dir\progs\demos\One\one.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c
 
 CMakeFiles/One.dir/progs/demos/One/one.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/One.dir/progs/demos/One/one.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c > CMakeFiles\One.dir\progs\demos\One\one.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c > CMakeFiles\One.dir\progs\demos\One\one.c.i
 
 CMakeFiles/One.dir/progs/demos/One/one.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/One.dir/progs/demos/One/one.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c -o CMakeFiles\One.dir\progs\demos\One\one.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.c -o CMakeFiles\One.dir\progs\demos\One\one.c.s
 
 CMakeFiles/One.dir/progs/demos/One/one.rc.obj: CMakeFiles/One.dir/flags.make
-CMakeFiles/One.dir/progs/demos/One/one.rc.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/One/one.rc
+CMakeFiles/One.dir/progs/demos/One/one.rc.obj: progs/demos/One/one.rc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building RC object CMakeFiles/One.dir/progs/demos/One/one.rc.obj"
-	C:\MinGW64\bin\windres.exe -O coff $(RC_DEFINES) $(RC_INCLUDES) $(RC_FLAGS) C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.rc CMakeFiles\One.dir\progs\demos\One\one.rc.obj
+	C:\MinGW64\bin\windres.exe -O coff $(RC_DEFINES) $(RC_INCLUDES) $(RC_FLAGS) D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\One\one.rc CMakeFiles\One.dir\progs\demos\One\one.rc.obj
 
 # Object files for target One
 One_OBJECTS = \
@@ -115,6 +115,6 @@ CMakeFiles/One.dir/clean:
 .PHONY : CMakeFiles/One.dir/clean
 
 CMakeFiles/One.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\One.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\One.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/One.dir/depend
 

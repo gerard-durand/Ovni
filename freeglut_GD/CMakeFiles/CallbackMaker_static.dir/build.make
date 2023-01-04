@@ -52,7 +52,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
+CMAKE_SOURCE_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git
@@ -70,18 +70,18 @@ include CMakeFiles/CallbackMaker_static.dir/flags.make
 
 CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj: CMakeFiles/CallbackMaker_static.dir/flags.make
 CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj: CMakeFiles/CallbackMaker_static.dir/includes_C.rsp
-CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj: C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/progs/demos/CallbackMaker/CallbackMaker.c
+CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj: progs/demos/CallbackMaker/CallbackMaker.c
 CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj: CMakeFiles/CallbackMaker_static.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj -MF CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.obj.d -o CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.obj -c C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.obj -MF CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.obj.d -o CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.obj -c D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c
 
 CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.i"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c > CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.i
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c > CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.i
 
 CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CallbackMaker_static.dir/progs/demos/CallbackMaker/CallbackMaker.c.s"
-	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c -o CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.s
+	C:\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\CallbackMaker\CallbackMaker.c -o CMakeFiles\CallbackMaker_static.dir\progs\demos\CallbackMaker\CallbackMaker.c.s
 
 # Object files for target CallbackMaker_static
 CallbackMaker_static_OBJECTS = \
@@ -108,6 +108,6 @@ CMakeFiles/CallbackMaker_static.dir/clean:
 .PHONY : CMakeFiles/CallbackMaker_static.dir/clean
 
 CMakeFiles/CallbackMaker_static.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CallbackMaker_static.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\CMakeFiles\CallbackMaker_static.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/CallbackMaker_static.dir/depend
 

@@ -1,13 +1,13 @@
 CMakeFiles/timer.dir/progs/demos/timer/timer.c.obj: \
- C:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c \
+ D:\Users\Gerard\Documents\Programmation\Freeglut\freeglut_git\progs\demos\timer\timer.c \
  C:/MinGW64/include/stdio.h C:/MinGW64/include/corecrt_stdio_config.h \
  C:/MinGW64/include/corecrt.h C:/MinGW64/include/_mingw.h \
  C:/MinGW64/include/_mingw_mac.h C:/MinGW64/include/_mingw_secapi.h \
  C:/MinGW64/include/vadefs.h C:/MinGW64/include/sdks/_mingw_ddk.h \
  C:/MinGW64/include/_mingw_off_t.h C:/MinGW64/include/swprintf.inl \
  C:/MinGW64/include/sec_api/stdio_s.h \
- C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/glut.h \
- C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
+ D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/glut.h \
+ D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include/GL/freeglut_std.h \
  C:/MinGW64/include/windows.h C:/MinGW64/include/sdkddkver.h \
  C:/MinGW64/include/excpt.h C:/MinGW64/include/crtdefs.h \
  C:/MinGW64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/stdarg.h \
