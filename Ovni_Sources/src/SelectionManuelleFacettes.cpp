@@ -1,7 +1,6 @@
 #include "SelectionManuelleFacettes.h"
 
 //(*InternalHeaders(SelectionManuelleFacettes)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

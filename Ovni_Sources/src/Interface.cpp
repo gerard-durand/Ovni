@@ -17,6 +17,11 @@
 #include <filesystem>
 
 #include "OvniMain.h"
+#include "OvniApp.h"
+
+#include <wx/settings.h>
+#include <wx/app.h>
+#include <wx/sysopt.h>
 
 
 const float to_Deg = 180.0f/M_PI;
@@ -54,6 +59,7 @@ const char *initM="FacettesNotFlat=";
 const char *initN="Nb_Threads=";
 const char *initO="TestDbAretes=";
 const char *initP="Taille_Icones=";
+const char *initQ="Dark_Mode=";
 
 FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
@@ -100,6 +106,21 @@ END_EVENT_TABLE()
 {
 #endif // wxCHECK_VERSION
 #endif
+
+/** \brief BddInter::BddInter Création/Initialisation de la classe BddInter
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ * \param AttribList    : liste des attributs de GLCanvas créés dans OvniMain
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ * \param style         : style créé dans OvniMain
+ * \param main_verbose  : booléen indiquant si on affiche ou pas diverses entrées/sorties de fonctions
+ * \param name          : nom transmis depuis OvniMain (peut ne pas exister)
+ *
+ */
 
     verbose = main_verbose; // On recopie dans verbose la valeur transmise depuis OvniMain (ou on utilise la valeur par défaut soit false !)
 
@@ -205,7 +226,7 @@ void BddInter::output_Glut_Msg(GLfloat x, GLfloat y, char *text)
 
 int BddInter::convert_rotx_LSI() {
     int ival;
-    ival = lround(fmod((m_gldata.rotx - 270), 360)) ;        //! Comme dans la version TCL
+    ival = lround(fmod((m_gldata.rotx - 270), 360)) ;        // Comme dans la version TCL
     if (ival < -180) ival += 360 ;
     return ival;
 }
@@ -628,6 +649,14 @@ void BddInter::Ouvrir_ini_file()
                 icon_size = icon_sizes[icon_index]  ;           // par précaution, n'autoriser que les valeurs de icon_sizes
                 continue;   // Passer au while suivant
             }
+            len = strlen( initQ);
+            icmp= strncmp(initQ,Message,len) ;                  // Test sur 26ème mot clé
+            darkmode = -1;                                      // initialisation par défaut
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&darkmode) ;              // Récupère la valeur de DarkMode
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
     } else {
@@ -670,6 +699,8 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initN,nb_threads) ;
         fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
         fprintf(f_init,"%s%d\n",initP,icon_size);
+        if (darkmode != -1)
+            fprintf(f_init,"%s%d\n",initQ,darkmode);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -759,7 +790,7 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
         if (m_gldata.mode_Trackball) {
             build_rotmatrix( m, m_gldata.quat );
-///            glMultMatrixf( &m[0][0] ) ;  // Ne doit pas servir à grand chose vu que la matrice précédente est Identity !
+//            glMultMatrixf( &m[0][0] ) ;  // Ne doit pas servir à grand chose vu que la matrice précédente est Identity !
             // Calcul des 3 rotations de la Bdd d'après la matrice de rotation.
             CalculAngles(*m, m_gldata.rotx, m_gldata.roty, m_gldata.rotz) ;
         }
@@ -914,6 +945,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             long ID_POPUP_NORM_S     = MAIN_b->ID_POPUP_NORM_S;
             long ID_POPUP_FLAT       = MAIN_b->ID_POPUP_FLAT;
             long ID_POPUP_NOT_FLAT   = MAIN_b->ID_POPUP_NOT_FLAT;
+#if !wxCHECK_VERSION(3,3,0)
             wxColour Forg;
             wxColour Back;
             if (theme_b) {
@@ -923,6 +955,13 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Forg    = wxNullColour;
                 Back    = wxNullColour;
             }
+#endif
+
+#if wxCHECK_VERSION(3,3,0)
+//            Back = ;
+//            Forg = ;
+#endif // wxCHECK_VERSION
+
 
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
@@ -933,15 +972,19 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des objets\t(s)"),   wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des facettes\t(s)"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_RAZ->SetBackgroundColour(Back);
             Popup_RAZ->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_RAZ);
 
+            wxMenuItem * Popup_COMPLEMT = nullptr;
             if (mode_selection == selection_facette) {
-                wxMenuItem * Popup_COMPLEMT;
                 Popup_COMPLEMT = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
                 Popup_COMPLEMT->SetBackgroundColour(Back);
                 Popup_COMPLEMT->SetTextColour(Forg);
+#endif
                 My_popupmenu.Append(Popup_COMPLEMT);
             }
 
@@ -950,13 +993,17 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Centrer la rotation sur la sélection\t(c)"), wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Recentrer sur la rotation par défaut\t(c)"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Centrer->SetBackgroundColour(Back);
             Popup_Centrer->SetTextColour(Forg);
+#endif // wxCHECK_VERSION
             My_popupmenu.Append(Popup_Centrer);
 
             wxMenuItem * Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, wxS("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Etendre->SetBackgroundColour(Back);
             Popup_Etendre->SetTextColour(Forg);
+#endif // wxCHECK_VERSION
 
             My_popupmenu.Append(Popup_Etendre);
             if (this->ToSelect.ListeSelect.size() == 0) Popup_Etendre->Enable(false);
@@ -964,13 +1011,17 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.AppendSeparator();
 
             wxMenuItem * Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, wxS("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Masquer->SetBackgroundColour(Back);
             Popup_Masquer->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Masquer);
 
             wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Delete->SetBackgroundColour(Back);
             Popup_Delete->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Delete);
 
             My_popupmenu.AppendSeparator();
@@ -980,13 +1031,17 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser toutes les normales\t(i)"),        wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Inverser->SetBackgroundColour(Back);
             Popup_Inverser->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Inverser);
 
             wxMenuItem * Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, wxS("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Reverse->SetBackgroundColour(Back);
             Popup_Reverse->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Reverse);
 
             wxMenuItem * Popup_Raz_Select;
@@ -994,8 +1049,10 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Désactiver la désélection automatique\t(z)"), wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Activer la désélection automatique\t(z)"),    wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Raz_Select->SetBackgroundColour(Back);
             Popup_Raz_Select->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Raz_Select);
 
             My_popupmenu.AppendSeparator();
@@ -1005,8 +1062,10 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, wxS("Ne pas afficher les normales aux barycentres"), wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, wxS("Afficher les normales aux barycentres"),        wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Afficher_Normales->SetBackgroundColour(Back);
             Popup_Afficher_Normales->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Afficher_Normales);
 
             wxMenuItem * Popup_Afficher_NormalesSommets;
@@ -1014,40 +1073,53 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Ne pas afficher les normales aux sommets"),  wxEmptyString, wxITEM_NORMAL);
             else
                 Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Afficher les normales aux sommets"),         wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Afficher_NormalesSommets->SetBackgroundColour(Back);
             Popup_Afficher_NormalesSommets->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Afficher_NormalesSommets);
 
             wxMenuItem * Popup_Forcer_Facettes_Planes;
             Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         wxS("Forcer les facettes à être planes"),  wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_Planes->SetBackgroundColour(Back);
             Popup_Forcer_Facettes_Planes->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Forcer_Facettes_Planes);
 
             wxMenuItem * Popup_Forcer_Facettes_NonPlanes;
             Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  wxS("Forcer les facettes à être non planes"),  wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_NonPlanes->SetBackgroundColour(Back);
             Popup_Forcer_Facettes_NonPlanes->SetTextColour(Forg);
+#endif
             My_popupmenu.Append(Popup_Forcer_Facettes_NonPlanes);
 
             if (Elements_Masques || Elements_Supprimes)
                 My_popupmenu.AppendSeparator(); // Ajout d'un séparateur si des élements de menu suivent ...
 
+            wxMenuItem * Popup_Demasquer = nullptr;
             if (Elements_Masques) {             // S'il y a au moins une facette masquée, proposer de les réafficher
-                wxMenuItem * Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, wxS("Réafficher les facettes masquées"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, wxS("Réafficher les facettes masquées"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
                 Popup_Demasquer->SetBackgroundColour(Back);
                 Popup_Demasquer->SetTextColour(Forg);
+#endif
                 My_popupmenu.Append(Popup_Demasquer);
             }
+            wxMenuItem * Popup_Undelete = nullptr;
             if (Elements_Supprimes) {           // S'il y a au moins une facette supprimée, proposer de les restituer
-                wxMenuItem * Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE,   wxS("Restituer les facettes supprimées"),wxEmptyString, wxITEM_NORMAL);
+                Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE,   wxS("Restituer les facettes supprimées"),wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
                 Popup_Undelete->SetBackgroundColour(Back);
                 Popup_Undelete->SetTextColour(Forg);
+#endif
                 My_popupmenu.Append(Popup_Undelete);
             }
             PopupMenu(&My_popupmenu, mouse_position.x, mouse_position.y);
 //            printf("This : %d\n",this);
 //            PopupMenu(&MAIN_b->My_popupmenu, mouse_position.x, mouse_position.y);   // Plante à l'exécution quand créé par wxSmith
+
         }
 
         previous_right_drag = false;    // Reset de l'affichage des menus contextuels (ne le sauter que la première fois après un drag bouton droit)
@@ -1085,14 +1157,14 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 //                  stopPicking();
                 }
             }
-            if (test_rectangle_selection) {                 /// ici pour l'instant (phase de test)
+            if (test_rectangle_selection) {                 // ici pour l'instant (phase de test)
                 Selection_rectangle((GLint)mouse_position.x,(GLint)mouse_position.y);   // Paramétrage de l'arrivée du rectangle de sélection
                 Refresh();
             }
         } else if(event.MiddleUp()) {   // event.RightUp() ||
 //            printf("event.MiddleUp\n");
             this->ToSelect.verrouiller_ListeSelect(false);  // Déverrouiller la liste : évite de recommencer une sélection tant qu'on n'a pas relaché la souris
-            if (test_rectangle_selection) {                 ///ici pour l'instant (phase de test)
+            if (test_rectangle_selection) {                 // ici pour l'instant (phase de test)
                 xd_sel = xa_sel = (GLint)mouse_position.x;  // Donner la même valeur aux 2 extrémités => ne tracera plus le rectangle
                 yd_sel = ya_sel = (GLint)mouse_position.y;
                 if (mode_selection == selection_point)   m_gllist = glliste_points;
@@ -1100,7 +1172,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 Refresh();
             }
             if ((modeGL == aretes) && click_sur_segment) {
-                buildAllLines(); /// OK si on a cliqué sur une arête, sinon inutile !
+                buildAllLines(); // OK si on a cliqué sur une arête, sinon inutile !
                 click_sur_segment = false;
             }
         } else if (event.Dragging()) {
@@ -1278,7 +1350,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             }
         }
     }
-    event.Skip();                   /// Indispensable
+    event.Skip();                   // Indispensable
 }
 
 void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
@@ -1289,7 +1361,7 @@ void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
     m_gldata.BeginX  = event.GetX();
     m_gldata.BeginY  = event.GetY();
 //    printf("Mouseweelmoved\n");
-    event.Skip();                                       /// N'a pas l'air utile, mais ne semble pas gêner !
+    event.Skip();                                       // N'a pas l'air utile, mais ne semble pas gêner !
 }
 
 void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
@@ -1353,7 +1425,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     float X_m, Y_m, Z_m ;
     int   Nb_Valeurs;
     int   GrpMat;
-    bool  Touche_Maj;
+    bool  Touche_Maj, liste_facettes_OK;
     Object  *Objet_courant;
     Face    *Facette_courante;
     Sommet  *Sommet_courant;
@@ -1365,6 +1437,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     wxMouseEvent   event_mouse;
     wxCommandEvent cmd_event;
     wxKeyEvent     key_event;
+
+    wxMenu * menu;
+    wxMenuItem * item;
+    wxMenuItemList::compatibility_iterator node;
+    int nb_menus, num_menu, nb;
+    wxColour Backg;
 
     long evkey = event.GetKeyCode();    // pas de différence entre une minuscule et une majuscule à ce niveau
     if (evkey == 0) {
@@ -1629,7 +1707,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             mode_selection = old;
             m_gllist = 0;           // Regénérer toutes les listes
             Refresh();
-            break;  /// m_gllist = 0; et Refresh() déjà fait via 'S' ???
+            break;  // m_gllist = 0; et Refresh() déjà fait via 'S' ???
         }
         if (show_CW_CCW) {
             m_gllist = 0;           // Utile si Sens des normales est activé. Sans effet visuel sinon
@@ -1637,9 +1715,14 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
         break;
 
-// Reset (valeurs d'initialisation)
+// Reset (valeurs d'initialisation) ou Forcer un Reset du tracé graphique
     case 'R':
 // ou    case 'r':
+        if (event.ControlDown()) {    // C'est un Ctrl-R ; un 'R' majuscule event.ShiftDown() ||
+            m_gllist = 0;
+            Refresh();
+            break;
+        }
         ResetData();
         test=1;
         break;
@@ -1651,6 +1734,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             for (unsigned int objet=0; objet < Objetlist.size(); objet++) Objetlist[objet].selected = false;
             listeObjets.clear();
         }
+        liste_facettes_OK = false;
+        if ((mode_selection == selection_facette) && (this->ToSelect.ListeSelect.size() > 0)){
+            liste_facettes_OK= true;
+        }
         // Les élements de ToSelect.Liste et ToSelect.ListeSelect vont être remis aux valeurs par défaut indépendamment du fait que ces listes soient des facettes ou des sommets
         while (this->ToSelect.ListeSelect.size() > 0) { // Faire tant que la liste ToSelect.ListeSelect n'est pas vide ...
             // On récupère le premier élément de la liste et on remet les valeurs de selected à false (par défaut)
@@ -1659,13 +1746,13 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             if (mode_selection == selection_point) {
                 if (ifexist_sommet(objet,numero)) {
                     Sommet_courant = &(this->Objetlist[objet].Sommetlist[numero]);
-                    Sommet_courant->selected = false;                               // si numero peut correspondre à un sommet, mettre selected à false
+                    Sommet_courant->selected = false;                   // si numero peut correspondre à un sommet, mettre selected à false
                 }
             }
             if (mode_selection == selection_facette) {
                 if (ifexist_facette(objet,numero)) {
                     Facette_courante = &(this->Objetlist[objet].Facelist[numero]);
-                    Facette_courante->selected = false;                              // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
+                    Facette_courante->selected = false;                 // si numero peut correspondre à une facette, mettre selected à false, et reset de la couleur de la facette
                     Facette_courante->color[0] = Facette_courante->color[1] = Facette_courante->color[2] = gris_def;   // Ne sert plus ?
                 }
             }
@@ -1690,7 +1777,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (mode_selection != selection_objet) {
             buildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
             buildAllPoints();           // Idem pour les points
-            m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
+            if ((mode_selection == selection_facette) && liste_facettes_OK) m_gllist = 0;               // ne faire que si la liste de facettes n'était pas déjà vide (2 'S' consécutifs)
+            else                                                            m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
         } else
             m_gllist = 0;               // on est en mode selection_objet
         Refresh();
@@ -1699,7 +1787,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // Complément de la sélection de facettes dans les objets
     case 'K':
 // ou    case 'k':
-    if (mode_selection== selection_facette) {   // seulement en mode de sélection de facettes
+    if (mode_selection == selection_facette) {  // seulement en mode de sélection de facettes
         bool Inverse_Selected_Facettes = false;
         // balayer les objets
         for (unsigned int objet=0; objet < Objetlist.size(); objet++) {
@@ -1957,7 +2045,17 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
     case 'W':
         theme_b = !theme_b;                     // Test pour Basculer du thème standard vers un thème sombre... Pas très fiable, plante parfois !!!
+#if wxCHECK_VERSION(3,3,0)
+        if (theme_b) wxGetApp().MSWEnableDarkMode(1);// wxApp::DarkMode_Always
+        else         wxGetApp().MSWEnableDarkMode(0);// wxApp::DarkMode_Auto
+
+        Switch_theme_wx33(theme_b);
+#else
         Switch_theme(theme_b);
+#endif
+        darkmode = (int)theme_b;
+        ini_file_modified = true;
+        this->MAIN_b ->Refresh();
         break;
 
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
@@ -1994,12 +2092,176 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         Refresh(false);
     }
 
-///    event.Skip();   // Avec ou sans ne semble rien changer !!!
+//    event.Skip();   // Avec ou sans ne semble rien changer !!!
     if(verbose) printf("Sortie de BddInter::OnKeyDown\n");
+}
+
+void BddInter::Switch_theme_wx33(bool theme_b)
+{
+// Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
+// Version pour wxWidgets 3.3 et +
+
+// Même ici, il faut balayer certains éléments déjà créés pour les re-coloriser
+// Les boutons ne sont pas traités pour le moment => restent comme dans le thème clair par défaut
+// Mais comme avec wxWidgets 3.2.x plante parfois (dans la boucle sur les menus semble t-il) surtout si plusieurs appels de suite ...
+
+    wxColour Forg;
+    wxColour Back;
+//    wxColour Gris;
+//    wxColour Bleu_svg ;
+    int nb,num_menu,nb_menus;
+    wxMenu * menu;
+    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
+    wxMenuItem * item;
+
+//        this->MAIN_b->MenuFile->UpdateUI();
+//        this->MAIN_b->MenuBar_Globale->UpdateMenus();
+//        this->MAIN_b->MenuBar_Globale->Refresh();
+//        Backg = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
+//        this->MAIN_b->Panel1->Refresh();
+//        this->MAIN_b->Panel_Sliders->Refresh();
+//        this->MAIN_b->StatusBar1->Refresh();
+//        this->MAIN_b->Button_Droite->UpdateWindowUI();
+//        this->MAIN_b->Button_Droite->SetBackgroundColour(Backg);
+//        this->MAIN_b->Button_Droite->Refresh();
+
+    this->MAIN_b->MenuBar_Globale->Refresh();
+    Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
+    printf("Back 0x%06x\n",Back.GetRGB());
+    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
+    printf("test 0x%06x\n",test.GetRGB());
+    Forg = this->MAIN_b->MenuBar_Globale->GetForegroundColour();
+    printf("Forg 0x%06x\n",Forg.GetRGB());
+    test = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUTEXT);
+    printf("test 0x%06x\n",test.GetRGB());
+//    Back = this->MAIN_b->Button_Gauche->GetBackgroundColour();
+    this->MAIN_b->SetBackgroundColour(Back);
+//    wxButtonBase().SetBackgroundColour(Back);
+//    wxButtonBase().Refresh();
+    this->MAIN_b->Button_Droite             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Gauche             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Haut               ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Bas                ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_ZoomPlus           ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_ZoomMoins          ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Points             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Filaire            ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Plein              ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Axes               ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Boite              ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Normales_Sommets   ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Normale_Barycentre ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Source             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Gouraud            ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Sliders            ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Modifs             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Outils             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Groupes            ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Materiaux          ->SetBackgroundColour(Back);
+    this->MAIN_b->StatusBar1                ->SetBackgroundColour(Back);    // Ne fonctionne pas ?
+
+    this->MPanel->Panel2 ->SetBackgroundColour(Back);
+    this->MPanel->Panel4 ->SetBackgroundColour(Back);
+    this->MPanel->Panel6 ->SetBackgroundColour(Back);
+    this->MPanel->Panel8 ->SetBackgroundColour(Back);
+    this->MPanel->Panel10->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_FacettePlane->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_NotFlat     ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_Transparence->SetForegroundColour(Forg);
+
+    this->MPrefs->CheckBox_1SeulObjet3D         ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_AntialiasingSoft     ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CalculNormales       ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CreerBackup          ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_DisplayFps           ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_LectureOptimisee     ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_NotFlat              ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TraiterDoublonsAretes->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_RecNormales_Seuillees->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_Seuillage            ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_SupprBackup          ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TestDecalage3DS      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CreerBackup          ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_SupprBackup          ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_Trackball            ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_Triangulation        ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_IconSize             ->SetForegroundColour(Forg);
+
+    this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Selection_Objets     ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Both   ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Avant  ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_TypeSelection_Arriere->SetForegroundColour(Forg);
+    this->MSelect->CheckBox_ForcerFlat              ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Grp                  ->SetForegroundColour(Forg);
+    this->MSelect->RadioButton_Mat                  ->SetForegroundColour(Forg);
+
+    this->MCone->CheckBox_FermerCone        ->SetForegroundColour(Forg);
+    this->MCylindre->CheckBox_FermerCylindre->SetForegroundColour(Forg);
+    this->MEllips->CheckBox_NewSphere       ->SetForegroundColour(Forg);
+    this->MSphere->CheckBox_NewSphere       ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormale   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormale   ->SetBackgroundColour(Back);
+    this->MRepFacet->CheckBox_VisuSommets   ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormales_Sommets  ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
+
+    this->MRepObj->CheckBox_masquer         ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_supprimer       ->SetForegroundColour(Forg);
+
+    this->MRepPoint->CheckBox_X             ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Y             ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Z             ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Laisser       ->SetForegroundColour(Forg);
+
+    this->MRotation->RadioBox_Centre        ->SetForegroundColour(Forg);
+    this->MScale->CheckBox_ScaleUnique      ->SetForegroundColour(Forg);
+
+// Parcourir en boucle les menus fonctionne mais amène souvent un plantage si on active plusieurs fois de suite cette option
+
+//    nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
+//    for (num_menu=0; num_menu<nb_menus; num_menu++) {
+//        menu = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
+//        for (nb=0, node = menu->GetMenuItems().GetFirst(); node; nb++,node = node->GetNext()) {
+//            item = node->GetData();
+//            if (item->IsSeparator()) continue;  // Si c'est un séparateur, passer au menu suivant, car les Set*Colour n'y fonctionnent pas bien
+//            item->SetTextColour(Forg);
+//            item->SetBackgroundColour(Back);
+//            if (nb == 0) {
+//                menu->Remove(item);             // Il suffit de le faire sur le 1er menu, mais il faut le UpdateUI ensuite (sinon faire chaque fois mais flicker)
+//                menu->Insert(nb,item);          // Prepend suffit pour nb == 0
+//            }
+//        }
+//        menu->UpdateUI();
+//    }
+
+// Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
+    wxColour New_blue;
+    if (theme_b)
+        New_blue = *wxCYAN;
+    else
+        New_blue = *wxBLUE;
+
+    this->MAIN_b    ->Slider_z      ->SetForegroundColour(New_blue);
+    this->MPosCRot  ->StaticText4   ->SetForegroundColour(New_blue);
+    this->MDeplacer ->StaticText4   ->SetForegroundColour(New_blue);
+    this->MManip    ->CheckBox_Z    ->SetForegroundColour(New_blue);
+    this->MPosLight ->Pos_Z         ->SetForegroundColour(New_blue);
+    this->MTrans    ->StaticText7   ->SetForegroundColour(New_blue);
+    this->MTrans    ->StaticText8   ->SetForegroundColour(New_blue);
+
+
+//    this->MAIN_b->Refresh();
 }
 
 void BddInter::Switch_theme(bool theme_b)
 {
+// Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
+// Version pour wxWidgets avant la 3.3
+
 // Test pour Basculer du thème standard vers un thème sombre. Mais semble assez laborieux !
 
 //    int next;
@@ -3320,7 +3582,8 @@ void BddInter::Switch_theme(bool theme_b)
 
 // About : c'est un wxMessageBox dans void OvniFrame::OnAbout : ne semble pas pouvoir se coloriser via SetForegroundColour / SetBackgroundColour
 
-    this->MAIN_b ->Refresh();
+//    this->MAIN_b->Refresh();
+
 }
 
 void BddInter::Reset_Sliders() {
@@ -3351,8 +3614,8 @@ void BddInter::ResetProjectionMode() {
 //    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(this->GetParent());
 //    MAIN->ResizeOpenGL(ClientSize.GetX(), ClientSize.GetY());
 
-///    int w, h;
-///    GetClientSize(&w, &h);
+//    int w, h;
+//    GetClientSize(&w, &h);
 //    printf("ClientSize X/Y %d %d\n", w, h);
 
 #if wxCHECK_VERSION(3,0,0)
@@ -3369,7 +3632,7 @@ void BddInter::ResetProjectionMode() {
 //printf(" 6\n");fflush(stdout);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);   /// ici .x et .y, pas .GetX et .GetY ? à vérifier peut-être
+        gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);   // ici .x et .y, pas .GetX et .GetY ? à vérifier peut-être
         glMatrixMode(GL_MODELVIEW);
 
    }
@@ -3391,7 +3654,7 @@ void BddInter::CalculAngles(float *m, float &alpha, float &beta, float &gamma) {
     double sin_beta, cos_beta ;
 
     sin_beta = m[8];
-///    sin_beta = -m[2];
+//    sin_beta = -m[2];
     beta = asin(sin_beta)*to_Deg;                       // suffisant car -90 <= beta <= 90°
     cos_beta = sqrt(1.0f-sin_beta*sin_beta);            // cos_beta est donc toujours >= 0
 
@@ -3399,13 +3662,13 @@ void BddInter::CalculAngles(float *m, float &alpha, float &beta, float &gamma) {
         // Signes changés / article ... + au lieu de -
         alpha=atan2(-m[9],m[10])*to_Deg;                    // en fait -m[9]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
         gamma=atan2(-m[4],m[0] )*to_Deg;                    // Idem
-///        alpha=atan2(+m[6],m[10])*to_Deg;                 // en fait -m[6]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
-///        gamma=atan2(+m[1],m[0] )*to_Deg;                 // Idem
+//        alpha=atan2(+m[6],m[10])*to_Deg;                 // en fait -m[6]/cos_beta et m[10]/cos_beta), mais <=> car cos_beta > 0
+//        gamma=atan2(+m[1],m[0] )*to_Deg;                 // Idem
     } else {                                            // ici sin(beta) = 1 ou -1 (à epsilon près)
         beta =( sin_beta < 0.0f ? -90.0f : +90.0f);         // Forcer la valeur de beta
         alpha=0.0f;                                         // Cas dégénéré (Gimball lock => alpha et gamma sur le même axe)=> cos(alpha)=1.
         gamma=atan2( m[1],m[5])*to_Deg;                     // Signe changé / article ... - au lieu de +
-///        gamma=atan2(-m[4],m[5])*to_Deg;
+//        gamma=atan2(-m[4],m[5])*to_Deg;
     }
     Clamp(alpha,0.0f,360.0f);                           // Recadrer les angles dans l'intervalle [0,360°[
     Clamp(beta, 0.0f,360.0f);                           // Vu l'usage fait ici, un fmod avec décalage de 360 si valeurs négatives doit être suffisant.
@@ -4708,10 +4971,10 @@ void BddInter::LoadOBJ()
                 wxDELETE(progress_dialog);
             }
 
-//! Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
-//! ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
-//!             pour éviter de dupliquer ces (gros) tableaux.
-//!             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
+// Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
+// ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
+//             pour éviter de dupliquer ces (gros) tableaux.
+//             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
             Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
             Object * objet_courant;
             bool msg_optim = true;
@@ -6747,16 +7010,16 @@ void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
 
 void BddInter::LoadBDD() {
 
-/// ATTENTION : la lecture originale via tfile pose problème s'il y a des caractères accentués dans un fichier ANSI => Plante car agit comme si on avait trouvé un Eof !
-///             Pas de soucis, si le fichier comportant des caractères accentués est encodé en UTF8.
-/// Autres soucis : tfile semble lire tout le fichier en mémoire dès le début => s'il y a un caractère erronné dedans (comme dans f16_celar.bdd, ligne 11052)
-///                 c'est comme ci-dessus => le prend pour un Eof et le fichier n'est pas décodé.
-///             OK avec wxFileInputStream + wxTextInputStream c'est mieux car la ligne est certes mal lue, mais ça n'empêche pas de lire la suite !
+// ATTENTION : la lecture originale via tfile pose problème s'il y a des caractères accentués dans un fichier ANSI => Plante car agit comme si on avait trouvé un Eof !
+//             Pas de soucis, si le fichier comportant des caractères accentués est encodé en UTF8.
+// Autres soucis : tfile semble lire tout le fichier en mémoire dès le début => s'il y a un caractère erronné dedans (comme dans f16_celar.bdd, ligne 11052)
+//                 c'est comme ci-dessus => le prend pour un Eof et le fichier n'est pas décodé.
+//             OK avec wxFileInputStream + wxTextInputStream c'est mieux car la ligne est certes mal lue, mais ça n'empêche pas de lire la suite !
 
-//!             Revoir le calcul des Luminances => plante sur certains fichiers celar à cause d'erreur d'indicage (variable compteur >= 96 sur 1er objet
-//!             de EuroFigh_8.bdd par exemple !
+//             Revoir le calcul des Luminances => plante sur certains fichiers celar à cause d'erreur d'indicage (variable compteur >= 96 sur 1er objet
+//             de EuroFigh_8.bdd par exemple !
 
-//! On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
+// On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
 
     Object *objet_courant=nullptr;
     int x1=0;
@@ -6792,17 +7055,17 @@ void BddInter::LoadBDD() {
     fichierBdd.seekg(0,fichierBdd.beg);     // Revenir au début du fichier
     printf("Taille : %lld\n",fichierBdd_length);
 
-///    wxRect rect;
-///    this->MAIN_b->GetStatusBar()->GetFieldRect(0, rect);              // Récupérer la taille et position du premier champ de la StatusBar
+//    wxRect rect;
+//    this->MAIN_b->GetStatusBar()->GetFieldRect(0, rect);              // Récupérer la taille et position du premier champ de la StatusBar
 
-///    if (m_gauge) wxDELETE(m_gauge);
+//    if (m_gauge) wxDELETE(m_gauge);
 // PROBLEME : si pas de timer, il faut mettre une valeur max < 100, mais le timer ne fonctionne pas ici. Pourquoi ?
-///    m_gauge = new wxGauge(this->MAIN_b->GetStatusBar(), wxID_ANY, 100, rect.GetPosition(), rect.GetSize(), wxGA_HORIZONTAL|wxNO_BORDER );
+//    m_gauge = new wxGauge(this->MAIN_b->GetStatusBar(), wxID_ANY, 100, rect.GetPosition(), rect.GetSize(), wxGA_HORIZONTAL|wxNO_BORDER );
 //    m_gauge->SetSize(rect.x + margin, rect.y + margin, rect.width - 2*margin, rect.height - 2*margin);  // Changer position et taille pour laisser une petite marge autour
-///    m_gauge->SetSize(rect.x + margin, rect.y + margin, 300, rect.height - 2*margin);  // Changer position et taille pour laisser une petite marge autour
-///    m_gauge->SetValue(0);
+//    m_gauge->SetSize(rect.x + margin, rect.y + margin, 300, rect.height - 2*margin);  // Changer position et taille pour laisser une petite marge autour
+//    m_gauge->SetValue(0);
 // Divers tests d'init du timer ...
-///    if (!m_timer) m_timer = new wxTimer();//(this->MAIN_b,wxID_ANY);   // Créer un timer
+//    if (!m_timer) m_timer = new wxTimer();//(this->MAIN_b,wxID_ANY);   // Créer un timer
 ////    id_timer= m_timer->GetId();
 ////    m_timer->SetOwner(this->MAIN_b,id_timer);
 //////    Connect(wxID_ANY,wxEVT_TIMER,(wxObjectEventFunction)&BddInter::OnTimer_Bdd);
@@ -6810,11 +7073,11 @@ void BddInter::LoadBDD() {
 ////    m_timer->Bind(wxEVT_TIMER, &BddInter::OnTimer_Bdd, this);
 //    if (m_timer->IsRunning())   printf("Timer On\n") ;
 //    else                        printf("Timer Off\n");
-///    m_timer->Start(100);
+////    m_timer->Start(100);
 //    if (m_timer->IsRunning())   printf("Timer On\n") ;
 //    else                        printf("Timer Off\n");
-///    timer_bis = false;
-///    m_gauge->Update();
+////    timer_bis = false;
+////    m_gauge->Update();
 
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
@@ -6928,7 +7191,7 @@ void BddInter::LoadBDD() {
                     str=wxString::FromAscii(ligne.c_str());
                     make1aspect_face();     // A supprimer par la suite ??? Pour lire les lignes  <GROUPE> et <CODMATFACE> avec le même indice i
                                             // Mais laisser pour l'instant car décodage et rangement faits dans make1aspect_face à revoir
-                                            /// C'est le SEUL endroit ou make1aspect_face est encore actif (mais utile si pas de ligne blanche intermédiaire !)
+                                            // C'est le SEUL endroit ou make1aspect_face est encore actif (mais utile si pas de ligne blanche intermédiaire !)
                     getline(fichierBdd,ligne); while (ligne.back() == ' ') ligne.pop_back();
                     if (New_aspect_face) i++;   // Incrémenter le compteur i seulement si 3 valeurs dans la ligne
                 }
@@ -7047,8 +7310,8 @@ void BddInter::LoadBDD() {
 ////        }
         Update_Dialog(fichierBdd.tellg(), fichierBdd_length);
     }
-///    m_gauge->SetValue(100);
-///    m_gauge->Update();
+//    m_gauge->SetValue(100);
+//    m_gauge->Update();
 //    MAIN_b->UpdateWindowUI();
 
     if (Objetlist.size() == 0) {
@@ -7097,8 +7360,8 @@ void BddInter::LoadBDD() {
 //    UpdateWindowUI();
 //    MAIN_b->StatusBar1->UpdateWindowUI();
 //    RefreshRect(rect);
-///    if (m_gauge) wxDELETE(m_gauge);
-///    if (m_timer) wxDELETE(m_timer);
+//    if (m_gauge) wxDELETE(m_gauge);
+//    if (m_timer) wxDELETE(m_timer);
     if (progress_dialog_en_cours) {
         progress_dialog->Update(100); // Le plus tard possible car fermeture automatique de dialog via le wxPD_AUTO_HIDE
         wxDELETE(progress_dialog);
@@ -7730,7 +7993,7 @@ void BddInter::GenereTableauAretes(Object * objet)
         indice_b = Arete_test.ind_b;
         itArete2 = itArete;
         ++itArete2; // Se positionner sur l'arête suivante (<=> i+1)
-//#pragma omp parallel for private(p_Arete) // break incompatible avec la boucle for dans openmp
+////#pragma omp parallel for private(p_Arete) // break incompatible avec la boucle for dans openmp
         for (j=i+1; j<nbaretes; j++,itArete2++) {
 //        for (j=i+1; j<objet->Areteslist.size(); j++) {    // Si Aretelist est un vector, sinon à supprimer
 //            p_Arete = &(objet->Areteslist[j]);  // Ici, il vaut mieux travailler sur un pointeur, surtout avec la méthode 2 ci-dessous, sinon on ne modifie qu'une copie !
@@ -8175,7 +8438,7 @@ Boucle:
 // Des tests placés différemment pour générer autant de listes (via glNewList) que de threads n'a pas non plus fonctionné !
 // Est-ce parce qu'OpenGL ne peut gérer qu'une seule liste à la fois ? même si chaque thread gère une liste différente ?
 
-//#pragma omp parallel for ordered private(Face_ij,NormaleFacette,NumerosSommets,NormaleSommet,\
+////#pragma omp parallel for ordered private(Face_ij,NormaleFacette,NumerosSommets,NormaleSommet,\
                 grpmat,groupe,material,lissage_Gouraud,k,test_np,xyz_sommet)
                 for (j=0; j<nb_faces; j++) {
 
@@ -8288,8 +8551,8 @@ Boucle:
 ////                            glEnd();
 ////                            break;
 
-//! NOTE : la distinction GL_TRIANGLES, GL_QUADS n'apporte pas grand chose / GL_POLYGON : c'est le même code C++ dans chaque "case"
-//!        => ne pas le dupliquer sauf si raisons de performances !
+// NOTE : la distinction GL_TRIANGLES, GL_QUADS n'apporte pas grand chose / GL_POLYGON : c'est le même code C++ dans chaque "case"
+//        => ne pas le dupliquer sauf si raisons de performances !
 
     //                     case 3:
     //                        glBegin(GL_TRIANGLES);
@@ -8395,7 +8658,7 @@ Boucle:
 
         finishdraw = true;
         m_gllist   = glliste_objets; // Déjà comme ça en principe
-        Refresh();                  /// S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
+        Refresh();                   // S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
 
         if (wxIsBusy()) wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
 
@@ -8993,7 +9256,7 @@ void BddInter::showAllLines() {
             unsigned int nbAretes = objet_courant->Areteslist.size();
             std::list<Aretes>::iterator itArete = objet_courant->Areteslist.begin();
 //            int tid;
-//#pragma omp parallel for private(p_Arete,xyz_sommet,tid)    // Ne marche pas ici car liste OpenGL
+////#pragma omp parallel for private(p_Arete,xyz_sommet,tid)    // Ne marche pas ici car liste OpenGL
             for (j=0; j<nbAretes; j++,itArete++) {
 //                p_Arete = &(objet_courant->Areteslist[j]);
                 p_Arete = &(*itArete);
@@ -9115,7 +9378,7 @@ void BddInter::fghCircleTable_local(double **sint,double **cost,const int n)
     {
         free(*sint);
         free(*cost);
-///        fgError("Failed to allocate memory in fghCircleTable");
+//        fgError("Failed to allocate memory in fghCircleTable");
         printf("Echec d'allocation memoire dans fghCircleTable\n");
         exit (1);
     }
@@ -9155,7 +9418,7 @@ void BddInter::glutSolidSphere_local(GLdouble radius, GLint slices, GLint stacks
     double *sint1,*cost1;
     double *sint2,*cost2;
 
-///    FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutSolidSphere" );
+//    FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutSolidSphere" );
 
     fghCircleTable_local(&sint1,&cost1,-slices);
     fghCircleTable_local(&sint2,&cost2,stacks*2);
@@ -9637,19 +9900,19 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
     if (mode == (int)standard) {
         if (verbose) printf("standard ");
         width = width_pixel;
-        style = GL_POLYGON;             //!style plein
+        style = GL_POLYGON;             // style plein
     } else if (mode == (int)points) {
         if (verbose) printf("points ");
         width = width_point;
-        style = GL_POINTS;              //!style points
+        style = GL_POINTS;              // style points
     } else if (mode == (int)aretes) {
         if (verbose) printf("aretes ");
         width = width_ligne;
-        style = GL_LINE_LOOP;           //!style fils de fer
+        style = GL_LINE_LOOP;           // style fils de fer
     } else {
         if (verbose) printf("inconnu ! ");
         width = width_pixel;
-        style = GL_POLYGON;             //!style plein
+        style = GL_POLYGON;             // style plein
     }
     if (verbose) printf("(%d)\n",mode);
 
@@ -9778,7 +10041,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
         GLuint val0;
         val0 = *ptr;
 
-        if (val0 < 2) return;   /// pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
+        if (val0 < 2) return;   // pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
 
         int incrHits = 0;
         if (val0 != 0) incrHits = 1;    // Si val0 == 0, c'est qu'on est sur le fond <=> hits = 0 !
@@ -10148,7 +10411,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
 void BddInter::colorface(int objet,int face, bool OnOff) {
 
-/// Ne sert plus à grand chose ... notamment ne colorise plus la facette sélectionnée, car fonction reportée dans la création de liste
+// Ne sert plus à grand chose ... notamment ne colorise plus la facette sélectionnée, car fonction reportée dans la création de liste
 
     Face *facette_courante;
 //    int i;
@@ -10300,11 +10563,11 @@ void BddInter::SaveBDD(wxString str) {
         compteur_sommets = 0;
         NewVecteurs.clear();
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
-///                compteur++;                                 // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+//            if(objet_courant->Sommetlist[j].show == true) {   // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+//                compteur++;                                 // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-///                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base, mais important si soudures ?
-///            }
+//                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base, mais important si soudures ?
+//            }
         }
         myfile << "<OBJET> ";
         myfile << objet_courant->GetValue();
@@ -10356,7 +10619,7 @@ void BddInter::SaveBDD(wxString str) {
         myfile << "\n";
         myfile << "\n";
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {      // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+////            if(objet_courant->Sommetlist[j].show == true) {      // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 compteur++;
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "\t";
@@ -10367,7 +10630,7 @@ void BddInter::SaveBDD(wxString str) {
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
                 myfile << "\n";
-///            }
+////            }
         }
         myfile.flush(); // Forcer l'écriture sur le fichier
 
@@ -10610,11 +10873,11 @@ void BddInter::SaveOBJ(wxString str) {
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
-///                compteur++;                                         // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+////            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+////                compteur++;                                         // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-///                objet_courant->Sommetlist[j].Numero = compteur;     // Pourquoi ??? car modifie la base
-///            }
+////                objet_courant->Sommetlist[j].Numero = compteur;     // Pourquoi ??? car modifie la base
+////            }
         }
         myfile << "\ng ";
         myfile << objet_courant->GetName();                         // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
@@ -10626,7 +10889,7 @@ void BddInter::SaveOBJ(wxString str) {
         myfile << "# " << compteur_sommets << " Sommets\n";
 
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+////            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 myfile << "v";
                 for (k=0; k<xyz_sommet.size(); k++) {
@@ -10634,7 +10897,7 @@ void BddInter::SaveOBJ(wxString str) {
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
                 myfile << "\n";
-///            }
+////            }
         }
 
 //        compteur = 0;
@@ -10830,9 +11093,9 @@ void BddInter::SaveOFF(wxString str) {
 
         compteur_sommets = 0;
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+////            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur_sommets++;
-///            }
+////            }
         }
         total_vertices += compteur_sommets;
 
@@ -10861,14 +11124,14 @@ void BddInter::SaveOFF(wxString str) {
         }
 
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
+////            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ?
                 xyz_sommet = objet_courant->Sommetlist[j].getPoint();
                 for (k=0; k<xyz_sommet.size(); k++) {
                     myfile << " ";
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
                 myfile << "\n";
-///            }
+////            }
         }
     }
     for (o=0; o<this->Objetlist.size(); o++) {
@@ -10890,9 +11153,9 @@ void BddInter::SaveOFF(wxString str) {
 
         compteur_sommets = 0;
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+////            if(objet_courant->Sommetlist[j].show == true) {           // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
                 compteur_sommets++;
-///            }
+////            }
         }
 
         offset_vertices += compteur_sommets;
@@ -11131,11 +11394,11 @@ void BddInter::SaveG3D(wxString str) {
         NewVecteurs.clear();
         unsigned int compteur_sommets = 0;
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
-///            if(objet_courant->Sommetlist[j].show == true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
-///                compteur++;                                     // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
+////            if(objet_courant->Sommetlist[j].show == true) {       // A vérifier. Ne serait-ce pas plutôt un test sur ! deleted ? ou même inutile !
+////                compteur++;                                     // Non car si soudures c'est .show qui est utilisé (deleted n'existe pas sur sommets !)
                 compteur_sommets++;
-///                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base
-///            }
+////                objet_courant->Sommetlist[j].Numero = compteur; // Pourquoi ??? car modifie la base
+////            }
         }
 
         numeros_Sommets_L.clear();
@@ -11165,13 +11428,13 @@ void BddInter::SaveG3D(wxString str) {
         myfile << "\t\t\t<maillages nbr=\"1\">\n";
         myfile << "\t\t\t\t<maillage lod=\"1\">\n";
 
-///        compteur = 0;
+////        compteur = 0;
         myfile << "\t\t\t\t\t<sommets nbr=\"";
         myfile << compteur_sommets;
         myfile << "\">\n";
         for (j=0; j<objet_courant->Sommetlist.size(); j++) {
             Sommet_ij = &(objet_courant->Sommetlist[j]);
-///            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier.
+////            if(objet_courant->Sommetlist[j].show == true) {         // A vérifier.
 //                compteur++;
                 xyz_sommet = Sommet_ij->getPoint();
                 myfile << "\t\t\t\t\t\t<sommet id=\"";
@@ -11182,7 +11445,7 @@ void BddInter::SaveG3D(wxString str) {
                     myfile << std::scientific << std::setprecision(6) << std::setw(14) << xyz_sommet[k];
                 }
                 myfile << " \"/>\n";
-///            }
+////            }
         }
         myfile << "\t\t\t\t\t</sommets>\n";
         myfile.flush();
@@ -11472,7 +11735,7 @@ void BddInter::diviserArete(int objet, int face, int line) {
                     objet_cible->Nb_facettes = NewFace.Numero;
                 }
             }
-            /// entre 1er et dernier point ?
+            //// entre 1er et dernier point ?
         }
 //        }
         numero_a = nouveau_sommet;
@@ -11530,7 +11793,7 @@ void BddInter::souderPoints(int objet, int point) {
         if (objet_origine->Nb_vecteurs > 0) {
             NewVecteur.Numero = objet_origine->Vecteurlist.size() +1;
             objet_origine->Vecteurlist.push_back(NewVecteur);               // Idem pour NewVecteur, mais il faudra le modifier car non adapté
-///            Luminance NewLuminance;                                                            // Non utilisé ? pour l'instant
+////            Luminance NewLuminance;                                                            // Non utilisé ? pour l'instant
         }                                                                   // que fait-on si Nb_vecteurs dans cible = 0 mais pas dans origine : il faudrait en créer un ?
     }
 //    printf("1\n"); fflush(stdout);
@@ -11657,7 +11920,7 @@ void BddInter::UNDO_ONE() {
     Sommet* sommet_j;
 
     if(undo_memory != 0) {
-        for (i=0; i<this->Objetlist.size(); i++) {   /// est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
+        for (i=0; i<this->Objetlist.size(); i++) {   // est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
             objet_courant = &(this->Objetlist[i]);
             for (j=0; j<objet_courant->Facelist.size(); j++) {
                 face_j = &(objet_courant->Facelist[j]);
@@ -11712,7 +11975,7 @@ void BddInter::UNDO_ONE() {
         wxKeyEvent key_event;
         key_event.m_keyCode = 'S';
         OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de points
-        m_gllist = 0;           /// Utile ? => reconstruire toutes les listes !
+        m_gllist = 0;           // Utile ? => reconstruire toutes les listes !
     }
     Refresh();
 }
@@ -11819,7 +12082,7 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
             face_under_mouse  = -1;
             point_under_mouse = -1;
             line_under_mouse  = -1;
-            return false;     /// pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
+            return false;     // pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
         }
 
         offset = 6; // ici on est soit en GL_POINTS, soit en GL_LINE*
@@ -12212,7 +12475,7 @@ void BddInter::Simplification_BDD()
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
         int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;          // -1 pour passer d'un numéro de sommet à un indice de sommet
         Point_1  = objet_courant->Sommetlist[ind1].getPoint();          // Coordonnées du 1er sommet de la 1ère facette dans Point_1
-///#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+////#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
         for (i=1; i<=nb_points; ++i) {                                  // Ici, i est un numéro de point (décalé de 1 / indice)
         //pour chaque point d'un objet
             cpt = 0 ;
@@ -12234,16 +12497,16 @@ void BddInter::Simplification_BDD()
                     fflush(stdout); // Pour Sun/cc
                 }
             }
-///            #pragma omp critical
-///            {
+//            #pragma omp critical
+//            {
             compteur++;
-///            }
+//            }
 // semble provoquer un blocage sur certaines bdd (comme klein_glass.STL) si à l'intérieur d'un pragma omp critical. Inutile de faire sur tous les threads => seulement le 0
 // Mais ... le blocage subsiste de façon aléatoire. De plus, le gain de temps est peu sensible par rapport aux autres boucles ci-dessous.
-///            if (omp_get_thread_num() == 0)
+//            if (omp_get_thread_num() == 0)
                 Update_Dialog(compteur,Nb_test);
         }
-/// Fin de zone calcul //
+//// Fin de zone calcul //
 
 //        compteur+=nb_points;
 //        Update_Dialog(compteur,Nb_test);        // mieux (si supprimé ausi dans le pragma) mais l'Update_Dialog est tardif, bien après Dialog_Delay
@@ -12385,7 +12648,7 @@ void BddInter::Simplification_BDD()
             nbface = objet_courant->Nb_facettes;
 
             // Pour supprimer les normales non utilisées .... on les marque comme des doublons du 1er vecteur
-///#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+////#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
             for (i=1; i<=nb_points; ++i) {                           // Ici i est un numéro de vecteur, donc décalé de 1 / indice
             //pour chaque normale au sommet d'un objet (vecteur au sens SDM)
                 cpt = 0 ;
@@ -12409,15 +12672,15 @@ void BddInter::Simplification_BDD()
                         fflush(stdout); // Pour Sun/cc
                     }
                 }
-///                #pragma omp critical
-///                {
+////                #pragma omp critical
+////                {
                 compteur++;
-///                }
+////                }
 //// Même problème que plus haut... blocage possible sur certaines bdd.
-///                if (omp_get_thread_num() == 0)
+////                if (omp_get_thread_num() == 0)
                     Update_Dialog(compteur,Nb_test);
             }
-/// Fin de zone calcul //
+//// Fin de zone calcul //
 
 //            printf("3 %d\n",compteur);
             if (verbose) printf("\n");
@@ -12623,12 +12886,12 @@ void BddInter::Calcul_Normale_Barycentre(int indice_objet, int indice_facette) {
         for (z=0; z<3; z++) {
             vector1[z]=
                  Objet_i->Sommetlist[Face_ij->F_sommets[n-1]-1].point[z]
-                -Objet_i->Sommetlist[Face_ij->F_sommets[0]  -1].point[z];       //! Vecteur P1-P0 si n=2, puis P2-P0 si n=3, ...
+                -Objet_i->Sommetlist[Face_ij->F_sommets[0]  -1].point[z];       // Vecteur P1-P0 si n=2, puis P2-P0 si n=3, ...
             vector2[z]=
-                 Objet_i->Sommetlist[Face_ij->F_sommets[n]-1].point[z]          //! Vecteur P2-P0 si n=2, puis P3-P0 si n=3, ..., Pn-P0 avec n >= 2
+                 Objet_i->Sommetlist[Face_ij->F_sommets[n]-1].point[z]          // Vecteur P2-P0 si n=2, puis P3-P0 si n=3, ..., Pn-P0 avec n >= 2
                 -Objet_i->Sommetlist[Face_ij->F_sommets[0]-1].point[z];
         }
-        normal1.push_back(vector1[1]*vector2[2]-vector1[2]*vector2[1]);         //! Calcul de n-2 sous-normales
+        normal1.push_back(vector1[1]*vector2[2]-vector1[2]*vector2[1]);         // Calcul de n-2 sous-normales
         normal1.push_back(vector1[2]*vector2[0]-vector1[0]*vector2[2]);
         normal1.push_back(vector1[0]*vector2[1]-vector1[1]*vector2[0]);
         normal.push_back(normal1);
@@ -13105,7 +13368,7 @@ void BddInter::simplification_doublons_points(unsigned int objet)
                             facette->deleteone(k);
                             nbsom   = facette->Nb_Sommets_F; // Mettre à jour la borne sup !
                             facette->Nb_Sommets_L-- ;        // Le deleteone a aussi supprimé la normale aux sommets correspondante
-                            /// Ne faudrait-il pas faire la même chose sur luminance ?
+                            //// Ne faudrait-il pas faire la même chose sur luminance ?
                             bdd_modifiee = true;
                         }
 					}

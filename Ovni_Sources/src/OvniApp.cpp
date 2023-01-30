@@ -12,6 +12,8 @@
 #include <wx/stdpaths.h>
 #include <wx/filefn.h>
 
+#include <wx/settings.h>    // Pour test sur IsDark
+
 //(*AppHeaders
 #include "OvniMain.h"
 #include <wx/image.h>
@@ -23,6 +25,13 @@ bool OvniApp::OnInit() {
     char Message[1024];
 //    printf("Entree OvniApp::OnInit\n");
 
+/** \brief OvniApp::OnInit Initialisation globale d'Ovni
+ *
+ * \return wxsOK
+ *
+ */
+
+
 #if _WIN32
     system("chcp 65001  > nul");    // Pour coder en UTF-8 les sorties dans la console DOS sous Windows
 #endif
@@ -32,8 +41,16 @@ bool OvniApp::OnInit() {
     wxString appPath(f.GetPath());
     snprintf(Message,1024,"Chemin de l'exécutable :\n%s\n",(const char*)appPath.utf8_str());
     printf("%s",Message);
-///    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
+//    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
     wxSetWorkingDirectory(appPath);
+
+//#if wxCHECK_VERSION(3,3,0)
+//    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // Dark mode en cours dans l'application
+//    printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
+////    printf("IsUsingDarkBackground : %d\n",wxSystemSettings::GetAppearance().wxSystemAppearance::IsUsingDarkBackground() );
+////    wxGetApp().MSWEnableDarkMode(1);                                                    // Pour forcer le mode Dark
+////    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );
+//#endif // wxCHECK_VERSION
 
     //(*AppInitialize
     bool wxsOK = true;

@@ -13,6 +13,7 @@
 #include "OvniApp.h"
 #include <wx/settings.h>
 #include <wx/app.h>
+#include <wx/sysopt.h>
 #include <wx/dcclient.h>
 #include <wx/debug.h>
 #include <wx/filedlg.h>
@@ -45,6 +46,13 @@ enum wxbuildinfoformat {
 
 wxString wxbuildinfo(wxbuildinfoformat format) {
     wxString wxbuild(wxVERSION_STRING);
+
+/** \brief wxbuildinfo Génération d'infos diverses sur le système, le numéro de version, les versions des dll ...
+ *
+ * \param format peut être short_f ou long_f
+ * \return wxString wxbuild(wxVERSION_STRING)
+ *
+ */
 
     if (format == long_f ) {
 #if defined(__WXMSW__)
@@ -239,8 +247,35 @@ BEGIN_EVENT_TABLE(OvniFrame,wxFrame)
 END_EVENT_TABLE()
 
 OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
+
+/** \brief OvniFrame::OvniFrame Point d'entrée d'Ovni
+ *
+ * \param parent    : Pointeur sur la fenêtre parent
+ * \param id        : Identificateur de la fenêtre
+ *
+ */
+
 //    verbose = true;
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
+
+#if defined(__WXMSW__)      // Teste si on est sous Windows
+    int darkmode = -1;
+    darkmode = wxSystemOptions().GetOptionInt("msw.dark-mode");     // suivant la valeur de WX_MSW_DARK_MODE peut valoir 0, 1 ou 2
+    printf("msw.dark-mode: %d\n",darkmode);
+    darkmode = Ouvrir_Ini();                                        // De toute façon c'est le contenu de Ovni.ini qui prévaut (mais valeurs -1, 0 ou 1)
+    if (wxSystemSettings::GetAppearance().IsDark()) darkmode = 1;   // On a forcé le darkmode via set WX_MSW_DARK_MODE=2 en ligne de commande avant de lancer Ovni
+    if (darkmode >= 0) {
+#if wxCHECK_VERSION(3,3,0)
+        wxGetApp().MSWEnableDarkMode(darkmode);
+#endif // wxCHECK_VERSION
+    }
+#endif // __WXMSW__
+
+    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
+#if wxCHECK_VERSION(3,3,0)
+    printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
+#endif // wxCHECK_VERSION
+
     // Menus, boutons et autres contrôles gérés par wxSmith
 
     // Note : mettre ci-dessous //_(* plutôt que //(* empèche la génération automatique de code par wxSmith. Utile pour pouvoir insérer du code dans une version quasi-définitive.
@@ -615,6 +650,8 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&OvniFrame::OnClose);
     //*)
 
+//    wxGetApp().MSWEnableDarkMode(1);                                                    // Pour forcer le mode Dark, mais c'est un peu tard ici
+//    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // certains élements restent en mode clair. De plus Ovni.ini toujours pas ouvert !
     // Initialement créés par wxSmith (pour wxWidgets 2.8.12) ainsi que les déclarations des ID_POPUP_*
 
 #if wxCHECK_VERSION(3,0,0)
@@ -755,6 +792,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 
 //    wxSize* ClientSize = new wxSize(800,600);
 //    this->SetMinSize(*ClientSize);
+
     //OpenGL initialisation code
     InitOpenGL();
     int argc=1;
@@ -824,7 +862,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         Element=new BddInter(dynamic_cast<wxWindow*>(this->GLCanvas), GLCanvasAttributes_1, wxID_ANY, wxDefaultPosition,
             wxSize(1, 1), wxSUNKEN_BORDER, verbose); // Taille minimale (1 pixel) car sera ajusté par la suite (+ évite une zone blanche si pas de fichier sélectionné !)
 //          wxSize(300, 300), wxSUNKEN_BORDER);
-///        this->GLCanvas = dynamic_cast<wxGLCanvas*>(Element); // Les this->GLCanvas commentés par /// ne semblent pas servir à quelque chose !!!
+////        this->GLCanvas = dynamic_cast<wxGLCanvas*>(Element); // Les this->GLCanvas commentés par /// ne semblent pas servir à quelque chose !!!
 //        this->GLCanvas->SetSize(wxSize(860, 600));    // Sera fait plus tard ...
         Element->Numero_base = 0;
     }
@@ -866,9 +904,34 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         // Note : ne pas mettre Element->exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
     }
 
+
     Ouvrir_Fichier();
     Timer_Save.Stop();                                                          // Arrêt du timer par précaution
     if (Element->svg_time > 0) Timer_Save.Start(Element->svg_time*60000,false); // Lancer le timer si svg_time > 0
+
+#if wxCHECK_VERSION(3,3,0)
+    if (Element->darkmode >= 0 ) {
+        Element->theme_b = Element->darkmode;
+    }
+    if (wxSystemSettings::GetAppearance().IsDark()) {
+// Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
+        wxColour New_blue = *wxCYAN;
+        Slider_z                            ->SetForegroundColour(New_blue);
+        CentreRotation_Panel->StaticText4   ->SetForegroundColour(New_blue);
+        DeplacerBdd_Panel   ->StaticText4   ->SetForegroundColour(New_blue);
+        Manipulations_Panel ->CheckBox_Z    ->SetForegroundColour(New_blue);
+        PositionSource_Panel->Pos_Z         ->SetForegroundColour(New_blue);
+        Translation_Panel   ->StaticText7   ->SetForegroundColour(New_blue);
+        Translation_Panel   ->StaticText8   ->SetForegroundColour(New_blue);
+    }
+#else
+    if (Element->darkmode >= 0 ) {
+        Element->theme_b = (bool)(1 - Element->darkmode);
+        wxKeyEvent key_event;
+        key_event.m_keyCode = 'W';
+        Element->OnKeyDown(key_event);
+    }
+#endif // wxCHECK_VERSION
 
 //    printf("Sortie OvniFrame, wxSize x:%d y:%d\n",ClientSize->GetX(), ClientSize->GetY());
 
@@ -894,6 +957,36 @@ OvniFrame::~OvniFrame() {
     wxTheApp->ExitMainLoop();   // Pour voir si utile en cas de crash dans Ovni
 }
 
+int OvniFrame::Ouvrir_Ini() {
+/** \brief Version spéciale de Ouvrir_ini_file ne récupérant que la valeur du mot clé Dark_Mode s'il y est présent
+ *
+ * \return Valeur lue (0 si thème par défaut, 1 pour forcer le thème sombre) ou -1 pour forcer le thème clair (ou absent)
+ *
+ */
+    const char *fichier_init="Ovni.ini";
+    const char *initQ="Dark_Mode=";
+    int darkmode = -1;
+    char *Lu, *p_txt_wrk;
+    int icmp, ibool, len ;
+    char Message[512];
+    FILE *f_init;
+
+    f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
+    if (f_init != nullptr) {
+        while ((Lu = fgets(Message,300,f_init)) != nullptr) {
+            len = strlen( initQ);
+            icmp= strncmp(initQ,Message,len) ;                  // Test sur 26ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&darkmode) ;              // Récupère la valeur de DarkMode
+//                continue;   // Passer au while suivant
+            }
+        }
+    }
+
+    return darkmode;
+}
+
 void OvniFrame::InitOpenGL(void) {
     if (verbose) printf("Entree OvniFrame::InitOpenGL\n");  // Ne semble plus très utile ... à voir ... et peut-être intégrer ailleurs
     //create opengl context
@@ -909,6 +1002,12 @@ void OvniFrame::InitOpenGL(void) {
   * \param iHeight: the new height of the view port
   */
 void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
+/** \brief OvniFrame::ResizeOpenGL : Redimensionne la fenêtre OpenGL
+ *
+ * \param iWidth  largeur de la fenêtre
+ * \param iHeight hauteur de la fenêtre
+ *
+ */
     int iw, ih;
 
     if (verbose) printf("Entree OvniFrame::ResizeOpenGL\n");
@@ -927,6 +1026,11 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
 
 void OvniFrame::InitBoutons(void)
 {
+/** \brief OvniFrame::InitBoutons : Initialisation des boutons en mode coché/non coché
+ *
+ *
+ */
+
     if (verbose) printf("Entree OvniFrame::InitBoutons\n");
     if (Menu_Affichage_Points ->IsChecked()) Button_Points ->SetValue(true);    // IsChecked <=> Bouton enfoncé, sinon par défaut en position haute
     if (Menu_Affichage_Filaire->IsChecked()) Button_Filaire->SetValue(true);
@@ -945,7 +1049,16 @@ void OvniFrame::InitBoutons(void)
     if (verbose) printf("Sortie OvniFrame::InitBoutons\n");
 }
 
-int OvniFrame::SetNewIcons(int icon_size) {
+int OvniFrame::SetNewIcons(int icon_size)
+{
+
+/** \brief OvniFrame::SetNewIcons : Initialisation des positions/Taille des boutons
+ *
+ * \param icon_size         : Taille d'icônes (16, 32, 48, 64)
+ * \return int button_pos   : position du dernier bouton
+ *
+ */
+
 //    wxString ext = _T(".png");                                      // NOTE : avec des fichiers .svg, on évite d'avoir un jeu de fichiers par taille.
     wxString ext = _T(".svg");
     int button_pos  = 460;
@@ -1049,7 +1162,15 @@ int OvniFrame::SetNewIcons(int icon_size) {
     return(button_pos);
 }
 
-bool OvniFrame::OnBdd_modifiee() {
+bool OvniFrame::OnBdd_modifiee()
+{
+
+/** \brief OvniFrame::OnBdd_modifiee : Si la Bdd a été modifiée, affiche un message pour demander s'il faut l'enregistrer ou ignorer les modifications
+ *
+ * \return bool retour
+ *
+ */
+
     bool retour = true;
     int  retour_Show;
     if (Element->Objetlist.size() == 0) return(true) ;  // Inutile de tester bdd_modifiee car il ne reste rien !
@@ -1083,7 +1204,11 @@ bool OvniFrame::OnBdd_modifiee() {
     return (retour);
 }
 
-void OvniFrame::OnPal_modifiee() {
+void OvniFrame::OnPal_modifiee()
+{
+/** \brief OvniFrame::OnPal_modifiee : Si la Palette de couleurs a été modifiée, affiche un message pour demander s'il faut l'enregistrer ou ignorer les modifications
+ *
+ */
     if (Element->pal_file_modified) {
         wxString wxMessage = _T("Le fichier de palette des couleurs a été modifié.\n");
         wxMessage         += _T("Voulez-vous l'enregistrer avant de Quitter ?");
@@ -1096,7 +1221,14 @@ void OvniFrame::OnPal_modifiee() {
     }
 }
 
-void OvniFrame::OnQuit(wxCommandEvent& event) {
+void OvniFrame::OnQuit(wxCommandEvent& event)
+{
+/** \brief OvniFrame::OnQuit : Sortie d'Ovni par Quit (appelle OnClose)
+ *
+ * \param event
+ *
+ */
+
 //    bool test;
 //    test = OnBdd_modifiee();
 //    if (!test) return;
@@ -1119,6 +1251,11 @@ void OvniFrame::OnAbout(wxCommandEvent& event) {
 }
 
 void OvniFrame::OnClose(wxCloseEvent& event) {
+/** \brief OvniFrame::OnClose : Sortie d'Ovni par Close. Fermeture/sauvegarde des fichiers
+ *
+ * \param event
+ *
+ */
     bool test;
     test = OnBdd_modifiee();
     if (!test) return;
@@ -1148,7 +1285,7 @@ void OvniFrame::OnGLCanvasPaint(wxPaintEvent& event) {
     ResizeOpenGL(ClientSize.x, ClientSize.y);
 
 //    m_glcontext->SetCurrent(*GLCanvas);
-    event.Skip();                               /// Indispensable
+    event.Skip();                               // Indispensable
     if (verbose) printf("Sortie OvniFrame::OnGLCanvasPaint\n");
 }
 
@@ -1159,7 +1296,12 @@ void OvniFrame::OnMenu_NotImplemented(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
 
-//! Affichage des caractéristiques de la carte graphique (Hardware 3D)
+/** \brief OvniFrame::OnMenu_Hardware3DSelected : Affichage des caractéristiques de la carte graphique (Hardware 3D)
+ *
+ * \param event
+ *
+ */
+
 //  NOTE : les \t (tabulations) sont ignorées semble t-il ! => remplacer par des espaces, mais alignements imparfaits
 
     char *cptr;
@@ -1201,8 +1343,11 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
 
 void OvniFrame::OnButton_PleinToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface les surfaces des objets via un bouton
-
+/** \brief Affiche / Efface les surfaces des objets via un bouton
+ *
+ * \param event
+ *
+ */
     if (Button_Plein->GetValue())
         Menu_Affichage_Plein->Check(true) ;
     else
@@ -1216,8 +1361,11 @@ void OvniFrame::OnButton_PleinToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_PleinSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface les surfaces des objets via un menu
-
+/** \brief Affiche / Efface les surfaces des objets via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Plein->IsChecked())
         Button_Plein->SetValue(true) ;
     else
@@ -1231,8 +1379,11 @@ void OvniFrame::OnMenu_Affichage_PleinSelected(wxCommandEvent& event) {
 
 void OvniFrame::OnButton_AxesToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface les axes XYZ de la Bdd via un bouton
-
+/** \brief Affiche / Efface les axes XYZ de la Bdd via un bouton
+ *
+ * \param event
+ *
+ */
     if (Button_Axes->GetValue())
         Menu_Affichage_Axes->Check(true) ;
     else
@@ -1246,8 +1397,11 @@ void OvniFrame::OnButton_AxesToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_AxesSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface les axes XYZ de la Bdd via un menu
-
+/** \brief Affiche / Efface les axes XYZ de la Bdd via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Axes->IsChecked())
         Button_Axes->SetValue(true) ;
     else
@@ -1261,8 +1415,11 @@ void OvniFrame::OnMenu_Affichage_AxesSelected(wxCommandEvent& event) {
 
 void OvniFrame::OnButton_BoiteToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface la boîte englobante de la Bdd via un bouton
-
+/** \brief Affiche / Efface la boîte englobante de la Bdd via un bouton
+ *
+ * \param event
+ *
+ */
     if(Button_Boite->GetValue())
         Menu_Affichage_Boite->Check(true) ;
     else
@@ -1276,8 +1433,11 @@ void OvniFrame::OnButton_BoiteToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_BoiteSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface la boîte englobante de la Bdd via un menu
-
+/** \brief Affiche / Efface la boîte englobante de la Bdd via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Boite->IsChecked())
         Button_Boite->SetValue(true) ;
     else
@@ -1291,8 +1451,11 @@ void OvniFrame::OnMenu_Affichage_BoiteSelected(wxCommandEvent& event) {
 
 void OvniFrame::OnButton_SourceToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface la source de lumière via un bouton
-
+/** \brief Affiche / Efface la source de lumière via un bouton
+ *
+ * \param event
+ *
+ */
     if (Button_Source->GetValue())
         Menu_Affichage_Source->Check(true) ;
     else
@@ -1306,8 +1469,11 @@ void OvniFrame::OnButton_SourceToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_SourceSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface la source de lumière via le menu
-
+/** \brief Affiche / Efface la source de lumière via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Source->IsChecked())
         Button_Source->SetValue(true) ;
     else
@@ -1321,8 +1487,11 @@ void OvniFrame::OnMenu_Affichage_SourceSelected(wxCommandEvent& event) {
 
 void OvniFrame::OnButton_PointsToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface les points via un bouton
-
+/** \brief Affiche / Efface les points via un bouton
+ *
+ * \param event
+ *
+ */
     if (Button_Points->GetValue())
         Menu_Affichage_Points->Check(true) ;
     else
@@ -1340,8 +1509,11 @@ void OvniFrame::OnButton_PointsToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface les points via le menu
-
+/** \brief Affiche / Efface les points via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Points->IsChecked())
         Button_Points->SetValue(true) ;
     else
@@ -1358,6 +1530,11 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
 }
 
 void OvniFrame::GenereListeAretes() {
+
+/** \brief Génération de la liste des arêtes des facettes
+ *
+ *
+ */
     if (!Element->GenereTableauAretes_OK) {
         printf("Construction de GenereTableauAretes\n");
         for (unsigned int i=0; i<Element->Objetlist.size(); ++i) {
@@ -1373,8 +1550,11 @@ void OvniFrame::GenereListeAretes() {
 
 void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
 
-//! Affiche / Efface les arêtes via un bouton
-
+/** \brief Affiche / Efface les arêtes via un bouton
+ *
+ * \param event
+ *
+ */
     if (Button_Filaire->GetValue())
         Menu_Affichage_Filaire->Check(true) ;
     else
@@ -1391,8 +1571,11 @@ void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
 
 void OvniFrame::OnMenu_Affichage_FilaireSelected(wxCommandEvent& event) {
 
-//! Affiche / Efface les arêtes via le menu
-
+/** \brief Affiche / Efface les arêtes via un menu
+ *
+ * \param event
+ *
+ */
     if (Menu_Affichage_Filaire->IsChecked())
         Button_Filaire->SetValue(true)  ;
     else
@@ -1412,6 +1595,13 @@ void OvniFrame::Toggle_Groupes(wxCommandEvent& event) {
 }
 
 void OvniFrame::OnButton_GroupesToggle(wxCommandEvent& event) {
+
+/** \brief Colorise/Supprime la colorisation par groupes via un bouton
+ *
+ * \param event
+ *
+ */
+
     if(Element != nullptr) {
         if (Button_Groupes->GetValue()) {
             Menu_Reperage_Couleurs_Groupes  ->Check(true);
@@ -1434,6 +1624,12 @@ void OvniFrame::Toggle_Materiaux(wxCommandEvent& event) {
 }
 
 void OvniFrame::OnButton_MateriauxToggle(wxCommandEvent& event) {
+
+/** \brief Colorise/Supprime la colorisation par matériau via un bouton
+ *
+ * \param event
+ *
+ */
     if(Element != nullptr) {
         if (Button_Materiaux->GetValue()) {
             Menu_Reperage_Couleurs_Groupes  ->Check(false);
@@ -1497,6 +1693,12 @@ void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event
 
 void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 {
+/** \brief Réouvre le fichier tel qu'il est sur le disque (les modifications en cours sont donc éliminées)
+ *
+ * \param event
+ *
+ */
+
     bool points_affiches;
 
     New_file = false;                           // => le nom du fichier est déjà connu (via get_file)
@@ -1517,7 +1719,13 @@ void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
 {
+/** \brief Réouvre le fichier 3ds tel qu'il est sur le disque
+ *
+ * \param event
+ *
+ */
 // Reopen spécifique pour fichiers 3ds
+
     this->Element->test_decalage3ds = !this->Element->test_decalage3ds; // Inverser le test...
                                                                         // Ici, on ne marque pas de changement du fichier init (ini_file_modified inchangé)
     if (this->Element->MPrefs->IsShown()) {                             // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
@@ -1528,6 +1736,11 @@ void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_OpenSelected(wxCommandEvent& event)
 {
+/** \brief Ouvre le fichier 3D sur le disque
+ *
+ * \param event
+ *
+ */
 //    printf("Entree OpenSelected\n");
     New_file = true;
     Element->Numero_base = 0;
@@ -1538,6 +1751,11 @@ void OvniFrame::OnMenu_OpenSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_AddFileSelected(wxCommandEvent& event)
 {
+/** \brief Ouvre un fichier 3D sur le disque et l'ajoute à la Bdd déjà présente
+ *
+ * \param event
+ *
+ */
     New_file = true;
     Element->Numero_base = Element->Objetlist.size();   // Pour continuer la numérotation (sans repartir de 0 dans "value" d'un Object)
     Ouvrir_Fichier();
@@ -1545,6 +1763,9 @@ void OvniFrame::OnMenu_AddFileSelected(wxCommandEvent& event)
 
 void OvniFrame::Ouvrir_Fichier()
 {
+/** \brief Ouverture effective et décodage des fichiers 3D supportés par Ovni
+ *
+ */
     static int FilterIndex=8;
     static bool first_time=true;
 
@@ -1727,6 +1948,12 @@ void OvniFrame::Ouvrir_Fichier()
 
 void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 {
+/** \brief Préparation de la boîte de dialogue des préférences
+ *
+ * \param event
+ *
+ */
+
 //    Preferences_Panel->ShowModal(); // Bloque l'interactivité d'autres options, boutons, menus, ...
     float val ;
     int   ival;
@@ -1857,7 +2084,11 @@ void OvniFrame::OnSlider_zCmdScroll(wxScrollEvent& event)
 
 void OvniFrame::OnMenu_EnregistrerSelected(wxCommandEvent& event)
 {
-// Enregistre au format SDM bdd avec le nom d'origine et dans le répertoire d'origine
+/** \brief Enregistre au format SDM bdd avec le nom d'origine et dans le répertoire d'origine
+ *
+ * \param event
+ *
+ */
     bool test=true;
     wxString wxNomFichier = Element->get_firstFile().BeforeLast('.') + _T(".bdd");
     if (Element->CreerBackup) {
@@ -1889,7 +2120,11 @@ void OvniFrame::OnMenu_EnregistrerSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
 {
-// Enregistre au format SDM bdd en proposant le nom d'origine comme nom par défaut
+/** \brief Enregistre au format SDM bdd en proposant le nom d'origine comme nom par défaut
+ *
+ * \param event
+ *
+ */
     bool notOK = false;
     if (Element == nullptr)             notOK = true;
     if (Element->Objetlist.size() == 0) notOK = true;
@@ -1980,8 +2215,11 @@ void OvniFrame::Toggle_Sliders(wxCommandEvent& event)
 
 void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 {
-    // Pour afficher ou masquer l'espace réservé aux Sliders
-
+/** \brief Pour afficher ou masquer l'espace réservé aux Sliders
+ *
+ * \param event
+ *
+ */
     int New_y_size;
 
     if (verbose) printf("\nEntree OvniFrame::OnButton_SlidersToggle\n");
@@ -3103,7 +3341,7 @@ void OvniFrame::Lire_Image(int &largeur, int &hauteur)
 	larg = viewport[2] -4;      // -4 pour éviter une marge noire de 4 pixels à droite et en haut des images lues sur l'écran.
 	haut = viewport[3] -4;
 	if (larg & 1) {             // Détecte une valeur impaire de la largeur image
-        ++larg; //!Pour avoir des valeurs paires
+        ++larg;                 // Pour avoir des valeurs paires
 //        printf("Largeur ajustee : %d\n",larg);
 	}
 //	if (haut & 1) ++haut;       // Ne semble pas nécessaire

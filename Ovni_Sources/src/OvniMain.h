@@ -253,6 +253,7 @@ class OvniFrame: public wxFrame
 //        static wxString s_extFileDef;
 //        void changeangle();
         void Ouvrir_Fichier();
+        int  Ouvrir_Ini();
         void ResizeOpenGL(int , int );
         void SetAngles();
         int  SetNewIcons(int);

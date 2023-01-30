@@ -40,6 +40,14 @@ END_EVENT_TABLE()
 
 Facette::Facette(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Facette::Facette Création d'une forme générique de Facette
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Facette)
 	Create(parent, id, _T("Ajout d\'un objet Facette"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(449,142));

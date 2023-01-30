@@ -52,7 +52,7 @@
 			<pos>0,104</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
-			<bg>wxSYS_COLOUR_MENUTEXT</bg>
+			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
@@ -136,7 +136,7 @@
 			<pos>0,280</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
-			<bg>wxSYS_COLOUR_BACKGROUND</bg>
+			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT10" variable="StaticText_NumerosUtilises" member="yes">

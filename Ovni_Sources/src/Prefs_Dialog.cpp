@@ -1,7 +1,6 @@
 #include "Prefs_Dialog.h"
 
 //(*InternalHeaders(Prefs_Dialog)
-#include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/string.h>
 //*)
@@ -115,8 +114,6 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(StaticLine3, 0, wxALL|wxEXPAND, 0);
 	CheckBox_1SeulObjet3D = new wxCheckBox(this, ID_CHECKBOX8, _T("Forcer la lecture des fichiers .obj dans 1 seul Objet 3D"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX8"));
 	CheckBox_1SeulObjet3D->SetValue(false);
-	CheckBox_1SeulObjet3D->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	CheckBox_1SeulObjet3D->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
 	BoxSizer1->Add(CheckBox_1SeulObjet3D, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	CheckBox_LectureOptimisee = new wxCheckBox(this, ID_CHECKBOX2, _T("Lecture optimisée des tableaux de points des fichiers de type .obj"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
 	CheckBox_LectureOptimisee->SetValue(false);
@@ -174,7 +171,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	    _T("Méthode 2     "),
 	    _T("Méthode 3     ")
 	};
-	RadioBox_Triangulation = new wxRadioBox(this, ID_RADIOBOX1, _T("Méthode de triangulation"), wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX1"));
+	RadioBox_Triangulation = new wxRadioBox(this, ID_RADIOBOX1, _T("Méthode de triangulation"), wxDefaultPosition, wxSize(382,48), 3, __wxRadioBoxChoices_1, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX1"));
 	RadioBox_Triangulation->SetSelection(1);
 	BoxSizer1->Add(RadioBox_Triangulation, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	wxString __wxRadioBoxChoices_2[2] =
@@ -182,7 +179,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	    _T("Directe            "),
 	    _T("Trackball")
 	};
-	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxDefaultSize, 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
+	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxSize(382,48), 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
 	RadioBox_Trackball->SetSelection(1);
 	BoxSizer1->Add(RadioBox_Trackball, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	wxString __wxRadioBoxChoices_3[4] =
@@ -192,7 +189,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	    _T("32 x 32            "),
 	    _T("48 x 48")
 	};
-	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxDefaultSize, 4, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
+	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxSize(382,48), 4, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
 	RadioBox_IconSize->SetSelection(0);
 	BoxSizer1->Add(RadioBox_IconSize, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(380,2), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
@@ -206,13 +203,11 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	CheckBox_CreerBackup->SetValue(false);
 	CheckBox_CreerBackup->Disable();
 	CheckBox_CreerBackup->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	CheckBox_CreerBackup->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
 	BoxSizer1->Add(CheckBox_CreerBackup, 0, wxALL|wxEXPAND, 5);
 	CheckBox_SupprBackup = new wxCheckBox(this, ID_CHECKBOX10, _T("Supprimer le fichier de backup *.bdd.bak en quittant Ovni"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX10"));
 	CheckBox_SupprBackup->SetValue(false);
 	CheckBox_SupprBackup->Disable();
 	CheckBox_SupprBackup->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	CheckBox_SupprBackup->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
 	BoxSizer1->Add(CheckBox_SupprBackup, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine11 = new wxStaticLine(this, ID_STATICLINE11, wxDefaultPosition, wxSize(380,1), wxLI_HORIZONTAL, _T("ID_STATICLINE11"));
 	BoxSizer1->Add(StaticLine11, 0, wxALL|wxEXPAND, 0);

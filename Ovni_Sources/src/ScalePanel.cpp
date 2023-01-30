@@ -1,7 +1,6 @@
 #include "ScalePanel.h"
 
 //(*InternalHeaders(ScalePanel)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

@@ -2,7 +2,6 @@
 #include "vector3d.h"
 
 //(*InternalHeaders(Cone)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 
@@ -37,6 +36,14 @@ END_EVENT_TABLE()
 
 Cone::Cone(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Cone::Cone Création d'une forme générique en cône
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Cone)
 	Create(parent, id, _T("Ajout d\'un cône"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(466,220));

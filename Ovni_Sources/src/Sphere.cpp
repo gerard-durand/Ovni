@@ -34,6 +34,14 @@ END_EVENT_TABLE()
 
 Sphere::Sphere(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Sphere::Sphere Création d'une forme générique en Sphere
+ *
+ * \param parent    : Pointeur sur la fenêtre parent
+ * \param id        : identifiant de la boîte de dialogue
+ * \param pos       : position de la boîte de dialogue
+ * \param size      : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Sphere)
 	Create(parent, id, _T("Ajout d\'une sphère"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(409,164));

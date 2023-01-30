@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="OvniW_wx3" />
+		<Option title="Ovni_wx3" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -31,8 +31,8 @@
 					<Add option="-s" />
 					<Add option="-lopengl32 -lglu32 -lfreeglut" />
 					<Add option="-Wl,--allow-multiple-definition" />
-					<Add library="libwxmsw$(WX_VERSION)u.a" />
-					<Add library="libwxmsw$(WX_VERSION)u_gl.a" />
+					<Add library="libwxmsw$(#wx3x.WX_VERSION)u.a" />
+					<Add library="libwxmsw$(#wx3x.WX_VERSION)u_gl.a" />
 					<Add directory="$(#wx3x)/lib/gcc_dll" />
 				</Linker>
 			</Target>
@@ -64,8 +64,8 @@
 					<Add option="-static" />
 					<Add option="-Wl,--allow-multiple-definition" />
 					<Add library="libfreeglut_static.a" />
-					<Add library="libwxmsw$(WX_VERSION)u.a" />
-					<Add library="libwxmsw$(WX_VERSION)u_gl.a" />
+					<Add library="libwxmsw$(#wx3x.WX_VERSION)u.a" />
+					<Add library="libwxmsw$(#wx3x.WX_VERSION)u_gl.a" />
 					<Add library="libwxpng.a" />
 					<Add library="libwxjpeg.a" />
 					<Add library="libwxtiff.a" />
@@ -93,9 +93,6 @@
 					<Add directory="$(#wx3x)/lib/gcc_lib" />
 				</Linker>
 			</Target>
-			<Environment>
-				<Variable name="WX_VERSION" value="32" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -257,43 +254,52 @@
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project output_language="French" />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 			<envvars set="default" />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="OvniApp.cpp" main="OvniFrame" init_handlers="necessary" language="CPP" />
 				<resources>
-					<wxFrame wxs="wxsmith/Ovniframe.wxs" src="src/OvniMain.cpp" hdr="src/OvniMain.h" fwddecl="0" i18n="1" name="OvniFrame" language="CPP" />
-					<wxDialog wxs="wxsmith/CentreRotation.wxs" src="src\CentreRotation.cpp" hdr="src\CentreRotation.h" fwddecl="0" i18n="1" name="CentreRotation" language="CPP" />
-					<wxDialog wxs="wxsmith/ChangerEchelleBdd.wxs" src="src\ChangerEchelleBdd.cpp" hdr="src\ChangerEchelleBdd.h" fwddecl="0" i18n="1" name="ChangerEchelleBdd" language="CPP" />
-					<wxDialog wxs="wxsmith/ChoixAffichageObjets.wxs" src="src\ChoixAffichageObjets.cpp" hdr="src\ChoixAffichageObjets.h" fwddecl="0" i18n="1" name="ChoixAffichageObjets" language="CPP" />
-					<wxDialog wxs="wxsmith/Cone.wxs" src="src\Cone.cpp" hdr="src\Cone.h" fwddecl="0" i18n="1" name="Cone" language="CPP" />
-					<wxDialog wxs="wxsmith/CouleursGroupes.wxs" src="src\CouleursGroupes.cpp" hdr="src\CouleursGroupes.h" fwddecl="0" i18n="1" name="CouleursGroupes" language="CPP" />
-					<wxDialog wxs="wxsmith/Cube.wxs" src="src\Cube.cpp" hdr="src\Cube.h" fwddecl="0" i18n="1" name="Cube" language="CPP" />
-					<wxDialog wxs="wxsmith/Cylindre.wxs" src="src\Cylindre.cpp" hdr="src\Cylindre.h" fwddecl="0" i18n="1" name="Cylindre" language="CPP" />
-					<wxDialog wxs="wxsmith/DeplacerBdd.wxs" src="src\DeplacerBdd.cpp" hdr="src\DeplacerBdd.h" fwddecl="0" i18n="1" name="DeplacerBdd" language="CPP" />
-					<wxDialog wxs="wxsmith/Ellipsoide.wxs" src="src\Ellipsoide.cpp" hdr="src\Ellipsoide.h" fwddecl="0" i18n="1" name="Ellipsoide" language="CPP" />
-					<wxDialog wxs="wxsmith/Facette.wxs" src="src\Facette.cpp" hdr="src\Facette.h" fwddecl="0" i18n="1" name="Facette" language="CPP" />
-					<wxDialog wxs="wxsmith/Icosaedre.wxs" src="src\Icosaedre.cpp" hdr="src\Icosaedre.h" fwddecl="0" i18n="1" name="Icosaedre" language="CPP" />
-					<wxDialog wxs="wxsmith/ManipulationsPanel.wxs" src="src\ManipulationsPanel.cpp" hdr="src\ManipulationsPanel.h" fwddecl="0" i18n="1" name="ManipulationsPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/ModificationPanel.wxs" src="src/ModificationPanel.cpp" hdr="src/ModificationPanel.h" fwddecl="0" i18n="1" name="ModificationPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/PositionObs_AzimutSite.wxs" src="src\PositionObs_AzimutSite.cpp" hdr="src\PositionObs_AzimutSite.h" fwddecl="0" i18n="1" name="PositionObs_AzimutSite" language="CPP" />
-					<wxDialog wxs="wxsmith/PositionSource.wxs" src="src\PositionSource.cpp" hdr="src\PositionSource.h" fwddecl="0" i18n="1" name="PositionSource" language="CPP" />
-					<wxDialog wxs="wxsmith/Prefs_Dialog.wxs" src="src/Prefs_Dialog.cpp" hdr="src/Prefs_Dialog.h" fwddecl="0" i18n="1" name="Prefs_Dialog" language="CPP" />
-					<wxDialog wxs="wxsmith/PropertiesPanel.wxs" src="src/PropertiesPanel.cpp" hdr="src/PropertiesPanel.h" fwddecl="0" i18n="1" name="PropertiesPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/ReperageFacette.wxs" src="src\ReperageFacette.cpp" hdr="src\ReperageFacette.h" fwddecl="0" i18n="1" name="ReperageFacette" language="CPP" />
-					<wxDialog wxs="wxsmith/ReperageGroupe.wxs" src="src\ReperageGroupe.cpp" hdr="src\ReperageGroupe.h" fwddecl="0" i18n="1" name="ReperageGroupe" language="CPP" />
-					<wxDialog wxs="wxsmith/ReperageMateriau.wxs" src="src\ReperageMateriau.cpp" hdr="src\ReperageMateriau.h" fwddecl="0" i18n="1" name="ReperageMateriau" language="CPP" />
-					<wxDialog wxs="wxsmith/ReperageObjet.wxs" src="src\ReperageObjet.cpp" hdr="src\ReperageObjet.h" fwddecl="0" i18n="1" name="ReperageObjet" language="CPP" />
-					<wxDialog wxs="wxsmith/ReperagePoint.wxs" src="src\ReperagePoint.cpp" hdr="src\ReperagePoint.h" fwddecl="0" i18n="1" name="ReperagePoint" language="CPP" />
-					<wxDialog wxs="wxsmith/RotationPanel.wxs" src="src\RotationPanel.cpp" hdr="src\RotationPanel.h" fwddecl="0" i18n="1" name="RotationPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/ScalePanel.wxs" src="src\ScalePanel.cpp" hdr="src\ScalePanel.h" fwddecl="0" i18n="1" name="ScalePanel" language="CPP" />
-					<wxDialog wxs="wxsmith/SelectionPanel.wxs" src="src\SelectionPanel.cpp" hdr="src\SelectionPanel.h" fwddecl="0" i18n="1" name="SelectionPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/SelectionManuelleFacettes.wxs" src="src\SelectionManuelleFacettes.cpp" hdr="src\SelectionManuelleFacettes.h" fwddecl="0" i18n="1" name="SelectionManuelleFacettes" language="CPP" />
-					<wxDialog wxs="wxsmith/SelectionManuelleObjets.wxs" src="src\SelectionManuelleObjets.cpp" hdr="src\SelectionManuelleObjets.h" fwddecl="0" i18n="1" name="SelectionManuelleObjets" language="CPP" />
-					<wxDialog wxs="wxsmith/Sphere.wxs" src="src\Sphere.cpp" hdr="src\Sphere.h" fwddecl="0" i18n="1" name="Sphere" language="CPP" />
-					<wxDialog wxs="wxsmith/TranslationPanel.wxs" src="src\TranslationPanel.cpp" hdr="src\TranslationPanel.h" fwddecl="0" i18n="1" name="TranslationPanel" language="CPP" />
-					<wxDialog wxs="wxsmith/ZoomSpecifique.wxs" src="src\ZoomSpecifique.cpp" hdr="src\ZoomSpecifique.h" fwddecl="0" i18n="1" name="ZoomSpecifique" language="CPP" />
-					<wxDialog wxs="wxsmith/Aide_html.wxs" src="src\Aide_html.cpp" hdr="src\Aide_html.h" fwddecl="0" i18n="1" name="Aide_html" language="CPP" />
-					<wxDialog wxs="wxsmith/Tore.wxs" src="src\Tore.cpp" hdr="src\Tore.h" fwddecl="0" i18n="1" name="Tore" language="CPP" />
+					<wxFrame wxs="wxsmith/Ovniframe.wxs" src="src/OvniMain.cpp" hdr="src/OvniMain.h" fwddecl="0" i18n="0" name="OvniFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/CentreRotation.wxs" src="src\CentreRotation.cpp" hdr="src\CentreRotation.h" fwddecl="0" i18n="0" name="CentreRotation" language="CPP" />
+					<wxDialog wxs="wxsmith/ChangerEchelleBdd.wxs" src="src\ChangerEchelleBdd.cpp" hdr="src\ChangerEchelleBdd.h" fwddecl="0" i18n="0" name="ChangerEchelleBdd" language="CPP" />
+					<wxDialog wxs="wxsmith/ChoixAffichageObjets.wxs" src="src\ChoixAffichageObjets.cpp" hdr="src\ChoixAffichageObjets.h" fwddecl="0" i18n="0" name="ChoixAffichageObjets" language="CPP" />
+					<wxDialog wxs="wxsmith/Cone.wxs" src="src\Cone.cpp" hdr="src\Cone.h" fwddecl="0" i18n="0" name="Cone" language="CPP" />
+					<wxDialog wxs="wxsmith/CouleursGroupes.wxs" src="src\CouleursGroupes.cpp" hdr="src\CouleursGroupes.h" fwddecl="0" i18n="0" name="CouleursGroupes" language="CPP" />
+					<wxDialog wxs="wxsmith/Cube.wxs" src="src\Cube.cpp" hdr="src\Cube.h" fwddecl="0" i18n="0" name="Cube" language="CPP" />
+					<wxDialog wxs="wxsmith/Cylindre.wxs" src="src\Cylindre.cpp" hdr="src\Cylindre.h" fwddecl="0" i18n="0" name="Cylindre" language="CPP" />
+					<wxDialog wxs="wxsmith/DeplacerBdd.wxs" src="src\DeplacerBdd.cpp" hdr="src\DeplacerBdd.h" fwddecl="0" i18n="0" name="DeplacerBdd" language="CPP" />
+					<wxDialog wxs="wxsmith/Ellipsoide.wxs" src="src\Ellipsoide.cpp" hdr="src\Ellipsoide.h" fwddecl="0" i18n="0" name="Ellipsoide" language="CPP" />
+					<wxDialog wxs="wxsmith/Facette.wxs" src="src\Facette.cpp" hdr="src\Facette.h" fwddecl="0" i18n="0" name="Facette" language="CPP" />
+					<wxDialog wxs="wxsmith/Icosaedre.wxs" src="src\Icosaedre.cpp" hdr="src\Icosaedre.h" fwddecl="0" i18n="0" name="Icosaedre" language="CPP" />
+					<wxDialog wxs="wxsmith/ManipulationsPanel.wxs" src="src\ManipulationsPanel.cpp" hdr="src\ManipulationsPanel.h" fwddecl="0" i18n="0" name="ManipulationsPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/ModificationPanel.wxs" src="src/ModificationPanel.cpp" hdr="src/ModificationPanel.h" fwddecl="0" i18n="0" name="ModificationPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/PositionObs_AzimutSite.wxs" src="src\PositionObs_AzimutSite.cpp" hdr="src\PositionObs_AzimutSite.h" fwddecl="0" i18n="0" name="PositionObs_AzimutSite" language="CPP" />
+					<wxDialog wxs="wxsmith/PositionSource.wxs" src="src\PositionSource.cpp" hdr="src\PositionSource.h" fwddecl="0" i18n="0" name="PositionSource" language="CPP" />
+					<wxDialog wxs="wxsmith/Prefs_Dialog.wxs" src="src/Prefs_Dialog.cpp" hdr="src/Prefs_Dialog.h" fwddecl="0" i18n="0" name="Prefs_Dialog" language="CPP" />
+					<wxDialog wxs="wxsmith/PropertiesPanel.wxs" src="src/PropertiesPanel.cpp" hdr="src/PropertiesPanel.h" fwddecl="0" i18n="0" name="PropertiesPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/ReperageFacette.wxs" src="src\ReperageFacette.cpp" hdr="src\ReperageFacette.h" fwddecl="0" i18n="0" name="ReperageFacette" language="CPP" />
+					<wxDialog wxs="wxsmith/ReperageGroupe.wxs" src="src\ReperageGroupe.cpp" hdr="src\ReperageGroupe.h" fwddecl="0" i18n="0" name="ReperageGroupe" language="CPP" />
+					<wxDialog wxs="wxsmith/ReperageMateriau.wxs" src="src\ReperageMateriau.cpp" hdr="src\ReperageMateriau.h" fwddecl="0" i18n="0" name="ReperageMateriau" language="CPP" />
+					<wxDialog wxs="wxsmith/ReperageObjet.wxs" src="src\ReperageObjet.cpp" hdr="src\ReperageObjet.h" fwddecl="0" i18n="0" name="ReperageObjet" language="CPP" />
+					<wxDialog wxs="wxsmith/ReperagePoint.wxs" src="src\ReperagePoint.cpp" hdr="src\ReperagePoint.h" fwddecl="0" i18n="0" name="ReperagePoint" language="CPP" />
+					<wxDialog wxs="wxsmith/RotationPanel.wxs" src="src\RotationPanel.cpp" hdr="src\RotationPanel.h" fwddecl="0" i18n="0" name="RotationPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/ScalePanel.wxs" src="src\ScalePanel.cpp" hdr="src\ScalePanel.h" fwddecl="0" i18n="0" name="ScalePanel" language="CPP" />
+					<wxDialog wxs="wxsmith/SelectionPanel.wxs" src="src\SelectionPanel.cpp" hdr="src\SelectionPanel.h" fwddecl="0" i18n="0" name="SelectionPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/SelectionManuelleFacettes.wxs" src="src\SelectionManuelleFacettes.cpp" hdr="src\SelectionManuelleFacettes.h" fwddecl="0" i18n="0" name="SelectionManuelleFacettes" language="CPP" />
+					<wxDialog wxs="wxsmith/SelectionManuelleObjets.wxs" src="src\SelectionManuelleObjets.cpp" hdr="src\SelectionManuelleObjets.h" fwddecl="0" i18n="0" name="SelectionManuelleObjets" language="CPP" />
+					<wxDialog wxs="wxsmith/Sphere.wxs" src="src\Sphere.cpp" hdr="src\Sphere.h" fwddecl="0" i18n="0" name="Sphere" language="CPP" />
+					<wxDialog wxs="wxsmith/TranslationPanel.wxs" src="src\TranslationPanel.cpp" hdr="src\TranslationPanel.h" fwddecl="0" i18n="0" name="TranslationPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/ZoomSpecifique.wxs" src="src\ZoomSpecifique.cpp" hdr="src\ZoomSpecifique.h" fwddecl="0" i18n="0" name="ZoomSpecifique" language="CPP" />
+					<wxDialog wxs="wxsmith/Aide_html.wxs" src="src\Aide_html.cpp" hdr="src\Aide_html.h" fwddecl="0" i18n="0" name="Aide_html" language="CPP" />
+					<wxDialog wxs="wxsmith/Tore.wxs" src="src\Tore.cpp" hdr="src\Tore.h" fwddecl="0" i18n="0" name="Tore" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

@@ -35,6 +35,14 @@ END_EVENT_TABLE()
 
 Tore::Tore(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Tore::Tore Création d'une forme générique en Tore
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Tore)
 	Create(parent, id, _T("Ajout d\'un tore"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(473,167));

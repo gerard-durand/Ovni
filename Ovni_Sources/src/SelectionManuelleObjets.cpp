@@ -1,7 +1,6 @@
 #include "SelectionManuelleObjets.h"
 
 //(*InternalHeaders(SelectionManuelleObjets)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

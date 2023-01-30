@@ -626,7 +626,7 @@ class BddInter: public wxGLCanvas {
     Lib3dsIo *io;
 
 //    Sommetmemory *Smemory;
-///    std::vector<std::vector<StoF> > StofM;
+//    std::vector<std::vector<StoF> > StofM;
 
     std::vector<wxString>     wxStringlist;
     std::ifstream fichierBdd;
@@ -722,7 +722,8 @@ public :
     double diagonale_save ;
 
 // Tests de thème
-    bool theme_b = false;
+    bool theme_b = false;   // Théme dark/clair expérimental pour wxWidgets < version 3.3
+    int  darkmode= -1;      // Valeur enregistrée dans Ovni.ini (plus ou moins <=> theme_b pour wxWidgets version >= 3.3)
 
     wxColour Noir     = wxColour(*wxBLACK);// = wxColour(0,0,0);//    (*wxBLACK);
     wxColour Blanc    = wxColour(*wxWHITE);
@@ -1133,6 +1134,7 @@ public :
     void draw_rectangle_selection();
     void Selection_rectangle(GLint, GLint);
     void Switch_theme(bool);
+    void Switch_theme_wx33(bool);
 
     void GenereTableauPointsFacettes(Object *);
     void GenereTableauAretes(Object *);

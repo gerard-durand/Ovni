@@ -138,8 +138,8 @@ void DeplacerBdd::OnButton_InverserClick(wxCommandEvent& event)
 
 void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
 {
-/// Ne fonctionne pas toujours bien ... revoir l'ordre des opérations peut-être ...
-/// + souci avec zNear zFar ... (modifiés dans SetPosObs et utilisés dans ResetProjectionMode)
+// Ne fonctionne pas toujours bien ... revoir l'ordre des opérations peut-être ...
+// + souci avec zNear zFar ... (modifiés dans SetPosObs et utilisés dans ResetProjectionMode)
 
     BddInter *Element = MAIN->Element;
 

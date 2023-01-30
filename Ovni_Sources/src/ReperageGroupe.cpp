@@ -1,7 +1,6 @@
 #include "ReperageGroupe.h"
 
 //(*InternalHeaders(ReperageGroupe)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

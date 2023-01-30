@@ -125,8 +125,6 @@
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX8" variable="CheckBox_1SeulObjet3D" member="yes">
 					<label>Forcer la lecture des fichiers .obj dans 1 seul Objet 3D</label>
-					<fg>wxSYS_COLOUR_BTNTEXT</fg>
-					<bg>wxSYS_COLOUR_MENUBAR</bg>
 					<handler function="OnCheckBox_1SeulObjet3DClick" entry="EVT_CHECKBOX" />
 				</object>
 				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
@@ -295,6 +293,7 @@
 						<item>Méthode 3     </item>
 					</content>
 					<default>1</default>
+					<size>382,48</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_TriangulationSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -309,6 +308,7 @@
 						<item>Trackball</item>
 					</content>
 					<default>1</default>
+					<size>382,48</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_TrackballSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -324,6 +324,7 @@
 						<item>32 x 32            </item>
 						<item>48 x 48</item>
 					</content>
+					<size>382,48</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_IconSizeSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -356,7 +357,6 @@
 					<label>Créer un fichier backup *.bdd.bak lors des opérations Enregistrer</label>
 					<enabled>0</enabled>
 					<fg>wxSYS_COLOUR_BTNTEXT</fg>
-					<bg>wxSYS_COLOUR_MENUBAR</bg>
 					<handler function="OnCheckBox_CreerBackupClick" entry="EVT_CHECKBOX" />
 				</object>
 				<flag>wxALL|wxEXPAND</flag>
@@ -367,7 +367,6 @@
 					<label>Supprimer le fichier de backup *.bdd.bak en quittant Ovni</label>
 					<enabled>0</enabled>
 					<fg>wxSYS_COLOUR_BTNTEXT</fg>
-					<bg>wxSYS_COLOUR_MENUBAR</bg>
 					<handler function="OnCheckBox_SupprBackupClick" entry="EVT_CHECKBOX" />
 				</object>
 				<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>

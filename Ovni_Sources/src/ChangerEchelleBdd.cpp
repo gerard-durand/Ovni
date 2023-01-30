@@ -1,7 +1,6 @@
 #include "ChangerEchelleBdd.h"
 
 //(*InternalHeaders(ChangerEchelleBdd)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 
@@ -23,6 +22,14 @@ END_EVENT_TABLE()
 
 ChangerEchelleBdd::ChangerEchelleBdd(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief ChangerEchelleBdd::ChangerEchelleBdd Gestion du changement d'échelle de la base de données 3D
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(ChangerEchelleBdd)
 	Create(parent, id, _T("Changer l\'échelle de la Bdd"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(304,119));

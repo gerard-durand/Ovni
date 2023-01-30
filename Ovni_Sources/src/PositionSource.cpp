@@ -1,7 +1,6 @@
 #include "PositionSource.h"
 
 //(*InternalHeaders(PositionSource)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

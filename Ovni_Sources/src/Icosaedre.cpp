@@ -32,6 +32,14 @@ END_EVENT_TABLE()
 
 Icosaedre::Icosaedre(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Icosaedre::Icosaedre Création d'une forme générique en Icosaedre (peut servir de base à une sphère)
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Icosaedre)
 	Create(parent, id, _T("Ajout d\'un Icosaèdre"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(410,164));

@@ -1,7 +1,6 @@
 #include "PropertiesPanel.h"
 
 //(*InternalHeaders(PropertiesPanel)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

@@ -1,7 +1,6 @@
 #include "CentreRotation.h"
 
 //(*InternalHeaders(CentreRotation)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 
@@ -24,6 +23,14 @@ END_EVENT_TABLE()
 
 CentreRotation::CentreRotation(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief CentreRotation::CentreRotation Gestion du centre de rotation de la figure 3D
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(CentreRotation)
 	Create(parent, id, _T("Centre de Rotation"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(200,166));

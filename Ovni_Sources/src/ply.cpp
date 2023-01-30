@@ -53,6 +53,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 #include "ply.h"
 
+/** \brief Bibliothèque de gestion, lecture et création de fichiers 3D au format ply
+ *
+ */
+
 const char *type_names[] =    /* names of scalar types */
 {
     "invalid",

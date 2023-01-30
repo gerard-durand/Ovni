@@ -2,7 +2,6 @@
 
 //(*InternalHeaders(PositionObs_AzimutSite)
 #include <wx/font.h>
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

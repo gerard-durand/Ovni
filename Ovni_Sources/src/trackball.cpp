@@ -52,6 +52,10 @@
 #include <math.h>
 #include "trackball.h"
 
+/** \brief Gestion du mode Trackball à la souris
+ *
+ */
+
 /*
  * This size should really be based on the distance from the center of
  * rotation to the point on the object underneath the mouse.  That

@@ -1,7 +1,6 @@
 #include "SelectionPanel.h"
 
 //(*InternalHeaders(SelectionPanel)
-#include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/string.h>
 //*)
@@ -82,7 +81,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_OuvrirReperage->Disable();
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Informations"), wxPoint(0,104), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT2"));
 	StaticText2->SetForegroundColour(wxColour(255,255,255));
-	StaticText2->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUTEXT));
+	StaticText2->SetBackgroundColour(wxColour(0,0,0));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Objet :"), wxPoint(8,132), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Numéro/Indice de l\'objet :"), wxPoint(8,156), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	StaticText_Fac = new wxStaticText(this, ID_STATICTEXT5, _T("Numéro/Indice de la facette"), wxPoint(8,180), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
@@ -102,7 +101,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	RadioButton_Mat = new wxRadioButton(this, ID_RADIOBUTTON2, _T("Matériau"), wxPoint(136,304), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON2"));
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Modifier la sélection"), wxPoint(0,280), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT9"));
 	StaticText9->SetForegroundColour(wxColour(255,255,255));
-	StaticText9->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	StaticText9->SetBackgroundColour(wxColour(0,0,0));
 	StaticText_NumerosUtilises = new wxStaticText(this, ID_STATICTEXT10, _T("Numéros des groupes utilisés"), wxPoint(56,328), wxDefaultSize, 0, _T("ID_STATICTEXT10"));
 	TextCtrl_NumerosUtilises = new wxTextCtrl(this, ID_TEXTCTRL7, wxEmptyString, wxPoint(0,344), wxSize(280,24), wxTE_CENTRE, wxDefaultValidator, _T("ID_TEXTCTRL7"));
 	TextCtrl_NumerosUtilises->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_SCROLLBAR));

@@ -36,6 +36,14 @@ END_EVENT_TABLE()
 
 Cylindre::Cylindre(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Cylindre::Cylindre Création d'une forme générique en Cylindre
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Cylindre)
 	Create(parent, id, _T("Ajout d\'un cylindre"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(407,217));

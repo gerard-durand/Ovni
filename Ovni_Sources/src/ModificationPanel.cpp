@@ -1,7 +1,6 @@
 #include "ModificationPanel.h"
 
 //(*InternalHeaders(ModificationPanel)
-#include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/string.h>
 //*)
@@ -59,7 +58,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(16,0), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
-	Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,16), wxSize(216,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
+	Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,16), wxSize(216,64), wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL, _T("ID_PANEL2"));
 	ToggleButton_Ajouter = new wxToggleButton(Panel2, ID_TOGGLEBUTTON1, _T("Ajouter sous le pointeur"), wxPoint(32,4), wxSize(152,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON1"));
 	SpinCtrl_NbSegments = new wxSpinCtrl(Panel2, ID_SPINCTRL1, _T("2"), wxPoint(88,32), wxSize(40,24), 0, 2, 100, 2, _T("ID_SPINCTRL1"));
 	SpinCtrl_NbSegments->SetValue(_T("2"));
@@ -318,9 +317,9 @@ void ModificationPanel::OnButton_UndoClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->UNDO_ONE();
-///    Element->modeGL = (BddInter::MODE)old_modeGL;    // Pas ici !!!!
-///    delete Element->Smemory;      // Utile ?
-///    Element->Smemory = nullptr;   //                 Par contre, peut-être ajouter un reset de sélection pour éviter un point vert restant ?
+//    Element->modeGL = (BddInter::MODE)old_modeGL;    // Pas ici !!!!
+//    delete Element->Smemory;      // Utile ?
+//    Element->Smemory = nullptr;   //                 Par contre, peut-être ajouter un reset de sélection pour éviter un point vert restant ?
 //    Element->m_gllist = 0; // inutile ? et plutôt glliste_points ou glliste_lines
     Element->Refresh();
 }

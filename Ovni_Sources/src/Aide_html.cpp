@@ -17,6 +17,15 @@ END_EVENT_TABLE()
 
 Aide_html::Aide_html(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Aide_html::Aide_html Affichage d'une aide d'Ovni au format Html
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
+
 	//(*Initialize(Aide_html)
 	Create(parent, id, _T("Aide Html"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxFULL_REPAINT_ON_RESIZE, _T("id"));
 	SetClientSize(wxSize(640,480));
@@ -63,6 +72,12 @@ void Aide_html::OnButton_OKClick(wxCommandEvent& event)
 
 void Aide_html::OnResize(wxSizeEvent& event)
 {
+/** \brief Aide_html::OnResize Redimensionner l'aide d'Ovni au format Html
+ *
+ * \param event
+ *
+ */
+
     int offset_x, offset_y;
     wxSize  s;
     wxPoint p;

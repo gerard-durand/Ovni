@@ -20,6 +20,7 @@
 		<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
 			<pos>0,16</pos>
 			<size>216,64</size>
+			<style>wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL</style>
 			<object class="wxToggleButton" name="ID_TOGGLEBUTTON1" variable="ToggleButton_Ajouter" member="yes">
 				<label>Ajouter sous le pointeur</label>
 				<pos>32,4</pos>

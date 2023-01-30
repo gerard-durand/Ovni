@@ -40,6 +40,14 @@ END_EVENT_TABLE()
 
 Ellipsoide::Ellipsoide(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief Ellipsoide::Ellipsoide Création d'une forme générique en Ellipsoide
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(Ellipsoide)
 	Create(parent, id, _T("Ajout d\'un éllipsoïde"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(416,199));

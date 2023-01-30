@@ -1,7 +1,6 @@
 #include "ManipulationsPanel.h"
 
 //(*InternalHeaders(ManipulationsPanel)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 

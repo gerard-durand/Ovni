@@ -1,7 +1,6 @@
 #include "ChoixAffichageObjets.h"
 
 //(*InternalHeaders(ChoixAffichageObjets)
-#include <wx/intl.h>
 #include <wx/string.h>
 //*)
 
@@ -20,6 +19,14 @@ END_EVENT_TABLE()
 
 ChoixAffichageObjets::ChoixAffichageObjets(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+/** \brief ChoixAffichageObjets::ChoixAffichageObjets Gestion du choix d'affichage des éléments de la base de données 3D
+ *
+ * \param parent        : Pointeur sur la fenêtre parent
+ * \param id            : identifiant de la boîte de dialogue
+ * \param pos           : position de la boîte de dialogue
+ * \param size          : taille de la boîte de dialogue
+ *
+ */
 	//(*Initialize(ChoixAffichageObjets)
 	Create(parent, id, _T("Choix des objets à afficher"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(269,200));
