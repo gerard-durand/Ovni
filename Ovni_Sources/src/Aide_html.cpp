@@ -1,7 +1,7 @@
 ﻿#include "Aide_html.h"
 
 //(*InternalHeaders(Aide_html)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -33,6 +33,7 @@ Aide_html::Aide_html(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	HtmlWindow_Aide = new wxHtmlWindow(this, ID_HTMLWINDOW1, wxPoint(8,8), wxSize(624,432), wxHW_SCROLLBAR_AUTO, _T("ID_HTMLWINDOW1"));
 	HtmlWindow_Aide->LoadPage(_T("file://../help/Aide.html"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Quitter"), wxPoint(544,448), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Aide_html::OnButton_OKClick);
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Aide_html::OnClose);

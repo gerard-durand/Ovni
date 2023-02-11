@@ -11,22 +11,26 @@
 
 #include "OvniMain.h"
 #include "OvniApp.h"
-#include <wx/settings.h>
+//#include <wx/settings.h>
 #include <wx/app.h>
 #include <wx/sysopt.h>
 #include <wx/dcclient.h>
 #include <wx/debug.h>
 #include <wx/filedlg.h>
 #include <wx/msgdlg.h>
-#include "wx/wxprec.h"
+#include <wx/wxprec.h>
 #include <wx/filename.h>
 #include <wx/filefn.h>
 #include <wx/stdpaths.h>
 #include <iomanip>
 #include <fstream>
 
+#if wxCHECK_VERSION(3,3,0)
+    #include <wx/msw/private/darkmode.h>
+#endif
+
 //(*InternalHeaders(OvniFrame)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 // avec 3.1.6 tester <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
@@ -38,6 +42,9 @@
 #include "version.h"
 
 //using namespace std;  // N'est pas utile ici vu qu'on utilise explicitement std::
+#if wxCHECK_VERSION(3,3,0)
+    using namespace wxMSWDarkMode;
+#endif // wxCHECK_VERSION
 
 //helper functions : diverses infos affichées dans le menu Aide / A propos ...
 enum wxbuildinfoformat {
@@ -269,12 +276,29 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         wxGetApp().MSWEnableDarkMode(darkmode);
 #endif // wxCHECK_VERSION
     }
-#endif // __WXMSW__
 
     printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
 #if wxCHECK_VERSION(3,3,0)
     printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
+//    wxColour test = wxMSWDarkMode::GetColour(wxSYS_COLOUR_BTNTEXT);
+    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT);
+    wxColour new_colour = *wxCYAN;
+    printf("Test RVB : %d %d %d\n",test.GetRed(),test.GetGreen(),test.GetBlue());
+    wxSystemSettings().SetColour(wxSYS_COLOUR_MENUTEXT,             new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_WINDOWTEXT,           new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_CAPTIONTEXT,          new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_HIGHLIGHTTEXT,        new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_BTNTEXT,              new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_INFOTEXT,             new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_LISTBOXTEXT,          new_colour);
+    wxSystemSettings().SetColour(wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT, new_colour);
+    wxMenuItem().SetTextColour(new_colour);                                         // Compile mais ne change pas la couleur des wxMenuItem !
+    test = wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT);
+    printf("Test RVB : %d %d %d\n",test.GetRed(),test.GetGreen(),test.GetBlue());
+//    wxMSWDarkMode::SetColour(wxSYS_COLOUR_BTNTEXT, *wxCYAN); // Ne marche pas, undefined reference
 #endif // wxCHECK_VERSION
+
+#endif // __WXMSW__
 
     // Menus, boutons et autres contrôles gérés par wxSmith
 
@@ -310,12 +334,18 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Panel1->SetMinSize(wxSize(-1,25));
     StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _T("Zoom :"), wxPoint(5,4), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
     Button_ZoomPlus = new wxButton(Panel1, ID_BUTTON1, _T("+"), wxPoint(48,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Button_ZoomPlus->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     Button_ZoomMoins = new wxButton(Panel1, ID_BUTTON2, _T("-"), wxPoint(96,0), wxSize(45,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    Button_ZoomMoins->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _T("Déplacements :"), wxPoint(152,4), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
     Button_Gauche = new wxButton(Panel1, ID_BUTTON3, _T("Gauche"), wxPoint(240,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    Button_Gauche->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     Button_Droite = new wxButton(Panel1, ID_BUTTON4, _T("Droite"), wxPoint(294,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    Button_Droite->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     Button_Haut = new wxButton(Panel1, ID_BUTTON5, _T("Haut"), wxPoint(348,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    Button_Haut->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     Button_Bas = new wxButton(Panel1, ID_BUTTON6, _T("Bas"), wxPoint(402,0), wxSize(55,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    Button_Bas->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
     BoxSizer1->Add(Panel1, 0, wxALL|wxEXPAND, 0);
     #if wxCHECK_VERSION(3,1,0)
         wxGLAttributes GLCanvasAttributes_1;
@@ -923,6 +953,32 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         PositionSource_Panel->Pos_Z         ->SetForegroundColour(New_blue);
         Translation_Panel   ->StaticText7   ->SetForegroundColour(New_blue);
         Translation_Panel   ->StaticText8   ->SetForegroundColour(New_blue);
+
+// Tests pour coloriser d'autres élements de l'interface graphique
+// En fait, OK si pour les boutons on choisi pour couleur du texte "Texte des boutons" plutôt que la valeur par défaut !
+//        SetForegroundColour(New_blue);
+//        Button_Droite     ->SetForegroundColour(New_blue);
+//        Button_Gauche     ->SetForegroundColour(New_blue);
+//        Button_Haut       ->SetForegroundColour(New_blue);
+//        Button_Bas        ->SetForegroundColour(New_blue);
+//        Button_ZoomMoins  ->SetForegroundColour(New_blue);
+//        Button_ZoomPlus   ->SetForegroundColour(New_blue);
+//        StaticText1       ->SetForegroundColour(New_blue); // marche pas sans le Refresh()
+//        StaticText2       ->SetForegroundColour(New_blue); // ""
+//        MenuBar_Globale   ->SetForegroundColour(New_blue); // sans effet ? En fait il faut toucher à COLORREF COL_STANDARD = 0xffff00; dans darkmode.cpp (ligne 505)
+
+// Pour les menus, c'est plus compliqué ...
+
+//// Suite : pourrait fonctionner au moins en partie, mais pénible à faire ...
+////        Menu_Open         ->SetTextColour(New_blue);
+////        Menu_Open         ->SetBackgroundColour(*wxBLACK);
+////        MenuFile->Remove (Menu_Open);       // Il en faut au moins 1 pour que UpdateUI() fonctionne
+////        MenuFile->Prepend(Menu_Open);
+////        Menu_ReOpen       ->SetTextColour(New_blue);
+////        Menu_ReOpen       ->SetBackgroundColour(*wxBLACK);
+////        MenuFile->UpdateUI();
+//
+//        Refresh();
     }
 #else
     if (Element->darkmode >= 0 ) {

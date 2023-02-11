@@ -2,6 +2,7 @@
 
 //(*InternalHeaders(PositionObs_AzimutSite)
 #include <wx/font.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -38,6 +39,7 @@ PositionObs_AzimutSite::PositionObs_AzimutSite(wxWindow* parent,wxWindowID id,co
 	SpinCtrl_LSI = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(192,48), wxSize(104,21), 0, -180, 180, 0, _T("ID_SPINCTRL2"));
 	SpinCtrl_LSI->SetValue(_T("0"));
 	Button_Quit = new wxButton(this, ID_BUTTON3, _T("OK"), wxPoint(112,88), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quit->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText_Warning = new wxStaticText(this, ID_STATICTEXT6, _T("Attention : Rotation en Y <> 0 !"), wxPoint(56,72), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	StaticText_Warning->Hide();
 	StaticText_Warning->SetForegroundColour(wxColour(255,0,0));

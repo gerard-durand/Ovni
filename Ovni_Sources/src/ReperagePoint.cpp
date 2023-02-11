@@ -1,7 +1,7 @@
 #include "ReperagePoint.h"
 
 //(*InternalHeaders(ReperagePoint)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -73,21 +73,30 @@ ReperagePoint::ReperagePoint(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	CheckBox_Z->SetValue(false);
 	Button_ModifierX = new wxButton(this, ID_BUTTON1, _T("Modifier"), wxPoint(176,88), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_ModifierX->Disable();
+	Button_ModifierX->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_ModifierY = new wxButton(this, ID_BUTTON2, _T("Modifier"), wxPoint(176,112), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_ModifierY->Disable();
+	Button_ModifierY->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_ModifierZ = new wxButton(this, ID_BUTTON3, _T("Modifier"), wxPoint(176,136), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_ModifierZ->Disable();
+	Button_ModifierZ->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_UndoX = new wxButton(this, ID_BUTTON4, _T("Undo"), wxPoint(232,88), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 	Button_UndoX->Disable();
+	Button_UndoX->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_UndoY = new wxButton(this, ID_BUTTON5, _T("Undo"), wxPoint(232,112), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
 	Button_UndoY->Disable();
+	Button_UndoY->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_UndoZ = new wxButton(this, ID_BUTTON6, _T("Undo"), wxPoint(232,136), wxSize(56,23), 0, wxDefaultValidator, _T("ID_BUTTON6"));
 	Button_UndoZ->Disable();
+	Button_UndoZ->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Centrer = new wxButton(this, ID_BUTTON7, _T("Centrer la rotation sur le point"), wxPoint(32,168), wxSize(232,23), 0, wxDefaultValidator, _T("ID_BUTTON7"));
+	Button_Centrer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_Laisser = new wxCheckBox(this, ID_CHECKBOX4, _T("Laisser l\'étoile affichée en quittant"), wxPoint(32,200), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX4"));
 	CheckBox_Laisser->SetValue(false);
 	Button_Reset = new wxButton(this, ID_BUTTON8, _T("Reset"), wxPoint(32,224), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON9, _T("Quitter"), wxPoint(176,224), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON9"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperagePoint::OnSpinCtrl_IndicePointChange);
 	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperagePoint::OnSpinCtrl_IndiceObjetChange);

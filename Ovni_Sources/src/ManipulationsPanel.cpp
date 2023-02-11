@@ -1,6 +1,7 @@
 #include "ManipulationsPanel.h"
 
 //(*InternalHeaders(ManipulationsPanel)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -34,8 +35,11 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
 	Button_Translation = new wxButton(this, ID_BUTTON1, _T("Translation"), wxPoint(32,24), wxSize(192,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Translation->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Rotation = new wxButton(this, ID_BUTTON2, _T("Rotation"), wxPoint(32,48), wxSize(192,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Rotation->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Scale = new wxButton(this, ID_BUTTON3, _T("Mise à l\'échelle"), wxPoint(32,72), wxSize(192,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Scale->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Création d\'un objet par symétrie / Plan"), wxPoint(0,104), wxSize(256,16), wxALIGN_CENTRE, _T("ID_STATICTEXT2"));
 	StaticText2->SetForegroundColour(wxColour(255,255,255));
 	StaticText2->SetBackgroundColour(wxColour(0,0,0));
@@ -50,9 +54,12 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	CheckBox_Z->SetForegroundColour(wxColour(0,0,255));
 	Button_Creer = new wxButton(this, ID_BUTTON4, _T("Créer l\'objet"), wxPoint(16,152), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 	Button_Creer->Disable();
+	Button_Creer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Raz = new wxButton(this, ID_BUTTON5, _T("Remise à zéro"), wxPoint(128,152), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+	Button_Raz->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(0,180), wxSize(256,4), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	Button_Quitter = new wxButton(this, ID_BUTTON6, _T("Fermer"), wxPoint(72,188), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_TranslationClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_RotationClick);

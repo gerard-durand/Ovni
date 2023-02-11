@@ -1,7 +1,7 @@
 #include "CouleursGroupes.h"
 
 //(*InternalHeaders(CouleursGroupes)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -44,7 +44,9 @@ CouleursGroupes::CouleursGroupes(wxWindow* parent,wxWindowID id,const wxPoint& p
 	ColourPickerCtrl_Ambient = new wxColourPickerCtrl(this, ID_COLOURPICKERCTRL1, wxColour(0,0,0), wxPoint(16,112), wxSize(104,25), 0, wxDefaultValidator, _T("ID_COLOURPICKERCTRL1"));
 	ColourPickerCtrl_Diffuse = new wxColourPickerCtrl(this, ID_COLOURPICKERCTRL2, wxColour(0,0,0), wxPoint(128,112), wxSize(104,25), 0, wxDefaultValidator, _T("ID_COLOURPICKERCTRL2"));
 	Button_Reset = new wxButton(this, ID_BUTTON1, _T("Reset"), wxPoint(16,136), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(128,136), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&CouleursGroupes::OnSpinCtrl_GroupesChange);
 	Connect(ID_COLOURPICKERCTRL1,wxEVT_COMMAND_COLOURPICKER_CHANGED,(wxObjectEventFunction)&CouleursGroupes::OnColourPickerCtrl_AmbientColourChanged);

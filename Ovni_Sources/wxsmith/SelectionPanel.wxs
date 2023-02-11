@@ -38,6 +38,7 @@
 			<pos>8,48</pos>
 			<size>264,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_SelectionManuelleFacettesClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_OuvrirReperage" member="yes">
@@ -45,6 +46,7 @@
 			<pos>8,72</pos>
 			<size>264,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OuvrirReperageClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
@@ -161,6 +163,7 @@
 			<label>Appliquer</label>
 			<pos>216,368</pos>
 			<size>64,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AppliquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_ForcerFlat" member="yes">
@@ -173,6 +176,7 @@
 			<label>Inverser les normales</label>
 			<pos>24,424</pos>
 			<size>160,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_InverserNormalesClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON5" variable="Button_UndoNormales" member="yes">
@@ -180,12 +184,14 @@
 			<pos>184,424</pos>
 			<size>72,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_UndoNormalesClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON6" variable="Button_Delete" member="yes">
 			<label>Supprimer la/les facette(s)</label>
 			<pos>24,448</pos>
 			<size>160,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_DeleteClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON7" variable="Button_UndoDelete" member="yes">
@@ -193,18 +199,21 @@
 			<pos>184,448</pos>
 			<size>72,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_UndoDeleteClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON8" variable="Button_InverserParcours" member="yes">
 			<label>Inversion du sens de parcours</label>
 			<pos>24,496</pos>
 			<size>232,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_InverserParcoursClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON9" variable="Button_Masquer" member="yes">
 			<label>Masquer les facettes</label>
 			<pos>24,520</pos>
 			<size>160,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_MasquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON15" variable="Button_UndoMasquer" member="yes">
@@ -212,24 +221,28 @@
 			<pos>184,520</pos>
 			<size>72,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_UndoMasquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON10" variable="Button_Reafficher" member="yes">
 			<label>Tout réafficher</label>
 			<pos>24,544</pos>
 			<size>232,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ReafficherClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON11" variable="Button_Centrer" member="yes">
 			<label>Centrer la rotation sur la/les facettes</label>
 			<pos>24,568</pos>
 			<size>232,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_CentrerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON12" variable="Button_Manipulations" member="yes">
 			<label>Manipulations de l&apos;objet</label>
 			<pos>24,592</pos>
 			<size>232,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ManipulationsClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxRadioButton" name="ID_RADIOBUTTON6" variable="RadioButton_TypeSelection_Both" member="yes">
@@ -261,12 +274,14 @@
 			<label>Étendre la sélection</label>
 			<pos>64,672</pos>
 			<size>144,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_EtendreClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON14" variable="Button_Quitter" member="yes">
 			<label>Fermer</label>
 			<pos>176,696</pos>
 			<size>96,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON16" variable="Button_Fusionner" member="yes">
@@ -274,6 +289,7 @@
 			<pos>24,472</pos>
 			<size>232,23</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_FusionnerClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

@@ -1,7 +1,7 @@
 #include "DeplacerBdd.h"
 
 //(*InternalHeaders(DeplacerBdd)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -44,9 +44,13 @@ DeplacerBdd::DeplacerBdd(wxWindow* parent,wxWindowID id,const wxPoint& pos,const
 	TextCtrl_DeplY = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0"), wxPoint(96,72), wxDefaultSize, wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	TextCtrl_DeplZ = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0"), wxPoint(96,104), wxDefaultSize, wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
 	Button_Centrer = new wxButton(this, ID_BUTTON1, _T("Centrage Auto sur Min-Max de la Bdd"), wxPoint(8,136), wxSize(240,26), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Centrer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_OK = new wxButton(this, ID_BUTTON2, _T("Accepter"), wxPoint(8,168), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Inverser = new wxButton(this, ID_BUTTON3, _T("Inverser"), wxPoint(88,168), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Inverser->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON4, _T("Quitter"), wxPoint(168,168), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_CentrerClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_OKClick);

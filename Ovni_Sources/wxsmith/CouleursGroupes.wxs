@@ -62,12 +62,14 @@
 			<label>Reset</label>
 			<pos>16,136</pos>
 			<size>104,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON3" variable="Button_Quitter" member="yes">
 			<label>Quitter</label>
 			<pos>128,136</pos>
 			<size>104,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

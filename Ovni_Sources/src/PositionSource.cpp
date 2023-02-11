@@ -1,6 +1,7 @@
 #include "PositionSource.h"
 
 //(*InternalHeaders(PositionSource)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -46,7 +47,9 @@ PositionSource::PositionSource(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	SpinCtrlDouble_PosW = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE4, _T("0"), wxPoint(88,104), wxSize(96,23), 0, 0, 1, 0, 0.01, _T("ID_SPINCTRLDOUBLE4"));
 	SpinCtrlDouble_PosW->SetValue(_T("0"));
 	Button_Quitter = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(128,136), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Defaut = new wxButton(this, ID_BUTTON3, _T("Défaut"), wxPoint(32,136), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Defaut->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRLDOUBLE1,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosXChange);
 	Connect(ID_SPINCTRLDOUBLE2,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosYChange);

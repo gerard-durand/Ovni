@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
 //(*InternalHeaders(Sphere)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -59,7 +59,9 @@ Sphere::Sphere(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& s
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Nombre de Parallèles :"), wxPoint(208,75), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	TextCtrl_NbParalleles = new wxTextCtrl(this, ID_TEXTCTRL6, _T("10"), wxPoint(328,72), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(104,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(208,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(8,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(128,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
 	SpinCtrl_Groupe->SetValue(_T("0"));

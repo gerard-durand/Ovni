@@ -20,12 +20,14 @@
 						<label>+</label>
 						<pos>48,0</pos>
 						<size>45,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_ZoomPlusClick" entry="EVT_BUTTON" />
 					</object>
 					<object class="wxButton" name="ID_BUTTON2" variable="Button_ZoomMoins" member="yes">
 						<label>-</label>
 						<pos>96,0</pos>
 						<size>45,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_ZoomMoinsClick" entry="EVT_BUTTON" />
 					</object>
 					<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
@@ -36,24 +38,28 @@
 						<label>Gauche</label>
 						<pos>240,0</pos>
 						<size>55,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_GaucheClick" entry="EVT_BUTTON" />
 					</object>
 					<object class="wxButton" name="ID_BUTTON4" variable="Button_Droite" member="yes">
 						<label>Droite</label>
 						<pos>294,0</pos>
 						<size>55,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_DroiteClick" entry="EVT_BUTTON" />
 					</object>
 					<object class="wxButton" name="ID_BUTTON5" variable="Button_Haut" member="yes">
 						<label>Haut</label>
 						<pos>348,0</pos>
 						<size>55,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_HautClick" entry="EVT_BUTTON" />
 					</object>
 					<object class="wxButton" name="ID_BUTTON6" variable="Button_Bas" member="yes">
 						<label>Bas</label>
 						<pos>402,0</pos>
 						<size>55,24</size>
+						<fg>wxSYS_COLOUR_BTNTEXT</fg>
 						<handler function="OnButton_BasClick" entry="EVT_BUTTON" />
 					</object>
 				</object>

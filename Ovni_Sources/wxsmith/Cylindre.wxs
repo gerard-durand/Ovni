@@ -65,12 +65,14 @@
 			<label>Accepter</label>
 			<pos>96,192</pos>
 			<size>88,23</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Annuler" member="yes">
 			<label>Annuler</label>
 			<pos>200,192</pos>
 			<size>88,23</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_FermerCylindre" member="yes">

@@ -1,6 +1,7 @@
 #include "SelectionManuelleFacettes.h"
 
 //(*InternalHeaders(SelectionManuelleFacettes)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -35,8 +36,11 @@ SelectionManuelleFacettes::SelectionManuelleFacettes(wxWindow* parent,wxWindowID
 	StaticText_Numeros = new wxStaticText(this, ID_STATICTEXT4, _T("Indices des facettes (séparés par espace, virgule ou - ) :"), wxPoint(8,64), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	TextCtrl_Numeros = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxPoint(8,88), wxSize(312,24), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_Valider = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(16,120), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Valider->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Reset = new wxButton(this, ID_BUTTON3, _T("Reset"), wxPoint(120,120), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(224,120), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnSpinCtrl_NumObjetChange);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_ValiderClick);

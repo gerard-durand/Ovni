@@ -45,6 +45,7 @@
 			<label>OK</label>
 			<pos>160,112</pos>
 			<size>136,26</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_masquer" member="yes">
@@ -61,6 +62,7 @@
 			<label>Inverser les normales</label>
 			<pos>8,112</pos>
 			<size>136,26</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_InverserNormalesClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

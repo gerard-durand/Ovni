@@ -19,18 +19,21 @@
 			<label>Aucun</label>
 			<pos>16,200</pos>
 			<size>64,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AucunClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Tous" member="yes">
 			<label>Tous</label>
 			<pos>88,200</pos>
 			<size>64,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_TousClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON3" variable="Button_Quitter" member="yes">
 			<label>Quitter</label>
 			<pos>160,200</pos>
 			<size>64,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

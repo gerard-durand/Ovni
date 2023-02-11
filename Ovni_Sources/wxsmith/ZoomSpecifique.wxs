@@ -73,17 +73,20 @@
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Reset" member="yes">
 			<label>Défaut</label>
 			<pos>8,168</pos>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_Appliquer" member="yes">
 			<label>Appliquer</label>
 			<pos>104,168</pos>
 			<focused>1</focused>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AppliquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON3" variable="Button_Quit" member="yes">
 			<label>OK</label>
 			<pos>200,168</pos>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText_Warning" member="yes">

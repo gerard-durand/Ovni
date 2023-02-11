@@ -1,7 +1,7 @@
 #include "Cube.h"
 
 //(*InternalHeaders(Cube)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -54,7 +54,9 @@ Cube::Cube(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Z :"), wxPoint(264,59), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(280,56), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(88,120), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(208,120), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Numéro de Groupe :"), wxPoint(8,91), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(120,88), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
 	SpinCtrl_Groupe->SetValue(_T("0"));

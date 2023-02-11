@@ -1,6 +1,7 @@
 #include "ChangerEchelleBdd.h"
 
 //(*InternalHeaders(ChangerEchelleBdd)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -40,8 +41,11 @@ ChangerEchelleBdd::ChangerEchelleBdd(wxWindow* parent,wxWindowID id,const wxPoin
 	TextCtrl_scale = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1"), wxPoint(184,48), wxDefaultSize, wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticLine2 = new wxStaticLine(this, ID_STATICLINE2, wxPoint(0,80), wxSize(400,2), wxLI_HORIZONTAL, _T("ID_STATICLINE2"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(8,88), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Inverser = new wxButton(this, ID_BUTTON2, _T("Inverser"), wxPoint(104,88), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Inverser->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(200,88), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChangerEchelleBdd::OnButton_OKClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChangerEchelleBdd::OnButton_InverserClick);

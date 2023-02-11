@@ -2,7 +2,7 @@
 #include "vector3d.h"
 
 //(*InternalHeaders(Icosaedre)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -56,7 +56,9 @@ Icosaedre::Icosaedre(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	SpinCtrl_Subdiv = new wxSpinCtrl(this, ID_SPINCTRL3, _T("0"), wxPoint(224,72), wxSize(74,23), 0, 0, 8, 0, _T("ID_SPINCTRL3"));
 	SpinCtrl_Subdiv->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(104,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(208,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(8,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(128,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
 	SpinCtrl_Groupe->SetValue(_T("0"));

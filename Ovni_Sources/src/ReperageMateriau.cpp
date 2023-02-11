@@ -1,7 +1,7 @@
 #include "ReperageMateriau.h"
 
 //(*InternalHeaders(ReperageMateriau)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -30,7 +30,9 @@ ReperageMateriau::ReperageMateriau(wxWindow* parent,wxWindowID id,const wxPoint&
 	TextCtrl1 = new wxTextCtrl(this, ID_TEXTCTRL1, _T("Aucun"), wxPoint(128,16), wxSize(80,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(8,48), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->Disable();
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quit = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(128,48), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Quit->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	SpinButton1 = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(208,16), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton1->SetRange(0, 100);
 

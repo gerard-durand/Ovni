@@ -24,6 +24,7 @@
 			<label>Valider</label>
 			<pos>200,16</pos>
 			<size>80,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ValiderClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
@@ -93,12 +94,14 @@
 			<label>Appliquer</label>
 			<pos>32,208</pos>
 			<size>96,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AppliquerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON3" variable="Button_Annuler" member="yes">
 			<label>Annuler</label>
 			<pos>152,208</pos>
 			<size>96,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

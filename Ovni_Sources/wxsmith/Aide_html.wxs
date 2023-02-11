@@ -16,6 +16,7 @@
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
 			<label>Quitter</label>
 			<pos>544,448</pos>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

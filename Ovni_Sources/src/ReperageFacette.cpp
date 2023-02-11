@@ -2,6 +2,7 @@
 
 //(*InternalHeaders(ReperageFacette)
 #include <wx/font.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -69,16 +70,24 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	CheckBox_VisuNormales_Sommets = new wxCheckBox(this, ID_CHECKBOX2, _T("Visualisation des normales aux sommets"), wxPoint(24,192), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
 	CheckBox_VisuNormales_Sommets->SetValue(false);
 	Button_InvNormale = new wxButton(this, ID_BUTTON1, _T("Inverser la normale"), wxPoint(24,216), wxSize(264,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_InvNormale->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_DelFacette = new wxButton(this, ID_BUTTON3, _T("Supprimer la facette"), wxPoint(24,240), wxSize(152,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_DelFacette->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_UndoDel = new wxButton(this, ID_BUTTON4, _T("Undo"), wxPoint(184,240), wxSize(104,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 	Button_UndoDel->Disable();
+	Button_UndoDel->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Masquer = new wxButton(this, ID_BUTTON5, _T("Masquer la facette"), wxPoint(24,264), wxSize(264,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+	Button_Masquer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Permuter = new wxButton(this, ID_BUTTON6, _T("Permutation circulaire des sommets"), wxPoint(24,288), wxSize(264,23), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+	Button_Permuter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_CentrerRotation = new wxButton(this, ID_BUTTON7, _T("Centrer la rotation sur la facette"), wxPoint(24,312), wxSize(264,23), 0, wxDefaultValidator, _T("ID_BUTTON7"));
+	Button_CentrerRotation->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_Laisser = new wxCheckBox(this, ID_CHECKBOX3, _T("Laisser la facette affichée en quittant"), wxPoint(24,344), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX3"));
 	CheckBox_Laisser->SetValue(false);
 	Button_Reset = new wxButton(this, ID_BUTTON8, _T("Reset"), wxPoint(24,368), wxSize(104,23), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON9, _T("Quitter"), wxPoint(184,368), wxSize(104,23), 0, wxDefaultValidator, _T("ID_BUTTON9"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText_Warning = new wxStaticText(this, ID_STATICTEXT5, _T("Supprimée"), wxPoint(232,58), wxSize(64,16), 0, _T("ID_STATICTEXT5"));
 	StaticText_Warning->Hide();
 	StaticText_Warning->SetForegroundColour(wxColour(255,0,0));

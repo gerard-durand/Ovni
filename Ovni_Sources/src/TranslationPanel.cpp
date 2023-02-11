@@ -1,7 +1,7 @@
 #include "TranslationPanel.h"
 
 //(*InternalHeaders(TranslationPanel)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -52,6 +52,7 @@ TranslationPanel::TranslationPanel(wxWindow* parent,wxWindowID id,const wxPoint&
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Pas fin"), wxPoint(256,12), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	TextCtrl_PasFin = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.010"), wxPoint(320,8), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	Button_Valider = new wxButton(this, ID_BUTTON1, _T("Valider la modification du Pas"), wxPoint(48,40), wxSize(336,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Valider->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Translation en X"), wxPoint(8,92), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText3->SetForegroundColour(wxColour(255,0,0));
 	TextCtrl_XG = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(104,88), wxSize(96,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
@@ -86,7 +87,9 @@ TranslationPanel::TranslationPanel(wxWindow* parent,wxWindowID id,const wxPoint&
 	SpinButton_ZF = new wxSpinButton(this, ID_SPINBUTTON6, wxPoint(416,152), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON6"));
 	SpinButton_ZF->SetRange(-10, 10);
 	Button_OK = new wxButton(this, ID_BUTTON2, _T("OK"), wxPoint(104,192), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(232,192), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasGrossierText);
 	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasFinText);

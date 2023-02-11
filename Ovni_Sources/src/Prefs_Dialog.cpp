@@ -217,6 +217,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	TextCtrl_WorkDir = new wxTextCtrl(this, ID_TEXTCTRL10, _T("C:"), wxDefaultPosition, wxSize(294,21), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL10"));
 	BoxSizer2->Add(TextCtrl_WorkDir, 0, wxLEFT|wxRIGHT|wxALIGN_BOTTOM, 5);
 	Button_tmp_rep = new wxButton(this, ID_BUTTON1, _T("..."), wxDefaultPosition, wxSize(40,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_tmp_rep->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	BoxSizer2->Add(Button_tmp_rep, 0, wxALIGN_BOTTOM, 5);
 	BoxSizer1->Add(BoxSizer2, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine9 = new wxStaticLine(this, ID_STATICLINE9, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE9"));
@@ -233,8 +234,10 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(StaticLine12, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 2);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
 	Button_Reset = new wxButton(this, ID_BUTTON2, _T("Reset"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	BoxSizer3->Add(Button_Reset, 1, wxALL|wxALIGN_BOTTOM, 2);
 	Button_OK = new wxButton(this, ID_BUTTON3, _T("OK"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	BoxSizer3->Add(Button_OK, 1, wxALL|wxALIGN_BOTTOM, 2);
 	BoxSizer1->Add(BoxSizer3, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL, 2);
 	SetSizer(BoxSizer1);

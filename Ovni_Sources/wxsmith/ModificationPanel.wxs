@@ -25,6 +25,7 @@
 				<label>Ajouter sous le pointeur</label>
 				<pos>32,4</pos>
 				<size>152,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnToggleButton_AjouterToggle" entry="EVT_TOGGLEBUTTON" />
 			</object>
 			<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_NbSegments" member="yes">
@@ -45,6 +46,7 @@
 				<label>Diviser en</label>
 				<pos>16,32</pos>
 				<size>64,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnToggleButton_DiviserToggle" entry="EVT_TOGGLEBUTTON" />
 			</object>
 		</object>
@@ -86,6 +88,7 @@
 				<label>Créer</label>
 				<pos>16,40</pos>
 				<size>88,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnToggleButton_CreerFacetteToggle" entry="EVT_TOGGLEBUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON4" variable="Button_Annuler" member="yes">
@@ -93,6 +96,7 @@
 				<pos>16,68</pos>
 				<size>184,24</size>
 				<enabled>0</enabled>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON5" variable="Button_SupprimerFacette" member="yes">
@@ -100,6 +104,7 @@
 				<pos>16,92</pos>
 				<size>184,24</size>
 				<enabled>0</enabled>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_SupprimerFacetteClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON6" variable="Button_InverserNormale" member="yes">
@@ -107,6 +112,7 @@
 				<pos>16,116</pos>
 				<size>184,24</size>
 				<enabled>0</enabled>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_InverserNormaleClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_FacettePlane" member="yes">
@@ -131,6 +137,7 @@
 				<label>Souder</label>
 				<pos>48,4</pos>
 				<size>120,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnToggleButton_SouderToggle" entry="EVT_TOGGLEBUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON8" variable="Button_Undo" member="yes">
@@ -138,6 +145,7 @@
 				<pos>8,36</pos>
 				<size>200,24</size>
 				<enabled>0</enabled>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_UndoClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
@@ -172,30 +180,35 @@
 				<label>Inverser toutes les normales</label>
 				<pos>16,32</pos>
 				<size>184,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_InverserToutClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON10" variable="Button_Trianguler" member="yes">
 				<label>Trianguler la BDD</label>
 				<pos>16,56</pos>
 				<size>184,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_TriangulerClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON11" variable="Button_RecalculerNormales" member="yes">
 				<label>Recalculer toutes les normales</label>
 				<pos>16,104</pos>
 				<size>184,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_RecalculerNormalesClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON12" variable="Button_Simplification" member="yes">
 				<label>Simplification de la BDD</label>
 				<pos>16,128</pos>
 				<size>184,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_SimplificationClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button_RecalculerAretes" member="yes">
 				<label>Recalculer les arêtes</label>
 				<pos>16,152</pos>
 				<size>184,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_RecalculerAretesClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_Transparence" member="yes">
@@ -217,6 +230,7 @@
 				<label>Quitter</label>
 				<pos>64,16</pos>
 				<size>88,24</size>
+				<fg>wxSYS_COLOUR_BTNTEXT</fg>
 				<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxPanel" name="ID_PANEL9" variable="Panel9" member="yes">

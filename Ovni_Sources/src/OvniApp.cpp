@@ -12,7 +12,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filefn.h>
 
-#include <wx/settings.h>    // Pour test sur IsDark
+//#include <wx/settings.h>    // Pour test sur IsDark
 
 //(*AppHeaders
 #include "OvniMain.h"

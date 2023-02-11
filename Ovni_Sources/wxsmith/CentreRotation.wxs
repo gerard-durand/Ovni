@@ -55,12 +55,14 @@
 			<label>Défaut</label>
 			<pos>8,136</pos>
 			<size>88,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_DefsClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_OK" member="yes">
 			<label>OK</label>
 			<pos>104,136</pos>
 			<size>88,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

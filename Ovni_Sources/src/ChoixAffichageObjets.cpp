@@ -1,6 +1,7 @@
 #include "ChoixAffichageObjets.h"
 
 //(*InternalHeaders(ChoixAffichageObjets)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -35,8 +36,11 @@ ChoixAffichageObjets::ChoixAffichageObjets(wxWindow* parent,wxWindowID id,const 
 	CheckListBox1 = new wxCheckListBox(this, ID_CHECKLISTBOX1, wxPoint(16,32), wxSize(240,128), 0, 0, 0, wxDefaultValidator, _T("ID_CHECKLISTBOX1"));
 	CheckListBox1->Check(CheckListBox1->Append(_T("Objet 1")));
 	Button_Aucun = new wxButton(this, ID_BUTTON1, _T("Aucun"), wxPoint(16,168), wxSize(80,26), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Aucun->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Tous = new wxButton(this, ID_BUTTON2, _T("Tous"), wxPoint(96,168), wxSize(80,26), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Tous->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(176,168), wxSize(80,26), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_CHECKLISTBOX1,wxEVT_COMMAND_CHECKLISTBOX_TOGGLED,(wxObjectEventFunction)&ChoixAffichageObjets::OnCheckListBox1Toggled);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChoixAffichageObjets::OnButton_AucunClick);

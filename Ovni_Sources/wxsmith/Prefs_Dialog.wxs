@@ -402,6 +402,7 @@
 						<object class="wxButton" name="ID_BUTTON1" variable="Button_tmp_rep" member="yes">
 							<label>...</label>
 							<size>40,23</size>
+							<fg>wxSYS_COLOUR_BTNTEXT</fg>
 							<handler function="OnButton_tmp_repClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALIGN_BOTTOM</flag>
@@ -453,6 +454,7 @@
 					<object class="sizeritem">
 						<object class="wxButton" name="ID_BUTTON2" variable="Button_Reset" member="yes">
 							<label>Reset</label>
+							<fg>wxSYS_COLOUR_BTNTEXT</fg>
 							<handler function="OnButton_ResetClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxALIGN_BOTTOM</flag>
@@ -462,6 +464,7 @@
 					<object class="sizeritem">
 						<object class="wxButton" name="ID_BUTTON3" variable="Button_OK" member="yes">
 							<label>OK</label>
+							<fg>wxSYS_COLOUR_BTNTEXT</fg>
 							<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxALIGN_BOTTOM</flag>

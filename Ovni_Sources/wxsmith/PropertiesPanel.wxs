@@ -159,6 +159,7 @@
 			<label>OK</label>
 			<pos>128,432</pos>
 			<focused>1</focused>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnBoutonOKClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

@@ -1,7 +1,7 @@
 #include "RotationPanel.h"
 
 //(*InternalHeaders(RotationPanel)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -48,12 +48,13 @@ RotationPanel::RotationPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Pas angulaire en degrés"), wxPoint(8,12), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	TextCtrl_PasAngulaire = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(152,8), wxDefaultSize, wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_ValiderPas = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(272,8), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_ValiderPas->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _T("Centre de Rotation"), wxPoint(2,40), wxSize(356,176), 0, _T("ID_STATICBOX1"));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
-		_T("Barycentre de la sélection"),
-		_T("Boîte englobante de la sélection"),
-		_T("Point particulier à entrer (et valider) ci-dessous")
+	    _T("Barycentre de la sélection"),
+	    _T("Boîte englobante de la sélection"),
+	    _T("Point particulier à entrer (et valider) ci-dessous")
 	};
 	RadioBox_Centre = new wxRadioBox(this, ID_RADIOBOX1, wxEmptyString, wxPoint(32,56), wxSize(296,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("X :"), wxPoint(8,156), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
@@ -70,6 +71,7 @@ RotationPanel::RotationPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Angle de rotation en Z :"), wxPoint(40,292), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	Button_ValiderPoint = new wxButton(this, ID_BUTTON2, _T("Valider"), wxPoint(104,184), wxSize(152,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_ValiderPoint->Disable();
+	Button_ValiderPoint->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	TextCtrl_AngleX = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0"), wxPoint(200,224), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
 	SpinButton_X = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(288,224), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton_X->SetRange(-360, 360);
@@ -80,7 +82,9 @@ RotationPanel::RotationPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	SpinButton_Z = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(288,288), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
 	SpinButton_Z->SetRange(-360, 360);
 	Button_Appliquer = new wxButton(this, ID_BUTTON3, _T("Appliquer"), wxPoint(40,336), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Appliquer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON4, _T("Annuler"), wxPoint(200,336), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_PasAngulaireText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&RotationPanel::OnButton_ValiderPasClick);

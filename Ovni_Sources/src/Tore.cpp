@@ -1,7 +1,7 @@
 #include "Tore.h"
 
 //(*InternalHeaders(Tore)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -68,7 +68,9 @@ Tore::Tore(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(394,104), wxSize(72,24), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
 	SpinCtrl_Materiau->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(136,136), wxSize(83,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(248,136), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Tore::OnSpinCtrl_GroupeChange);
 	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Tore::OnSpinCtrl_MateriauChange);

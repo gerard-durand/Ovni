@@ -2316,7 +2316,7 @@ void BddInter::Switch_theme(bool theme_b)
 //    this->MAIN_b->MenuBar_Globale->UpdateMenus();
 //    this->MAIN_b->MenuBar_Globale->Refresh();
 
-// Tests pour explorer tous les items de MenuFile, Mene_Affichage,...!
+// Tests pour explorer tous les items de MenuFile, Menu_Affichage,...!
 // Mieux avec des boucles, mais ça plante parfois et + de flicker ... De plus, ne colorise bien pas le séparateur (seulement une petite marge en haut) : dommage !
 
     if (methode_boucle) {
@@ -2367,6 +2367,8 @@ void BddInter::Switch_theme(bool theme_b)
 //...
 
     } else {
+
+// ça marche mais pénible à programmer car il faut revoir tous les éléments 1 par 1 ...
 
     this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
     this->MAIN_b->Menu_Open         ->SetBackgroundColour(Back);

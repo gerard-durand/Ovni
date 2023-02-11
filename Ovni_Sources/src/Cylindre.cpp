@@ -1,7 +1,7 @@
 #include "Cylindre.h"
 
 //(*InternalHeaders(Cylindre)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -61,7 +61,9 @@ Cylindre::Cylindre(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSiz
 	TextCtrl_NbPoints = new wxTextCtrl(this, ID_TEXTCTRL6, _T("10"), wxPoint(192,80), wxSize(104,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Nombre de points/cercle :"), wxPoint(40,83), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(96,192), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(200,192), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_FermerCylindre = new wxCheckBox(this, ID_CHECKBOX1, _T("Fermer le cylindre par 2 facettes aux extrémités"), wxPoint(8,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_FermerCylindre->SetValue(false);
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(8,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));

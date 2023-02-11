@@ -2,7 +2,7 @@
 
 //(*InternalHeaders(ZoomSpecifique)
 #include <wx/font.h>
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -49,9 +49,12 @@ ZoomSpecifique::ZoomSpecifique(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	TextCtrl_Distance = new wxTextCtrl(this, ID_TEXTCTRL1, _T("10.00"), wxPoint(192,96), wxSize(102,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	TextCtrl_FoV = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.00"), wxPoint(192,128), wxSize(102,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	Button_Reset = new wxButton(this, ID_BUTTON2, _T("Défaut"), wxPoint(8,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Reset->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Appliquer = new wxButton(this, ID_BUTTON1, _T("Appliquer"), wxPoint(104,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_Appliquer->SetFocus();
+	Button_Appliquer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quit = new wxButton(this, ID_BUTTON3, _T("OK"), wxPoint(200,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quit->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText_Warning = new wxStaticText(this, ID_STATICTEXT8, _T("Attention : Rotation en Y <> 0 !"), wxPoint(48,72), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	StaticText_Warning->Hide();
 	StaticText_Warning->SetForegroundColour(wxColour(255,0,0));

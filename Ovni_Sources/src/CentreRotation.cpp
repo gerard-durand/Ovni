@@ -1,6 +1,7 @@
 #include "CentreRotation.h"
 
 //(*InternalHeaders(CentreRotation)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -49,7 +50,9 @@ CentreRotation::CentreRotation(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	SpinCtrlDouble_Z = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE3, _T("0"), wxPoint(56,88), wxSize(120,23), 0, -100, 100, 0, 0.1, _T("ID_SPINCTRLDOUBLE3"));
 	SpinCtrlDouble_Z->SetValue(_T("0"));
 	Button_Defs = new wxButton(this, ID_BUTTON1, _T("Défaut"), wxPoint(8,136), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Defs->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_OK = new wxButton(this, ID_BUTTON2, _T("OK"), wxPoint(104,136), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINCTRLDOUBLE1,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&CentreRotation::OnSpinCtrlDouble_XChange);
 	Connect(ID_SPINCTRLDOUBLE2,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&CentreRotation::OnSpinCtrlDouble_YChange);

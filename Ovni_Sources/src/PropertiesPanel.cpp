@@ -1,6 +1,7 @@
 #include "PropertiesPanel.h"
 
 //(*InternalHeaders(PropertiesPanel)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -85,6 +86,7 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Texte_Box = new wxStaticText(this, ID_STATICTEXT27, _T("Texte\n1\n2\n3\n4"), wxPoint(0,344), wxSize(335,88), wxST_NO_AUTORESIZE|wxALIGN_CENTRE, _T("ID_STATICTEXT27"));
 	BoutonOK = new wxButton(this, ID_BUTTON1, _T("OK"), wxPoint(128,432), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	BoutonOK->SetFocus();
+	BoutonOK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PropertiesPanel::OnBoutonOKClick);
 	//*)

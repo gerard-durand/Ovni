@@ -1,7 +1,7 @@
 #include "ReperageObjet.h"
 
 //(*InternalHeaders(ReperageObjet)
-#include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -42,11 +42,13 @@ ReperageObjet::ReperageObjet(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	TextCtrl_NomObjet = new wxTextCtrl(this, ID_TEXTCTRL2, wxEmptyString, wxPoint(40,40), wxSize(256,21), wxTE_READONLY, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Nom"), wxPoint(8,44), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("OK"), wxPoint(160,112), wxSize(136,26), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_masquer = new wxCheckBox(this, ID_CHECKBOX1, _T("Masquer l\'objet"), wxPoint(8,72), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_masquer->SetValue(false);
 	CheckBox_supprimer = new wxCheckBox(this, ID_CHECKBOX2, _T("Supprimer l\'objet"), wxPoint(8,88), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
 	CheckBox_supprimer->SetValue(false);
 	Button_InverserNormales = new wxButton(this, ID_BUTTON2, _T("Inverser les normales"), wxPoint(8,112), wxSize(136,26), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_InverserNormales->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&ReperageObjet::OnSpinButton_indiceChange);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnButton_OKClick);

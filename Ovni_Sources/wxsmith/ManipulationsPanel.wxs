@@ -21,18 +21,21 @@
 			<label>Translation</label>
 			<pos>32,24</pos>
 			<size>192,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_TranslationClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Rotation" member="yes">
 			<label>Rotation</label>
 			<pos>32,48</pos>
 			<size>192,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_RotationClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON3" variable="Button_Scale" member="yes">
 			<label>Mise à l&apos;échelle</label>
 			<pos>32,72</pos>
 			<size>192,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_ScaleClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
@@ -66,12 +69,14 @@
 			<pos>16,152</pos>
 			<size>104,24</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_CreerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON5" variable="Button_Raz" member="yes">
 			<label>Remise à zéro</label>
 			<pos>128,152</pos>
 			<size>104,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_RazClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
@@ -82,6 +87,7 @@
 			<label>Fermer</label>
 			<pos>72,188</pos>
 			<size>104,24</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
 		</object>
 	</object>

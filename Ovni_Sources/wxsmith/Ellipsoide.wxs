@@ -64,12 +64,14 @@
 			<label>Accepter</label>
 			<pos>104,168</pos>
 			<size>96,23</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Annuler" member="yes">
 			<label>Annuler</label>
 			<pos>224,168</pos>
 			<size>96,23</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_AnnulerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">

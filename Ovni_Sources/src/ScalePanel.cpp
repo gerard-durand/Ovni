@@ -1,6 +1,7 @@
 #include "ScalePanel.h"
 
 //(*InternalHeaders(ScalePanel)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -38,6 +39,7 @@ ScalePanel::ScalePanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Incrément :"), wxPoint(8,20), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	TextCtrl_Increment = new wxTextCtrl(this, ID_TEXTCTRL1, _T("0.010"), wxPoint(80,16), wxSize(112,24), wxTE_PROCESS_ENTER|wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_Valider = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(200,16), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Valider->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Mise à l\'échelle en X :"), wxPoint(16,76), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Mise à l\'échelle en Y :"), wxPoint(16,108), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Mise à l\'échelle en Z :"), wxPoint(16,140), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
@@ -53,7 +55,9 @@ ScalePanel::ScalePanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	CheckBox_ScaleUnique = new wxCheckBox(this, ID_CHECKBOX1, _T("Mettre la même échelle en X, Y et Z"), wxPoint(16,176), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_ScaleUnique->SetValue(true);
 	Button_Appliquer = new wxButton(this, ID_BUTTON2, _T("Appliquer"), wxPoint(32,208), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Appliquer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(152,208), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_IncrementText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ScalePanel::OnButton_ValiderClick);

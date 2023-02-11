@@ -22,11 +22,13 @@
 			<pos>8,48</pos>
 			<size>96,23</size>
 			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_Quit" member="yes">
 			<label>Quitter</label>
 			<pos>128,48</pos>
 			<size>96,23</size>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton1" member="yes">

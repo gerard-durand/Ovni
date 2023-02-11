@@ -2,6 +2,7 @@
 #include "vector3d.h"
 
 //(*InternalHeaders(Cone)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -67,7 +68,9 @@ Cone::Cone(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(360,104), wxSize(96,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
 	SpinCtrl_Materiau->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(120,192), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(232,192), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	CheckBox_FermerCone = new wxCheckBox(this, ID_CHECKBOX1, _T("Fermer le cône à sa base"), wxPoint(8,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_FermerCone->SetValue(false);
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Nombre de secteurs"), wxPoint(4,139), wxDefaultSize, 0, _T("ID_STATICTEXT9"));

@@ -1,6 +1,7 @@
 #include "SelectionManuelleObjets.h"
 
 //(*InternalHeaders(SelectionManuelleObjets)
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -25,8 +26,11 @@ SelectionManuelleObjets::SelectionManuelleObjets(wxWindow* parent,wxWindowID id,
 	CheckListBox1 = new wxCheckListBox(this, ID_CHECKLISTBOX1, wxPoint(16,16), wxSize(208,176), 0, 0, 0, wxDefaultValidator, _T("ID_CHECKLISTBOX1"));
 	CheckListBox1->Append(_T("Objet1"));
 	Button_Aucun = new wxButton(this, ID_BUTTON1, _T("Aucun"), wxPoint(16,200), wxSize(64,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button_Aucun->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Tous = new wxButton(this, ID_BUTTON2, _T("Tous"), wxPoint(88,200), wxSize(64,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button_Tous->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(160,200), wxSize(64,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
 	Connect(ID_CHECKLISTBOX1,wxEVT_COMMAND_CHECKLISTBOX_TOGGLED,(wxObjectEventFunction)&SelectionManuelleObjets::OnCheckListBox1Toggled);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleObjets::OnButton_AucunClick);
