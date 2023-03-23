@@ -23,7 +23,9 @@ class ReperageObjet: public wxDialog
 		//(*Declarations(ReperageObjet)
 		wxButton* Button_InverserNormales;
 		wxButton* Button_OK;
+		wxButton* Button_renommer;
 		wxCheckBox* CheckBox_masquer;
+		wxCheckBox* CheckBox_renommer;
 		wxCheckBox* CheckBox_supprimer;
 		wxSpinButton* SpinButton_indice;
 		wxStaticText* StaticText1;
@@ -46,6 +48,8 @@ class ReperageObjet: public wxDialog
 		static const long ID_BUTTON1;
 		static const long ID_CHECKBOX1;
 		static const long ID_CHECKBOX2;
+		static const long ID_CHECKBOX3;
+		static const long ID_BUTTON3;
 		static const long ID_BUTTON2;
 		//*)
 
@@ -58,6 +62,8 @@ class ReperageObjet: public wxDialog
 		void OnCheckBox_supprimerClick(wxCommandEvent& event);
 		void OnButton_InverserNormalesClick(wxCommandEvent& event);
 		void OnSpinButton_indiceChange(wxSpinEvent& event);
+		void OnCheckBox_renommerClick(wxCommandEvent& event);
+		void OnButton_renommerClick(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

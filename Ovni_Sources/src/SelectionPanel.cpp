@@ -143,7 +143,7 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	RadioButton_TypeSelection_Arriere = new wxRadioButton(this, ID_RADIOBUTTON8, _T("Faces arrière"), wxPoint(184,648), wxDefaultSize, 0, wxDefaultValidator, _T("ID_RADIOBUTTON8"));
 	StaticText_TypeSelection = new wxStaticText(this, ID_STATICTEXT12, _T("Type de Sélection"), wxPoint(0,624), wxSize(288,16), wxALIGN_CENTRE, _T("ID_STATICTEXT12"));
 	StaticText_TypeSelection->SetForegroundColour(wxColour(255,255,255));
-	StaticText_TypeSelection->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	StaticText_TypeSelection->SetBackgroundColour(wxColour(0,0,0));
 	Button_Etendre = new wxButton(this, ID_BUTTON13, _T("Étendre la sélection"), wxPoint(64,672), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON13"));
 	Button_Etendre->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Quitter = new wxButton(this, ID_BUTTON14, _T("Fermer"), wxPoint(176,696), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON14"));
@@ -451,7 +451,7 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
     key_event.m_keyCode = 'S';
     Element->OnKeyDown(key_event);      // Simule une pression sur la touche S au clavier
 
-    Element->m_gllist = 0;              // on pourrait éviter un reset complet sauf si on venait du mode de sélection objets
+    Element->m_gllist = 0;              // on pourrait éviter un reset complet sauf si on venait du mode de sélection d'objets
     Element->Refresh();
 }
 
@@ -769,6 +769,13 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
         Element->MManip->Button_Rotation->Enable();
     else
         Element->MManip->Button_Rotation->Disable();
+
+    // Le bouton Button_NewObjet n'est actif que si des facettes sont sélectionnées
+    Element->MManip->Button_NewObjet->Disable();
+    if (Element->mode_selection == Element->selection_facette) {
+        if (!Element->ToSelect.ListeSelect.empty())
+            Element->MManip->Button_NewObjet->Enable() ;
+    }
 
     Element->MManip->Show();
 }

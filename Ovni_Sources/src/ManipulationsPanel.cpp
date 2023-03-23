@@ -18,6 +18,8 @@ const long ManipulationsPanel::ID_BUTTON4 = wxNewId();
 const long ManipulationsPanel::ID_BUTTON5 = wxNewId();
 const long ManipulationsPanel::ID_STATICLINE1 = wxNewId();
 const long ManipulationsPanel::ID_BUTTON6 = wxNewId();
+const long ManipulationsPanel::ID_BUTTON7 = wxNewId();
+const long ManipulationsPanel::ID_STATICLINE2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ManipulationsPanel,wxDialog)
@@ -29,7 +31,7 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 {
 	//(*Initialize(ManipulationsPanel)
 	Create(parent, id, _T("Manipulations d\'Objet"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
-	SetClientSize(wxSize(254,215));
+	SetClientSize(wxSize(254,271));
 	Move(wxPoint(20,20));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Modifications de l\'Objet"), wxPoint(0,0), wxSize(256,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
@@ -58,8 +60,12 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	Button_Raz = new wxButton(this, ID_BUTTON5, _T("Remise à zéro"), wxPoint(128,152), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON5"));
 	Button_Raz->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(0,180), wxSize(256,4), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
-	Button_Quitter = new wxButton(this, ID_BUTTON6, _T("Fermer"), wxPoint(72,188), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+	Button_Quitter = new wxButton(this, ID_BUTTON6, _T("Fermer"), wxPoint(72,240), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON6"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
+	Button_NewObjet = new wxButton(this, ID_BUTTON7, _T("Facettes sélectionnées => Nouvel Objet"), wxPoint(8,192), wxSize(234,24), 0, wxDefaultValidator, _T("ID_BUTTON7"));
+	Button_NewObjet->Disable();
+	Button_NewObjet->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
+	StaticLine2 = new wxStaticLine(this, ID_STATICLINE2, wxPoint(0,224), wxSize(256,4), wxLI_HORIZONTAL, _T("ID_STATICLINE2"));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_TranslationClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_RotationClick);
@@ -70,6 +76,7 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_CreerClick);
 	Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_RazClick);
 	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_QuitterClick);
+	Connect(ID_BUTTON7,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_NewObjetClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ManipulationsPanel::OnInit);
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ManipulationsPanel::OnClose);
 	//*)
@@ -263,13 +270,13 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
     if (Symetriser_X) nb_symetries++;
     if (Symetriser_Y) nb_symetries++;
     if (Symetriser_Z) nb_symetries++;
-    symetries_impaires = (bool)(nb_symetries % 2);      // Parité du nombre de symétries
+    symetries_impaires = (bool)(nb_symetries % 2);              // Parité du nombre de symétries
 
     n_val   = Element->listeObjets.size();
     auto it = Element->listeObjets.begin();
 
-    indiceObjet = Element->Objetlist.size() -1;         // Numéro d'indice du dernier objet
-    numero_max = 0;
+    indiceObjet = Element->Objetlist.size() -1;                 // Numéro d'indice du dernier objet
+    numero_max  = 0;
     for (i=0; i<=indiceObjet; i++) numero_max = std::max(numero_max,Element->Objetlist[i].GetValue());
 //    printf("\nNumero maximal : %d\n",numero_max);
     new_numero = ((numero_max/10) +1)*10;
@@ -278,22 +285,22 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
         int o = *it;
         Element->Objetlist.push_back(Element->Objetlist[o]);    // Push_back d'une copie de l'objet initial
         objet_courant = &(Element->Objetlist[o]);
-        indiceObjet = Element->Objetlist.size() -1;       // Numéro d'indice de l'objet créé
-        Element->indiceObjet_courant = indiceObjet;       // Enregistrer ce numéro d'indice dans BddInter
+        indiceObjet = Element->Objetlist.size() -1;             // Numéro d'indice de l'objet créé
+        Element->indiceObjet_courant = indiceObjet;             // Enregistrer ce numéro d'indice dans BddInter
 
         objet_nouveau = &(Element->Objetlist[indiceObjet]);
-        objet_nouveau->SetValue(objet_courant->GetValue()+new_numero);              // Nouveau numéro pour le nouvel objet
+        objet_nouveau->SetValue(new_numero);                    // Nouveau numéro pour le nouvel objet
         wxString Ancien_nom  = objet_courant->GetwxName();
-        wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - par symetrie"); // Ajouter "par symetrie" au nom de l'objet original
+        wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - par symetrie");  // Ajouter "par symetrie" au nom de l'objet original
         objet_nouveau->SetName(Nouveau_nom);
-        objet_courant->SetName(Ancien_nom);     // Bizzarement objet_courant a perdu son nom. Restitution ici !
+        objet_courant->SetName(Ancien_nom);                     // Bizzarement objet_courant a perdu son nom. Restitution ici !
 
         // Changer certaines valeurs selon les options de symétrisation X, Y et/ou Z
         // 1) Changer les coordonnées des sommets
         ns = objet_nouveau->Sommetlist.size();
         for (j=0; j<ns; j++) {
             sommet_courant = &(objet_nouveau->Sommetlist[j]);
-            if (sommet_courant->point.empty()) continue;    // Ne pas traiter un éventuel point vide (non initialisé)
+            if (sommet_courant->point.empty()) continue;        // Ne pas traiter un éventuel point vide (non initialisé)
             if (Symetriser_X) sommet_courant->point[0] *= -1;
             if (Symetriser_Y) sommet_courant->point[1] *= -1;
             if (Symetriser_Z) sommet_courant->point[2] *= -1;
@@ -311,7 +318,7 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
                 for (auto it2=NumerosSommets.crbegin(); it2 != NumerosSommets.crend(); ++it2) ReverseSommets.push_back(*it2);
                 facette_courante->setFsommet(ReverseSommets);
                 NumerosSommets = facette_courante->getL_sommets();
-                if (NumerosSommets.size() > 0) {    // Ne pas faire s'il n'y a pas de normales aux sommets
+                if (NumerosSommets.size() > 0) {                // Ne pas faire s'il n'y a pas de normales aux sommets
                     ReverseSommets.clear();
                     for (auto it2=NumerosSommets.crbegin(); it2 != NumerosSommets.crend(); ++it2) ReverseSommets.push_back(*it2);
                     facette_courante->setLsommet(ReverseSommets);
@@ -347,7 +354,85 @@ void ManipulationsPanel::OnButton_RazClick(wxCommandEvent& event)
     MAIN->Element->Refresh();
 }
 
+void ManipulationsPanel::NewObjet_SelectedFacets(wxCommandEvent& event){    // Pour appeler depuis OvniFrame::OnPopup_CreerObjetFacettesSelected
+    OnButton_NewObjetClick(event) ;                                         // ManipulationsPanel::OnButton_NewObjetClick qui est private ici
+}
+
+void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
+{
+    Object   *objet_courant, *objet_nouveau;
+    BddInter *Element = MAIN->Element;
+    static bool premiere_fois = true;
+
+    int i, indice_objet, numero_max, new_numero;
+    long long unsigned int i_obj, i_fac, new_indice;
+    bool OK = true;
+
+    int nb_select = Element->ToSelect.ListeSelect.size();       // Nombre de facettes sélectionnées
+    if (nb_select <= 0) return;                                 // Aucune, retour direct (peut arriver si ManipulationPanel était déjà ouvert)
+    indice_objet  = Element->ToSelect.ListeSelect[0].objet;     // Indice de l'objet de la première facette sélectionnée
+
+    for (i=1; i<nb_select; i++) {                               // On vérifie que toutes les facettes sélectionnées appartiennent au même objet
+        if (Element->ToSelect.ListeSelect[i].objet != indice_objet) OK = false;
+    }
+    if (!OK) {
+        Element->DisplayMessage(_T("Ne fonctionne pas sur des facettes\nappartenant à plusieurs objets"), true);
+        return;
+    }
+
+    printf("Objet à traiter : indice %d, nom  : %s\n",indice_objet,Element->Objetlist[indice_objet].GetName());
+    printf("Nombre de facettes sélectionnées : %d\n" ,nb_select);
+
+    numero_max = 0;
+    new_indice = Element->Objetlist.size();
+    for (i_obj =0; i_obj<new_indice; i_obj++) numero_max = std::max(numero_max,Element->Objetlist[i_obj].GetValue());
+    if (premiere_fois)
+        new_numero = ((numero_max/10) +1)*10;   // Pour bien différentier ce qu'on sépare, la première fois
+    else
+        new_numero = ++numero_max;              // ensuite, incrémenter simplement de 1
+
+    // Provisoire : OK mais pas optimisé en mémoire car dédouble l'objet
+
+    Element->Objetlist.push_back(Element->Objetlist[indice_objet]);         // Push_back d'une copie de l'objet initial en entier
+    objet_courant = &(Element->Objetlist[indice_objet]);
+    Element->indiceObjet_courant = new_indice;                              // Enregistrer le numéro d'indice dans BddInter
+    objet_nouveau = &(Element->Objetlist[new_indice]);
+    objet_nouveau->SetValue(new_numero);
+//    wxString Ancien_nom  = objet_courant->GetwxName();
+    wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - Extrait");   // Modifier le nom (ou bien le demander à l'écran)
+    objet_nouveau->SetName(Nouveau_nom);
+//    objet_courant->SetName(Ancien_nom);   // Inutile ici, pourtant il a fallu le faire dans OnButton_CreerClick !
+
+    for (i_fac=0;i_fac<objet_courant->Facelist.size();i_fac++) {
+        objet_nouveau->Facelist[i_fac].selected = false;    // Dans objet_nouveau, mettre l'attribut selected sur toutes les facettes à false
+        if (objet_courant->Facelist[i_fac].selected) {
+            objet_courant->Facelist[i_fac].deleted = true;  // Facette sélectionnée dans objet_courant     => la supprimer de objet_courant
+        } else {
+            objet_nouveau->Facelist[i_fac].deleted = true;  // Facette non sélectionnée dans objet_courant => la supprimer de objet_nouveau
+        }
+    }
+
+    // Désélectionner les facettes dans objet_courant !
+    wxKeyEvent key_event;
+    key_event.m_keyCode = 'S';
+    Element->OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de facettes
+
+    Element->bdd_modifiee = true;
+
+    // En sortie, peut-être forcer (simuler) un clic sur Quitter, mais peut généer si on fait plusieurs fois de suite cette opération
+
+/*  En toute rigueur, il faut simplifier la bdd : le faire d'office ou le suggérer ?
+    Le faire d'office peut s'avérer long sur de grosses bdd, surtout si on le fait plusieurs fois de suite.
+    Autant le faire une seule fois, à la demande. Le risque est toutefois de prendre temporairement trop de place en mémoire,
+    car les facettes ne sont que marquées "deleted", mais pas supprimées, et les points/normales/vecteurs non utilisés restent en mémoire.
+*/
+    if (premiere_fois)
+        Element->DisplayMessage(_T("Il faudrait simplifier la Bdd de préférence\navant de l'enregistrer"), true);
+    premiere_fois = false;  // Un seul avertissement la première fois... Vous avez été prévenus non ?
+}
+
 //void ManipulationsPanel::ToDo()
 //{
 //    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel"), true);
 //}
+

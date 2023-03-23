@@ -83,7 +83,7 @@ private:
     void NormalizeEntities();
 
     bool m_loaded;
-    GLuint m_gllist;
+    GLint m_gllist;
     DXFLayerList m_layers;
     DXFEntityList m_entities;
 };

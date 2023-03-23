@@ -2,13 +2,13 @@
 <wxsmith>
 	<object class="wxDialog" name="ReperageObjet">
 		<title>Repérage d&apos;un objet</title>
-		<size>308,144</size>
+		<size>308,160</size>
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
-			<label>Objet indice/numéro :</label>
+			<label>Objet numéro/indice :</label>
 			<pos>8,12</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl_NumObjet" member="yes">
@@ -19,7 +19,7 @@
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton_indice" member="yes">
 			<value>-1</value>
-			<min>-1</min>
+			<min>-2</min>
 			<max>100</max>
 			<pos>232,8</pos>
 			<size>17,24</size>
@@ -35,7 +35,6 @@
 		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_NomObjet" member="yes">
 			<pos>40,40</pos>
 			<size>256,21</size>
-			<style>wxTE_READONLY</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Nom</label>
@@ -43,24 +42,36 @@
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
 			<label>OK</label>
-			<pos>160,112</pos>
+			<pos>160,128</pos>
 			<size>136,26</size>
 			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_OKClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_masquer" member="yes">
 			<label>Masquer l&apos;objet</label>
-			<pos>8,72</pos>
+			<pos>8,88</pos>
 			<handler function="OnCheckBox_masquerClick" entry="EVT_CHECKBOX" />
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_supprimer" member="yes">
 			<label>Supprimer l&apos;objet</label>
-			<pos>8,88</pos>
+			<pos>8,104</pos>
 			<handler function="OnCheckBox_supprimerClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX3" variable="CheckBox_renommer" member="yes">
+			<label>Activer le renommage de l&apos;objet</label>
+			<pos>8,72</pos>
+			<handler function="OnCheckBox_renommerClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button_renommer" member="yes">
+			<label>Renommer</label>
+			<pos>216,70</pos>
+			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
+			<handler function="OnButton_renommerClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button_InverserNormales" member="yes">
 			<label>Inverser les normales</label>
-			<pos>8,112</pos>
+			<pos>8,128</pos>
 			<size>136,26</size>
 			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_InverserNormalesClick" entry="EVT_BUTTON" />

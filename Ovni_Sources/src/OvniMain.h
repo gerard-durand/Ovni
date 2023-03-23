@@ -30,6 +30,7 @@
 
 //#include <wx/defs.h>
 #include "Interface.h"
+
 #include "Prefs_Dialog.h"
 #include "ModificationPanel.h"
 #include "TranslationPanel.h"
@@ -62,9 +63,48 @@
 #include "SelectionManuelleObjets.h"
 #include "ZoomSpecifique.h"
 #include "Aide_html.h"
+
 #include <math.h>
 
 #define tempo_s 2       //
+
+// Pour test du darkmode sous Windows à partir de wxWidgets 3.3.0 (beta)
+#if defined(__WXMSW__)
+#if wxCHECK_VERSION(3,3,0)
+#include <wx/msw/darkmode.h>
+class MySettings : public wxDarkModeSettings
+{
+public:
+    virtual wxColour GetMenuColour(wxMenuColour which)
+    {
+        if ( which == wxMenuColour::StandardFg )
+            return *wxCYAN;
+
+        return wxDarkModeSettings::GetMenuColour(which);
+    }
+
+    wxColour GetColour(wxSystemColour index) override
+    {
+    switch ( index )
+        {
+        case wxSYS_COLOUR_MENUTEXT:
+        case wxSYS_COLOUR_WINDOWTEXT:
+        case wxSYS_COLOUR_CAPTIONTEXT:
+        case wxSYS_COLOUR_HIGHLIGHTTEXT:
+        case wxSYS_COLOUR_BTNTEXT:
+        case wxSYS_COLOUR_INFOTEXT:
+        case wxSYS_COLOUR_LISTBOXTEXT:
+        case wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT:
+            // Default colour used here is 0xe0e0e0.
+            return *wxCYAN;
+
+        default:
+            return wxDarkModeSettings::GetColour(index);
+        }
+    }
+};
+#endif // wxCHECK_VERSION
+#endif // __WXMSW__
 
 class OvniFrame: public wxFrame
 {
@@ -146,6 +186,7 @@ class OvniFrame: public wxFrame
          wxMenuItem* Menu_Reperage_Couleurs_Facettes;
          wxMenuItem* Menu_Reperage_Couleurs_Groupes;
          wxMenuItem* Menu_Reperage_Couleurs_Materiaux;
+         wxMenuItem* Menu_Retracer3D;
          wxMenuItem* Menu_SensDesNormales;
          wxMenuItem* Menu_SupprimerDerniere;
          wxMenuItem* Menu_SupprimerFacettes;
@@ -272,6 +313,7 @@ class OvniFrame: public wxFrame
         static const long ID_POPUP_DEMASQUER;
         static const long ID_POPUP_DELETE;
         static const long ID_POPUP_UNDELETE;
+        static const long ID_POPUP_NEWOBJECT;
         static const long ID_POPUP_INVERSER_N;
         static const long ID_POPUP_PARCOURS_I;
         static const long ID_POPUP_RAZ_SELECT;
@@ -397,6 +439,7 @@ class OvniFrame: public wxFrame
         void OnMenuItem_AideSelected(wxCommandEvent& event);
         void OnMenu_ReOpen3dsSelected(wxCommandEvent& event);
         void OnMenu_AjouteToreSelected(wxCommandEvent& event);
+        void OnMenu_Retracer3DSelected(wxCommandEvent& event);
         //*)
 
         void Lire_Image(int &, int &);
@@ -408,6 +451,7 @@ class OvniFrame: public wxFrame
         void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);
         void OnPopup_ForcerFacettesPlanesSelected(wxCommandEvent& event);
         void OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event);
+        void OnPopup_CreerObjetFacettesSelected(wxCommandEvent& event);
         bool OnBdd_modifiee();
         void OnPal_modifiee();
         void GenereListeAretes();
@@ -495,6 +539,7 @@ class OvniFrame: public wxFrame
 		static const long ID_MENUITEM29;
 		static const long ID_MENUITEM30;
 		static const long ID_MENUITEM31;
+		static const long ID_MENUITEM52;
 		static const long ID_MENUITEM17;
 		static const long ID_MENUITEM18;
 		static const long ID_MENUITEM19;

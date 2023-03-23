@@ -17,9 +17,11 @@ class ManipulationsPanel: public wxDialog
 
 		ManipulationsPanel(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~ManipulationsPanel();
+		void NewObjet_SelectedFacets(wxCommandEvent& event);
 
 		//(*Declarations(ManipulationsPanel)
 		wxButton* Button_Creer;
+		wxButton* Button_NewObjet;
 		wxButton* Button_Quitter;
 		wxButton* Button_Raz;
 		wxButton* Button_Rotation;
@@ -29,6 +31,7 @@ class ManipulationsPanel: public wxDialog
 		wxCheckBox* CheckBox_Y;
 		wxCheckBox* CheckBox_Z;
 		wxStaticLine* StaticLine1;
+		wxStaticLine* StaticLine2;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		//*)
@@ -48,6 +51,8 @@ class ManipulationsPanel: public wxDialog
 		static const long ID_BUTTON5;
 		static const long ID_STATICLINE1;
 		static const long ID_BUTTON6;
+		static const long ID_BUTTON7;
+		static const long ID_STATICLINE2;
 		//*)
 
 	private:
@@ -64,6 +69,7 @@ class ManipulationsPanel: public wxDialog
 		void OnButton_QuitterClick(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		void OnInit(wxInitDialogEvent& event);
+		void OnButton_NewObjetClick(wxCommandEvent& event);
 		//*)
 //		void ToDo();
 		void CreerBoiteObjet();

@@ -11,40 +11,27 @@
 
 #include "OvniMain.h"
 #include "OvniApp.h"
-//#include <wx/settings.h>
-#include <wx/app.h>
-#include <wx/sysopt.h>
-#include <wx/dcclient.h>
+
+#include <wx/wxprec.h>
 #include <wx/debug.h>
 #include <wx/filedlg.h>
-#include <wx/msgdlg.h>
-#include <wx/wxprec.h>
-#include <wx/filename.h>
 #include <wx/filefn.h>
-#include <wx/stdpaths.h>
-#include <iomanip>
-#include <fstream>
+#include <wx/msgdlg.h>
+#include <wx/sysopt.h>
 
-#if wxCHECK_VERSION(3,3,0)
-    #include <wx/msw/private/darkmode.h>
-#endif
+#include <wx/bmpbndl.h>     // avec wx >= 3.1.6 <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
+//#include <wx/bitmap.h>    // inclus dans bmpbndl
+#include <wx/image.h>
+#include <wx/tglbtn.h>
 
 //(*InternalHeaders(OvniFrame)
 #include <wx/settings.h>
 #include <wx/string.h>
 //*)
-// avec 3.1.6 tester <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
-#include <wx/bmpbndl.h>
-//#include <wx/bitmap.h>    // inclus dans bmpbndl
-#include <wx/image.h>
-#include <wx/tglbtn.h>
 
 #include "version.h"
 
 //using namespace std;  // N'est pas utile ici vu qu'on utilise explicitement std::
-#if wxCHECK_VERSION(3,3,0)
-    using namespace wxMSWDarkMode;
-#endif // wxCHECK_VERSION
 
 //helper functions : diverses infos affichées dans le menu Aide / A propos ...
 enum wxbuildinfoformat {
@@ -207,6 +194,7 @@ const long OvniFrame::ID_MENUITEM28 = wxNewId();
 const long OvniFrame::ID_MENUITEM29 = wxNewId();
 const long OvniFrame::ID_MENUITEM30 = wxNewId();
 const long OvniFrame::ID_MENUITEM31 = wxNewId();
+const long OvniFrame::ID_MENUITEM52 = wxNewId();
 const long OvniFrame::ID_MENUITEM17 = wxNewId();
 const long OvniFrame::ID_MENUITEM18 = wxNewId();
 const long OvniFrame::ID_MENUITEM19 = wxNewId();
@@ -238,6 +226,7 @@ const long OvniFrame::ID_POPUP_MASQUER   = wxNewId();
 const long OvniFrame::ID_POPUP_DEMASQUER = wxNewId();
 const long OvniFrame::ID_POPUP_DELETE    = wxNewId();
 const long OvniFrame::ID_POPUP_UNDELETE  = wxNewId();
+const long OvniFrame::ID_POPUP_NEWOBJECT = wxNewId();
 const long OvniFrame::ID_POPUP_INVERSER_N= wxNewId();
 const long OvniFrame::ID_POPUP_PARCOURS_I= wxNewId();
 const long OvniFrame::ID_POPUP_RAZ_SELECT= wxNewId();
@@ -265,37 +254,28 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //    verbose = true;
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
 
+    if (verbose) printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
+
 #if defined(__WXMSW__)      // Teste si on est sous Windows
-    int darkmode = -1;
-    darkmode = wxSystemOptions().GetOptionInt("msw.dark-mode");     // suivant la valeur de WX_MSW_DARK_MODE peut valoir 0, 1 ou 2
-    printf("msw.dark-mode: %d\n",darkmode);
-    darkmode = Ouvrir_Ini();                                        // De toute façon c'est le contenu de Ovni.ini qui prévaut (mais valeurs -1, 0 ou 1)
-    if (wxSystemSettings::GetAppearance().IsDark()) darkmode = 1;   // On a forcé le darkmode via set WX_MSW_DARK_MODE=2 en ligne de commande avant de lancer Ovni
-    if (darkmode >= 0) {
+    int local_darkmode = -1;
+    local_darkmode = wxSystemOptions().GetOptionInt("msw.dark-mode");   // suivant la valeur de WX_MSW_DARK_MODE peut valoir 0, 1 ou 2
+    if (verbose) printf("msw.dark-mode: %d\n",local_darkmode);
+    local_darkmode = Ouvrir_Ini();                                      // De toute façon c'est le contenu de Ovni.ini qui prévaut (mais valeurs -1, 0 ou 1)
+    if (wxSystemSettings::GetAppearance().IsDark()) local_darkmode = 1; // On a forcé le darkmode via set WX_MSW_DARK_MODE=2 en ligne de commande avant de lancer Ovni
 #if wxCHECK_VERSION(3,3,0)
-        wxGetApp().MSWEnableDarkMode(darkmode);
-#endif // wxCHECK_VERSION
+    if (local_darkmode >= 0) {
+        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings());
     }
 
-    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
-#if wxCHECK_VERSION(3,3,0)
-    printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
+    if (verbose) printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
 //    wxColour test = wxMSWDarkMode::GetColour(wxSYS_COLOUR_BTNTEXT);
+//    wxColour test = MySettings().GetColour(wxSYS_COLOUR_BTNTEXT);
     wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT);
-    wxColour new_colour = *wxCYAN;
-    printf("Test RVB : %d %d %d\n",test.GetRed(),test.GetGreen(),test.GetBlue());
-    wxSystemSettings().SetColour(wxSYS_COLOUR_MENUTEXT,             new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_WINDOWTEXT,           new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_CAPTIONTEXT,          new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_HIGHLIGHTTEXT,        new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_BTNTEXT,              new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_INFOTEXT,             new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_LISTBOXTEXT,          new_colour);
-    wxSystemSettings().SetColour(wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT, new_colour);
-    wxMenuItem().SetTextColour(new_colour);                                         // Compile mais ne change pas la couleur des wxMenuItem !
-    test = wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT);
-    printf("Test RVB : %d %d %d\n",test.GetRed(),test.GetGreen(),test.GetBlue());
-//    wxMSWDarkMode::SetColour(wxSYS_COLOUR_BTNTEXT, *wxCYAN); // Ne marche pas, undefined reference
+////    wxMenuItem().SetTextColour(new_colour);                                         // Compile mais ne change pas la couleur des wxMenuItem !
+    if (verbose) printf("Test RVB wxSYS_COLOUR_BTNTEXT : %d %d %d ou 0x%2.2x%2.2x%2.2x\n",test.GetRed(),test.GetGreen(),test.GetBlue(),test.GetRed(),test.GetGreen(),test.GetBlue());
+//    int Colour[1]={COLOR_BTNFACE};
+//    COLORREF My_Col[1]={0xFFFF00};
+//    ::SetSysColors(1,Colour,My_Col);  // Ainsi on colorise toutes les fenêtres dans Windows qui utilisent COLOR_BTNFACE (y compris celle de Code::Blocks !)
 #endif // wxCHECK_VERSION
 
 #endif // __WXMSW__
@@ -532,6 +512,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Outils->Append(Outils_Supprimer_Masques);
     Outils_UnDelete = new wxMenuItem(Menu_Outils, ID_MENUITEM31, _T("Restituer les éléments supprimés"), wxEmptyString, wxITEM_NORMAL);
     Menu_Outils->Append(Outils_UnDelete);
+    Menu_Outils->AppendSeparator();
+    Menu_Retracer3D = new wxMenuItem(Menu_Outils, ID_MENUITEM52, _T("Retracer complètement la vue 3D\tCtrl-R"), _T("Relance complètement le tracé 3D"), wxITEM_NORMAL);
+    Menu_Outils->Append(Menu_Retracer3D);
     MenuBar_Globale->Append(Menu_Outils, _T("Outils"));
     Menu_Transformations = new wxMenu();
     MenuItem_SigneX = new wxMenuItem(Menu_Transformations, ID_MENUITEM17, _T("X => - X"), wxEmptyString, wxITEM_NORMAL);
@@ -658,6 +641,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_MENUITEM29,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_ReafficherSelected);
     Connect(ID_MENUITEM30,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_Supprimer_MasquesSelected);
     Connect(ID_MENUITEM31,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_UnDeleteSelected);
+    Connect(ID_MENUITEM52,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Retracer3DSelected);
     Connect(ID_MENUITEM17,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_XminusX);
     Connect(ID_MENUITEM18,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_YminusY);
     Connect(ID_MENUITEM19,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZminusZ);
@@ -680,8 +664,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&OvniFrame::OnClose);
     //*)
 
-//    wxGetApp().MSWEnableDarkMode(1);                                                    // Pour forcer le mode Dark, mais c'est un peu tard ici
-//    printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // certains élements restent en mode clair. De plus Ovni.ini toujours pas ouvert !
     // Initialement créés par wxSmith (pour wxWidgets 2.8.12) ainsi que les déclarations des ID_POPUP_*
 
 #if wxCHECK_VERSION(3,0,0)
@@ -790,6 +772,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_POPUP_MASQUER,   wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_MasquerFacettesSelected);
     Connect(ID_POPUP_UNDELETE,  wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_UnDeleteSelected);
     Connect(ID_POPUP_DEMASQUER, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_ReafficherSelected);
+    Connect(ID_POPUP_NEWOBJECT, wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_CreerObjetFacettesSelected);
     Connect(ID_POPUP_INVERSER_N,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected);
     Connect(ID_POPUP_PARCOURS_I,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Reverse_ParcoursSelected);
     Connect(ID_POPUP_NORM_F,    wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnPopup_Afficher_NormalesSelected);
@@ -946,13 +929,17 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (wxSystemSettings::GetAppearance().IsDark()) {
 // Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
         wxColour New_blue = *wxCYAN;
-        Slider_z                            ->SetForegroundColour(New_blue);
-        CentreRotation_Panel->StaticText4   ->SetForegroundColour(New_blue);
-        DeplacerBdd_Panel   ->StaticText4   ->SetForegroundColour(New_blue);
-        Manipulations_Panel ->CheckBox_Z    ->SetForegroundColour(New_blue);
-        PositionSource_Panel->Pos_Z         ->SetForegroundColour(New_blue);
-        Translation_Panel   ->StaticText7   ->SetForegroundColour(New_blue);
-        Translation_Panel   ->StaticText8   ->SetForegroundColour(New_blue);
+        Slider_z                         ->SetForegroundColour(New_blue);
+        CentreRotation_Panel->StaticText4->SetForegroundColour(New_blue);
+        DeplacerBdd_Panel   ->StaticText4->SetForegroundColour(New_blue);
+        Manipulations_Panel ->CheckBox_Z ->SetForegroundColour(New_blue);
+        PositionSource_Panel->Pos_Z      ->SetForegroundColour(New_blue);
+        Translation_Panel   ->StaticText7->SetForegroundColour(New_blue);
+        Translation_Panel   ->StaticText8->SetForegroundColour(New_blue);
+
+//        COLORREF colSys = ::GetSysColor(wxSYS_COLOUR_BTNFACE);
+//        test = wxRGBToColour(colSys);
+//    printf("Test RVB wxSYS_COLOUR_BTNFACE : %d %d %d ou 0x%2.2x%2.2x%2.2x\n",test.GetRed(),test.GetGreen(),test.GetBlue(),test.GetRed(),test.GetGreen(),test.GetBlue());
 
 // Tests pour coloriser d'autres élements de l'interface graphique
 // En fait, OK si pour les boutons on choisi pour couleur du texte "Texte des boutons" plutôt que la valeur par défaut !
@@ -1021,7 +1008,7 @@ int OvniFrame::Ouvrir_Ini() {
  */
     const char *fichier_init="Ovni.ini";
     const char *initQ="Dark_Mode=";
-    int darkmode = -1;
+    int local_darkmode = -1;
     char *Lu, *p_txt_wrk;
     int icmp, ibool, len ;
     char Message[512];
@@ -1034,13 +1021,13 @@ int OvniFrame::Ouvrir_Ini() {
             icmp= strncmp(initQ,Message,len) ;                  // Test sur 26ème mot clé
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
-                sscanf(p_txt_wrk,"%d",&darkmode) ;              // Récupère la valeur de DarkMode
+                sscanf(p_txt_wrk,"%d",&local_darkmode) ;        // Récupère la valeur de Dark_Mode
 //                continue;   // Passer au while suivant
             }
         }
+        fclose(f_init);
     }
-
-    return darkmode;
+    return local_darkmode;
 }
 
 void OvniFrame::InitOpenGL(void) {
@@ -1083,8 +1070,6 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
 void OvniFrame::InitBoutons(void)
 {
 /** \brief OvniFrame::InitBoutons : Initialisation des boutons en mode coché/non coché
- *
- *
  */
 
     if (verbose) printf("Entree OvniFrame::InitBoutons\n");
@@ -1270,7 +1255,6 @@ void OvniFrame::OnPal_modifiee()
         wxMessage         += _T("Voulez-vous l'enregistrer avant de Quitter ?");
         wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question..."),
                                         wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
-
         wxCommandEvent event_cmd;
         if (query->ShowModal() == wxID_YES) OnMenu_EnregistrerPaletteSelected(event_cmd);
         query->Destroy();
@@ -1297,7 +1281,6 @@ void OvniFrame::OnQuit(wxCommandEvent& event)
 // OnQuit <=> onClose
     wxCloseEvent close_event;
     OnClose(close_event);
-
 }
 
 void OvniFrame::OnAbout(wxCommandEvent& event) {
@@ -2479,6 +2462,12 @@ void OvniFrame::OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event)
     }
 }
 
+void OvniFrame::OnPopup_CreerObjetFacettesSelected(wxCommandEvent& event)
+{
+//    Element->MManip->NewObjet_SelectedFacets(event); // Pour appeler ManipulationsPanel::OnButton_NewObjetClick qui est de type private
+    Manipulations_Panel->NewObjet_SelectedFacets(event); // Pour appeler ManipulationsPanel::OnButton_NewObjetClick qui est de type private
+}
+
 void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
 {
     // Inverser le sens de parcours des facettes sélectionnées
@@ -2755,7 +2744,7 @@ void OvniFrame::OnMenu_CentreRotationSelected(wxCommandEvent& event)
 void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 {
     ReperageGroupe_Panel->SpinButton1->SetValue(0);
-    ReperageGroupe_Panel->SpinButton1->SetMax(Element->listeGroupes.size());
+    ReperageGroupe_Panel->SpinButton1->SetMax(Element->listeGroupes.size()+1);      // Ajout de +1 pour pouvoir boucler
     str.Printf(_T("Aucun"));
     ReperageGroupe_Panel->TextCtrl1->SetValue(str);
     ReperageGroupe_Panel->Show();
@@ -2764,7 +2753,7 @@ void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 void OvniFrame::OnMenu_ReperageMateriauSelected(wxCommandEvent& event)
 {
     ReperageMateriau_Panel->SpinButton1->SetValue(0);
-    ReperageMateriau_Panel->SpinButton1->SetMax(Element->listeMateriaux.size());
+    ReperageMateriau_Panel->SpinButton1->SetMax(Element->listeMateriaux.size()+1);  // Ajout de +1 pour pouvoir boucler
     str.Printf(_T("Aucun"));
     ReperageMateriau_Panel->TextCtrl1->SetValue(str);
     ReperageMateriau_Panel->Show();
@@ -2778,18 +2767,22 @@ void OvniFrame::ReperageObjet_activer()
 
 void OvniFrame::OnMenu_ReperageObjetSelected(wxCommandEvent& event)
 {
-    ReperageObjet_Panel->SpinButton_indice-> SetValue(-1);                          // SpinButton sur -1
-    ReperageObjet_Panel->SpinButton_indice-> SetMax(Element->Objetlist.size());     // pour pouvoir boucler
+    ReperageObjet_Panel->SpinButton_indice ->SetValue(-1);                          // SpinButton sur -1
+    ReperageObjet_Panel->SpinButton_indice ->SetMax(Element->Objetlist.size());     // pour pouvoir boucler
     str.Printf(_T("Non sélectionné"));                                              // Afficher ce texte
-    ReperageObjet_Panel->TextCtrl_NumObjet-> SetValue(str);
+    ReperageObjet_Panel->TextCtrl_NumObjet ->SetValue(str);
     str.Printf(_T(""));                                                             // Vider la case avec le nom de l'objet
-    ReperageObjet_Panel->TextCtrl_NomObjet-> SetValue(str);
-    ReperageObjet_Panel->TextCtrl_indice->   SetValue(str);
-    ReperageObjet_Panel->CheckBox_masquer->  SetValue(false);                       // Case à cocher non cochée
-    ReperageObjet_Panel->CheckBox_masquer->  Disable();                             // et désactivée
+    ReperageObjet_Panel->TextCtrl_NomObjet ->SetValue(str);
+    ReperageObjet_Panel->TextCtrl_NomObjet ->Disable();
+    ReperageObjet_Panel->TextCtrl_indice   ->SetValue(str);
+    ReperageObjet_Panel->CheckBox_masquer  ->SetValue(false);                       // Case à cocher non cochée
+    ReperageObjet_Panel->CheckBox_masquer  ->Disable();                             // et désactivée
     ReperageObjet_Panel->CheckBox_supprimer->SetValue(false);                       // Case à cocher non cochée
     ReperageObjet_Panel->CheckBox_supprimer->Disable();                             // et désactivée
+    ReperageObjet_Panel->CheckBox_renommer ->SetValue(false);                       // Case à cocher non cochée
+    ReperageObjet_Panel->CheckBox_renommer ->Disable();                             // et désactivée
     ReperageObjet_Panel->Button_InverserNormales->Disable();
+    ReperageObjet_Panel->Button_renommer        ->Disable();
     ReperageObjet_Panel->Show();
 }
 
@@ -2884,7 +2877,7 @@ void OvniFrame::OnMenu_ReperagePointSelected(wxCommandEvent& event)
     wxString str;
 
 // Init Objet
-    ReperagePoint_Panel->SpinCtrl_IndiceObjet->SetMax(Element->Objetlist.size()-1);
+    ReperagePoint_Panel->SpinCtrl_IndiceObjet->SetMax(Element->Objetlist.size());   // Suppression du -1 pour pouvoir boucler
     int IndiceObjet = 0;
     ReperagePoint_Panel->SpinCtrl_IndicePoint->SetMax(Element->Objetlist[IndiceObjet].Sommetlist.size() -1);
     ReperagePoint_Panel->SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
@@ -2917,7 +2910,7 @@ void OvniFrame::OnMenu_ReperageFacetteSelected(wxCommandEvent& event)
     wxString str;
 
 // Init Objet
-    ReperageFacette_Panel->SpinCtrl_IndiceObjet->SetMax(Element->Objetlist.size()-1);
+    ReperageFacette_Panel->SpinCtrl_IndiceObjet->SetMax(Element->Objetlist.size());     // Supression du -1 pour pouvoir boucler
     int IndiceObjet = 0;
     ReperageFacette_Panel->SpinCtrl_IndiceFacette->SetMax(Element->Objetlist[IndiceObjet].Facelist.size()); // indice max +1 pour boucler
     ReperageFacette_Panel->SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
@@ -2944,7 +2937,7 @@ void OvniFrame::OnButton_Normale_BarycentreClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormale->SetValue(Button_Normale_Barycentre->GetValue());       // Synchroniser le bouton et la checkbox
     Element->AfficherNormaleFacette = Button_Normale_Barycentre->GetValue();                            // et la variable d'affichage
-    Element->m_gllist = Element->glliste_select; //0   // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
+    Element->m_gllist = Element->glliste_select; //0 : pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
 
@@ -2952,7 +2945,7 @@ void OvniFrame::OnButton_Normales_SommetsClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormales_Sommets->SetValue(Button_Normales_Sommets->GetValue());// Synchroniser le bouton et la checkbox
     Element->AfficherNormalesSommets = Button_Normales_Sommets->GetValue();                             // et la variable d'affichage
-    Element->m_gllist = Element->glliste_select; //0    // pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
+    Element->m_gllist = Element->glliste_select; //0 : pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
 
@@ -3242,7 +3235,7 @@ void OvniFrame::OnMenu_RelirePaletteSelected(wxCommandEvent& event)
         myfile.close();
 
         if((Element->groupes) || (Element->materials)) {    // A ne faire que si l'un des modes affichage des groupes ou matériaux est actif
-            Element->m_gllist = 0;                         // Mettre l'affichage à jour
+            Element->m_gllist = 0;                          // Mettre l'affichage à jour
             Element->Refresh();
         }
     }
@@ -3464,4 +3457,12 @@ void OvniFrame::OnMenu_ZoomSpecifiqueSelected(wxCommandEvent& event)
 void OvniFrame::OnMenuItem_AideSelected(wxCommandEvent& event)
 {
     AideHtml_Panel->Show();
+}
+
+void OvniFrame::OnMenu_Retracer3DSelected(wxCommandEvent& event)
+{
+    wxKeyEvent key_event;
+    key_event.m_keyCode     = 'R';      // Touche R ...
+    key_event.SetControlDown(true);     // Pour simuler un Ctrl-R <=> key_event.m_controlDown = true;
+    Element->OnKeyDown(key_event);      //
 }

@@ -55,8 +55,8 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Create(parent, id, _T("Modifications"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(216,591));
 	Move(wxPoint(20,20));
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(16,0), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
-	StaticText1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ajout de points dans une arête"), wxPoint(0,0), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT1"));
+	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	StaticText1->SetBackgroundColour(wxColour(0,0,0));
 	Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,16), wxSize(216,64), wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL, _T("ID_PANEL2"));
 	ToggleButton_Ajouter = new wxToggleButton(Panel2, ID_TOGGLEBUTTON1, _T("Ajouter sous le pointeur"), wxPoint(32,4), wxSize(152,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON1"));
@@ -68,7 +68,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	ToggleButton_Diviser = new wxToggleButton(Panel2, ID_TOGGLEBUTTON2, _T("Diviser en"), wxPoint(16,32), wxSize(64,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON2"));
 	ToggleButton_Diviser->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,160), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
-	StaticText3->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
+	StaticText3->SetForegroundColour(wxColour(255,255,255));
 	StaticText3->SetBackgroundColour(wxColour(0,0,0));
 	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,176), wxSize(216,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
 	StaticText4 = new wxStaticText(Panel4, ID_STATICTEXT4, _T("Avec le numéro de groupe"), wxPoint(8,2), wxSize(144,16), 0, _T("ID_STATICTEXT4"));
@@ -91,8 +91,8 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	CheckBox_FacettePlane = new wxCheckBox(Panel4, ID_CHECKBOX2, _T("Plane"), wxPoint(120,44), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
 	CheckBox_FacettePlane->SetValue(false);
 	CheckBox_FacettePlane->Disable();
-	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Souder deux points"), wxPoint(16,80), wxSize(184,16), wxALIGN_CENTRE, _T("ID_STATICTEXT6"));
-	StaticText6->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
+	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Souder deux points"), wxPoint(0,80), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT6"));
+	StaticText6->SetForegroundColour(wxColour(255,255,255));
 	StaticText6->SetBackgroundColour(wxColour(0,0,0));
 	Panel6 = new wxPanel(this, ID_PANEL6, wxPoint(0,96), wxSize(216,64), wxTAB_TRAVERSAL, _T("ID_PANEL6"));
 	ToggleButton_Souder = new wxToggleButton(Panel6, ID_TOGGLEBUTTON3, _T("Souder"), wxPoint(48,4), wxSize(120,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON3"));
@@ -102,7 +102,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Button_Undo->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticLine1 = new wxStaticLine(Panel6, ID_STATICLINE1, wxPoint(0,32), wxSize(216,1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,320), wxSize(216,16), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
-	StaticText7->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
+	StaticText7->SetForegroundColour(wxColour(255,255,255));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
 	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,336), wxSize(216,208), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(8,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));

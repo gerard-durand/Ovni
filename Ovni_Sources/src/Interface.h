@@ -3,34 +3,41 @@
 
 #include <wx/app.h>
 #include <wx/dcclient.h>
-#include <wx/frame.h>
-#include <wx/wx.h>
 #include <wx/dialog.h>
-#include "wx/glcanvas.h"
+#include <wx/frame.h>
+#include <wx/filename.h>
+#include <wx/glcanvas.h>
+#include <wx/progdlg.h>
+#include <wx/stdpaths.h>
 #include <wx/string.h>
 #include <wx/textfile.h>
 #include <wx/tokenzr.h>
-#include "wx/wfstream.h"
-#include "wx/txtstrm.h"
-#include "wx/progdlg.h"
-#include "trackball.h"
+#include <wx/txtstrm.h>
+#include <wx/wfstream.h>
+#include <wx/wx.h>
+
 #include <GL/freeglut.h>
-//#include <GL/glext.h>                 // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
-//#include <GL/gl.h>                    // Pas utile car fait dans glut.h
-//#include <GL/glu.h>                   // Idem
+//#include <GL/glext.h>     // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
+//#include <GL/gl.h>        // Pas utile car fait dans glut.h
+//#include <GL/glu.h>       // Idem
+
+#include "trackball.h"
 #include "GLCanvas.h"
-#include <float.h>
-#include <vector> //Ne pas oublier !
-#include <list>
-#include <algorithm>
-#include <ctime>
 #include "vector3d.h"
 #include "lib3ds/lib3ds.h"
 //#include "lib3ds/lib3ds_impl.h"
 #include "libexpat/expat.h"
 #include "charset.h"
+
+#include <algorithm>
+#include <ctime>
+#include <float.h>
+#include <iostream>
+#include <iomanip>
+#include <list>
 #include <sstream>
 #include <fstream>
+#include <vector>
 
 #include <omp.h>                        // Header de OpenMP pour la parallélisation des boucles sur plusieurs processeurs/threads
 
@@ -973,14 +980,23 @@ public :
 #endif // wxCHECK_VERSION
 
     GLData m_gldata;
-    GLint  m_gllist;    // GLuint
-    GLint glliste_lines  = 1;
-    GLint glliste_points = 2;
-    GLint glliste_boite  = 3;
-    GLint glliste_repere = 4;
-    GLint glliste_select = 5;
-    GLint glliste_segment= 6;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
-    GLint glliste_objets = 7;   // Numéro le plus haut pour pouvoir gérer plusieurs listes d'objets (en particulier via OpenMP)
+    GLint  m_gllist;        // GLuint (GLint pour se réserver la possibilité d'utiliser m_gllist = -1; pour un Refresh() sans aucune regénération de liste)
+    enum gllistes {
+         glliste_lines = 1, // Liste pour les lignes/arêtes (ici forcer le numéro 1, sinon enum commence à 0)
+         glliste_points ,   // Liste pour les points/sommets
+         glliste_boite  ,   // Liste pour la boîte englobante
+         glliste_repere ,   // Liste pour le tracé du repère Oxyz
+         glliste_select ,   // Liste pour des sélections de facettes ou de points
+         glliste_segment,   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas car réservé pour des tracés de segments individuels ou en petit nombre
+         glliste_objets     // Numéro le plus haut pour pouvoir éventuellement gérer plusieurs listes d'objets (en particulier via OpenMP, mais OpenGL ne semble pas d'accord !)
+    };
+//    GLint glliste_lines  = 1;
+//    GLint glliste_points = 2;
+//    GLint glliste_boite  = 3;
+//    GLint glliste_repere = 4;
+//    GLint glliste_select = 5;
+//    GLint glliste_segment= 6;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
+//    GLint glliste_objets = 7;   // Numéro le plus haut pour pouvoir gérer plusieurs listes d'objets (en particulier via OpenMP)
 
     bool materials = false;
     bool groupes   = false;
@@ -1240,7 +1256,7 @@ private :
     bool ifexist_sommet (int, int) ;
     void souderPoints(int, int);
     void diviserArete(int, int, int);
-    bool letscheckthemouse(int , int); //, GLuint * );
+    bool letscheckthemouse(int, int); //, GLuint * );
 
     //opengl affichage
     void showAllPoints();

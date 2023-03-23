@@ -25,6 +25,7 @@
 		</object>
 		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_IndiceObjet" member="yes">
 			<value>0</value>
+			<min>-1</min>
 			<pos>152,8</pos>
 			<size>72,21</size>
 			<handler function="OnSpinCtrl_IndiceObjetChange" entry="EVT_SPINCTRL" />

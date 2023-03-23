@@ -34,7 +34,7 @@ ReperageMateriau::ReperageMateriau(wxWindow* parent,wxWindowID id,const wxPoint&
 	Button_Quit = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(128,48), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Quit->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	SpinButton1 = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(208,16), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
-	SpinButton1->SetRange(0, 100);
+	SpinButton1->SetRange(-1, 100);
 
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageMateriau::OnButton_QuitClick);
 	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&ReperageMateriau::OnSpinButton1Change);
@@ -57,7 +57,17 @@ void ReperageMateriau::OnSpinButton1Change(wxSpinEvent& event)
     BddInter *Element = MAIN->Element;
 
     wxString str;
-    int num=SpinButton1->GetValue();
+
+    int num = SpinButton1->GetValue();
+
+    if (num < 0) {
+        num = Element->listeMateriaux.size();
+        SpinButton1->SetValue(num);
+    }
+    if (num > (int)Element->listeMateriaux.size()) {
+        num = 0;
+        SpinButton1->SetValue(num);
+    }
     if (num == 0) {
         str.Printf(_T("Aucun"));
         Element->GroupeMateriau[0]=0;

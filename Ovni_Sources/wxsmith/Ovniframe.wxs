@@ -409,6 +409,13 @@
 					<label>Restituer les éléments supprimés</label>
 					<handler function="OnOutils_UnDeleteSelected" entry="EVT_MENU" />
 				</object>
+				<object class="separator" />
+				<object class="wxMenuItem" name="ID_MENUITEM52" variable="Menu_Retracer3D" member="yes">
+					<label>Retracer complètement la vue 3D</label>
+					<accel>Ctrl-R</accel>
+					<help>Relance complètement le tracé 3D</help>
+					<handler function="OnMenu_Retracer3DSelected" entry="EVT_MENU" />
+				</object>
 			</object>
 			<object class="wxMenu" variable="Menu_Transformations" member="yes">
 				<label>Transformations</label>

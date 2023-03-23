@@ -267,7 +267,7 @@
 			<pos>0,624</pos>
 			<size>288,16</size>
 			<fg>#FFFFFF</fg>
-			<bg>wxSYS_COLOUR_BACKGROUND</bg>
+			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxButton" name="ID_BUTTON13" variable="Button_Etendre" member="yes">

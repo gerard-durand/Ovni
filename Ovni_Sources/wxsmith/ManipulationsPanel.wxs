@@ -3,7 +3,7 @@
 	<object class="wxDialog" name="ManipulationsPanel">
 		<title>Manipulations d&apos;Objet</title>
 		<pos>20,20</pos>
-		<size>254,215</size>
+		<size>254,271</size>
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
 		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX</style>
@@ -85,10 +85,22 @@
 		</object>
 		<object class="wxButton" name="ID_BUTTON6" variable="Button_Quitter" member="yes">
 			<label>Fermer</label>
-			<pos>72,188</pos>
+			<pos>72,240</pos>
 			<size>104,24</size>
 			<fg>wxSYS_COLOUR_BTNTEXT</fg>
 			<handler function="OnButton_QuitterClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON7" variable="Button_NewObjet" member="yes">
+			<label>Facettes sélectionnées =&gt; Nouvel Objet</label>
+			<pos>8,192</pos>
+			<size>234,24</size>
+			<enabled>0</enabled>
+			<fg>wxSYS_COLOUR_BTNTEXT</fg>
+			<handler function="OnButton_NewObjetClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE2" variable="StaticLine2" member="yes">
+			<pos>0,224</pos>
+			<size>256,4</size>
 		</object>
 	</object>
 </wxsmith>

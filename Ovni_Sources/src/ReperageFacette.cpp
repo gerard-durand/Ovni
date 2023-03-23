@@ -48,7 +48,7 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Indice/Numéro de l\'objet :"), wxPoint(8,11), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	SpinCtrl_IndiceFacette = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(128,56), wxSize(98,21), 0, -2, 100, 0, _T("ID_SPINCTRL1"));
 	SpinCtrl_IndiceFacette->SetValue(_T("0"));
-	SpinCtrl_IndiceObjet = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(160,8), wxSize(80,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
+	SpinCtrl_IndiceObjet = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(160,8), wxSize(80,21), 0, -1, 100, 0, _T("ID_SPINCTRL2"));
 	SpinCtrl_IndiceObjet->SetValue(_T("0"));
 	Text_NumeroObjet = new wxTextCtrl(this, ID_TEXTCTRL1, _T("nnn"), wxPoint(240,8), wxSize(64,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Text_NumeroObjet->Disable();
@@ -177,6 +177,14 @@ void ReperageFacette::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
     wxString str_nom, str_num, str;
 
     int IndiceObjet = SpinCtrl_IndiceObjet->GetValue();
+    if (IndiceObjet < 0) {
+        IndiceObjet = Element->Objetlist.size() -1;
+        SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
+    }
+    if (IndiceObjet >= (int)Element->Objetlist.size()) {
+        IndiceObjet = 0;
+        SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
+    }
     SpinCtrl_IndiceFacette->SetMax(Element->Objetlist[IndiceObjet].Facelist.size());
     int num_obj = Element->Objetlist[IndiceObjet].GetValue();
     str_num.Printf(_T("%d"),num_obj);

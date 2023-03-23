@@ -32,6 +32,7 @@
 			<handler function="OnButton_QuitClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxSpinButton" name="ID_SPINBUTTON1" variable="SpinButton1" member="yes">
+			<min>-1</min>
 			<max>100</max>
 			<pos>208,16</pos>
 			<size>17,24</size>

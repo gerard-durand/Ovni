@@ -1,28 +1,17 @@
 //(*AppHeaders
 #include "Interface.h"
 //*)
-#include <iostream>
-#include <iomanip>
-#include <fstream>
 #include <string>
-#include <sstream>
 #include <cstdio>      /* printf */
 #include <cmath>       /* round, floor, ceil, trunc, M_PI, ... */
 #include <cstdlib>
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
-#include "vector3d.h"
+#include <filesystem>
+
 #include "utf8.h"
 #include "ply.h"
-#include <filesystem>
 
 #include "OvniMain.h"
 #include "OvniApp.h"
-
-#include <wx/settings.h>
-#include <wx/app.h>
-#include <wx/sysopt.h>
-
 
 const float to_Deg = 180.0f/M_PI;
 const float to_Rad = 1.0f/to_Deg;
@@ -81,8 +70,8 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_PAINT(BddInter::OnPaint)
     EVT_ERASE_BACKGROUND(BddInter::OnEraseBackground)
     EVT_KEY_DOWN( BddInter::OnKeyDown )
+    EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved) // Semble (?) réagir plus vite si placé avant EVT_MOUSE_EVENTS
     EVT_MOUSE_EVENTS(BddInter::OnMouse)
-    EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved)
     EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)
 END_EVENT_TABLE()
 
@@ -659,6 +648,7 @@ void BddInter::Ouvrir_ini_file()
             }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
+        fclose(f_init);
     } else {
         ini_file_modified = true;       // Contenu du fichier ini_file à créer car n'existait pas (sauf modifs ultérieures, ce sera avec les valeurs par défaut) !
     }
@@ -699,8 +689,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initN,nb_threads) ;
         fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
         fprintf(f_init,"%s%d\n",initP,icon_size);
-        if (darkmode != -1)
-            fprintf(f_init,"%s%d\n",initQ,darkmode);
+        fprintf(f_init,"%s%d\n",initQ,darkmode);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;
@@ -926,6 +915,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                                                 // (pourrait être dans BddInter mais n'est utile que dans OnMouse !)
     mouse_position = event.GetPosition();
     if (finishdraw == true) {
+//        finishdraw = false;
 
         if (event.RightUp() && !previous_right_drag) {  // Ne pas faire l'affichage des menus contextuels si juste après un drag souris bouton droit
 //            printf("Right clic\n");
@@ -938,6 +928,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             long ID_POPUP_DEMASQUER  = MAIN_b->ID_POPUP_DEMASQUER;
             long ID_POPUP_DELETE     = MAIN_b->ID_POPUP_DELETE;
             long ID_POPUP_UNDELETE   = MAIN_b->ID_POPUP_UNDELETE;
+            long ID_POPUP_NEWOBJECT  = MAIN_b->ID_POPUP_NEWOBJECT;
             long ID_POPUP_INVERSER_N = MAIN_b->ID_POPUP_INVERSER_N;
             long ID_POPUP_PARCOURS_I = MAIN_b->ID_POPUP_PARCOURS_I;
             long ID_POPUP_RAZ_SELECT = MAIN_b->ID_POPUP_RAZ_SELECT;
@@ -962,6 +953,9 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 //            Forg = ;
 #endif // wxCHECK_VERSION
 
+            bool desactiver_menu = true;
+            if ((mode_selection == selection_facette) && (this->ToSelect.ListeSelect.size() > 0)) desactiver_menu = false;
+            // Note : plutôt que désactiver, ou pourrait ne pas afficher ces menus qui ont besoin que des facettes soient sélectionnées
 
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
@@ -978,14 +972,15 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_RAZ);
 
-            wxMenuItem * Popup_COMPLEMT = nullptr;
+            wxMenuItem * Popup_Complemt = nullptr;
             if (mode_selection == selection_facette) {
-                Popup_COMPLEMT = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_Complemt = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
-                Popup_COMPLEMT->SetBackgroundColour(Back);
-                Popup_COMPLEMT->SetTextColour(Forg);
+                Popup_Complemt->SetBackgroundColour(Back);
+                Popup_Complemt->SetTextColour(Forg);
 #endif
-                My_popupmenu.Append(Popup_COMPLEMT);
+                My_popupmenu.Append (Popup_Complemt);
+                if (desactiver_menu) Popup_Complemt->Enable(false);
             }
 
             wxMenuItem * Popup_Centrer;
@@ -1005,8 +1000,8 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             Popup_Etendre->SetTextColour(Forg);
 #endif // wxCHECK_VERSION
 
-            My_popupmenu.Append(Popup_Etendre);
-            if (this->ToSelect.ListeSelect.size() == 0) Popup_Etendre->Enable(false);
+            My_popupmenu.Append (Popup_Etendre);
+            if (desactiver_menu) Popup_Etendre->Enable(false);
 
             My_popupmenu.AppendSeparator();
 
@@ -1015,14 +1010,24 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             Popup_Masquer->SetBackgroundColour(Back);
             Popup_Masquer->SetTextColour(Forg);
 #endif
-            My_popupmenu.Append(Popup_Masquer);
+            My_popupmenu.Append (Popup_Masquer);
+            if (desactiver_menu) Popup_Masquer->Enable(false);
 
             wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Delete->SetBackgroundColour(Back);
             Popup_Delete->SetTextColour(Forg);
 #endif
-            My_popupmenu.Append(Popup_Delete);
+            My_popupmenu.Append (Popup_Delete);
+            if (desactiver_menu) Popup_Delete->Enable(false);
+
+            wxMenuItem * Popup_NewObject = new wxMenuItem((&My_popupmenu), ID_POPUP_NEWOBJECT, wxS("Couper/coller les facettes sélectionnées vers un nouvel objet"), wxEmptyString, wxITEM_NORMAL);
+#if !wxCHECK_VERSION(3,3,0)
+            Popup_NewObject->SetBackgroundColour(Back);
+            Popup_NewObject->SetTextColour(Forg);
+#endif
+            My_popupmenu.Append (Popup_NewObject);
+            if (desactiver_menu) Popup_NewObject->Enable(false);
 
             My_popupmenu.AppendSeparator();
 
@@ -1042,7 +1047,8 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             Popup_Reverse->SetBackgroundColour(Back);
             Popup_Reverse->SetTextColour(Forg);
 #endif
-            My_popupmenu.Append(Popup_Reverse);
+            My_popupmenu.Append (Popup_Reverse);
+            if (desactiver_menu) Popup_Reverse->Enable(false);
 
             wxMenuItem * Popup_Raz_Select;
             if (this->Raz_Selection_F)
@@ -1053,7 +1059,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             Popup_Raz_Select->SetBackgroundColour(Back);
             Popup_Raz_Select->SetTextColour(Forg);
 #endif
-            My_popupmenu.Append(Popup_Raz_Select);
+            My_popupmenu.Append(Popup_Raz_Select);  // On peut toujours l'afficher comme activé (par précaution)
 
             My_popupmenu.AppendSeparator();
 
@@ -1175,6 +1181,12 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 buildAllLines(); // OK si on a cliqué sur une arête, sinon inutile !
                 click_sur_segment = false;
             }
+            if (MManip->IsShown()) {
+                if (this->ToSelect.ListeSelect.empty()) // Si besoin, activer/désactiver le bouton Button_NewObjet
+                    MManip->Button_NewObjet->Disable();
+                else
+                    MManip->Button_NewObjet->Enable();
+            }
         } else if (event.Dragging()) {
             if(event.LeftIsDown()) {        // Ici Dragging avec bouton gauche de la souris
                 wxSize sz(GetClientSize());
@@ -1279,12 +1291,12 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
-                        m_gllist = glliste_points;              // Reconstruire toute la liste de points
+//                        m_gllist = glliste_points;              // Reconstruire toute la liste de points, ... pas utile finalement !
                         if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
                             // Plutôt que de reconstruire toute la liste de points, seuls 2 points suffisent en superposition, 1 point jaune survolé et un point rouge stocké
-                            m_gllist = glliste_objets; //points;
+                            m_gllist = -1;  //glliste_objets; //points;
                         }
                         Refresh();
                     }
@@ -1296,8 +1308,8 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     face_under_mouse_old  = face_under_mouse  = -1;
                     point_under_mouse_old = point_under_mouse = -1;
                     line_under_mouse_old  = line_under_mouse  = -1;
-                    m_gllist = glliste_objets; //points;
-                    Refresh();
+                    m_gllist = -1;              // glliste_objets;  //points;
+                    Refresh();                  // Ne rafraîchir que le tracé des listes déjà établies
                 }
                 glMatrixMode(GL_MODELVIEW);
                 stopPicking();
@@ -1343,25 +1355,32 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     segment_surligne  = false;
 //                    Refresh();
                 }
-                m_gllist = glliste_objets;  // Pas besoin de regénérer la liste des lignes ici. Sera fait plus tard après clic sur la ligne.
+                m_gllist = -1;          //glliste_objets;  // Pas besoin de regénérer la liste des lignes ici. Sera fait plus tard après clic sur la ligne.
                 Refresh();
                 glMatrixMode(GL_MODELVIEW);
                 stopPicking();
             }
         }
+//        finishdraw = true;
     }
     event.Skip();                   // Indispensable
 }
 
 void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
 // Zoom avec la molette
+
+/* Note : Lorsqu'on bouge la molette de plusieurs crans, on passe plusieurs fois par ici avec un Refresh() à chaque fois (fait dans OnMouseZoom).
+ *        Dans l'idéal, il ne faudrait le faire que la dernière fois pour avoir directement l'effet cumulé, car sur de grosses bdd l'affichage est lent,
+ *        en particulier si les points sont affichés. Dans ce cas, le ralentissement est aussi peut-être dû au fait qu'on cherche en plus à détecter des points
+ *        survolés pour les identifier en jaune (car pas ce souci de lenteur avec les arêtes affichées).
+ */
     int signe = event.GetWheelRotation();
     bool Touche_Maj  = event.ShiftDown();
     OnMouseZoom(event, signe, Touche_Maj);
     m_gldata.BeginX  = event.GetX();
     m_gldata.BeginY  = event.GetY();
-//    printf("Mouseweelmoved\n");
-    event.Skip();                                       // N'a pas l'air utile, mais ne semble pas gêner !
+    if (verbose) printf("event MouseWeelMoved\n");
+//    event.Skip();                                       // N'a pas l'air utile, mais ne semble pas trop gêner !
 }
 
 void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
@@ -1717,8 +1736,9 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
 // Reset (valeurs d'initialisation) ou Forcer un Reset du tracé graphique
     case 'R':
-// ou    case 'r':
+//ou    case 'r':
         if (event.ControlDown()) {    // C'est un Ctrl-R ; un 'R' majuscule event.ShiftDown() ||
+            if(verbose) printf("Touche Ctrl-R\n");
             m_gllist = 0;
             Refresh();
             break;
@@ -1735,7 +1755,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             listeObjets.clear();
         }
         liste_facettes_OK = false;
-        if ((mode_selection == selection_facette) && (this->ToSelect.ListeSelect.size() > 0)){
+        if ((mode_selection == selection_facette) && !ToSelect.ListeSelect.empty()){
             liste_facettes_OK= true;
         }
         // Les élements de ToSelect.Liste et ToSelect.ListeSelect vont être remis aux valeurs par défaut indépendamment du fait que ces listes soient des facettes ou des sommets
@@ -1759,6 +1779,10 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             ToSelect.ListeSelect.erase(ToSelect.ListeSelect.begin());   // On supprime le premier élément de la liste => la liste se décale d'un cran.
         }
 
+        if (MManip->IsShown()) {
+            MManip->Button_NewObjet->Disable();// Si besoin, désactiver le bouton Button_NewObjet
+        }
+
         if (MSelect->IsShown()) {
             wxString str_reset;
             str_reset.clear();
@@ -1777,8 +1801,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         if (mode_selection != selection_objet) {
             buildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
             buildAllPoints();           // Idem pour les points
-            if ((mode_selection == selection_facette) && liste_facettes_OK) m_gllist = 0;               // ne faire que si la liste de facettes n'était pas déjà vide (2 'S' consécutifs)
-            else                                                            m_gllist = glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
+            if ((mode_selection == selection_facette) && liste_facettes_OK) m_gllist = 0;   // ne faire que si la liste de facettes n'était pas déjà vide (2 'S' consécutifs)
+            else                                                            m_gllist = -1;  //glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
         } else
             m_gllist = 0;               // on est en mode selection_objet
         Refresh();
@@ -2046,14 +2070,15 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     case 'W':
         theme_b = !theme_b;                     // Test pour Basculer du thème standard vers un thème sombre... Pas très fiable, plante parfois !!!
 #if wxCHECK_VERSION(3,3,0)
-        if (theme_b) wxGetApp().MSWEnableDarkMode(1);// wxApp::DarkMode_Always
-        else         wxGetApp().MSWEnableDarkMode(0);// wxApp::DarkMode_Auto
-
+//        if (theme_b) wxGetApp().MSWEnableDarkMode(1);// wxApp::DarkMode_Always
+//        else         wxGetApp().MSWEnableDarkMode(0);// wxApp::DarkMode_Auto
+        if (theme_b) wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings); // Et si MySettings a déjà été créé ?
+        else         wxTheApp->MSWEnableDarkMode(0);
         Switch_theme_wx33(theme_b);
 #else
         Switch_theme(theme_b);
 #endif
-        darkmode = (int)theme_b;
+        darkmode = (int)theme_b*2 -1;   // darkmode = -1 pour thème clair standard, darkmode = +1 pour thème sombre (0, pour suivre le thème système, non disponible ici)
         ini_file_modified = true;
         this->MAIN_b ->Refresh();
         break;
@@ -2101,18 +2126,13 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
 // Version pour wxWidgets 3.3 et +
 
-// Même ici, il faut balayer certains éléments déjà créés pour les re-coloriser
-// Les boutons ne sont pas traités pour le moment => restent comme dans le thème clair par défaut
-// Mais comme avec wxWidgets 3.2.x plante parfois (dans la boucle sur les menus semble t-il) surtout si plusieurs appels de suite ...
+// La colorisation faite ici n'affecte que l'interface principale. La colorisation complète ne sera obtenue qu'au redémarrage d'Ovni.
+
+// A ce niveau, il faut balayer certains éléments déjà créés pour les re-coloriser
+// Certains boutons ne sont pas traités => restent comme dans le thème clair par défaut
 
     wxColour Forg;
     wxColour Back;
-//    wxColour Gris;
-//    wxColour Bleu_svg ;
-    int nb,num_menu,nb_menus;
-    wxMenu * menu;
-    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
-    wxMenuItem * item;
 
 //        this->MAIN_b->MenuFile->UpdateUI();
 //        this->MAIN_b->MenuBar_Globale->UpdateMenus();
@@ -2127,23 +2147,30 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 
     this->MAIN_b->MenuBar_Globale->Refresh();
     Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
-    printf("Back 0x%06x\n",Back.GetRGB());
-    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
-    printf("test 0x%06x\n",test.GetRGB());
+//    printf("Back 0x%06x\n",Back.GetRGB());
+//    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
+//    printf("test 0x%06x\n",test.GetRGB());
     Forg = this->MAIN_b->MenuBar_Globale->GetForegroundColour();
-    printf("Forg 0x%06x\n",Forg.GetRGB());
-    test = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUTEXT);
-    printf("test 0x%06x\n",test.GetRGB());
+//    printf("Forg 0x%06x\n",Forg.GetRGB());
+//    test = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUTEXT);
+//    printf("test 0x%06x\n",test.GetRGB());
 //    Back = this->MAIN_b->Button_Gauche->GetBackgroundColour();
     this->MAIN_b->SetBackgroundColour(Back);
 //    wxButtonBase().SetBackgroundColour(Back);
 //    wxButtonBase().Refresh();
     this->MAIN_b->Button_Droite             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Droite             ->SetForegroundColour(Forg);
     this->MAIN_b->Button_Gauche             ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Gauche             ->SetForegroundColour(Forg);
     this->MAIN_b->Button_Haut               ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Haut               ->SetForegroundColour(Forg);
     this->MAIN_b->Button_Bas                ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_Bas                ->SetForegroundColour(Forg);
     this->MAIN_b->Button_ZoomPlus           ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_ZoomPlus           ->SetForegroundColour(Forg);
     this->MAIN_b->Button_ZoomMoins          ->SetBackgroundColour(Back);
+    this->MAIN_b->Button_ZoomMoins          ->SetForegroundColour(Forg);
+
     this->MAIN_b->Button_Points             ->SetBackgroundColour(Back);
     this->MAIN_b->Button_Filaire            ->SetBackgroundColour(Back);
     this->MAIN_b->Button_Plein              ->SetBackgroundColour(Back);
@@ -2211,6 +2238,7 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 
     this->MRepObj->CheckBox_masquer         ->SetForegroundColour(Forg);
     this->MRepObj->CheckBox_supprimer       ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_renommer        ->SetForegroundColour(Forg);
 
     this->MRepPoint->CheckBox_X             ->SetForegroundColour(Forg);
     this->MRepPoint->CheckBox_Y             ->SetForegroundColour(Forg);
@@ -2221,7 +2249,14 @@ void BddInter::Switch_theme_wx33(bool theme_b)
     this->MScale->CheckBox_ScaleUnique      ->SetForegroundColour(Forg);
 
 // Parcourir en boucle les menus fonctionne mais amène souvent un plantage si on active plusieurs fois de suite cette option
+// Parcourir 1 par 1 avec les noms n'a pas ce souci, mais pas beaucoup d'intérêt ici (et lourd à programmer).
+// Après le redémarrage d'Ovni, s'il est en Darkmode, ça se passera bien car fait dès le départ, avant création des différents items.
 
+//    int nb,num_menu,nb_menus;
+//    wxMenu * menu;
+//    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
+//    wxMenuItem * item;
+//
 //    nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
 //    for (num_menu=0; num_menu<nb_menus; num_menu++) {
 //        menu = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
@@ -2238,21 +2273,20 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 //        menu->UpdateUI();
 //    }
 
-// Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
+// Ajustement de la couleur Bleue utilisée par quelques éléments car elle est trop foncée sur fond sombre : remplacer par du Cyan
     wxColour New_blue;
     if (theme_b)
         New_blue = *wxCYAN;
     else
         New_blue = *wxBLUE;
 
-    this->MAIN_b    ->Slider_z      ->SetForegroundColour(New_blue);
-    this->MPosCRot  ->StaticText4   ->SetForegroundColour(New_blue);
-    this->MDeplacer ->StaticText4   ->SetForegroundColour(New_blue);
-    this->MManip    ->CheckBox_Z    ->SetForegroundColour(New_blue);
-    this->MPosLight ->Pos_Z         ->SetForegroundColour(New_blue);
-    this->MTrans    ->StaticText7   ->SetForegroundColour(New_blue);
-    this->MTrans    ->StaticText8   ->SetForegroundColour(New_blue);
-
+    this->MAIN_b   ->Slider_z   ->SetForegroundColour(New_blue);
+    this->MPosCRot ->StaticText4->SetForegroundColour(New_blue);
+    this->MDeplacer->StaticText4->SetForegroundColour(New_blue);
+    this->MManip   ->CheckBox_Z ->SetForegroundColour(New_blue);
+    this->MPosLight->Pos_Z      ->SetForegroundColour(New_blue);
+    this->MTrans   ->StaticText7->SetForegroundColour(New_blue);
+    this->MTrans   ->StaticText8->SetForegroundColour(New_blue);
 
 //    this->MAIN_b->Refresh();
 }
@@ -2261,6 +2295,8 @@ void BddInter::Switch_theme(bool theme_b)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
 // Version pour wxWidgets avant la 3.3
+// Certains éléments, comme les separators dans les menus, la barre de menu principale,... restent sur fond clair !
+// Sera mieux géré avec wxWidgets 3.3 et +, mais avec d'autres soucis !
 
 // Test pour Basculer du thème standard vers un thème sombre. Mais semble assez laborieux !
 
@@ -2269,7 +2305,7 @@ void BddInter::Switch_theme(bool theme_b)
     wxColour Back;
     wxColour Gris;
     wxColour Bleu_svg ;
-    bool methode_boucle = true;    // Pour tester 2 méthodes, une avec boucles, + élégante mais qui plante parfois, et une très bourrine, mais plus fiable !
+    bool methode_boucle = false;    // Pour tester 2 méthodes, une avec boucles (true), + élégante mais qui plante parfois, et une très bourrine, mais plus fiable !
 
     if (theme_b) {
         Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour(); // Sur ce slider en Z, le bleu original est trop foncé
@@ -2506,6 +2542,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MAIN_b->Outils_Supprimer_Masques  ->SetBackgroundColour(Back);
     this->MAIN_b->Outils_UnDelete           ->SetTextColour(Forg);
     this->MAIN_b->Outils_UnDelete           ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_Retracer3D           ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Retracer3D           ->SetBackgroundColour(Back);
 
     this->MAIN_b->Menu_Outils->UpdateUI();
 
@@ -2562,7 +2600,7 @@ void BddInter::Switch_theme(bool theme_b)
     }
 
     if (theme_b)
-        this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);   // Trop foncé, mettre plutôt Cyan
+        this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);   // Bleu initial trop foncé, mettre plutôt Cyan pour darkmode
     else
         this->MAIN_b->Slider_z->SetForegroundColour(Bleu_svg);  // Reset de la couleur originale
 
@@ -2576,7 +2614,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPosCRot->SetBackgroundColour(Back);
     this->MPosCRot->StaticText1->SetForegroundColour(Forg);
     if (theme_b)
-        this->MPosCRot->StaticText4->SetForegroundColour(*wxCYAN);
+        this->MPosCRot->StaticText4->SetForegroundColour(New_Forg);
     else
         this->MPosCRot->StaticText4->SetForegroundColour(Bleu_svg);
 
@@ -2748,7 +2786,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MDeplacer->SetBackgroundColour(Back);
     this->MDeplacer->StaticText1  ->SetForegroundColour(Forg);
     if (theme_b) {
-        this->MDeplacer->StaticText4->SetForegroundColour(*wxCYAN);
+        this->MDeplacer->StaticText4->SetForegroundColour(New_Forg);
      } else {
         this->MDeplacer->StaticText4->SetForegroundColour(Bleu_svg);
      }
@@ -2899,12 +2937,14 @@ void BddInter::Switch_theme(bool theme_b)
     this->MManip->Button_Translation->SetBackgroundColour(Gris);
     this->MManip->Button_Scale      ->SetForegroundColour(Forg);
     this->MManip->Button_Scale      ->SetBackgroundColour(Gris);
+    this->MManip->Button_NewObjet   ->SetForegroundColour(Forg);
+    this->MManip->Button_NewObjet   ->SetBackgroundColour(Gris);
     if (theme_b) {
         this->MManip->StaticText1   ->SetForegroundColour(New_Back);
         this->MManip->StaticText1   ->SetBackgroundColour(New_Forg);
         this->MManip->StaticText2   ->SetForegroundColour(New_Back);
         this->MManip->StaticText2   ->SetBackgroundColour(New_Forg);
-        this->MManip->CheckBox_Z    ->SetForegroundColour(*wxCYAN);
+        this->MManip->CheckBox_Z    ->SetForegroundColour(New_Forg);
     } else {
         this->MManip->StaticText1   ->SetForegroundColour(Blanc);
         this->MManip->StaticText1   ->SetBackgroundColour(Noir);
@@ -3011,7 +3051,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPosLight->StaticText1->SetForegroundColour(Forg);
     this->MPosLight->Pos_W      ->SetForegroundColour(Forg);
     if (theme_b) {
-        this->MPosLight->Pos_Z  ->SetForegroundColour(*wxCYAN);
+        this->MPosLight->Pos_Z  ->SetForegroundColour(*wxCYAN); // Couleur bleue initiale trop foncée en darkmode
     } else {
         this->MPosLight->Pos_Z  ->SetForegroundColour(Bleu_svg);
     }
@@ -3221,22 +3261,26 @@ void BddInter::Switch_theme(bool theme_b)
 // ReperageObjet
     this->MRepObj->SetForegroundColour(Forg);
     this->MRepObj->SetBackgroundColour(Back);
-    this->MRepObj->StaticText1          ->SetForegroundColour(Forg);
-    this->MRepObj->StaticText2          ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NumObjet    ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NumObjet    ->SetBackgroundColour(Gris);
-    this->MRepObj->TextCtrl_NomObjet    ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_NomObjet    ->SetBackgroundColour(Gris);
-    this->MRepObj->TextCtrl_indice      ->SetForegroundColour(Forg);
-    this->MRepObj->TextCtrl_indice      ->SetBackgroundColour(Gris);
-    this->MRepObj->SpinButton_indice    ->SetForegroundColour(Forg);
-    this->MRepObj->SpinButton_indice    ->SetBackgroundColour(Gris);
-    this->MRepObj->CheckBox_masquer     ->SetForegroundColour(Forg);
-    this->MRepObj->CheckBox_masquer     ->SetBackgroundColour(Back);
-    this->MRepObj->CheckBox_supprimer   ->SetForegroundColour(Forg);
-    this->MRepObj->CheckBox_supprimer   ->SetBackgroundColour(Back);
-    this->MRepObj->Button_OK            ->SetForegroundColour(Forg);
-    this->MRepObj->Button_OK            ->SetBackgroundColour(Gris);
+    this->MRepObj->StaticText1            ->SetForegroundColour(Forg);
+    this->MRepObj->StaticText2            ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet      ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NumObjet      ->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_NomObjet      ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_NomObjet      ->SetBackgroundColour(Gris);
+    this->MRepObj->TextCtrl_indice        ->SetForegroundColour(Forg);
+    this->MRepObj->TextCtrl_indice        ->SetBackgroundColour(Gris);
+    this->MRepObj->SpinButton_indice      ->SetForegroundColour(Forg);
+    this->MRepObj->SpinButton_indice      ->SetBackgroundColour(Gris);
+    this->MRepObj->CheckBox_renommer      ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_renommer      ->SetBackgroundColour(Back);
+    this->MRepObj->CheckBox_masquer       ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_masquer       ->SetBackgroundColour(Back);
+    this->MRepObj->CheckBox_supprimer     ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_supprimer     ->SetBackgroundColour(Back);
+    this->MRepObj->Button_renommer        ->SetForegroundColour(Forg);
+    this->MRepObj->Button_renommer        ->SetBackgroundColour(Gris);
+    this->MRepObj->Button_OK              ->SetForegroundColour(Forg);
+    this->MRepObj->Button_OK              ->SetBackgroundColour(Gris);
     this->MRepObj->Button_InverserNormales->SetForegroundColour(Forg);
     this->MRepObj->Button_InverserNormales->SetBackgroundColour(Gris);
     this->MRepObj->Refresh();
@@ -3244,28 +3288,28 @@ void BddInter::Switch_theme(bool theme_b)
 // ReperagePoint
     this->MRepPoint->SetForegroundColour(Forg);
     this->MRepPoint->SetBackgroundColour(Back);
-    this->MRepPoint->StaticText1    ->SetForegroundColour(Forg);
-    this->MRepPoint->StaticText2    ->SetForegroundColour(Forg);
-    this->MRepPoint->StaticText3    ->SetForegroundColour(Forg);
-    this->MRepPoint->StaticText4    ->SetForegroundColour(Forg);
-    this->MRepPoint->StaticText5    ->SetForegroundColour(Forg);
-    this->MRepPoint->StaticText6    ->SetForegroundColour(Forg);
-    this->MRepPoint->Text_NomObjet  ->SetForegroundColour(Forg);
-    this->MRepPoint->Text_NomObjet  ->SetBackgroundColour(Gris);
-    this->MRepPoint->Text_NumeroObjet->SetForegroundColour(Forg);
-    this->MRepPoint->Text_NumeroObjet->SetBackgroundColour(Back);
-    this->MRepPoint->Text_ValeurX   ->SetForegroundColour(Forg);
-    this->MRepPoint->Text_ValeurX   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Text_ValeurY   ->SetForegroundColour(Forg);
-    this->MRepPoint->Text_ValeurY   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Text_ValeurZ   ->SetForegroundColour(Forg);
-    this->MRepPoint->Text_ValeurZ   ->SetBackgroundColour(Gris);
-    this->MRepPoint->CheckBox_X     ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_X     ->SetBackgroundColour(Back);
-    this->MRepPoint->CheckBox_Y     ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_Y     ->SetBackgroundColour(Back);
-    this->MRepPoint->CheckBox_Z     ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_Z     ->SetBackgroundColour(Back);
+    this->MRepPoint->StaticText1        ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText2        ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText3        ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText4        ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText5        ->SetForegroundColour(Forg);
+    this->MRepPoint->StaticText6        ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NomObjet      ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NomObjet      ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_NumeroObjet   ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_NumeroObjet   ->SetBackgroundColour(Back);
+    this->MRepPoint->Text_ValeurX       ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurX       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_ValeurY       ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurY       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Text_ValeurZ       ->SetForegroundColour(Forg);
+    this->MRepPoint->Text_ValeurZ       ->SetBackgroundColour(Gris);
+    this->MRepPoint->CheckBox_X         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_X         ->SetBackgroundColour(Back);
+    this->MRepPoint->CheckBox_Y         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Y         ->SetBackgroundColour(Back);
+    this->MRepPoint->CheckBox_Z         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Z         ->SetBackgroundColour(Back);
     this->MRepPoint->CheckBox_Laisser   ->SetForegroundColour(Forg);
     this->MRepPoint->CheckBox_Laisser   ->SetBackgroundColour(Back);
     this->MRepPoint->Text_NumeroObjet   ->SetForegroundColour(Forg);
@@ -3282,18 +3326,18 @@ void BddInter::Switch_theme(bool theme_b)
     this->MRepPoint->Button_ModifierY   ->SetBackgroundColour(Gris);
     this->MRepPoint->Button_ModifierZ   ->SetForegroundColour(Forg);
     this->MRepPoint->Button_ModifierZ   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_UndoX   ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_UndoX   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_UndoY   ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_UndoY   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_UndoZ   ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_UndoZ   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_Centrer ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_Centrer ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_Reset   ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_Reset   ->SetBackgroundColour(Gris);
-    this->MRepPoint->Button_Quitter ->SetForegroundColour(Forg);
-    this->MRepPoint->Button_Quitter ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoX       ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoX       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoY       ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoY       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_UndoZ       ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_UndoZ       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Centrer     ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Centrer     ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Reset       ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Reset       ->SetBackgroundColour(Gris);
+    this->MRepPoint->Button_Quitter     ->SetForegroundColour(Forg);
+    this->MRepPoint->Button_Quitter     ->SetBackgroundColour(Gris);
     this->MRepPoint->Refresh();
 
 // RotationPanel
@@ -3507,8 +3551,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MTrans->StaticText1->SetForegroundColour(Forg);
     this->MTrans->StaticText2->SetForegroundColour(Forg);
     if (theme_b) {
-        this->MTrans->StaticText7->SetForegroundColour(*wxCYAN);
-        this->MTrans->StaticText8->SetForegroundColour(*wxCYAN);
+        this->MTrans->StaticText7->SetForegroundColour(New_Forg);
+        this->MTrans->StaticText8->SetForegroundColour(New_Forg);
      } else {
         this->MTrans->StaticText7->SetForegroundColour(Bleu_svg);
         this->MTrans->StaticText8->SetForegroundColour(Bleu_svg);
@@ -4370,7 +4414,7 @@ void BddInter::LoadG3D()
     if(verbose) printf("Entree de BddInter::LoadG3D\n");
     wxCharBuffer buffer=this->file.mb_str();
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -4566,7 +4610,7 @@ void BddInter::LoadOBJ()
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -5075,7 +5119,7 @@ void BddInter::LoadM3D()
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -5280,7 +5324,7 @@ void BddInter::LoadPLY()
 
     wxCharBuffer buffer=this->file.mb_str();
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -5694,7 +5738,7 @@ void BddInter::LoadPLY_Stanford()
 
     wxCharBuffer buffer=this->file.mb_str();
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -6053,7 +6097,7 @@ void BddInter::LoadOFF()
 
     wxCharBuffer buffer=this->file.mb_str();
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -6206,7 +6250,7 @@ void BddInter::LoadSTL() {
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -6514,7 +6558,7 @@ void BddInter::Load3DS()
 
     wxCharBuffer buffer=this->file.mb_str();
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -7084,7 +7128,7 @@ void BddInter::LoadBDD() {
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
 
-    if(m_gllist != 0) {
+    if(m_gllist > 0) {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
@@ -8369,7 +8413,7 @@ void BddInter::drawOpenGL() {
 
     if (test_timing) dwStart = GetTickCount();
 
-    if( m_gllist == 0 ) {
+    if( m_gllist == 0 ) {       // Reconstruire les listes, en particulier celle des objets
 
         if (verbose) printf("Reconstruction des listes\n");
 
@@ -8659,8 +8703,8 @@ Boucle:
         buildAllFacettesSelected();
 
         finishdraw = true;
-        m_gllist   = glliste_objets; // Déjà comme ça en principe
-        Refresh();                   // S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
+        m_gllist   = -1;        // glliste_objets; // Déjà comme ça en principe
+        Refresh();              // S'il n'est pas là, pas d'affichage des objets la première fois ! mais du coup, double passage dans drawOpenGL
 
         if (wxIsBusy()) wxEndBusyCursor();          // Listes générées : arrêter le curseur Busy
 
@@ -8675,31 +8719,39 @@ Boucle:
     if (m_gllist == glliste_lines) {
         if (verbose) printf("Reconstruction de la liste de aretes seulement\n");
         buildAllLines();
-        m_gllist = glliste_objets;
+        m_gllist = -1;      //glliste_objets;
     }
     if (m_gllist == glliste_points) {                                           // le signe - utilisé auparavant n'est plus justifié
         if (verbose) printf("Reconstruction de la liste de points seulement\n");
         buildAllPoints();
-        m_gllist = glliste_objets;
+        m_gllist = -1;      //glliste_objets;
     }
     if (m_gllist == glliste_select) {
+        if (verbose) printf("Reconstruction de la liste des facettes ou points sélectionnés\n");
         buildAllFacettesSelected();
-        m_gllist = glliste_objets;
+        m_gllist = -1;      //glliste_objets;
     }
 
     if (verbose) printf("Affichage des listes\n");
 
     if (show_plein)  {
-        glCallList(glliste_objets);    // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-        if ((mode_selection == selection_facette) && (!MPanel->Bool_souder)) {
+        glCallList(glliste_objets);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
+        if (verbose) printf("liste objets\n");
+        if ((mode_selection == selection_facette) && !MPanel->Bool_souder && !ToSelect.ListeSelect.empty()) {
+            if (verbose) printf("liste select\n");
             glCallList(glliste_select);
         }
     }
-    if (show_lines)  glCallList(glliste_lines) ;    // <=> showAllLines() mais appel direct de la liste donc bien plus rapide;
-    if (show_points) {
-            glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
-            showPoint_Selection();          // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
+    if (show_lines)  {
+        if (verbose) printf("liste lines\n");
+        glCallList(glliste_lines) ;     // <=> showAllLines() mais appel direct de la liste donc bien plus rapide;
     }
+    if (show_points) {
+        if (verbose) printf("liste points\n");
+        glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
+        showPoint_Selection();          // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
+    }
+//    if (m_gllist == -1) showPoint_Selection();
     if (show_box)   glCallList(glliste_boite) ;     // <=> AffichageBoite() ""  ;
     if (show_axes)  glCallList(glliste_repere);     // <=> repereOXYZ()     ""  ;
     if (show_light) AfficherSource();               // Une liste pourrait être utile ? pas sûr !
@@ -9966,7 +10018,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
                     ToSelect.ListeSelect.clear();
                     m_gllist = 0;   // Refaire toutes les listes car les facettes, les arêtes ont changé (les points sont à jour : on pourrait éviter de les reconstruire !)
                 } else {
-                    m_gllist = glliste_objets;
+                    m_gllist = -1;  //glliste_objets;
                 }
                 Refresh();
             }
@@ -10005,21 +10057,22 @@ void BddInter::stopPicking() {
 void BddInter::processHits(GLint hits, bool OnOff) {
 
 // Appel dans testPicking
-// Fonction très proche de letscheckthemouse. A t-on besoin des 2 ?
+// Fonction très proche de letscheckthemouse, du moins au début. A t-on besoin des 2 ?
 
     int i, ii, offset;
-    int objet, face, line, point;
-    unsigned int indice_pt, indice_vec;
+    int objet, face, point;
     GLuint z;
-//    float zz;
     GLuint *ptr=nullptr;
-
-    Object *objet_courant;
-    Face   *new_facette;
 
     bool test_print = false ;       // Mettre true pour activer des impressions de test et commenter la ligne en dessous (ou activer verbose via lettre v)!
     test_print = verbose;
 //    test_print = true;
+
+    unsigned int indice_pt, indice_vec;
+    int line;
+
+    Object *objet_courant;
+    Face   *new_facette;
 
     if (verbose) printf("Entree de processHits\n");
 
@@ -10035,13 +10088,12 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 
         if (style == GL_POLYGON || style == GL_POINTS) offset= 5; else offset= 6 ;
 
-        if (test_print)
+        if (test_print) {
             printf("\nhits en entree de processHits : %d\n",hits);
-// Test
-        if (test_print)
             printf("style : %d (POINTS:%d LINE_LOOP:%d POLYGON:%d)\n",style,GL_POINTS,GL_LINE_LOOP,GL_POLYGON);
-        GLuint val0;
-        val0 = *ptr;
+        }
+
+        GLuint val0 = *ptr;
 
         if (val0 < 2) return;   // pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
 
@@ -10055,22 +10107,22 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             else
                 incrHits=0;
             if (test_print) {
-                printf("0 : %u;\n", ptr[0]);
-                printf("1 : %u; z\n", ptr[1]);
-                printf("2 : %u; z2\n",  ptr[2]);
+                printf("0 : %u;\n",       ptr[0]);
+                printf("1 : %u; z\n",     ptr[1]);
+                printf("2 : %u; z2\n",    ptr[2]);
                 printf("3 : %u; objet\n", ptr[3]);
                 if (style == GL_POINTS)
                     printf("4 : %u; point\n",   ptr[4]);
                 else
-                    printf("4 : %u; facette\n",  ptr[4]);
+                    printf("4 : %u; facette\n", ptr[4]);
 //                if (style == GL_POINTS)     printf("5 : %d; ID\n",   ptr[5]);
                 if (style == GL_LINE_LOOP)  printf("5 : %d; line\n", ptr[5]);
             }
             ptr += offset;
         }
-
         ptr = (GLuint *) selectBuffer;
 // Fin du test
+
         z = ptr[1];
         if (test_print) printf("z : %u; ", z);
         ii = 0;
@@ -10097,7 +10149,6 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 if (test_print) printf("\nz2: %u; ", z);
             }
 //            ptr += offset;
-
         }
 
         ptr = (GLuint *) selectBuffer;/*!on reinitialise le pointeur*/
@@ -12048,7 +12099,7 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
 bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 
 // Appel dans OnMouse, tests sur MPanel->Bool_souder et MPanel->Bool_diviser
-// Fonction très proche de processHits. A t-on besoin des 2 ?
+// Fonction très proche de processHits, du moins au début. A t-on besoin des 2 ?
 // mode_appel=0 si appel dans le test souderPoints
 // mode_appel=1 si appel dans le test diviserArete
 
@@ -12057,7 +12108,7 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
     GLuint z;
     GLuint *ptr=nullptr;
 
-    bool test_print = false;    // Mettre true pour activer des impressions de test
+    bool test_print = false ;       // Mettre true pour activer des impressions de test et commenter la ligne en dessous (ou activer verbose via lettre v)!
     test_print = verbose;
 //    test_print = true;
 
@@ -12069,47 +12120,45 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
             std::cout<< hits;
             std::cout<<" \n";
         }
-        objet_under_mouse = -1;
-        face_under_mouse  = -1;
-        point_under_mouse = -1;
-        line_under_mouse  = -1;
+        objet_under_mouse = face_under_mouse = point_under_mouse = line_under_mouse = -1;
         return false;
     } else {
         /*!on initialise le pointeur*/
         ptr = (GLuint *) selectBuffer;
 
-        GLuint val0 = *ptr;
-        if (val0 < 2) {
-            objet_under_mouse = -1;
-            face_under_mouse  = -1;
-            point_under_mouse = -1;
-            line_under_mouse  = -1;
-            return false;     // pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
-        }
-
         offset = 6; // ici on est soit en GL_POINTS, soit en GL_LINE*
 
         if (test_print) {
             printf("\nhits dans letscheckthemouse : %d\n",hits);
+        }
+
+        GLuint val0 = *ptr;
+
+        if (val0 < 2) {
+            objet_under_mouse = face_under_mouse = point_under_mouse = line_under_mouse  = -1;
+            return false;     // pourquoi ? si 0, c'est le fond, si 1 il y a un pb => offset varie => décalages dans les ptr de 1 ou 2 => mieux vaut ignorer
+        }
+
 //// Test
+        if (test_print) {
             for (i = 0; i < hits; i++) {
-                printf("0 : %u;\n", ptr[0]);
-                printf("1 : %u; z\n", ptr[1]);
-                printf("2 : %u; z2\n",  ptr[2]);
+                printf("0 : %u;\n",       ptr[0]);
+                printf("1 : %u; z\n",     ptr[1]);
+                printf("2 : %u; z2\n",    ptr[2]);
                 printf("3 : %u; objet\n", ptr[3]);
                 if (mode_appel == 0)
-                    printf("4 : %u; point\n", ptr[4]);
+                    printf("4 : %u; point\n",   ptr[4]);
                 else
                     printf("4 : %u; facette\n", ptr[4]);
-                printf("5 : %d; ID ou line\n", ptr[5]);
+                printf("5 : %d; ID ou line\n",  ptr[5]);
                 ptr += offset;
             }
             ptr = (GLuint *) selectBuffer;
-//// Fin du test
         }
+//// Fin du test
 
         z=ptr[1];
-        if (test_print) printf("z : %u;\n",  z);
+        if (test_print) printf("z : %u; ",  z);
         ii=0;
         if(z > ptr[2]) {
             z=ptr[2];
@@ -12136,6 +12185,7 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
 //        printf("ii=%d\n",ii);
 
         ptr = (GLuint *) selectBuffer;  /*!on reinitialise le pointeur*/
+
         int indiceptr_objet = (ii*offset)+3; // mode points ou line => 6 valeurs par Hit
 //        printf("indiceptr_objet : %d\n",indiceptr_objet);
 //        printf("valeur objet    : %d (%d)\n",ptr[indiceptr_objet],ptr[indiceptr_objet]-1);

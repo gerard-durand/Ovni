@@ -11,9 +11,9 @@
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Ajout de points dans une arête</label>
-			<pos>16,0</pos>
-			<size>184,16</size>
-			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<pos>0,0</pos>
+			<size>216,16</size>
+			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
@@ -54,7 +54,7 @@
 			<label>Création de facettes</label>
 			<pos>0,160</pos>
 			<size>216,16</size>
-			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
@@ -124,9 +124,9 @@
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
 			<label>Souder deux points</label>
-			<pos>16,80</pos>
-			<size>184,16</size>
-			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<pos>0,80</pos>
+			<size>216,16</size>
+			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
@@ -157,7 +157,7 @@
 			<label>Divers</label>
 			<pos>0,320</pos>
 			<size>216,16</size>
-			<fg>wxSYS_COLOUR_BTNHIGHLIGHT</fg>
+			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>

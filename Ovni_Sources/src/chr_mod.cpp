@@ -569,7 +569,7 @@ unsigned int utf8ToEascii(const char * capSrc,unsigned int iSrcLen,char * capDes
 }
 
 // d'après https://stackoverflow.com/questions/1031645/how-to-detect-utf-8-in-plain-c
-// Teste si une chaine est valide en codage utf8 : attention ; il peut y avoir de faux positifs d'près ce forum !
+// Teste si une chaine est valide en codage utf8 : attention ; il peut y avoir de faux positifs d'après ce forum !
 
 bool is_utf8(const char * string)
 {
