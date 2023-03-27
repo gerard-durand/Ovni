@@ -99,7 +99,7 @@ void Cube::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cube::genereSommets(BddInter* Element, Object *p_Objet) //int indiceObjet)
+void Cube::Genere_Sommets(BddInter* Element, Object *p_Objet) //int indiceObjet)
 {
     int Nb_sommets = 8 ;
     float Xc = centre_primitive[0] , Yc = centre_primitive[1] , Zc = centre_primitive[2];
@@ -107,71 +107,71 @@ void Cube::genereSommets(BddInter* Element, Object *p_Objet) //int indiceObjet)
 
     Element->str.clear();
     Element->N_elements = 8;
-    Element->makesommet();
+    Element->make_sommet();
 
 //    Element->Objetlist[indiceObjet].Nb_sommets = Nb_sommets;
     p_Objet->Nb_sommets = Nb_sommets;
 
-    Element->N_elements=1; Element->Setxyz(Xc-demi,Yc+demi,Zc+demi); Element->make1sommet();
-    Element->N_elements=2; Element->Setxyz(Xc+demi,Yc+demi,Zc+demi); Element->make1sommet();
-    Element->N_elements=3; Element->Setxyz(Xc+demi,Yc-demi,Zc+demi); Element->make1sommet();
-    Element->N_elements=4; Element->Setxyz(Xc-demi,Yc-demi,Zc+demi); Element->make1sommet();
-    Element->N_elements=5; Element->Setxyz(Xc-demi,Yc+demi,Zc-demi); Element->make1sommet();
-    Element->N_elements=6; Element->Setxyz(Xc+demi,Yc+demi,Zc-demi); Element->make1sommet();
-    Element->N_elements=7; Element->Setxyz(Xc+demi,Yc-demi,Zc-demi); Element->make1sommet();
-    Element->N_elements=8; Element->Setxyz(Xc-demi,Yc-demi,Zc-demi); Element->make1sommet();
+    Element->N_elements=1; Element->Setxyz(Xc-demi,Yc+demi,Zc+demi); Element->make_1_sommet();
+    Element->N_elements=2; Element->Setxyz(Xc+demi,Yc+demi,Zc+demi); Element->make_1_sommet();
+    Element->N_elements=3; Element->Setxyz(Xc+demi,Yc-demi,Zc+demi); Element->make_1_sommet();
+    Element->N_elements=4; Element->Setxyz(Xc-demi,Yc-demi,Zc+demi); Element->make_1_sommet();
+    Element->N_elements=5; Element->Setxyz(Xc-demi,Yc+demi,Zc-demi); Element->make_1_sommet();
+    Element->N_elements=6; Element->Setxyz(Xc+demi,Yc+demi,Zc-demi); Element->make_1_sommet();
+    Element->N_elements=7; Element->Setxyz(Xc+demi,Yc-demi,Zc-demi); Element->make_1_sommet();
+    Element->N_elements=8; Element->Setxyz(Xc-demi,Yc-demi,Zc-demi); Element->make_1_sommet();
 }
 
-//void Cube::genereLuminances(BddInter* Element, int indiceObjet)
+//void Cube::Genere_Luminances(BddInter* Element, int indiceObjet)
 //{
 //    int Nb_facettes = 6 ;
 //    Element->str.clear();
 //    Element->N_elements = Nb_facettes;
-//    Element->makeluminance();
+//    Element->make_luminance();
 //
 //    for (int n=1; n <= 6; n++) {
-//        Element->str.Printf(_T("%d 4 %d %d %d %d"),n,n,n,n,n); Element->make1luminance();
+//        Element->str.Printf(_T("%d 4 %d %d %d %d"),n,n,n,n,n); Element->make_1_luminance();
 //    }
 //}
 
-//void Cube::genereNormalesSommets(BddInter* Element, int indiceObjet)
+//void Cube::Genere_Normales_Sommets(BddInter* Element, int indiceObjet)
 //{
 //    Element->str.clear();
 //    Element->N_elements = 6;
 //    Element->Objetlist[indiceObjet].Nb_vecteurs = 6;
-//    Element->makevecteur();
+//    Element->make_vecteur();
 //
-//    Element->N_elements=1; Element->Setxyz( 0.0, 0.0, 1.0); Element->make1vecteur();
-//    Element->N_elements=2; Element->Setxyz( 1.0, 0.0, 0.0); Element->make1vecteur();
-//    Element->N_elements=3; Element->Setxyz( 0.0, 0.0,-1.0); Element->make1vecteur();
-//    Element->N_elements=4; Element->Setxyz(-1.0, 0.0, 0.0); Element->make1vecteur();
-//    Element->N_elements=5; Element->Setxyz( 0.0, 1.0, 0.0); Element->make1vecteur();
-//    Element->N_elements=6; Element->Setxyz( 0.0,-1.0, 0.0); Element->make1vecteur();
+//    Element->N_elements=1; Element->Setxyz( 0.0, 0.0, 1.0); Element->make_1_vecteur();
+//    Element->N_elements=2; Element->Setxyz( 1.0, 0.0, 0.0); Element->make_1_vecteur();
+//    Element->N_elements=3; Element->Setxyz( 0.0, 0.0,-1.0); Element->make_1_vecteur();
+//    Element->N_elements=4; Element->Setxyz(-1.0, 0.0, 0.0); Element->make_1_vecteur();
+//    Element->N_elements=5; Element->Setxyz( 0.0, 1.0, 0.0); Element->make_1_vecteur();
+//    Element->N_elements=6; Element->Setxyz( 0.0,-1.0, 0.0); Element->make_1_vecteur();
 //}
 
-void Cube::genereFacettes(BddInter* Element, Object *p_Objet) //int indiceObjet)
+void Cube::Genere_Facettes(BddInter* Element, Object *p_Objet) //int indiceObjet)
 {
 //    Object *p_Objet;
     int Nb_facettes = 6 ;
     Element->str.clear();
     Element->N_elements = Nb_facettes;
-    Element->makeface();
+    Element->make_face();
 
 //    p_Objet = &(Element->Objetlist[indiceObjet]);
     p_Objet->Nb_facettes = Nb_facettes;
 
-    Element->str = _T("1 4 4 3 2 1"); Element->make1face();
-    Element->str = _T("2 4 3 7 6 2"); Element->make1face();
-    Element->str = _T("3 4 7 8 5 6"); Element->make1face();
-    Element->str = _T("4 4 8 4 1 5"); Element->make1face();
-    Element->str = _T("5 4 1 2 6 5"); Element->make1face();
-    Element->str = _T("6 4 8 7 3 4"); Element->make1face();
+    Element->str = _T("1 4 4 3 2 1"); Element->make_1_face();
+    Element->str = _T("2 4 3 7 6 2"); Element->make_1_face();
+    Element->str = _T("3 4 7 8 5 6"); Element->make_1_face();
+    Element->str = _T("4 4 8 4 1 5"); Element->make_1_face();
+    Element->str = _T("5 4 1 2 6 5"); Element->make_1_face();
+    Element->str = _T("6 4 8 7 3 4"); Element->make_1_face();
 
     for (int j=0; j<Nb_facettes ; j++) p_Objet->Facelist[j].flat = true ; // Force le mode facettes planes
 }
 
 
-void Cube::genereCube()
+void Cube::Genere_Cube()
 {
     wxString num_obj;
     int new_num;
@@ -185,7 +185,7 @@ void Cube::genereCube()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Cube - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
     int indiceObjet = Element->indiceObjet_courant;
@@ -194,22 +194,22 @@ void Cube::genereCube()
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    genereFacettes(Element, p_Objet);//indiceObjet);
-    genereSommets (Element, p_Objet);//indiceObjet);
+    Genere_Facettes(Element, p_Objet);//indiceObjet);
+    Genere_Sommets (Element, p_Objet);//indiceObjet);
 
-    Element->genereNormalesFacettes (p_Objet, 6);
-    Element->genereAttributsFacettes(p_Objet, 6, numeroGroupe, numeroMateriau);
+    Element->Genere_Normales_Facettes (p_Objet, 6);
+    Element->Genere_Attributs_Facettes(p_Objet, 6, numeroGroupe, numeroMateriau);
     p_Objet->flat = true; // En fait serait plat de toutes façons avec les normales aux sommets calculées
 
 ////    forcer le nombre de Luminances à 0, mais ne suffit pas !
 //    Element->str.clear();
 //    Element->N_elements = 0;
-//    Element->makeluminance();
+//    Element->make_luminance();
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -227,13 +227,13 @@ void Cube::OnButton_OKClick(wxCommandEvent& event)
     numeroGroupe   = SpinCtrl_Groupe  ->GetValue() ;    // Par précaution, mais déjà fait !
     numeroMateriau = SpinCtrl_Materiau->GetValue() ;    // idem
 
-    genereCube();
+    Genere_Cube();
 
     Element->type     = 1;  // Marquer comme si c'était un fichier .bdd
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
 

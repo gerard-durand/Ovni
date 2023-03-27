@@ -92,10 +92,10 @@ class Cone: public wxDialog
 		int   n_secteurs;
 
 		void genereCone();
-		void genereFacettes       (BddInter*, Object*);
-		void genereSommets        (BddInter*, Object*);
-        void genereLuminances     (BddInter*);
-        void genereNormalesSommets(BddInter*, Object*);
+		void Genere_Facettes       (BddInter*, Object*);
+		void Genere_Sommets        (BddInter*, Object*);
+        void Genere_Luminances     (BddInter*);
+        void Genere_Normales_Sommets(BddInter*, Object*);
 
 		DECLARE_EVENT_TABLE()
 };

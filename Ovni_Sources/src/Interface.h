@@ -1,8 +1,13 @@
 #ifndef INTERFACE_H_INCLUDED
 #define INTERFACE_H_INCLUDED
 
+// Entête général des fichiers Interface*.cpp
+// ******************************************
+
+// Les includes pour wxWidgets
 #include <wx/app.h>
 #include <wx/dcclient.h>
+#include <wx/defs.h>
 #include <wx/dialog.h>
 #include <wx/frame.h>
 #include <wx/filename.h>
@@ -18,9 +23,10 @@
 
 #include <GL/freeglut.h>
 //#include <GL/glext.h>     // Pour tests antialising des polygones (définition de GL_MULTISAMPLE entre autres) sinon à supprimer car inclus dans freeglut.h
-//#include <GL/gl.h>        // Pas utile car fait dans glut.h
+//#include <GL/gl.h>        // Pas utile car fait dans glut.h (et/ou freeglut.h)
 //#include <GL/glu.h>       // Idem
 
+// Les includes locaux
 #include "trackball.h"
 #include "GLCanvas.h"
 #include "vector3d.h"
@@ -29,18 +35,25 @@
 #include "libexpat/expat.h"
 #include "charset.h"
 
+// Les includes C++ (ou C)
 #include <algorithm>
 #include <ctime>
+#include <cstdio>      /* printf */
+#include <cmath>       /* round, floor, ceil, trunc, M_PI, ... */
+#include <cstdlib>
+#include <filesystem>
 #include <float.h>
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <list>
 #include <sstream>
-#include <fstream>
+#include <string>
 #include <vector>
 
 #include <omp.h>                        // Header de OpenMP pour la parallélisation des boucles sur plusieurs processeurs/threads
 
+// Define de constantes
 #define BUFSIZE 4096
 #define gris_def 0.5f                   // 0.35f version jdias
 #define groupe_def      -123
@@ -57,11 +70,19 @@
     #define GL_SAMPLES          0x80A9
 #endif // GL_SAMPLES
 
-
+// Classes des objets, facettes, points,... d'Ovni
 class BddInter;
 class OvniFrame;
 class Object;
+class Face;
+class Sommet;
+class Luminance;
+class Vecteur;
+class Points;
+class Aretes;
 
+// Déclaration des classes des boîtes de dialogues
+class Aide_html;
 class CentreRotation;
 class ChangerEchelleBdd;
 class ChoixAffichageObjets;
@@ -93,18 +114,10 @@ class Sphere;
 class Tore;
 class TranslationPanel;
 class ZoomSpecifique;
-class Aide_html;
 
-class Face;
-class Sommet;
-class Luminance;
-class Vecteur;
-class Points;
-class Aretes;
+#include "OvniMain.h"       // Note : OvniMain.h possède aussi un include Interface.h
 
-#include "OvniMain.h"
-
-//using namespace std;    // Si absent, vector ne semble pas toujours reconnu ! il faut std::vector dans ce cas partout ???? mais aussi sur string, list, ...
+//using namespace std;      // Si absent, vector ne semble pas toujours reconnu ! il faut std::vector dans ce cas partout ???? mais aussi sur string, list, ...
 
 // Dans la version Tcl, mais ne semble pas bien adapté ici !
 char *iso_To_ibm (char *) ;
@@ -112,8 +125,18 @@ char *ibm_To_iso (char *) ;
 // mieux ...
 char *utf8_To_ibm (char *) ;
 
-// Les classes
-//************
+const float to_Deg = 180.0f/M_PI;
+const float to_Rad = 1.0f/to_Deg;
+const float pas_deg= 5.0f;
+const float pas_rad= pas_deg/to_Deg;
+
+static char Message[1024];
+
+unsigned int codegroupe,codemateriau;
+int message_multi_sample_actif = 0;
+
+// Les classes, définitions, méthodes,...
+//***************************************
 
 class Object {
     wxCharBuffer name;
@@ -885,8 +908,8 @@ public :
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
                                                                 // sur M2000 et pour les autres Bdd donnera la même position sur l'écran
-    int   mode_Trackball_def=1;                     // mode par défaut : 1 = Trackball, 0 = Rotation directe
-    int   methode_Triangulation_def=1;              // mode par défaut 0, 1 ou 2
+    int   mode_Trackball_def = 1;                   // mode par défaut : 1 = Trackball, 0 = Rotation directe
+    int   methode_Triangulation_def = 1;            // mode par défaut 0, 1 ou 2
     float fmult_diag_def = 10.0f;                   // Pour calcul de la distance de visée comme multiple de la diagonale de boîte englobante
     int   nb_threads_def = 0;                       // Nombre max de threads pour OpenMP. 0 => non limité => sera pris égal au nombre de processeurs/max_threads via omp_set_num_threads
 
@@ -925,7 +948,7 @@ public :
     GLfloat Light0Position[4];              // a paramétrer / diagonale surtout si petits objets car 4 * 4 * 2 m peut être trop loin
 
     unsigned int nb_objets;
-    unsigned int nb_objets_reels;           // Pour compter seulement les objets non supprimés (calculé dans searchMin_Max)
+    unsigned int nb_objets_reels;           // Pour compter seulement les objets non supprimés (calculé dans Search_Min_Max)
     unsigned int nb_sommets;
     unsigned int nb_facettes;
     unsigned int nb_aretes;
@@ -935,7 +958,7 @@ public :
     unsigned int nb_aretes_test_d=400000;   //Si le nombre d'arêtes à traiter dépasse cette valeur, on court-circuite le traitement des doublons car trop long... faute de mieux !
     bool liste_sommets_OK;                  // Pour savoir si la liste OpenGL des sommets a été générée
     bool liste_aretes_OK;                   // Pour savoir si la liste OpenGL des arêtes a été générée
-    bool GenereTableauAretes_OK;
+    bool Genere_Tableau_Aretes_OK;
     unsigned int nb_3points;                // Comptage des facettes à 3 sommets
     unsigned int nb_4points;                // Comptage des facettes à 4 sommets et +
     unsigned int nb_sommets_max;
@@ -1007,37 +1030,37 @@ public :
     bool Elements_Masques   = false; // à l'initialisation, rien n'est masqué
     bool Elements_Supprimes = false; // ni supprimé. Ces 2 indicateurs sont globaux. Pour les détails, voir dans chaque objet et chaque facette
 
-    CentreRotation          *MPosCRot = nullptr;
-    ChangerEchelleBdd       *MScale_0 = nullptr;
-    ChoixAffichageObjets    *MChoice_O= nullptr;
-    Cone                    *MCone    = nullptr;
-    Cube                    *MCube    = nullptr;
-    CouleursGroupes         *MCGroup  = nullptr;
-    Cylindre                *MCylindre= nullptr;
-    DeplacerBdd             *MDeplacer=nullptr;
-    Ellipsoide              *MEllips  = nullptr;
-    Facette                 *MFacet   = nullptr;
-    Icosaedre               *MIcosa   = nullptr;
-    ManipulationsPanel      *MManip   = nullptr;
-    ModificationPanel       *MPanel   = nullptr;
-    PositionObs_AzimutSite  *MPosObs  = nullptr;
-    PositionSource          *MPosLight= nullptr;
-    Prefs_Dialog            *MPrefs   = nullptr;
-    PropertiesPanel         *MProps   = nullptr;
-    ReperageFacette         *MRepFacet= nullptr;
-    ReperageGroupe          *MRepGrp  = nullptr;
-    ReperageMateriau        *MRepMat  = nullptr;
-    ReperageObjet           *MRepObj  = nullptr;
-    ReperagePoint           *MRepPoint= nullptr;
-    RotationPanel           *MRotation= nullptr;
-    ScalePanel              *MScale   = nullptr;
-    SelectionPanel          *MSelect  = nullptr;
-    SelectionManuelleFacettes *MSelFac= nullptr;
-    SelectionManuelleObjets *MSelObj  = nullptr;
-    Sphere                  *MSphere  = nullptr;
-    TranslationPanel        *MTrans   = nullptr;
-    ZoomSpecifique          *MZoomSpec= nullptr;
-    Aide_html               *MHelp    = nullptr;
+    Aide_html               *MHelp     = nullptr;
+    CentreRotation          *MPosCRot  = nullptr;
+    ChangerEchelleBdd       *MScale_0  = nullptr;
+    ChoixAffichageObjets    *MChoice_O = nullptr;
+    Cone                    *MCone     = nullptr;
+    Cube                    *MCube     = nullptr;
+    CouleursGroupes         *MCGroup   = nullptr;
+    Cylindre                *MCylindre = nullptr;
+    DeplacerBdd             *MDeplacer = nullptr;
+    Ellipsoide              *MEllips   = nullptr;
+    Facette                 *MFacet    = nullptr;
+    Icosaedre               *MIcosa    = nullptr;
+    ManipulationsPanel      *MManip    = nullptr;
+    ModificationPanel       *MPanel    = nullptr;
+    PositionObs_AzimutSite  *MPosObs   = nullptr;
+    PositionSource          *MPosLight = nullptr;
+    Prefs_Dialog            *MPrefs    = nullptr;
+    PropertiesPanel         *MProps    = nullptr;
+    ReperageFacette         *MRepFacet = nullptr;
+    ReperageGroupe          *MRepGrp   = nullptr;
+    ReperageMateriau        *MRepMat   = nullptr;
+    ReperageObjet           *MRepObj   = nullptr;
+    ReperagePoint           *MRepPoint = nullptr;
+    RotationPanel           *MRotation = nullptr;
+    ScalePanel              *MScale    = nullptr;
+    SelectionPanel          *MSelect   = nullptr;
+    SelectionManuelleFacettes *MSelFac = nullptr;
+    SelectionManuelleObjets *MSelObj   = nullptr;
+    Sphere                  *MSphere   = nullptr;
+    TranslationPanel        *MTrans    = nullptr;
+    ZoomSpecifique          *MZoomSpec = nullptr;
 
     bool OK_ToSave = false; // Mis à true lors de la lecture d'un fichier et testé dans SaveTo (pas de save si OK_ToSave = false !!!)
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
@@ -1135,7 +1158,7 @@ public :
     void XtoZ();
     void YtoZ();
     void XtoYtoZ();
-    void searchMin_Max();
+    void Search_Min_Max();
     void Simplification_BDD();
     void Calcul_All_Normales();
     void Calcul_Normale_Barycentre(int ,int );
@@ -1147,59 +1170,59 @@ public :
     void SetPosObs(bool );
     void Tracer_normale(const std::vector <float> & , const std::vector <float> &, int );
     void coloriserFacette(unsigned int, unsigned int, bool, GLfloat couleur[3]);
-    void draw_rectangle_selection();
+    void Draw_Rectangle_Selection();
     void Selection_rectangle(GLint, GLint);
     void Switch_theme(bool);
     void Switch_theme_wx33(bool);
 
-    void GenereTableauPointsFacettes(Object *);
-    void GenereTableauAretes(Object *);
-    void GenereListeGroupesMateriaux(Object *);
-    void GenereListeGroupesMateriaux(unsigned int);
+    void Genere_Tableau_Points_Facettes(Object *);
+    void Genere_Tableau_Aretes(Object *);
+    void Genere_Liste_Groupes_Materiaux(Object *);
+    void Genere_Liste_Groupes_Materiaux(unsigned int);
     bool Calcul_Normale_Seuillee(int, int, int, std::vector<float> &, std::vector<float> &);
 //    bool Calcul_Normale_Seuillee(int, int, int, std::vector<float> &, std::vector<float> &, Vector3D & );
 //    bool Calcul_Normale_Seuillee(int, int, int, Vector3D & );
 
-    void makeobjet();
-    void makesommet();
-    void make1sommet();
-    void makeface();
-    void make1face();
-    void make1face(int , const std::vector<int> &);
-    void makenormale();
-    void make1normale();
-    void makeaspect_face();
-    void make1aspect_face();
-    void makeluminance();
-    void make1luminance();
-    void make1luminance(int , const std::vector<int> &);
+    void make_objet();
+    void make_sommet();
+    void make_1_sommet();
+    void make_face();
+    void make_1_face();
+    void make_1_face(int , const std::vector<int> &);
+    void make_normale();
+    void make_1_normale();
+    void make_aspect_face();
+    void make_1_aspect_face();
+    void make_luminance();
+    void make_1_luminance();
+    void make_1_luminance(int , const std::vector<int> &);
 
-    void makevecteur();
-    void make1vecteur();
+    void make_vecteur();
+    void make_1_vecteur();
 
-    void drawOpenGL();
+    void DrawOpenGL();
 
-    int  convert_rotx_LSI();
-    int  convert_rotz_LAZ();
+    int  Convert_Rotx_LSI();
+    int  Convert_Rotz_LAZ();
 
-    bool compare_normales(int, int, int);
-    bool points_egaux(const std::vector<float> &, const std::vector<float> &, float);
-    void simplification_doublons_points(unsigned int);
-    void simplification_facettes(unsigned int);
+    bool Compare_Normales(int, int, int);
+    bool Points_Egaux(const std::vector<float> &, const std::vector<float> &, float);
+    void Simplification_Doublons_Points(unsigned int);
+    void Simplification_Facettes(unsigned int);
     void TraiterMatricePosition(unsigned int);
-    void genereAttributsFacettes(int, int, int, int );
-    void genereAttributsFacettes(Object *, int, int, int );
-    void genereNormalesFacettes (int, int);
-    void genereNormalesFacettes (Object *, int);
-    void genereLuminances(int, int ) ;
-    void genereLuminances(Object *, int ) ;
+    void Genere_Attributs_Facettes(int, int, int, int );
+    void Genere_Attributs_Facettes(Object *, int, int, int );
+    void Genere_Normales_Facettes (int, int);
+    void Genere_Normales_Facettes (Object *, int);
+    void Genere_Luminances(int, int ) ;
+    void Genere_Luminances(Object *, int ) ;
 
 // Fonctions communes Sphere - Ellipsoide
-    void genereFacettesSphere(int, int, bool);
-    void genereSommetsSphere (int, int, float *, float, float, float, float);
-    void genereNormalesSommetsSphere(int, int, float, float, float);
-    void GenereNormale_1_Sommet(Object *, unsigned int , unsigned int );
-    void GenereNormalesAuxSommets(unsigned int , int );
+    void Genere_Facettes_Sphere(int, int, bool);
+    void Genere_Sommets_Sphere (int, int, float *, float, float, float, float);
+    void Genere_Normales_Sommets_Sphere(int, int, float, float, float);
+    void Genere_Normale_1_Sommet(Object *, unsigned int , unsigned int );
+    void Genere_Normales_Aux_Sommets(unsigned int , int );
 
     void buildAllLines();
     void buildBoite();
@@ -1244,7 +1267,7 @@ private :
     void LoadSTL();
 
     void makeposition();
-//    void make1position();
+//    void make_1_position();
 
     //opengl selection
 //    void selectMode(int selection1);
@@ -1255,7 +1278,7 @@ private :
     bool ifexist_facette(int, int) ;
     bool ifexist_sommet (int, int) ;
     void souderPoints(int, int);
-    void diviserArete(int, int, int);
+    void Diviser_Arete(int, int, int);
     bool letscheckthemouse(int, int); //, GLuint * );
 
     //opengl affichage
@@ -1264,18 +1287,18 @@ private :
     void showSegment_Selection();
     void showPoint_Selection();
     void buildAllPoints();
-    void buildAllFacettesSelected();
+    void BuildAllFacettesSelected();
 
     double Norme3(float x, float y, float z);
-    void GenereEtoile();
-    void resetMin_Max();
-    void setMin_Max(float x, float y, float z);
+    void Genere_Etoile();
+    void Reset_Min_Max();
+    void Set_Min_Max(float x, float y, float z);
     void InitGL();
 
     void CalculAngles(float *, float &, float &, float &);
     void Clamp(float &, const float, const float);
-    void output_Glut_Msg(GLfloat , GLfloat , char *);
-    float produit_scalaire(const std::vector<float> &, const std::vector<float> &);
+    void Output_Glut_Msg(GLfloat , GLfloat , char *);
+    float Produit_Scalaire(const std::vector<float> &, const std::vector<float> &);
 
     OvniFrame *MAIN_b;
     DECLARE_EVENT_TABLE()

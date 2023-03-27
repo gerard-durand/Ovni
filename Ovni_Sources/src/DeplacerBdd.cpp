@@ -110,10 +110,10 @@ void DeplacerBdd::OnButton_OKClick(wxCommandEvent& event)
             sommet_i->point[2] += dz;
         }
     }
-    Element->centreRot[0] += dx; Element->centreRot[1] += dy; Element->centreRot[2] += dz; // centre_auto mis à jour dans searchMin_Max
+    Element->centreRot[0] += dx; Element->centreRot[1] += dy; Element->centreRot[2] += dz; // centre_auto mis à jour dans Search_Min_Max
 
     Element->m_gllist = 0;
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->SetPosObs(true);
     Element->ResetProjectionMode();
     Element->bdd_modifiee = true;
@@ -155,7 +155,7 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
 
     Element->centrageRotAuto = true;
     Element->m_gllist = 0;
-//    Element->searchMin_Max();
+//    Element->Search_Min_Max();
     dx = (Element->x_min + Element->x_max)/2;   // Centre de la boîte englobante
     dy = (Element->y_min + Element->y_max)/2;
     dz = (Element->z_min + Element->z_max)/2;
@@ -179,8 +179,8 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
             sommet_i->point[2] -= dz;
         }
     }
-    Element->centreRot[0] -= dx; Element->centreRot[1] -= dy; Element->centreRot[2] -= dz; // centre_auto mis à jour dans searchMin_Max
-    Element->searchMin_Max();
+    Element->centreRot[0] -= dx; Element->centreRot[1] -= dy; Element->centreRot[2] -= dz; // centre_auto mis à jour dans Search_Min_Max
+    Element->Search_Min_Max();
     Element->SetPosObs(true);
     Element->ResetProjectionMode();
     Element->bdd_modifiee = true;

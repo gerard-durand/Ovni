@@ -105,7 +105,7 @@ void Cylindre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cylindre::genereSommets(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Sommets(BddInter* Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -118,7 +118,7 @@ void Cylindre::genereSommets(BddInter* Element, Object *p_Objet)
 
     Element->str.clear();
     Element->N_elements = NbSommets;
-    Element->makesommet();
+    Element->make_sommet();
 
     p_Objet->Nb_sommets = NbSommets;
 
@@ -129,7 +129,7 @@ void Cylindre::genereSommets(BddInter* Element, Object *p_Objet)
     for (j=0; j<n_slices ; j++) {
         angle = 0.;
         for (i=0; i<NbPoints; i++) {
-            Element->N_elements=numero; Element->Setxyz(Xp,Yc+rayon*cos(angle),Zc+rayon*sin(angle)); Element->make1sommet();
+            Element->N_elements=numero; Element->Setxyz(Xp,Yc+rayon*cos(angle),Zc+rayon*sin(angle)); Element->make_1_sommet();
             angle += pas_angle;
             numero++;
         }
@@ -137,7 +137,7 @@ void Cylindre::genereSommets(BddInter* Element, Object *p_Objet)
     }
 }
 
-void Cylindre::genereLuminances(BddInter* Element)
+void Cylindre::Genere_Luminances(BddInter* Element)
 {
     wxString str_loc;
     int numero,i1,i,j;
@@ -146,13 +146,13 @@ void Cylindre::genereLuminances(BddInter* Element)
     Element->N_elements = NbPoints*n_slices;
     if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;
 
-    Element->makeluminance();
+    Element->make_luminance();
     numero= 1;
 
     for (j=0; j < n_secteurs ; j++) {
         for (i=1; i <= NbPoints ; i++) {
             i1 = i+1 ; if (i1 > NbPoints) i1=1;
-            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i,i,i1,i1) ; Element->make1luminance();
+            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i,i,i1,i1) ; Element->make_1_luminance();
             numero++;
         }
     }
@@ -160,17 +160,17 @@ void Cylindre::genereLuminances(BddInter* Element)
         Element->str.Printf(_T("%d %d"),numero,NbPoints) ;
         str_loc.Printf(_T(" %d"),NbPoints+1);
         for (int j=0; j<NbPoints ; j++) Element->str += str_loc;
-        Element->make1luminance();
+        Element->make_1_luminance();
 
         numero++;
         Element->str.Printf(_T("%d %d"),numero,NbPoints) ;
         str_loc.Printf(_T(" %d"),NbPoints+2);
         for (int j=0; j<NbPoints ; j++) Element->str += str_loc;
-        Element->make1luminance();
+        Element->make_1_luminance();
     }
 }
 
-void Cylindre::genereNormalesSommets(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -183,26 +183,26 @@ void Cylindre::genereNormalesSommets(BddInter* Element, Object *p_Objet)
     if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;   // et 2 de plus en cas de fermeture du cylindre par 2 facettes
 
     p_Objet->Nb_vecteurs = Element->N_elements;
-    Element->makevecteur();
+    Element->make_vecteur();
     numero= 1;
     angle = 0.;
     for (int i=0; i<NbPoints; i++) {
-        Element->N_elements=numero; Element->Setxyz(0.,cos(angle),sin(angle)); Element->make1vecteur();
+        Element->N_elements=numero; Element->Setxyz(0.,cos(angle),sin(angle)); Element->make_1_vecteur();
         angle += pas_angle;
         numero++;
     }
     if (CheckBox_FermerCylindre->IsChecked()) {
         Element->N_elements=numero;
         Element->Setxyz(1.,0.,0.);
-        Element->make1vecteur();
+        Element->make_1_vecteur();
         numero++;
         Element->N_elements=numero;
         Element->Setxyz(-1.,0.,0.);
-        Element->make1vecteur();
+        Element->make_1_vecteur();
     }
 }
 
-void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Facettes(BddInter* Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -212,7 +212,7 @@ void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
     int NbFacettes = NbPoints*n_secteurs;
     Element->N_elements = NbFacettes;
     if (CheckBox_FermerCylindre->IsChecked()) Element->N_elements +=2;
-    Element->makeface();
+    Element->make_face();
 
     p_Objet->Nb_facettes = Element->N_elements;
     numero = 1;
@@ -224,7 +224,7 @@ void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
             i0 = i+istep;
             i3 = i0+NbPoints;
             i2 += istep ; i1 += istep;
-            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i3,i2,i1); Element->make1face();
+            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i3,i2,i1); Element->make_1_face();
             numero++;
         }
     }
@@ -234,7 +234,7 @@ void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
             str_loc.Printf(_T(" %d"),i);
             Element->str += str_loc;
         }
-        Element->make1face();
+        Element->make_1_face();
         numero++;
         str_loc.Printf(_T("%d %d"),numero,NbPoints); Element->str = str_loc;
         i0 = n_slices*NbPoints;
@@ -242,7 +242,7 @@ void Cylindre::genereFacettes(BddInter* Element, Object *p_Objet)
         for (i=i0; i>i1 ; i--) {
             str_loc.Printf(_T(" %d"),i); Element->str += str_loc;
         }
-        Element->make1face();
+        Element->make_1_face();
     }
 }
 
@@ -260,7 +260,7 @@ void Cylindre::genereCylindre()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Cylindre - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
     int indiceObjet = Element->indiceObjet_courant;
@@ -274,19 +274,19 @@ void Cylindre::genereCylindre()
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    genereSommets (Element, p_Objet);
-    genereFacettes(Element, p_Objet);
+    Genere_Sommets (Element, p_Objet);
+    Genere_Facettes(Element, p_Objet);
 
-    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
-    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
-    genereNormalesSommets(Element, p_Objet);
-    genereLuminances(Element);
+    Element->Genere_Normales_Facettes (p_Objet, Nb_facettes);
+    Element->Genere_Attributs_Facettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Genere_Normales_Sommets(Element, p_Objet);
+    Genere_Luminances(Element);
     p_Objet->flat = false;
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -310,7 +310,7 @@ void Cylindre::OnButton_OKClick(wxCommandEvent& event)
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();

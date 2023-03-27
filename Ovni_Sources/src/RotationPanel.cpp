@@ -32,7 +32,7 @@ const long RotationPanel::ID_BUTTON4 = wxNewId();
 //*)
 
 wxString format= _T("%4.1f");
-const double to_Rad=M_PI/180.0f;
+//const double to_Rad=M_PI/180.0f;
 
 BEGIN_EVENT_TABLE(RotationPanel,wxDialog)
 	//(*EventTable(RotationPanel)
@@ -496,7 +496,7 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
         }
         // Calcul des normales aux sommets
         unsigned int nv = objet_courant->Vecteurlist.size();    // Récupérer le nombre de vecteurs (peut être != ns)
-        Element->GenereNormalesAuxSommets(o,ns);
+        Element->Genere_Normales_Aux_Sommets(o,ns);
     }
 
     Element->bdd_modifiee    = true;

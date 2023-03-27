@@ -150,6 +150,12 @@
 		<Unit filename="src/Icosaedre.h" />
 		<Unit filename="src/Interface.cpp" />
 		<Unit filename="src/Interface.h" />
+		<Unit filename="src/Interface_Clavier.cpp" />
+		<Unit filename="src/Interface_FichierIni.cpp" />
+		<Unit filename="src/Interface_FichiersBdds.cpp" />
+		<Unit filename="src/Interface_GlutOpenGL.cpp" />
+		<Unit filename="src/Interface_Souris.cpp" />
+		<Unit filename="src/Interface_Theme.cpp" />
 		<Unit filename="src/ManipulationsPanel.cpp" />
 		<Unit filename="src/ManipulationsPanel.h" />
 		<Unit filename="src/ModificationPanel.cpp" />

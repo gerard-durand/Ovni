@@ -107,7 +107,7 @@ void Cone::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cone::genereSommets(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Sommets(BddInter* Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -121,7 +121,7 @@ void Cone::genereSommets(BddInter* Element, Object *p_Objet)
 
     Element->str.clear();
     Element->N_elements = NbSommets;
-    Element->makesommet();
+    Element->make_sommet();
 
     p_Objet->Nb_sommets = NbSommets;
 
@@ -133,14 +133,14 @@ void Cone::genereSommets(BddInter* Element, Object *p_Objet)
         angle = 0.;
         rayon_j = (n_secteurs-j)*rayon/n_secteurs;
         for (i=0; i<NbPoints; i++) {
-            Element->N_elements=numero; Element->Setxyz(Xp,Yc+rayon_j*cos(angle),Zc+rayon_j*sin(angle)); Element->make1sommet();
+            Element->N_elements=numero; Element->Setxyz(Xp,Yc+rayon_j*cos(angle),Zc+rayon_j*sin(angle)); Element->make_1_sommet();
             angle += pas_angle;
             numero++;
         }
 		Xp += XStep;                // Plans suivants
     }
     // Sommet du cône
-    Element->N_elements=numero; Element->Setxyz(Xc+longueur/2,Yc,Zc); Element->make1sommet();
+    Element->N_elements=numero; Element->Setxyz(Xc+longueur/2,Yc,Zc); Element->make_1_sommet();
 
 }
 
@@ -148,7 +148,7 @@ void Cone::genereSommets(BddInter* Element, Object *p_Objet)
 #define Last_3Points TRUE
 //#define Last_3Points FALSE
 
-void Cone::genereLuminances(BddInter* Element)
+void Cone::Genere_Luminances(BddInter* Element)
 {
     wxString str_loc;
     int numero,i1,i,j,i2;
@@ -161,7 +161,7 @@ void Cone::genereLuminances(BddInter* Element)
     bool last_j = false;
     int  last_secteur = n_secteurs-1;
 #endif
-    Element->makeluminance();
+    Element->make_luminance();
     numero= 1;
 
 // Traité comme un cylindre, y compris sur les facettes contenant le sommet du cône si Last_3Points est FALSE, car considérées à 4 points (sommet doublé !)
@@ -179,7 +179,7 @@ void Cone::genereLuminances(BddInter* Element)
             else
 #endif
                 Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i,i1,i1,i) ;
-            Element->make1luminance();
+            Element->make_1_luminance();
             numero++;
         }
     }
@@ -187,11 +187,11 @@ void Cone::genereLuminances(BddInter* Element)
         Element->str.Printf(_T("%d %d"),numero,NbPoints) ;
         str_loc.Printf(_T(" %d"),NbPoints+1);
         for (int j=0; j<NbPoints ; j++) Element->str += str_loc;
-        Element->make1luminance();
+        Element->make_1_luminance();
     }
 }
 
-void Cone::genereNormalesSommets(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -210,12 +210,12 @@ void Cone::genereNormalesSommets(BddInter* Element, Object *p_Objet)
     Element->N_elements += NbPoints;    // Place pour NbPoints normales aux sommets supplémentaires, égales aux normales au barycentre de chaque facette
 #endif
     p_Objet->Nb_vecteurs = Element->N_elements;
-    Element->makevecteur();
+    Element->make_vecteur();
     numero= 1;
     angle = 0.;
     for (int i=0; i<NbPoints; i++) {
         Element->N_elements=numero; Element->Setxyz(sin_sommet,cos_sommet*cos(angle),cos_sommet*sin(angle));
-        Element->make1vecteur();
+        Element->make_1_vecteur();
         angle += pas_angle;
         numero++;
 	}
@@ -225,17 +225,17 @@ void Cone::genereNormalesSommets(BddInter* Element, Object *p_Objet)
         Normale3 = p_Objet->Facelist[i].getNormale_b();         // Récupérer la normale au barycentre de la facette
         Element->N_elements=numero++;
         Element->Setxyz(Normale3[0],Normale3[1],Normale3[2]);   // En faire une normale au sommet du cône
-        Element->make1vecteur();
+        Element->make_1_vecteur();
     }
 #endif
     if (CheckBox_FermerCone->IsChecked()) {
         Element->N_elements=numero++;
         Element->Setxyz(-1.,0.,0.);
-        Element->make1vecteur();
+        Element->make_1_vecteur();
     }
 }
 
-void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Facettes(BddInter* Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -245,7 +245,7 @@ void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
     int NbFacettes = NbPoints*n_secteurs;
     Element->N_elements = NbFacettes;
     if (CheckBox_FermerCone->IsChecked()) Element->N_elements +=1;
-    Element->makeface();
+    Element->make_face();
 
     p_Objet->Nb_facettes = Element->N_elements;
     numero = 1;
@@ -258,7 +258,7 @@ void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
             i0 = i+istep;
             i3 = i0+NbPoints;
             i2 += istep ; i1 += istep;
-            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i1,i2,i3); Element->make1face();
+            Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i1,i2,i3); Element->make_1_face();
             numero++;
         }
     }
@@ -274,7 +274,7 @@ void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
 #else
         Element->str.Printf(_T("%d 4 %d %d %d %d"),numero,i0,i1,i2,i2);  // Sommet doublé : n'est pas optimal mais évite des soucis en cas de recalcul des normales
 #endif
-        Element->make1face();
+        Element->make_1_face();
         numero++;
 	}
     if (CheckBox_FermerCone->IsChecked()) {
@@ -282,7 +282,7 @@ void Cone::genereFacettes(BddInter* Element, Object *p_Objet)
         for (i=NbPoints; i>=1 ; i--) {
             str_loc.Printf(_T(" %d"),i); Element->str += str_loc;
         }
-        Element->make1face();
+        Element->make_1_face();
     }
 }
 
@@ -303,7 +303,7 @@ void Cone::genereCone()
 
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Cone - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
     int indiceObjet = Element->indiceObjet_courant; // C'est le dernier !
@@ -318,19 +318,19 @@ void Cone::genereCone()
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    genereSommets (Element, p_Objet);
-    genereFacettes(Element, p_Objet);
+    Genere_Sommets (Element, p_Objet);
+    Genere_Facettes(Element, p_Objet);
 
-    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
-    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
-    genereNormalesSommets(Element, p_Objet);
-    genereLuminances(Element);
+    Element->Genere_Normales_Facettes (p_Objet, Nb_facettes);
+    Element->Genere_Attributs_Facettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Genere_Normales_Sommets(Element, p_Objet);
+    Genere_Luminances(Element);
     p_Objet->flat = false;
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -356,7 +356,7 @@ void Cone::OnButton_OKClick(wxCommandEvent& event)
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();

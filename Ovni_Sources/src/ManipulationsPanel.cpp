@@ -337,7 +337,7 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
     }
 //    Element->Symetrie_Objets = false; // En commentaire pour laisser affichée la boîte englobante du/des objet(s) sélectionnés
     Element->m_gllist = 0;
-    Element->searchMin_Max();         // Mettre à jour les min-max pour la boîte englobante
+    Element->Search_Min_Max();          // Mettre à jour les min-max pour la boîte englobante
     Element->bdd_modifiee = true;
     Element->Refresh();
 //    ToDo();

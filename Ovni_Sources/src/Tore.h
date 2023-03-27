@@ -86,9 +86,9 @@ class Tore: public wxDialog
 		int   NbPoints;
 		int   n_secteurs;
 
-		void genereTore();
-		void genereFacettes(BddInter*, Object*);
-		void genereSommets (BddInter*, Object*);
+		void Genere_Tore();
+		void Genere_Facettes(BddInter*, Object*);
+		void Genere_Sommets (BddInter*, Object*);
 
 		DECLARE_EVENT_TABLE()
 };

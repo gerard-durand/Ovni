@@ -92,10 +92,10 @@ void ChangerEchelleBdd::OnButton_OKClick(wxCommandEvent& event)
             for (j=0;j<3;j++) objet_courant->Sommetlist[i].point[j] *= val;
         }
     }
-    for (j=0; j<3; j++) Element->centreRot[j] *= val;                                       // centre_auto mis à jour dans searchMin_Max;
+    for (j=0; j<3; j++) Element->centreRot[j] *= val;                                       // centre_auto mis à jour dans Search_Min_Max;
 
     Element->m_gllist = 0;
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->bdd_modifiee = true;
     Element->Refresh();
     if (MAIN->Properties_Panel->IsShown()) MAIN->OvniFrame::Redisplay_Proprietes(event);    // On met à jour la fenètre "Propriétés" si elle est affichée

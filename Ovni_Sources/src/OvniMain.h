@@ -24,53 +24,56 @@
 //*)
 
 #if !wxCHECK_VERSION(3,0,0)
-    #include <wx/things/toggle.h>   // Pour avoir wxCustomButton dans wxWidgets 2.8.12
+    #include <wx/things/toggle.h>       // Pour avoir wxCustomButton dans wxWidgets 2.8.12
 //    #include <wx/things/spinctld.h>
 #endif
 
-//#include <wx/defs.h>
-#include "Interface.h"
+#include "Interface.h"                  // Note : Interface.h possède aussi un include OvniMain.h
 
-#include "Prefs_Dialog.h"
+// Includes des différents boîtes de dialogues / Panels
+#include "Aide_html.h"
+#include "CentreRotation.h"
+#include "ChangerEchelleBdd.h"
+#include "ChoixAffichageObjets.h"
+#include "Cone.h"
+#include "CouleursGroupes.h"
+#include "Cube.h"
+#include "Cylindre.h"
+#include "DeplacerBdd.h"
+#include "Ellipsoide.h"
+#include "Facette.h"
+#include "Icosaedre.h"
+#include "ManipulationsPanel.h"
 #include "ModificationPanel.h"
-#include "TranslationPanel.h"
-#include "RotationPanel.h"
-#include "ScalePanel.h"
-#include "SelectionPanel.h"
-#include "PropertiesPanel.h"
 #include "PositionObs_AzimutSite.h"
 #include "PositionSource.h"
-#include "CentreRotation.h"
-#include "ReperagePoint.h"
+#include "Prefs_Dialog.h"
+#include "PropertiesPanel.h"
+#include "RotationPanel.h"
 #include "ReperageFacette.h"
 #include "ReperageGroupe.h"
 #include "ReperageMateriau.h"
 #include "ReperageObjet.h"
-#include "CouleursGroupes.h"
-#include "Cone.h"
-#include "Cube.h"
-#include "Cylindre.h"
-#include "Facette.h"
-#include "Sphere.h"
-#include "Icosaedre.h"
-#include "Ellipsoide.h"
-#include "Tore.h"
-#include "ChoixAffichageObjets.h"
-#include "DeplacerBdd.h"
-#include "ChangerEchelleBdd.h"
-#include "ManipulationsPanel.h"
+#include "ReperagePoint.h"
+#include "ScalePanel.h"
 #include "SelectionManuelleFacettes.h"
 #include "SelectionManuelleObjets.h"
+#include "SelectionPanel.h"
+#include "Sphere.h"
+#include "Tore.h"
+#include "TranslationPanel.h"
 #include "ZoomSpecifique.h"
-#include "Aide_html.h"
 
 #include <math.h>
 
-#define tempo_s 2       //
+#define tempo_s 2
+
+const char *fichier_init="Ovni.ini";    // a priori dans le même répertoire que l'exécutable Ovni.exe. à vérifier ! Sinon récupérer le appPath (via OvniApp ?)
 
 // Pour test du darkmode sous Windows à partir de wxWidgets 3.3.0 (beta)
 #if defined(__WXMSW__)
 #if wxCHECK_VERSION(3,3,0)
+
 #include <wx/msw/darkmode.h>
 class MySettings : public wxDarkModeSettings
 {
@@ -252,6 +255,7 @@ class OvniFrame: public wxFrame
         wxPoint wxModificationPanel_pos;
         wxPoint wxPropertiesPanel_pos;
 
+        Aide_html*                  AideHtml_Panel;
         CentreRotation*             CentreRotation_Panel;
         ChangerEchelleBdd*          ChangerEchelleBdd_Panel;
         ChoixAffichageObjets*       ChoixAffichageObjets_Panel;
@@ -283,7 +287,6 @@ class OvniFrame: public wxFrame
         Tore*                       Tore_Panel;
         TranslationPanel*           Translation_Panel;
         ZoomSpecifique*             ZoomSpecifique_Panel;
-        Aide_html*                  AideHtml_Panel;
 
         bool toggle_modif = false;
         bool toggle_outils= false;
@@ -446,15 +449,15 @@ class OvniFrame: public wxFrame
         void OnModifsXYZ();
         void OnPopup_Centrer_sur_SelectionSelected(wxCommandEvent& event);
         void OnPopup_Complementer_SelectionFacettesSelected(wxCommandEvent& event);
+        void OnPopup_CreerObjetFacettesSelected(wxCommandEvent& event);
         void OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event);
-        void OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event);
-        void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);
         void OnPopup_ForcerFacettesPlanesSelected(wxCommandEvent& event);
         void OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event);
-        void OnPopup_CreerObjetFacettesSelected(wxCommandEvent& event);
+        void OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event);
+        void OnPopup_Raz_Select_FSelected(wxCommandEvent& event);
         bool OnBdd_modifiee();
         void OnPal_modifiee();
-        void GenereListeAretes();
+        void Genere_Liste_Aretes();
 
         static const long ID_BUTTON7;
         static const long ID_BUTTON8;
@@ -568,9 +571,9 @@ class OvniFrame: public wxFrame
 
         //opengl methods
         wxGLContext* m_glcontext;
-        void InitOpenGL(void);
+        void Init_OpenGL(void);
 //        void ResizeOpenGL(int iWidth, int iHeight);   // Déplacé en public pour tests
-        void InitBoutons(void);
+        void Init_Boutons(void);
         unsigned char *pixelsRGB;
 
         DECLARE_EVENT_TABLE()

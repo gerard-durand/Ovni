@@ -100,7 +100,7 @@ void Tore::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Tore::genereFacettes(BddInter* Element, Object *p_Objet)
+void Tore::Genere_Facettes(BddInter* Element, Object *p_Objet)
 {
     int i, j, istep;
     int i0,i1,i2,i3;
@@ -111,8 +111,8 @@ void Tore::genereFacettes(BddInter* Element, Object *p_Objet)
 
     Element->str.clear();
     Element->N_elements = Nb_facettes;
-    Element->makeface();
-    Element->makeluminance();
+    Element->make_face();
+    Element->make_luminance();
 
     p_Objet->Nb_facettes = p_Objet->Nb_luminances = Nb_facettes;   // utile ?
 
@@ -128,15 +128,15 @@ void Tore::genereFacettes(BddInter* Element, Object *p_Objet)
             Numeros = {i0, i1, i2, i3};             // Initialisation du vecteur des numéros de sommet (4 points)
             Element->Set_numeros(Numeros);
             Element->N_elements = numero;
-            Element->make1face();
-            Element->make1luminance();
+            Element->make_1_face();
+            Element->make_1_luminance();
             p_Objet->Facelist[numero-1].flat = false;
             numero++;
         }
     }
 }
 
-void Tore::genereSommets(BddInter* Element, Object *p_Objet)
+void Tore::Genere_Sommets(BddInter* Element, Object *p_Objet)
 {
 // Génère les sommets, les normales aux sommets et les normales aux barycentres
 
@@ -152,9 +152,9 @@ void Tore::genereSommets(BddInter* Element, Object *p_Objet)
 
     Element->str.clear();
     Element->N_elements = Nb_sommets;
-    Element->makesommet() ;
-    Element->makevecteur();
-    Element->makenormale();
+    Element->make_sommet() ;
+    Element->make_vecteur();
+    Element->make_normale();
 
     dpsi   =  2.0*M_PI/n_secteurs;
     dphi   = -2.0*M_PI/NbPoints  ;
@@ -177,13 +177,13 @@ void Tore::genereSommets(BddInter* Element, Object *p_Objet)
             ZZ   = Zc +                     sphi*rayon_cercle ;
             Element->N_elements = numero;
             Element->Setxyz(XX,YY,ZZ);
-            Element->make1sommet();     // Sommet
+            Element->make_1_sommet();     // Sommet
 
             XX = cpsi*cphi;
             YY = spsi*cphi;
             ZZ =      sphi;
             Element->Setxyz(XX,YY,ZZ);
-            Element->make1vecteur();    // Normale aux sommet
+            Element->make_1_vecteur();    // Normale aux sommet
 
             cphi_nb = cos(phi_nb);
             sphi_nb = sin(phi_nb);
@@ -191,7 +191,7 @@ void Tore::genereSommets(BddInter* Element, Object *p_Objet)
             YY = spsi_nb*cphi_nb ;
             ZZ =         sphi_nb ;
             Element->Setxyz(XX,YY,ZZ);  // Normale au barycentre
-            Element->make1normale();
+            Element->make_1_normale();
 
             phi    += dphi;
             phi_nb += dphi;
@@ -202,7 +202,7 @@ void Tore::genereSommets(BddInter* Element, Object *p_Objet)
     }
 }
 
-void Tore::genereTore()
+void Tore::Genere_Tore()
 {
     wxString num_obj;
     int new_num;
@@ -217,9 +217,9 @@ void Tore::genereTore()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Tore - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true; // <=> (Element->Objetlist.end()-1)->primitive = true;
-    int indiceObjet = Element->indiceObjet_courant; //Element->Objetlist.size() -1; // Car c'est le dernier ! MaJ dans makeobjet
+    int indiceObjet = Element->indiceObjet_courant; //Element->Objetlist.size() -1; // Car c'est le dernier ! MaJ dans make_objet
 
     printf("centre : %f %f %f\n",centre_primitive[0],centre_primitive[1],centre_primitive[2]);
     printf("Rayons moyen/cercle  : %f / %f\n",rayon_moyen,rayon_cercle);
@@ -228,16 +228,16 @@ void Tore::genereTore()
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    genereFacettes(Element, p_Objet);   // Générer les facettes avant les sommets !
-    genereSommets (Element, p_Objet);   // car Facelist y est utilisé !
+    Genere_Facettes(Element, p_Objet);      // Générer les facettes avant les sommets !
+    Genere_Sommets (Element, p_Objet);      // car Facelist y est utilisé !
     int Nb_facettes = NbPoints*n_secteurs ;
     p_Objet->flat = false;
-    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Element->Genere_Attributs_Facettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes        (p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes         (p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -258,13 +258,13 @@ void Tore::OnButton_OKClick(wxCommandEvent& event)
     numeroGroupe  = SpinCtrl_Groupe  ->GetValue() ;     // Par précaution, mais déjà fait via OnSpinCtrl !
     numeroMateriau= SpinCtrl_Materiau->GetValue() ;     // idem
 
-    genereTore();
+    Genere_Tore();
 
     Element->type = 1;  // Marquer comme si c'était un fichier .bdd
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();

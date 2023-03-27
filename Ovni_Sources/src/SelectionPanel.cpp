@@ -538,7 +538,7 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     Element->listeGroupes.clear();
     Element->listeMateriaux.clear();
     for (i=0; i<Element->Objetlist.size(); i++) {
-        Element->GenereListeGroupesMateriaux(i);
+        Element->Genere_Liste_Groupes_Materiaux(i);
     }
     OnRadioButton_GrpMatSelect(event) ; // Simuler un clic sur Groupe/Matériau pour regénérer la liste affichée dans l'interface
 
@@ -795,7 +795,7 @@ void SelectionPanel::OnRadioButton_TypeSelectionSelect(wxCommandEvent& event)
     Element->TypeSelection = TypeSelection_local;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
 //    printf("Radio TypeSelection %d\n",TypeSelection_local);
 
-    if (TypeSelection_local > 0) {        // Fait ici plutôt que dans drawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
+    if (TypeSelection_local > 0) {        // Fait ici plutôt que dans DrawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
         glEnable(GL_CULL_FACE);
         if (TypeSelection_local == 1)
              glFrontFace(GL_CCW);

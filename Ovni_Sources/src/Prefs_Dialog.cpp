@@ -9,8 +9,8 @@
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 
-const float to_Deg=180.0f/M_PI;
-const float to_Rad=1.0f/to_Deg;
+//const float to_Deg=180.0f/M_PI;
+//const float to_Rad=1.0f/to_Deg;
 
 //(*IdInit(Prefs_Dialog)
 const long Prefs_Dialog::ID_STATICTEXT1 = wxNewId();

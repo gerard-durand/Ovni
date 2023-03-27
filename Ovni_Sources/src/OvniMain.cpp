@@ -7,21 +7,21 @@
  * License:
  **************************************************************/
 
-//#include <GL/glew.h>    // Pour test
+//#include <GL/glew.h>      // Pour test
 
 #include "OvniMain.h"
 #include "OvniApp.h"
 
-#include <wx/wxprec.h>
-#include <wx/debug.h>
-#include <wx/filedlg.h>
-#include <wx/filefn.h>
-#include <wx/msgdlg.h>
-#include <wx/sysopt.h>
+#include <wx/wxprec.h>      // Pour les entêtes précompilées (s'il y en a ...)
 
+#include <wx/debug.h>
 #include <wx/bmpbndl.h>     // avec wx >= 3.1.6 <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
 //#include <wx/bitmap.h>    // inclus dans bmpbndl
+#include <wx/filedlg.h>
+#include <wx/filefn.h>
 #include <wx/image.h>
+#include <wx/msgdlg.h>
+#include <wx/sysopt.h>
 #include <wx/tglbtn.h>
 
 //(*InternalHeaders(OvniFrame)
@@ -807,13 +807,13 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //    this->SetMinSize(*ClientSize);
 
     //OpenGL initialisation code
-    InitOpenGL();
+    Init_OpenGL();
     int argc=1;
     char *argv=(char*)"Ovni";
     glutInit(&argc,&argv);  // On pourrait récupérer les véritables arguments via wxGetApp().argc et wxGetApp.argv[*], mais peu d'intérêt ici pout glutInit, de + ce sont des wxString
 //    glutSetOption(GLUT_MULTISAMPLE,4);    // à faire avant tracé de fenêtre Glut, mais fait aussi dans wxGLCanvas
 //    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);   // Ajout 02/2020 pour test : serait déjà fait dans wxGLCanvas ?
-    InitBoutons();
+    Init_Boutons();
 //    wxPrefs_pos=wxDefaultPosition;
 //    wxModificationPanel_pos= wxDefaultPosition;
 //    wxPropertiesPanel_pos  = wxDefaultPosition;
@@ -1006,7 +1006,7 @@ int OvniFrame::Ouvrir_Ini() {
  * \return Valeur lue (0 si thème par défaut, 1 pour forcer le thème sombre) ou -1 pour forcer le thème clair (ou absent)
  *
  */
-    const char *fichier_init="Ovni.ini";
+//    const char *fichier_init="Ovni.ini";
     const char *initQ="Dark_Mode=";
     int local_darkmode = -1;
     char *Lu, *p_txt_wrk;
@@ -1030,14 +1030,14 @@ int OvniFrame::Ouvrir_Ini() {
     return local_darkmode;
 }
 
-void OvniFrame::InitOpenGL(void) {
-    if (verbose) printf("Entree OvniFrame::InitOpenGL\n");  // Ne semble plus très utile ... à voir ... et peut-être intégrer ailleurs
+void OvniFrame::Init_OpenGL(void) {
+    if (verbose) printf("Entree OvniFrame::Init_OpenGL\n");  // Ne semble plus très utile ... à voir ... et peut-être intégrer ailleurs
     //create opengl context
     m_glcontext = new wxGLContext(GLCanvas);
     //bind the context to the widget
     m_glcontext->SetCurrent(*GLCanvas);
 
-    if (verbose) printf("Sortie OvniFrame::InitOpenGL\n");
+    if (verbose) printf("Sortie OvniFrame::Init_OpenGL\n");
 }
 
 /** Resize the view port
@@ -1067,12 +1067,12 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
     if (verbose) printf("Sortie OvniFrame::ResizeOpenGL\n");
 }
 
-void OvniFrame::InitBoutons(void)
+void OvniFrame::Init_Boutons(void)
 {
-/** \brief OvniFrame::InitBoutons : Initialisation des boutons en mode coché/non coché
+/** \brief OvniFrame::Init_Boutons : Initialisation des boutons en mode coché/non coché
  */
 
-    if (verbose) printf("Entree OvniFrame::InitBoutons\n");
+    if (verbose) printf("Entree OvniFrame::Init_Boutons\n");
     if (Menu_Affichage_Points ->IsChecked()) Button_Points ->SetValue(true);    // IsChecked <=> Bouton enfoncé, sinon par défaut en position haute
     if (Menu_Affichage_Filaire->IsChecked()) Button_Filaire->SetValue(true);
     if (Menu_Affichage_Plein  ->IsChecked()) Button_Plein  ->SetValue(true);
@@ -1087,7 +1087,7 @@ void OvniFrame::InitBoutons(void)
     Panel_Sliders->Update();            // à ce niveau, pas encore affichés, donc ne sert à pas grand chose (idem 3 lignes Panel_Sliders)
     Panel_Sliders->Show(true);          // => Sliders affichés
     Panel_Sliders->Refresh(true);
-    if (verbose) printf("Sortie OvniFrame::InitBoutons\n");
+    if (verbose) printf("Sortie OvniFrame::Init_Boutons\n");
 }
 
 int OvniFrame::SetNewIcons(int icon_size)
@@ -1568,18 +1568,18 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
     }
 }
 
-void OvniFrame::GenereListeAretes() {
+void OvniFrame::Genere_Liste_Aretes() {
 
 /** \brief Génération de la liste des arêtes des facettes
  *
  *
  */
-    if (!Element->GenereTableauAretes_OK) {
-        printf("Construction de GenereTableauAretes\n");
+    if (!Element->Genere_Tableau_Aretes_OK) {
+        printf("Construction de Genere_Tableau_Aretes\n");
         for (unsigned int i=0; i<Element->Objetlist.size(); ++i) {
-             Element->GenereTableauAretes(&(Element->Objetlist[i]));
+             Element->Genere_Tableau_Aretes(&(Element->Objetlist[i]));
         }
-        Element->GenereTableauAretes_OK = true;
+        Element->Genere_Tableau_Aretes_OK = true;
     }
     if (!Element->liste_aretes_OK) {
         printf("Construction de la liste OpenGL d'arêtes\n");
@@ -1602,7 +1602,7 @@ void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
     if(Element != nullptr) {
         Element->show_lines = Button_Filaire->GetValue();
         if (Element->show_lines) {
-            GenereListeAretes();
+            Genere_Liste_Aretes();
         }
         Element->Refresh();
     }
@@ -1623,7 +1623,7 @@ void OvniFrame::OnMenu_Affichage_FilaireSelected(wxCommandEvent& event) {
     if (Element != nullptr) {
         Element->show_lines = Menu_Affichage_Filaire->IsChecked();
         if (Element->show_lines) {
-            GenereListeAretes();
+            Genere_Liste_Aretes();
         }
         Element->Refresh();
     }
@@ -1844,40 +1844,40 @@ void OvniFrame::Ouvrir_Fichier()
     Slider_x->Enable();
     Slider_y->Enable();
     Slider_z->Enable();
-    Element->Slider_x = Slider_x;
-    Element->Slider_y = Slider_y;
-    Element->Slider_z = Slider_z;
-    Element->MPosCRot = CentreRotation_Panel;
-    Element->MScale_0 = ChangerEchelleBdd_Panel;
-    Element->MChoice_O= ChoixAffichageObjets_Panel;
-    Element->MCone    = Cone_Panel;
-    Element->MCGroup  = CouleursGroupes_Panel;
-    Element->MCube    = Cube_Panel;
-    Element->MCylindre= Cylindre_Panel;
-    Element->MDeplacer= DeplacerBdd_Panel;
-    Element->MEllips  = Ellipsoide_Panel;
-    Element->MFacet   = Facette_Panel;
-    Element->MIcosa   = Icosaedre_Panel;
-    Element->MManip   = Manipulations_Panel;
-    Element->MPanel   = Modifications_Panel;
-    Element->MPosObs  = PositionObsAzimutSite_Panel;
-    Element->MPosLight= PositionSource_Panel;
-    Element->MPrefs   = Preferences_Panel;
-    Element->MProps   = Properties_Panel;
-    Element->MRepFacet= ReperageFacette_Panel;
-    Element->MRepGrp  = ReperageGroupe_Panel;
-    Element->MRepMat  = ReperageMateriau_Panel;
-    Element->MRepObj  = ReperageObjet_Panel;
-    Element->MRepPoint= ReperagePoint_Panel;
-    Element->MRotation= Rotation_Panel;
-    Element->MScale   = Scale_Panel;
-    Element->MSelect  = Selections_Panel;
-    Element->MSelFac  = Selections_Manuelles_Facettes;
-    Element->MSelObj  = Selections_Manuelles_Objets;
-    Element->MSphere  = Sphere_Panel;
-    Element->MTrans   = Translation_Panel;
-    Element->MZoomSpec= ZoomSpecifique_Panel;
-    Element->MHelp    = AideHtml_Panel;
+    Element->Slider_x  = Slider_x;
+    Element->Slider_y  = Slider_y;
+    Element->Slider_z  = Slider_z;
+    Element->MPosCRot  = CentreRotation_Panel;
+    Element->MScale_0  = ChangerEchelleBdd_Panel;
+    Element->MChoice_O = ChoixAffichageObjets_Panel;
+    Element->MCone     = Cone_Panel;
+    Element->MCGroup   = CouleursGroupes_Panel;
+    Element->MCube     = Cube_Panel;
+    Element->MCylindre = Cylindre_Panel;
+    Element->MDeplacer = DeplacerBdd_Panel;
+    Element->MEllips   = Ellipsoide_Panel;
+    Element->MFacet    = Facette_Panel;
+    Element->MIcosa    = Icosaedre_Panel;
+    Element->MManip    = Manipulations_Panel;
+    Element->MPanel    = Modifications_Panel;
+    Element->MPosObs   = PositionObsAzimutSite_Panel;
+    Element->MPosLight = PositionSource_Panel;
+    Element->MPrefs    = Preferences_Panel;
+    Element->MProps    = Properties_Panel;
+    Element->MRepFacet = ReperageFacette_Panel;
+    Element->MRepGrp   = ReperageGroupe_Panel;
+    Element->MRepMat   = ReperageMateriau_Panel;
+    Element->MRepObj   = ReperageObjet_Panel;
+    Element->MRepPoint = ReperagePoint_Panel;
+    Element->MRotation = Rotation_Panel;
+    Element->MScale    = Scale_Panel;
+    Element->MSelect   = Selections_Panel;
+    Element->MSelFac   = Selections_Manuelles_Facettes;
+    Element->MSelObj   = Selections_Manuelles_Objets;
+    Element->MSphere   = Sphere_Panel;
+    Element->MTrans    = Translation_Panel;
+    Element->MZoomSpec = ZoomSpecifique_Panel;
+    Element->MHelp     = AideHtml_Panel;
 
     bool Erreur_lecture = true;
 
@@ -1970,7 +1970,7 @@ void OvniFrame::Ouvrir_Fichier()
 //            Element->BddInter::Forcer_OnPaint(cmdPaint);        // Note : inutile avec wxWidgets 2.8, mais pas avec 3.1 et +
             this->Menu_Enregistrer_Sous->Enable();              // Activer tout de même le menu "Enregistrer sous..."
         } else {                                            // Objets(s) déjà affiché(s) => ne rien faire de plus...
-            Element->SetFocus();                                // Donner le focus à la fenètre OpenGL ici car on n'est pas passé dans drawOpenGL
+            Element->SetFocus();                                // Donner le focus à la fenètre OpenGL ici car on n'est pas passé dans DrawOpenGL
         }
     }
 
@@ -2365,7 +2365,7 @@ void OvniFrame::OnModifsXYZ()
 {
     // fonctions à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
         Element->m_gllist = 0;
-        Element->searchMin_Max();
+        Element->Search_Min_Max();
         Element->Refresh();
 }
 
@@ -2464,8 +2464,13 @@ void OvniFrame::OnPopup_ForcerFacettesNonPlanesSelected(wxCommandEvent& event)
 
 void OvniFrame::OnPopup_CreerObjetFacettesSelected(wxCommandEvent& event)
 {
-//    Element->MManip->NewObjet_SelectedFacets(event); // Pour appeler ManipulationsPanel::OnButton_NewObjetClick qui est de type private
-    Manipulations_Panel->NewObjet_SelectedFacets(event); // Pour appeler ManipulationsPanel::OnButton_NewObjetClick qui est de type private
+// Pour appeler ManipulationsPanel::OnButton_NewObjetClick qui est de type private, passer par une fonction publique de ManipulationsPanel
+
+//    if (Element != nullptr) {
+//        Element->MManip->NewObjet_SelectedFacets(event);
+//    }
+//  Ci-dessous, donne la même chose mais en plus direct, sans passer par BddInter
+    Manipulations_Panel->NewObjet_SelectedFacets(event);
 }
 
 void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
@@ -2656,20 +2661,20 @@ void OvniFrame::SetAngles()
 
     if (PositionObsAzimutSite_Panel->IsShown()) {
         // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
-        int val = Element->convert_rotx_LSI();
+        int val = Element->Convert_Rotx_LSI();
         PositionObsAzimutSite_Panel->SpinCtrl_LSI->SetValue(val);
 
-        val = Element->convert_rotz_LAZ();
+        val = Element->Convert_Rotz_LAZ();
         PositionObsAzimutSite_Panel->SpinCtrl_LAZ->SetValue(val);
         if (lround(Element->m_gldata.roty) == 0) PositionObsAzimutSite_Panel->StaticText_Warning->Hide();
         else                                     PositionObsAzimutSite_Panel->StaticText_Warning->Show();
     }
     if (ZoomSpecifique_Panel->IsShown()) {
         // ATTENTION : si roty != 0, les valeurs Site Azimut sont erronnées
-        int val = Element->convert_rotx_LSI();
+        int val = Element->Convert_Rotx_LSI();
         ZoomSpecifique_Panel->SpinCtrl_LSI->SetValue(val);
 
-        val = Element->convert_rotz_LAZ();
+        val = Element->Convert_Rotz_LAZ();
         ZoomSpecifique_Panel->SpinCtrl_LAZ->SetValue(val);
         if (lround(Element->m_gldata.roty) == 0) ZoomSpecifique_Panel->StaticText_Warning->Hide();
         else                                     ZoomSpecifique_Panel->StaticText_Warning->Show();
@@ -3057,7 +3062,7 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
             Element->Objetlist[indiceObjet].deleted=true;   // Dans ce cas, on ne fait que marquer l'objet comme deleted !
 
         Element->m_gllist = 0;
-        Element->searchMin_Max();
+        Element->Search_Min_Max();
         Element->Refresh();
     } else {
         printf("Plus de primitives ajoutees !\n");

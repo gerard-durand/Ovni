@@ -134,7 +134,7 @@ void Facette::genereFacette()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Facette - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
     int indiceObjet = Element->indiceObjet_courant;
 
@@ -143,27 +143,27 @@ void Facette::genereFacette()
 // Facette
     Element->str.clear();
     Element->N_elements = 1;
-    Element->makeface();
+    Element->make_face();
     p_Objet->Nb_facettes = 1;
-    Element->str = _T("1 3 1 2 3"); Element->make1face();
+    Element->str = _T("1 3 1 2 3"); Element->make_1_face();
 
     p_Objet->Facelist[0].flat = true;   // On force le mode facette plane
 
 // Sommets
     Element->str.clear();
     Element->N_elements = 3;
-    Element->makesommet();
+    Element->make_sommet();
     p_Objet->Nb_sommets = 3;
     float X, Y, Z;
     X = wxAtof(TextCtrl_P1X->GetValue()); Y = wxAtof(TextCtrl_P1Y->GetValue()); Z = wxAtof(TextCtrl_P1Z->GetValue());
     Vector3D P1(X,Y,Z);
-    Element->N_elements=1; Element->Setxyz(X,Y,Z); Element->make1sommet();
+    Element->N_elements=1; Element->Setxyz(X,Y,Z); Element->make_1_sommet();
     X = wxAtof(TextCtrl_P2X->GetValue()); Y = wxAtof(TextCtrl_P2Y->GetValue()); Z = wxAtof(TextCtrl_P2Z->GetValue());
     Vector3D P2(X,Y,Z);
-    Element->N_elements=2; Element->Setxyz(X,Y,Z); Element->make1sommet();
+    Element->N_elements=2; Element->Setxyz(X,Y,Z); Element->make_1_sommet();
     X = wxAtof(TextCtrl_P3X->GetValue()); Y = wxAtof(TextCtrl_P3Y->GetValue()); Z = wxAtof(TextCtrl_P3Z->GetValue());
     Vector3D P3(X,Y,Z);
-    Element->N_elements=3; Element->Setxyz(X,Y,Z); Element->make1sommet();
+    Element->N_elements=3; Element->Setxyz(X,Y,Z); Element->make_1_sommet();
 
 // Normale à la facette
     Vector3D v1 = P2 - P1;
@@ -174,22 +174,22 @@ void Facette::genereFacette()
 
     Element->str.clear();
     Element->N_elements = 1;
-    Element->makenormale();
+    Element->make_normale();
     p_Objet->Nb_normales = 1;
-    Element->N_elements = 1; Element->Setxyz( vn.X, vn.Y, vn.Z); Element->make1normale();
+    Element->N_elements = 1; Element->Setxyz( vn.X, vn.Y, vn.Z); Element->make_1_normale();
 
 // Attributs de la facette
-    Element->genereAttributsFacettes(p_Objet, 1, numeroGroupe, numeroMateriau);
+    Element->Genere_Attributs_Facettes(p_Objet, 1, numeroGroupe, numeroMateriau);
 
 // Luminance
     p_Objet->flat = true; // En fait serait de toutes façons plat avec les normales aux sommets ci-dessous
     p_Objet->Nb_vecteurs   = 0;
     p_Objet->Nb_luminances = 0;
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -207,7 +207,7 @@ void Facette::OnButton_OKClick(wxCommandEvent& event)
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();

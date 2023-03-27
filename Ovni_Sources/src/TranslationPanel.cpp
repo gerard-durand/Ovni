@@ -451,7 +451,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
             if (objet_courant->Nb_vecteurs != 0) {  // Ne rien faire s'il n'y a pas déjà de normales aux sommets
                 n_val = Element->listePoints.size();
                 jt    = Element->listePoints.begin();
-                for (j=0; j<n_val; j++, jt++) Element->GenereNormale_1_Sommet(objet_courant,*jt,*jt); // Attention ici, les "vecteurs" doivent exister
+                for (j=0; j<n_val; j++, jt++) Element->Genere_Normale_1_Sommet(objet_courant,*jt,*jt); // Attention ici, les "vecteurs" doivent exister
             }
         }
         Element->listePoints.clear();
@@ -496,7 +496,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
                 // Compléter la liste des sommets avec tous ceux de chaque facette de la liste
                 NumerosSommets = objet_courant->Facelist[*ft].getF_sommets();
                 for (j=0; j<NumerosSommets.size(); j++) {
-                    indice = NumerosSommets[j] -1;
+                    indice  = NumerosSommets[j] -1;
                     auto jt = std::find(Element->listePoints.begin(),Element->listePoints.end(),indice);    // Ce sommet est-il déjà dans la liste ?
                     if (jt == Element->listePoints.end() || Element->listePoints.empty()) {                     // Non
                         Element->listePoints.push_front(indice);                                                // L'ajouter à la liste des points
@@ -507,7 +507,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
             if (objet_courant->Nb_vecteurs != 0) {  // Ne rien faire s'il n'y a pas déjà de normales aux sommets
                 n_val = Element->listePoints.size();
                 jt    = Element->listePoints.begin();
-                for (j=0; j<n_val; j++, jt++) Element->GenereNormale_1_Sommet(objet_courant,*jt,*jt); // Attention ici, les "vecteurs" doivent exister
+                for (j=0; j<n_val; j++, jt++) Element->Genere_Normale_1_Sommet(objet_courant,*jt,*jt); // Attention ici, les "vecteurs" doivent exister
             }
         }
         Element->listePoints.clear();
@@ -516,7 +516,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
 
     Element->bdd_modifiee = true;
     Element->m_gllist = 0;
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->Refresh();
 }
 

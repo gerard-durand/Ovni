@@ -95,7 +95,7 @@ void Icosaedre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Icosaedre::genereNormalesSommets(BddInter* Element, Object * p_Objet)
+void Icosaedre::Genere_Normales_Sommets(BddInter* Element, Object * p_Objet)
 {
     int i, numero;
     std::vector<float> xyz_sommet;
@@ -105,7 +105,7 @@ void Icosaedre::genereNormalesSommets(BddInter* Element, Object * p_Objet)
     Element->str.clear();
     Element->N_elements = NbPoints;
     p_Objet->Nb_normales = NbPoints;
-    Element->makevecteur();
+    Element->make_vecteur();
 
     Element->N_elements = 3;
     numero = 1;
@@ -115,13 +115,13 @@ void Icosaedre::genereNormalesSommets(BddInter* Element, Object * p_Objet)
         Vs.normalize();
         Element->N_elements = numero;
         Element->Setxyz(Vs.X, Vs.Y, Vs.Z);
-        Element->make1vecteur();
+        Element->make_1_vecteur();
         numero++;
     }
 
 }
 
-void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
+void Icosaedre::Genere_Sommets(BddInter* Element, Object *p_Objet)
 {
 // Génère un icosaèdre, via des points sur une sphère de rayon donné
 // NOTE : cette figure peut servir de point de départ à une génération de sphère en subdivisant les arêtes de façon récursive
@@ -138,7 +138,7 @@ void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
 
     Element->str.clear();
     Element->N_elements = NbPoints;
-    Element->makesommet();
+    Element->make_sommet();
 
     p_Objet->Nb_sommets = NbPoints;
 
@@ -146,7 +146,7 @@ void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
     numero = 1;
     Element->N_elements = numero;
     Element->Setxyz(Xc, Yc+rayon, Zc);
-    Element->make1sommet();
+    Element->make_1_sommet();
 
     phi   = M_PI/2 - atan(0.5) ;    // Phi n'est pas la latitude ici : latitude = +- artan(1/2) M_PI_2 = M_PI/2 mais seulement pour Gnu C
     s_phi = sin(phi);
@@ -161,7 +161,7 @@ void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
         Element->Setxyz(Xc+rayon*cos(theta)*s_phi,
                         Yc+rayon*c_phi,
                         Zc+rayon*sin(theta)*s_phi);
-        Element->make1sommet();
+        Element->make_1_sommet();
 
         if (i == 4) {
             c_phi *= -1 ;           // <=> phi = M_PI - phi ;
@@ -173,7 +173,7 @@ void Icosaedre::genereSommets(BddInter* Element, Object *p_Objet)
     numero = NbPoints;
     Element->N_elements = numero;
     Element->Setxyz(Xc, Yc-rayon, Zc);
-    Element->make1sommet();
+    Element->make_1_sommet();
 
 }
 
@@ -191,7 +191,7 @@ void Icosaedre::genereIcosaedre()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Icosaedre - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
     int indiceObjet = Element->indiceObjet_courant;
@@ -202,21 +202,21 @@ void Icosaedre::genereIcosaedre()
     int Nb_facettes  = 2*Nb_Meridiens*Nb_Paralleles;
 
     bool New_typeSphere = false;
-    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
+    Element->Genere_Facettes_Sphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    genereSommets(Element, p_Objet);
-    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
-    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
-    Element->genereLuminances(p_Objet, Nb_facettes);
+    Genere_Sommets(Element, p_Objet);
+    Element->Genere_Normales_Facettes (p_Objet, Nb_facettes);
+    Element->Genere_Attributs_Facettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Element->Genere_Luminances(p_Objet, Nb_facettes);
     p_Objet->flat = false; // Si true, vrai Icosaèdre à facettes planes
-    genereNormalesSommets(Element, p_Objet);
+    Genere_Normales_Sommets(Element, p_Objet);
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -283,27 +283,27 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
             Pn = Vn*rayon + Centre;             // Point sur la surface de la sphère
             Element->N_elements = Nb_sommets+1;
             Element->Setxyz(Pn.X, Pn.Y, Pn.Z);
-            Element->make1sommet();
+            Element->make_1_sommet();
             Element->Setxyz(Vn.X, Vn.Y, Vn.Z);
-            Element->make1vecteur();
+            Element->make_1_vecteur();
 
             Pn = (P1+P2)/2. - Centre;
             Vn = Pn.normalize();
             Pn = Vn*rayon + Centre;
             Element->N_elements = Nb_sommets+2;
             Element->Setxyz(Pn.X, Pn.Y, Pn.Z);
-            Element->make1sommet();
+            Element->make_1_sommet();
             Element->Setxyz(Vn.X, Vn.Y, Vn.Z);
-            Element->make1vecteur();
+            Element->make_1_vecteur();
 
             Pn = (P2+P0)/2. - Centre;
             Vn = Pn.normalize();
             Pn = Vn*rayon + Centre;
             Element->N_elements = Nb_sommets+3;
             Element->Setxyz(Pn.X, Pn.Y, Pn.Z);
-            Element->make1sommet();
+            Element->make_1_sommet();
             Element->Setxyz(Vn.X, Vn.Y, Vn.Z);
-            Element->make1vecteur();
+            Element->make_1_vecteur();
 
             NewNumeros = NumerosSommets;
             NewNumeros[1] = Nb_sommets+1;
@@ -318,7 +318,7 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
             indiceFacette = newFacette++;
             Element->N_elements = newFacette;
             Element->NumerosSommets = {(int)Nb_sommets+1, NumerosSommets[1], (int)Nb_sommets+2};
-            Element->make1face();
+            Element->make_1_face();
             objet_courant = &(Element->Objetlist[indiceObjet]);
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);
             facette_nouvelle->groupe       = groupe;
@@ -331,7 +331,7 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
             indiceFacette++;
             Element->N_elements = ++newFacette;
             Element->NumerosSommets = {(int)Nb_sommets+1, (int)Nb_sommets+2, (int)Nb_sommets+3};
-            Element->make1face();
+            Element->make_1_face();
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);
             facette_nouvelle->groupe       = groupe;
             facette_nouvelle->codmatface   = codmatface;
@@ -343,7 +343,7 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
             indiceFacette++;
             Element->N_elements = ++newFacette;
             Element->NumerosSommets = {(int)Nb_sommets+3, (int)Nb_sommets+2, NumerosSommets[2]};
-            Element->make1face();
+            Element->make_1_face();
             facette_nouvelle = &(objet_courant->Facelist[indiceFacette]);
             facette_nouvelle->groupe       = groupe;
             facette_nouvelle->codmatface   = codmatface;
@@ -356,8 +356,8 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
 
         }
     }
-    Element->GenereTableauPointsFacettes(objet_courant);
-    Element->GenereTableauAretes(objet_courant);
+    Element->Genere_Tableau_Points_Facettes(objet_courant);
+    Element->Genere_Tableau_Aretes(objet_courant);
     printf("\nResultat des subdivisions :\n");
     printf("Nombre de points   : %d\n",objet_courant->Nb_sommets) ;
     printf("Nombre de facettes : %d\n",objet_courant->Nb_facettes);
@@ -387,7 +387,7 @@ void Icosaedre::OnButton_OKClick(wxCommandEvent& event)
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();

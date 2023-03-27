@@ -234,7 +234,7 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
         for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected = false;
     }
     Hide();
-    // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser GenereTableauPointsFacettes et GenereTableauAretes
+    // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser Genere_Tableau_Points_Facettes et Genere_Tableau_Aretes
     // Mais cette opération est longue sur certaines grosses Bdd. Peut-être à proposer en option via le bouton "Recalculer les arêtes".
     Element->Refresh();
 }
@@ -465,12 +465,12 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     for (k=0; k<3; k++) Element->xyz[k] = xyz[k];   // Recopie du xyz local dans le vecteur xyz de Element
                     Element->str.clear();
                     Element->N_elements = new_numero;
-                    Element->make1sommet();                         // Ici on va augmenter la taille de Sommetlist via push_back
+                    Element->make_1_sommet();                         // Ici on va augmenter la taille de Sommetlist via push_back
                     if (!facette_plane) {
                         new_numero = objet_courant->Nb_vecteurs +1;
                         Element->xyz[0] = Element->xyz[1] = 0. ; Element->xyz[2] = 1; // Initialiser le vecteur
                         Element->N_elements = new_numero;
-                        Element->make1vecteur();
+                        Element->make_1_vecteur();
                     }
                     nb_new = nb_sommets_loc-1;  // 1 de moins car on réutilise la facette de base (facette_courante)
                     jj3 = objet_courant->Nb_sommets;                        // Indice du nouveau point central
@@ -557,11 +557,11 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
                     new_indice_facette      = new_numero_facette-1;
                     Element->N_elements     = new_numero_facette;
                     Element->NumerosSommets = NumerosSommets;
-                    Element->make1face();
+                    Element->make_1_face();
                     if (!facette_plane) {
                         Element->NumerosSommets = NumerosVecteurs;
-                        Element->make1luminance();
-//                        Element->make1luminance(new_numero_facette,NumerosVecteurs);
+                        Element->make_1_luminance();
+//                        Element->make_1_luminance(new_numero_facette,NumerosVecteurs);
                     }
                     facette_courante = &(objet_courant->Facelist[i]);   // Facelist a changé donc peut avoir changé de place en mémoire => réinit du pointeur facette_courante
                     facette_nouvelle = &(objet_courant->Facelist[new_indice_facette]);
@@ -593,8 +593,8 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
             }
 
             if (objet_courant->Temps_Calcul_Aretes <= tempo_s*CLOCKS_PER_SEC) {
-                Element->GenereTableauPointsFacettes(objet_courant);
-                Element->GenereTableauAretes(objet_courant);    // Peut-être long sur de grosses Bdd (recherche des doublons !) est-ce à faire systématiquement ?
+                Element->Genere_Tableau_Points_Facettes(objet_courant);
+                Element->Genere_Tableau_Aretes(objet_courant);    // Peut-être long sur de grosses Bdd (recherche des doublons !) est-ce à faire systématiquement ?
                 Element->buildAllLines();
                 Refresh();
                 aretes_calculees    = true;
@@ -636,8 +636,8 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 ////                }
 //                kt=IndicesSommets.begin();
 //            }
-//            for (k=0; k<IndicesVecteurs.size(); k++, kt++) Element->GenereNormale_1_Sommet(objet_courant,*kt,*kt);
-//            Element->searchMin_Max();   // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
+//            for (k=0; k<IndicesVecteurs.size(); k++, kt++) Element->Genere_Normale_1_Sommet(objet_courant,*kt,*kt);
+//            Element->Search_Min_Max();   // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
         }
     }
 
@@ -646,7 +646,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
         Element->DisplayMessage(_T("La base de données est déjà triangulée !"),true);
     } else {
         Element->Calcul_All_Normales();     // Ici, le + simple : recalculer toutes les normales (y compris celles aux barycentres !)
-        Element->searchMin_Max();           // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
+        Element->Search_Min_Max();          // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)
         Element->bdd_modifiee = true;
         Element->m_gllist = 0;              // Retracer la nouvelle Bdd modifiée
         Element->Smemory  = nullptr;        // Raz
@@ -754,8 +754,8 @@ void ModificationPanel::OnButton_RecalculerAretesClick(wxCommandEvent& event)
     for (o=0; o<Element->Objetlist.size(); o++) {
         objet_courant = &(Element->Objetlist[o]);
         if (objet_courant->deleted) continue;   // Objet supprimé mais encore en mémoire => passer au suivant
-        Element->GenereTableauPointsFacettes(objet_courant);
-        Element->GenereTableauAretes(objet_courant);
+        Element->Genere_Tableau_Points_Facettes(objet_courant);
+        Element->Genere_Tableau_Aretes(objet_courant);
         aretes_calculees = true;
     }
     Element->buildAllLines();

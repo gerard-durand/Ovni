@@ -43,7 +43,7 @@ class Sphere: public wxDialog
 		wxTextCtrl* TextCtrl_Y;
 		wxTextCtrl* TextCtrl_Z;
 		//*)
-//		void genereFacettes(OvniFrame*);
+//		void Genere_Facettes(OvniFrame*);
 
 	protected:
 

@@ -383,7 +383,7 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
                 }
             // Calcul des normales aux sommets
 //                if (objet_courant->Nb_vecteurs != 0)              // Faut-il le conditionner à la préexistance des vecteurs ?
-                    Element->GenereNormalesAuxSommets(o,ns);
+                    Element->Genere_Normales_Aux_Sommets(o,ns);
             }
         }
     } else if(Element->mode_selection == Element->selection_facette) {
@@ -457,7 +457,7 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
                 }
                 jt    = Element->listePoints.begin();
                 n_val = Element->listePoints.size();
-                for (j=0; j<n_val; j++, jt++) Element->GenereNormale_1_Sommet(objet_courant,*jt,*jt) ;
+                for (j=0; j<n_val; j++, jt++) Element->Genere_Normale_1_Sommet(objet_courant,*jt,*jt) ;
             }
 
         }

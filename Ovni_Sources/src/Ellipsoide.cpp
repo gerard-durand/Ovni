@@ -126,7 +126,7 @@ void Ellipsoide::genereEllipsoide()
         new_num = Element->Objetlist.rbegin()->GetValue() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Ellipsoide - ") + num_obj;
-    Element->makeobjet();
+    Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
     int indiceObjet = Element->indiceObjet_courant;
@@ -136,22 +136,22 @@ void Ellipsoide::genereEllipsoide()
     printf("Nombre de paralleles : %d\n",Nb_Paralleles);
     int Nb_facettes = 2*Nb_Meridiens*Nb_Paralleles;
 
-    Element->genereFacettesSphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
-    Element->genereSommetsSphere (Nb_Meridiens, Nb_Paralleles, centre_primitive, rayon, coefx, coefy, coefz);
+    Element->Genere_Facettes_Sphere(Nb_Meridiens, Nb_Paralleles, New_typeSphere);
+    Element->Genere_Sommets_Sphere (Nb_Meridiens, Nb_Paralleles, centre_primitive, rayon, coefx, coefy, coefz);
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
-    Element->genereNormalesFacettes (p_Objet, Nb_facettes);
-    Element->genereAttributsFacettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
-    Element->genereLuminances(p_Objet, Nb_facettes);
+    Element->Genere_Normales_Facettes (p_Objet, Nb_facettes);
+    Element->Genere_Attributs_Facettes(p_Objet, Nb_facettes, numeroGroupe, numeroMateriau);
+    Element->Genere_Luminances(p_Objet, Nb_facettes);
 
     p_Objet->flat = false;
-    Element->genereNormalesSommetsSphere(Nb_Meridiens, Nb_Paralleles, coefx, coefy, coefz);
+    Element->Genere_Normales_Sommets_Sphere(Nb_Meridiens, Nb_Paralleles, coefx, coefy, coefz);
 
-    Element->GenereTableauPointsFacettes(p_Objet);
-    Element->GenereTableauAretes_OK = true;
-    Element->GenereTableauAretes(p_Objet);
-    Element->GenereListeGroupesMateriaux(p_Objet);
+    Element->Genere_Tableau_Points_Facettes(p_Objet);
+    Element->Genere_Tableau_Aretes_OK = true;
+    Element->Genere_Tableau_Aretes(p_Objet);
+    Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
     Element->bdd_modifiee = true;
 }
@@ -181,7 +181,7 @@ void Ellipsoide::OnButton_OKClick(wxCommandEvent& event)
     Element->type_new = 1;
     Element->m_gllist = 0;
 
-    Element->searchMin_Max();
+    Element->Search_Min_Max();
     Element->m_loaded = true;
     Element->OK_ToSave= true;
     Element->Refresh();
