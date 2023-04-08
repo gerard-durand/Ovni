@@ -9,7 +9,7 @@
 #include <wx/textctrl.h>
 //*)
 
-#include "OvniMain.h"
+#include "Interface.h"
 
 class Icosaedre: public wxDialog
 {

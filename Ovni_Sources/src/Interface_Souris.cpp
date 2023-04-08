@@ -406,7 +406,6 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
                     if (letscheckthemouse(0,hits)) {
-//                        m_gllist = 0;                         // reconstruit toutes les listes alors que seule celle des points suffirait
                         Search_Min_Max();                       // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
                         if (show_points && !MPanel->Bool_souder) { // En mode show_points seulement, pas en mode soudure de points
                             if ((point_under_mouse != point_under_mouse_old) || (objet_under_mouse != objet_under_mouse_old)) {
@@ -415,7 +414,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
-//                        m_gllist = glliste_points;              // Reconstruire toute la liste de points, ... pas utile finalement !
+                        m_gllist = glliste_points;              // Reconstruire toute la liste de points
                         if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;

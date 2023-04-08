@@ -7,7 +7,7 @@
 #include <wx/html/htmlwin.h>
 //*)
 
-#include "OvniMain.h"
+//#include "OvniMain.h"
 
 class Aide_html: public wxDialog
 {
@@ -36,8 +36,8 @@ class Aide_html: public wxDialog
 		void OnResize(wxSizeEvent& event);
 		//*)
 
-        int posx_button,posy_button,sizex_html,sizey_html;
-		OvniFrame* MAIN;
+        int posx_button, posy_button, sizex_html, sizey_html;
+//		OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

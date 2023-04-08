@@ -31,11 +31,10 @@ const char *initO="TestDbAretes="       ;
 const char *initP="Taille_Icones="      ;
 const char *initQ="Dark_Mode="          ;
 
-FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
+FILE *f_init;
 
 void BddInter::Ouvrir_ini_file()
 {
-    FILE *f_init;
     char *Lu, *p_txt_wrk;
     int icmp, ibool, len ;
 
@@ -296,11 +295,11 @@ void BddInter::Ouvrir_ini_file()
 
 void BddInter::Stocker_ini_file()
 {
-    FILE *f_init;
 
     if (!ini_file_modified) return ;        // Ne rien faire si le fichier n'a pas été modifié
 
     f_init=fopen(fichier_init,"w") ;
+
     if (f_init != nullptr) {
         fprintf(f_init,"%s%f\n",init1,len_axe) ;
         fprintf(f_init,"%s%f\n",init2,len_normales);

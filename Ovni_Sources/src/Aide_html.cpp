@@ -39,7 +39,7 @@ Aide_html::Aide_html(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Aide_html::OnClose);
 	Connect(wxEVT_SIZE,(wxObjectEventFunction)&Aide_html::OnResize);
 	//*)
-	this->MAIN = dynamic_cast<OvniFrame*>(parent);
+//	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 	wxSize s;
 	s = this->GetClientSize();
 	sizex_html = s.GetWidth();      // Sauvegarde de la taille initiale du dialogue

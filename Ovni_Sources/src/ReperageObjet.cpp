@@ -5,7 +5,6 @@
 #include <wx/string.h>
 //*)
 
-//#include "OvniMain.h"
 #include "utf8.h"
 
 //(*IdInit(ReperageObjet)

@@ -521,5 +521,5 @@ void RotationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 //void RotationPanel::ToDo()
 //{
-//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), false);
+//    DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), false);
 //}

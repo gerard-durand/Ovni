@@ -12,16 +12,6 @@
 #ifndef _DXFRENDERER_H_
 #define _DXFRENDERER_H_
 
-#include <wx/app.h>
-#include <wx/dcclient.h>
-#include <wx/string.h>
-#include <wx/tokenzr.h>
-#include "wx/wfstream.h"
-#include <GL/glu.h>
-#include <vector>
-#include "trackball.h"
-#include "GLCanvas.h"
-
 struct DXFVector
 {
     DXFVector() { x = y = z = 0.0f; }

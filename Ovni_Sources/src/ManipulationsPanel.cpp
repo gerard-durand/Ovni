@@ -376,7 +376,7 @@ void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
         if (Element->ToSelect.ListeSelect[i].objet != indice_objet) OK = false;
     }
     if (!OK) {
-        Element->DisplayMessage(_T("Ne fonctionne pas sur des facettes\nappartenant à plusieurs objets"), true);
+        DisplayMessage(_T("Ne fonctionne pas sur des facettes\nappartenant à plusieurs objets"), true);
         return;
     }
 
@@ -427,12 +427,12 @@ void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
     car les facettes ne sont que marquées "deleted", mais pas supprimées, et les points/normales/vecteurs non utilisés restent en mémoire.
 */
     if (premiere_fois)
-        Element->DisplayMessage(_T("Il faudrait simplifier la Bdd de préférence\navant de l'enregistrer"), true);
+        DisplayMessage(_T("Il faudrait simplifier la Bdd de préférence\navant de l'enregistrer"), true);
     premiere_fois = false;  // Un seul avertissement la première fois... Vous avez été prévenus non ?
 }
 
 //void ManipulationsPanel::ToDo()
 //{
-//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel"), true);
+//    DisplayMessage(_T("Pas encore complètement opérationnel"), true);
 //}
 

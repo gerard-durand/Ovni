@@ -16,13 +16,13 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
 END_EVENT_TABLE()
 
 #if wxCHECK_VERSION(3,1,0)
-    BddInter::BddInter(wxWindow *parent, const wxGLAttributes& AttribList, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
+BddInter::BddInter(wxWindow *parent, const wxGLAttributes& AttribList, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
 // Explicitly create a new rendering context instance for this canvas.
     wxGLCanvas(parent, AttribList, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
 {
     m_glRC = new wxGLContext(this);
 #else
-    BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
+BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
 
 #if wxCHECK_VERSION(3,0,0)
     wxGLCanvas(parent, id, AttribList, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
@@ -1160,15 +1160,7 @@ void BddInter::Inverse_Selected_Normales() {
 //    Refresh();
 }
 
-void BddInter::DisplayMessage(wxString wxMessage, bool bip)
-{
-    long style     = wxOK | wxICON_QUESTION;        // Avec l'icône wxICON_QUESTION, l'affichage reste silencieux (wxICON_INFORMATION + logique, mais bruyant !!)
-    if (bip) style = wxOK | wxICON_INFORMATION;
-
-    wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Avertissement"), style);
-    query->ShowModal();
-    query->Destroy();
-}
+//void BddInter::DisplayMessage(wxString wxMessage, bool bip)   // Déplacé dans OvniMain.cpp en dehors de OvniFrame
 
 void BddInter::Inverser_Parcours_Selected() {
 // <=> Inverse_Selected_Normales mais on ne garde que l'inversion du sens de parcours des sommets de facettes

@@ -1509,7 +1509,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MHelp->Button_OK->SetBackgroundColour(Gris);
     this->MHelp->Refresh();
 
-// About : c'est un wxMessageBox dans void OvniFrame::OnAbout : ne semble pas pouvoir se coloriser via SetForegroundColour / SetBackgroundColour
+// About : c'était un wxMessageBox dans void OvniFrame::OnAbout : ne semble pas pouvoir se coloriser via SetForegroundColour / SetBackgroundColour
 
 //    this->MAIN_b->Refresh();
 

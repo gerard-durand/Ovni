@@ -534,7 +534,7 @@ void ScalePanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 //void ScalePanel::ToDo()
 //{
-//    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), true);
+//    DisplayMessage(_T("Pas encore complètement opérationnel\nSimulation interface OK"), true);
 //}
 
 

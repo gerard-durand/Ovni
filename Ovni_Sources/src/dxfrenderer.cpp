@@ -13,14 +13,7 @@
 // Ne supporte pas, de base, le format dxf dans son intégralité, seulement un sous-ensemble compatible penguin ou fichiers obtenus via de Flight_Sim !
 
 // For compilers that support precompilation, includes "wx/wx.h".
-#include "Interface.h"
-#include "trackball.h"
-#include <wx/dcclient.h>
-#include <wx/string.h>
-#include <wx/tokenzr.h>
 #include "wx/wxprec.h"
-#include <GL/glu.h>
-#include <vector>
 
 #ifdef __BORLANDC__
 #pragma hdrstop

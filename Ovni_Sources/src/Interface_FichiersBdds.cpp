@@ -29,9 +29,9 @@
 FILE* f;                                    // Doit être ici pour pouvoir être utilisé aussi dans la lecture des fichiers G3D (hors BddInter)
 
 #define XML_FMT_INT_MOD "l"
-#define BUFFSIZE        8192
+#define XML_BUFFSIZE    8192
 
-char XML_Buff[BUFFSIZE];
+char XML_Buff[XML_BUFFSIZE];
 int  XML_Depth;
 int  i_objetXML_courant=0;                  // Utilisé seulement en lecture de fichier G3D. Donner une valeur initiale
 static int id_timer=1000;
@@ -76,7 +76,10 @@ void BddInter::Update_Dialog(long position, long max_value)
         if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
 //            dialog = new wxProgressDialog(wxS("Lecture du fichier"),
 //                                          wxFileNameFromPath(get_file()),   // Pour afficher le npm du fichier
-            progress_dialog = new wxProgressDialog(Dialog_Titre,
+
+// un wxGenericProgressDialog est OK en mode Darkmode alors qu'un wxProgressDialog reste avec les couleurs standard de Windows !
+
+            progress_dialog = new wxGenericProgressDialog(Dialog_Titre,
                                           Dialog_Comment,   // Pour afficher le npm du fichier
                                           100,              // range
                                           this,             // parent
@@ -285,10 +288,13 @@ void BddInter::create_bdd() {
                         wxString wxMessage = _T("Les Vecteurs et Luminances sont déjà présents dans la BDD.\n");
                         wxMessage         += _T("Le calcul refait à la lecture du fichier va les remplacer...\n");
                         wxMessage         += _T("Est-ce bien ce que vous voulez ?");
-                        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question"),
-                                                 wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
-                        if (query->ShowModal() == wxID_YES) Forcer_calcul = true;
-                        query->Destroy();
+
+                        long retour_Display = DisplayMessage(wxMessage, _T("Question"),
+                                                             wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+                        if (retour_Display == wxID_YES) {
+                            Forcer_calcul = true;
+                            bdd_modifiee  = true;
+                        }
                     }
                 }
                 else Forcer_calcul = true;
@@ -645,7 +651,7 @@ void BddInter::LectureXML_G3d (FILE *f)
 
     for (;;) {
 
-        len = (int)fread(XML_Buff, 1, BUFFSIZE, f);
+        len = (int)fread(XML_Buff, 1, XML_BUFFSIZE, f);
         if (ferror(f)) {
             fprintf(stderr, "Erreur de lecture du fichier XML\n");
             exit(-1);
@@ -3902,7 +3908,7 @@ void BddInter::SaveBDD(wxString str) {
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
         wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        wxMessageBox(Msg,"Avertissement");
+        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
@@ -4204,7 +4210,7 @@ void BddInter::SaveOBJ(wxString str) {
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
         wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        wxMessageBox(Msg,"Avertissement");
+        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
@@ -4427,7 +4433,7 @@ void BddInter::SaveOFF(wxString str) {
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
         wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        wxMessageBox(Msg,"Avertissement");
+        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
         return;
     }
     printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
@@ -4562,7 +4568,7 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
     }
     if (!myfile.is_open()) {
         wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        wxMessageBox(Msg,"Avertissement");
+        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
         return;
     }
 
@@ -4683,7 +4689,7 @@ void BddInter::SaveG3D(wxString str) {
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
         wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        wxMessageBox(Msg,"Avertissement");
+        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
         return;
     }
 

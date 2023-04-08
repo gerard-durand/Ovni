@@ -421,21 +421,32 @@ void SelectionPanel::OnButton_QuitterClick(wxCommandEvent& event)
 
 void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
 {
-// Initialement, c'était OnRadioBox_SelectionSelect avec des RadioBox_Selection->GetSelection(xx) ...
+// Initialement, c'était OnRadioBox_SelectionSelect avec des RadioBox_Selection->GetSelection(xx) ... mais soucis en darkmode si wxWidgets < 3.3.0
 
     BddInter *Element = MAIN->Element;
+    Object * objet_courant;
 
     wxString str_reset;
     str_reset.clear();                              // Vide pour forcer un affichage de case sans rien dedans
-    unsigned int i;
-
-    Element->listeObjets.clear();
-    Element->listePoints.clear();
-    for (i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
+    unsigned int i,j;
 
     if (RadioButton_Selection_Points  ->GetValue()) Element->TypeSelection = 0;
     if (RadioButton_Selection_Facettes->GetValue()) Element->TypeSelection = 1;
     if (RadioButton_Selection_Objets  ->GetValue()) Element->TypeSelection = 2;
+
+    Element->listeObjets.clear();
+    Element->listePoints.clear();
+    for (i=0; i<Element->Objetlist.size(); i++) {
+        objet_courant = &(Element->Objetlist[i]);
+        objet_courant->selected = false;            // Forcer la déselection des objets
+        if (Element->TypeSelection == 0) {
+            unsigned int nb_sommets = objet_courant->Sommetlist.size();
+#pragma omp parallel for
+            for (j=0; j<nb_sommets; j++) {          // Forcer la déselection des points/sommets
+                objet_courant->Sommetlist[j].selected = false;
+            }
+        }
+    }
 
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
@@ -759,9 +770,16 @@ void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
             test      = true;
             wxMessage = _T("Aucune Facette sélectionnée !");
         }
+    } else if (Element->mode_selection == Element->selection_point) {
+//        wxString s_val = TextCtrl_Selection->GetValue();
+        if (Element->ToSelect.ListeSelect.size() == 0) { // empty() ne marche pas ? voir aussi Translation_Panel lignes 459 et +. De plus les points ne restent pas en vert !
+//        if (s_val == "") {    // Ici on teste si la case est vide.
+            test      = true;
+            wxMessage = _T("Aucun Point sélectionné !");
+        }
     }
     if (test) {
-        Element->DisplayMessage(wxMessage,true);
+        DisplayMessage(wxMessage,true);
         return;
     }
     // Le bouton Rotation de Manipulation d'objet n'est actif que si on est en mode de sélection d'objet !
@@ -1037,5 +1055,5 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
 
 void SelectionPanel::ToDo()
 {
-    MAIN->Element->DisplayMessage(_T("Pas encore complètement opérationnel...\nSimulation interface OK"), true);
+    DisplayMessage(_T("Pas encore complètement opérationnel...\nSimulation interface OK"), true);
 }

@@ -10,7 +10,7 @@
 #include <wx/textctrl.h>
 //*)
 
-#include "OvniMain.h"
+#include "Interface.h"
 
 class Cone: public wxDialog
 {
@@ -19,7 +19,6 @@ class Cone: public wxDialog
 		Cone(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Cone();
 //		wxWindow* Cone_Parent;
-		OvniFrame *MAIN;
 		int numeroGroupe  = 0;
 		int numeroMateriau= 0;
 
@@ -83,6 +82,7 @@ class Cone: public wxDialog
 		void OnClose(wxCloseEvent& event);
 		void OnSpinCtrl_NbSecteursChange(wxSpinEvent& event);
 		//*)
+        OvniFrame *MAIN;
 
         float centre_primitive[3];
 		float longueur;
@@ -92,9 +92,9 @@ class Cone: public wxDialog
 		int   n_secteurs;
 
 		void genereCone();
-		void Genere_Facettes       (BddInter*, Object*);
-		void Genere_Sommets        (BddInter*, Object*);
-        void Genere_Luminances     (BddInter*);
+		void Genere_Facettes        (BddInter*, Object*);
+		void Genere_Sommets         (BddInter*, Object*);
+        void Genere_Luminances      (BddInter*);
         void Genere_Normales_Sommets(BddInter*, Object*);
 
 		DECLARE_EVENT_TABLE()

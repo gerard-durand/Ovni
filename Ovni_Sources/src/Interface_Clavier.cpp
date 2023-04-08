@@ -1,10 +1,8 @@
 #include "Interface.h"
+#include "OvniDarkmode.h"
 
 // Gestion de l'interface de BddInter au Clavier
 // *********************************************
-
-//#include "OvniMain.h"
-//#include "OvniApp.h"
 
 void BddInter::OnKeyLeftRight(wxKeyEvent& event, int signe) {
     float spin_quat[4];

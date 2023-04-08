@@ -14,7 +14,6 @@
 //*)
 
 #include "OvniMain.h"
-//#include <math.h>
 
 class Prefs_Dialog: public wxDialog
 {

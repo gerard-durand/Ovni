@@ -378,7 +378,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
     int indice;
     if (Element->mode_selection == Element->selection_objet) {
         if (Element->listeObjets.empty()) {
-            Element->DisplayMessage(_T("Aucun Objet sélectionné !"),true);
+            DisplayMessage(_T("Aucun Objet sélectionné !"),true);
             return;
         }
         auto it = Element->listeObjets.begin();
@@ -535,5 +535,5 @@ void TranslationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 //void TranslationPanel::ToDo()
 //{
-//    MAIN->Element->DisplayMessage(_T("Pas encore opérationnel\nSimulation interface OK"), true);
+//    DisplayMessage(_T("Pas encore opérationnel\nSimulation interface OK"), true);
 //}

@@ -28,7 +28,7 @@
 //    #include <wx/things/spinctld.h>
 #endif
 
-#include "Interface.h"                  // Note : Interface.h possède aussi un include OvniMain.h
+class OvniFrame;                        // Déplacé ici depuis interface.h où ce n'était pas logique !
 
 // Includes des différents boîtes de dialogues / Panels
 #include "Aide_html.h"
@@ -40,6 +40,7 @@
 #include "Cube.h"
 #include "Cylindre.h"
 #include "DeplacerBdd.h"
+#include "DisplayMessages.h"
 #include "Ellipsoide.h"
 #include "Facette.h"
 #include "Icosaedre.h"
@@ -69,45 +70,6 @@
 #define tempo_s 2
 
 const char *fichier_init="Ovni.ini";    // a priori dans le même répertoire que l'exécutable Ovni.exe. à vérifier ! Sinon récupérer le appPath (via OvniApp ?)
-
-// Pour test du darkmode sous Windows à partir de wxWidgets 3.3.0 (beta)
-#if defined(__WXMSW__)
-#if wxCHECK_VERSION(3,3,0)
-
-#include <wx/msw/darkmode.h>
-class MySettings : public wxDarkModeSettings
-{
-public:
-    virtual wxColour GetMenuColour(wxMenuColour which)
-    {
-        if ( which == wxMenuColour::StandardFg )
-            return *wxCYAN;
-
-        return wxDarkModeSettings::GetMenuColour(which);
-    }
-
-    wxColour GetColour(wxSystemColour index) override
-    {
-    switch ( index )
-        {
-        case wxSYS_COLOUR_MENUTEXT:
-        case wxSYS_COLOUR_WINDOWTEXT:
-        case wxSYS_COLOUR_CAPTIONTEXT:
-        case wxSYS_COLOUR_HIGHLIGHTTEXT:
-        case wxSYS_COLOUR_BTNTEXT:
-        case wxSYS_COLOUR_INFOTEXT:
-        case wxSYS_COLOUR_LISTBOXTEXT:
-        case wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT:
-            // Default colour used here is 0xe0e0e0.
-            return *wxCYAN;
-
-        default:
-            return wxDarkModeSettings::GetColour(index);
-        }
-    }
-};
-#endif // wxCHECK_VERSION
-#endif // __WXMSW__
 
 class OvniFrame: public wxFrame
 {
@@ -248,12 +210,14 @@ class OvniFrame: public wxFrame
 #endif // wxCHECK_VERSION
 
         BddInter *Element=nullptr;
-        OvniFrame(wxWindow* parent,wxWindowID id = -1);
+        OvniFrame(wxWindow* parent, wxWindowID id = -1);
         virtual ~OvniFrame();
         bool OnInit();
-        wxPoint wxPrefs_pos;
-        wxPoint wxModificationPanel_pos;
-        wxPoint wxPropertiesPanel_pos;
+        enum wxbuildinfoformat{short_f, long_f};
+        wxString wxbuildinfo(wxbuildinfoformat);
+        wxPoint  wxPrefs_pos;
+        wxPoint  wxModificationPanel_pos;
+        wxPoint  wxPropertiesPanel_pos;
 
         Aide_html*                  AideHtml_Panel;
         CentreRotation*             CentreRotation_Panel;
@@ -302,10 +266,10 @@ class OvniFrame: public wxFrame
         void SetAngles();
         int  SetNewIcons(int);
         void Redisplay_Proprietes(wxCommandEvent& event);
-        void Toggle_Sliders(wxCommandEvent& event); // Fonction publique pour appel externe à OvniFrame de OnButton_SlidersToggle
-        void Toggle_Gouraud(wxCommandEvent& event); // Idem .  .  .  .  .  .  .  .  .  .  .  .  .  .  . de OnButton_GouraudToggle
-        void Toggle_Groupes(wxCommandEvent& event);
-        void Toggle_Materiaux(wxCommandEvent& event);
+        void Toggle_Sliders      (wxCommandEvent& event);   // Fonction publique pour appel externe à OvniFrame de OnButton_SlidersToggle
+        void Toggle_Gouraud      (wxCommandEvent& event);   // Idem .  .  .  .  .  .  .  .  .  .  .  .  .  .  . de OnButton_GouraudToggle
+        void Toggle_Groupes      (wxCommandEvent& event);
+        void Toggle_Materiaux    (wxCommandEvent& event);
 
 // ID_POPUP_* créés par wxSmith en private initialement, puis déplacés ici en public
         static const long ID_POPUP_RAZ;

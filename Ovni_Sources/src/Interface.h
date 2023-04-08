@@ -72,7 +72,7 @@
 
 // Classes des objets, facettes, points,... d'Ovni
 class BddInter;
-class OvniFrame;
+//class OvniFrame;                      // Déplacé dans OvniMain.h : plus logique !
 class Object;
 class Face;
 class Sommet;
@@ -115,7 +115,7 @@ class Tore;
 class TranslationPanel;
 class ZoomSpecifique;
 
-#include "OvniMain.h"       // Note : OvniMain.h possède aussi un include Interface.h
+#include "OvniMain.h"
 
 //using namespace std;      // Si absent, vector ne semble pas toujours reconnu ! il faut std::vector dans ce cas partout ???? mais aussi sur string, list, ...
 
@@ -650,7 +650,7 @@ class BddInter: public wxGLCanvas {
     wxCharBuffer buffer;
     wxGauge *m_gauge = nullptr;
     wxTimer *m_timer = nullptr;
-    wxProgressDialog * progress_dialog = nullptr;
+    wxGenericProgressDialog * progress_dialog = nullptr;    // wxGenericProgressDialog plutôt que wxProgressDialog car mieux en Darkmode
     clock_t time_deb_dialog;
     bool progress_dialog_en_cours;
     Lib3dsIo *io;
@@ -1143,7 +1143,7 @@ public :
     void glutSolidSphere_local(GLdouble , GLint , GLint );
     void AfficherSource();
     void UNDO_ONE();
-    void DisplayMessage(wxString , bool );
+//    void DisplayMessage(wxString , bool );    // Déplacé dans Ovni.h, en dehors de OvniFrame
     void Inverse_Selected_Normales();
     void Inverser_Parcours_Selected();
     void Inverser_Parcours_Facettes_Objet(unsigned int , bool);

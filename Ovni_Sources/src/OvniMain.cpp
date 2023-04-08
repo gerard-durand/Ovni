@@ -7,20 +7,23 @@
  * License:
  **************************************************************/
 
-//#include <GL/glew.h>      // Pour test
+//#include <GL/glew.h>              // Pour test
 
 #include "OvniMain.h"
 #include "OvniApp.h"
+#include "OvniDarkmode.h"
 
-#include <wx/wxprec.h>      // Pour les entêtes précompilées (s'il y en a ...)
+#include <wx/wxprec.h>              // Pour les entêtes précompilées (s'il y en a ...)
+
+#include <wx/aboutdlg.h>            // Pour utiliser wxAboutBox
+#include <wx/generic/aboutdlgg.h>   // Mais pour utiliser wxGenericAboutBox il faut en plus cet include
 
 #include <wx/debug.h>
-#include <wx/bmpbndl.h>     // avec wx >= 3.1.6 <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
-//#include <wx/bitmap.h>    // inclus dans bmpbndl
+#include <wx/bmpbndl.h>             // avec wx >= 3.1.6 <wx/bmpbndl.h> plutôt que <wx/bitmap.h>
+//#include <wx/bitmap.h>            // inclus dans bmpbndl
 #include <wx/filedlg.h>
 #include <wx/filefn.h>
 #include <wx/image.h>
-#include <wx/msgdlg.h>
 #include <wx/sysopt.h>
 #include <wx/tglbtn.h>
 
@@ -33,12 +36,7 @@
 
 //using namespace std;  // N'est pas utile ici vu qu'on utilise explicitement std::
 
-//helper functions : diverses infos affichées dans le menu Aide / A propos ...
-enum wxbuildinfoformat {
-    short_f, long_f
-};
-
-wxString wxbuildinfo(wxbuildinfoformat format) {
+wxString OvniFrame::wxbuildinfo(wxbuildinfoformat format) {
     wxString wxbuild(wxVERSION_STRING);
 
 /** \brief wxbuildinfo Génération d'infos diverses sur le système, le numéro de version, les versions des dll ...
@@ -256,13 +254,13 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 
     if (verbose) printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
 
-#if defined(__WXMSW__)      // Teste si on est sous Windows
+#if defined(__WXMSW__)              // Teste si on est sous Windows, car le Darkmode y est spécifique
     int local_darkmode = -1;
     local_darkmode = wxSystemOptions().GetOptionInt("msw.dark-mode");   // suivant la valeur de WX_MSW_DARK_MODE peut valoir 0, 1 ou 2
     if (verbose) printf("msw.dark-mode: %d\n",local_darkmode);
     local_darkmode = Ouvrir_Ini();                                      // De toute façon c'est le contenu de Ovni.ini qui prévaut (mais valeurs -1, 0 ou 1)
     if (wxSystemSettings::GetAppearance().IsDark()) local_darkmode = 1; // On a forcé le darkmode via set WX_MSW_DARK_MODE=2 en ligne de commande avant de lancer Ovni
-#if wxCHECK_VERSION(3,3,0)
+#if wxCHECK_VERSION(3,3,0)          // Darkmode réellement supporté si version de wxWidgets > 3.3
     if (local_darkmode >= 0) {
         wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings());
     }
@@ -902,12 +900,9 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         wxMessage         += _T("  *  Si Oui, il vaut mieux l'\"Enregistrer sous ...\" un autre nom dès que possible car elle\n");
         wxMessage         += _T("  *  sera écrasée à la prochaine sauvegarde automatique ou supprimée en sortie !");
 
-        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Sauvegarde automatique existante..."),
-                                        wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
-
-        int retour_Show = query->ShowModal();
-        query->Destroy();
-        if (retour_Show == wxID_YES) {
+        long retour_Display = DisplayMessage(wxMessage, _T("Sauvegarde automatique existante..."),
+                                             wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
+        if (retour_Display == wxID_YES) {
             Element->set_file(Fichier_svg);
             New_file = false;
         } else {
@@ -1230,7 +1225,7 @@ bool OvniFrame::OnBdd_modifiee()
 #endif // wxCHECK_VERSION
         wxMessage         += _T("    3 : ne pas l'enregistrer ni Quitter Ovni (Annuler) ?");
 
-        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question..."),
+        wxGenericMessageDialog *query = new wxGenericMessageDialog(nullptr, wxMessage, _T("Question..."),
                                         wxYES_NO | wxYES_DEFAULT | wxCANCEL | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
 #if wxCHECK_VERSION(3,0,0)
         query->SetYesNoCancelLabels(_T("Oui"),_T("Quitter"),_T("Annuler"));
@@ -1253,11 +1248,13 @@ void OvniFrame::OnPal_modifiee()
     if (Element->pal_file_modified) {
         wxString wxMessage = _T("Le fichier de palette des couleurs a été modifié.\n");
         wxMessage         += _T("Voulez-vous l'enregistrer avant de Quitter ?");
-        wxMessageDialog *query = new wxMessageDialog(nullptr, wxMessage, _T("Question..."),
-                                        wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
-        wxCommandEvent event_cmd;
-        if (query->ShowModal() == wxID_YES) OnMenu_EnregistrerPaletteSelected(event_cmd);
-        query->Destroy();
+
+        long retour_Display = DisplayMessage(wxMessage, _T("Question..."),
+                                                        wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+        if (retour_Display == wxID_YES) {
+            wxCommandEvent event_cmd;
+            OnMenu_EnregistrerPaletteSelected(event_cmd);
+        }
     }
 }
 
@@ -1285,7 +1282,15 @@ void OvniFrame::OnQuit(wxCommandEvent& event)
 
 void OvniFrame::OnAbout(wxCommandEvent& event) {
     wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(msg, _T("Ovni version wxWidgets...")); // <=> wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
+    wxAboutDialogInfo aboutInfo;
+    aboutInfo.SetName("Ovni version wxWidgets...");
+    aboutInfo.SetDescription(msg);
+    aboutInfo.SetWebSite("https://github.com/gerard-durand/Ovni");  // Si appel simple à wxAboutBox active en fait wxGenericAboutBox
+
+    wxGenericAboutBox(aboutInfo);   // L'appel direct à wxGenericAboutBox ne fonctionne pas si on n'a pas #include <wx/generic/aboutdlgg.h>.
+                                    //Ici, sous MSW, on peut le forcer indirectement grâce à SetWebSite (ou SetLicence ?) !
+
+//    wxMessageBox(msg, _T("Ovni version wxWidgets...")); // <=> wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
 //    event.Skip();
 }
 
@@ -1350,18 +1355,18 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
     wxString msg, str;
 
     msg << wxS("Caractéristiques de la carte Graphique :\n\n") ;
-    msg << wxS("OpenGL Renderer: \t") ;
+    msg << wxS("OpenGL Renderer: ") ; // \t
 
     get_glstring = (char *)glGetString(GL_RENDERER);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
 
-    msg << wxS("\nOpenGL Vendor:    \t\t") ;
+    msg << wxS("\nOpenGL Vendor:    ") ; //\t\t
     get_glstring = (char *)glGetString(GL_VENDOR);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
 
-    msg << wxS("\nOpenGL Version:    \t\t") ;
+    msg << wxS("\nOpenGL Version:    ") ;//\t\t
     get_glstring = (char *)glGetString(GL_VERSION);
     cptr = get_glstring;
     while (*cptr != '\0') msg << (wxChar)btowc(*cptr++) ;
@@ -1371,13 +1376,13 @@ void OvniFrame::OnMenu_Hardware3DSelected(wxCommandEvent& event) {
     glGetIntegerv(GL_GREEN_BITS, &greenBits);
     glGetIntegerv(GL_BLUE_BITS,  &blueBits);
 
-    str.Printf(wxS("\n\nProfondeur du Z-Buffer : \t\t%d bits\n"),depth);
+    str.Printf(wxS("\n\nProfondeur du Z-Buffer : %d bits\n"),depth);//\t\t
     msg << str;
 
-    str.Printf(wxS("Profondeur couleur (R,G,B) détectée : \t%d, %d, %d\n"), redBits, greenBits, blueBits);
+    str.Printf(wxS("Profondeur couleur (R,G,B) détectée : %d, %d, %d\n"), redBits, greenBits, blueBits); // \t
     msg << str ;
 
-    wxMessageBox(msg,wxS("Hardware 3D"));
+    DisplayBox(msg,wxS("Hardware 3D"));//    wxMessageBox(msg,wxS("Hardware 3D"));
 }
 
 void OvniFrame::OnButton_PleinToggle(wxCommandEvent& event) {
@@ -2168,7 +2173,7 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
     if (Element == nullptr)             notOK = true;
     if (Element->Objetlist.size() == 0) notOK = true;
     if (notOK) {   // Il n'y a rien à enregistrer
-        Element->DisplayMessage(_T("Aucun objet à enregistrer !\n"),true);
+        DisplayMessage(_T("Aucun objet à enregistrer !\n"),true);
         return;
     }
     // Préparer l'enregistrement sous...
@@ -2197,7 +2202,7 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
                 if(objet_courant->Facelist[j].deleted) continue;
                 if(objet_courant->Facelist[j].getNb_Sommets_F() != 3) {
                     wxString wxMessage=_T("La base n'est pas triangulée. Stockage impossible en format .stl");
-                    Element->DisplayMessage(wxMessage,true);
+                    DisplayMessage(wxMessage,true);
                     return;
                 }
             }
@@ -2313,7 +2318,8 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
             Msg +=         _T("Recalculer les normales* ou relancer la lecture en cochant la case adéquate du dialogue \"Fichier/Préférences\"");
             Msg +=         _T("\n\n* Il peut être nécessaire de simplifier d'abord la Bdd et cocher \"Forcer facettes à NON planes\"\n");
             Msg +=         _T("  dans le panneau \"Modifications\" avant de recalculer les normales");
-            Element->DisplayMessage(Msg,true);
+
+            DisplayMessage(Msg,true);
             Button_Gouraud->SetValue(false);    // Simuler un nouveau clic sur le bouton pour le remettre à l'état initial
             Element->smooth = false;
             return; // On ne fait rien de plus !
@@ -3288,7 +3294,8 @@ void OvniFrame::OnMenuItem_ImagePpmSelected(wxCommandEvent& event)
 	f = fopen(nom_fic_image, "wb"); // ajout du b pour forcer l'écriture binaire (pour Windows).
 
 	if (f == nullptr) {
-        wxMessageBox(_T("Erreur : Ouverture en écriture du fichier Image_Ovni.ppm impossible !"),_T("Avertissement"));
+//        wxMessageBox(_T("Erreur : Ouverture en écriture du fichier Image_Ovni.ppm impossible !"),_T("Avertissement"));
+        DisplayBox(_T("Erreur : Ouverture en écriture du fichier Image_Ovni.ppm impossible !"),_T("Avertissement"));
         return ;
 	}
 

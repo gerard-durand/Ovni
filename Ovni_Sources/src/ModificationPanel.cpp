@@ -643,7 +643,7 @@ void ModificationPanel::OnButton_TriangulerClick(wxCommandEvent& event)
 
 // Tous les objets ont été analysés et traités
     if (new_triangles == 0) {
-        Element->DisplayMessage(_T("La base de données est déjà triangulée !"),true);
+        DisplayMessage(_T("La base de données est déjà triangulée !"),true);
     } else {
         Element->Calcul_All_Normales();     // Ici, le + simple : recalculer toutes les normales (y compris celles aux barycentres !)
         Element->Search_Min_Max();          // Pour mettre à jour les infos de la Bdd (nombre de points, facettes, ....)

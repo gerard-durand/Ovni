@@ -141,6 +141,8 @@
 		<Unit filename="src/Cylindre.h" />
 		<Unit filename="src/DeplacerBdd.cpp" />
 		<Unit filename="src/DeplacerBdd.h" />
+		<Unit filename="src/DisplayMessages.cpp" />
+		<Unit filename="src/DisplayMessages.h" />
 		<Unit filename="src/Ellipsoide.cpp" />
 		<Unit filename="src/Ellipsoide.h" />
 		<Unit filename="src/Facette.cpp" />
@@ -162,6 +164,7 @@
 		<Unit filename="src/ModificationPanel.h" />
 		<Unit filename="src/OvniApp.cpp" />
 		<Unit filename="src/OvniApp.h" />
+		<Unit filename="src/OvniDarkmode.h" />
 		<Unit filename="src/OvniMain.cpp" />
 		<Unit filename="src/OvniMain.h" />
 		<Unit filename="src/PositionObs_AzimutSite.cpp" />
