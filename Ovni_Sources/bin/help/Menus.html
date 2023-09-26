@@ -11,18 +11,20 @@
     <br>
     Lien vers l' <a href="Aide.html">Aide</a>.<br>
     Lien vers <a href="About.html">à Propos de ...</a><br>
-    <h3><font color="blue"><i>Fichier :</i></font></h3>
-    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (SDM d'Oktal), .ply (Polygon file de
-    Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D Ascii), .g3d
-    (Format Onera G3D), .off (Object File Format de chez DEC). Quand un fichier
-    a été ouvert, son extension devient celle proposée par défaut.<br>
-    <b>Ajouter une Bdd</b> : Pour ajouter à la bdd courante avec un autre fichier de
-    bdd. Les objets restent indépendants. Il existe une fonction de fusion de plusieurs objets
-    accessible via le menu (ou l'icône) de "Sélection et déplacement".<br>
+    <h3><span style="color: #33cc00;"><i>Fichier :</i></span></h3>
+    <b>Ouvrir</b> : Ouvre une bdd : formats .bdd (SDM d'Oktal), .ply (Polygon
+    file de Niratam), .3ds (Autodesk), .obj (Wavefront), .m3d (Milkshape 3D
+    Ascii), .g3d (Format Onera G3D), .off (Object File Format de chez DEC).
+    Quand un fichier a été ouvert, son extension devient celle proposée par
+    défaut.<br>
+    <b>Ajouter une Bdd</b> : Pour ajouter à la bdd courante avec un autre
+    fichier de bdd. Les objets restent indépendants. Il existe une fonction de
+    fusion de plusieurs objets accessible via le menu (ou l'icône) de "Sélection
+    et déplacement".<br>
     <b>Enregistrer</b> : Enregistre avec le nom courant (seulement en .bdd,
     format Oktal).<br>
-    <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd
-    par défaut). On peut choisir un autre format comme .off, .obj ou .g3d.<br>
+    <b>Enregistrer sous...</b> : Enregistre sous un nouveau nom (.bdd par
+    défaut). On peut choisir un autre format comme .off, .obj ou .g3d.<br>
     <b>Propriétés</b> : Affiche le nombre d'objets, de points, de facettes,
     d'arêtes, de groupes de toute la Bdd, quelques statistiques de nombres de
     points par facette ainsi que les dimensions de la boîte englobante.<br>
@@ -31,24 +33,24 @@
     suivant.<br>
     L'option de gestion d'antialiasing par OpenGL est utile si la carte
     graphique ne gère pas seule par hardware cette fonction, via le driver.
-    Fonctionne correctement sur des segments dans tous les cas. Sur les
-    bords de polygones, le fonctionnement n'écessite que le driver de la carte
-    graphique supporte l'option GL_MULTISAMPLE d'OpenGL.<br>
+    Fonctionne correctement sur des segments dans tous les cas. Sur les bords de
+    polygones, le fonctionnement n'écessite que le driver de la carte graphique
+    supporte l'option GL_MULTISAMPLE d'OpenGL.<br>
     <b>Hardware 3D</b> : Affiche les caractéristiques du Hardware (carte
     graphique) supportant OpenGL.<br>
     <b>Quitter</b> : Pour sortir d'Ovni.<br>
     <br>
-    <h3><font color="blue"><i>Affichage :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Affichage :</i></span></h3>
     <b>Points / Filaire / Plein</b> : Pour sélectionner le mode de
-    représentation. <b>Dans cette version le mode Plein est actif par défaut. </b><b><font
-        color="blue">Ces fonctions sont directement accessibles via des icônes
-        de la barre de menus.</font></b><br>
+    représentation. <b>Dans cette version le mode Plein est actif par défaut. </b><b
+      style="color: #33cc00;">Ces fonctions sont directement accessibles via des
+      icônes de la barre de menus.</b><br>
     <b>Axes et Boîte englobante</b> : Pour afficher ou supprimer l'affichage des
     axes et/ou de la boîte englobante.<b>Ces fonctions sont directement
       accessibles via des icônes de la barre de menus.</b><br>
     <b>Source de lumière</b> : Pour matérialiser la position de la source de
-    lumière. <b><font color="blue">Cette fonction est directement accessible
-        via une icône de la barre de menus.</font></b><br>
+    lumière. <b style="color: #33cc00;">Cette fonction est directement
+      accessible via une icône de la barre de menus.</b><br>
     <b>Origine</b> : vue originale.<br>
     <b>Vue de face</b> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Projection
     X-Z, correspond à une vue de face en standard dans Crira<br>
@@ -68,20 +70,20 @@
     source de lumière (en coordonnées homogènes x,y,z,w : rappel :
     0&lt;=w&lt;=1, w=0 =&gt; infini, w=1 =&gt; x,y,z valeurs réelles).<br>
     <br>
-    <h3><font color="blue"><i>Primitive :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Primitive :</i></span></h3>
     Construction d'objets simples (cône, cube, cylindre, ellipsoïde, facette,
     sphère, icosaèdre, tore...)<br>
     <i><b>Note :</b></i> un icosaèdre est composé de triangles. Chaque triangle
     peut être subdivisé en 4 sous-triangles. Les sommets intermédiaires créés au
     milieu de chaque arête sont alors ramenés sur une sphère. On obtient ainsi
-    une approximation de sphère plus homogène que via la sphère de base, utilisant
-    des méridiens et des parallèles. Le nombre de subdivisions est limité à 8 car
-    au-delà le nombre de facettes total devient trop important, long à créer par une
-    procédure récursive et difficile à gérer.<br>
+    une approximation de sphère plus homogène que via la sphère de base,
+    utilisant des méridiens et des parallèles. Le nombre de subdivisions est
+    limité à 8 car au-delà le nombre de facettes total devient trop important,
+    long à créer par une procédure récursive et difficile à gérer.<br>
     Les primitives créées peuvent être supprimées une à une dans l'ordre inverse
     de leur création.<br>
     <br>
-    <h3><font color="blue"><i>Repérage :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Repérage :</i></span></h3>
     <b>Point</b> : Pour repérer un point particulier par une étoile. Les
     coordonnées du point sélectionné s'affichent. Il est possible de les
     modifier en cochant la case à droite de la valeur à changer pour activer les
@@ -111,29 +113,31 @@
     <b>Sens des Normales</b> : Swith ON/OFF colorisant en bleu des facettes
     "correctement orientées" et en rouge les facettes dont la normale est à
     l'envers [en fait c'est le sens de parcours des points qui est soit dans les
-    sens des aiguilles d'une montre (GL_CW et alors colorisé en rouge) soit dans le sens contraire
-    ou trigonométrique (GL_CCW et alors colorisé en bleu)]. Accessible aussi via un raccourci clavier (<b>n</b>).<br>
+    sens des aiguilles d'une montre (GL_CW et alors colorisé en rouge) soit dans
+    le sens contraire ou trigonométrique (GL_CCW et alors colorisé en bleu)].
+    Accessible aussi via un raccourci clavier (<b>n</b>).<br>
     <span style="text-decoration: line-through; color: red;"> </span><br>
     <span style="text-decoration: line-through;"> </span><b>Couleurs groupes</b>
     : Colorise les facettes par leur numéro de groupe.&nbsp;<br>
     <b>Couleurs matériaux</b> : Colorise les facettes par leur numéro de
     matériau<br>
     <br>
-    <h3><font color="blue"><i>Image :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Image :</i></span></h3>
     <b>Enregistrer image</b> : Enregistre au format .jpg, .png ou .ppm l'image
     de la fenêtre OpenGL.<br>
     <br>
     <br>
-    <h3><font color="blue"><i>Outils :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Outils :</i></span></h3>
     <b>Sélection et déplacement</b> : Dialogue interactif permettant de
     sélectionner soit des points, des facettes, ou un objet. Ce dialogue permet
     aussi de déplacer la sélection, ou encore d'effectuer, via le bouton
     "Manipulations de l'objet", la translation, la rotation, la création par
     symétrie d'un objet ou encore, directement, le masquage ou la suppression
     d'un objet/facette. Quand plusieurs objets sont sélectionnés, on peut aussi
-    les fusionner en 1 seul onjet (fusion des tableaux de points, facettes, ...).
-    Il peut être utile, mais pas nécessaire, de faire suivre cette action par
-    une simplification de la base de données pour éliminer les doublons de points, normales,...<br>
+    les fusionner en 1 seul onjet (fusion des tableaux de points, facettes,
+    ...). Il peut être utile, mais pas nécessaire, de faire suivre cette action
+    par une simplification de la base de données pour éliminer les doublons de
+    points, normales,...<br>
     La plupart des fonctions ont un UNDO, <b>sauf la suppression d'un groupe de
       facettes</b><br>
     Tout comme dans Repérage, on peut effectuer une permutation circulaire de
@@ -150,8 +154,8 @@
     Un bouton permet d'ouvrir directement la fenêtre "Repérage Facette" (plutôt
     que de passer par les menus). Les indications des 2 fenêtres ouvertes sont
     alors synchrones.<br>
-    <b><font color="blue">Cette fonction est directement accessible via une
-        icône de la barre de menus.</font></b><br>
+    <b style="color: #33cc00;">Cette fonction est directement accessible via une
+      icône de la barre de menus.</b><br>
     <br>
     <b>Modifications</b> : Dialogue interactif permettant d'apporter des
     modifications à un objet de la cellule. Il y est possible d'ajouter des
@@ -176,8 +180,8 @@
     puis se sert de ce nouveau point comme point de départ de la triangulation,
     comme dans la méthode 1. Cette méthode évite l'écueil des points originaux
     alignés, mais crée beaucoup plus de triangles que les 2 autres méthodes.<br>
-    <b><font color="blue">Cette fonction est directement accessible via une
-        icône de la barre de menus.</font></b><br>
+    <b style="color: #33cc00;">Cette fonction est directement accessible via une
+      icône de la barre de menus.</b><br>
     <br>
     <b>Choix des éléments à afficher</b> : Une boîte de dialogue permet de
     choisir quels sont les objets à afficher ou masquer<br>
@@ -187,7 +191,7 @@
     marqués comme étant supprimés de la bdd en mémoire (la suppression n'est
     effective qu'à l'enregistrement sur fichier)<br>
     <br>
-    <h3><font color="blue"><i>Transformations :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Transformations :</i></span></h3>
     Ces transformations affectent la base de données entière de l'avion (en
     mémoire). Il faudra passer par le menu "Enregistrer" pour les sauvegarder.<br>
     <b>X =&gt; -X</b> : change le signe des coordonnées en X<br>
@@ -206,7 +210,7 @@
     d'échelle global sur la bdd. Possibilité d'annuler ce facteur en activant le
     bouton "Inverser".<br>
     <br>
-    <h3><font color="blue"><i>Options :</i></font></h3>
+    <h3><span style="color: #33cc00;"><i>Options :</i></span></h3>
     <b>Sous-menu :</b><br>
     <b>Couleurs des groupes :</b> pour modifier les 2 composantes de la lumière
     (Ambiante et Diffuse) de chacun des groupes<br>

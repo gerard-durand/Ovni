@@ -176,6 +176,7 @@ extern char *my_alloc();
 
 
 /* old routines */
+
 #if 0
 extern PlyFile *ply_write(FILE *, int, char **, int);
 extern PlyFile *ply_read(FILE *, int *, char ***);

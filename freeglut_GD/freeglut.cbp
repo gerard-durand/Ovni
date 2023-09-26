@@ -31,9 +31,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin"/>
@@ -56,9 +56,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin/fast"/>
@@ -81,9 +81,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer"/>
@@ -106,9 +106,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer/fast"/>
@@ -132,9 +132,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut"/>
@@ -158,9 +158,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut/fast"/>
@@ -203,9 +203,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback"/>
@@ -228,9 +228,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback/fast"/>
@@ -254,9 +254,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin_static"/>
@@ -280,9 +280,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 subwin_static/fast"/>
@@ -305,9 +305,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3"/>
@@ -330,9 +330,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3/fast"/>
@@ -356,9 +356,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer_static"/>
@@ -382,9 +382,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 resizer_static/fast"/>
@@ -408,9 +408,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut_static"/>
@@ -434,9 +434,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 freeglut_static/fast"/>
@@ -459,9 +459,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker"/>
@@ -484,9 +484,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker/fast"/>
@@ -510,9 +510,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random_static"/>
@@ -536,9 +536,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random_static/fast"/>
@@ -562,9 +562,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_static"/>
@@ -588,9 +588,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_static/fast"/>
@@ -614,9 +614,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker_static"/>
@@ -640,9 +640,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 CallbackMaker_static/fast"/>
@@ -666,9 +666,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback_static"/>
@@ -692,9 +692,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_callback_static/fast"/>
@@ -718,9 +718,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3_static"/>
@@ -744,9 +744,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 smooth_opengl3_static/fast"/>
@@ -769,9 +769,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random"/>
@@ -794,9 +794,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals_random/fast"/>
@@ -819,9 +819,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals"/>
@@ -844,9 +844,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Fractals/fast"/>
@@ -869,9 +869,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz"/>
@@ -894,9 +894,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz/fast"/>
@@ -919,9 +919,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch"/>
@@ -944,9 +944,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch/fast"/>
@@ -970,9 +970,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz_static"/>
@@ -996,9 +996,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 Lorenz_static/fast"/>
@@ -1021,9 +1021,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick"/>
@@ -1046,9 +1046,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick/fast"/>
@@ -1071,9 +1071,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes"/>
@@ -1096,9 +1096,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes/fast"/>
@@ -1121,9 +1121,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One"/>
@@ -1146,9 +1146,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One/fast"/>
@@ -1172,9 +1172,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick_static"/>
@@ -1198,9 +1198,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 joystick_static/fast"/>
@@ -1224,9 +1224,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes_static"/>
@@ -1250,9 +1250,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 shapes_static/fast"/>
@@ -1276,9 +1276,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One_static"/>
@@ -1302,9 +1302,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 One_static/fast"/>
@@ -1328,9 +1328,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch_static"/>
@@ -1354,9 +1354,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 multi-touch_static/fast"/>
@@ -1379,9 +1379,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball"/>
@@ -1404,9 +1404,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball/fast"/>
@@ -1430,9 +1430,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball_static"/>
@@ -1456,9 +1456,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 spaceball_static/fast"/>
@@ -1481,9 +1481,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer"/>
@@ -1506,9 +1506,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer/fast"/>
@@ -1532,9 +1532,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_static"/>
@@ -1558,9 +1558,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 timer_static/fast"/>
@@ -1583,9 +1583,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard"/>
@@ -1608,9 +1608,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard/fast"/>
@@ -1634,9 +1634,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard_static"/>
@@ -1660,9 +1660,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 keyboard_static/fast"/>
@@ -1685,9 +1685,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color"/>
@@ -1710,9 +1710,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color/fast"/>
@@ -1736,9 +1736,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color_static"/>
@@ -1762,9 +1762,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 indexed_color_static/fast"/>
@@ -1787,9 +1787,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview"/>
@@ -1812,9 +1812,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview/fast"/>
@@ -1838,9 +1838,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview_static"/>
@@ -1864,9 +1864,9 @@
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/src"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/include"/>
 					<Add directory="D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../include"/>
-					<Add directory="C:/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;D:/Users/Gerard/Documents/Programmation/Freeglut/freeglut_git/Makefile&quot;  VERBOSE=1 3dview_static/fast"/>

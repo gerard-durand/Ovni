@@ -32,4 +32,5 @@ génère les libs (dynamiques et statiques) et les démos en statique et via une
 dans bin, on peut faire à la main, via la console de commande, strip * pour réduire les tailles des exe et de la dll
 ou alors ajouter -s lors de la génération.
 De plus ajouter -O2 à la compilation
+=> pour le faire via le Makefile : dans CMAKE_C_FLAGS mettre -O2 puis dans CMAKE_EXE_LINKER_FLAGS et CMAKE_SHARED_LINKER_FLAGS mettre -s
 cf freeglut_libs.cbp

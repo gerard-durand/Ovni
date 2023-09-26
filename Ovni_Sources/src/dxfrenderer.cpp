@@ -4,20 +4,19 @@
 // Author:      Sandro Sigala
 // Modified by:
 // Created:     2005-11-10
-// RCS-ID:      $Id: dxfrenderer.cpp 43272 2006-11-10 15:16:02Z VZ $
 // Copyright:   (c) Sandro Sigala
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
-// Version modifiÃ©e GD pour supporter des facettes Ã  3 et 4 points
-// Ne supporte pas, de base, le format dxf dans son intÃ©gralitÃ©, seulement un sous-ensemble compatible penguin ou fichiers obtenus via de Flight_Sim !
+// Version modifiée GD pour supporter des facettes à 3 et 4 points
+// Ne supporte pas, de base, le format dxf dans son intégralité, seulement un sous-ensemble compatible penguin ou des fichiers obtenus via Flight_Sim !
+
+// Mis à jour à partir des dxfrenderer.h et .cpp livrés avec wxWidgets 3.3.0
+// Classe DXFRenderer supprimée et fonctions transférées vers BddInter pour pouvoir utiliser make_objet ... et enregistere sous d'autres formats (.bdd, .obj, ...)
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
 
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
@@ -36,273 +35,271 @@
     #include <GL/glu.h>
 #endif
 
+#include <sstream>
+
 #include "dxfrenderer.h"
+#include "interface.h"
 
-#include "wx/listimpl.cpp"
-WX_DEFINE_LIST(DXFEntityList)
-WX_DEFINE_LIST(DXFLayerList)
-
-// Conversion table from AutoCAD ACI colours to RGB values
-static const struct {
-    unsigned char r, g, b;
-} aci_to_rgb[256] = {
-/*   0 */ {255, 255, 255},
-/*   1 */ {255,   0,   0},
-/*   2 */ {255, 255,   0},
-/*   3 */ {  0, 255,   0},
-/*   4 */ {  0, 255, 255},
-/*   5 */ {  0,   0, 255},
-/*   6 */ {255,   0, 255},
-/*   7 */ {255, 255, 255},
-/*   8 */ {128, 128, 128},
-/*   9 */ {192, 192, 192},
-/*  10 */ {255,   0,   0},
-/*  11 */ {255, 127, 127},
-/*  12 */ {204,   0,   0},
-/*  13 */ {204, 102, 102},
-/*  14 */ {153,   0,   0},
-/*  15 */ {153,  76,  76},
-/*  16 */ {127,   0,   0},
-/*  17 */ {127,  63,  63},
-/*  18 */ { 76,   0,   0},
-/*  19 */ { 76,  38,  38},
-/*  20 */ {255,  63,   0},
-/*  21 */ {255, 159, 127},
-/*  22 */ {204,  51,   0},
-/*  23 */ {204, 127, 102},
-/*  24 */ {153,  38,   0},
-/*  25 */ {153,  95,  76},
-/*  26 */ {127,  31,   0},
-/*  27 */ {127,  79,  63},
-/*  28 */ { 76,  19,   0},
-/*  29 */ { 76,  47,  38},
-/*  30 */ {255, 127,   0},
-/*  31 */ {255, 191, 127},
-/*  32 */ {204, 102,   0},
-/*  33 */ {204, 153, 102},
-/*  34 */ {153,  76,   0},
-/*  35 */ {153, 114,  76},
-/*  36 */ {127,  63,   0},
-/*  37 */ {127,  95,  63},
-/*  38 */ { 76,  38,   0},
-/*  39 */ { 76,  57,  38},
-/*  40 */ {255, 191,   0},
-/*  41 */ {255, 223, 127},
-/*  42 */ {204, 153,   0},
-/*  43 */ {204, 178, 102},
-/*  44 */ {153, 114,   0},
-/*  45 */ {153, 133,  76},
-/*  46 */ {127,  95,   0},
-/*  47 */ {127, 111,  63},
-/*  48 */ { 76,  57,   0},
-/*  49 */ { 76,  66,  38},
-/*  50 */ {255, 255,   0},
-/*  51 */ {255, 255, 127},
-/*  52 */ {204, 204,   0},
-/*  53 */ {204, 204, 102},
-/*  54 */ {153, 153,   0},
-/*  55 */ {153, 153,  76},
-/*  56 */ {127, 127,   0},
-/*  57 */ {127, 127,  63},
-/*  58 */ { 76,  76,   0},
-/*  59 */ { 76,  76,  38},
-/*  60 */ {191, 255,   0},
-/*  61 */ {223, 255, 127},
-/*  62 */ {153, 204,   0},
-/*  63 */ {178, 204, 102},
-/*  64 */ {114, 153,   0},
-/*  65 */ {133, 153,  76},
-/*  66 */ { 95, 127,   0},
-/*  67 */ {111, 127,  63},
-/*  68 */ { 57,  76,   0},
-/*  69 */ { 66,  76,  38},
-/*  70 */ {127, 255,   0},
-/*  71 */ {191, 255, 127},
-/*  72 */ {102, 204,   0},
-/*  73 */ {153, 204, 102},
-/*  74 */ { 76, 153,   0},
-/*  75 */ {114, 153,  76},
-/*  76 */ { 63, 127,   0},
-/*  77 */ { 95, 127,  63},
-/*  78 */ { 38,  76,   0},
-/*  79 */ { 57,  76,  38},
-/*  80 */ { 63, 255,   0},
-/*  81 */ {159, 255, 127},
-/*  82 */ { 51, 204,   0},
-/*  83 */ {127, 204, 102},
-/*  84 */ { 38, 153,   0},
-/*  85 */ { 95, 153,  76},
-/*  86 */ { 31, 127,   0},
-/*  87 */ { 79, 127,  63},
-/*  88 */ { 19,  76,   0},
-/*  89 */ { 47,  76,  38},
-/*  90 */ {  0, 255,   0},
-/*  91 */ {127, 255, 127},
-/*  92 */ {  0, 204,   0},
-/*  93 */ {102, 204, 102},
-/*  94 */ {  0, 153,   0},
-/*  95 */ { 76, 153,  76},
-/*  96 */ {  0, 127,   0},
-/*  97 */ { 63, 127,  63},
-/*  98 */ {  0,  76,   0},
-/*  99 */ { 38,  76,  38},
-/* 100 */ {  0, 255,  63},
-/* 101 */ {127, 255, 159},
-/* 102 */ {  0, 204,  51},
-/* 103 */ {102, 204, 127},
-/* 104 */ {  0, 153,  38},
-/* 105 */ { 76, 153,  95},
-/* 106 */ {  0, 127,  31},
-/* 107 */ { 63, 127,  79},
-/* 108 */ {  0,  76,  19},
-/* 109 */ { 38,  76,  47},
-/* 110 */ {  0, 255, 127},
-/* 111 */ {127, 255, 191},
-/* 112 */ {  0, 204, 102},
-/* 113 */ {102, 204, 153},
-/* 114 */ {  0, 153,  76},
-/* 115 */ { 76, 153, 114},
-/* 116 */ {  0, 127,  63},
-/* 117 */ { 63, 127,  95},
-/* 118 */ {  0,  76,  38},
-/* 119 */ { 38,  76,  57},
-/* 120 */ {  0, 255, 191},
-/* 121 */ {127, 255, 223},
-/* 122 */ {  0, 204, 153},
-/* 123 */ {102, 204, 178},
-/* 124 */ {  0, 153, 114},
-/* 125 */ { 76, 153, 133},
-/* 126 */ {  0, 127,  95},
-/* 127 */ { 63, 127, 111},
-/* 128 */ {  0,  76,  57},
-/* 129 */ { 38,  76,  66},
-/* 130 */ {  0, 255, 255},
-/* 131 */ {127, 255, 255},
-/* 132 */ {  0, 204, 204},
-/* 133 */ {102, 204, 204},
-/* 134 */ {  0, 153, 153},
-/* 135 */ { 76, 153, 153},
-/* 136 */ {  0, 127, 127},
-/* 137 */ { 63, 127, 127},
-/* 138 */ {  0,  76,  76},
-/* 139 */ { 38,  76,  76},
-/* 140 */ {  0, 191, 255},
-/* 141 */ {127, 223, 255},
-/* 142 */ {  0, 153, 204},
-/* 143 */ {102, 178, 204},
-/* 144 */ {  0, 114, 153},
-/* 145 */ { 76, 133, 153},
-/* 146 */ {  0,  95, 127},
-/* 147 */ { 63, 111, 127},
-/* 148 */ {  0,  57,  76},
-/* 149 */ { 38,  66,  76},
-/* 150 */ {  0, 127, 255},
-/* 151 */ {127, 191, 255},
-/* 152 */ {  0, 102, 204},
-/* 153 */ {102, 153, 204},
-/* 154 */ {  0,  76, 153},
-/* 155 */ { 76, 114, 153},
-/* 156 */ {  0,  63, 127},
-/* 157 */ { 63,  95, 127},
-/* 158 */ {  0,  38,  76},
-/* 159 */ { 38,  57,  76},
-/* 160 */ {  0,  63, 255},
-/* 161 */ {127, 159, 255},
-/* 162 */ {  0,  51, 204},
-/* 163 */ {102, 127, 204},
-/* 164 */ {  0,  38, 153},
-/* 165 */ { 76,  95, 153},
-/* 166 */ {  0,  31, 127},
-/* 167 */ { 63,  79, 127},
-/* 168 */ {  0,  19,  76},
-/* 169 */ { 38,  47,  76},
-/* 170 */ {  0,   0, 255},
-/* 171 */ {127, 127, 255},
-/* 172 */ {  0,   0, 204},
-/* 173 */ {102, 102, 204},
-/* 174 */ {  0,   0, 153},
-/* 175 */ { 76,  76, 153},
-/* 176 */ {  0,   0, 127},
-/* 177 */ { 63,  63, 127},
-/* 178 */ {  0,   0,  76},
-/* 179 */ { 38,  38,  76},
-/* 180 */ { 63,   0, 255},
-/* 181 */ {159, 127, 255},
-/* 182 */ { 51,   0, 204},
-/* 183 */ {127, 102, 204},
-/* 184 */ { 38,   0, 153},
-/* 185 */ { 95,  76, 153},
-/* 186 */ { 31,   0, 127},
-/* 187 */ { 79,  63, 127},
-/* 188 */ { 19,   0,  76},
-/* 189 */ { 47,  38,  76},
-/* 190 */ {127,   0, 255},
-/* 191 */ {191, 127, 255},
-/* 192 */ {102,   0, 204},
-/* 193 */ {153, 102, 204},
-/* 194 */ { 76,   0, 153},
-/* 195 */ {114,  76, 153},
-/* 196 */ { 63,   0, 127},
-/* 197 */ { 95,  63, 127},
-/* 198 */ { 38,   0,  76},
-/* 199 */ { 57,  38,  76},
-/* 200 */ {191,   0, 255},
-/* 201 */ {223, 127, 255},
-/* 202 */ {153,   0, 204},
-/* 203 */ {178, 102, 204},
-/* 204 */ {114,   0, 153},
-/* 205 */ {133,  76, 153},
-/* 206 */ { 95,   0, 127},
-/* 207 */ {111,  63, 127},
-/* 208 */ { 57,   0,  76},
-/* 209 */ { 66,  38,  76},
-/* 210 */ {255,   0, 255},
-/* 211 */ {255, 127, 255},
-/* 212 */ {204,   0, 204},
-/* 213 */ {204, 102, 204},
-/* 214 */ {153,   0, 153},
-/* 215 */ {153,  76, 153},
-/* 216 */ {127,   0, 127},
-/* 217 */ {127,  63, 127},
-/* 218 */ { 76,   0,  76},
-/* 219 */ { 76,  38,  76},
-/* 220 */ {255,   0, 191},
-/* 221 */ {255, 127, 223},
-/* 222 */ {204,   0, 153},
-/* 223 */ {204, 102, 178},
-/* 224 */ {153,   0, 114},
-/* 225 */ {153,  76, 133},
-/* 226 */ {127,   0,  95},
-/* 227 */ {127,  63, 111},
-/* 228 */ { 76,   0,  57},
-/* 229 */ { 76,  38,  66},
-/* 230 */ {255,   0, 127},
-/* 231 */ {255, 127, 191},
-/* 232 */ {204,   0, 102},
-/* 233 */ {204, 102, 153},
-/* 234 */ {153,   0,  76},
-/* 235 */ {153,  76, 114},
-/* 236 */ {127,   0,  63},
-/* 237 */ {127,  63,  95},
-/* 238 */ { 76,   0,  38},
-/* 239 */ { 76,  38,  57},
-/* 240 */ {255,   0,  63},
-/* 241 */ {255, 127, 159},
-/* 242 */ {204,   0,  51},
-/* 243 */ {204, 102, 127},
-/* 244 */ {153,   0,  38},
-/* 245 */ {153,  76,  95},
-/* 246 */ {127,   0,  31},
-/* 247 */ {127,  63,  79},
-/* 248 */ { 76,   0,  19},
-/* 249 */ { 76,  38,  47},
-/* 250 */ { 51,  51,  51},
-/* 251 */ { 91,  91,  91},
-/* 252 */ {132, 132, 132},
-/* 253 */ {173, 173, 173},
-/* 254 */ {214, 214, 214},
-/* 255 */ {255, 255, 255}
-};
+// Tranféré dans BddInter/Interface.h
+//// Conversion table from AutoCAD ACI colours to RGB values
+//static const struct { unsigned char r, g, b; } aci_to_rgb[256] = {
+///*   0 */ {255, 255, 255},
+///*   1 */ {255,   0,   0},
+///*   2 */ {255, 255,   0},
+///*   3 */ {  0, 255,   0},
+///*   4 */ {  0, 255, 255},
+///*   5 */ {  0,   0, 255},
+///*   6 */ {255,   0, 255},
+///*   7 */ {255, 255, 255},
+///*   8 */ {128, 128, 128},
+///*   9 */ {192, 192, 192},
+///*  10 */ {255,   0,   0},
+///*  11 */ {255, 127, 127},
+///*  12 */ {204,   0,   0},
+///*  13 */ {204, 102, 102},
+///*  14 */ {153,   0,   0},
+///*  15 */ {153,  76,  76},
+///*  16 */ {127,   0,   0},
+///*  17 */ {127,  63,  63},
+///*  18 */ { 76,   0,   0},
+///*  19 */ { 76,  38,  38},
+///*  20 */ {255,  63,   0},
+///*  21 */ {255, 159, 127},
+///*  22 */ {204,  51,   0},
+///*  23 */ {204, 127, 102},
+///*  24 */ {153,  38,   0},
+///*  25 */ {153,  95,  76},
+///*  26 */ {127,  31,   0},
+///*  27 */ {127,  79,  63},
+///*  28 */ { 76,  19,   0},
+///*  29 */ { 76,  47,  38},
+///*  30 */ {255, 127,   0},
+///*  31 */ {255, 191, 127},
+///*  32 */ {204, 102,   0},
+///*  33 */ {204, 153, 102},
+///*  34 */ {153,  76,   0},
+///*  35 */ {153, 114,  76},
+///*  36 */ {127,  63,   0},
+///*  37 */ {127,  95,  63},
+///*  38 */ { 76,  38,   0},
+///*  39 */ { 76,  57,  38},
+///*  40 */ {255, 191,   0},
+///*  41 */ {255, 223, 127},
+///*  42 */ {204, 153,   0},
+///*  43 */ {204, 178, 102},
+///*  44 */ {153, 114,   0},
+///*  45 */ {153, 133,  76},
+///*  46 */ {127,  95,   0},
+///*  47 */ {127, 111,  63},
+///*  48 */ { 76,  57,   0},
+///*  49 */ { 76,  66,  38},
+///*  50 */ {255, 255,   0},
+///*  51 */ {255, 255, 127},
+///*  52 */ {204, 204,   0},
+///*  53 */ {204, 204, 102},
+///*  54 */ {153, 153,   0},
+///*  55 */ {153, 153,  76},
+///*  56 */ {127, 127,   0},
+///*  57 */ {127, 127,  63},
+///*  58 */ { 76,  76,   0},
+///*  59 */ { 76,  76,  38},
+///*  60 */ {191, 255,   0},
+///*  61 */ {223, 255, 127},
+///*  62 */ {153, 204,   0},
+///*  63 */ {178, 204, 102},
+///*  64 */ {114, 153,   0},
+///*  65 */ {133, 153,  76},
+///*  66 */ { 95, 127,   0},
+///*  67 */ {111, 127,  63},
+///*  68 */ { 57,  76,   0},
+///*  69 */ { 66,  76,  38},
+///*  70 */ {127, 255,   0},
+///*  71 */ {191, 255, 127},
+///*  72 */ {102, 204,   0},
+///*  73 */ {153, 204, 102},
+///*  74 */ { 76, 153,   0},
+///*  75 */ {114, 153,  76},
+///*  76 */ { 63, 127,   0},
+///*  77 */ { 95, 127,  63},
+///*  78 */ { 38,  76,   0},
+///*  79 */ { 57,  76,  38},
+///*  80 */ { 63, 255,   0},
+///*  81 */ {159, 255, 127},
+///*  82 */ { 51, 204,   0},
+///*  83 */ {127, 204, 102},
+///*  84 */ { 38, 153,   0},
+///*  85 */ { 95, 153,  76},
+///*  86 */ { 31, 127,   0},
+///*  87 */ { 79, 127,  63},
+///*  88 */ { 19,  76,   0},
+///*  89 */ { 47,  76,  38},
+///*  90 */ {  0, 255,   0},
+///*  91 */ {127, 255, 127},
+///*  92 */ {  0, 204,   0},
+///*  93 */ {102, 204, 102},
+///*  94 */ {  0, 153,   0},
+///*  95 */ { 76, 153,  76},
+///*  96 */ {  0, 127,   0},
+///*  97 */ { 63, 127,  63},
+///*  98 */ {  0,  76,   0},
+///*  99 */ { 38,  76,  38},
+///* 100 */ {  0, 255,  63},
+///* 101 */ {127, 255, 159},
+///* 102 */ {  0, 204,  51},
+///* 103 */ {102, 204, 127},
+///* 104 */ {  0, 153,  38},
+///* 105 */ { 76, 153,  95},
+///* 106 */ {  0, 127,  31},
+///* 107 */ { 63, 127,  79},
+///* 108 */ {  0,  76,  19},
+///* 109 */ { 38,  76,  47},
+///* 110 */ {  0, 255, 127},
+///* 111 */ {127, 255, 191},
+///* 112 */ {  0, 204, 102},
+///* 113 */ {102, 204, 153},
+///* 114 */ {  0, 153,  76},
+///* 115 */ { 76, 153, 114},
+///* 116 */ {  0, 127,  63},
+///* 117 */ { 63, 127,  95},
+///* 118 */ {  0,  76,  38},
+///* 119 */ { 38,  76,  57},
+///* 120 */ {  0, 255, 191},
+///* 121 */ {127, 255, 223},
+///* 122 */ {  0, 204, 153},
+///* 123 */ {102, 204, 178},
+///* 124 */ {  0, 153, 114},
+///* 125 */ { 76, 153, 133},
+///* 126 */ {  0, 127,  95},
+///* 127 */ { 63, 127, 111},
+///* 128 */ {  0,  76,  57},
+///* 129 */ { 38,  76,  66},
+///* 130 */ {  0, 255, 255},
+///* 131 */ {127, 255, 255},
+///* 132 */ {  0, 204, 204},
+///* 133 */ {102, 204, 204},
+///* 134 */ {  0, 153, 153},
+///* 135 */ { 76, 153, 153},
+///* 136 */ {  0, 127, 127},
+///* 137 */ { 63, 127, 127},
+///* 138 */ {  0,  76,  76},
+///* 139 */ { 38,  76,  76},
+///* 140 */ {  0, 191, 255},
+///* 141 */ {127, 223, 255},
+///* 142 */ {  0, 153, 204},
+///* 143 */ {102, 178, 204},
+///* 144 */ {  0, 114, 153},
+///* 145 */ { 76, 133, 153},
+///* 146 */ {  0,  95, 127},
+///* 147 */ { 63, 111, 127},
+///* 148 */ {  0,  57,  76},
+///* 149 */ { 38,  66,  76},
+///* 150 */ {  0, 127, 255},
+///* 151 */ {127, 191, 255},
+///* 152 */ {  0, 102, 204},
+///* 153 */ {102, 153, 204},
+///* 154 */ {  0,  76, 153},
+///* 155 */ { 76, 114, 153},
+///* 156 */ {  0,  63, 127},
+///* 157 */ { 63,  95, 127},
+///* 158 */ {  0,  38,  76},
+///* 159 */ { 38,  57,  76},
+///* 160 */ {  0,  63, 255},
+///* 161 */ {127, 159, 255},
+///* 162 */ {  0,  51, 204},
+///* 163 */ {102, 127, 204},
+///* 164 */ {  0,  38, 153},
+///* 165 */ { 76,  95, 153},
+///* 166 */ {  0,  31, 127},
+///* 167 */ { 63,  79, 127},
+///* 168 */ {  0,  19,  76},
+///* 169 */ { 38,  47,  76},
+///* 170 */ {  0,   0, 255},
+///* 171 */ {127, 127, 255},
+///* 172 */ {  0,   0, 204},
+///* 173 */ {102, 102, 204},
+///* 174 */ {  0,   0, 153},
+///* 175 */ { 76,  76, 153},
+///* 176 */ {  0,   0, 127},
+///* 177 */ { 63,  63, 127},
+///* 178 */ {  0,   0,  76},
+///* 179 */ { 38,  38,  76},
+///* 180 */ { 63,   0, 255},
+///* 181 */ {159, 127, 255},
+///* 182 */ { 51,   0, 204},
+///* 183 */ {127, 102, 204},
+///* 184 */ { 38,   0, 153},
+///* 185 */ { 95,  76, 153},
+///* 186 */ { 31,   0, 127},
+///* 187 */ { 79,  63, 127},
+///* 188 */ { 19,   0,  76},
+///* 189 */ { 47,  38,  76},
+///* 190 */ {127,   0, 255},
+///* 191 */ {191, 127, 255},
+///* 192 */ {102,   0, 204},
+///* 193 */ {153, 102, 204},
+///* 194 */ { 76,   0, 153},
+///* 195 */ {114,  76, 153},
+///* 196 */ { 63,   0, 127},
+///* 197 */ { 95,  63, 127},
+///* 198 */ { 38,   0,  76},
+///* 199 */ { 57,  38,  76},
+///* 200 */ {191,   0, 255},
+///* 201 */ {223, 127, 255},
+///* 202 */ {153,   0, 204},
+///* 203 */ {178, 102, 204},
+///* 204 */ {114,   0, 153},
+///* 205 */ {133,  76, 153},
+///* 206 */ { 95,   0, 127},
+///* 207 */ {111,  63, 127},
+///* 208 */ { 57,   0,  76},
+///* 209 */ { 66,  38,  76},
+///* 210 */ {255,   0, 255},
+///* 211 */ {255, 127, 255},
+///* 212 */ {204,   0, 204},
+///* 213 */ {204, 102, 204},
+///* 214 */ {153,   0, 153},
+///* 215 */ {153,  76, 153},
+///* 216 */ {127,   0, 127},
+///* 217 */ {127,  63, 127},
+///* 218 */ { 76,   0,  76},
+///* 219 */ { 76,  38,  76},
+///* 220 */ {255,   0, 191},
+///* 221 */ {255, 127, 223},
+///* 222 */ {204,   0, 153},
+///* 223 */ {204, 102, 178},
+///* 224 */ {153,   0, 114},
+///* 225 */ {153,  76, 133},
+///* 226 */ {127,   0,  95},
+///* 227 */ {127,  63, 111},
+///* 228 */ { 76,   0,  57},
+///* 229 */ { 76,  38,  66},
+///* 230 */ {255,   0, 127},
+///* 231 */ {255, 127, 191},
+///* 232 */ {204,   0, 102},
+///* 233 */ {204, 102, 153},
+///* 234 */ {153,   0,  76},
+///* 235 */ {153,  76, 114},
+///* 236 */ {127,   0,  63},
+///* 237 */ {127,  63,  95},
+///* 238 */ { 76,   0,  38},
+///* 239 */ { 76,  38,  57},
+///* 240 */ {255,   0,  63},
+///* 241 */ {255, 127, 159},
+///* 242 */ {204,   0,  51},
+///* 243 */ {204, 102, 127},
+///* 244 */ {153,   0,  38},
+///* 245 */ {153,  76,  95},
+///* 246 */ {127,   0,  31},
+///* 247 */ {127,  63,  79},
+///* 248 */ { 76,   0,  19},
+///* 249 */ { 76,  38,  47},
+///* 250 */ { 51,  51,  51},
+///* 251 */ { 91,  91,  91},
+///* 252 */ {132, 132, 132},
+///* 253 */ {173, 173, 173},
+///* 254 */ {214, 214, 214},
+///* 255 */ {255, 255, 255}
+//};
 
 inline DXFVector Cross(const DXFVector& v1, const DXFVector& v2)
 {
@@ -325,12 +322,13 @@ void DXFFace::CalculateNormal()
     n.z /= mod;
 }
 
+/* Tranférés dans BddInter/Interface.h
+
 // convert an AutoCAD ACI colour to wxWidgets RGB colour
 inline wxColour ACIColourToRGB(int col)
 {
-//    if(col >= 0 && col <= 255)
     wxASSERT(col >= 0 && col <= 255);
-    return wxColour(aci_to_rgb[col].r, aci_to_rgb[col].g, aci_to_rgb[col].b); // Dans le code original c'est un wxASSERT(); et non un if () !!!
+    return wxColour(aci_to_rgb[col].r, aci_to_rgb[col].g, aci_to_rgb[col].b);
 }
 
 // DXFReader constructor
@@ -349,31 +347,16 @@ DXFRenderer::~DXFRenderer()
 void DXFRenderer::Clear()
 {
     m_loaded = false;
-    {
-        for (DXFLayerList::compatibility_iterator node = m_layers.GetFirst(); node; node = node->GetNext())
-        {
-            DXFLayer *current = node->GetData();
-            delete current;
-        }
-    }
-    m_layers.Clear();
-    {
-        for (DXFEntityList::compatibility_iterator node = m_entities.GetFirst(); node; node = node->GetNext())
-        {
-            DXFEntity *current = node->GetData();
-            delete current;
-        }
-        m_entities.Clear();
-    }
+    m_layers.clear();
+    m_entities.clear();
 }
 
 int DXFRenderer::GetLayerColour(const wxString& layer) const
 {
-    for (DXFLayerList::compatibility_iterator node = m_layers.GetFirst(); node; node = node->GetNext())
+    for (const auto& current : m_layers)
     {
-        DXFLayer *current = node->GetData();
-        if (current->name == layer)
-            return current->colour;
+        if (current.name == layer)
+            return current.colour;
     }
     return 7;   // white
 }
@@ -388,20 +371,27 @@ inline void GetLines(wxTextInputStream& text, wxString& line1, wxString& line2)
 // parse header section: just skip everything
 bool DXFRenderer::ParseHeader(wxInputStream& stream)
 {
+    printf("Entree de DXFRenderer::ParseHeader\n");
+
     wxTextInputStream text(stream);
     wxString line1, line2;
     while (stream.CanRead())
     {
         GetLines(text, line1, line2);
-        if (line1 == wxT("0") && line2 == wxT("ENDSEC"))
+        if (line1 == "0" && line2 == "ENDSEC") {
+            printf("Sortie de DXFRenderer::ParseHeader en true\n");
             return true;
+        }
     }
+    printf("Sortie de DXFRenderer::ParseHeader en false\n");
     return false;
 }
 
 // parse tables section: save layers name and colour
 bool DXFRenderer::ParseTables(wxInputStream& stream)
 {
+    printf("Entree de DXFRenderer::ParseTables\n");
+
     wxTextInputStream text(stream);
     wxString line1, line2;
     bool inlayer=false;
@@ -409,35 +399,55 @@ bool DXFRenderer::ParseTables(wxInputStream& stream)
     while (stream.CanRead())
     {
         GetLines(text, line1, line2);
-        if (line1 == wxT("0") && inlayer)
+        if (line1 == "0" && inlayer)
         {
             // flush layer
             if (!layer.name.IsEmpty() && layer.colour != -1)
             {
-                DXFLayer *p = new DXFLayer;
-                p->name = layer.name;
-                p->colour = layer.colour;
-                m_layers.Append(p);
+                DXFLayer p;
+                p.name = layer.name;
+                p.colour = layer.colour;
+                m_layers.push_back(p);
             }
             layer = DXFLayer();
             inlayer = false;
         }
-        if (line1 == wxT("0") && line2 == wxT("ENDSEC"))
+        if (line1 == "0" && line2 == "ENDSEC") {
+            printf("Sortie de DXFRenderer::ParseTables en true\n");
             return true;
-        else if (line1 == wxT("0") && line2 == wxT("LAYER"))
+        }
+        else if (line1 == "0" && line2 == "LAYER")
             inlayer = true;
         else if (inlayer)
         {
-            if (line1 == wxT("2")) // layer name
+            if (line1 == "2") // layer name
                 layer.name = line2;
-            else if (line1 == wxT("62")) { // ACI colour
+            else if (line1 == "62") // ACI colour
+            {
                 long l;
                 line2.ToLong(&l);
                 layer.colour = l;
             }
         }
     }
+    printf("Sortie de DXFRenderer::ParseTables en false\n");
     return false;
+}
+
+// This method is used instead of numStr.ToDouble(d) because the latter
+// (wxString::ToDouble()) takes the systems proper locale into account,
+// whereas the implementation below works with the default locale.
+// (Converting numbers that are formatted in the default locale can fail
+//  with system locales that use e.g. the comma as the decimal separator.)
+static double ToDouble(const wxString& numStr)
+{
+    double             d;
+    std::string        numStr_(numStr.c_str());
+    std::istringstream iss(numStr_);
+
+    iss >> d;
+
+    return d;
 }
 
 // parse entities section: save 3DFACE and LINE entities
@@ -447,12 +457,17 @@ bool DXFRenderer::ParseEntities(wxInputStream& stream)
     wxString line1, line2;
     int state = 0;  // 0: none, 1: 3DFACE, 2: LINE
     DXFVector v[4];
-    int Nvector = 3;            // Par dÃ©faut, facettes triangulaires
+    int Nvector = 3;            // Par défaut, facettes triangulaires
     int Nlignes = 0;            // Compteur de lignes
-    int Nlignes_test = 10000;   // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que Ã§a tourne !
+    int nb3DFACE= 0;
+    int nbLINE  = 0;
+    int Nlignes_test = 10000;   // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
     bool EnCours=false;
     int colour = -1;
     wxString layer;
+
+    printf("Entree de DXFRenderer::ParseEntities\n");
+
     while (stream.CanRead())
     {
         GetLines(text, line1, line2);
@@ -461,11 +476,13 @@ bool DXFRenderer::ParseEntities(wxInputStream& stream)
             EnCours = true;
             printf(".");
         }
-        if (line1 == wxT("0") && state > 0)
+        if (line1 == "0" && state > 0)
         {
             // flush entity
-            if (state == 1) { // 3DFACE
-                DXFFace *p = new DXFFace;
+            if (state == 1) // 3DFACE
+            {
+                nb3DFACE++;
+                std::unique_ptr<DXFFace> p(new DXFFace);
                 p->v0 = v[0];
                 p->v1 = v[1];
                 p->v2 = v[2];
@@ -476,68 +493,71 @@ bool DXFRenderer::ParseEntities(wxInputStream& stream)
                     p->colour = colour;
                 else
                     p->colour = GetLayerColour(layer);
-                m_entities.Append(p);
+                m_entities.push_back(std::move(p));
                 colour = -1; layer.clear();
                 v[0] = v[1] = v[2] = v[3] = DXFVector();
                 state = 0;
             }
             else if (state == 2) // LINE
             {
-                DXFLine *p = new DXFLine;
+                nbLINE++;
+                std::unique_ptr<DXFLine> p(new DXFLine);
                 p->v0 = v[0];
                 p->v1 = v[1];
                 if (colour != -1)
                     p->colour = colour;
                 else
                     p->colour = GetLayerColour(layer);
-                m_entities.Append(p);
+                m_entities.push_back(std::move(p));
                 colour = -1; layer.clear();
                 v[0] = v[1] = v[2] = v[3] = DXFVector();
                 state = 0;
             }
         }
-        if (line1 == wxT("0") && line2 == wxT("ENDSEC")) {
+        if (line1 == "0" && line2 == "ENDSEC") {
             if (EnCours) printf("\n");
+            printf("Sortie de DXFRenderer::ParseEntities     : nb3DFACE : %d, nbLINE : %d, en true\n",nb3DFACE,nbLINE);
             return true;
         }
-        else if (line1 == wxT("0") && line2 == wxT("3DFACE"))
+        else if (line1 == "0" && line2 == "3DFACE")
             state = 1;
-        else if (line1 == wxT("0") && line2 == wxT("LINE"))
+        else if (line1 == "0" && line2 == "LINE")
             state = 2;
         else if (state > 0)
         {
-            double d;
-            line2.ToDouble(&d);
+            const float d = float(ToDouble(line2));
+
             Nvector = 3;                            // Facettes triangulaires
-            if (line1 == wxT("10"))
+            if (line1 == "10")
                 v[0].x = d;
-            else if (line1 == wxT("20"))
+            else if (line1 == "20")
                 v[0].y = d;
-            else if (line1 == wxT("30"))
+            else if (line1 == "30")
                 v[0].z = d;
-            else if (line1 == wxT("11"))
+            else if (line1 == "11")
                 v[1].x = d;
-            else if (line1 == wxT("21"))
+            else if (line1 == "21")
                 v[1].y = d;
-            else if (line1 == wxT("31"))
+            else if (line1 == "31")
                 v[1].z = d;
-            else if (line1 == wxT("12"))
+            else if (line1 == "12")
                 v[2].x = d;
-            else if (line1 == wxT("22"))
+            else if (line1 == "22")
                 v[2].y = d;
-            else if (line1 == wxT("32"))
+            else if (line1 == "32")
                 v[2].z = d;
-            else if (line1 == wxT("13"))
+            else if (line1 == "13")
                 v[3].x = d;
-            else if (line1 == wxT("23"))
+            else if (line1 == "23")
                 v[3].y = d;
-            else if (line1 == wxT("33")) {
+            else if (line1 == "33") {
                 v[3].z = d;
-                Nvector = 4;                // Facettes Ã  4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
+                Nvector = 4;                // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
             }
-            else if (line1 == wxT("8"))     // layer
+            else if (line1 == "8")  // layer
                 layer = line2;
-            else if (line1 == wxT("62")) {  // colour
+            else if (line1 == "62") // colour
+            {
                 long l;
                 line2.ToLong(&l);
                 colour = l;
@@ -545,6 +565,7 @@ bool DXFRenderer::ParseEntities(wxInputStream& stream)
         }
     }
     if (EnCours) printf("\n");
+    printf("Sortie de DXFRenderer::ParseEntities     : nb3DFACE : %d, nbLINE : %d, en false\n",nb3DFACE,nbLINE);
     return false;
 }
 
@@ -552,6 +573,7 @@ bool DXFRenderer::ParseEntities(wxInputStream& stream)
 // currently pretty limited, but knows enough to handle 3DFACEs and LINEs
 bool DXFRenderer::Load(wxInputStream& stream)
 {
+    printf("Entree de DXFRenderer::Load\n");
     Clear();
     wxTextInputStream text(stream);
 
@@ -559,24 +581,24 @@ bool DXFRenderer::Load(wxInputStream& stream)
     while (stream.CanRead())
     {
         GetLines(text, line1, line2);
-        if (line1 == wxT("999")) // comment
+        if (line1 == "999") // comment
             continue;
-        else if (line1 == wxT("0") && line2 == wxT("SECTION"))
+        else if (line1 == "0" && line2 == "SECTION")
         {
             GetLines(text, line1, line2);
-            if (line1 == wxT("2"))
+            if (line1 == "2")
             {
-                if (line2 == wxT("HEADER"))
+                if (line2 == "HEADER")
                 {
                     if (!ParseHeader(stream))
                         return false;
                 }
-                else if (line2 == wxT("TABLES"))
+                else if (line2 == "TABLES")
                 {
                     if (!ParseTables(stream))
                         return false;
                 }
-                else if (line2 == wxT("ENTITIES"))
+                else if (line2 == "ENTITIES")
                 {
                     if (!ParseEntities(stream))
                         return false;
@@ -588,15 +610,12 @@ bool DXFRenderer::Load(wxInputStream& stream)
     NormalizeEntities();
     m_loaded = true;
     m_gllist = 0;
+    printf("Sortie de DXFRenderer::Load\n");
     return true;
 }
 
-inline float mymin(float x, float y) {
-    return x < y ? x : y;
-}
-inline float mymax(float x, float y) {
-    return x > y ? x : y;
-}
+inline float mymin(float x, float y) { return x < y ? x : y; }
+inline float mymax(float x, float y) { return x > y ? x : y; }
 
 // Scale object boundings to [-5,5]
 void DXFRenderer::NormalizeEntities()
@@ -604,13 +623,18 @@ void DXFRenderer::NormalizeEntities()
     // calculate current min and max boundings of object
     DXFVector minv(10e20f, 10e20f, 10e20f);
     DXFVector maxv(-10e20f, -10e20f, -10e20f);
-    int nbvec;
-    for (DXFEntityList::compatibility_iterator node = m_entities.GetFirst(); node; node = node->GetNext())
+	int nbvec;
+	int nb3DFACE=0, nbLINE=0, nbVector=0;
+	int nb4p=0, nb3p=0;
+
+	printf("Entree de DXFRenderer::NormalizeEntities\n");
+
+    for (auto& entity : m_entities)
     {
-        DXFEntity *p = node->GetData();
-        if (p->type == DXFEntity::Line)
+        if (entity->type == DXFEntity::Line)
         {
-            DXFLine *line = (DXFLine *)p;
+            nbLINE++;
+            DXFLine *line = (DXFLine *)entity.get();
             const DXFVector *v[2] = { &line->v0, &line->v1 };
             for (int i = 0; i < 2; ++i)
             {
@@ -621,14 +645,17 @@ void DXFRenderer::NormalizeEntities()
                 maxv.y = mymax(v[i]->y, maxv.y);
                 maxv.z = mymax(v[i]->z, maxv.z);
             }
-        } else if (p->type == DXFEntity::Face)
+        } else if (entity->type == DXFEntity::Face)
         {
-            DXFFace *face = (DXFFace *)p;
-
+            nb3DFACE++;
+            DXFFace *face = (DXFFace *)entity.get();
             const DXFVector *v[4] = { &face->v0, &face->v1, &face->v2, &face->v3 };
             nbvec = 3;
             if (face->Nb_DXFVector != 3) nbvec = 4; // 3 points pour des facettes triangulaires, sinon 4
-            for (int i = 0; i < nbvec; ++i) {
+            if (nbvec == 3) nb3p++; else nb4p++;
+            nbVector += nbvec;
+            for (int i = 0; i < nbvec; ++i)
+            {
                 minv.x = mymin(v[i]->x, minv.x);
                 minv.y = mymin(v[i]->y, minv.y);
                 minv.z = mymin(v[i]->z, minv.z);
@@ -636,46 +663,44 @@ void DXFRenderer::NormalizeEntities()
                 maxv.y = mymax(v[i]->y, maxv.y);
                 maxv.z = mymax(v[i]->z, maxv.z);
             }
-        }
+       }
     }
 
     // rescale object down to [-5,5]
     DXFVector span(maxv.x - minv.x, maxv.y - minv.y, maxv.z - minv.z);
     float factor = mymin(mymin(10.0f / span.x, 10.0f / span.y), 10.0f / span.z);
-    for (DXFEntityList::compatibility_iterator node2 = m_entities.GetFirst(); node2; node2 = node2->GetNext())
+    for (auto& entity : m_entities)
     {
-        DXFEntity *p = node2->GetData();
-        if (p->type == DXFEntity::Line)
+        if (entity->type == DXFEntity::Line)
         {
-            DXFLine *line = (DXFLine *)p;
+            DXFLine *line = (DXFLine *)entity.get();
             DXFVector *v[2] = { &line->v0, &line->v1 };
             for (int i = 0; i < 2; ++i)
             {
-                v[i]->x -= minv.x + span.x/2;
-                v[i]->x *= factor;
-                v[i]->y -= minv.y + span.y/2;
-                v[i]->y *= factor;
-                v[i]->z -= minv.z + span.z/2;
-                v[i]->z *= factor;
+                v[i]->x -= minv.x + span.x/2; v[i]->x *= factor;
+                v[i]->y -= minv.y + span.y/2; v[i]->y *= factor;
+                v[i]->z -= minv.z + span.z/2; v[i]->z *= factor;
             }
-        } else if (p->type == DXFEntity::Face) {
-            DXFFace *face = (DXFFace *)p;
+        } else if (entity->type == DXFEntity::Face)
+        {
+            DXFFace *face = (DXFFace *)entity.get();
             DXFVector *v[4] = { &face->v0, &face->v1, &face->v2, &face->v3 };
             nbvec = 3;
             if (face->Nb_DXFVector != 3) nbvec = 4; // 3 points pour des facettes triangulaires, sinon 4
-            for (int i = 0; i < nbvec; ++i) {
-                v[i]->x -= minv.x + span.x/2;
-                v[i]->x *= factor;
-                v[i]->y -= minv.y + span.y/2;
-                v[i]->y *= factor;
-                v[i]->z -= minv.z + span.z/2;
-                v[i]->z *= factor;
+            for (int i = 0; i < nbvec; ++i)
+            {
+                v[i]->x -= minv.x + span.x/2; v[i]->x *= factor;
+                v[i]->y -= minv.y + span.y/2; v[i]->y *= factor;
+                v[i]->z -= minv.z + span.z/2; v[i]->z *= factor;
             }
-        }
+       }
     }
+
+    printf("Sortie de DXFRenderer::NormalizeEntities : nb3DFACE = %d, nbLINE = %d, nbVector = %d, nb3p = %d, nb4p = %d\n", nb3DFACE,nbLINE,nbVector, nb3p, nb4p);
+
 }
 
-// OpenGL renderer for DXF entities
+// OpenGL renderer for DXF entities : Note si Render() const , comme dans le sample wxwidgets penguin, on a une erreur d'affectation sur m_gllist
 void DXFRenderer::Render()
 {
     if (!m_loaded)
@@ -685,31 +710,32 @@ void DXFRenderer::Render()
     if( m_gllist == 0 ) {
         m_gllist = glGenLists( 1 ) ; // BddInter::glliste_objets; // ne marche pas (erreur: invalid use of non-static data member), mais 7 est OK
         glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );
-
-        for (DXFEntityList::compatibility_iterator node = m_entities.GetFirst(); node; node = node->GetNext())
+        for (const auto& entity : m_entities)
         {
-            DXFEntity *p = node->GetData();
-            wxColour c = ACIColourToRGB(p->colour);
-            if (p->type == DXFEntity::Line) {
-                DXFLine *line = (DXFLine *)p;
+            wxColour c = ACIColourToRGB(entity->colour);
+            if (entity->type == DXFEntity::Line)
+            {
+                DXFLine *line = (DXFLine *)entity.get();
                 glBegin(GL_LINES);
-                glColor3f(c.Red()/255.0,c.Green()/255.0,c.Blue()/255.0);
+                glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
                 glVertex3f(line->v0.x, line->v0.y, line->v0.z);
                 glVertex3f(line->v1.x, line->v1.y, line->v1.z);
                 glEnd();
-            } else if (p->type == DXFEntity::Face) {
-                DXFFace *face = (DXFFace *)p;
+            }
+            else if (entity->type == DXFEntity::Face)
+            {
+                DXFFace *face = (DXFFace *)entity.get();
                 if (face->Nb_DXFVector == 3) {
                     glBegin(GL_TRIANGLES);
-                    glColor3f(c.Red()/255.0,c.Green()/255.0,c.Blue()/255.0);
+                    glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
                     glNormal3f(face->n.x, face->n.y, face->n.z);
                     glVertex3f(face->v0.x, face->v0.y, face->v0.z);
                     glVertex3f(face->v1.x, face->v1.y, face->v1.z);
                     glVertex3f(face->v2.x, face->v2.y, face->v2.z);
                     glEnd();
-                 } else {
-                    glBegin(GL_POLYGON);
-                    glColor3f(c.Red()/255.0,c.Green()/255.0,c.Blue()/255.0);
+			    } else {
+			        glBegin(GL_POLYGON);
+                    glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
                     glNormal3f(face->n.x, face->n.y, face->n.z);
                     glVertex3f(face->v0.x, face->v0.y, face->v0.z);
                     glVertex3f(face->v1.x, face->v1.y, face->v1.z);
@@ -717,7 +743,7 @@ void DXFRenderer::Render()
                     glVertex3f(face->v3.x, face->v3.y, face->v3.z);
                     glEnd();
                  }
-            }
+			}
         }
 //        printf("\nhello\n");
         glEndList();
@@ -726,3 +752,4 @@ void DXFRenderer::Render()
         glCallList(m_gllist);
     }
 }
+*/

@@ -573,93 +573,93 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     BoxSizer1->SetSizeHints(this);
     Center();
 
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
-    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
-    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
-    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
-    Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
-    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
-    GLCanvas->Connect(wxEVT_PAINT,(wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint,0,this);
-    Connect(ID_SLIDER_X,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
-    Connect(ID_SLIDER_X,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
-    Connect(ID_SLIDER_Y,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
-    Connect(ID_SLIDER_Y,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
-    Connect(ID_SLIDER_Z,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
-    Connect(ID_SLIDER_Z,wxEVT_COMMAND_SLIDER_UPDATED,(wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
-    Connect(idOpenFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OpenSelected);
-    Connect(idReopenFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReOpenSelected);
-    Connect(idAddFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AddFileSelected);
-    Connect(idSaveFile,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerSelected);
-    Connect(idSaveFileAs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Enregistrer_Sous);
-    Connect(idProperties,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ProprietesSelected);
-    Connect(idPrefs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PreferencesSelected);
-    Connect(idHardware,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Hardware3DSelected);
-    Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnQuit);
-    Connect(menu_Affichage_Points,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
-    Connect(menu_Affichage_Filaire,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_FilaireSelected);
-    Connect(menu_Affichage_Plein,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
-    Connect(menu_Affichage_Axes,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
-    Connect(menu_Affichage_Boite,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
-    Connect(menu_Affichage_Source,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
-    Connect(ID_MENUITEM1,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_OrigineSelected);
-    Connect(ID_MENUITEM2,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeFaceSelected);
-    Connect(ID_MENUITEM3,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeProfilSelected);
-    Connect(ID_MENUITEM4,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_VueDeDessusSelected);
-    Connect(ID_MENUITEM5,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionObservateurSelected);
-    Connect(ID_MENUITEM6,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZoomSpecifiqueSelected);
-    Connect(ID_MENUITEM7,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CentreRotationSelected);
-    Connect(ID_MENUITEM8,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_PositionSourceSelected);
-    Connect(ID_MENUITEM32,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteConeSelected);
-    Connect(ID_MENUITEM33,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCubeSelected);
-    Connect(ID_MENUITEM34,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCylindreSelected);
-    Connect(ID_MENUITEM35,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteEllipsoideSelected);
-    Connect(ID_MENUITEM36,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteFacetteSelected);
-    Connect(ID_MENUITEM37,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteSphereSelected);
-    Connect(ID_MENUITEM38,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteIcosaedreSelected);
-    Connect(ID_MENUITEM51,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_AjouteToreSelected);
-    Connect(ID_MENUITEM39,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerDerniereSelected);
-    Connect(ID_MENUITEM9,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperagePointSelected);
-    Connect(ID_MENUITEM10,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageFacetteSelected);
-    Connect(ID_MENUITEM11,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageGroupeSelected);
-    Connect(ID_MENUITEM12,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageMateriauSelected);
-    Connect(ID_MENUITEM13,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReperageObjetSelected);
-    Connect(ID_MENUITEM14,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_SensDesNormalesSelected);
-    Connect(menu_reperage_couleurs_facettes,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected);
-    Connect(menu_reperage_couleurs_groupes,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected);
-    Connect(menu_reperage_couleurs_materiaux,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected);
-    Connect(ID_MENUITEM50,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_ImageJpegSelected);
-    Connect(ID_MENUITEM49,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_ImagePngSelected);
-    Connect(ID_MENUITEM48,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_ImagePpmSelected);
-    Connect(ID_MENUITEM40,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_RAZ_SelectionFacettesSelected);
-    Connect(ID_MENUITEM41,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_MasquerFacettesSelected);
-    Connect(ID_MENUITEM42,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerFacettesSelected);
-    Connect(ID_MENUITEM15,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_Selec_DeplSelected);
-    Connect(ID_MENUITEM16,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_ModificationsSelected);
-    Connect(ID_MENUITEM28,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_choix_afficherSelected);
-    Connect(ID_MENUITEM29,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_ReafficherSelected);
-    Connect(ID_MENUITEM30,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_Supprimer_MasquesSelected);
-    Connect(ID_MENUITEM31,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnOutils_UnDeleteSelected);
-    Connect(ID_MENUITEM52,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Retracer3DSelected);
-    Connect(ID_MENUITEM17,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_XminusX);
-    Connect(ID_MENUITEM18,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_YminusY);
-    Connect(ID_MENUITEM19,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZminusZ);
-    Connect(ID_MENUITEM20,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_XtoY);
-    Connect(ID_MENUITEM21,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_XtoZ);
-    Connect(ID_MENUITEM22,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_YtoZ);
-    Connect(ID_MENUITEM23,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_XtoYtoZ);
-    Connect(ID_MENUITEM24,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Inverser_Toutes_les_NormalesSelected);
-    Connect(ID_MENUITEM27,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected);
-    Connect(ID_MENUITEM25,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_DeplacerBddSelected);
-    Connect(ID_MENUITEM26,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_FacteurEchelleBddSelected);
-    Connect(ID_MENUITEM43,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CouleurDesGroupesSelected);
-    Connect(ID_MENUITEM44,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_RelirePaletteSelected);
-    Connect(ID_MENUITEM45,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerPaletteSelected);
-    Connect(ID_MENUITEM46,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ZoomAutoSelected);
-    Connect(ID_MENUITEM47,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_CentrageAutoSelected);
-    Connect(idMenuHelp,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenuItem_AideSelected);
-    Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnAbout);
-    Connect(ID_TIMER1,wxEVT_TIMER,(wxObjectEventFunction)&OvniFrame::OnTimer_SaveTrigger);
-    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&OvniFrame::OnClose);
+    Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_ZoomPlusClick);
+    Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_ZoomMoinsClick);
+    Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_GaucheClick);
+    Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
+    Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
+    Connect(ID_BUTTON6, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
+    GLCanvas->Connect(wxEVT_PAINT, (wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint, NULL, this);
+    Connect(ID_SLIDER_X, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
+    Connect(ID_SLIDER_X, wxEVT_COMMAND_SLIDER_UPDATED, (wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
+    Connect(ID_SLIDER_Y, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
+    Connect(ID_SLIDER_Y, wxEVT_COMMAND_SLIDER_UPDATED, (wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
+    Connect(ID_SLIDER_Z, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
+    Connect(ID_SLIDER_Z, wxEVT_COMMAND_SLIDER_UPDATED, (wxObjectEventFunction)&OvniFrame::OnSlider_zCmdScroll);
+    Connect(idOpenFile, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_OpenSelected);
+    Connect(idReopenFile, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReOpenSelected);
+    Connect(idAddFile, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AddFileSelected);
+    Connect(idSaveFile, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerSelected);
+    Connect(idSaveFileAs, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Enregistrer_Sous);
+    Connect(idProperties, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ProprietesSelected);
+    Connect(idPrefs, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_PreferencesSelected);
+    Connect(idHardware, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Hardware3DSelected);
+    Connect(idMenuQuit, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnQuit);
+    Connect(menu_Affichage_Points, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PointsSelected);
+    Connect(menu_Affichage_Filaire, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_FilaireSelected);
+    Connect(menu_Affichage_Plein, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_PleinSelected);
+    Connect(menu_Affichage_Axes, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_AxesSelected);
+    Connect(menu_Affichage_Boite, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_BoiteSelected);
+    Connect(menu_Affichage_Source, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Affichage_SourceSelected);
+    Connect(ID_MENUITEM1, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_OrigineSelected);
+    Connect(ID_MENUITEM2, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_VueDeFaceSelected);
+    Connect(ID_MENUITEM3, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_VueDeProfilSelected);
+    Connect(ID_MENUITEM4, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_VueDeDessusSelected);
+    Connect(ID_MENUITEM5, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_PositionObservateurSelected);
+    Connect(ID_MENUITEM6, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ZoomSpecifiqueSelected);
+    Connect(ID_MENUITEM7, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_CentreRotationSelected);
+    Connect(ID_MENUITEM8, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_PositionSourceSelected);
+    Connect(ID_MENUITEM32, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteConeSelected);
+    Connect(ID_MENUITEM33, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCubeSelected);
+    Connect(ID_MENUITEM34, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteCylindreSelected);
+    Connect(ID_MENUITEM35, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteEllipsoideSelected);
+    Connect(ID_MENUITEM36, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteFacetteSelected);
+    Connect(ID_MENUITEM37, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteSphereSelected);
+    Connect(ID_MENUITEM38, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteIcosaedreSelected);
+    Connect(ID_MENUITEM51, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_AjouteToreSelected);
+    Connect(ID_MENUITEM39, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerDerniereSelected);
+    Connect(ID_MENUITEM9, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReperagePointSelected);
+    Connect(ID_MENUITEM10, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReperageFacetteSelected);
+    Connect(ID_MENUITEM11, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReperageGroupeSelected);
+    Connect(ID_MENUITEM12, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReperageMateriauSelected);
+    Connect(ID_MENUITEM13, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ReperageObjetSelected);
+    Connect(ID_MENUITEM14, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_SensDesNormalesSelected);
+    Connect(menu_reperage_couleurs_facettes, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected);
+    Connect(menu_reperage_couleurs_groupes, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected);
+    Connect(menu_reperage_couleurs_materiaux, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected);
+    Connect(ID_MENUITEM50, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenuItem_ImageJpegSelected);
+    Connect(ID_MENUITEM49, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenuItem_ImagePngSelected);
+    Connect(ID_MENUITEM48, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenuItem_ImagePpmSelected);
+    Connect(ID_MENUITEM40, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_RAZ_SelectionFacettesSelected);
+    Connect(ID_MENUITEM41, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_MasquerFacettesSelected);
+    Connect(ID_MENUITEM42, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_SupprimerFacettesSelected);
+    Connect(ID_MENUITEM15, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_Selec_DeplSelected);
+    Connect(ID_MENUITEM16, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_ModificationsSelected);
+    Connect(ID_MENUITEM28, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_choix_afficherSelected);
+    Connect(ID_MENUITEM29, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_ReafficherSelected);
+    Connect(ID_MENUITEM30, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_Supprimer_MasquesSelected);
+    Connect(ID_MENUITEM31, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnOutils_UnDeleteSelected);
+    Connect(ID_MENUITEM52, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Retracer3DSelected);
+    Connect(ID_MENUITEM17, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_XminusX);
+    Connect(ID_MENUITEM18, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_YminusY);
+    Connect(ID_MENUITEM19, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ZminusZ);
+    Connect(ID_MENUITEM20, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_XtoY);
+    Connect(ID_MENUITEM21, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_XtoZ);
+    Connect(ID_MENUITEM22, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_YtoZ);
+    Connect(ID_MENUITEM23, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_XtoYtoZ);
+    Connect(ID_MENUITEM24, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Inverser_Toutes_les_NormalesSelected);
+    Connect(ID_MENUITEM27, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_Inverse_All_Selected_NormalesSelected);
+    Connect(ID_MENUITEM25, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_DeplacerBddSelected);
+    Connect(ID_MENUITEM26, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_FacteurEchelleBddSelected);
+    Connect(ID_MENUITEM43, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_CouleurDesGroupesSelected);
+    Connect(ID_MENUITEM44, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_RelirePaletteSelected);
+    Connect(ID_MENUITEM45, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_EnregistrerPaletteSelected);
+    Connect(ID_MENUITEM46, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_ZoomAutoSelected);
+    Connect(ID_MENUITEM47, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenu_CentrageAutoSelected);
+    Connect(idMenuHelp, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnMenuItem_AideSelected);
+    Connect(idMenuAbout, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&OvniFrame::OnAbout);
+    Connect(ID_TIMER1, wxEVT_TIMER, (wxObjectEventFunction)&OvniFrame::OnTimer_SaveTrigger);
+    Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&OvniFrame::OnClose);
     //*)
 
     // Initialement créés par wxSmith (pour wxWidgets 2.8.12) ainsi que les déclarations des ID_POPUP_*
@@ -892,6 +892,8 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         New_file = false;
     }
 
+    long retour_Display = 0;
+
     wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
     if (wxFileExists(Fichier_svg)) {
         // Un fichier Autosave.bdd existe
@@ -900,7 +902,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         wxMessage         += _T("  *  Si Oui, il vaut mieux l'\"Enregistrer sous ...\" un autre nom dès que possible car elle\n");
         wxMessage         += _T("  *  sera écrasée à la prochaine sauvegarde automatique ou supprimée en sortie !");
 
-        long retour_Display = DisplayMessage(wxMessage, _T("Sauvegarde automatique existante..."),
+        retour_Display = DisplayMessage(wxMessage, _T("Sauvegarde automatique existante..."),
                                              wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
         if (retour_Display == wxID_YES) {
             Element->set_file(Fichier_svg);
@@ -912,8 +914,14 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         // Note : ne pas mettre Element->exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
     }
 
-
     Ouvrir_Fichier();
+
+    if (retour_Display == wxID_YES) {
+        // Forcer un Enregistrement Sous...
+        wxCommandEvent event_cmd;
+        OnMenu_Enregistrer_Sous(event_cmd);
+    }
+
     Timer_Save.Stop();                                                          // Arrêt du timer par précaution
     if (Element->svg_time > 0) Timer_Save.Start(Element->svg_time*60000,false); // Lancer le timer si svg_time > 0
 
@@ -1759,6 +1767,7 @@ void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 //        Element->m_gllist = 0 ;
 //        Element->Refresh();
 //    }
+    Element->bdd_modifiee = false;
 }
 
 void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
@@ -1772,8 +1781,8 @@ void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
 
     this->Element->test_decalage3ds = !this->Element->test_decalage3ds; // Inverser le test...
                                                                         // Ici, on ne marque pas de changement du fichier init (ini_file_modified inchangé)
-    if (this->Element->MPrefs->IsShown()) {                             // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
-        this->Element->MPrefs->CheckBox_TestDecalage3DS->SetValue(this->Element->test_decalage3ds);
+    if (this->Preferences_Panel->IsShown()) {                             // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
+        this->Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(this->Element->test_decalage3ds);
     }
     OnMenu_ReOpenSelected(event) ;
 }
@@ -1913,7 +1922,7 @@ void OvniFrame::Ouvrir_Fichier()
 
         Element->create_bdd();
 
-        if (Element->type < 0) Erreur_lecture = true;
+        if (Element->type_fichier < 0) Erreur_lecture = true;
 
         if (!Erreur_lecture) {
 
@@ -1948,11 +1957,11 @@ void OvniFrame::Ouvrir_Fichier()
                 }
             }
 
-            this->Menu_Enregistrer->Enable();                   // Activer le menu "Enregistrer"
-            this->Menu_Enregistrer_Sous->Enable();              // Activer le menu "Enregistrer sous..."
-            Element->MPrefs->CheckBox_CreerBackup->Enable();    // Activer la case à cocher de création d'un fichier .bak
+            this->Menu_Enregistrer->Enable();                       // Activer le menu "Enregistrer"
+            this->Menu_Enregistrer_Sous->Enable();                  // Activer le menu "Enregistrer sous..."
+            Preferences_Panel->CheckBox_CreerBackup->Enable();      // Activer la case à cocher de création d'un fichier .bak
             if (Element->CreerBackup)
-                Element->MPrefs->CheckBox_SupprBackup->Enable();// Activer la case à cocher de suppression du fichier .bak
+                Preferences_Panel->CheckBox_SupprBackup->Enable();  // Activer la case à cocher de suppression du fichier .bak
 
             if (Element->Numero_base != 0) {
                 Element->bdd_modifiee = true;                   // On a fait une fusion => marquer la bdd comme modifiée
@@ -1979,7 +1988,8 @@ void OvniFrame::Ouvrir_Fichier()
         }
     }
 
-    this->Menu_AddFile->Enable();                         // Activer le menu "AddFile"
+    this->Menu_AddFile->Enable();                                       // Activer le menu "AddFile"
+    if (Element->type_fichier == 0) this->Menu_AddFile->Enable(false);  // sauf si a déjà lu un fichier dxf (Disable() n'existe pas !)
 
     wxSpinEvent cmd_spin;
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);    // Initialiser la valeur du spinbutton
@@ -2217,7 +2227,8 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
 
     if (Element != nullptr) {
         Element->SaveTo(wxNomFichier,saveFileDialog.GetFilterIndex());
-        Element->set_file(wxNomFichier);    // Mettre à jour le nom du fichier (au cas où il aurait changé, par exemple si fusion)
+        Element->set_file(wxNomFichier);        // Mettre à jour le nom du fichier (au cas où il aurait changé, par exemple si fusion)
+        Element->set_firstFile(wxNomFichier);   // .....
     }
 }
 
@@ -2230,7 +2241,7 @@ void OvniFrame::OnOutils_Selec_DeplSelected(wxCommandEvent& event)
             Selections_Panel->RadioButton_Grp->SetValue(true)    ;          // 0 = Groupe
 //            Selections_Panel->TextCtrl_NumerosUtilises->SetLabel(_T(""));   // Provisoire
 //            Selections_Panel->RadioButton_TypeSelection_Both->SetValue(true) ;
-//            Element->TypeSelection = 0;
+//            Element->TypeSelection = Element->Both;
 
             Selections_Panel->Show();
             Selections_Panel->Refresh();

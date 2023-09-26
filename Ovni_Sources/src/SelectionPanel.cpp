@@ -60,7 +60,8 @@ BEGIN_EVENT_TABLE(SelectionPanel,wxDialog)
 	//*)
 END_EVENT_TABLE()
 
-ListeSelected UndoListe;
+ListeSelected  UndoListe;
+std::list<int> UndoListe_Objets;
 
 SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
@@ -152,34 +153,34 @@ SelectionPanel::SelectionPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Fusionner->Disable();
 	Button_Fusionner->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_RADIOBUTTON3,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
-	Connect(ID_RADIOBUTTON4,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
-	Connect(ID_RADIOBUTTON5,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_SelectionManuelleFacettesClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_OuvrirReperageClick);
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SelectionPanel::OnTextCtrl_NomObjetText);
-	Connect(ID_RADIOBUTTON1,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
-	Connect(ID_RADIOBUTTON2,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_AppliquerClick);
-	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnCheckBox_ForcerFlatClick);
-	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_InverserNormalesClick);
-	Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_UndoNormalesClick);
-	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_DeleteClick);
-	Connect(ID_BUTTON7,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_UndoDeleteClick);
-	Connect(ID_BUTTON8,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_InverserParcoursClick);
-	Connect(ID_BUTTON9,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_MasquerClick);
-	Connect(ID_BUTTON15,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_UndoMasquerClick);
-	Connect(ID_BUTTON10,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_ReafficherClick);
-	Connect(ID_BUTTON11,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_CentrerClick);
-	Connect(ID_BUTTON12,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_ManipulationsClick);
-	Connect(ID_RADIOBUTTON6,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
-	Connect(ID_RADIOBUTTON7,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
-	Connect(ID_RADIOBUTTON8,wxEVT_COMMAND_RADIOBUTTON_SELECTED,(wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
-	Connect(ID_BUTTON13,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_EtendreClick);
-	Connect(ID_BUTTON14,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_QuitterClick);
-	Connect(ID_BUTTON16,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionPanel::OnButton_FusionnerClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&SelectionPanel::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&SelectionPanel::OnClose);
+	Connect(ID_RADIOBUTTON3, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
+	Connect(ID_RADIOBUTTON4, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
+	Connect(ID_RADIOBUTTON5, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_SelectionSelect);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_SelectionManuelleFacettesClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_OuvrirReperageClick);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&SelectionPanel::OnTextCtrl_NomObjetText);
+	Connect(ID_RADIOBUTTON1, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
+	Connect(ID_RADIOBUTTON2, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_GrpMatSelect);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_AppliquerClick);
+	Connect(ID_CHECKBOX1, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnCheckBox_ForcerFlatClick);
+	Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_InverserNormalesClick);
+	Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_UndoNormalesClick);
+	Connect(ID_BUTTON6, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_DeleteClick);
+	Connect(ID_BUTTON7, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_UndoDeleteClick);
+	Connect(ID_BUTTON8, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_InverserParcoursClick);
+	Connect(ID_BUTTON9, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_MasquerClick);
+	Connect(ID_BUTTON15, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_UndoMasquerClick);
+	Connect(ID_BUTTON10, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_ReafficherClick);
+	Connect(ID_BUTTON11, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_CentrerClick);
+	Connect(ID_BUTTON12, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_ManipulationsClick);
+	Connect(ID_RADIOBUTTON6, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
+	Connect(ID_RADIOBUTTON7, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
+	Connect(ID_RADIOBUTTON8, wxEVT_COMMAND_RADIOBUTTON_SELECTED, (wxObjectEventFunction)&SelectionPanel::OnRadioButton_TypeSelectionSelect);
+	Connect(ID_BUTTON13, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_EtendreClick);
+	Connect(ID_BUTTON14, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_QuitterClick);
+	Connect(ID_BUTTON16, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionPanel::OnButton_FusionnerClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&SelectionPanel::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&SelectionPanel::OnClose);
 	//*)
 
 //	this->Selection_Parent=parent;
@@ -195,11 +196,12 @@ SelectionPanel::~SelectionPanel()
 void SelectionPanel::InitPanel()
 {
     BddInter *Element = MAIN->Element;
-    int TypeSelection_local;
+//    int TypeSelection_local = (int)Element->TypeSelection; // ou initialement RadioBox_TypeSelection->GetSelection()
 
     if (RadioButton_Selection_Points->GetValue()) {
         Element->mode_selection = Element->selection_point;
-        Element->show_points = true;
+        Element->show_points    = true;
+        Element->detection_survol_point = true;
 //        Element->style = GL_POINTS;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Points\""));
         Button_OuvrirReperage->Enable();
@@ -239,19 +241,14 @@ void SelectionPanel::InitPanel()
         RadioButton_TypeSelection_Both   ->Disable();
         RadioButton_TypeSelection_Avant  ->Disable();
         RadioButton_TypeSelection_Arriere->Disable();
-//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus (il y avait un RadioBox_TypeSelection->Enable();)
-/*        RadioButton_TypeSelection_Both   ->Enable();
-        RadioButton_TypeSelection_Avant  ->Enable();
-        RadioButton_TypeSelection_Arriere->Enable(); */
-        TypeSelection_local = Element->TypeSelection; // ou = RadioBox_TypeSelection->GetSelection()
 
         glDisable(GL_CULL_FACE);
 
     } else if (RadioButton_Selection_Facettes->GetValue()) {
 
         Element->mode_selection = Element->selection_facette;
-        Element->show_points = false;
+        Element->show_points    = false;
+        Element->detection_survol_point = false;
 //        Element->style = GL_POLYGON;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Facettes\""));
         Button_OuvrirReperage->Enable();
@@ -288,16 +285,12 @@ void SelectionPanel::InitPanel()
         RadioButton_TypeSelection_Both   ->Enable();
         RadioButton_TypeSelection_Avant  ->Enable();
         RadioButton_TypeSelection_Arriere->Enable();
-        TypeSelection_local = Element->TypeSelection; // ou initialement RadioBox_TypeSelection->GetSelection()
-        if (TypeSelection_local > 0) {
-            glEnable(GL_CULL_FACE);
-            if (TypeSelection_local == 1)
-                 glFrontFace(GL_CCW);
-            else glFrontFace(GL_CW) ;
-        } else glDisable(GL_CULL_FACE); // Ici si == 0
-
-//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
+//        if (TypeSelection_local > 0) {                // ??? ne sert à rien ici ??? + bug en mode 2 faces, faces arrières n'apparaissant plus
+//            glEnable(GL_CULL_FACE);
+//            if (TypeSelection_local == 1)
+//                 glFrontFace(GL_CCW);
+//            else glFrontFace(GL_CW) ;
+//        } else glDisable(GL_CULL_FACE); // Ici si == 0
 
         Button_Etendre->Enable();
 
@@ -307,8 +300,9 @@ void SelectionPanel::InitPanel()
     } else if (RadioButton_Selection_Objets->GetValue()) {
 
         Element->mode_selection = Element->selection_objet;
-        // On pourrait effacer une éventuelle sélection de facettes via key_event.m_keyCode = 's'; Element->OnKeyDown(key_event);
-        Element->show_points = false;
+        // On pourrait effacer une éventuelle sélection de facettes via key_event.m_keyCode = 'S'; Element->OnKeyDown(key_event);
+        Element->show_points    = false;
+        Element->detection_survol_point = false;
 //        Element->style = GL_POLYGON;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Objets\""));
         Button_OuvrirReperage->Enable();    // Disable() en version Tcl. Pourquoi ?
@@ -348,8 +342,6 @@ void SelectionPanel::InitPanel()
         RadioButton_TypeSelection_Both   ->Disable();
         RadioButton_TypeSelection_Avant  ->Disable();
         RadioButton_TypeSelection_Arriere->Disable();
-//        StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison
-//        StaticText_TypeSelection->Enable();   // du changement d'état du bouton radio ci-dessus
         glDisable(GL_CULL_FACE);
 
         Button_Etendre->Disable();
@@ -361,15 +353,9 @@ void SelectionPanel::InitPanel()
         Element->mode_selection = Element->aucune;
     }
 
-/*    if (RadioButton_Grp->GetValue()) {                                    // Fait aussi dans OnRadioButton_GrpMatSelect
-        // Groupe sélectionné
-        StaticText_Changer->SetLabel(_T("Changer le numéro de groupe"));
-        StaticText_NumerosUtilises->SetLabel(_T("Numéros des groupes utilisés"));
-    } else {    // <=> RadioButton_Mat->GetValue()
-        // Matériau sélectionné
-        StaticText_Changer->SetLabel(_T("Changer le numéro de matériau"));
-        StaticText_NumerosUtilises->SetLabel(_T("Numéros des matériaux utilisés"));
-    } */
+//    StaticText_TypeSelection->Disable();  // évite un trait blanc au travers du texte en raison du changement
+//    StaticText_TypeSelection->Enable();   // d'état des boutons RadioButton_TypeSelection* ci-dessus ... mais ce bug a disparu...
+
     wxCommandEvent new_event;
     OnRadioButton_GrpMatSelect(new_event);      // Simuler un clic sur le bouton radio Groupe/Matériau pour forcer/initialiser l'affichage des numéros utilisés
 
@@ -392,6 +378,9 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
         Element->show_points = true;
     else
         Element->show_points = false;   // sinon, false
+
+    Element->detection_survol_point = false;
+
     if (Element->mode_selection == Element->selection_objet) {
         Element->m_gllist = 0;
     }
@@ -399,7 +388,7 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     Element->listePoints.clear();
     for (unsigned int i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected=false;
     Element->SelectionObjet = 0;
-    if (Element->mode_selection == Element->selection_point) {
+    if ((Element->mode_selection == Element->selection_point) && (Element->type_fichier != 0)) {
         wxKeyEvent key_event;
         key_event.m_keyCode = 'S';                          // Raz de la sélection de points, sinon pb lors du basculement en mode selection_facette
         Element->OnKeyDown(key_event);                      // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
@@ -409,6 +398,9 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     RadioButton_Grp->SetValue(true);                        // Remettre le choix sur Groupe/Matériau sur Groupe
     wxCommandEvent new_event;
     OnRadioButton_GrpMatSelect(new_event);                  // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
+
+    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+
     Element->Refresh();
 }
 
@@ -430,16 +422,14 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
     str_reset.clear();                              // Vide pour forcer un affichage de case sans rien dedans
     unsigned int i,j;
 
-    if (RadioButton_Selection_Points  ->GetValue()) Element->TypeSelection = 0;
-    if (RadioButton_Selection_Facettes->GetValue()) Element->TypeSelection = 1;
-    if (RadioButton_Selection_Objets  ->GetValue()) Element->TypeSelection = 2;
+    if (RadioButton_Selection_Points  ->GetValue()) Element->mode_selection = Element->selection_point;
+    if (RadioButton_Selection_Facettes->GetValue()) Element->mode_selection = Element->selection_facette;
+    if (RadioButton_Selection_Objets  ->GetValue()) Element->mode_selection = Element->selection_objet;
 
-    Element->listeObjets.clear();
-    Element->listePoints.clear();
     for (i=0; i<Element->Objetlist.size(); i++) {
         objet_courant = &(Element->Objetlist[i]);
         objet_courant->selected = false;            // Forcer la déselection des objets
-        if (Element->TypeSelection == 0) {
+        if (Element->mode_selection == Element->selection_point) {
             unsigned int nb_sommets = objet_courant->Sommetlist.size();
 #pragma omp parallel for
             for (j=0; j<nb_sommets; j++) {          // Forcer la déselection des points/sommets
@@ -447,6 +437,8 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
             }
         }
     }
+    Element->listeObjets.clear();
+    Element->listePoints.clear();
 
     InitPanel();
     TextCtrl_NomObjet   ->ChangeValue(str_reset);
@@ -457,6 +449,8 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
     TextCtrl_IndFacette ->SetValue(str_reset);
     TextCtrl_NumGroupe  ->SetValue(str_reset);
     TextCtrl_NumMateriau->SetValue(str_reset);
+
+    if (Element->type_dxf) return;      // Ne rien faire de plus si on est sur un fichier .dxf => sortir directement (en évitant le Refresh() notamment !)
 
     wxKeyEvent key_event;               // Raz de la liste de points/facettes sélectionnés
     key_event.m_keyCode = 'S';
@@ -589,18 +583,15 @@ void SelectionPanel::OnButton_DeleteClick(wxCommandEvent& event)
 
 // le mode_point n'est pas concerné
     if (Element->mode_selection == Element->selection_facette) {
-        UndoListe = Element->ToSelect;              // Sauvegarder la liste ToSelect dans UndoListe
+        UndoListe = Element->ToSelect;                      // Sauvegarder la liste ToSelect dans UndoListe
         wxKeyEvent key_event;
-        key_event.m_keyCode = WXK_DELETE;           // Touche Suppr principale
-        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" au clavier
+        key_event.m_keyCode = WXK_DELETE;                   // Touche Suppr principale
+        Element->OnKeyDown(key_event);                      // Simule une pression sur la touche "Suppr" au clavier
     } else if (Element->mode_selection == Element->selection_objet) {
-//        auto it = Element->listeObjets.begin();
-//        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
-//            Element->Objetlist[*it].deleted = true;
-//        }
+        UndoListe_Objets = Element->listeObjets;            // Sauvegarder la listeObjets
         wxKeyEvent key_event;
-        key_event.m_keyCode = WXK_DELETE;           // Touche Suppr principale
-        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" au clavier
+        key_event.m_keyCode = WXK_DELETE;                   // Touche Suppr principale
+        Element->OnKeyDown(key_event);                      // Simule une pression sur la touche "Suppr" au clavier
     }
     Button_UndoDelete->Enable();
 //    Element->m_gllist = 0;    // Inutile car fait via OnKeyDown
@@ -614,22 +605,23 @@ void SelectionPanel::OnButton_UndoDeleteClick(wxCommandEvent& event)
 
 // le mode_point n'est pas concerné
     if (Element->mode_selection == Element->selection_facette) {
-        Element->ToSelect = UndoListe;    // Remettre en place la liste ToSelect depuis UndoListe
+        Element->ToSelect = UndoListe;                      // Remettre en place la liste ToSelect depuis UndoListe
         for (unsigned int i=0; i<Element->Objetlist.size(); i++) {
             if (Element->Objetlist[i].deleted) continue;                  // Ne rien faire sur les objets complètement supprimés
             for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
                 if (Element->ToSelect.check_if_in_ListeSelect(i,j)) {
                     Facette_courante = &(Element->Objetlist[i].Facelist[j]);
-                    Facette_courante->deleted  = false;   // Undelete
-//                    Element->colorface(i,j);            // coloriser la facette
-                    Facette_courante->selected = true;    // marquer la facette comme Sélectionnée
-                    Facette_courante->afficher = true;    // + réafficher
+                    Facette_courante->deleted  = false;     // Undelete
+//                    Element->colorface(i,j);                // coloriser la facette
+                    Facette_courante->selected = true;      // marquer la facette comme Sélectionnée
+                    Facette_courante->afficher = true;      // + réafficher
                 }
             }
         }
         Element->m_gllist = Element->glliste_select;
 
     } else if (Element->mode_selection == Element->selection_objet) {
+        Element->listeObjets = UndoListe_Objets;            // Restaurer la listeObjets
         auto it = Element->listeObjets.begin();
         for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
             Element->Objetlist[*it].deleted = false;
@@ -646,18 +638,15 @@ void SelectionPanel::OnButton_MasquerClick(wxCommandEvent& event)
 
 // le mode_point n'est pas concerné
     if (Element->mode_selection == Element->selection_facette) {
-        UndoListe = Element->ToSelect;              // Sauvegarder la liste ToSelect dans UndoListe
+        UndoListe = Element->ToSelect;                      // Sauvegarder la liste ToSelect dans UndoListe
         wxKeyEvent key_event;
-        key_event.m_keyCode = WXK_NUMPAD_DELETE;    // Touche Suppr du Numpad
-        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" du clavier Numpad
+        key_event.m_keyCode = WXK_NUMPAD_DELETE;            // Touche Suppr du Numpad
+        Element->OnKeyDown(key_event);                      // Simule une pression sur la touche "Suppr" du clavier Numpad
     } else if (Element->mode_selection == Element->selection_objet) {
+        UndoListe_Objets = Element->listeObjets;            // Sauvegarder la listeObjets
         wxKeyEvent key_event;
-        key_event.m_keyCode = WXK_NUMPAD_DELETE;    // Touche Suppr du Numpad
-        Element->OnKeyDown(key_event);              // Simule une pression sur la touche "Suppr" du clavier Numpad
-//        auto it = Element->listeObjets.begin();
-//        for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
-//            Element->Objetlist[*it].afficher = false;
-//        }
+        key_event.m_keyCode = WXK_NUMPAD_DELETE;            // Touche Suppr du Numpad
+        Element->OnKeyDown(key_event);                      // Simule une pression sur la touche "Suppr" du clavier Numpad
     }
     Button_UndoMasquer->Enable();
 //    Element->m_gllist = 0;    // Inutile car fait via OnKeyDown
@@ -670,20 +659,21 @@ void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
     Face * Facette_courante;
 
     if (Element->mode_selection == Element->selection_facette) {
-        Element->ToSelect = UndoListe;    // Remettre en place la liste ToSelect depuis UndoListe
+        Element->ToSelect = UndoListe;                      // Remettre en place la liste ToSelect depuis UndoListe
         for (unsigned int i=0; i<Element->Objetlist.size(); i++) {
             if (Element->Objetlist[i].deleted) continue;                  // Ne rien faire sur les objets complètement supprimés
             for (unsigned int j=0; j<Element->Objetlist[i].Facelist.size(); j++) {
                 if (Element->ToSelect.check_if_in_ListeSelect(i,j)) {
                     Facette_courante = &(Element->Objetlist[i].Facelist[j]);
-//                    Element->colorface(i,j);            // coloriser la facette
-                    Facette_courante->selected = true;    // marquer la facette comme Sélectionnée
-                    Facette_courante->afficher = true;    // + réafficher
+//                    Element->colorface(i,j);              // coloriser la facette
+                    Facette_courante->selected = true;      // marquer la facette comme Sélectionnée
+                    Facette_courante->afficher = true;      // + réafficher
                 }
             }
         }
         Element->m_gllist = Element->glliste_select;
     } else if (Element->mode_selection == Element->selection_objet) {
+        Element->listeObjets = UndoListe_Objets;            // Restaurer la listeObjets
         auto it = Element->listeObjets.begin();
         for (unsigned int i=0; i<Element->listeObjets.size(); i++, it++) {
             Element->Objetlist[*it].afficher = true;
@@ -744,12 +734,9 @@ void SelectionPanel::OnButton_CentrerClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
 // OK sur facette, points et objets
-//    if ((Element->mode_selection == Element->selection_facette) ||
-//        (Element->mode_selection == Element->selection_point)) {
         wxKeyEvent key_event;
         key_event.m_keyCode = 'C';
         Element->OnKeyDown(key_event);   // Simule une pression sur la touche "c" au clavier
-//    }
 }
 
 void SelectionPanel::OnButton_ManipulationsClick(wxCommandEvent& event)
@@ -810,7 +797,7 @@ void SelectionPanel::OnRadioButton_TypeSelectionSelect(wxCommandEvent& event)
     if (RadioButton_TypeSelection_Avant  ->GetValue()) TypeSelection_local = 1;
     if (RadioButton_TypeSelection_Arriere->GetValue()) TypeSelection_local = 2;
 
-    Element->TypeSelection = TypeSelection_local;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
+//    Element->TypeSelection = TypeSelection_local;    // Retourne 0 (Les 2 faces), 1 (Faces avant) ou 2 (Faces arrière)
 //    printf("Radio TypeSelection %d\n",TypeSelection_local);
 
     if (TypeSelection_local > 0) {        // Fait ici plutôt que dans DrawOpenGL (juste avant if(show_CW_CCW == true) ). Suffisant et évite de le faire à chaque Refresh
@@ -892,7 +879,6 @@ void SelectionPanel::OnButton_SelectionManuelleFacettesClick(wxCommandEvent& eve
         Titre = _T("Sélection manuelle des points") ;   // Ne sert pas ?
         Identification = _T("Numéros des points");
     }
-
 }
 
 void SelectionPanel::OnButton_OuvrirReperageClick(wxCommandEvent& event)
@@ -1036,24 +1022,34 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
         Offset_Nb_vecteurs   = Objet_base->Nb_vecteurs;
     }
 
-    while (Element->listeObjets.size() > 1) {   // On ne garde que le dernier élément de la liste, soit objet_base (car la liste des Objets est construite par des push_front)
-        it = Element->listeObjets.begin();
+    while (Element->listeObjets.size() > 0) {       // On ne garde que le dernier élément de la liste, soit objet_base (car la liste des Objets est construite par des push_front)
+        it = Element->listeObjets.begin();          // (Initialement >1) L'idée était de garder sélectionné l'objet fusionné, mais ça ne marche pas comme prévu...
+        Objet_courant = &(Element->Objetlist[*it]);
+        Objet_courant->selected = false;            // Par précaution car ne semble pas nécessaire
         Element->listeObjets.erase(it);
     }
+
+    Element->listeObjets.clear();                       // Ceinture et bretelles
+
+    Button_Fusionner->Disable();                        // ???
+    Element->show_points    = false;                    // Devrait être déjà ainsi ???
+    Element->m_gllist       = Element->glliste_objets;
+    Element->Refresh();
+    Element->bdd_modifiee   = true;
+
+    RadioButton_Selection_Objets->SetValue(true);       // Devrait être déjà ainsi ???
+    Element->mode_selection = Element->selection_objet; //      "           "
+
+    OnRadioButton_SelectionSelect(event);               // Reset sinon on n'est pas dans le bon mode !
+
     wxString str_loc;
     str_loc.clear();
     str_loc.Printf(_T("%d"),(int)Element->listeObjets.size());
-    TextCtrl_Selection->SetValue(str_loc);
-
-    Element->m_gllist = 0;
-    Element->Refresh();
-    Element->bdd_modifiee = true;
-    Button_Fusionner->Disable();
+    TextCtrl_Selection->SetValue(str_loc);              // Affiche 0 dans le Nombre d' "Objets sélectionnés"
+}
 
 //    ToDo();
-}
-
-void SelectionPanel::ToDo()
-{
-    DisplayMessage(_T("Pas encore complètement opérationnel...\nSimulation interface OK"), true);
-}
+//void SelectionPanel::ToDo()
+//{
+//    DisplayMessage(_T("Pas encore complètement opérationnel...\nSimulation interface OK"), true);
+//}

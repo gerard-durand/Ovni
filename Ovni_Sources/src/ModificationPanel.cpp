@@ -166,7 +166,10 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
 {
     unsigned int o,i;
     BddInter *Element  = MAIN->Element;
+    Object * objet_courant;
 
+    Element->detection_survol_point = false;        // Par précaution car c'est déjà le cas normalement
+    Element->detection_survol_arete = false;
     old_modeGL         = (int)Element->modeGL;      // Pour pouvoir restituer l'état initial en quittant ModificationPanel
     old_mode_selection = Element->mode_selection;
     old_show_points    = Element->show_points;
@@ -175,20 +178,17 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
     aretes_calculees   = true;  // Si le flag n'a pas été changé, c'est donc qu'il n'est pas utile de les recalculer
 //    printf("mode_selection : %d %d\n",old_mode_selection,MAIN->Element->mode_selection);
 
-// RAZ de l'attribut "selected" des facettes en entrée
+// RAZ de l'attribut "selected" des facettes et sommets en entrée
     for (o=0; o<Element->Objetlist.size(); o++) {
-        for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;
+        objet_courant = &(Element->Objetlist[o]);
+        for (i=0; i<objet_courant->Facelist.size()  ; i++) objet_courant->Facelist[i].selected  = false;
+        for (i=0; i<objet_courant->Sommetlist.size(); i++) objet_courant->Sommetlist[i].selected= false;
     }
 }
 
 void ModificationPanel::OnButton_QuitterClick(wxCommandEvent& event)
 {
 // Boutton Quitter <=> OnClose
-    if (!aretes_calculees) {
-        char Message[128];
-        sprintf(Message,"===> ATTENTION : Les arêtes n'ont pas été recalculées\n");
-        printf("%s",utf8_To_ibm(Message));
-    }
     wxCloseEvent close_event;
     OnClose(close_event);
 }
@@ -224,6 +224,9 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
     Element->modeGL          = (BddInter::MODE)old_modeGL;
     Element->mode_selection  = (BddInter::SELECTION)old_mode_selection;
     Element->creation_facette= false;
+    Element->detection_survol_point = false;
+    Element->detection_survol_arete = false;
+
     Element->tolerance = wxAtof(TextCtrl_Tolerance->GetValue());
     if (old_show_points) Element->show_points = true;                   // Dans ce cas, forcer à true
     if (old_show_lines)  Element->show_lines  = true;                   // idem
@@ -237,6 +240,12 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
     // Si show_lines est à true (mais pas seulement !), il faudrait peut-être actualiser Genere_Tableau_Points_Facettes et Genere_Tableau_Aretes
     // Mais cette opération est longue sur certaines grosses Bdd. Peut-être à proposer en option via le bouton "Recalculer les arêtes".
     Element->Refresh();
+
+    if (!aretes_calculees) {
+        char Message[128];
+        sprintf(Message,"===> ATTENTION : Les arêtes n'ont pas été recalculées\n");
+        printf("%s",utf8_To_ibm(Message));
+    }
 }
 
 //souder
@@ -246,21 +255,32 @@ void ModificationPanel::OnToggleButton_SouderToggle(wxCommandEvent& event)
 
     Bool_souder = ToggleButton_Souder->GetValue();
     if (Bool_souder) {
+        Element->detection_survol_point = true;                         // Activer la détection en jaune du point/sommet survolé
 //        printf("Souder YES\n");
         ToggleButton_Ajouter->SetValue(false);
         ToggleButton_Diviser->SetValue(false);
         old_modeGL = (int)Element->modeGL;
         Element->modeGL = Element->points;
+        if (Element->pointsSelected) Element->liste_sommets_OK = false; // Force à regénérer la liste des points/sommets, car un point a été précedemment sélectionné
+                                                                        //(pour éviter l'apparition de points en vert d'une éventuelle liste précédente)
     } else {
 //        printf("Souder NO\n");
-        delete Element->Smemory;      // Utile ??
-        Element->Smemory = nullptr;   // ""
+        wxKeyEvent key_event;
+        key_event.m_keyCode = 'S';      // Pour forcer à effacer une éventuelle liste de points
+        Element->OnKeyDown(key_event);  // Simule une pression sur la touche S au clavier => Reset de la sélection
+        delete Element->Smemory;        // Utile ??
+        Element->Smemory = nullptr;     // ""
         Element->modeGL  = (BddInter::MODE)old_modeGL;
+        key_event.m_keyCode = 'S';      // Pour forcer à effacer une éventuelle liste de facettes
+        Element->OnKeyDown(key_event);  // Simule une pression sur la touche S au clavier => Reset de la sélection
+        Element->detection_survol_point = false;
+
     }
     Bool_diviser = false;
     Element->show_points= Bool_souder;
-    if (Bool_souder && !Element->liste_sommets_OK) {
-        printf("Construction de la liste de sommets\n");
+//    if (Bool_souder && !Element->liste_sommets_OK) {
+    if (!Element->liste_sommets_OK || Element->pointsSelected) {
+        printf("Re-construction de la liste de sommets\n");
         Element->m_gllist = Element->glliste_points;
     }
     Element->show_lines = false;
@@ -276,17 +296,20 @@ void ModificationPanel::OnToggleButton_AjouterToggle(wxCommandEvent& event)
     Bool_diviser = ToggleButton_Ajouter->GetValue();
     if (ToggleButton_Ajouter->GetValue()) {
 //        printf("Ajouter YES\n");
+        Element->detection_survol_arete = true;     // Activer la détection en vert de l'arête survolée
         ToggleButton_Diviser->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
         SpinCtrl_NbSegments ->Disable();
         Element->modeGL = Element->aretes;
     } else {
 //        printf("Ajouter NO\n");
+        Element->detection_survol_arete = false;
         Element->modeGL = (BddInter::MODE)old_modeGL;
     }
     Bool_souder         = false;
     Element->show_lines = Bool_diviser;
     Element->show_points= false;
+
     if (Bool_diviser && !Element->liste_aretes_OK) {
         printf("Construction de la liste d'arêtes\n");
         Element->m_gllist = Element->glliste_lines;
@@ -302,6 +325,7 @@ void ModificationPanel::OnToggleButton_DiviserToggle(wxCommandEvent& event)
     Bool_diviser = ToggleButton_Diviser->GetValue();
     if (Bool_diviser) {
 //        printf("Diviser YES\n");
+        Element->detection_survol_arete = true;     // Activer la détection en vert de l'arête survolée
         ToggleButton_Ajouter->SetValue(false);
         ToggleButton_Souder ->SetValue(false);
         SpinCtrl_NbSegments ->Enable();
@@ -309,6 +333,7 @@ void ModificationPanel::OnToggleButton_DiviserToggle(wxCommandEvent& event)
         division = SpinCtrl_NbSegments->GetValue();
     } else {
 //        printf("Diviser NO\n");
+        Element->detection_survol_arete = false;
         SpinCtrl_NbSegments->Disable();
         Element->modeGL = (BddInter::MODE)old_modeGL;
     }
@@ -687,14 +712,17 @@ void ModificationPanel::OnToggleButton_CreerFacetteToggle(wxCommandEvent& event)
         Element->mode_selection = Element->selection_point;
         Button_Annuler->Enable();
         CheckBox_FacettePlane->Enable();
+        Element->old_detection_survol_point = Element->detection_survol_point;
+        Element->detection_survol_point     = true;                             // Activer la détection en jaune du point/sommet survolé
 //        Button_InverserNormale->Enable(); // Fait dans processHits quand une facette est créée
     } else {
         Element->mode_selection = (BddInter::SELECTION)old_mode_selection;
         Element->modeGL         = (BddInter::MODE)old_modeGL;
-        if (old_show_points) Element->show_points = true;               // Dans ce cas, ne pas mettre à false
+        if (old_show_points) Element->show_points = true;                       // Dans ce cas, ne pas mettre à false
         Button_Annuler->Disable();
-        CheckBox_FacettePlane ->Disable();                              // On garde son état coché/décoché
+        CheckBox_FacettePlane ->Disable();                                      // On garde son état coché/décoché
         Button_InverserNormale->Disable();
+        Element->detection_survol_point = Element->old_detection_survol_point;  // Désactiver/remettre en état la détection en jaune du point/sommet survolé
         // RAZ de l'attribut "selected" des facettes en sortie de Créer facette
         for (o=0; o<Element->Objetlist.size(); o++) {
             for (i=0; i<Element->Objetlist[o].Facelist.size(); i++) Element->Objetlist[o].Facelist[i].selected=false;

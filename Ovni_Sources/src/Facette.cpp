@@ -203,9 +203,9 @@ void Facette::OnButton_OKClick(wxCommandEvent& event)
 
     genereFacette();
 
-    Element->type = 1;  // Marquer comme si c'était un fichier .bdd
-    Element->type_new = 1;
-    Element->m_gllist = 0;
+    Element->type_fichier   = 1;  // Marquer comme si c'était un fichier .bdd
+    Element->type_dxf       = false;
+    Element->m_gllist       = 0;
 
     Element->Search_Min_Max();
     Element->m_loaded = true;

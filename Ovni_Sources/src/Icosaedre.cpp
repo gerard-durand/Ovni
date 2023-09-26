@@ -383,9 +383,9 @@ void Icosaedre::OnButton_OKClick(wxCommandEvent& event)
     int NbSubdiv = SpinCtrl_Subdiv->GetValue(); // 6 ou 7 au max. à 8, ça plante car dépassements de mémoire sans doute : trop de points et/ou facettes.
     if (NbSubdiv != 0) genereSubdivisions(NbSubdiv);
 
-    Element->type = 1;  // Marquer comme si c'était un fichier .bdd
-    Element->type_new = 1;
-    Element->m_gllist = 0;
+    Element->type_fichier   = 1;  // Marquer comme si c'était un fichier .bdd
+    Element->type_dxf       = false;
+    Element->m_gllist       = 0;
 
     Element->Search_Min_Max();
     Element->m_loaded = true;

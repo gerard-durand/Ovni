@@ -6,5 +6,5 @@ C_DEFINES = -DHAVE_CONFIG_H -DWINVER=0x0601 -D_CRT_SECURE_NO_WARNINGS -D_WIN32_W
 
 C_INCLUDES = @CMakeFiles/timer_callback.dir/includes_C.rsp
 
-C_FLAGS =  -Wall -pedantic
+C_FLAGS = -O2 -Wall -pedantic
 

@@ -58,7 +58,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     float spin_quat[4];
     float q[4],a[3];
     float degres;
-    int test=0;
+    int test = 0;
     std::vector<int>   Numeros;
     std::vector<int>   NumerosF, NumerosJ;
     std::vector<float> xyz_point;
@@ -358,8 +358,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 // Reset (valeurs d'initialisation) ou Forcer un Reset du tracé graphique
     case 'R':
 //ou    case 'r':
-        if (event.ControlDown()) {    // C'est un Ctrl-R ; un 'R' majuscule event.ShiftDown() ||
+        if (event.ControlDown()) {      // C'est un Ctrl-R ; un 'R' majuscule event.ShiftDown() ||
             if(verbose) printf("Touche Ctrl-R\n");
+            if (type_dxf) {             // Si c'est un fichier dxf, retracer le 3D en passant par DrawOpenGL plutôt que RenderDXF
+                type_dxf     = false;       // Force le passage par DrawOpenGL
+                bdd_modifiee = true;        // Pour inciter à "Enregistrer sous..." en sortie d'Ovni (si ça n'a pas été déjà fait entre temps).
+            }
             m_gllist = 0;
             Refresh();
             break;
@@ -420,7 +424,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
 
         if (mode_selection != selection_objet) {
-            BuildAllFacettesSelected(); // Va supprimer la liste des facettes sélectionnées si elle existe
+            BuildAllFacettes_Selected();// Va supprimer la liste des facettes sélectionnées si elle existe
             buildAllPoints();           // Idem pour les points
             if ((mode_selection == selection_facette) && liste_facettes_OK) m_gllist = 0;   // ne faire que si la liste de facettes n'était pas déjà vide (2 'S' consécutifs)
             else                                                            m_gllist = -1;  //glliste_objets;  // suffisant ici ? pas de regénération de points, facettes ou lignes.
@@ -465,7 +469,6 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
     }
     break;
-
 
 // Changer de mode Trackball <-> Direct
     case 'T':
@@ -566,7 +569,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
         break;
 
-// Supprimer les facettes sélectionnées
+// Supprimer les facettes sélectionnées ou les objets sélectionnés
     case WXK_DELETE :
 
         if (mode_selection == selection_point) break;   // Delete ne s'applique pas au mode de sélection des sommets
@@ -593,8 +596,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                     }
                 }
             }
-            m_gllist = 0;
-            Refresh();
+            wxKeyEvent key_event;
+            key_event.m_keyCode = 'S';           // Touche 'S' pour déselectionner les objets
+            OnKeyDown(key_event);
+            bdd_modifiee = true;
+//            m_gllist = 0;
+//            Refresh();
             break;
         }
 
@@ -616,12 +623,13 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
                 }
     //            printf("size apres: %d\n",this->ToSelect.ListeSelect.size());     // Effet escompté mais la Liste n'est pas forcément vide !
             } while (this->ToSelect.ListeSelect.size() > 0);                        // Donc, on boucle ... jusqu'à ce que ...
+            bdd_modifiee = true;
             m_gllist = 0;
             Refresh();
         }
         break;
 
-        // Masquer les facettes sélectionnées
+// Masquer les facettes sélectionnées ou les objets sélectionnés
     case WXK_NUMPAD_DELETE :
 
         if (mode_selection == selection_point) break;   // Masquer ne s'applique pas au mode de sélection des sommets
@@ -631,8 +639,11 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
             for (unsigned int i=0; i<listeObjets.size(); i++, it++) {
                 Objetlist[*it].afficher = false;
             }
-            m_gllist = 0;
-            Refresh();
+            wxKeyEvent key_event;
+            key_event.m_keyCode = 'S';           // Touche 'S' pour déselectionner les objets : OK mais le bouton Undo ne marche pas
+            OnKeyDown(key_event);
+//            m_gllist = 0;
+//            Refresh();
             break;
         }
 
@@ -706,7 +717,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
 // Touche non reconnue : rien de spécial à faire (sauf l'afficher)
     default:
-        if (evkey != 0x0132 && evkey != 0x0133 && evkey != 0x0134 ) { // on passe si Shift, Alt ou Ctrl
+        if (evkey != 0x0132 && evkey != 0x0133 && evkey != 0x0134 ) { // on n'affiche pas si touche Shift, Alt ou Ctrl seule
             printf("code : %3d, %c, %#06x\n", (int)evkey,char(evkey),(int)evkey);
         }
         break;

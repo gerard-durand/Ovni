@@ -119,7 +119,7 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
 //    printf("pos : %f %f %f, centre_auto : %f %f %f\n",m_gldata.posx, m_gldata.posy, m_gldata.posz,centre_auto[0],centre_auto[1],centre_auto[2]);
     //    printf("type=%d\n",type);
-    if(type!=-1) {
+    if(type_fichier != -1) {
 
         if (m_gldata.mode_Trackball) {
             build_rotmatrix( m, m_gldata.quat );
@@ -166,18 +166,13 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
         printf("GL_SAMPLES        = %d\n", multi_s);
     }
 
-    if (type != -1) {
-        switch(type_new) {      // A vérifier, mais type_new fait souvent double emploi avec type => en particulier dans les primitives, il faut entrer les mêmes valeurs !
-        case 0:
+    if (type_fichier != -1) {
+        if (type_dxf) {      // A vérifier, mais type_dxf fait souvent double emploi avec type => en particulier dans les primitives, il faut entrer les mêmes valeurs !
 //            printf("\ndraw dxf!!!\n");
-            m_renderer.Render();
-            break;
-        case 1:
+//            m_renderer.Render();
+            this->RenderDXF();
+        } else {
             this->DrawOpenGL();
-            break;
-        default:
-            printf("\nType non gere pour l'instant !!!\n");
-            break;
         }
     }
 
@@ -765,7 +760,7 @@ Boucle:
         }
         buildBoite();
         buildRepereOXYZ();
-        BuildAllFacettesSelected();
+        BuildAllFacettes_Selected();
 
         finishdraw = true;
         m_gllist   = -1;        // glliste_objets; // Déjà comme ça en principe
@@ -791,9 +786,14 @@ Boucle:
         buildAllPoints();
         m_gllist = -1;      //glliste_objets;
     }
+    if (m_gllist == glliste_points_selected) {                                           // le signe - utilisé auparavant n'est plus justifié
+        if (verbose) printf("Reconstruction de la liste de points sélectionnés seulement\n");
+        buildAllPoints_Selected();
+        m_gllist = -1;      //glliste_objets;
+    }
     if (m_gllist == glliste_select) {
-        if (verbose) printf("Reconstruction de la liste des facettes ou points sélectionnés\n");
-        BuildAllFacettesSelected();
+        if (verbose) printf("Reconstruction de la liste des facettes sélectionnées\n");
+        BuildAllFacettes_Selected();
         m_gllist = -1;      //glliste_objets;
     }
 
@@ -801,19 +801,20 @@ Boucle:
 
     if (show_plein)  {
         glCallList(glliste_objets);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
-        if (verbose) printf("liste objets\n");
+        if (verbose) printf("DrawOpenGL : liste objets\n");
         if ((mode_selection == selection_facette) && !MPanel->Bool_souder && !ToSelect.ListeSelect.empty()) {
             if (verbose) printf("liste select\n");
             glCallList(glliste_select);
         }
     }
     if (show_lines)  {
-        if (verbose) printf("liste lines\n");
+        if (verbose) printf("DrawOpenGL : liste lines\n");
         glCallList(glliste_lines) ;     // <=> showAllLines() mais appel direct de la liste donc bien plus rapide;
     }
     if (show_points) {
-        if (verbose) printf("liste points\n");
+        if (verbose) printf("DrawOpenGL : liste points\n");
         glCallList(glliste_points);     // <=> showAllPoints()  ""  ;
+        if (pointsSelected) glCallList(glliste_points_selected);
         showPoint_Selection();          // Pour n'afficher que les points surlignés en jaune au survol ou un premier point sélectionné en rouge lors d'une soudure
     }
 //    if (m_gllist == -1) showPoint_Selection();
@@ -879,6 +880,7 @@ void BddInter::showPoint_Selection() {
             if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]);
             glEnd();
             glEnable(GL_LIGHTING);
+            pointsSelected = true;
         }
     }
     if (objet_under_mouse != -1 && point_under_mouse != -1) {       // Tracé en jaune du point survolé
@@ -900,12 +902,31 @@ void BddInter::buildAllPoints() {
 
     if (verbose)
         printf("Entrée BddInter::buildAllPoints\n");
-
-    glDeleteLists(glliste_points,1);        // Détruire une éventuelle liste de points existante
-    glNewList(glliste_points, GL_COMPILE) ; // GL_COMPILE seulement ici
+// Liste de tous les points
+    glDeleteLists(glliste_points,1);                // Détruire une éventuelle liste de points existante
+    glNewList(glliste_points, GL_COMPILE) ;         // GL_COMPILE seulement ici
     glInitNames();
     showAllPoints();
     glEndList();
+
+    buildAllPoints_Selected();
+
+    liste_sommets_OK = true;
+}
+
+void BddInter::buildAllPoints_Selected() {
+// Utilise showAllPoints_selected pour construire une liste de points
+
+    if (verbose)
+        printf("Entrée BddInter::buildAllPoints_Selected\n");
+
+// Liste des points sélectionnés seulement
+    glDeleteLists(glliste_points_selected,1);       // Détruire une éventuelle liste de points existante
+    glNewList(glliste_points_selected, GL_COMPILE); // GL_COMPILE seulement ici
+    glInitNames();
+    showAllPoints_Selected();
+    glEndList();
+
     liste_sommets_OK = true;
 }
 
@@ -913,6 +934,8 @@ void BddInter::showAllPoints() {
     std::vector<float> xyz_sommet;
     Object* objet_courant;
     Sommet* sommet_courant;
+
+//    pointsSelected  = false;
 
     glDisable(GL_LIGHTING);
 
@@ -930,7 +953,53 @@ void BddInter::showAllPoints() {
                     glPushName(-1);
                     glBegin(GL_POINTS);
                     glColor3fv(bleu);                                       // Point bleu standard
-                    if (sommet_courant->selected) glColor3fv(vert);         // Point vert si on le sélectionne
+//                    if (sommet_courant->selected) {
+//                        glColor3fv(vert);                                   // Point vert si on le sélectionne
+//                        pointsSelected = true;
+//                    }
+                    if (Changer_Echelle) {
+                        if (sommet_courant->selected) {
+                            xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
+                            xyz_sommet[0] *= Scale_X  ; xyz_sommet[1] *= Scale_Y  ; xyz_sommet[2] *= Scale_Z ;
+                            xyz_sommet[0] += Centre_X ; xyz_sommet[1] += Centre_Y ; xyz_sommet[2] += Centre_Z;
+                        }
+                    }
+                    if (!xyz_sommet.empty()) glVertex3f(xyz_sommet[0],xyz_sommet[1],xyz_sommet[2]); // Ne pas tenir compte de points vides (non utilisés a priori !)
+                    glEnd();
+                    glPopName();
+                    glPopName();
+                }
+            }
+            glPopName();
+        }
+    }
+    glEnable(GL_LIGHTING);
+}
+
+void BddInter::showAllPoints_Selected() {
+    std::vector<float> xyz_sommet;
+    Object* objet_courant;
+    Sommet* sommet_courant;
+
+    pointsSelected  = false;
+
+    glDisable(GL_LIGHTING);
+
+    for (unsigned int i=0; i<this->Objetlist.size(); i++) {
+        objet_courant = &(this->Objetlist[i]);
+        if (objet_courant->afficher && !objet_courant->deleted){
+//            glPushName(i+1);                    // +1 ??
+            glPushName(i);
+            for (unsigned int j=0; j<objet_courant->Sommetlist.size(); j++) {
+                sommet_courant = &(objet_courant->Sommetlist[j]);
+                if ((sommet_courant->show == true) && (sommet_courant->selected) ) {
+//                    glPushName(j+1);            // +1 permet d'identifier par le numéro du point et non l'indice dans le tableau
+                    glPushName(j);
+                    xyz_sommet = sommet_courant->getPoint();
+                    glPushName(-1);
+                    glBegin(GL_POINTS);
+                    glColor3fv(vert);                                       // Point vert si on le sélectionne
+                    pointsSelected = true;
                     if (Changer_Echelle) {
                         if (sommet_courant->selected) {
                             xyz_sommet[0] -= Centre_X ; xyz_sommet[1] -= Centre_Y ; xyz_sommet[2] -= Centre_Z;
@@ -1009,7 +1078,7 @@ void BddInter::showAllLines() {
 //                printf("j:%d n:%d\n",j,tid);
                 Nb_lignes++;
                 glPushName(j);
-                glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans letscheckthemouse) !
+                glPushName(j);  // Un de plus (pour compatibilité avec la version originale et l'offset dans WhoIsUnderTheMouse) !
                 if (p_Arete->afficher) {
 //                    if (antialiasing_soft) {
 //                        glLineWidth(l_width_e);
@@ -1664,13 +1733,12 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
     glPushMatrix();
     glLoadIdentity();
 
-    if (type!=-1) {
-        switch(type_new) {
-        case 0:                 // Spécifique fichier .dxf. Serait à supprimer une fois le décodage réalisé ... mais reste à faire !
+    if (type_fichier != -1) {
+        if (type_dxf) {
             //printf("\ndraw dxf!!!\n");
-            m_renderer.Render();
-            break;
-        case 1:
+//            m_renderer.Render();
+            this->RenderDXF();  // Spécifique fichier .dxf. Serait à supprimer une fois le décodage réalisé ... mais reste à faire !
+        } else {
             //printf("\ndraw a .bdd file !!!\n");
             if (mode == standard) { // || mode == points) {
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width, width, viewport);
@@ -1704,10 +1772,6 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
                 Refresh();
             }
             //glTranslatef( m_gldata.posx, m_gldata.posy,m_gldata.posz );
-            break;
-        default:
-            //printf("\ndraw something else ? !!!\n");
-            break;
         }
     }
     glMatrixMode(GL_PROJECTION);
@@ -1722,14 +1786,14 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
     ResetProjectionMode();
 }
 
-void BddInter::stopPicking() {
-    ResetProjectionMode();
-}
+//void BddInter::stopPicking() {
+//    ResetProjectionMode();
+//}
 
 void BddInter::processHits(GLint hits, bool OnOff) {
 
 // Appel dans testPicking
-// Fonction très proche de letscheckthemouse, du moins au début. A t-on besoin des 2 ?
+// Fonction très proche de WhoIsUnderTheMouse, du moins au début. A t-on besoin des 2 ?
 
     int i, ii, offset;
     int objet, face, point;
@@ -1841,16 +1905,18 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 printf("et ayant pour id ");
                 printf("%d\n", ID);
             }
-            MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
-//            MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
-            str.Printf(_T("%d"),this->Objetlist[objet].GetValue());
-            MSelect->TextCtrl_NumObjet->SetValue(str);
-            str.Printf(_T("%d"),objet);
-            MSelect->TextCtrl_IndObjet->SetValue(str);
-            str.Printf(_T("%d"),point);
-            MSelect->TextCtrl_IndFacette->SetValue(str); // Case renommée en numéro de point dans ce cas
-            str.Printf(_T("%d"),point+1);
-            MSelect->TextCtrl_NumFacette->SetValue(str);
+            if (MSelect->IsShown()) {   // On peut le faire même si MSelect n'est pas affiché
+                MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
+    //            MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
+                str.Printf(_T("%d"),this->Objetlist[objet].GetValue());
+                MSelect->TextCtrl_NumObjet->SetValue(str);
+                str.Printf(_T("%d"),objet);
+                MSelect->TextCtrl_IndObjet->SetValue(str);
+                str.Printf(_T("%d"),point);
+                MSelect->TextCtrl_IndFacette->SetValue(str); // Case renommée en numéro de point dans ce cas
+                str.Printf(_T("%d"),point+1);
+                MSelect->TextCtrl_NumFacette->SetValue(str);
+            }
             if (ToSelect.check_if_in_ListeSelect(objet,point)) {
 //                printf("point deja present => l'enlever en mode OnOff actif\n");
                 if (creation_facette && (ToSelect.ListeSelect.size() > 1)) { // Ne pas passer ici si 1 seul point dans ListeSelect (c'est alors 2 x le 1er)
@@ -1885,7 +1951,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         for (i=0; i<(int)ToSelect.ListeSelect.size(); i++) NumerosSommets[i] = ToSelect.ListeSelect[i].face_sommet +1; // Numéros décalés d'1 cran / indices
                         make_1_face();
                         objet_courant->Nb_facettes = new_size;
-                        Calcul_Normale_Barycentre(indiceObjet_courant,new_indice);                // Ici la facette créée est plane
+                        Calcul_Normale_Barycentre(indiceObjet_courant,new_indice);  // Ici la facette créée est plane
                         objet_courant->Facelist[new_indice].selected = true;
                         Genere_Tableau_Points_Facettes(objet_courant);
                         Genere_Tableau_Aretes(objet_courant);
@@ -1916,18 +1982,18 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         mode_selection = selection_point;
                         wxKeyEvent key_event;
                         key_event.m_keyCode = 'S';
-                        OnKeyDown(key_event);               // Simule une pression sur la touche S au clavier => Reset de la sélection de points
+                        OnKeyDown(key_event);                       // Simule une pression sur la touche S au clavier => Reset de la sélection de points
                         mode_selection = old;
 
                         m_gllist = 0;
                         Refresh();
 
                     } else if (OnOff) {
-                        ToSelect.erase_one(objet,point);    // Si le point est déjà dans la liste et que ce n'est pas le 1er, le supprimer
+                        ToSelect.erase_one(objet,point);            // Si le point est déjà dans la liste et que ce n'est pas le 1er, le supprimer
                         Objetlist[objet].Sommetlist[point].selected = false;
                     }
                 } else if (OnOff) {
-                    ToSelect.erase_one(objet,point);        // Si OnOff est true et si le point est déjà dans la liste, le supprimer
+                    ToSelect.erase_one(objet,point);                // Si OnOff est true et si le point est déjà dans la liste, le supprimer
                     Objetlist[objet].Sommetlist[point].selected = false;
                 }
             } else {
@@ -1935,8 +2001,12 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 ToSelect.add_one(objet,point);                      // N'ajouter que si non déjà présent dans la Liste
                 Objetlist[objet].Sommetlist[point].selected = true;
             }
-            str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());
-            MSelect->TextCtrl_Selection->SetValue(str);
+
+            printf ("Nombre de points dans Liste : %d\n",(int)ToSelect.ListeSelect.size()); //vérification que le clic sur un point a été pris en compte
+            if (MSelect->IsShown()) {                               // On peut le faire même si MSelect n'est pas affiché
+                str.Printf(_T("%d"),(int)ToSelect.ListeSelect.size()); // + (int)ToSelect.Liste.size());
+                MSelect->TextCtrl_Selection->SetValue(str);
+            }
 
             if (MPanel->Bool_souder) {
                 if(Smemory == nullptr) {
@@ -1949,6 +2019,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                     if(objet != this->Smemory->objet || point != this->Smemory->sommet) {
                         souderPoints(objet, point);
                         Objetlist[objet].Sommetlist[point].selected = false;    // Sinon le second point sélectionné reste coloré en vert
+                        pointsSelected = false;                                 // Ceinture et bretelles
                     }
                     delete this->Smemory;       // Utile ??
                     this->Smemory  = nullptr;   // Reset
@@ -2157,10 +2228,13 @@ void BddInter::colorface(int objet,int face, bool OnOff) {
     return;
 }
 
-bool BddInter::letscheckthemouse(int mode_appel, int hits) {
+bool BddInter::WhoIsUnderTheMouse(GLint hits, int mode_appel) {
 
-// Appel dans OnMouse, tests sur MPanel->Bool_souder et MPanel->Bool_diviser
-// Fonction très proche de processHits, du moins au début. A t-on besoin des 2 ?
+// Appel dans OnMouse, tests sur MPanel->Bool_souder (ou juste points affichés) et MPanel->Bool_diviser, respectivement lors du survol de points ou d'arêtes
+// Si OK, retourne true et initialise objet_under_mouse, face_under_mouse, point_under_mouse et/ou line_under_mouse
+
+// Fonction très proche de processHits, du moins au début. A t-on besoin des 2 ? Les mutualiser ?
+
 // mode_appel=0 si appel dans le test souderPoints
 // mode_appel=1 si appel dans le test Diviser_Arete
 
@@ -2173,7 +2247,7 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
     test_print = verbose;
 //    test_print = true;
 
-    if (verbose) printf("Entree de letscheckthemouse\n");
+    if (verbose) printf("Entree de WhoIsUnderTheMouse\n");
 
     if (hits >= BUFSIZE || hits < 0) {
         if (hits > 0) {// Si valeur négative, ne rien afficher car ce n'est pas toujours une erreur ! Peut-être pb de timing
@@ -2187,10 +2261,10 @@ bool BddInter::letscheckthemouse(int mode_appel, int hits) {
         /*!on initialise le pointeur*/
         ptr = (GLuint *) selectBuffer;
 
-        offset = 6; // ici on est soit en GL_POINTS, soit en GL_LINE*
+        offset = 6; // ici on est soit en GL_POINTS, soit en GL_LINE*.              ????? Pourquoi dans processHits offset vaut 5 en GL_POINTS ?
 
         if (test_print) {
-            printf("\nhits dans letscheckthemouse : %d\n",hits);
+            printf("\nhits dans WhoIsUnderTheMouse : %d\n",hits);
         }
 
         GLuint val0 = *ptr;

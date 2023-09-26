@@ -153,7 +153,7 @@ class SelectionPanel: public wxDialog
 		//*)
 		void InitPanel();
 		void Reset_ListeObjets();
-		void ToDo();
+//		void ToDo();
         OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

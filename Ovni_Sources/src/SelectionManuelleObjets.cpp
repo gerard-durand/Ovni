@@ -84,6 +84,8 @@ void SelectionManuelleObjets::OnButton_AucunClick(wxCommandEvent& event)
     MAIN->Selections_Panel->TextCtrl_NumObjet ->SetValue(_T(""));
     MAIN->Selections_Panel->Button_Fusionner  ->Disable();
 
+    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -117,6 +119,8 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
     if (chk_compteur > 1)
          MAIN->Selections_Panel->Button_Fusionner->Enable();
     else MAIN->Selections_Panel->Button_Fusionner->Disable();
+
+    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->m_gllist = 0;
     Element->Refresh();
@@ -169,6 +173,8 @@ void SelectionManuelleObjets::OnCheckListBox1Toggled(wxCommandEvent& event)
         Element->SelectionObjet =  0;
     else
         Element->SelectionObjet = -1;
+
+    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->m_gllist = 0;
     Element->Refresh();

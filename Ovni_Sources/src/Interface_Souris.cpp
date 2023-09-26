@@ -34,6 +34,8 @@ void BddInter::OnMouseZoom(wxMouseEvent& event, int signe, bool Touche_Maj) {
 void BddInter::OnMouse(wxMouseEvent& event) {
 
     GLfloat m[4][4];  // On pourrait utiliser matquat de BddInter ?
+    GLint hits = 0;
+    GLint viewport[4];
     int val;
     static bool previous_right_drag = false;    // En statique pour retrouver la valeur précédente à chaque appel
                                                 // (pourrait être dans BddInter mais n'est utile que dans OnMouse !)
@@ -383,10 +385,12 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
         } else {    // Tout autre évênement de souris non déjà traité ci-dessus
 
-            if(MPanel->Bool_souder || show_points) {
-                GLint hits=0;
-                GLint viewport[4];
-                if(MPanel->Bool_souder) modeGL = points;    // On ne passe pas en mode sélection de points si show_points seulement !
+//            if(MPanel->Bool_souder || show_points) {    // Ici, survol des points affichés, soit simplement affichés, soit en mode de soudure de points
+            if (detection_survol_point) {    // Ici, survol des points affichés, soit simplement affichés, soit en mode de soudure de points
+                                                        // Si show_points seulement, l'affichage est rallenti à cause de la détection de points survolés
+
+                hits = 0;   // Initialisation
+                if(MPanel->Bool_souder) modeGL = points;      // On ne passe pas en mode sélection de points si show_points seulement !
                 wxSize ClientSize = this->GetSize();
                 glGetIntegerv(GL_VIEWPORT, viewport);
                 glSelectBuffer(BUFSIZE, selectBuffer);
@@ -399,22 +403,23 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glMatrixMode(GL_MODELVIEW);
                 glInitNames();
 //                showAllPoints();
-                glCallList(glliste_points);
+                glCallList(glliste_points);             // Afficher la liste de tous les points
+                glCallList(glliste_points_selected);    // Afficher aussi la liste des points sélectionnés
                 glMatrixMode(GL_PROJECTION);
                 glPopMatrix();
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
-                    if (letscheckthemouse(0,hits)) {
-                        Search_Min_Max();                       // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
-                        if (show_points && !MPanel->Bool_souder) { // En mode show_points seulement, pas en mode soudure de points
+                    if (WhoIsUnderTheMouse(hits, 0)) {
+                        Search_Min_Max();                           // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
+                        if (show_points && !MPanel->Bool_souder) {  // En mode show_points seulement, pas en mode soudure de points
                             if ((point_under_mouse != point_under_mouse_old) || (objet_under_mouse != objet_under_mouse_old)) {
                                 if (verbose) printf("Survol du point %d de l'objet %d\n", point_under_mouse, objet_under_mouse);
                                 objet_under_mouse_old = objet_under_mouse;  // Mémoriser les valeurs pour ne pas afficher plusieurs fois de suite la même chose !
                                 point_under_mouse_old = point_under_mouse;
                             }
                         }
-                        m_gllist = glliste_points;              // Reconstruire toute la liste de points
+                        m_gllist = glliste_points_selected;         // Pour ne reconstruire que la liste de points sélectionnés
                         if (MPanel->Bool_souder) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
@@ -435,13 +440,13 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                     Refresh();                  // Ne rafraîchir que le tracé des listes déjà établies
                 }
                 glMatrixMode(GL_MODELVIEW);
-                stopPicking();
+                ResetProjectionMode();
 
-            } else if(MPanel->Bool_diviser) {
+//            } else if(MPanel->Bool_diviser) {               // Ici en mode survol d'arêtes en mode division d'arêtes
+            } else if(detection_survol_arete) {               // Ici en mode survol d'arêtes en mode division d'arêtes
 
 //                printf("OnMouse + Bool_diviser\n");
-                GLint hits=0;
-                GLint viewport[4];
+                hits   = 0;   // Initialisation
                 modeGL = aretes;
                 wxSize ClientSize = this->GetSize();
                 glGetIntegerv(GL_VIEWPORT, viewport);
@@ -461,7 +466,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 glFlush();
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
-                    if (letscheckthemouse(1,hits)) {
+                    if (WhoIsUnderTheMouse(hits, 1)) {
 //                        m_gllist = glliste_lines; //0;     // On ne reconstruira que la liste des arêtes dans le Refresh() ci-dessous
                         // Il suffirait d'afficher la liste complète et d'y ajouter seulement le segment vert, pas tout recalculer !
                         Search_Min_Max();
@@ -481,7 +486,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 m_gllist = -1;          //glliste_objets;  // Pas besoin de regénérer la liste des lignes ici. Sera fait plus tard après clic sur la ligne.
                 Refresh();
                 glMatrixMode(GL_MODELVIEW);
-                stopPicking();
+                ResetProjectionMode();
             }
         }
 //        finishdraw = true;
@@ -509,6 +514,11 @@ void BddInter::OnMouseWheelMoved(wxMouseEvent& event) {
 /* Fixe les coordonnées du 2ème point (xa_sel,ya_sel) permettant de sélectionner des pixels dans le rectangle de sélection avec le premier point xd_sel,yd_sel*/
 void BddInter::Selection_rectangle (GLint xa, GLint ya)
 {
+// A revoir ...
+// ************
+// Dans la version Tcl, on rentrait tout le rectangle dans la fonction de picking. Ici, ça ne marche pas ainsi et via testPicking, on teste point par point, ce qui est bien trop long.
+// Du coup, on ne prend que quelques points dans le rectangle, mais ce n'est pas bon car on rate des facettes ou des points.
+
 	int i,j,nb_points;
     GLdouble Cursor_X0, Cursor_Y0, Cursor_X, Cursor_Y, pas_X, pas_Y;
     GLdouble select_largeur, select_hauteur;

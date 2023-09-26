@@ -124,7 +124,7 @@
 			</object>
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX8" variable="CheckBox_1SeulObjet3D" member="yes">
-					<label>Forcer la lecture des fichiers .obj dans 1 seul Objet 3D</label>
+					<label>Forcer la lecture des fichiers .obj et .dxf dans 1 seul Objet 3D</label>
 					<handler function="OnCheckBox_1SeulObjet3DClick" entry="EVT_CHECKBOX" />
 				</object>
 				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>

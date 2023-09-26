@@ -92,10 +92,10 @@ BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowI
     }
 
     Smemory = nullptr;
-    selectBuffer   = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
-    this->type     = -1;
-    this->m_loaded = false;
-    this->MAIN_b   = dynamic_cast<OvniFrame*>(this->GetGrandParent());//((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
+    selectBuffer        = (GLuint*)malloc(BUFSIZE*sizeof(GLuint));
+    this->type_fichier  = -1;
+    this->m_loaded      = false;
+    this->MAIN_b        = dynamic_cast<OvniFrame*>(this->GetGrandParent());//((this->GetParent())->GetParent());    // Il faut remonter de 2 parents (GLCanvas puis OvniFrame).
 //    wxSize ClientSize = this->GetSize();
 //    printf("BddInter::BddInter ClientSize X/Y %d %d\n",ClientSize.x,ClientSize.y);
     //W=ClientSize.x;
@@ -174,7 +174,7 @@ void BddInter::ResetData() {
     }
     trackball(m_gldata.quat, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    antialiasing_soft   = antialiasing_soft_def;
+//    antialiasing_soft   = antialiasing_soft_def;  // à vérifier, mais pas forcément utile
     test_decalage3ds    = test_decalage3ds_def;
     Forcer_1_Seul_Objet = Forcer_1_Seul_Objet_def;
     lect_obj_opt        = lect_obj_opt_def;
@@ -267,10 +267,12 @@ void BddInter::ResetData() {
         MScale->CheckBox_ScaleUnique->SetValue(true);
     }
     if (MSelect != nullptr) {
+        MSelect->RadioButton_Selection_Facettes->SetValue(true);
         MSelect->RadioButton_TypeSelection_Both->SetValue(true);
-        TypeSelection = 0;
     }
-    glDisable(GL_CULL_FACE);    // Mode compatible de TypeSelection = 0
+    mode_selection = selection_facette;
+    TypeSelection  = Both;      // <=> 0
+    glDisable(GL_CULL_FACE);    // Mode compatible de TypeSelection = Both
 
     m_gldata.initialized = false ;
 
@@ -387,6 +389,64 @@ void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
     }
 }
 
+bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
+{
+// Si cancel est true, affiche un bouton "Cancel" puis
+// retourne true si le bouton Cancel a été activé. Sinon, retourne false.
+// Le paramêtre "cancel" peut être omis. Dans ce cas, il est pris par défaut à false.
+
+    if (!progress_dialog_en_cours) {
+        if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
+
+// un wxGenericProgressDialog est OK en mode Darkmode alors qu'un wxProgressDialog reste avec les couleurs standard de Windows !
+
+            int style = wxPD_AUTO_HIDE;
+            if (cancel) style = wxPD_CAN_ABORT | wxPD_AUTO_HIDE;
+
+//                                          wxPD_CAN_ABORT |
+//                                          wxPD_APP_MODAL |
+//                                          wxPD_ELAPSED_TIME |
+//                                          wxPD_ESTIMATED_TIME |
+//                                          wxPD_REMAINING_TIME |
+//                                          wxPD_AUTO_HIDE
+
+            progress_dialog = new wxGenericProgressDialog(Dialog_Titre,
+                                          Dialog_Comment,   // Pour afficher le nom du fichier
+                                          100,              // range
+                                          this,             // parent
+                                          style
+                                         );
+//            if (style | wxPD_CAN_ABORT) progress_dialog->m_btnAbort->SetLabel("Interrompre"); // Ne marche pas car m_btnAbort a été déclaré private
+            progress_dialog->Update(0);   // Par précaution
+            progress_dialog_en_cours = true;
+            int new_val = round(position*100./max_value);
+            progress_dialog->Update(new_val);
+            if (progress_dialog->WasCancelled()) return true;       // Abandonner si détection de pression sur le bouton "Cancel"
+        }
+    } else {
+        int old_val = progress_dialog->GetValue();
+        int new_val = round(position*100./max_value);
+        if (old_val != new_val) {
+            if (new_val >= 100) {
+                progress_dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
+            } else {
+                progress_dialog->Update(new_val);
+                if (progress_dialog->WasCancelled()) return true;   // Abandonner si détection de pression sur le bouton "Cancel"
+            }
+        }
+    }
+    return false;
+}
+
+void BddInter::Fermer_progress_dialog()
+{
+    if (progress_dialog_en_cours) {
+        progress_dialog->Update(100);
+        wxDELETE(progress_dialog);
+        progress_dialog_en_cours = false;    // Par précaution
+    }
+}
+
 void BddInter::make_objet() {
     wxStringTokenizer tokenizer(str);
     wxStringlist.clear();
@@ -415,7 +475,7 @@ void BddInter::make_objet() {
     if (Numero_base != 0) NewObject.SetValue(NewObject.GetValue() + Numero_base) ; // Changer le numéro d'objet (value) en y ajoutant un offset (Numero_base) !
     wxStringlist.clear();
     this->Objetlist.push_back(NewObject);
-    indiceObjet_courant = this->Objetlist.size() -1;    // plus judicieux à faire ici plutôt qu'apès des make_objet ? A vérifier
+    indiceObjet_courant = this->Objetlist.size() -1;    // plus judicieux à faire ici plutôt qu'après des make_objet ? A vérifier
 }
 
 void BddInter::make_face() {
@@ -784,7 +844,7 @@ void BddInter::make_1_vecteur() {
         Objet_courant->Vecteurlist[Numero-1] = New1Vecteur;
 }
 
-void BddInter::makeposition() {
+void BddInter::make_position() {
     Object *Objet_courant;
 
     wxStringTokenizer tokenizer(str);
@@ -841,6 +901,7 @@ void BddInter::Genere_Tableau_Aretes(Object * objet)
     Aretes   Arete, Arete_test, *p_Arete;
     bool verbose_local = true;      // Local ici
     bool print_en_cours;    // un peu le même usage que progress_dialog_en_cours qui pourrait être suffisant
+    bool cancelled;
 
     clock_t time_0, delta_time, time_c;
     #define NB_DELTA_TICKS 2*CLOCKS_PER_SEC         // Pour obtenir un affichage de points de progression toutes les 2 secondes
@@ -849,7 +910,7 @@ void BddInter::Genere_Tableau_Aretes(Object * objet)
 // La seconde partie permet de décoder les doublons et de les éliminer
 
     if (verbose) printf("Entree BddInter::Genere_Tableau_Aretes\n");
-    progress_dialog_en_cours = print_en_cours = false;
+    progress_dialog_en_cours = print_en_cours = cancelled = false;
 
 //    indice_point = 0;
     nb_fac = objet->Nb_facettes;
@@ -945,29 +1006,31 @@ void BddInter::Genere_Tableau_Aretes(Object * objet)
                                 // L'affichage dépend du temps d'exécution => plutôt utiliser un timer et donc n'afficher un '.' que toutes les x secondes
             delta_time = clock() - time_c;
             if (delta_time >= NB_DELTA_TICKS && verbose_local) {
-                if (!print_en_cours) {                                  // Seulement la 1ère fois
+                if (!print_en_cours) {                                          // Seulement la 1ère fois
                     print_en_cours = true;
 //                    printf("%s",Message);
 //                    printf("Detection d'aretes en doublon ");
-                    printf("%s",utf8_To_ibm(Message));                  // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
-                    sprintf(Message,"Détection d'arêtes en doublon ");  // et le début de l'indicateur de progression
+                    printf("%s",utf8_To_ibm(Message));                          // Afficher d'office Nb_avant (quelle que soit la future valeur de Nb_apres)
+                    sprintf(Message,"Détection d'arêtes en doublon ");          // et le début de l'indicateur de progression
                     printf("%s",utf8_To_ibm(Message));
                     Dialog_Titre    = wxS("Détection d'arêtes en doublon");
                     Dialog_Comment  = wxS("Objet : ")+objet->GetwxName();
-                    Dialog_Delay    = NB_DELTA_TICKS;                   // Ce sera forcément le cas car test sur delta_time la première fois
+                    Dialog_Delay    = NB_DELTA_TICKS;                           // Ce sera forcément le cas car test sur delta_time la première fois
                     progress_dialog_en_cours = false;
-                    Update_Dialog((long)i, (long)nbaretes);
+                    cancelled = Update_Dialog((long)i, (long)nbaretes, true);   // true pour afficher le bouton "Cancel"
                 }
                 printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
                 time_c = clock();
-           }
+                if (cancelled) break;   // Pour sortir de la boucle interne en j. Plutôt bizzare ici, mais il y a des fois où ça repart !
+            }
         }
-        if(progress_dialog_en_cours) Update_Dialog((long)i, (long)nbaretes);
+        if(cancelled) break;            // Pour sortir aussi de la boucle en i
+        if(progress_dialog_en_cours) cancelled = Update_Dialog((long)i, (long)nbaretes, true); // Placé ici, mais l'effet n'est pas immédiat car il faut d'abord terminer le for en j.
+        if(cancelled) break;            // Pour sortir immédiatement du for
     }
-    if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+
+    Fermer_progress_dialog();
+
     Nb_apres = objet->Nb_aretes = objet->Areteslist.size();
     if (Nb_deleted != 0) {
         Nb_apres -= Nb_deleted; // Ne sert qu'en méthode 1 ! Mais la taille de la liste d'arêtes ne change pas car les arêtes à supprimer sont marquées deleted = true !
@@ -990,6 +1053,7 @@ void BddInter::Genere_Tableau_Aretes(Object * objet)
         printf("Temps de filtrage des doublons : %ld ticks (soit %3.1f secondes)\n\n", delta_time, float(delta_time)/CLOCKS_PER_SEC);
     }
     progress_dialog_en_cours = false;
+    print_en_cours = false;
     traiter_doublons_aretes  = traiter_doublons_aretes_svg;;          // Remettre à l'état initial
     if (verbose) printf("Sortie BddInter::Genere_Tableau_Aretes\n");
 }
@@ -1315,7 +1379,7 @@ void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
 //    Refresh();
 }
 
-void BddInter::BuildAllFacettesSelected() {
+void BddInter::BuildAllFacettes_Selected() {
 
     // Repris en grande partie de DrawOpenGL
 
@@ -1331,7 +1395,7 @@ void BddInter::BuildAllFacettesSelected() {
     bool lissage_Gouraud;
 
     if (verbose)
-        printf("Entree BddInter::BuildAllFacettesSelected\n");
+        printf("Entree BddInter::BuildAllFacettes_Selected\n");
 
     glDeleteLists(glliste_select,1);                                // Détruire une éventuelle liste existante de facettes sélectionnées
     if (this->ToSelect.ListeSelect.empty()) return;                 // Rien de plus à faire
@@ -1371,7 +1435,7 @@ void BddInter::BuildAllFacettesSelected() {
                 NumerosSommets.clear();
                 // Note : les facettes sélectionnées et leurs normales sont incluses dans la liste
                 glColor3fv(vert);
-                coloriserFacette(objet,numero,true, vert);
+                coloriserFacette(objet, numero, true, vert);
 
                 NormaleFacette = Face_ij->getNormale_b();
 
@@ -2174,6 +2238,7 @@ void BddInter::Simplification_BDD()
     long Nb_test, compteur;
 
     bool modification, indic;
+    bool cancelled = false;
 //    bool verbose=false;             // Si true affiche plus d'indications des changements. A généraliser et initialiser à plus haut niveau ?
 
     float epsilon=tolerance*diagonale_save/100.0;                       // La tolérance est donnée en % de la diagonale
@@ -2184,7 +2249,7 @@ void BddInter::Simplification_BDD()
     printf("Tolerance d'egalite des sommets : relative : %8.3f%%, absolue : %7.2e\n",tolerance,epsilon);
     nbp_changes = nbv_changes = 0;
 
-    Dialog_Titre    = wxS("Simplification de la Bdd");
+    Dialog_Titre    = wxS("Simplification de la Base de données");
     Dialog_Comment  = wxS("Patience, ça peut être long... et même très long !");
     Dialog_Delay    = CLOCKS_PER_SEC/2;      // 1/2 seconde
     time_deb_dialog = clock();
@@ -2202,7 +2267,7 @@ void BddInter::Simplification_BDD()
 //    printf("0  %d\n",Nb_test);
 
 
-    for (o=0; o<this->Objetlist.size(); o++) {                          // On parcourt tous les objets en mémoire
+    for (o=0; o<this->Objetlist.size(); o++) {                          // On parcoure tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         printf("\nObjet : %s\n",objet_courant->GetName());
         if (objet_courant->deleted) continue ;                          // Ne pas traiter un objet supprimé (mais encore en mémoire), et donc passer au suivant
@@ -2249,12 +2314,13 @@ void BddInter::Simplification_BDD()
 // semble provoquer un blocage sur certaines bdd (comme klein_glass.STL) si à l'intérieur d'un pragma omp critical. Inutile de faire sur tous les threads => seulement le 0
 // Mais ... le blocage subsiste de façon aléatoire. De plus, le gain de temps est peu sensible par rapport aux autres boucles ci-dessous.
 //            if (omp_get_thread_num() == 0)
-                Update_Dialog(compteur,Nb_test);
+                cancelled = Update_Dialog(compteur,Nb_test,true);
+                if (cancelled) goto Sortir;
         }
 //// Fin de zone calcul //
 
 //        compteur+=nb_points;
-//        Update_Dialog(compteur,Nb_test);        // mieux (si supprimé ausi dans le pragma) mais l'Update_Dialog est tardif, bien après Dialog_Delay
+//        Update_Dialog(compteur,Nb_test,true);        // mieux (si supprimé ausi dans le pragma) mais l'Update_Dialog est tardif, bien après Dialog_Delay
 //        printf("1 %d\n",compteur);
         if (verbose) printf("\n");
         for (i=0; i<nb_points; ++i) {           // Pas sûr que ce soit parallélisable !
@@ -2328,12 +2394,12 @@ void BddInter::Simplification_BDD()
                 if(indic && verbose) printf("\n") ;
             }
             compteur++;
-            Update_Dialog(compteur+nb_modifs,Nb_test);
-
+            cancelled = Update_Dialog(compteur+nb_modifs,Nb_test,true);
+            if (cancelled) goto Sortir;
         }
 //        printf("2 %d\n",compteur);
         compteur +=nb_modifs;
-        Update_Dialog(compteur,Nb_test);
+        cancelled = Update_Dialog(compteur,Nb_test,true);
 //        printf("2 %d\n",compteur);
 
         tabPoints.clear();
@@ -2360,6 +2426,8 @@ void BddInter::Simplification_BDD()
             printf("Nombre de sommets  : sans changement\n");
         }
         Simplification_Doublons_Points(o);  // pour éliminer les points en doublons dans les facettes si besoin
+
+        if (cancelled) goto Sortir;
 
         if (objet_courant->Nb_sommets < 3) {
             printf("Il reste moins de 3 points dans l'objet => Suppression de l'objet.\n") ;
@@ -2423,9 +2491,11 @@ void BddInter::Simplification_BDD()
 ////                }
 //// Même problème que plus haut... blocage possible sur certaines bdd.
 ////                if (omp_get_thread_num() == 0)
-                    Update_Dialog(compteur,Nb_test);
+                    cancelled = Update_Dialog(compteur,Nb_test,true);
             }
 //// Fin de zone calcul //
+
+            if (cancelled) goto Sortir;
 
 //            printf("3 %d\n",compteur);
             if (verbose) printf("\n");
@@ -2491,12 +2561,15 @@ void BddInter::Simplification_BDD()
                     if(indic && verbose) printf("\n") ;
                 }
                 compteur++;
-                Update_Dialog(compteur+nb_modifs,Nb_test);
+                cancelled = Update_Dialog(compteur+nb_modifs,Nb_test,true);
             }
+
+            if (cancelled) goto Sortir;
 //            printf("4 %d\n",compteur);
             compteur +=nb_modifs;
-            Update_Dialog(compteur,Nb_test);
+            cancelled = Update_Dialog(compteur,Nb_test,true);
 //            printf("4 %d\n",compteur);
+            if (cancelled) goto Sortir;
 
             tabPoints.clear();
             if (modification) {
@@ -2510,13 +2583,10 @@ void BddInter::Simplification_BDD()
         }
     }   // boucle for sur les objets (o)
 
-    if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-        progress_dialog_en_cours = false;    // Par précaution
-    }
+Sortir:
+    Fermer_progress_dialog();
 
-    for (o=0; o<this->Objetlist.size(); o++) {                      // On parcourt tous les objets en mémoire
+    for (o=0; o<this->Objetlist.size(); o++) {                      // On parcoure tous les objets en mémoire
         objet_courant = &(this->Objetlist[o]);
         if (objet_courant->deleted) continue ;                      // Passer au suivant
         Genere_Tableau_Points_Facettes(objet_courant);
@@ -2550,6 +2620,8 @@ void BddInter::Simplification_BDD()
     MPanel->Button_Undo->Disable();         // et donc désactiver le bouton
 
     printf("\nFin de simplification de la Bdd\n");
+    if (cancelled) printf("La simplification a été interrompue. Risque d'instabilités !\n");
+
 }
 
 void BddInter::Genere_Attributs_Facettes(int indiceObjet, int Nb_facettes, int numeroGroupe, int numeroMateriau)
@@ -3182,123 +3254,4 @@ void BddInter::Genere_Liste_Groupes_Materiaux(Object *objet_courant)
             listeMateriaux.push_front(materiau);                                // L'ajouter à la liste des matériaux
         }
     }
-}
-
-/* Fixe les coordonnées du 2ème point (xa_sel,ya_sel) permettant de sélectionner des pixels dans le rectangle de sélection avec le premier point xd_sel,yd_sel*/
-void BddInter::Selection_rectangle (GLint xa, GLint ya)
-{
-	int i,j,nb_points;
-    GLdouble Cursor_X0, Cursor_Y0, Cursor_X, Cursor_Y, pas_X, pas_Y;
-    GLdouble select_largeur, select_hauteur;
-
-    nb_points = 4;  // Soit nb_points -1 intervalles (doit être > 2)
-
-	xa_sel = xa;
-	ya_sel = ya;
-
-//	printf("%4d %4d %4d %4d\n",xd_sel,yd_sel,xa_sel,ya_sel);
-
-	//calcul de la largeur et de la hauteur de la zone de sélection
-	select_largeur = (GLdouble)abs(xa_sel-xd_sel);
-	select_hauteur = (GLdouble)abs(ya_sel-yd_sel);
-
-	//calcul du point central de la zone de sélection
-//	xmil = (GLdouble)(xd_sel+xa_sel)*0.5;
-//	ymil = (GLdouble)(yd_sel+ya_sel)*0.5;
-
-    Cursor_X0 = ((xd_sel < xa_sel) ? xd_sel : xa_sel);  // Le point debut (d) peut-être > point final (a) => Cursor_X0 est la valeur minimale sur l'écran
-    Cursor_Y0 = ((yd_sel < ya_sel) ? yd_sel : ya_sel);  // Idem en Y
-    pas_X     = select_largeur/(nb_points-1);           // Pour limiter le nombre de boucles en i et j mais du coup, remplissage avec des oublis
-    pas_Y     = select_hauteur/(nb_points-1);           // car on ne parcoure pas toute la sélection rectangulaire ! Temps de parcours trop long
-
-    // NOTE : on peut se contenter du début et de l'arrivée sur les bords du rectangle et ne subdiviser qu'à l'intérieur
-    //        => moins de points à tester => + rapide mais un peu moins efficace
-    //        On pourrait tester un tirage aléatoire de points en nombre pas trop élevé ...
-    /****/
-    // 4 coins dans un premier temps
-//    for (i=0,Cursor_X=Cursor_X0 ; i<2 ; i++,Cursor_X+=select_largeur) {
-//        for (j=0,Cursor_Y=Cursor_Y0 ; j<2 ; j++,Cursor_Y+=select_hauteur) {
-//            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
-//        }
-//    }
-//    // Intérieur maintenant
-//    Cursor_X0 += pas_X;
-//    Cursor_Y0 += pas_Y;
-//    nb_points -= 2;
-    /****/
-    // Ici suffit, sans les 4 coins à part pour être plus exhaustif (supprimer/commenter les lignes entre les 2 /****/
-
-    for (i=0,Cursor_X=Cursor_X0 ; i<nb_points ; i++,Cursor_X+=pas_X) {
-        for (j=0,Cursor_Y=Cursor_Y0 ; j<nb_points ; j++,Cursor_Y+=pas_Y) {
-            testPicking(int(Cursor_X +0.5), int(Cursor_Y +0.5), modeGL, false) ;
-//            testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;   // round souci en debug !
-        }
-    }
-// Via tirage aléatoire, mais pas beaucoup mieux !
-//	srand (time(NULL));
-//	nb_points*=2;
-//    for (i=0; i<nb_points; i++) {
-//        Cursor_X = Cursor_X0 + float(rand())/RAND_MAX*select_largeur;
-//        Cursor_Y = Cursor_Y0 + float(rand())/RAND_MAX*select_hauteur;
-//        testPicking(round(Cursor_X), round(Cursor_Y), modeGL, false) ;
-//    }
-	return;
-}
-
-/*Dessine le rectangle de sélection pendant la multi-sélection*/
-void BddInter::Draw_Rectangle_Selection()
-{
-//    printf("OK2 : ");
-    if ((xd_sel == xa_sel) && (yd_sel == ya_sel)) return; // Rien à faire dans ce cas
-
-    GLint yd_offset,ya_offset;
-
-    wxSize ClientSize = this->GetSize();
-//printf ("%d %d\n",ClientSize.x,ClientSize.y);
-	glDisable(GL_LIGHTING);
-
-	glPushMatrix();                      // sauvegarde de la matrice de modélisation
-	glLoadIdentity();                    // réinitialisation de la matrice
-
-	glMatrixMode(GL_PROJECTION);         // on sélectionne la matrice de projection
-	glPushMatrix();                      // On sauvegarde la matrice de projection
-	glLoadIdentity();                    // on charge l'identité
-
-	gluOrtho2D(0,ClientSize.x,ClientSize.y,0);//On passe en 2D
-
-	glMatrixMode(GL_MODELVIEW);          // on sélectionne la matrice de modélisation
-
-	glLineWidth(1.3);
-	glColor3f(0.8f,0.7f,0.6f);
-
-	glDepthFunc(GL_ALWAYS);             // le rectangle de sélection s'affiche par dessus tout les objets de la scène
-
-	//glEnable(GL_LINE_STIPPLE);        // active les pointillés
-	//glLineStipple(1,0x0F0F);          // spécifie le type de pointillé
-
-	yd_offset = yd_sel+offset_pointeur; // Décaler en Y à cause de l'offset du pointeur
-	ya_offset = ya_sel+offset_pointeur; // ""
-
-	glBegin(GL_LINE_LOOP);              // On trace le rectangle de sélection
-		glVertex2i(xd_sel,yd_offset);
-		glVertex2i(xa_sel,yd_offset);
-		glVertex2i(xa_sel,ya_offset);
-		glVertex2i(xd_sel,ya_offset);
-	glEnd();
-	//glDisable(GL_LINE_STIPPLE);
-
-
-	glDepthFunc(GL_LEQUAL);             // on repasse au test normal (objet le plus près affiché)
-
-	glLineWidth(1);
-//	glDisable(GL_LINE_STIPPLE);//on désactive les pointillés
-
-	glPopMatrix();                      // on restaure la matrice de modélisation
-
-	glMatrixMode(GL_PROJECTION);        // on sélectionne la matrice de projection
-	glPopMatrix();                      // et on la restaure
-
-	glMatrixMode(GL_MODELVIEW);         // on re-sélectionne la matrice de modélisation avant de quitter la fonction
-
-	glEnable(GL_LIGHTING);
 }

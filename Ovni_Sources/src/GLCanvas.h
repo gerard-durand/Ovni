@@ -2,7 +2,7 @@
 #define GLCANVAS_H_INCLUDED
 
 #include <wx/app.h>
-#include "dxfrenderer.h"
+//#include "dxfrenderer.h"
 #include "wx/glcanvas.h"
 
 // OpenGL view data

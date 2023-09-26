@@ -2,7 +2,7 @@
 <BrowseTracker_layout_file>
 	<ActiveTarget name="Release x64_dll_Static" />
 	<File name="src\fg_internal.h" open="1" top="1" tabpos="1">
-		<Cursor position="679" topLine="0" />
-		<BrowseMarks positions="679" />
+		<Cursor position="1286" topLine="0" />
+		<BrowseMarks positions="608" />
 	</File>
 </BrowseTracker_layout_file>

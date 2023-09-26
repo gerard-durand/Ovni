@@ -29,6 +29,9 @@
 // Les includes locaux
 #include "trackball.h"
 #include "GLCanvas.h"
+
+#include "dxfrenderer.h"
+
 #include "vector3d.h"
 #include "lib3ds/lib3ds.h"
 //#include "lib3ds/lib3ds_impl.h"
@@ -689,7 +692,7 @@ class BddInter: public wxGLCanvas {
     GLfloat width_point = 5.;       // Largeur de zone pour sélectionner 1 point
     GLfloat width_ligne = 4.;       // Largeur de zone pour sélectionner 1 ligne
     GLint   offset_pointeur = 4;    // Pour rattraper un petit décalage en Y entre le pointeur de souris et un sommet pointé (devrait être nul !!!).
-    DXFRenderer m_renderer;
+//    DXFRenderer m_renderer;
 //    GLfloat Light0Position_def[4]= {4.0f,4.0f,2.0f,0.0f};
 //    GLfloat light0_dir[3]= {0.0,0.0,0.0};
     GLfloat Light0Ambient[4]      = {0.2f, 0.2f, 0.2f, 1.0f};
@@ -747,7 +750,28 @@ class BddInter: public wxGLCanvas {
     GLfloat cyan_c[3]= {0.5f, 1.0f, 1.0f};              // Cyan clair
     GLfloat gris[3]  = {gris_def, gris_def, gris_def};  // Gris par défaut
 
+// DXFRenderer
+// fonctions/méthodes provenant de DXFRenderer.h
+    bool ParseHeaderDXF(wxInputStream& );
+    bool ParseTablesDXF(wxInputStream& );
+    bool ParseEntitiesDXF(wxInputStream& );
+    int  GetLayerColourDXF(const wxString& ) const;
+    void NormalizeEntitiesDXF();
+
+    void ClearDXF();
+    bool LoadDXF(wxInputStream& );
+    void RenderDXF();
+    void GetLines(wxTextInputStream& , wxString& , wxString& );
+    double ToDoubleDXF(const wxString& );
+    wxColour ACIColourToRGB(int);
+    int nb3DFACE_DXF, nbLINE_DXF, nbPoints_DXF;
+
 public :
+    std::vector<DXFLayer>  m_layers;
+    std::vector<DXFObjet>  m_objets;
+    std::vector<std::unique_ptr<DXFEntity>> m_entities;
+//
+
     unsigned int Numero_base;
     double diagonale_save ;
 
@@ -763,6 +787,7 @@ public :
 //
 
 /*! Paramètres du matériau utilisé pour la colorisation de l'avion par groupes et/ou matériaux */
+    int Groupe_num[maxGroupes] ;
     static const int nb_couleurs=32;    // a priori, devrait être égal (ou supérieur) à maxGroupes
 
     // Ces 2 tableaux pourraient être en private mais il faut que nb_couleurs reste en public. à donc déclarer avant !
@@ -845,8 +870,8 @@ public :
     unsigned int indiceObjet_courant;
     std::vector<Object> Objetlist;
 
-    int type    = 0;
-    int type_new=-1;
+    int  type_fichier   = 0;
+    bool type_dxf       = false;
     int N_elements;
     float xyz[3];
     wxString str;
@@ -874,6 +899,7 @@ public :
     bool  AfficherNormaleFacette  = false ;
     bool  AfficherNormalesSommets = false ;
     bool  centrageRotAuto = true;
+    bool  pointsSelected  = false;
 
 // Valeurs par défaut
 
@@ -904,6 +930,9 @@ public :
     bool  Raz_Selection_F_def          = false;     // Indicateur de Reset de sélection de facettes après une inversion de normales ('S' automatique après un 'I' ou un 'P')
     bool  NotFlat_def                  = false;     // Lors  d'un recalcul des normales, ne change pas les facettes déclarées plane. Si true, lissage de Gouraud actif sur la/les facette(s)
     bool  msg_warning_def              = true;      // Affiche un message sous forme de dialogue si la carte graphique ne supporte pas WX_GL_SAMPLE_BUFFERS (antialiasing par multisample)
+    bool  detection_survol_point       = false;     // Pour activer/désactiver la détection et colorisation des sommets survolés
+    bool  old_detection_survol_point   = false;
+    bool  detection_survol_arete       = false;     // Pour activer/désactiver la détection et colorisation des arêtes survoleés
 
     GLfloat Light0Position_def[4]= {4.0f, 4.0f, 2.0f, 0.0f};    // a paramétrer / diagonale surtout si petits objets
                                                                 // OK avec modif dans AfficherSource : Ce sont des coordonnées absolues
@@ -1005,21 +1034,15 @@ public :
     GLData m_gldata;
     GLint  m_gllist;        // GLuint (GLint pour se réserver la possibilité d'utiliser m_gllist = -1; pour un Refresh() sans aucune regénération de liste)
     enum gllistes {
-         glliste_lines = 1, // Liste pour les lignes/arêtes (ici forcer le numéro 1, sinon enum commence à 0)
-         glliste_points ,   // Liste pour les points/sommets
-         glliste_boite  ,   // Liste pour la boîte englobante
-         glliste_repere ,   // Liste pour le tracé du repère Oxyz
-         glliste_select ,   // Liste pour des sélections de facettes ou de points
-         glliste_segment,   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas car réservé pour des tracés de segments individuels ou en petit nombre
-         glliste_objets     // Numéro le plus haut pour pouvoir éventuellement gérer plusieurs listes d'objets (en particulier via OpenMP, mais OpenGL ne semble pas d'accord !)
+         glliste_lines = 1,         // Liste pour les lignes/arêtes (ici forcer le numéro 1, sinon enum commence à 0)
+         glliste_points ,           // Liste pour les points/sommets
+         glliste_points_selected ,  // Liste pour les points/sommets sélectionnés
+         glliste_boite  ,           // Liste pour la boîte englobante
+         glliste_repere ,           // Liste pour le tracé du repère Oxyz
+         glliste_select ,           // Liste pour des sélections de facettes
+         glliste_segment,           // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas car réservé pour des tracés de segments individuels ou en petit nombre
+         glliste_objets             // Numéro le plus haut pour pouvoir éventuellement gérer plusieurs listes d'objets (en particulier via OpenMP, mais OpenGL ne semble pas d'accord !)
     };
-//    GLint glliste_lines  = 1;
-//    GLint glliste_points = 2;
-//    GLint glliste_boite  = 3;
-//    GLint glliste_repere = 4;
-//    GLint glliste_select = 5;
-//    GLint glliste_segment= 6;   // Pas utilisé. Pas sûr qu'une liste soit utile dans ce cas
-//    GLint glliste_objets = 7;   // Numéro le plus haut pour pouvoir gérer plusieurs listes d'objets (en particulier via OpenMP)
 
     bool materials = false;
     bool groupes   = false;
@@ -1075,7 +1098,9 @@ public :
     bool show_lines = false, show_points = false;
     bool show_star  = false;
     bool test_rectangle_selection = false;
-    int  TypeSelection = 0;
+    typedef enum {Both, Avant, Arriere} TYPESELECTION;
+//    int  TypeSelection = 0; // Both
+    TYPESELECTION TypeSelection = Both;
     std::vector<float> point_star;
     wxSlider* Slider_x = nullptr;
     wxSlider* Slider_y = nullptr;
@@ -1227,14 +1252,14 @@ public :
     void buildAllLines();
     void buildBoite();
     void buildRepereOXYZ();
+    void buildGroupes(unsigned int &, int &, bool &, int ) ;
 
     void TracerBoite(double, double, double, double, double, double);
 
 //    void Forcer_OnPaint(wxPaintEvent& event);
     void OnTimer_Bdd(wxTimerEvent& event);
-    void Update_Dialog(long, long);
-
-
+    bool Update_Dialog(long, long, bool cancel=false);
+    void Fermer_progress_dialog();
 
 protected:
     void OnPaint(wxPaintEvent& event);
@@ -1266,28 +1291,30 @@ private :
     void LoadM3D();
     void LoadSTL();
 
-    void makeposition();
+    void make_position();
 //    void make_1_position();
 
     //opengl selection
 //    void selectMode(int selection1);
-    void processHits(GLint , bool);//, GLuint *);
+    void processHits(GLint, bool);
     GLuint* selectBuffer;
     void testPicking(int, int, int, bool) ;
-    void stopPicking();
+//    void stopPicking();
     bool ifexist_facette(int, int) ;
     bool ifexist_sommet (int, int) ;
     void souderPoints(int, int);
     void Diviser_Arete(int, int, int);
-    bool letscheckthemouse(int, int); //, GLuint * );
+    bool WhoIsUnderTheMouse(GLint, int);
 
     //opengl affichage
     void showAllPoints();
+    void showAllPoints_Selected();
     void showAllLines();
     void showSegment_Selection();
     void showPoint_Selection();
     void buildAllPoints();
-    void BuildAllFacettesSelected();
+    void buildAllPoints_Selected();
+    void BuildAllFacettes_Selected();
 
     double Norme3(float x, float y, float z);
     void Genere_Etoile();

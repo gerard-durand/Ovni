@@ -13,7 +13,8 @@
         LoadM3D     Chargement d'un fichier Milkshape 3D Texte  : extension .m3d
         LoadG3D     Chargement d'un fichier Xml Groupe 3D Onera : extension .g3d
         LoadSTL     Chargement d'un fichier Standard Triangle Language (Ascii ou binaire) : extension .stl
-        Load        Chargement d'un fichier .dxf (support en lecture partiel, seulement affichage, pas de transformation possible)
+        Load        Chargement d'un fichier .dxf (support partiel en lecture, seulement affichage, pas de transformation possible)
+        LoadDXF     Version améliorée de Load qui permet d'enregistrer dans un autre format (comme .bdd d'Oktal)
 
    SaveTo       Enregistrement de Bdds sous différents formats
         SaveBDD     Enregistrement au format SDM Oktal .bdd (par défaut)
@@ -61,55 +62,13 @@ void BddInter::clearall() {
     Objetlist.clear();
     wxStringlist.clear();
 
-    type=1;                         // <=> .bdd
-    reset_zoom = true;
-    m_loaded   = false;
-    diagonale_save=0.0;
-    glDeleteLists( 1, 100);   // ?? pourquoi 100 et pas plus ? que se passe t-il si plus de 100 listes ? 6 doit être suffisant en fait (glliste_* de 1 à 6)
+    type_fichier    =   1;      // <=> .bdd
+    reset_zoom      = true;
+    m_loaded        = false;
+    diagonale_save  = 0.0;
+    glDeleteLists( 1, 100);     // ?? pourquoi 100 et pas plus ? que se passe t-il si plus de 100 listes ? 8 doit être suffisant en fait (glliste_* de 1 à 8)
     glClear(GL_COLOR_BUFFER_BIT);
     m_gldata.initialized = false;
-}
-
-void BddInter::Update_Dialog(long position, long max_value)
-{
-    if (!progress_dialog_en_cours) {
-        if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
-//            dialog = new wxProgressDialog(wxS("Lecture du fichier"),
-//                                          wxFileNameFromPath(get_file()),   // Pour afficher le npm du fichier
-
-// un wxGenericProgressDialog est OK en mode Darkmode alors qu'un wxProgressDialog reste avec les couleurs standard de Windows !
-
-            progress_dialog = new wxGenericProgressDialog(Dialog_Titre,
-                                          Dialog_Comment,   // Pour afficher le npm du fichier
-                                          100,              // range
-                                          this,             // parent
-//                                          wxPD_CAN_ABORT |
-//                                          wxPD_APP_MODAL// |
-//                                          wxPD_ELAPSED_TIME |
-//                                          wxPD_ESTIMATED_TIME |
-//                                          wxPD_REMAINING_TIME |
-                                          wxPD_AUTO_HIDE
-                                         );
-//            if (theme_b) {
-//                progress_dialog->SetForegroundColour(New_Forg);    // Sans effet
-//                progress_dialog->SetBackgroundColour(New_Back);
-//            }
-            progress_dialog->Update(0);   // Par précaution
-            progress_dialog_en_cours = true;
-            int new_val = round(position*100./max_value);
-            progress_dialog->Update(new_val);
-        }
-    } else {
-        int old_val = progress_dialog->GetValue();
-        int new_val = round(position*100./max_value);
-        if (old_val != new_val) {
-            if (new_val >= 100) {
-                progress_dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
-            } else {
-                progress_dialog->Update(new_val);
-            }
-        }
-    }
 }
 
 // Appel à la lecture puis la création de BDDs
@@ -139,25 +98,25 @@ void BddInter::create_bdd() {
     wxCharBuffer buffer=str_nom.mb_str();
     printf("Chargement de : %s\n",buffer.data());
     if(str_nom.EndsWith(_T(".bdd"))) {
-        type=1;
+        type_fichier = 1;
     } else if(str_nom.EndsWith(_T(".3ds"))) {
-        type=2;
+        type_fichier = 2;
     } else if(str_nom.EndsWith(_T(".g3d"))) {
-        type=3;
+        type_fichier = 3;
     } else if(str_nom.EndsWith(_T(".obj"))) {
-        type=4;
+        type_fichier = 4;
     } else if(str_nom.EndsWith(_T(".ply"))) {
-        type=5;
+        type_fichier = 5;
     } else if(str_nom.EndsWith(_T(".off"))) {
-        type=6;
+        type_fichier = 6;
     } else if(str_nom.EndsWith(_T(".m3d"))) {
-        type=7;
+        type_fichier = 7;
     } else if(str_nom.EndsWith(_T(".stl"))) {
-        type=8;
+        type_fichier = 8;
     } else if(str_nom.EndsWith(_T(".dxf"))) {
-        type=0;
+        type_fichier = 0;
     }
-    printf("create_bdd : type=%d\n",type);
+    printf("create_bdd : type_fichier=%d\n",type_fichier);
 
     Dialog_Titre   = wxS("Lecture du fichier");
     Dialog_Comment = wxFileNameFromPath(get_file());
@@ -165,30 +124,37 @@ void BddInter::create_bdd() {
 
     wxFileInputStream stream(str_nom);
     mtllib_OK = false;                      // Ne sert que si une ligne mtllib existe dans un fichier .obj
-    if(type != -1) {
-        switch(type) {
+    if(type_fichier != -1) {
+        switch(type_fichier) {
         case 0:
             printf("\nChargement d'un fichier .dxf !!!\n");
-            printf("ATTENTION : pour le moment, le support des fichiers dxf n'est que partiel !\n");
-            printf("            Visuel uniquement, notamment, pas de sauvegardes en format SDM .bdd\n");
-            m_renderer.Load(stream);            // lecture incompatible de BddInter !!
-            this->m_loaded = m_renderer.IsOk(); //true; // Récupère le m_loaded interne à m_renderer
-            this->m_gldata.zoom = 4;            // ces valeurs sont compatibles de penguin.dxf ! Pour généraliser, il faut récupérer des valeurs comme min et max en x, y et z
+            printf("ATTENTION : Le support des fichiers dxf n'est que partiel !\n");
+            sprintf(Message,"            Seuls les fichiers ayant un bloc ENTITIES contenant les mots clés 3DFACE et LINE sont traités.\n");
+            printf("%s",utf8_To_ibm(Message));
+            printf("            Rendu visuel via RenderDXF(), sauvegarde possible en format SDM .bdd, .obj,... via SaveTo()\n");
+            sprintf(Message,"            Mais pas de manipulations directes, sélections/affichages de facettes, points, arêtes ... etc.\n");
+            printf("%s",utf8_To_ibm(Message));
+//            m_renderer.Load(stream);              // lecture incompatible de BddInter !! Ancienne lecture via DXFRenderer.cpp
+            this->LoadDXF(stream);                  // lecture maintenant compatible de BddInter !!
+//            this->m_loaded = m_renderer.IsOk();   //true; // Récupère le m_loaded interne à m_renderer
+            this->m_gldata.zoom = 4;                // ces valeurs sont compatibles de penguin.dxf ! Pour généraliser, il faut récupérer des valeurs comme min et max en x, y et z
             this->m_gldata.zoom_step = 0.5;
             this->m_gldata.posz = -150.;
-            this->m_gldata.zNear= abs(this->m_gldata.posz) -10.;    // Objet recadré sur -5,+5 dans DXFRenderer::NormalizeEntities
+            this->m_gldata.zNear= abs(this->m_gldata.posz) -10.;    // Objet recadré sur -5,+5 dans BddInter::NormalizeEntitiesDXF
             this->m_gldata.zFar = abs(this->m_gldata.posz) +10.;
             this->m_gldata.posx = 0.;
             this->m_gldata.posy = 0.;
             centre_auto = {0.0f, 0.0f, 0.0f};   // <=> centre_auto[0] = centre_auto[1] = centre_auto[2] = 0.0;
             centreRot = centre_auto;
             diagonale_save = 10.*sqrt(3.);
-            x_min = y_min = z_min = -5.;
+            x_min = y_min = z_min = -5.;        // Objet recadré sur -5,+5 dans BddInter::NormalizeEntitiesDXF
             x_max = y_max = z_max = +5.;
+//            Search_Min_Max();
+//            ResetData();
             this->Refresh(true);
             this->SetFocus();
             this->finishdraw=true;
-            type_new = type;
+            type_dxf = true;    // Pour appeler RenderDXF plutôt que DrawOpenGL
             break;
         case 1:
             printf("\nChargement d'un fichier .bdd !!!\n");
@@ -228,9 +194,9 @@ void BddInter::create_bdd() {
             break;
         }
     }
-    if (type > 0) {
-        type_new = 1;
-        bdd_modifiee = false;   // Pas sûr que ce soit ici le meilleur endroit, surtout si on fusionne des bdd !
+    if (type_fichier > 0) {         // On ne passe pas dans ce if pour les fichiers dxf
+        type_dxf     = false;
+        bdd_modifiee = false;       // Pas sûr que ce soit ici le meilleur endroit, surtout si on fusionne des bdd !
 
         bool Normales_sommets_presentes = false;
         unsigned int i;
@@ -666,10 +632,8 @@ void BddInter::LectureXML_G3d (FILE *f)
 #ifdef WIN32
             system("pause") ;
 #endif
-            if(progress_dialog_en_cours) {
-                progress_dialog->Update(100);
-                wxDELETE(progress_dialog);
-            }
+            Fermer_progress_dialog();
+
             exit(-1);
         }
 
@@ -707,10 +671,7 @@ void BddInter::LectureXML_G3d (FILE *f)
     printf("Nombre total de normales aux sommets : %d\n",nb_T_norml   );
     printf("Nombre total de facettes             : %d\n",nb_T_facettes);
 
-    if(progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+    Fermer_progress_dialog();
 
     sprintf(Message,"Non encore totalement opérationnel/testé\n\n");
     printf("%s",utf8_To_ibm(Message));
@@ -754,7 +715,7 @@ void BddInter::LoadG3D()
         } else {
             sprintf(Message,"Fichier de type XML mais n'est pas du g3d Version 2\n") ;
             printf("%s",utf8_To_ibm(Message)) ;
-            type = -1; // Erreur
+            type_fichier = -1; // Erreur
         }
     }
 
@@ -1329,10 +1290,8 @@ void BddInter::LoadOBJ()
 //                Update_Dialog(ftell(f), fichierBdd_length); // pas efficace ici à cause des continue
             }
 //            nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
-            if (progress_dialog_en_cours) {
-                progress_dialog->Update(100);
-                wxDELETE(progress_dialog);
-            }
+
+            Fermer_progress_dialog();
 
 // Et maintenant utiliser les tableaux de sommets et vecteurs de l'objet numéro 0
 // ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
@@ -1395,13 +1354,12 @@ void BddInter::LoadOBJ()
             return ;
         }
         printf("Fichier .obj non conforme Wavefront\n") ;
-        type = -1;
+        type_fichier = -1;
     }
     fclose(f);
-    if (progress_dialog_en_cours) {               // au cas où ...
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+
+    Fermer_progress_dialog();           // au cas où ...
+
     if(verbose) printf("Sortie de BddInter::LoadOBJ\n");
 }
 
@@ -1455,7 +1413,7 @@ void BddInter::LoadM3D()
         printf("Fichier de type : MilkShape 3D en Ascii\n") ;
     } else {
         printf("Fichier .m3d mais pas reconnu comme de type MilkShape 3D en Ascii\n") ;
-        type = -1;
+        type_fichier = -1;
         fclose(f);
         return;
     }
@@ -1474,7 +1432,7 @@ void BddInter::LoadM3D()
 #ifdef WIN32
         system("pause") ;
 #endif
-        type = -1;
+        type_fichier = -1;
         exit(2) ;
     }
     sscanf(s1+7,"%d",&Nb_objets);
@@ -1599,10 +1557,9 @@ void BddInter::LoadM3D()
     m_loaded = true;
     m_gllist = 0;
     fclose(f);
-    if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+
+    Fermer_progress_dialog();
+
     sprintf(Message,"\nFin de la lecture des données.\n");
     printf("%s",utf8_To_ibm(Message));
     if(verbose) printf("Sortie de BddInter::LoadM3D\n");
@@ -1610,8 +1567,42 @@ void BddInter::LoadM3D()
 
 //******************************************************************************
 
-// Pour fichiers Niratam polygon file ply
+void BddInter::buildGroupes(unsigned int &nb_groupes, int &index_grp, bool &i_warn, int materiau)
+{
+// Construit un tableau de numéros de groupes à partir de différentes valeurs de matériaux. Utilisé par LoadPLY et RenderDXF
+// Les numéros uitilisés seront en fait l'indice dans le tableau (index_grp)
 
+    int i0;
+
+// Différentiation des groupes
+    if (nb_groupes == 0) {
+        nb_groupes = 1 ;
+        index_grp  = 1 ;
+        Groupe_num[1] = materiau ;
+    } else {
+        i0 = 0 ;
+        for (unsigned int i=1; i <= nb_groupes; i++) {
+            if (materiau == Groupe_num[i]) {
+                i0 = 1 ;
+                index_grp = i ;
+            }
+        }
+        if (!i0) {
+            if (nb_groupes == maxGroupes) {
+                if (!i_warn) {
+//                        printf("Warning : Nombre de valeurs ""materiau"" differentes > %d\n",maxGroupes) ;
+                    sprintf(Message,"Warning : Nombre de valeurs ""materiau"" différentes > %d\n",maxGroupes) ;
+                    printf("%s",utf8_To_ibm(Message)) ;
+                    i_warn = true ;
+                }
+            } else nb_groupes++;
+            index_grp = nb_groupes ;
+            Groupe_num[nb_groupes] = materiau ;
+        }
+    }
+}
+
+// Pour fichiers Niratam polygon file ply
 void BddInter::LoadPLY()
 {
 /*
@@ -1624,10 +1615,10 @@ void BddInter::LoadPLY()
     char nom_obj[80], nom_prec[80] ;
     char   *cptr = nullptr ;
     Object *Objet_courant;
-    int i0, n_OK, ittem ;
+    int n_OK, ittem ;
     unsigned int i, nfac, npoint, nb_fac, nb_p, n, indice_premierObjet ;
     int materi ;
-    int index_ply= 0;
+    int index_grp= 0;
     bool i_warn  = false ;
     int id1, id2, id3 ;
     int o=0;		            // pour compter le nombre d'objets
@@ -1636,7 +1627,6 @@ void BddInter::LoadPLY()
     int *o_nfac, *o_npoint ;
     int code_facette=0;     //flag pour tester s'il y a des facettes dégénérées (< 3 points)
 
-    int Groupe_ply[maxGroupes] ;
     float vx, vy, vz;
 
     std::vector<int> Numeros_Sommets;
@@ -1662,7 +1652,7 @@ void BddInter::LoadPLY()
         if (strncmp(s1,"ply",3)) {
             printf("Fichier .ply mais pas de type GEO Niratam, ni Stanford Polygon file !\n");
             fclose(f);
-            type = -1;
+            type_fichier = -1;
             return ;
         }
         fclose(f);
@@ -1671,7 +1661,7 @@ void BddInter::LoadPLY()
     }
 
     printf("Fichier GEO - Niratam : %s",s1) ;
-    unsigned int nb_grp_ply = 0 ;
+    unsigned int nb_groupes = 0 ;
 
     time_deb_dialog = clock();
     progress_dialog_en_cours = false;
@@ -1801,32 +1791,7 @@ void BddInter::LoadPLY()
 
         Update_Dialog(ftell(f), fichierBdd_length);
 
-// Différentiation des groupes
-        if (nb_grp_ply == 0) {
-            nb_grp_ply = 1 ;
-            index_ply  = 1 ;
-            Groupe_ply[1] = materi ;
-        } else {
-            i0 = 0 ;
-            for (i=1; i <= nb_grp_ply; i++) {
-                if (materi == Groupe_ply[i]) {
-                    i0 = 1 ;
-                    index_ply = i ;
-                }
-            }
-            if (!i0) {
-                if (nb_grp_ply == maxGroupes) {
-                    if (!i_warn) {
-//                        printf("Warning : Nombre de valeurs ""materi"" differentes > %d\n",maxGroupes) ;
-                        sprintf(Message,"Warning : Nombre de valeurs ""materi"" différentes > %d\n",maxGroupes) ;
-                        printf("%s",utf8_To_ibm(Message)) ;
-                        i_warn = true ;
-                    }
-                } else nb_grp_ply++;
-                index_ply = nb_grp_ply ;
-                Groupe_ply[nb_grp_ply] = materi ;
-            }
-        }
+        buildGroupes(nb_groupes, index_grp, i_warn, materi);
 
         if(materi == 0) {
             // A faire
@@ -1896,8 +1861,8 @@ void BddInter::LoadPLY()
         this->Setxyz(1.,0.,0.); // Provisoire
         make_1_normale();
 
-        Objet_courant->Facelist[nfac-1].groupe     = index_ply;
-        Objet_courant->Facelist[nfac-1].codmatface = index_ply;
+        Objet_courant->Facelist[nfac-1].groupe     = index_grp;
+        Objet_courant->Facelist[nfac-1].codmatface = index_grp;
 
         fscanf(f,"%d",&n) ;
 
@@ -1914,10 +1879,7 @@ void BddInter::LoadPLY()
         Update_Dialog(ftell(f), fichierBdd_length);
     }
 
-    if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+    Fermer_progress_dialog();
 
     for (o=0; o<Nb_objets; o++) {
         indiceObjet_courant = indice_premierObjet + o;
@@ -1925,10 +1887,10 @@ void BddInter::LoadPLY()
         for (i=0; i < Objet_courant->Facelist.size(); i++) Calcul_Normale_Barycentre(indiceObjet_courant,i);
     }
     free(o_nfac)   ; // Libérer la mémoire obtenue par malloc/realloc ...
-    sprintf(Message,"Nombre de groupes identifiés : %d\n",nb_grp_ply) ;
+    sprintf(Message,"Nombre de groupes identifiés : %d\nIndice Materi\n",nb_groupes) ;
     printf("%s",utf8_To_ibm(Message)) ;
 
-    for (i=1; i<=nb_grp_ply; i++) printf("%2d %8d\n",i,Groupe_ply[i]) ;
+    for (i=1; i<=nb_groupes; i++) printf("  %2d %8d\n",i,Groupe_num[i]) ;
     free(o_npoint) ;
 
     m_loaded = true;
@@ -2079,7 +2041,7 @@ void BddInter::LoadPLY_Stanford()
         buf = fgets(s1,160,f);
         if (buf == nullptr) {
             fprintf (stderr, "Fin de fichier atteinte ... Abandon de la lecture !\n");
-            type = -1;
+            type_fichier = -1;
             break;
         }
         printf ("%s", s1);              // le \n est déjà dans s1
@@ -2088,7 +2050,7 @@ void BddInter::LoadPLY_Stanford()
 
         if (compteur > 50) {
             fprintf (stderr, "Le Header semble trop long ... Abandon de la lecture !\n");
-            type = -1;
+            type_fichier = -1;
             break;
         }
 
@@ -2096,7 +2058,7 @@ void BddInter::LoadPLY_Stanford()
             break;
     }
 
-    if (type < 0) {
+    if (type_fichier < 0) {
         fclose(f);
         printf("Sortie en Erreur de BddInter::LoadPLY_Stanford\n");
         return;
@@ -2115,7 +2077,7 @@ void BddInter::LoadPLY_Stanford()
     }
 
     if (in_ply == nullptr) {
-        type = -1;
+        type_fichier = -1;
         printf("Sortie en Erreur de BddInter::LoadPLY_Stanford\n");
         return;
     }
@@ -2383,15 +2345,12 @@ void BddInter::LoadPLY_Stanford()
     close_ply(in_ply);
     free_ply (in_ply) ;
 
-//    type = -1;
+//    type_fichier = -1;
 
     m_loaded = true;
     m_gllist = 0;
 
-    if(progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+    Fermer_progress_dialog();
 
     if(verbose)
         printf("Sortie de BddInter::LoadPLY_Stanford\n");
@@ -2437,7 +2396,7 @@ void BddInter::LoadOFF()
     if (strncmp(s1,"OFF",3)) {
         printf("Fichier .off, mais pas de type Object File Format !\n");    // Doit obligatoirement commencer par OFF en 1ère ligne
         fclose(f);
-        type = -1;
+        type_fichier = -1;
         return ;
     }
 
@@ -2541,10 +2500,7 @@ void BddInter::LoadOFF()
 
     fclose(f);
 
-    if(progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+    Fermer_progress_dialog();
 
     if(verbose) printf("Sortie de BddInter::LoadOFF\n");
 }
@@ -2594,7 +2550,7 @@ void BddInter::LoadSTL() {
     if (cptr == nullptr) {
         printf("Fichier vide !\n");
         fclose(f);
-        type = -1;
+        type_fichier = -1;
         return;
     }
 
@@ -2610,7 +2566,7 @@ void BddInter::LoadSTL() {
     if (!binary && strncmp(s1,"solid ",6)) {    // Fichier Ascii, mais ne contenant pas la chaîne "solid " sur les 6 premiers caractères !
         printf("Fichier .stl, mais pas de type Ascii stéréolithographique !\n");
         fclose(f);
-        type = -1;
+        type_fichier = -1;
         return ;
     }
 
@@ -2848,12 +2804,11 @@ void BddInter::LoadSTL() {
     m_gllist = 0;
 
     fclose(f);
-//    type = -1;  // Pour le moment
+//    type_fichier = -1;  // Pour le moment
 //    Update();
-    if(progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+
+    Fermer_progress_dialog();
+
     if(verbose) printf("Sortie de BddInter::LoadSTL\n");
 }
 
@@ -2895,7 +2850,7 @@ void BddInter::Load3DS()
     f3ds=lib3ds_file_open(buffer.data());
     if (!f3ds) {
         printf("Le fichier %s n'est pas un fichier 3ds\n",buffer.data());
-        type = -1;
+        type_fichier = -1;
         return;
     }
     fichierBdd_length = std::filesystem::file_size(buffer.data());
@@ -3006,10 +2961,7 @@ void BddInter::Load3DS()
     lib3ds_file_free(f3ds);
 //    fclose(f);
 //    delete io;
-    if(progress_dialog_en_cours) {
-        progress_dialog->Update(100);
-        wxDELETE(progress_dialog);
-    }
+    Fermer_progress_dialog();
 
     m_loaded = true;
     m_gllist = 0;
@@ -3601,7 +3553,7 @@ void BddInter::LoadBDD() {
             }
             mode_lecture = -1;
         } else if((ligne.find("<POSITION>") != notFound) || (ligne.find("<PLACEMENT>") != notFound)) {
-            makeposition(); // Ne sert pas à grand chose !
+            make_position(); // Ne sert pas à grand chose semble t-il !
             mode_lecture = 7;
             objet_courant = &(this->Objetlist[indiceObjet]);        // Déjà comme ça, mais évite un warning
             NbMatrices = objet_courant->Nb_matrices;
@@ -3713,10 +3665,8 @@ void BddInter::LoadBDD() {
 //    RefreshRect(rect);
 //    if (m_gauge) wxDELETE(m_gauge);
 //    if (m_timer) wxDELETE(m_timer);
-    if (progress_dialog_en_cours) {
-        progress_dialog->Update(100); // Le plus tard possible car fermeture automatique de dialog via le wxPD_AUTO_HIDE
-        wxDELETE(progress_dialog);
-    }
+
+    Fermer_progress_dialog();    // Le plus tard possible car fermeture automatique de progress_dialog via le wxPD_AUTO_HIDE
 
     if(verbose) printf("Sortie de BddInter::LoadBdd\n");
 }
@@ -3815,43 +3765,863 @@ void BddInter::TraiterMatricePosition(unsigned int i)
     }
 }
 
+// Recopie/adaptation de DXFRenderer
+
+// Conversion table from AutoCAD ACI colours to RGB values
+static const struct { unsigned char r, g, b; } aci_to_rgb[256] = {
+/*   0 */ {255, 255, 255},
+/*   1 */ {255,   0,   0},
+/*   2 */ {255, 255,   0},
+/*   3 */ {  0, 255,   0},
+/*   4 */ {  0, 255, 255},
+/*   5 */ {  0,   0, 255},
+/*   6 */ {255,   0, 255},
+/*   7 */ {255, 255, 255},
+/*   8 */ {128, 128, 128},
+/*   9 */ {192, 192, 192},
+/*  10 */ {255,   0,   0},
+/*  11 */ {255, 127, 127},
+/*  12 */ {204,   0,   0},
+/*  13 */ {204, 102, 102},
+/*  14 */ {153,   0,   0},
+/*  15 */ {153,  76,  76},
+/*  16 */ {127,   0,   0},
+/*  17 */ {127,  63,  63},
+/*  18 */ { 76,   0,   0},
+/*  19 */ { 76,  38,  38},
+/*  20 */ {255,  63,   0},
+/*  21 */ {255, 159, 127},
+/*  22 */ {204,  51,   0},
+/*  23 */ {204, 127, 102},
+/*  24 */ {153,  38,   0},
+/*  25 */ {153,  95,  76},
+/*  26 */ {127,  31,   0},
+/*  27 */ {127,  79,  63},
+/*  28 */ { 76,  19,   0},
+/*  29 */ { 76,  47,  38},
+/*  30 */ {255, 127,   0},
+/*  31 */ {255, 191, 127},
+/*  32 */ {204, 102,   0},
+/*  33 */ {204, 153, 102},
+/*  34 */ {153,  76,   0},
+/*  35 */ {153, 114,  76},
+/*  36 */ {127,  63,   0},
+/*  37 */ {127,  95,  63},
+/*  38 */ { 76,  38,   0},
+/*  39 */ { 76,  57,  38},
+/*  40 */ {255, 191,   0},
+/*  41 */ {255, 223, 127},
+/*  42 */ {204, 153,   0},
+/*  43 */ {204, 178, 102},
+/*  44 */ {153, 114,   0},
+/*  45 */ {153, 133,  76},
+/*  46 */ {127,  95,   0},
+/*  47 */ {127, 111,  63},
+/*  48 */ { 76,  57,   0},
+/*  49 */ { 76,  66,  38},
+/*  50 */ {255, 255,   0},
+/*  51 */ {255, 255, 127},
+/*  52 */ {204, 204,   0},
+/*  53 */ {204, 204, 102},
+/*  54 */ {153, 153,   0},
+/*  55 */ {153, 153,  76},
+/*  56 */ {127, 127,   0},
+/*  57 */ {127, 127,  63},
+/*  58 */ { 76,  76,   0},
+/*  59 */ { 76,  76,  38},
+/*  60 */ {191, 255,   0},
+/*  61 */ {223, 255, 127},
+/*  62 */ {153, 204,   0},
+/*  63 */ {178, 204, 102},
+/*  64 */ {114, 153,   0},
+/*  65 */ {133, 153,  76},
+/*  66 */ { 95, 127,   0},
+/*  67 */ {111, 127,  63},
+/*  68 */ { 57,  76,   0},
+/*  69 */ { 66,  76,  38},
+/*  70 */ {127, 255,   0},
+/*  71 */ {191, 255, 127},
+/*  72 */ {102, 204,   0},
+/*  73 */ {153, 204, 102},
+/*  74 */ { 76, 153,   0},
+/*  75 */ {114, 153,  76},
+/*  76 */ { 63, 127,   0},
+/*  77 */ { 95, 127,  63},
+/*  78 */ { 38,  76,   0},
+/*  79 */ { 57,  76,  38},
+/*  80 */ { 63, 255,   0},
+/*  81 */ {159, 255, 127},
+/*  82 */ { 51, 204,   0},
+/*  83 */ {127, 204, 102},
+/*  84 */ { 38, 153,   0},
+/*  85 */ { 95, 153,  76},
+/*  86 */ { 31, 127,   0},
+/*  87 */ { 79, 127,  63},
+/*  88 */ { 19,  76,   0},
+/*  89 */ { 47,  76,  38},
+/*  90 */ {  0, 255,   0},
+/*  91 */ {127, 255, 127},
+/*  92 */ {  0, 204,   0},
+/*  93 */ {102, 204, 102},
+/*  94 */ {  0, 153,   0},
+/*  95 */ { 76, 153,  76},
+/*  96 */ {  0, 127,   0},
+/*  97 */ { 63, 127,  63},
+/*  98 */ {  0,  76,   0},
+/*  99 */ { 38,  76,  38},
+/* 100 */ {  0, 255,  63},
+/* 101 */ {127, 255, 159},
+/* 102 */ {  0, 204,  51},
+/* 103 */ {102, 204, 127},
+/* 104 */ {  0, 153,  38},
+/* 105 */ { 76, 153,  95},
+/* 106 */ {  0, 127,  31},
+/* 107 */ { 63, 127,  79},
+/* 108 */ {  0,  76,  19},
+/* 109 */ { 38,  76,  47},
+/* 110 */ {  0, 255, 127},
+/* 111 */ {127, 255, 191},
+/* 112 */ {  0, 204, 102},
+/* 113 */ {102, 204, 153},
+/* 114 */ {  0, 153,  76},
+/* 115 */ { 76, 153, 114},
+/* 116 */ {  0, 127,  63},
+/* 117 */ { 63, 127,  95},
+/* 118 */ {  0,  76,  38},
+/* 119 */ { 38,  76,  57},
+/* 120 */ {  0, 255, 191},
+/* 121 */ {127, 255, 223},
+/* 122 */ {  0, 204, 153},
+/* 123 */ {102, 204, 178},
+/* 124 */ {  0, 153, 114},
+/* 125 */ { 76, 153, 133},
+/* 126 */ {  0, 127,  95},
+/* 127 */ { 63, 127, 111},
+/* 128 */ {  0,  76,  57},
+/* 129 */ { 38,  76,  66},
+/* 130 */ {  0, 255, 255},
+/* 131 */ {127, 255, 255},
+/* 132 */ {  0, 204, 204},
+/* 133 */ {102, 204, 204},
+/* 134 */ {  0, 153, 153},
+/* 135 */ { 76, 153, 153},
+/* 136 */ {  0, 127, 127},
+/* 137 */ { 63, 127, 127},
+/* 138 */ {  0,  76,  76},
+/* 139 */ { 38,  76,  76},
+/* 140 */ {  0, 191, 255},
+/* 141 */ {127, 223, 255},
+/* 142 */ {  0, 153, 204},
+/* 143 */ {102, 178, 204},
+/* 144 */ {  0, 114, 153},
+/* 145 */ { 76, 133, 153},
+/* 146 */ {  0,  95, 127},
+/* 147 */ { 63, 111, 127},
+/* 148 */ {  0,  57,  76},
+/* 149 */ { 38,  66,  76},
+/* 150 */ {  0, 127, 255},
+/* 151 */ {127, 191, 255},
+/* 152 */ {  0, 102, 204},
+/* 153 */ {102, 153, 204},
+/* 154 */ {  0,  76, 153},
+/* 155 */ { 76, 114, 153},
+/* 156 */ {  0,  63, 127},
+/* 157 */ { 63,  95, 127},
+/* 158 */ {  0,  38,  76},
+/* 159 */ { 38,  57,  76},
+/* 160 */ {  0,  63, 255},
+/* 161 */ {127, 159, 255},
+/* 162 */ {  0,  51, 204},
+/* 163 */ {102, 127, 204},
+/* 164 */ {  0,  38, 153},
+/* 165 */ { 76,  95, 153},
+/* 166 */ {  0,  31, 127},
+/* 167 */ { 63,  79, 127},
+/* 168 */ {  0,  19,  76},
+/* 169 */ { 38,  47,  76},
+/* 170 */ {  0,   0, 255},
+/* 171 */ {127, 127, 255},
+/* 172 */ {  0,   0, 204},
+/* 173 */ {102, 102, 204},
+/* 174 */ {  0,   0, 153},
+/* 175 */ { 76,  76, 153},
+/* 176 */ {  0,   0, 127},
+/* 177 */ { 63,  63, 127},
+/* 178 */ {  0,   0,  76},
+/* 179 */ { 38,  38,  76},
+/* 180 */ { 63,   0, 255},
+/* 181 */ {159, 127, 255},
+/* 182 */ { 51,   0, 204},
+/* 183 */ {127, 102, 204},
+/* 184 */ { 38,   0, 153},
+/* 185 */ { 95,  76, 153},
+/* 186 */ { 31,   0, 127},
+/* 187 */ { 79,  63, 127},
+/* 188 */ { 19,   0,  76},
+/* 189 */ { 47,  38,  76},
+/* 190 */ {127,   0, 255},
+/* 191 */ {191, 127, 255},
+/* 192 */ {102,   0, 204},
+/* 193 */ {153, 102, 204},
+/* 194 */ { 76,   0, 153},
+/* 195 */ {114,  76, 153},
+/* 196 */ { 63,   0, 127},
+/* 197 */ { 95,  63, 127},
+/* 198 */ { 38,   0,  76},
+/* 199 */ { 57,  38,  76},
+/* 200 */ {191,   0, 255},
+/* 201 */ {223, 127, 255},
+/* 202 */ {153,   0, 204},
+/* 203 */ {178, 102, 204},
+/* 204 */ {114,   0, 153},
+/* 205 */ {133,  76, 153},
+/* 206 */ { 95,   0, 127},
+/* 207 */ {111,  63, 127},
+/* 208 */ { 57,   0,  76},
+/* 209 */ { 66,  38,  76},
+/* 210 */ {255,   0, 255},
+/* 211 */ {255, 127, 255},
+/* 212 */ {204,   0, 204},
+/* 213 */ {204, 102, 204},
+/* 214 */ {153,   0, 153},
+/* 215 */ {153,  76, 153},
+/* 216 */ {127,   0, 127},
+/* 217 */ {127,  63, 127},
+/* 218 */ { 76,   0,  76},
+/* 219 */ { 76,  38,  76},
+/* 220 */ {255,   0, 191},
+/* 221 */ {255, 127, 223},
+/* 222 */ {204,   0, 153},
+/* 223 */ {204, 102, 178},
+/* 224 */ {153,   0, 114},
+/* 225 */ {153,  76, 133},
+/* 226 */ {127,   0,  95},
+/* 227 */ {127,  63, 111},
+/* 228 */ { 76,   0,  57},
+/* 229 */ { 76,  38,  66},
+/* 230 */ {255,   0, 127},
+/* 231 */ {255, 127, 191},
+/* 232 */ {204,   0, 102},
+/* 233 */ {204, 102, 153},
+/* 234 */ {153,   0,  76},
+/* 235 */ {153,  76, 114},
+/* 236 */ {127,   0,  63},
+/* 237 */ {127,  63,  95},
+/* 238 */ { 76,   0,  38},
+/* 239 */ { 76,  38,  57},
+/* 240 */ {255,   0,  63},
+/* 241 */ {255, 127, 159},
+/* 242 */ {204,   0,  51},
+/* 243 */ {204, 102, 127},
+/* 244 */ {153,   0,  38},
+/* 245 */ {153,  76,  95},
+/* 246 */ {127,   0,  31},
+/* 247 */ {127,  63,  79},
+/* 248 */ { 76,   0,  19},
+/* 249 */ { 76,  38,  47},
+/* 250 */ { 51,  51,  51},
+/* 251 */ { 91,  91,  91},
+/* 252 */ {132, 132, 132},
+/* 253 */ {173, 173, 173},
+/* 254 */ {214, 214, 214},
+/* 255 */ {255, 255, 255}
+};
+
+// convert an AutoCAD ACI colour to wxWidgets RGB colour
+inline wxColour BddInter::ACIColourToRGB(int col)
+{
+    wxASSERT(col >= 0 && col <= 255);
+    return wxColour(aci_to_rgb[col].r, aci_to_rgb[col].g, aci_to_rgb[col].b);
+}
+
+// deallocate all the dynamic data
+void BddInter::ClearDXF()
+{
+    m_loaded = false;
+    m_layers.clear();
+    m_objets.clear();
+    m_entities.clear();
+}
+
+int BddInter::GetLayerColourDXF(const wxString& layer) const
+{
+    for (const auto& current : m_layers)
+    {
+        if (current.name == layer)
+            return current.colour;
+    }
+    return 7;   // white
+}
+
+// read two sequential lines
+inline void BddInter::GetLines(wxTextInputStream& text, wxString& line1, wxString& line2)
+{
+    line1 = text.ReadLine().Trim().Trim(false);
+    line2 = text.ReadLine().Trim().Trim(false);
+}
+
+// parse header section: just skip everything
+bool BddInter::ParseHeaderDXF(wxInputStream& stream)
+{
+    if (verbose) printf("Entree de BddInter::ParseHeaderDXF\n");
+
+    wxTextInputStream text(stream);
+    wxString line1, line2;
+    while (stream.CanRead())
+    {
+        GetLines(text, line1, line2);
+        if (line1 == "0" && line2 == "ENDSEC") {
+            if (verbose) printf("Sortie de BddInter::ParseHeaderDXF en true\n");
+            return true;
+        }
+    }
+    if (verbose) printf("Sortie de BddInter::ParseHeaderDXF en false\n");
+    return false;
+}
+
+// parse tables section: save layers name and colour
+bool BddInter::ParseTablesDXF(wxInputStream& stream)
+{
+// TABLES est lu mais non utilisé par Ovni.
+
+    if (verbose) printf("Entree de BddInter::ParseTablesDXF\n");
+
+    wxTextInputStream text(stream);
+    wxString line1, line2;
+    bool inlayer=false;
+    DXFLayer layer;
+    while (stream.CanRead())
+    {
+        GetLines(text, line1, line2);
+        if (line1 == "0" && inlayer)
+        {
+            // flush layer
+            if (!layer.name.IsEmpty() && layer.colour != -1)
+            {
+                DXFLayer p;
+                p.name = layer.name;
+                p.colour = layer.colour;
+                m_layers.push_back(p);
+            }
+            layer = DXFLayer();
+            inlayer = false;
+        }
+        if (line1 == "0" && line2 == "ENDSEC") {
+            if (verbose) printf("Sortie de BddInter::ParseTablesDXF en true\n");
+            return true;
+        }
+        else if (line1 == "0" && line2 == "LAYER")
+            inlayer = true;
+        else if (inlayer)
+        {
+            if (line1 == "2") // layer name
+                layer.name = line2;
+            else if (line1 == "62") // ACI colour
+            {
+                long l;
+                line2.ToLong(&l);
+                layer.colour = l;
+            }
+        }
+    }
+    if (verbose) printf("Sortie de BddInter::ParseTablesDXF en false\n");
+    return false;
+}
+
+// This method is used instead of numStr.ToDouble(d) because the latter
+// (wxString::ToDouble()) takes the systems proper locale into account,
+// whereas the implementation below works with the default locale.
+// (Converting numbers that are formatted in the default locale can fail
+//  with system locales that use e.g. the comma as the decimal separator.)
+double BddInter::ToDoubleDXF(const wxString& numStr)
+{
+    double             d;
+    std::string        numStr_(numStr.c_str());
+    std::istringstream iss(numStr_);
+
+    iss >> d;
+
+    return d;
+}
+
+// parse entities section: save 3DFACE and LINE entities
+bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
+{
+// Tel que c'est fait ici, on rassemble tout dans un seul objet.
+// On pourrait différentier les objets à chaque nouveau layer, et pour chacun compter les 3DFACE et nombre de sommets pour chacun d'entre eux.
+// A stocker dans des tableaux ou plutôt des vecteurs dont la taille augmente à chaque nouveau layer.
+
+    wxTextInputStream text(stream);
+    wxString line1, line2;
+    int state = 0;  // 0: none, 1: 3DFACE, 2: LINE
+    DXFVector v[4];
+    int Nvector      = 3;               // Par défaut, facettes triangulaires
+    int Nlignes      = 0;               // Compteur de lignes
+    int nb3DFACE     = 0;
+    int nbLINE       = 0;
+    int nbLayer      = 0;
+    int nbVector     = 0;
+    int Nlignes_test = 10000;           // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
+    bool EnCours     =false;
+    bool type_return =true;
+    int colour       = -1;
+    wxString layer, old_layer;
+
+    if (verbose) printf("Entree de BddInter::ParseEntitiesDXF\n");
+
+    fichierBdd_length = stream.GetSize();
+    printf("Taille du fichier %lld octets\n",fichierBdd_length);
+    time_deb_dialog = clock();
+    progress_dialog_en_cours = false;
+
+    old_layer = "";
+    DXFObjet p_objets;
+
+    while (stream.CanRead())
+    {
+        GetLines(text, line1, line2);
+        Nlignes++;
+        if ((Nlignes%Nlignes_test) == 0) {
+            EnCours = true;
+            printf(".");
+        }
+        if (line1 == "0" && state > 0)
+        {
+            // flush entity : tant que state == 0, la lecture d'une 3DFACE ou LINE n'est pas terminée
+            if (state == 1) // 3DFACE
+            {
+                nb3DFACE++;
+                std::unique_ptr<DXFFace> p(new DXFFace);
+                p->v0 = v[0];
+                p->v1 = v[1];
+                p->v2 = v[2];
+                p->v3 = v[3];
+                p->Nb_DXFVector = Nvector;  // Nombre de vecteurs lus (3 ou 4)
+                nbVector += Nvector;
+                p->CalculateNormal();
+                if (colour != -1)
+                    p->colour = colour;
+                else
+                    p->colour = GetLayerColourDXF(layer);
+                m_entities.push_back(std::move(p));
+                colour = -1; layer.clear();
+                v[0] = v[1] = v[2] = v[3] = DXFVector();
+                state = 0;
+            }
+            else if (state == 2) // LINE
+            {
+                nbLINE++;
+                std::unique_ptr<DXFLine> p(new DXFLine);
+                p->v0 = v[0];
+                p->v1 = v[1];
+                if (colour != -1)
+                    p->colour = colour;
+                else
+                    p->colour = GetLayerColourDXF(layer);
+                m_entities.push_back(std::move(p));
+                colour = -1; layer.clear();
+                v[0] = v[1] = v[2] = v[3] = DXFVector();
+                state = 0;
+            }
+        }
+        if (line1 == "0" && line2 == "ENDSEC") {    // Fin normale des ENTITIES d'un fichier dxf
+            type_return = true;
+            goto Sortie;
+        }
+        else if (line1 == "0" && line2 == "3DFACE")
+            state = 1;
+        else if (line1 == "0" && line2 == "LINE")
+            state = 2;
+        else if (state > 0)
+        {
+            const float d = float(ToDoubleDXF(line2));
+
+            Nvector = 3;                            // Facettes triangulaires
+            if (line1 == "10")
+                v[0].x = d;
+            else if (line1 == "20")
+                v[0].y = d;
+            else if (line1 == "30")
+                v[0].z = d;
+            else if (line1 == "11")
+                v[1].x = d;
+            else if (line1 == "21")
+                v[1].y = d;
+            else if (line1 == "31")
+                v[1].z = d;
+            else if (line1 == "12")
+                v[2].x = d;
+            else if (line1 == "22")
+                v[2].y = d;
+            else if (line1 == "32")
+                v[2].z = d;
+            else if (line1 == "13")
+                v[3].x = d;
+            else if (line1 == "23")
+                v[3].y = d;
+            else if (line1 == "33") {
+                v[3].z = d;
+                Nvector= 4;                // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
+            }
+            else if (line1 == "8") {  // layer
+                layer = line2;
+               if (layer != old_layer && state == 1) {  // Pour créer un nouvel objet, basé sur layer, mais seulement avec des 3DFACE, pas des LINE
+                    p_objets.name       = layer;
+                    p_objets.num_3DFACE = nb3DFACE;
+                    p_objets.num_Vector = nbVector;
+                    m_objets.push_back(p_objets);
+                    old_layer = layer;
+                    nbLayer++;
+//                    printf("\n%4d 3DFACE : %6d num_deb : %6d nom : %s ", nbLayer, nb3DFACE, nbVector, layer.mb_str().data()); // nb3DFACE pas encore incrémenté, donc +1
+                }
+            }
+            else if (line1 == "62") // colour
+            {
+                long l;
+                line2.ToLong(&l);
+                colour = l;
+            }
+        }
+        Update_Dialog(stream.TellI(), fichierBdd_length);
+    }
+    type_return = false;    // On ne devrait pas sortir ainsi. Il manque quelquechose en fin de fichier ?
+
+Sortie:
+    Update_Dialog(stream.TellI(), fichierBdd_length);
+    if (EnCours)
+        printf("\n");
+    if (verbose) printf("Sortie de BddInter::ParseEntitiesDXF     : nb3DFACE : %d, nbLINE : %d, nbLayer : %d, nbVector : %d en %s\n",nb3DFACE,nbLINE,nbLayer,nbVector,(type_return ? "true" : "false"));
+    Fermer_progress_dialog();
+    nb3DFACE_DXF = nb3DFACE;
+    nbLINE_DXF   = nbLINE;
+    nbPoints_DXF = nbVector;
+    return type_return;
+}
+
+// parse and load a DXF file
+// currently pretty limited, but knows enough to handle 3DFACEs and LINEs
+bool BddInter::LoadDXF(wxInputStream& stream)
+{
+    wxString line1, line2;
+
+    if (verbose) printf("Entree de BddInter::LoadDXF\n");
+    ClearDXF();
+    wxTextInputStream text(stream);
+
+    this->clearall(); this->type_fichier = 0;   // Raz des objets => pas d'ajouts/fusions d'objets possibles, remettre type_fichier à la bonne valeur car modifiée dans clearall().
+
+    while (stream.CanRead())
+    {
+        GetLines(text, line1, line2);
+        if (line1 == "999") // comment
+            continue;
+        else if (line1 == "0" && line2 == "SECTION")
+        {
+            GetLines(text, line1, line2);
+            if (line1 == "2")
+            {
+                if (line2 == "HEADER")
+                {
+                    if (!ParseHeaderDXF(stream))
+                        return false;
+                }
+                else if (line2 == "TABLES")
+                {
+                    if (!ParseTablesDXF(stream))
+                        return false;
+                }
+                else if (line2 == "ENTITIES")
+                {
+                    if (!ParseEntitiesDXF(stream))
+                        return false;
+                }
+            }
+        }
+    }
+    Message[0] = '\0';          // Par précaution, vider Message
+    NormalizeEntitiesDXF();     // Normaliser et recentrer dans [-5,+5]
+    m_loaded = true;
+    m_gllist = 0;
+    if (verbose) printf("Sortie de BddInter::LoadDXF\n");
+    return true;
+}
+
+inline float mymin(float x, float y) { return x < y ? x : y; } // On pourrait utiliser std::min et std::max (mais pas forcément plus efficace)
+inline float mymax(float x, float y) { return x > y ? x : y; }
+
+// Scale object boundings to [-5,5]
+void BddInter::NormalizeEntitiesDXF()
+{
+    // calculate current min and max boundings of object
+    DXFVector minv( 10e20f,  10e20f,  10e20f);
+    DXFVector maxv(-10e20f, -10e20f, -10e20f);
+	int nbvec,compteur=0;
+
+	if (verbose) printf("Entree de BddInter::NormalizeEntitiesDXF\n");
+
+    for (auto& entity : m_entities)
+    {
+        if (entity->type == DXFEntity::Line)
+        {
+            compteur++;
+            DXFLine *line = (DXFLine *)entity.get();
+            const DXFVector *v[2] = { &line->v0, &line->v1 };
+            for (int i = 0; i < 2; ++i)
+            {
+                minv.x = mymin(v[i]->x, minv.x);
+                minv.y = mymin(v[i]->y, minv.y);
+                minv.z = mymin(v[i]->z, minv.z);
+                maxv.x = mymax(v[i]->x, maxv.x);
+                maxv.y = mymax(v[i]->y, maxv.y);
+                maxv.z = mymax(v[i]->z, maxv.z);
+            }
+        } else if (entity->type == DXFEntity::Face)
+        {
+            compteur++;
+            DXFFace *face = (DXFFace *)entity.get();
+            const DXFVector *v[4] = { &face->v0, &face->v1, &face->v2, &face->v3 };
+            nbvec = 3;
+            if (face->Nb_DXFVector != 3) nbvec = 4; // 3 points pour des facettes triangulaires, sinon 4
+            for (int i = 0; i < nbvec; ++i)
+            {
+                minv.x = mymin(v[i]->x, minv.x);
+                minv.y = mymin(v[i]->y, minv.y);
+                minv.z = mymin(v[i]->z, minv.z);
+                maxv.x = mymax(v[i]->x, maxv.x);
+                maxv.y = mymax(v[i]->y, maxv.y);
+                maxv.z = mymax(v[i]->z, maxv.z);
+            }
+        }
+    }
+
+    // rescale object down to [-5,5]
+    DXFVector span(maxv.x - minv.x, maxv.y - minv.y, maxv.z - minv.z);
+    float factor = mymin(mymin(10.0f / span.x, 10.0f / span.y), 10.0f / span.z);
+
+    if (compteur == 0) {
+        printf("DXFRenderer::m_entities est vide\n");
+        goto Sortie;
+    }
+
+    sprintf(Message,"Recadré sur [-5,+5] avec un facteur de %8.3e\n",factor) ;
+    printf("%s",utf8_To_ibm(Message)) ;
+
+    for (auto& entity : m_entities)
+    {
+        if (entity->type == DXFEntity::Line)
+        {
+            DXFLine *line = (DXFLine *)entity.get();
+            DXFVector *v[2] = { &line->v0, &line->v1 };
+            for (int i = 0; i < 2; ++i)
+            {
+                v[i]->x -= minv.x + span.x/2; v[i]->x *= factor;
+                v[i]->y -= minv.y + span.y/2; v[i]->y *= factor;
+                v[i]->z -= minv.z + span.z/2; v[i]->z *= factor;
+            }
+        } else if (entity->type == DXFEntity::Face)
+        {
+            DXFFace *face = (DXFFace *)entity.get();
+            DXFVector *v[4] = { &face->v0, &face->v1, &face->v2, &face->v3 };
+            nbvec = 3;
+            if (face->Nb_DXFVector != 3) nbvec = 4; // 3 points pour des facettes triangulaires, sinon 4
+            for (int i = 0; i < nbvec; ++i)
+            {
+                v[i]->x -= minv.x + span.x/2; v[i]->x *= factor;
+                v[i]->y -= minv.y + span.y/2; v[i]->y *= factor;
+                v[i]->z -= minv.z + span.z/2; v[i]->z *= factor;
+            }
+        }
+    }
+
+Sortie:
+    if (verbose) printf("Sortie de BddInter::NormalizeEntitiesDXF\n");
+}
+
+// OpenGL renderer for DXF entities : Note si Render() const , comme dans le sample wxwidgets penguin, on a une erreur d'affectation sur m_gllist
+// Le stockage dans BddInter est fait dans cette version (sortie de la classe DXFRenderer et intégrée à BddInter)
+
+// Compatibilité avec chargement d'autres fichiers dans d'autres formats (en cas de fusion/ajout d'une bdd) à voir ...
+// On peut avoir plusieurs objets, 1 à chaque nouveau layer (quand line1 == "8" cf ParseEntitiesDXF plus haut). Piloté par Forcer_1_Seul_Objet
+
+void BddInter::RenderDXF()
+{
+    Object *Objet_courant;
+    int nfac, npoint;
+    unsigned int i, o;
+    std::vector<int> Numeros_Sommets;
+    unsigned int nb_groupes = 0;
+    unsigned int nb_facettes_loc;
+    int index_grp = 0;
+    bool i_warn   = false ;
+
+    if (!m_loaded) return; // Base non chargée => ne rien faire d'autre
+
+    unsigned Nb_objets = m_objets.size();
+//    unsigned int indice_premierObjet = this->Objetlist.size();   // indice du premier objet de l'objet à charger, ici 0 pour l'instant
+
+//    bool Forcer_1_Seul_Objet = false;    // En commun avec celui pour les obj
+    if(Forcer_1_Seul_Objet) Nb_objets = 1 ;
+
+    if( m_gllist == 0 ) {
+        m_gllist = glliste_objets; //glGenLists( 1 ) ;
+        glNewList( m_gllist, GL_COMPILE_AND_EXECUTE );
+        int nb3DFACE_debut  = 0;
+        int nbPoints_debut  = 0;
+        indiceObjet_courant = 0;
+
+        nfac = npoint = 0;
+        o = 1;  // Numéro d'objet (ici, on commence la numérotation à 1)
+
+        for (const auto& entity : m_entities)
+        {
+            // On traitera la couleur entity->colour pour en faire des groupes (comme dans LoadPLY via buildGroupes) mais seulement pour des facettes
+            wxColour c = ACIColourToRGB(entity->colour);
+            if (entity->type == DXFEntity::Line)    // Pour l'instant, affichage via RenderDXF, mais pas de stockage des points/sommets dans la BddInter
+            {
+                DXFLine *line = (DXFLine *)entity.get();
+                glBegin(GL_LINES);
+                glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
+                glVertex3f(line->v0.x, line->v0.y, line->v0.z);
+                glVertex3f(line->v1.x, line->v1.y, line->v1.z);
+                glEnd();
+            }
+            else if (entity->type == DXFEntity::Face)
+            {
+                if (nfac == 0) {
+                    str.Printf(_T("<OBJET> %d ") + wxFileName::StripExtension(wxFileNameFromPath(get_file())),o);
+                    if (o > 1) str.Append("_" + m_objets[o-1].name);
+//        printf("indiceObjet_courant avant = %d\n",indiceObjet_courant);
+                    make_objet();                                                                       // Pour le moment, 1 seul objet
+//        printf("indiceObjet_courant apres = %d\n",indiceObjet_courant);
+                    Objet_courant = &(this->Objetlist[indiceObjet_courant]);    // indiceObjet_courant vaut quoi ici ?
+                    nb3DFACE_debut = m_objets[o-1].num_3DFACE;
+                    nbPoints_debut = m_objets[o-1].num_Vector;
+                    if (o == Nb_objets) {
+                        Objet_courant->Nb_facettes = nb_facettes_loc = nb3DFACE_DXF - nb3DFACE_debut;
+                        Objet_courant->Nb_sommets                    = nbPoints_DXF - nbPoints_debut;
+                    } else {
+                        Objet_courant->Nb_facettes = nb_facettes_loc = m_objets[o].num_3DFACE - nb3DFACE_debut;
+                        Objet_courant->Nb_sommets                    = m_objets[o].num_Vector - nbPoints_debut;
+                    }
+
+                    this->N_elements = Objet_courant->Nb_facettes;
+                    str.clear();
+                    make_face();
+                    make_normale();
+
+                    this->N_elements = Objet_courant->Nb_sommets;
+                    make_sommet();
+                }
+                buildGroupes(nb_groupes, index_grp, i_warn, entity->colour);    // Ne construire les groupes que pour les facettes (3DFACE)
+                DXFFace *face = (DXFFace *)entity.get();
+                Numeros_Sommets.resize(face->Nb_DXFVector);
+                this->str.clear();
+                if (face->Nb_DXFVector == 3) {
+                    glBegin(GL_TRIANGLES);
+                    glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
+                    glNormal3f(face->n.x,  face->n.y,  face->n.z);
+                    glVertex3f(face->v0.x, face->v0.y, face->v0.z);
+                    glVertex3f(face->v1.x, face->v1.y, face->v1.z);
+                    glVertex3f(face->v2.x, face->v2.y, face->v2.z);
+                    glEnd();
+			    } else {
+			        glBegin(GL_POLYGON);            // GL_QUADS conviendrait aussi
+                    glColor3f(c.Red()/255.0f, c.Green()/255.0f, c.Blue()/255.0f);
+                    glNormal3f(face->n.x,  face->n.y,  face->n.z);
+                    glVertex3f(face->v0.x, face->v0.y, face->v0.z);
+                    glVertex3f(face->v1.x, face->v1.y, face->v1.z);
+                    glVertex3f(face->v2.x, face->v2.y, face->v2.z);
+                    glVertex3f(face->v3.x, face->v3.y, face->v3.z);
+                    glEnd();
+                }
+                ++npoint;                       // 1er sommet
+                this->Setxyz(face->v0.x, face->v0.y, face->v0.z); this->N_elements = npoint; this->make_1_sommet(); Numeros_Sommets[0] = npoint;
+                ++npoint;                       // 2nd sommet
+                this->Setxyz(face->v1.x, face->v1.y, face->v1.z); this->N_elements = npoint; this->make_1_sommet(); Numeros_Sommets[1] = npoint;
+                ++npoint;                       // 3ème sommet
+                this->Setxyz(face->v2.x, face->v2.y, face->v2.z); this->N_elements = npoint; this->make_1_sommet(); Numeros_Sommets[2] = npoint;
+                if (face->Nb_DXFVector != 3) {
+                   ++npoint;                    // 4ème sommet (Nb_DXFVector devrait donc valoir 4 normalement)
+                   this->Setxyz(face->v3.x, face->v3.y, face->v3.z); this->N_elements = npoint; this->make_1_sommet(); Numeros_Sommets[3] = npoint;
+                }
+                N_elements = ++nfac;
+                this->Set_numeros(Numeros_Sommets);             // Créer la facette
+                make_1_face();
+                this->Setxyz(face->n.x, face->n.y, face->n.z);  // Créer la Normale au barycentre de la facette
+                make_1_normale();
+
+            // Affectation d'une numéro de groupe et/ou de matériau à la facette
+                Objet_courant->Facelist[nfac-1].groupe     = index_grp; // Comme dans LoadPLY, mais on pourrait y mettre la valeur par défaut groupe_def
+                Objet_courant->Facelist[nfac-1].codmatface = index_grp; //    "        "       "       "       "       "       "       "      codmatface_def
+
+                if (nfac == (int)nb_facettes_loc) { // Passer à l'objet suivant
+                    nfac = npoint = nb3DFACE_debut = nbPoints_debut = 0;
+                    o++;
+                }
+			}
+        }
+        glEndList();
+
+        if (this->Objetlist.size() == 0) {
+            sprintf(Message,"Ce fichier ne peut pas être décodé correctement par DXFRenderer : pas de mots clés ENTITIES/3DFACE ni LINE\n");
+            printf("%s",utf8_To_ibm(Message)) ;
+        } else {
+            printf("%s",utf8_To_ibm(Message)) ; // Rappel du Message précédent concernant le facteur d'échelle
+
+            sprintf(Message,"Nombre de groupes identifiés : %d\nIndice CouleurDXF\n",nb_groupes) ;
+            printf("%s",utf8_To_ibm(Message)) ;
+            for (i=1; i<=nb_groupes; i++) printf("  %2d  %8d\n",i,Groupe_num[i]) ;
+
+            for (i=0; i<this->Objetlist.size(); ++i) Genere_Liste_Groupes_Materiaux(i);
+            this->Search_Min_Max();     // Indispensable pour initialiser correctement certaines valeurs de BddInter
+            this->bdd_modifiee = false; // Initialisation de précaution
+//        printf("Nb_Objets : %lld\n",m_objets.size());
+//        for (i=0; i<m_objets.size(); i++) printf("%4d %6d %6d nom : %s\n",i+1,m_objets[i].num_3DFACE,m_objets[i].num_Vector,m_objets[i].name.mb_str().data());
+        }
+    } else {
+        glCallList(m_gllist);
+    }
+}
+
+//////////////////////////////////////////////////
 // *** Enregistrement de divers formats de BDD ***
+//////////////////////////////////////////////////
 
 void BddInter::SaveTo(wxString str, int index) {
 
 // Pour enregistrer sous différents formats, le format .bdd est celui par défaut (tous les formats lus ne sont pas accessibles en écriture)
 
     if(OK_ToSave) {
-        int types=-1;
+        int type_saveTo=-1;
         wxString local_str = str ;
         local_str.MakeLower();                          // Forcer le nom de fichier à être en minuscules
 
         if (local_str.EndsWith(_T(".bdd"))) {           // Teste si l'extension est .bdd
-            types = 1;
+            type_saveTo = 1;
         } else if (local_str.EndsWith(_T(".obj"))) {    // Teste si l'extension est .obj
-            types = 2;
+            type_saveTo = 2;
         } else if (local_str.EndsWith(_T(".g3d"))) {    // Teste si l'extension est .g3d
-            types = 3;
+            type_saveTo = 3;
         } else if (local_str.EndsWith(_T(".off"))) {    // Teste si l'extension est .off
-            types = 4;
+            type_saveTo = 4;
         } else if (local_str.EndsWith(_T(".stl"))) {    // Teste si l'extension est .stl
-            types = index+1;                            // Via index on sait si c'est Ascii ou Binaire
+            type_saveTo = index+1;                            // Via index on sait si c'est Ascii ou Binaire
         } else if (local_str.EndsWith(_T(".dxf"))) {    // Ne devrait jamais arriver !!!
-            types = 0;
+            type_saveTo = 0;
         }
-        if (types == -1) {
+        if (type_saveTo == -1) {
             // Extension absente ou non reconnue => forcer l'ajout de .bdd (pas forcément utile car fait via le dialogue saveFileDialog dans OvniFrame::OnMenu_Enregistrer_Sous
             str += _T(".bdd");
-            types = 1;
+            type_saveTo = 1;
         }
 
-//        printf("saving type                        %d\n",types);
+//        printf("saving type                        %d\n",type_saveTo);
 
-        if(types > 0) {
+        if(type_saveTo > 0) {
             buffer = str.utf8_str();
             sprintf(Message,"Enregistrement de :\n%s\n",buffer.data());
             printf("%s",utf8_To_ibm(Message));
-            switch(types) {
+            switch(type_saveTo) {
             case 0:                         // En réserve, mais ne peut pas se produire ici !
                 //m_renderer.Save(stream);
                 break;
