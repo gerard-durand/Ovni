@@ -2366,6 +2366,8 @@ void OvniFrame::OnButton_ModifsToggle(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_SensDesNormalesSelected(wxCommandEvent& event)
 {
+// Cet affichage est prioritaire par rapport aux autres modes de colorisation
+
     if (Element->show_CW_CCW == false) {
         Menu_SensDesNormales->Check(true);
         Element->show_CW_CCW = true;
@@ -2380,10 +2382,10 @@ void OvniFrame::OnMenu_SensDesNormalesSelected(wxCommandEvent& event)
 
 void OvniFrame::OnModifsXYZ()
 {
-    // fonctions à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
-        Element->m_gllist = 0;
-        Element->Search_Min_Max();
-        Element->Refresh();
+    // fonction à appeler systématiquement en sortie de OnMenu_XminusX, YminusY, ...
+    Element->m_gllist = 0;
+    Element->Search_Min_Max();
+    Element->Refresh();
 }
 
 void OvniFrame::OnMenu_XminusX(wxCommandEvent& event)
@@ -2765,6 +2767,10 @@ void OvniFrame::OnMenu_CentreRotationSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 {
+
+    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->materials)  Element->materials = false;
+
     ReperageGroupe_Panel->SpinButton1->SetValue(0);
     ReperageGroupe_Panel->SpinButton1->SetMax(Element->listeGroupes.size()+1);      // Ajout de +1 pour pouvoir boucler
     str.Printf(_T("Aucun"));
@@ -2774,6 +2780,9 @@ void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ReperageMateriauSelected(wxCommandEvent& event)
 {
+    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->materials)  Element->materials = false;
+
     ReperageMateriau_Panel->SpinButton1->SetValue(0);
     ReperageMateriau_Panel->SpinButton1->SetMax(Element->listeMateriaux.size()+1);  // Ajout de +1 pour pouvoir boucler
     str.Printf(_T("Aucun"));
@@ -2789,6 +2798,9 @@ void OvniFrame::ReperageObjet_activer()
 
 void OvniFrame::OnMenu_ReperageObjetSelected(wxCommandEvent& event)
 {
+    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->materials)  Element->materials = false;
+
     ReperageObjet_Panel->SpinButton_indice ->SetValue(-1);                          // SpinButton sur -1
     ReperageObjet_Panel->SpinButton_indice ->SetMax(Element->Objetlist.size());     // pour pouvoir boucler
     str.Printf(_T("Non sélectionné"));                                              // Afficher ce texte

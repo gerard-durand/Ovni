@@ -58,6 +58,8 @@ void ReperageMateriau::OnSpinButton1Change(wxSpinEvent& event)
 
     wxString str;
 
+    Element->groupes = Element->materials = false;  // Invalider la colorisation complète des groupes et matériaux
+
     int num = SpinButton1->GetValue();
 
     if (num < 0) {
@@ -95,7 +97,9 @@ void ReperageMateriau::OnClose(wxCloseEvent& event)
     BddInter *Element = MAIN->Element;
 
     Element->GroupeMateriau[0]=0;
-    Element->m_gllist = 0;
+    Element->groupes   = MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked();     // Restitution des valeurs conformément à l'interface (menu et boutons)
+    Element->materials = MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked();
+    Element->m_gllist  = 0;
     Element->Refresh();
     Hide();
 }

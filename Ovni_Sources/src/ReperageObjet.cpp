@@ -83,6 +83,8 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
     wxString str1,str2,str3;
     bool chkB;
 
+    Element->groupes = Element->materials = false;  // Invalider la colorisation complète des groupes et matériaux
+
     int num = SpinButton_indice->GetValue();
     if (num >= (int)Element->Objetlist.size()) {
         num = -1;                                   // Bouclage sur "Non sélectionné" si au delà de Objetlist.size() (car clic sur la flèche ^)
@@ -198,7 +200,10 @@ void ReperageObjet::OnClose(wxCloseEvent& event)
 
     Element->SelectionObjet = 0;    // Raz de sélection d'objet en sortie
     for (unsigned int i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
-    Element->m_gllist = 0;
+    Element->GroupeMateriau[0]=0;
+    Element->groupes   = MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked();     // Restitution des valeurs conformément à l'interface (menu et boutons)
+    Element->materials = MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked();
+    Element->m_gllist  = 0;
     Element->Refresh();
     Hide();
 }

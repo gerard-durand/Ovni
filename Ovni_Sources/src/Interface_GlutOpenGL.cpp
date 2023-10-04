@@ -562,11 +562,11 @@ Boucle:
                         NormaleFacette.clear();
                         NumerosSommets.clear();
 
-                        if (show_CW_CCW==false) {
-                            if((groupes==false)&&(materials==false)) {
+                        if (show_CW_CCW == false) {
+                            if((groupes == false) && (materials == false)) {
                                 glColor3fv(Face_ij->color); // Etait initialisé ou modifié dans colorface
-                                glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)  ;
-                                glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)  ;
+                                glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)   ;
+                                glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)   ;
                                 glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
                                 glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
 
@@ -601,8 +601,8 @@ Boucle:
                                 } else if(groupe>color_max) {
                                     groupe=color_max;
                                 }
-                                if (material<0) {
-                                    material=10;    // Si material non initialisé (à -1) tracer en rouge comme un jet
+                                if (material <0 ) {
+                                    material = 10;      // Si material non initialisé (à -1) tracer en rouge comme un jet
                                 } else if(material>color_max) {
                                     material=color_max;
                                 }
@@ -615,24 +615,28 @@ Boucle:
 //                                                  color_groupe_material[groupe][2]);
                                     glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[groupe])  ;
                                     glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[groupe])  ;
-                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
-                                } else {
+                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG)         ;
+                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG)        ;
+                                } else {    // donc ici material est true
 //                                        glColor3fv(color_groupe_material[material]) ;
                                     glColor3fv(MatAmbient_avionG[material]) ;   // Idem ci-dessus pour les groupes
-                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[material])  ;
-                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[material])  ;
-                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
-                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                                    glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionG[material]);
+                                    glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionG[material]);
+                                    glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG)         ;
+                                    glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG)        ;
                                 }
                             }
                         } else {
-                            // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
+                            glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avion)   ;  // A faire, surtout suite à une colorisation des groupes ou des matériaux
+                            glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)   ;
+                            glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
+                            glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
+                           // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
                             // De plus il faut les glColor3fv(color_groupe ... ci-dessus) soient présents ! Pour éviter ce double coloriage, il faudrait traiter le sens des normales
                             // comme le reste, soit avec des glMaterialfv (cf version TCL) ou à la rigueur disable puis enable de GL_LIGHTING. à voir à l'occasion ...
                             if(test2 == true) {
                                 glColor3fv(rouge);  // Vert initialement, mais souci en cas de sélection sur Sens de rotation inversé (même couleur => ne se voit pas).
-//                              glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionRG) ;    // Pas convainquant, de plus inhibe la sélection des facettes ! => faire autrement
+//                              glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionRG) ;    // Pas convainquant
 //                              glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionRG) ;
 //                              glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
 //                              glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);

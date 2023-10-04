@@ -4149,46 +4149,49 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
 {
 // Tel que c'est fait ici, on rassemble tout dans un seul objet.
 // On pourrait différentier les objets à chaque nouveau layer, et pour chacun compter les 3DFACE et nombre de sommets pour chacun d'entre eux.
-// A stocker dans des tableaux ou plutôt des vecteurs dont la taille augmente à chaque nouveau layer.
+// Peut-être à stocker dans des tableaux ou plutôt des vecteurs dont la taille augmente à chaque nouveau layer.
 
     wxTextInputStream text(stream);
     wxString line1, line2;
+    wxString layer, old_layer;
     int state = 0;  // 0: none, 1: 3DFACE, 2: LINE
     DXFVector v[4];
-    int Nvector      = 3;               // Par défaut, facettes triangulaires
-    int Nlignes      = 0;               // Compteur de lignes
-    int nb3DFACE     = 0;
-    int nbLINE       = 0;
-    int nbLayer      = 0;
-    int nbVector     = 0;
-    int Nlignes_test = 10000;           // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
-    bool EnCours     =false;
-    bool type_return =true;
-    int colour       = -1;
-    wxString layer, old_layer;
+    DXFObjet p_objets;
+    bool EnCours      = false;
+    bool type_return  = true;
+    int  Nvector      = 3;              // Par défaut, facettes triangulaires
+    int  Nlignes      = 0;              // Compteur de lignes
+    int  nb3DFACE     = 0;
+    int  nbLINE       = 0;
+    int  nbLayer      = 0;
+    int  nbVector     = 0;
+    int  Nlignes_test = 10000;          // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
+    int  colour       = -1;
 
     if (verbose) printf("Entree de BddInter::ParseEntitiesDXF\n");
 
     fichierBdd_length = stream.GetSize();
     printf("Taille du fichier %lld octets\n",fichierBdd_length);
-    time_deb_dialog = clock();
+    time_deb_dialog   = clock();
     progress_dialog_en_cours = false;
 
     old_layer = "";
-    DXFObjet p_objets;
 
     while (stream.CanRead())
     {
         GetLines(text, line1, line2);
+
+        Update_Dialog(stream.TellI(), fichierBdd_length);   // Utilise la position courante dans le stream et sa longueur totale pour afficher la barre de progression
+
         Nlignes++;
-        if ((Nlignes%Nlignes_test) == 0) {
+        if ((Nlignes%Nlignes_test) == 0) {                  // Cette marque de progression à la console n'est plus très utile...
             EnCours = true;
-            printf(".");
+            printf("."); fflush(stdout);
         }
         if (line1 == "0" && state > 0)
         {
             // flush entity : tant que state == 0, la lecture d'une 3DFACE ou LINE n'est pas terminée
-            if (state == 1) // 3DFACE
+            if (state == 1) // 3DFACE est complet
             {
                 nb3DFACE++;
                 std::unique_ptr<DXFFace> p(new DXFFace);
@@ -4208,7 +4211,7 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
                 v[0] = v[1] = v[2] = v[3] = DXFVector();
                 state = 0;
             }
-            else if (state == 2) // LINE
+            else if (state == 2) // LINE est complet
             {
                 nbLINE++;
                 std::unique_ptr<DXFLine> p(new DXFLine);
@@ -4224,15 +4227,15 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
                 state = 0;
             }
         }
-        if (line1 == "0" && line2 == "ENDSEC") {    // Fin normale des ENTITIES d'un fichier dxf
+        if (line1 == "0" && line2 == "ENDSEC") {    // Fin normale d'une section ENTITIES d'un fichier dxf
             type_return = true;
             goto Sortie;
         }
-        else if (line1 == "0" && line2 == "3DFACE")
+        else if (line1 == "0" && line2 == "3DFACE") // initialisation d'une nouvelle 3DFACE
             state = 1;
-        else if (line1 == "0" && line2 == "LINE")
+        else if (line1 == "0" && line2 == "LINE")   // initialisation d'une nouvelle LINE
             state = 2;
-        else if (state > 0)
+        else if (state > 0)                         // Ici on lit les propriétés successives des 3DFACE ou LINE (coordonnées de points en x,y,z, couleur, layer)
         {
             const float d = float(ToDoubleDXF(line2));
 
@@ -4261,33 +4264,32 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
                 v[3].y = d;
             else if (line1 == "33") {
                 v[3].z = d;
-                Nvector= 4;                // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
+                Nvector= 4;                 // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
             }
-            else if (line1 == "8") {  // layer
+            else if (line1 == "8") {        // layer
                 layer = line2;
-               if (layer != old_layer && state == 1) {  // Pour créer un nouvel objet, basé sur layer, mais seulement avec des 3DFACE, pas des LINE
+                if (layer != old_layer && state == 1) { // Pour créer un nouvel objet, basé sur layer, mais seulement avec des 3DFACE, pas des LINE
                     p_objets.name       = layer;
                     p_objets.num_3DFACE = nb3DFACE;
                     p_objets.num_Vector = nbVector;
                     m_objets.push_back(p_objets);
-                    old_layer = layer;
-                    nbLayer++;
-//                    printf("\n%4d 3DFACE : %6d num_deb : %6d nom : %s ", nbLayer, nb3DFACE, nbVector, layer.mb_str().data()); // nb3DFACE pas encore incrémenté, donc +1
+                    old_layer = layer;          // Mémoriser layer dans old_layer pour la comparaison suivante
+                    nbLayer++;                  // Incrémenter nbLayer (comptage du nombre d'objets)
+//                    printf("\n%4d 3DFACE : %6d num_deb : %6d nom : %s ", nbLayer, nb3DFACE, nbVector, layer.mb_str().data());
                 }
             }
-            else if (line1 == "62") // colour
+            else if (line1 == "62")         // colour
             {
                 long l;
                 line2.ToLong(&l);
                 colour = l;
             }
         }
-        Update_Dialog(stream.TellI(), fichierBdd_length);
     }
-    type_return = false;    // On ne devrait pas sortir ainsi. Il manque quelquechose en fin de fichier ?
+    type_return = false;    // On ne devrait pas sortir par ici. Il manque quelquechose en fin de fichier ? ENDSEC non trouvé ?
 
 Sortie:
-    Update_Dialog(stream.TellI(), fichierBdd_length);
+    Update_Dialog(stream.TellI(), fichierBdd_length);   // Ici, on ne devrait pas être loin de la fin du fichier
     if (EnCours)
         printf("\n");
     if (verbose) printf("Sortie de BddInter::ParseEntitiesDXF     : nb3DFACE : %d, nbLINE : %d, nbLayer : %d, nbVector : %d en %s\n",nb3DFACE,nbLINE,nbLayer,nbVector,(type_return ? "true" : "false"));
@@ -4554,7 +4556,7 @@ void BddInter::RenderDXF()
                 Objet_courant->Facelist[nfac-1].groupe     = index_grp; // Comme dans LoadPLY, mais on pourrait y mettre la valeur par défaut groupe_def
                 Objet_courant->Facelist[nfac-1].codmatface = index_grp; //    "        "       "       "       "       "       "       "      codmatface_def
 
-                if (nfac == (int)nb_facettes_loc) { // Passer à l'objet suivant
+                if (nfac == (int)nb_facettes_loc) { // On a fini avec cet objet. Passer à l'objet suivant
                     nfac = npoint = nb3DFACE_debut = nbPoints_debut = 0;
                     o++;
                 }
