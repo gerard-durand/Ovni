@@ -525,19 +525,21 @@ void BddInter::make_1_face() {
         Objet_courant->Facelist[Numero-1] = New1Face;
 }
 
-//void BddInter::make_1_face(int Numero, const std::vector<int> &Numeros_Sommets) {
-//// Cette version ne semble pas être vue par le compilateur !
-//    Face New1Face;
-//
-//    New1Face = Face(Numero, Numeros_Sommets);
-//
-//    if (Numero > (int)this->Objetlist[indiceObjet_courant].Facelist.size()) {
-//        this->Objetlist[indiceObjet_courant].Facelist.push_back(New1Face) ; // Taille initiale trop petite (on est en création de facettes) => procéder par push_back !
-//        this->Objetlist[indiceObjet_courant].Nb_facettes++;
-//    }
-//    else
-//        this->Objetlist[indiceObjet_courant].Facelist[Numero-1] = New1Face;
-//}
+void BddInter::make_1_face(int Numero, const std::vector<int> &Numeros_Sommets) {
+// Cette version ne semble pas être correctement vue/exécutée par le compilateur ! Pourtant c'est OK avec make_1_luminance !! Where is the bug ?
+    Face New1Face;
+    Object *Objet_courant;
+
+    New1Face = Face(Numero, Numeros_Sommets);
+    Objet_courant = &(this->Objetlist[indiceObjet_courant]);
+
+    if (Numero > (int)Objet_courant->Facelist.size()) {
+        Objet_courant->Facelist.push_back(New1Face) ; // Taille initiale trop petite (on est en création de facettes) => procéder par push_back !
+        Objet_courant->Nb_facettes++;
+    }
+    else
+        Objet_courant->Facelist[Numero-1] = New1Face;
+}
 
 void BddInter::make_sommet() {
 // Dans cette version, on dimensionne la liste Sommetlist et on initialise Nb_sommets dans Objetlist[indiceObjet_courant].
@@ -743,7 +745,7 @@ void BddInter::make_luminance() {
 }
 
 void BddInter::make_1_luminance() {
-// ici reste avec des push_back, pas comme dans make_1_face ... peut-être à revoir !
+// ici reste des push_back dans le dernier for, pas comme dans make_1_face ... peut-être à revoir !
     int Numero;
     Luminance New1luminance;
     Object *Objet_courant;
@@ -772,7 +774,7 @@ void BddInter::make_1_luminance() {
 }
 
 void BddInter::make_1_luminance(int Numero, const std::vector<int> &Numeros_Sommets) {
-// ici reste avec des push_back, pas comme dans make_1_face ... peut-être à revoir !
+// ici reste des push_back dans le dernier for, pas comme dans make_1_face ... peut-être à revoir !
     Luminance New1luminance;
     Object *Objet_courant;
 
@@ -862,7 +864,7 @@ void BddInter::make_position() {
     Objet_courant->Nb_matrices = wxAtoi(token);   // Nombre de transformations (normalement 1 seule si <MAT_POSITION>
 }
 
-void BddInter::Genere_Tableau_Points_Facettes(Object * objet)
+void BddInter::Genere_Tableau_Points_Facettes(Object *objet)
 {
     unsigned int nb_p, nb_fac;
     unsigned int i, j;
@@ -887,7 +889,7 @@ void BddInter::Genere_Tableau_Points_Facettes(Object * objet)
     if (verbose) printf("Sortie BddInter::Genere_Tableau_Points_Facettes\n");
 }
 
-void BddInter::Genere_Tableau_Aretes(Object * objet)
+void BddInter::Genere_Tableau_Aretes(Object *objet)
 {
     // NOTE : On pourrait chronométrer la partie test des doublons d'arêtes puis, si c'est suffisament court, activer Genere_Tableau_Aretes systématiquement quand c'est utile
     //        plutôt que de laisser ce soin à faire en manuel par l'utilisateur via le bouton "Recalculer les arêtes"
@@ -1059,10 +1061,11 @@ void BddInter::Genere_Tableau_Aretes(Object * objet)
 }
 
 void BddInter::Search_Min_Max() {
+// Recherche des min et max d'une Base De Données. Initialise également d'autres valeurs comme des nombre de sommets, facettes à 3 sommets et à 4 sommets et + ...
     std::vector<float>Point_XYZ;
     std::vector<int>numSommets;
     unsigned int i=0,j=0,k=0;
-    Object * objet_courant;
+    Object  *objet_courant;
 
     if (verbose) printf("Entree BddInter::Search_Min_Max\n");
 
@@ -1318,8 +1321,8 @@ void BddInter::Inverser_Toutes_les_Normales() {
 void BddInter::Inverser_les_Normales_Objet(unsigned int o) {
     unsigned int j,k;
     int m;
-    Face *Face_ij;
-    Face *Luminance_ij;
+    Face    *Face_ij;
+    Face    *Luminance_ij;
     Vecteur *Vecteur_ij;
     Object  *objet_courant;
 
@@ -1513,7 +1516,7 @@ void BddInter::Set_Min_Max(float x, float y, float z) {
     z_max = ( z>z_max ? z : z_max);
 }
 
-bool BddInter::ifexist_facette(int objet,int face) {
+bool BddInter::ifexist_facette(int objet, int face) {
     if((objet < 0) || (face < 0)) return false;
     if (objet < (int)Objetlist.size()) {
         if(face < (int)Objetlist[objet].Facelist.size()) {
@@ -1523,7 +1526,7 @@ bool BddInter::ifexist_facette(int objet,int face) {
     return false;
 }
 
-bool BddInter::ifexist_sommet(int objet,int sommet) {
+bool BddInter::ifexist_sommet(int objet, int sommet) {
     if((objet < 0) || (sommet < 0)) return false;
     if (objet < (int)Objetlist.size()) {
         if(sommet < (int)Objetlist[objet].Sommetlist.size()) {
@@ -1553,7 +1556,7 @@ void BddInter::Diviser_Arete(int objet, int face, int line) {
     Sommet  NewSommet;
     Sommet  Sommet_a;
     Sommet  Sommet_b;
-    Object  *objet_cible;
+    Object *objet_cible;
 
     int indice_objet_cible = objet;
     int indice_face_cible  = face;
@@ -1839,9 +1842,9 @@ void BddInter::souderPoints(int objet, int point) {
 void BddInter::UNDO_ONE() {
 // On va réactiver les facettes marquées .deleted, remettre en état les tableaux (vector en réalité) de facettes, sommets, vecteurs
     unsigned int i,j ;
-    Object* objet_courant;
-    Face  * face_j;
-    Sommet* sommet_j;
+    Object *objet_courant;
+    Face   *face_j;
+    Sommet *sommet_j;
 
     if(undo_memory != 0) {
         for (i=0; i<this->Objetlist.size(); i++) {   // est-il nécessaire de balayer tous les objets, pas seulement ceux dans undo_memory ?
@@ -1969,8 +1972,8 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
 
 void BddInter::Calcul_All_Normales() {
     unsigned int o,i,nb_fac,nb_som;
-    Object * objet_courant;
-    Face   * facette_courante;
+    Object  *objet_courant;
+    Face    *facette_courante;
     double tdeb,tfin;
 
     printf("\nCalcul de toutes les normales\n");
@@ -2016,7 +2019,7 @@ void BddInter::Calcul_All_Normales() {
 }
 
 void BddInter::InverseX() {
-    Object * objet_courant;
+    Object  *objet_courant;
     unsigned int i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
@@ -2036,7 +2039,7 @@ void BddInter::InverseX() {
 }
 
 void BddInter::InverseY() {
-    Object * objet_courant;
+    Object  *objet_courant;
     unsigned i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
@@ -2056,7 +2059,7 @@ void BddInter::InverseY() {
 }
 
 void BddInter::InverseZ() {
-    Object * objet_courant;
+    Object  *objet_courant;
     unsigned i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
         objet_courant = &(this->Objetlist[i]);
@@ -2076,10 +2079,10 @@ void BddInter::InverseZ() {
 }
 
 void BddInter::XtoY() {
-    Object * objet_courant;
-    Face   * face_j;
-    Sommet * sommet_j;
-    Vecteur* vecteur_j;
+    Object  *objet_courant;
+    Face    *face_j;
+    Sommet  *sommet_j;
+    Vecteur *vecteur_j;
     float memory;
     unsigned int i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
@@ -2111,10 +2114,10 @@ void BddInter::XtoY() {
 }
 
 void BddInter::XtoZ() {
-    Object * objet_courant;
-    Face   * face_j;
-    Sommet * sommet_j;
-    Vecteur* vecteur_j;
+    Object  *objet_courant;
+    Face    *face_j;
+    Sommet  *sommet_j;
+    Vecteur *vecteur_j;
     float memory;
     unsigned i,j;
     for (i=0; i<this->Objetlist.size(); i++) {
@@ -2146,9 +2149,9 @@ void BddInter::XtoZ() {
 }
 
 void BddInter::YtoZ() {
-    Object * objet_courant;
-    Face   * face_j;
-    Sommet * sommet_j;
+    Object  *objet_courant;
+    Face    *face_j;
+    Sommet  *sommet_j;
     Vecteur* vecteur_j;
     float memory;
     unsigned int i,j;
@@ -2181,9 +2184,9 @@ void BddInter::YtoZ() {
 }
 
 void BddInter::XtoYtoZ() {
-    Object * objet_courant;
-    Face   * face_j;
-    Sommet * sommet_j;
+    Object  *objet_courant;
+    Face    *face_j;
+    Sommet  *sommet_j;
     Vecteur* vecteur_j;
     float memory;
     unsigned int i,j;
@@ -2232,8 +2235,8 @@ void BddInter::Simplification_BDD()
     unsigned int nb_points2;
     std::vector<int> tabPoints;
     std::vector<float> Point_1, Point_i, Point_j;
-    Object * objet_courant;
-    Face   * Facette_courante;
+    Object *objet_courant;
+    Face   *Facette_courante;
     int tabPoints_j;
     long Nb_test, compteur;
 
@@ -2271,10 +2274,10 @@ void BddInter::Simplification_BDD()
         objet_courant = &(this->Objetlist[o]);
         printf("\nObjet : %s\n",objet_courant->GetName());
         if (objet_courant->deleted) continue ;                          // Ne pas traiter un objet supprimé (mais encore en mémoire), et donc passer au suivant
-        nb_modifs    = 0;
-        modification = false;
-        nb_points    = objet_courant->Sommetlist.size() ;               // normalement égal à This->Objetlist[i].Nb_sommets;
-        nb_points2   = objet_courant->Nb_sommets;
+        nb_modifs     = 0;
+        modification  = false;
+        nb_points     = objet_courant->Sommetlist.size() ;              // normalement égal à This->Objetlist[i].Nb_sommets;
+        nb_points2    = objet_courant->Nb_sommets;
         if(nb_points != nb_points2) printf("Probleme sur objet %d: Sommetlist.size=%d, Nb_sommets=%d\n",o,nb_points,nb_points2);
         if (nb_points <= 0) continue ;                                  // Ne pas traiter un objet sans sommets
 //        printf("Nombre de sommets avant le traitement   : %u\n",nb_points);
@@ -2285,7 +2288,7 @@ void BddInter::Simplification_BDD()
 // Pour supprimer les points non utilisés .... on les marque comme des doublons du 1er sommet de la première facette
         int ind1 = objet_courant->Facelist[0].F_sommets[0] -1;          // -1 pour passer d'un numéro de sommet à un indice de sommet
         Point_1  = objet_courant->Sommetlist[ind1].getPoint();          // Coordonnées du 1er sommet de la 1ère facette dans Point_1
-////#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)
+////#pragma omp parallel for private(cpt,k,l,Facette_courante,nbsom)        // Traitement en // pose des soucis ... ou trop peu d'avantages
         for (i=1; i<=nb_points; ++i) {                                  // Ici, i est un numéro de point (décalé de 1 / indice)
         //pour chaque point d'un objet
             cpt = 0 ;
@@ -2652,7 +2655,7 @@ void BddInter::Genere_Luminances(int indiceObjet, int Nb_facettes)
 {
 // Ici, ce sont les mêmes indices que pour les facettes
 
-    Object * objet_courant;
+    Object *objet_courant;
 
     objet_courant = &(this->Objetlist[indiceObjet]);
     Genere_Luminances(objet_courant, Nb_facettes);
@@ -2686,9 +2689,9 @@ void BddInter::Calcul_Normale_Barycentre(int indice_objet, int indice_facette) {
 
     Face   *Face_ij;
     Object *Objet_i;
-    float vector1[3];
-    float vector2[3];
-    float mag;
+    float   vector1[3];
+    float   vector2[3];
+    float   mag;
     std::vector<float> normalf(3,0.0);
     std::vector< std::vector<float> > normal;
     std::vector<float> normal1;
@@ -2731,7 +2734,7 @@ void BddInter::Genere_Normales_Facettes(int indiceObjet, int Nb_facettes)
 {
 // Génère les normales à partir des 3 premiers points de chaque facette
 // N'est plus utilisé sous cette forme. Cf version avec pointeur sur objet_courant
-    Object * objet_courant;
+    Object *objet_courant;
 
     objet_courant = &(this->Objetlist[indiceObjet]);
     Genere_Normales_Facettes(objet_courant, Nb_facettes);
@@ -2778,7 +2781,7 @@ void BddInter::Genere_Facettes_Sphere(int Nb_Meridiens, int Nb_Paralleles, bool 
 {
     // D'après Facette_Sphere de sphere.c de la version Tcl
     // Version modifiée pour générer, en option, un nouveau tracé de facettes plus homogène, sans direction privilégiée.
-    // Ce nouveau tracé fonctionne avec un nombre de // impair. Toutefois, la symétrie ne sera pas respectée si le nombre de méridiens n'est pas pair !
+    // Ce nouveau tracé fonctionne avec un nombre de // pair ou impair. Toutefois, la symétrie ne sera pas respectée si le nombre de méridiens n'est pas pair !
 
     int i, j, numero;
     int i1, i2, i3;
@@ -3039,7 +3042,7 @@ void BddInter::Genere_Normale_1_Sommet(Object *current_objet, unsigned int indic
         coef = 0.;
         pa   = current_objet->Sommetlist[cur_fac.F_sommets[0]-1].getPoint() ;
         pb   = current_objet->Sommetlist[cur_fac.F_sommets[1]-1].getPoint() ;
-        v1.X    = (double)(pb[0] - pa[0]); v1.Y = (double)(pb[1] - pa[1]); v1.Z = (double)(pb[2] - pa[2]);
+        v1.X     = (double)(pb[0] - pa[0]); v1.Y = (double)(pb[1] - pa[1]); v1.Z = (double)(pb[2] - pa[2]);
         for (k2=2; k2 < nbs; k2++) {
             pc = current_objet->Sommetlist[cur_fac.F_sommets[k2]-1].getPoint() ;
 //            v2 = SoustractionPoint(pc,pa) ;
@@ -3074,8 +3077,8 @@ void BddInter::Genere_Normales_Aux_Sommets(unsigned int o, int nb_p)
 // Calcul des normales aux sommets (additions des normales des facettes adjacentes et normalisation)
 // + Reconstruction des luminances
     int indice_point ;
-    Object * objet_courant;
-    Face   * facette_courante;
+    Object *objet_courant;
+    Face   *facette_courante;
 //    bool verbose=false;       // Pour l'instant ici !
 
 //    printf("\n");
@@ -3155,8 +3158,8 @@ bool BddInter::Points_Egaux(const std::vector<float> &point_1, const std::vector
 void BddInter::Simplification_Doublons_Points(unsigned int objet)
 {
 	unsigned int i,j,k,nbsom;
-    Object      * objet_courant;
-    Face        * facette;
+    Object  *objet_courant;
+    Face    *facette;
     bool test;
 
     objet_courant = &(this->Objetlist[objet]) ;
@@ -3200,7 +3203,7 @@ void BddInter::Simplification_Doublons_Points(unsigned int objet)
 void BddInter::Simplification_Facettes(unsigned int objet)
 {
 	unsigned int i,nbface,decalage;
-    Object      * objet_courant;
+    Object  *objet_courant;
 
     objet_courant = &(this->Objetlist[objet]) ;
 

@@ -78,8 +78,8 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     wxCommandEvent cmd_event;
     wxKeyEvent     key_event;
 
-    wxMenu * menu;
-    wxMenuItem * item;
+    wxMenu*     menu;
+    wxMenuItem* item;
     wxMenuItemList::compatibility_iterator node;
     int nb_menus, num_menu, nb;
     wxColour Backg;

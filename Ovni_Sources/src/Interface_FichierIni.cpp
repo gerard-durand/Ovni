@@ -298,7 +298,7 @@ void BddInter::Stocker_ini_file()
 
     if (!ini_file_modified) return ;        // Ne rien faire si le fichier n'a pas été modifié
 
-    f_init=fopen(fichier_init,"w") ;
+    f_init = fopen(fichier_init,"w") ;
 
     if (f_init != nullptr) {
         fprintf(f_init,"%s%f\n",init1,len_axe) ;

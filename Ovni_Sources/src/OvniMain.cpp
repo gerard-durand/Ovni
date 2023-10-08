@@ -264,16 +264,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     if (local_darkmode >= 0) {
         wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings());
     }
-
     if (verbose) printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
-//    wxColour test = wxMSWDarkMode::GetColour(wxSYS_COLOUR_BTNTEXT);
-//    wxColour test = MySettings().GetColour(wxSYS_COLOUR_BTNTEXT);
-    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT);
-////    wxMenuItem().SetTextColour(new_colour);                                         // Compile mais ne change pas la couleur des wxMenuItem !
-    if (verbose) printf("Test RVB wxSYS_COLOUR_BTNTEXT : %d %d %d ou 0x%2.2x%2.2x%2.2x\n",test.GetRed(),test.GetGreen(),test.GetBlue(),test.GetRed(),test.GetGreen(),test.GetBlue());
-//    int Colour[1]={COLOR_BTNFACE};
-//    COLORREF My_Col[1]={0xFFFF00};
-//    ::SetSysColors(1,Colour,My_Col);  // Ainsi on colorise toutes les fenêtres dans Windows qui utilisent COLOR_BTNFACE (y compris celle de Code::Blocks !)
 #endif // wxCHECK_VERSION
 
 #endif // __WXMSW__
@@ -865,7 +856,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
                                                                                 // de version : éliminer le dernier champ
     if (verbose) {
         printf("OvniFrame::OvniFrame : nb args  : %d\n",arg_c);
-        printf("OvniFrame::OvniFrame : commande : %s\n",(const char *)par_0.mb_str());
+        printf("OvniFrame::OvniFrame : commande : %s\n",(const char*)par_0.mb_str());
     }
 
     if (Element == nullptr) {
@@ -887,7 +878,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     }
 
     if (arg_c >= 2) {
-        printf("fichier  : %s\n",(const char *)par_1.mb_str());
+        printf("fichier  : %s\n",(const char*)par_1.mb_str());
         Element->set_file(par_1);
         New_file = false;
     }
@@ -1214,9 +1205,9 @@ bool OvniFrame::OnBdd_modifiee()
  * \return bool retour
  *
  */
-
     bool retour = true;
     int  retour_Show;
+
     if (Element->Objetlist.size() == 0) return(true) ;  // Inutile de tester bdd_modifiee car il ne reste rien !
     else {
         int ok = Element->Objetlist.size();
@@ -1274,21 +1265,17 @@ void OvniFrame::OnQuit(wxCommandEvent& event)
  *
  */
 
-//    bool test;
-//    test = OnBdd_modifiee();
-//    if (!test) return;
-//    Element->bdd_modifiee = false;      // Forcer à false pour éviter une double interrogation lors du Close si on a refusé l'enregistrement sous...
-//    Element->Stocker_ini_file();
-//    OnPal_modifiee();
-//    Element->pal_file_modified = false; // Idem
-//    Close();
-
 // OnQuit <=> onClose
     wxCloseEvent close_event;
     OnClose(close_event);
 }
 
 void OvniFrame::OnAbout(wxCommandEvent& event) {
+/** \brief OvniFrame::OnAbout : Affichage d'une boîte de dialogue "A propos" contenant diverses infos sur la façon dont a été généré Ovni
+ *
+ * \param event
+ *
+ */
     wxString msg = wxbuildinfo(long_f);
     wxAboutDialogInfo aboutInfo;
     aboutInfo.SetName("Ovni version wxWidgets...");
@@ -1653,7 +1640,6 @@ void OvniFrame::OnButton_GroupesToggle(wxCommandEvent& event) {
  * \param event
  *
  */
-
     if(Element != nullptr) {
         if (Button_Groupes->GetValue()) {
             Menu_Reperage_Couleurs_Groupes  ->Check(true);
@@ -1699,7 +1685,8 @@ void OvniFrame::OnButton_MateriauxToggle(wxCommandEvent& event) {
     }
 }
 
-void OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected(wxCommandEvent& event) {
+void OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected(wxCommandEvent& event)
+{
     if (Menu_Reperage_Couleurs_Facettes->IsChecked()) {
         Button_Groupes  ->SetValue(false);
         Button_Materiaux->SetValue(false);
@@ -1711,7 +1698,8 @@ void OvniFrame::OnMenu_Reperage_Couleurs_FacettesSelected(wxCommandEvent& event)
     Element->Refresh();
 }
 
-void OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected(wxCommandEvent& event) {
+void OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected(wxCommandEvent& event)
+{
     if (Menu_Reperage_Couleurs_Groupes->IsChecked()) {
         Button_Groupes  ->SetValue(true) ;
         Button_Materiaux->SetValue(false);
@@ -1727,7 +1715,8 @@ void OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected(wxCommandEvent& event) 
     Element->Refresh();
 }
 
-void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event) {
+void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event)
+{
     if (Menu_Reperage_Couleurs_Materiaux->IsChecked()) {
         Button_Materiaux->SetValue(true) ;
         Button_Groupes  ->SetValue(false);
@@ -1750,7 +1739,6 @@ void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
  * \param event
  *
  */
-
     bool points_affiches;
 
     New_file = false;                           // => le nom du fichier est déjà connu (via get_file)
@@ -2101,6 +2089,7 @@ void OvniFrame::OnSize(wxSizeEvent& event)
 
 void OvniFrame::OnSlider_xCmdScroll(wxScrollEvent& event)
 {
+// Routines pour traiter les évênements de déplacement des curseurs d'angles (Sliders)
         float val = event.GetInt();
         Element->m_gldata.rotx = val;
         Element->m_gldata.roty = Slider_y->GetValue();  // C'est rotx qui a changé mais relire tout de même les autres sliders : permet de
@@ -2174,7 +2163,7 @@ void OvniFrame::OnMenu_EnregistrerSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
 {
-/** \brief Enregistre au format SDM bdd en proposant le nom d'origine comme nom par défaut
+/** \brief Enregistre au format SDM bdd (ou quelques autres formats 3D) en proposant le nom d'origine comme nom par défaut
  *
  * \param event
  *
@@ -2203,7 +2192,7 @@ void OvniFrame::OnMenu_Enregistrer_Sous(wxCommandEvent& event)
 //    printf("Index %d\n",saveFileDialog.GetFilterIndex());
 
     if(saveFileDialog.GetFilterIndex() >= 4) {          // Format stl => facettes triangulaires. Vérifier que c'est le cas avant d'ouvrir le fichier !
-        Object * objet_courant;
+        Object *objet_courant;
         for (unsigned int o=0; o<Element->Objetlist.size(); o++) {
             objet_courant = &(Element->Objetlist[o]);
             if (objet_courant->deleted) continue ;
@@ -2845,7 +2834,7 @@ void OvniFrame::OnOutils_choix_afficherSelected(wxCommandEvent& event)
 void OvniFrame::OnOutils_ReafficherSelected(wxCommandEvent& event)
 {
     unsigned int i,j;
-    Object * objet_i;
+    Object  *objet_i;
 
     for (i=0; i<Element->Objetlist.size(); i++) {
         objet_i = &(Element->Objetlist[i]);
@@ -2863,7 +2852,7 @@ void OvniFrame::OnOutils_Supprimer_MasquesSelected(wxCommandEvent& event)
     // Pour marquer les objets masqués comme "à supprimer" (deleted)
     // ATTENTION : les objets supprimés ne sont pas encore complètement gérés => continuent d'apparaître dans certains menus / dialogues
     unsigned int i,j;
-    Object * objet_i;
+    Object  *objet_i;
 
     for (i=0; i<Element->Objetlist.size(); i++) {
         objet_i = &(Element->Objetlist[i]);
@@ -2883,7 +2872,7 @@ void OvniFrame::OnOutils_UnDeleteSelected(wxCommandEvent& event)
 {
     // Pour réactiver les objets/facettes marqués comme supprimés (deleted), car en fait toujours là en mémoire.
     unsigned int i,j;
-    Object * objet_i;
+    Object  *objet_i;
 
     for (i=0; i<Element->Objetlist.size(); i++) {
         objet_i = &(Element->Objetlist[i]);
@@ -3130,7 +3119,6 @@ void OvniFrame::OnPopup_Etendre_la_SelectionSelected(wxCommandEvent& event)
     key_event.m_keyCode = 'X';
     Element->OnKeyDown(key_event);              // Simule une pression sur la touche X au clavier
 }
-
 
 void OvniFrame::OnMenu_SupprimerFacettesSelected(wxCommandEvent& event)
 {

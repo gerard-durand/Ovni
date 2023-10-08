@@ -80,7 +80,7 @@ void ChangerEchelleBdd::OnButton_OKClick(wxCommandEvent& event)
 
     float val;
     unsigned int o,i,j;
-    Object * objet_courant;
+    Object  *objet_courant;
 
     val = wxAtof(TextCtrl_scale->GetValue());                                               // Récupérer le facteur d'échelle
     for (o=0; o<Element->Objetlist.size(); o++) {

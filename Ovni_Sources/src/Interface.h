@@ -456,10 +456,10 @@ public:
 // Méthodes, fonctions de la classe Aspect_face (traitements du numéro de matériau et/ou de groupe d'une facette)
 
     Aspect_face() {
-        show=true;
+        show = true;
     }
     Aspect_face(std::vector<wxString>wxStringlist) {
-        show=true;
+        show = true;
         Numero=wxAtoi(wxStringlist[0]); // On ne récupère que le numéro. Pour groupe et codmatface, sera fait plus tard
 //        wxString code=wxStringlist[1] ;
 //        if (code.Contains(_T("<GROUPE>"))) {
@@ -653,7 +653,7 @@ class BddInter: public wxGLCanvas {
     wxCharBuffer buffer;
     wxGauge *m_gauge = nullptr;
     wxTimer *m_timer = nullptr;
-    wxGenericProgressDialog * progress_dialog = nullptr;    // wxGenericProgressDialog plutôt que wxProgressDialog car mieux en Darkmode
+    wxGenericProgressDialog *progress_dialog = nullptr;     // wxGenericProgressDialog plutôt que wxProgressDialog car mieux en Darkmode
     clock_t time_deb_dialog;
     bool progress_dialog_en_cours;
     Lib3dsIo *io;
@@ -1023,12 +1023,12 @@ public :
 
     int indiceAspect = 0;
     int GroupeMateriau[2] = {0,0};   // 1 pour repérer par une couleur les groupes, 2 pour repérer les matériaux, 0 sinon
-    unsigned int SelectionObjet=0;
+    unsigned int SelectionObjet = 0;
 
     bool show_CW_CCW = false;
 
 #if wxCHECK_VERSION(3,0,0)
-    wxGLContext * m_glRC;
+    wxGLContext *m_glRC;
 #endif // wxCHECK_VERSION
 
     GLData m_gldata;
@@ -1154,7 +1154,7 @@ public :
 
     wxString get_file();                // Fichier courant (égal à first_file pour le premier fichier ouvert ou si c'est le seul !)
     wxString get_firstFile();           // Premier fichier lu en cas de fusion
-    void colorface(int objet,int face,bool OnOff);
+    void colorface(int objet, int face, bool OnOff);
     void set_file(wxString file);
     void set_firstFile(wxString file);
     void create_bdd();
@@ -1213,14 +1213,14 @@ public :
     void make_1_sommet();
     void make_face();
     void make_1_face();
-    void make_1_face(int , const std::vector<int> &);
+    void make_1_face(int , const std::vector<int> &);       // Ne fonctionne pas. Fait planter Ovni. Bug quelquepart ?
     void make_normale();
     void make_1_normale();
     void make_aspect_face();
     void make_1_aspect_face();
     void make_luminance();
     void make_1_luminance();
-    void make_1_luminance(int , const std::vector<int> &);
+    void make_1_luminance(int , const std::vector<int> &);  // Ici, ça marche
 
     void make_vecteur();
     void make_1_vecteur();
@@ -1327,7 +1327,7 @@ private :
     void Output_Glut_Msg(GLfloat , GLfloat , char *);
     float Produit_Scalaire(const std::vector<float> &, const std::vector<float> &);
 
-    OvniFrame *MAIN_b;
+    OvniFrame* MAIN_b;
     DECLARE_EVENT_TABLE()
 
 };

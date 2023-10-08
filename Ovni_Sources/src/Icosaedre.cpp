@@ -95,7 +95,7 @@ void Icosaedre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Icosaedre::Genere_Normales_Sommets(BddInter* Element, Object * p_Objet)
+void Icosaedre::Genere_Normales_Sommets(BddInter *Element, Object *p_Objet)
 {
     int i, numero;
     std::vector<float> xyz_sommet;
@@ -121,7 +121,7 @@ void Icosaedre::Genere_Normales_Sommets(BddInter* Element, Object * p_Objet)
 
 }
 
-void Icosaedre::Genere_Sommets(BddInter* Element, Object *p_Objet)
+void Icosaedre::Genere_Sommets(BddInter *Element, Object *p_Objet)
 {
 // Génère un icosaèdre, via des points sur une sphère de rayon donné
 // NOTE : cette figure peut servir de point de départ à une génération de sphère en subdivisant les arêtes de façon récursive
@@ -179,7 +179,7 @@ void Icosaedre::Genere_Sommets(BddInter* Element, Object *p_Objet)
 
 void Icosaedre::genereIcosaedre()
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     wxString num_obj;
     int new_num;
@@ -236,12 +236,12 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
         7           327672              163842
         ... Pas d'intérêt au-delà, de plus devient long à gérer et peut planter à cause de soucis de gestion de la mémoire.
 */
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
-    Object * objet_courant;
-    Face   * facette_courante;
-    Face   * facette_nouvelle;
-    Sommet * sommet_courant;
+    Object *objet_courant;
+    Face   *facette_courante;
+    Face   *facette_nouvelle;
+    Sommet *sommet_courant;
     int isubdiv;
     unsigned int i,j,indiceFacette;
     std::vector<int> NumerosSommets,NewNumeros;
@@ -367,7 +367,7 @@ void Icosaedre::genereSubdivisions(int NbSubdiv)
 
 void Icosaedre::OnButton_OKClick(wxCommandEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     wxString str;
 

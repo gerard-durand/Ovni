@@ -77,7 +77,7 @@ class Cube: public wxDialog
 		void OnSpinCtrl_GroupeChange(wxSpinEvent& event);
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		//*)
-		OvniFrame *MAIN;
+		OvniFrame* MAIN;
 
         float centre_primitive[3];
 		float arete;

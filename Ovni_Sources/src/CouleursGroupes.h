@@ -64,7 +64,7 @@ class CouleursGroupes: public wxDialog
 		void OnColourPickerCtrl_DiffuseColourChanged(wxColourPickerEvent& event);
 		void OnButton_ResetClick(wxCommandEvent& event);
 		//*)
-		OvniFrame *MAIN;
+		OvniFrame* MAIN;
 		int Numero_Groupe;
 
 		DECLARE_EVENT_TABLE()

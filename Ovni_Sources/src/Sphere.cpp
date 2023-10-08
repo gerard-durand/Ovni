@@ -101,11 +101,11 @@ void Sphere::OnButton_AnnulerClick(wxCommandEvent& event)
 
 void Sphere::genereSphere()
 {
-    wxString num_obj;
-    int new_num;
-    Object *p_Objet;
+    wxString  num_obj;
+    int       new_num;
+    Object   *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
 //  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
     if (Element->Objetlist.size() == 0)
@@ -148,7 +148,7 @@ void Sphere::OnButton_OKClick(wxCommandEvent& event)
 {
     wxString str;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     rayon = wxAtof(TextCtrl_Rayon->GetValue());
     centre_primitive[0] = wxAtof(TextCtrl_X->GetValue());

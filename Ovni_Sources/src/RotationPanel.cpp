@@ -174,7 +174,7 @@ void RotationPanel::Init_Centre_Rotation()
     BddInter *Element = MAIN->Element;
 
     unsigned int n_val,i,j, Nb_p;
-    Object * objet_courant;
+    Object  *objet_courant;
 
     n_val   = Element->listeObjets.size();
     auto it = Element->listeObjets.begin();
@@ -376,8 +376,8 @@ void RotationPanel::Rotation_Objet_X(int indiceObjet, double angle)
 	unsigned int j, ns;
 	float yy, zz ;
 	double cos_a, sin_a;
-	Object * objet_courant;
-	Sommet * sommet_courant;
+	Object *objet_courant;
+	Sommet *sommet_courant;
 /*	Matrice de rotation
 	float rotx[] = { 1.0,    0.0    ,     0.0,
 					 0.0, cos(angle), -sin(angle),
@@ -403,8 +403,8 @@ void RotationPanel::Rotation_Objet_Y(int indiceObjet, double angle)
 	unsigned int j, ns;
 	float xx, zz ;
 	double cos_a, sin_a;
-	Object * objet_courant;
-	Sommet * sommet_courant;
+	Object *objet_courant;
+	Sommet *sommet_courant;
 /*	Matrice de rotation
 	float roty[] = { cos(angle), 0.0, sin(angle),
 					    0.0,	 1.0,    0.0,
@@ -430,8 +430,8 @@ void RotationPanel::Rotation_Objet_Z(int indiceObjet, double angle)
 	unsigned int j, ns;
 	float xx, yy ;
 	double cos_a, sin_a;
-	Object * objet_courant;
-	Sommet * sommet_courant;
+	Object *objet_courant;
+	Sommet *sommet_courant;
 /*	Matrice de rotation
 	float rotz[] = { cos(angle), -sin(angle), 0.0,
 					 sin(angle),  cos(angle), 0.0,
@@ -456,8 +456,9 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     unsigned int n_val, i, j, nb_fac;
-    Object   *objet_courant;
-    Sommet   *sommet_courant;
+    Object  *objet_courant;
+    Sommet  *sommet_courant;
+
     n_val   = Element->listeObjets.size();
     auto it = Element->listeObjets.begin();
 

@@ -81,7 +81,7 @@ void CouleursGroupes::OnButton_QuitterClick(wxCommandEvent& event)
 
 void CouleursGroupes::OnSpinCtrl_GroupesChange(wxSpinEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     Numero_Groupe = SpinCtrl_Groupes->GetValue();
     if (Numero_Groupe >= Element->nb_couleurs) {        // Pour reboucler à 0 si on dépasse le max
@@ -119,7 +119,7 @@ void CouleursGroupes::OnSpinCtrl_GroupesChange(wxSpinEvent& event)
 
 void CouleursGroupes::OnColourPickerCtrl_AmbientColourChanged(wxColourPickerEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     wxColor col = ColourPickerCtrl_Ambient->GetColour();
 //    printf("%d %d %d\n",col.Red(),col.Green(),col.Blue());
@@ -136,7 +136,7 @@ void CouleursGroupes::OnColourPickerCtrl_AmbientColourChanged(wxColourPickerEven
 
 void CouleursGroupes::OnColourPickerCtrl_DiffuseColourChanged(wxColourPickerEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     wxColor col = ColourPickerCtrl_Diffuse->GetColour();
     Element->MatDiffuse_avionG[Numero_Groupe][0] = col.Red()  /255.;
@@ -153,7 +153,7 @@ void CouleursGroupes::OnColourPickerCtrl_DiffuseColourChanged(wxColourPickerEven
 void CouleursGroupes::OnButton_ResetClick(wxCommandEvent& event)
 {
 // Reset aux couleurs par défaut de palette (<=> relire default.pal)
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     for (int j=0; j<4; j++) {
         for (int i=0; i< Element->nb_couleurs; i++) {

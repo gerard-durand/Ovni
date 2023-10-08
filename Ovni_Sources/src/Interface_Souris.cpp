@@ -45,7 +45,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
         if (event.RightUp() && !previous_right_drag) {  // Ne pas faire l'affichage des menus contextuels si juste après un drag souris bouton droit
 //            printf("Right clic\n");
-            wxMenu My_popupmenu;
+            wxMenu My_popupmenu;                        // Recopie locale des ID* sinon ça ne marche pas (et c'est plus court !)
             long ID_POPUP_RAZ        = MAIN_b->ID_POPUP_RAZ;
             long ID_POPUP_COMPLEMT   = MAIN_b->ID_POPUP_COMPLEMT;
             long ID_POPUP_ETENDRE    = MAIN_b->ID_POPUP_ETENDRE;
@@ -85,7 +85,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             // Recopie de ce qui est fait par wxSmith ... Faute de mieux ! Bourrin mais ça marche à condition de forcer en public les ID_POPUP*
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
-            wxMenuItem * Popup_RAZ;
+            wxMenuItem* Popup_RAZ;
             if (mode_selection == selection_point)
                 Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des points\t(s)"),   wxEmptyString, wxITEM_NORMAL);
             else if (mode_selection == selection_objet)
@@ -98,7 +98,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_RAZ);
 
-            wxMenuItem * Popup_Complemt = nullptr;
+            wxMenuItem* Popup_Complemt = nullptr;
             if (mode_selection == selection_facette) {
                 Popup_Complemt = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
@@ -109,7 +109,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 if (desactiver_menu) Popup_Complemt->Enable(false);
             }
 
-            wxMenuItem * Popup_Centrer;
+            wxMenuItem* Popup_Centrer;
             if (this->ToSelect.ListeSelect.size() > 0)
                 Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Centrer la rotation sur la sélection\t(c)"), wxEmptyString, wxITEM_NORMAL);
             else
@@ -120,7 +120,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif // wxCHECK_VERSION
             My_popupmenu.Append(Popup_Centrer);
 
-            wxMenuItem * Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, wxS("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, wxS("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Etendre->SetBackgroundColour(Back);
             Popup_Etendre->SetTextColour(Forg);
@@ -131,7 +131,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             My_popupmenu.AppendSeparator();
 
-            wxMenuItem * Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, wxS("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, wxS("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Masquer->SetBackgroundColour(Back);
             Popup_Masquer->SetTextColour(Forg);
@@ -139,7 +139,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append (Popup_Masquer);
             if (desactiver_menu) Popup_Masquer->Enable(false);
 
-            wxMenuItem * Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Delete->SetBackgroundColour(Back);
             Popup_Delete->SetTextColour(Forg);
@@ -147,7 +147,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append (Popup_Delete);
             if (desactiver_menu) Popup_Delete->Enable(false);
 
-            wxMenuItem * Popup_NewObject = new wxMenuItem((&My_popupmenu), ID_POPUP_NEWOBJECT, wxS("Couper/coller les facettes sélectionnées vers un nouvel objet"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_NewObject = new wxMenuItem((&My_popupmenu), ID_POPUP_NEWOBJECT, wxS("Couper/coller les facettes sélectionnées vers un nouvel objet"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_NewObject->SetBackgroundColour(Back);
             Popup_NewObject->SetTextColour(Forg);
@@ -157,7 +157,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             My_popupmenu.AppendSeparator();
 
-            wxMenuItem * Popup_Inverser ;
+            wxMenuItem* Popup_Inverser ;
             if (this->ToSelect.ListeSelect.size() > 0)
                 Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
             else
@@ -168,7 +168,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_Inverser);
 
-            wxMenuItem * Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, wxS("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, wxS("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Reverse->SetBackgroundColour(Back);
             Popup_Reverse->SetTextColour(Forg);
@@ -176,7 +176,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append (Popup_Reverse);
             if (desactiver_menu) Popup_Reverse->Enable(false);
 
-            wxMenuItem * Popup_Raz_Select;
+            wxMenuItem* Popup_Raz_Select;
             if (this->Raz_Selection_F)
                 Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Désactiver la désélection automatique\t(z)"), wxEmptyString, wxITEM_NORMAL);
             else
@@ -189,7 +189,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             My_popupmenu.AppendSeparator();
 
-            wxMenuItem * Popup_Afficher_Normales;
+            wxMenuItem* Popup_Afficher_Normales;
             if (AfficherNormaleFacette)
                 Popup_Afficher_Normales = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_F, wxS("Ne pas afficher les normales aux barycentres"), wxEmptyString, wxITEM_NORMAL);
             else
@@ -200,7 +200,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_Afficher_Normales);
 
-            wxMenuItem * Popup_Afficher_NormalesSommets;
+            wxMenuItem* Popup_Afficher_NormalesSommets;
             if (AfficherNormalesSommets)
                 Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Ne pas afficher les normales aux sommets"),  wxEmptyString, wxITEM_NORMAL);
             else
@@ -211,7 +211,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_Afficher_NormalesSommets);
 
-            wxMenuItem * Popup_Forcer_Facettes_Planes;
+            wxMenuItem* Popup_Forcer_Facettes_Planes;
             Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         wxS("Forcer les facettes à être planes"),  wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_Planes->SetBackgroundColour(Back);
@@ -219,7 +219,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
             My_popupmenu.Append(Popup_Forcer_Facettes_Planes);
 
-            wxMenuItem * Popup_Forcer_Facettes_NonPlanes;
+            wxMenuItem* Popup_Forcer_Facettes_NonPlanes;
             Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  wxS("Forcer les facettes à être non planes"),  wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_NonPlanes->SetBackgroundColour(Back);
@@ -230,7 +230,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             if (Elements_Masques || Elements_Supprimes)
                 My_popupmenu.AppendSeparator(); // Ajout d'un séparateur si des élements de menu suivent ...
 
-            wxMenuItem * Popup_Demasquer = nullptr;
+            wxMenuItem* Popup_Demasquer = nullptr;
             if (Elements_Masques) {             // S'il y a au moins une facette masquée, proposer de les réafficher
                 Popup_Demasquer = new wxMenuItem((&My_popupmenu), ID_POPUP_DEMASQUER, wxS("Réafficher les facettes masquées"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
@@ -239,7 +239,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 #endif
                 My_popupmenu.Append(Popup_Demasquer);
             }
-            wxMenuItem * Popup_Undelete = nullptr;
+            wxMenuItem* Popup_Undelete = nullptr;
             if (Elements_Supprimes) {           // S'il y a au moins une facette supprimée, proposer de les restituer
                 Popup_Undelete = new wxMenuItem((&My_popupmenu), ID_POPUP_UNDELETE,   wxS("Restituer les facettes supprimées"),wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)

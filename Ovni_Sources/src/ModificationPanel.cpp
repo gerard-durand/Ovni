@@ -166,7 +166,7 @@ void ModificationPanel::OnInit(wxInitDialogEvent& event)
 {
     unsigned int o,i;
     BddInter *Element  = MAIN->Element;
-    Object * objet_courant;
+    Object   *objet_courant;
 
     Element->detection_survol_point = false;        // Par précaution car c'est déjà le cas normalement
     Element->detection_survol_arete = false;
@@ -197,7 +197,7 @@ void ModificationPanel::OnClose(wxCloseEvent& event)
 {
 //    printf("ModificationPanel: Close\n");
     BddInter *Element = MAIN->Element;
-    unsigned int o,i;
+    unsigned  int o,i;
 
     MAIN->toggle_modif=false;
     MAIN->Button_Modifs->SetValue(false);
@@ -742,7 +742,7 @@ void ModificationPanel::OnButton_AnnulerClick(wxCommandEvent& event)
 
 void ModificationPanel::OnButton_SupprimerFacetteClick(wxCommandEvent& event)
 {
-    Object *Objet_courant;
+    Object   *Objet_courant;
     BddInter *Element = MAIN->Element;
 
     unsigned int indice = Element->indiceObjet_courant;

@@ -100,7 +100,7 @@ void Tore::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Tore::Genere_Facettes(BddInter* Element, Object *p_Objet)
+void Tore::Genere_Facettes(BddInter *Element, Object *p_Objet)
 {
     int i, j, istep;
     int i0,i1,i2,i3;
@@ -136,7 +136,7 @@ void Tore::Genere_Facettes(BddInter* Element, Object *p_Objet)
     }
 }
 
-void Tore::Genere_Sommets(BddInter* Element, Object *p_Objet)
+void Tore::Genere_Sommets(BddInter *Element, Object *p_Objet)
 {
 // Génère les sommets, les normales aux sommets et les normales aux barycentres
 
@@ -204,11 +204,11 @@ void Tore::Genere_Sommets(BddInter* Element, Object *p_Objet)
 
 void Tore::Genere_Tore()
 {
-    wxString num_obj;
-    int new_num;
-    Object *p_Objet;
+    wxString  num_obj;
+    int       new_num;
+    Object   *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
 //  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
     if (Element->Objetlist.size() == 0)
@@ -244,9 +244,9 @@ void Tore::Genere_Tore()
 
 void Tore::OnButton_OKClick(wxCommandEvent& event)
 {
-    wxString str;
+    wxString  str;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     rayon_moyen  = wxAtof(TextCtrl_RayonMoyen ->GetValue());
     rayon_cercle = wxAtof(TextCtrl_RayonCercle->GetValue());

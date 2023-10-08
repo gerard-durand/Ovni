@@ -14,7 +14,7 @@
         LoadG3D     Chargement d'un fichier Xml Groupe 3D Onera : extension .g3d
         LoadSTL     Chargement d'un fichier Standard Triangle Language (Ascii ou binaire) : extension .stl
         Load        Chargement d'un fichier .dxf (support partiel en lecture, seulement affichage, pas de transformation possible)
-        LoadDXF     Version améliorée de Load qui permet d'enregistrer dans un autre format (comme .bdd d'Oktal)
+        LoadDXF     Version améliorée de Load qui permet d'enregistrer dans un autre format via les initialisations dans RenderDXF (comme .bdd d'Oktal)
 
    SaveTo       Enregistrement de Bdds sous différents formats
         SaveBDD     Enregistrement au format SDM Oktal .bdd (par défaut)
@@ -391,7 +391,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                 } else if (!strcmp(attr[i],"nom")) { // pour OVNI, actuellement, tous les mots clés sont équivallents à "groupe". codmatface devrait être <=> codemateriau mais conflit ?
                     if (!strcmp(attr[i+1],"groupe")    ) codegroupe = val_id; // n° d'Identification du mot clé groupe
                     if (!strcmp(attr[i+1],"codmatface")) codegroupe = val_id; // idem pour le numéro de matériau
-                    if (!strcmp(attr[i+1],"code Crira")) codegroupe = val_id; // idem pour le numéro de matériau
+                    if (!strcmp(attr[i+1],"code Crira")) codegroupe = val_id; // idem pour le numéro de matériau (synonyme de codmatface dans ce format de fichier ?)
                     printf("type_valeur id:%d/%d nom:%s\n",val_id,nb_val_id,attr[i+1]);
                 }
             }
@@ -402,7 +402,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     tmp = atoi(attr[i+1]);
                     Objet_courant->Nb_sommets = tmp;
 //                    printf("Indice objet : %d, sommets   , balise nbr :%d\n",o,tmp);
-                    // Création du tableau des points
+                // Création du tableau des points
                     Element->str.clear();
                     Element->N_elements = tmp;
                     Element->make_sommet();
@@ -412,7 +412,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     tmp = atoi(attr[i+1]);
                     Objet_courant->Nb_vecteurs = tmp;
 //                    printf("Indice objet : %d, normales_s, balise nbr :%d\n",o,tmp);
-                    // Création du tableau des normales aux sommets
+                // Création du tableau des normales aux sommets
                     Element->str.clear();
                     Element->N_elements = tmp;
                     Element->make_vecteur();
@@ -422,7 +422,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     tmp = atoi(attr[i+1]);
                     Objet_courant->Nb_facettes = tmp;
 //                    printf("Indice objet : %d, facettes,   balise nbr :%d\n",o,tmp);
-                    // Création du tableau des facettes
+                // Création du tableau des facettes
                     Element->str.clear();
                     Element->N_elements = tmp;
                     Element->make_face();
@@ -493,8 +493,8 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     wxNumeros = wxString::FromAscii(attr[i+1]) ;        // plutôt que les valp on met l'intégralité de la chaîne attr
                     Element->str += wxNumeros;
                     Element->make_1_face();
-                    // make_1_face remet à 0 la normale au barycentre
-                    // => la restituer via vxyz (intérêt si sommets lu après normale_b)
+                // make_1_face remet à 0 la normale au barycentre
+                // => la restituer via vxyz (intérêt si sommets lu après normale_b)
 //                    Element->Objetlist[Element->indiceObjet_courant].Facelist[ind_fac-1].setNormale_b(vxyz);
 //                    Element->Objetlist[Element->indiceObjet_courant].Facelist[ind_fac-1].flat = true ; // Facette plane par défaut => normales_s lu après !
                     Face_ij->setNormale_b(vxyz);
@@ -694,7 +694,7 @@ void BddInter::LoadG3D()
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
-    f=fopen(buffer.data(),"r");	//ouverture du fichier
+    f = fopen(buffer.data(),"r");	//ouverture du fichier
     fgets(s1,160,f) ;
     if (!strncmp(s1,"<?xml ",6)) {
     // Lire la ligne suivante pour identifier g3d version 2
@@ -725,7 +725,7 @@ void BddInter::LoadG3D()
 
 // Pour fichiers Waveforont obj
 
-void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_optim)
+void BddInter::Optimiser_Obj_Sommets(Object *objet_courant, int o, bool &msg_optim)
 {
     int i, j;
     int indice_min, indice_max, numero_sommet;
@@ -775,7 +775,7 @@ void BddInter::Optimiser_Obj_Sommets(Object * objet_courant, int o, bool &msg_op
     // En toute rigueur, il faudrait aussi changer les objet_courant->Sommetlist[*].Numero en les décalant de indice_min (idem sur les vecteurs)
 }
 
-void BddInter::Optimiser_Obj_Vecteurs(Object * objet_courant, int o)
+void BddInter::Optimiser_Obj_Vecteurs(Object *objet_courant, int o)
 {
     int i, j;
     int indice_min, indice_max, numero_sommet;
@@ -869,7 +869,7 @@ void BddInter::LoadOBJ()
 
     // A mettre ailleurs ??
     const char delimiters[] = "/\\" ;
-    char *cptr,*token,*nom_fichier;             //Pointeur de chaîne de caractères
+    char *cptr, *token, *nom_fichier;           //Pointeur de chaîne de caractères
 
     if(verbose) printf("Entree de BddInter::LoadOBJ\n");
 
@@ -892,7 +892,7 @@ void BddInter::LoadOBJ()
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
-    f=fopen(buffer.data(),"r");	//ouverture du fichier
+    f = fopen(buffer.data(),"r");	//ouverture du fichier
 
     fseek(f,0,SEEK_END);
     fichierBdd_length = ftell(f);
@@ -1250,11 +1250,11 @@ void BddInter::LoadOBJ()
                     str.clear();
                     this->N_elements = nfac;
                     this->Set_numeros(Numeros);
-                    make_1_face();
-//                    make_1_face(nfac,Numeros);
+                    this->make_1_face();
+//                    this->make_1_face(nfac,Numeros);
 
                     this->Setxyz(1.,0.,0.);
-                    make_1_normale();             // Normale bidon
+                    this->make_1_normale();             // Normale bidon. Sera mise à jour plus tard.
 
 // Ci-dessous : OK si dans tous les cas autant de normales que de sommets. Si nnorm==0 pas de pb, sinon, si à la lecture
 // certaines facettes n'ont pas de normales aux sommets => soucis ! N'arrive dans aucun fichier testé mais ....
@@ -1297,8 +1297,8 @@ void BddInter::LoadOBJ()
 // ATTENTION : ainsi, on fait des copies. Il faudrait plutôt, à ce niveau, pointer sur les tableaux/vectors de l'objet 0
 //             pour éviter de dupliquer ces (gros) tableaux.
 //             Si lecture optimisée des fichiers .obj, on éliminera ces sommets/vecteurs par la suite.
-            Object * PremierObjet = &(this->Objetlist[indice_premierObjet]);
-            Object * objet_courant;
+            Object *PremierObjet = &(this->Objetlist[indice_premierObjet]);
+            Object *objet_courant;
             bool msg_optim = true;
 
             for (o=1+indice_premierObjet; o<Nb_objets+indice_premierObjet; o++) {   // On ne commence que sur le 2ème objet les copies
@@ -1640,7 +1640,7 @@ void BddInter::LoadPLY()
         m_gllist = 0;
     }
 
-    f=fopen(buffer.data(),"r");	//ouverture du fichier
+    f = fopen(buffer.data(),"r");	//ouverture du fichier
 
     fseek(f,0,SEEK_END);
     fichierBdd_length = ftell(f);
@@ -1712,7 +1712,7 @@ void BddInter::LoadPLY()
         fgets( s1,100,f)  ;
 
         strcpy(nom_obj, Lire_chaine(s1)) ;
-        n      = (n-2)/3 ;
+        n = (n-2)/3 ;
         if (strstr(nom_obj,nom_prec) == nullptr) {
             if (nb_fac != 0) {
                 printf(" avec %5d facettes et %5d points\n", nfac, npoint) ;
@@ -1938,10 +1938,10 @@ void BddInter::LoadPLY_Stanford()
  */
 
     int compteur = 0;
-    char * buf;
     int i,j,k;
     int elem_count;
 
+    char *buf;
     char *elem_name;
     PlyFile *in_ply;
 
@@ -2374,7 +2374,7 @@ void BddInter::LoadOFF()
     unsigned int Nb_objets;
     std::vector<int>   Numeros;
     std::vector<float> xyz_point;
-    char *cptr;          //Pointeur de chaîne de caractères
+    char   *cptr;        //Pointeur de chaîne de caractères
     Object *objet_courant;
 
     if(verbose) printf("Entree de BddInter::LoadOFF\n");
@@ -2537,7 +2537,7 @@ void BddInter::LoadSTL() {
         glDeleteLists(glliste_objets,1);
         m_gllist = 0;
     }
-    f=fopen(buffer.data(),"r");     //ouverture du fichier
+    f = fopen(buffer.data(),"r");   //ouverture du fichier
 
     fseek(f,0,SEEK_END);
     fichierBdd_length = ftell(f);
@@ -2693,7 +2693,7 @@ void BddInter::LoadSTL() {
         UINT16 Attribute ;              // Unsigned Integer sur 16 bits (<=> unsigned short en gcc 32 ou 64 bits)
 
         fclose(f);                      // Fermer le fichier car ouvert précédemment en mode Ascii
-        f=fopen(buffer.data(),"rb");    // Le réouvrir en mode lecture+binaire
+        f = fopen(buffer.data(),"rb");  // Le réouvrir en mode lecture+binaire
         fseek(f,80,0);                  // passer les 80 premiers octets d'entête (déjà lus et décodés)
 
         fread(&nb_triangles,sizeof(UINT32),1,f);
@@ -2832,8 +2832,8 @@ void BddInter::Load3DS()
  */
     int im ;
     Lib3dsNode *p, *node ;
-    int meshes=0;
-    int nnodes=0;
+    int meshes = 0;
+    int nnodes = 0;
     int i;
     bool make_nodes = false;
 //    int indiceObjet;
@@ -2847,7 +2847,7 @@ void BddInter::Load3DS()
         m_gllist = 0;
     }
 
-    f3ds=lib3ds_file_open(buffer.data());
+    f3ds = lib3ds_file_open(buffer.data());
     if (!f3ds) {
         printf("Le fichier %s n'est pas un fichier 3ds\n",buffer.data());
         type_fichier = -1;
@@ -3002,12 +3002,12 @@ int BddInter::compter_nodes_mesh (Lib3dsNode *node)
     return (1);
 }
 
-char * BddInter::Lire_chaine( char st [])
+char* BddInter::Lire_chaine( char st [])
 {
 // élimine les blancs de début et de fin de chaîne
 
     char *cptr;          //Pointeur de chaîne de caractères
-    char c ;
+    char  c ;
 
     cptr = strrchr(st,'\n') ; // élimination du terminateur de ligne.
     if (cptr != nullptr) {
@@ -3325,7 +3325,7 @@ void BddInter::LoadBDD() {
 // On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
 
     Object *objet_courant=nullptr;
-    int x1=0;
+    int x1 = 0;
     unsigned int i;
     int mode_lecture= 0;
     int non_retenus = 0;
@@ -3679,7 +3679,7 @@ void BddInter::TraiterMatricePosition(unsigned int i)
     std::vector<float> Normale;
     std::vector<float> xyz_point;
     double matrice[16];
-    Object * objet_courant;
+    Object *objet_courant;
     unsigned int j, NbSommets, NbFacettes, NbVecteurs;
 
     objet_courant = &(this->Objetlist[i]);
@@ -4264,9 +4264,9 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
                 v[3].y = d;
             else if (line1 == "33") {
                 v[3].z = d;
-                Nvector= 4;                 // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
+                Nvector= 4;                     // Facettes à 4 sommets (en fait il faudrait que "13", "23" et "33" soient tous 3 vus dans des line1 successifs)
             }
-            else if (line1 == "8") {        // layer
+            else if (line1 == "8") {            // layer
                 layer = line2;
                 if (layer != old_layer && state == 1) { // Pour créer un nouvel objet, basé sur layer, mais seulement avec des 3DFACE, pas des LINE
                     p_objets.name       = layer;
@@ -4278,7 +4278,7 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
 //                    printf("\n%4d 3DFACE : %6d num_deb : %6d nom : %s ", nbLayer, nb3DFACE, nbVector, layer.mb_str().data());
                 }
             }
-            else if (line1 == "62")         // colour
+            else if (line1 == "62")             // colour
             {
                 long l;
                 line2.ToLong(&l);
@@ -4286,7 +4286,7 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
             }
         }
     }
-    type_return = false;    // On ne devrait pas sortir par ici. Il manque quelquechose en fin de fichier ? ENDSEC non trouvé ?
+    type_return = false;    // On ne devrait pas sortir par ici. Il manque quelquechose en fin de fichier ? Un ENDSEC non trouvé ?
 
 Sortie:
     Update_Dialog(stream.TellI(), fichierBdd_length);   // Ici, on ne devrait pas être loin de la fin du fichier
@@ -4444,6 +4444,7 @@ Sortie:
 
 // Compatibilité avec chargement d'autres fichiers dans d'autres formats (en cas de fusion/ajout d'une bdd) à voir ...
 // On peut avoir plusieurs objets, 1 à chaque nouveau layer (quand line1 == "8" cf ParseEntitiesDXF plus haut). Piloté par Forcer_1_Seul_Objet
+// Il faut impérativement passer dans RenderDXF lors de la lecture d'un .dxf car c'est là qu'on initilise la compatibilité avec BddInter
 
 void BddInter::RenderDXF()
 {
@@ -4594,7 +4595,7 @@ void BddInter::SaveTo(wxString str, int index) {
 // Pour enregistrer sous différents formats, le format .bdd est celui par défaut (tous les formats lus ne sont pas accessibles en écriture)
 
     if(OK_ToSave) {
-        int type_saveTo=-1;
+        int type_saveTo = -1;
         wxString local_str = str ;
         local_str.MakeLower();                          // Forcer le nom de fichier à être en minuscules
 
@@ -4646,11 +4647,12 @@ void BddInter::SaveTo(wxString str, int index) {
                 SaveSTL(str, false);    // Appel en mode binaire
                 break;
             default:
+                wxMessageBox(_T("Type de fichier non reconnu!"),_T("Error"));
                 break;
             }
-        } /* else {
+        } else {
             wxMessageBox(_T("Type de fichier non valide!"),_T("Error"));
-        }*/
+        }
 
     }
 }
@@ -4940,7 +4942,7 @@ void BddInter::SaveBDD(wxString str) {
 
 // Déclarations pour récupérer l'heure actuelle
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm  *timeinfo;
     char buffer_time [10];
 
     time (&rawtime);
@@ -5170,7 +5172,7 @@ void BddInter::SaveOBJ(wxString str) {
 
 // Déclarations pour récupérer l'heure actuelle
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm  *timeinfo;
     char buffer_time [10];
 
     time (&rawtime);
@@ -5304,7 +5306,7 @@ void BddInter::SaveOFF(wxString str) {
 
 // Déclarations pour récupérer l'heure actuelle
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm  *timeinfo;
     char buffer_time [10];
 
     time (&rawtime);
@@ -5420,7 +5422,7 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
 
 // Déclarations pour récupérer l'heure actuelle
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm  *timeinfo;
     char buffer_time [10];
 
     time (&rawtime);
@@ -5453,7 +5455,7 @@ void BddInter::SaveG3D(wxString str) {
 
 // Déclarations pour récupérer l'heure actuelle
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm  *timeinfo;
     char buffer_time [16];
 
     buffer=str.mb_str();

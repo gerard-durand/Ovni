@@ -99,7 +99,7 @@ void Cube::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cube::Genere_Sommets(BddInter* Element, Object *p_Objet) //int indiceObjet)
+void Cube::Genere_Sommets(BddInter *Element, Object *p_Objet) //int indiceObjet)
 {
     int Nb_sommets = 8 ;
     float Xc = centre_primitive[0] , Yc = centre_primitive[1] , Zc = centre_primitive[2];
@@ -149,7 +149,7 @@ void Cube::Genere_Sommets(BddInter* Element, Object *p_Objet) //int indiceObjet)
 //    Element->N_elements=6; Element->Setxyz( 0.0,-1.0, 0.0); Element->make_1_vecteur();
 //}
 
-void Cube::Genere_Facettes(BddInter* Element, Object *p_Objet) //int indiceObjet)
+void Cube::Genere_Facettes(BddInter *Element, Object *p_Objet) //int indiceObjet)
 {
 //    Object *p_Objet;
     int Nb_facettes = 6 ;
@@ -177,7 +177,7 @@ void Cube::Genere_Cube()
     int new_num;
     Object *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     if (Element->Objetlist.size() == 0)
         new_num = 1;
@@ -216,7 +216,7 @@ void Cube::Genere_Cube()
 
 void Cube::OnButton_OKClick(wxCommandEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     arete = wxAtof(TextCtrl_Arete->GetValue());
 //    printf("size :%d\n",centre_cube.size());

@@ -91,8 +91,8 @@ void DeplacerBdd::OnButton_OKClick(wxCommandEvent& event)
 
     float dx,dy,dz;
     unsigned int o,i;
-    Object * objet_courant;
-    Sommet * sommet_i;
+    Object  *objet_courant;
+    Sommet  *sommet_i;
 
     dx = wxAtof(TextCtrl_DeplX->GetValue());
     dy = wxAtof(TextCtrl_DeplY->GetValue());
@@ -149,8 +149,8 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
 
     float dx,dy,dz;
     unsigned int o,i;
-    Object *objet_courant;
-    Sommet *sommet_i;
+    Object  *objet_courant;
+    Sommet  *sommet_i;
     wxString str;
 
     Element->centrageRotAuto = true;

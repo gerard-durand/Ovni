@@ -167,7 +167,7 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
     }
 
     if (type_fichier != -1) {
-        if (type_dxf) {      // A vérifier, mais type_dxf fait souvent double emploi avec type => en particulier dans les primitives, il faut entrer les mêmes valeurs !
+        if (type_dxf) {
 //            printf("\ndraw dxf!!!\n");
 //            m_renderer.Render();
             this->RenderDXF();
@@ -404,13 +404,13 @@ void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFac
         if (AfficherNormalesSommets) {
             NormaleFacette = Facette_courante->getNormale_b();
             if (Facette_courante->flat || Objet_courant->flat) {
-            // La facette est plane => tracer la normale à la facette sur les ns sommets
+        // La facette est plane => tracer la normale à la facette sur les ns sommets
                 for (k=0; k<ns; k++) {
                     xyz_sommet = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                     Tracer_normale(xyz_sommet,NormaleFacette,1);
                 }
             } else {
-            // La facette n'est pas plane ...
+        // La facette n'est pas plane ...
                 for (k=0; k<ns; k++) {
                     xyz_sommet    = Objet_courant->Sommetlist[NumerosSommets[k]-1].getPoint();
                     NormaleSommet = Objet_courant->Vecteurlist[Facette_courante->L_sommets[k]-1].point;
@@ -631,7 +631,7 @@ Boucle:
                             glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avion)   ;
                             glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionG) ;
                             glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
-                           // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
+                            // Ces 2 glColor3fv nécessitent que glColorMaterial et glEnable(GL_COLOR_MATERIAL) soient actifs dans InitGL;
                             // De plus il faut les glColor3fv(color_groupe ... ci-dessus) soient présents ! Pour éviter ce double coloriage, il faudrait traiter le sens des normales
                             // comme le reste, soit avec des glMaterialfv (cf version TCL) ou à la rigueur disable puis enable de GL_LIGHTING. à voir à l'occasion ...
                             if(test2 == true) {
@@ -872,7 +872,7 @@ Boucle:
 void BddInter::showPoint_Selection() {
 
     std::vector<float> xyz_sommet;
-    Object*     objet_courant;
+    Object *objet_courant;
 
     if(Smemory != nullptr) {                                        // Tracé en rouge du point déjà sélectionné
         objet_courant = &(this->Objetlist[Smemory->objet]);
@@ -936,8 +936,8 @@ void BddInter::buildAllPoints_Selected() {
 
 void BddInter::showAllPoints() {
     std::vector<float> xyz_sommet;
-    Object* objet_courant;
-    Sommet* sommet_courant;
+    Object *objet_courant;
+    Sommet *sommet_courant;
 
 //    pointsSelected  = false;
 
@@ -982,8 +982,8 @@ void BddInter::showAllPoints() {
 
 void BddInter::showAllPoints_Selected() {
     std::vector<float> xyz_sommet;
-    Object* objet_courant;
-    Sommet* sommet_courant;
+    Object *objet_courant;
+    Sommet *sommet_courant;
 
     pointsSelected  = false;
 
@@ -1044,8 +1044,8 @@ void BddInter::showAllLines() {
 
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
-    Aretes*  p_Arete;
-    Object*  objet_courant;
+    Aretes  *p_Arete;
+    Object  *objet_courant;
 
     if (verbose)
         printf("Entrée BddInter::showAllLines\n");
@@ -1128,8 +1128,8 @@ void BddInter::showSegment_Selection() {
 
     std::vector<float> xyz_sommet;
     unsigned int i,j,k;
-    Aretes* p_Arete;
-    Object* objet_courant;
+    Aretes *p_Arete;
+    Object *objet_courant;
 
     GLfloat l_width_n = 1.;     // Largeur de ligne normale
     GLfloat l_width_e = 3.;     // Largeur de ligne plus épaisse
@@ -1331,7 +1331,7 @@ void BddInter::AfficherSource() {
 
 double BddInter::Norme3(float x, float y, float z) {
     double norme;
-    norme=sqrt(x*x + y*y + z*z) ;
+    norme = sqrt(x*x + y*y + z*z) ;
     return norme;
 }
 
@@ -1717,7 +1717,6 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
 
 //    selectMode(mode);   // Si on est en GL_POINTS on devrait avoir mode != standard !!!!
     wxSize ClientSize = this->GetSize();
-//    printf("\nheuuu ?? %d %d \n",ClientSize.x, ClientSize.y);
     this->SetSize(ClientSize.x, ClientSize.y);
 //    GLuint *selectBuffer;
     GLint hits=0;
@@ -1741,7 +1740,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
         if (type_dxf) {
             //printf("\ndraw dxf!!!\n");
 //            m_renderer.Render();
-            this->RenderDXF();  // Spécifique fichier .dxf. Serait à supprimer une fois le décodage réalisé ... mais reste à faire !
+            this->RenderDXF();  // Spécifique fichier .dxf. C'est RenderDXF qui assure la compatibilité avec les bases Internes d'Ovni (BddInter).
         } else {
             //printf("\ndraw a .bdd file !!!\n");
             if (mode == standard) { // || mode == points) {

@@ -107,7 +107,7 @@ void Cone::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cone::Genere_Sommets(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Sommets(BddInter *Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -148,7 +148,7 @@ void Cone::Genere_Sommets(BddInter* Element, Object *p_Objet)
 #define Last_3Points TRUE
 //#define Last_3Points FALSE
 
-void Cone::Genere_Luminances(BddInter* Element)
+void Cone::Genere_Luminances(BddInter *Element)
 {
     wxString str_loc;
     int numero,i1,i,j,i2;
@@ -191,7 +191,7 @@ void Cone::Genere_Luminances(BddInter* Element)
     }
 }
 
-void Cone::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Normales_Sommets(BddInter *Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -235,7 +235,7 @@ void Cone::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
     }
 }
 
-void Cone::Genere_Facettes(BddInter* Element, Object *p_Objet)
+void Cone::Genere_Facettes(BddInter *Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -292,7 +292,7 @@ void Cone::genereCone()
     int new_num;
     Object *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
 //    int new_num = Element->Objetlist[(Element->Objetlist.size()-1)].GetValue() +1;
 //  Récupérer plutôt le numéro du dernier objet au lieu de l'indice et l'incrémenter
@@ -337,7 +337,7 @@ void Cone::genereCone()
 
 void Cone::OnButton_OKClick(wxCommandEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     longueur = wxAtof(TextCtrl_Longueur->GetValue());
 //    printf("size :%d\n",centre_cube.size());

@@ -447,7 +447,7 @@ void ReperageFacette::OnButton_InvNormaleClick(wxCommandEvent& event)
 // Ici (pour l'instant !), on inverse la normale à la facette, mais on ne recalcule pas l'influence sur les normales aux sommets !
 
     BddInter *Element = MAIN->Element;
-    Object * objet_courant;
+    Object   *objet_courant;
     std::vector<float> NormaleFacette;
     std::vector<int>   NumerosSommets;
     std::vector<int>   ReverseSommets;
@@ -480,7 +480,7 @@ void ReperageFacette::OnButton_InvNormaleClick(wxCommandEvent& event)
 void ReperageFacette::OnButton_PermuterClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
-    Object * objet_courant;
+    Object   *objet_courant;
     std::vector<int> NumerosSommets;
     int last;
 

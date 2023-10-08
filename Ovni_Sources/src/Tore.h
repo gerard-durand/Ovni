@@ -78,7 +78,7 @@ class Tore: public wxDialog
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		//*)
 
-		OvniFrame *MAIN;
+		OvniFrame* MAIN;
 
         float centre_primitive[3];
 		float rayon_moyen;

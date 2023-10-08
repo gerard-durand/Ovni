@@ -75,8 +75,8 @@ class Icosaedre: public wxDialog
         float centre_primitive[3];
 		float rayon;
 		void genereIcosaedre();
-		void Genere_Sommets         (BddInter*, Object *);
-        void Genere_Normales_Sommets(BddInter* , Object *);
+		void Genere_Sommets         (BddInter* , Object*);
+        void Genere_Normales_Sommets(BddInter* , Object*);
         void genereSubdivisions(int);
 
 		DECLARE_EVENT_TABLE()

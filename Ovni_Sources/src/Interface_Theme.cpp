@@ -4,6 +4,8 @@
 // Versions pour wxWidgets version 3.3 et plus, puis tests sur version 3.2.x et moins
 // ***********************************************************************************
 
+// Encore beaucoup de code en commentaires (tests divers) car le mode Dark, est encore en développement sous wxWidgets 3.3
+
 void BddInter::Switch_theme_wx33(bool theme_b)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
@@ -136,9 +138,9 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 // Après le redémarrage d'Ovni, s'il est en Darkmode, ça se passera bien car fait dès le départ, avant création des différents items.
 
 //    int nb,num_menu,nb_menus;
-//    wxMenu * menu;
+//    wxMenu*     menu;
 //    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
-//    wxMenuItem * item;
+//    wxMenuItem* item;
 //
 //    nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
 //    for (num_menu=0; num_menu<nb_menus; num_menu++) {
@@ -174,6 +176,8 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 //    this->MAIN_b->Refresh();
 }
 
+// Ci-dessous, evrait pouvoir être supprimé une fois la bascule vers wxWidgets 3.3 définitive...
+
 void BddInter::Switch_theme(bool theme_b)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
@@ -181,7 +185,7 @@ void BddInter::Switch_theme(bool theme_b)
 // Certains éléments, comme les separators dans les menus, la barre de menu principale,... restent sur fond clair !
 // Sera mieux géré avec wxWidgets 3.3 et +, mais avec d'autres soucis !
 
-// Test pour Basculer du thème standard vers un thème sombre. Mais semble assez laborieux !
+// Test pour Basculer du thème standard vers un thème sombre. Mais semble assez (oups, très) laborieux !
 
 //    int next;
     wxColour Forg;
@@ -241,13 +245,13 @@ void BddInter::Switch_theme(bool theme_b)
     if (methode_boucle) {
 
     int nb,num_menu;
-    wxMenu * menu;
+    wxMenu*     menu;
     wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
-    wxMenuItem * item;
+    wxMenuItem* item;
     int nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
 //    printf("menus : %d\n",nb_menus);
 
-//    wxMenu * menu = this->MAIN_b->MenuFile;
+//    wxMenu* menu = this->MAIN_b->MenuFile;
 
 //    int nb_items  = menu->GetMenuItemCount();
 //    wxMenuItemList menu_liste=this->MAIN_b->MenuFile->GetMenuItems();

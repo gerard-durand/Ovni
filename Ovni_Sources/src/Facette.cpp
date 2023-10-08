@@ -125,7 +125,7 @@ void Facette::genereFacette()
     int new_num;
     Object *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
 // Objet Facette
     if (Element->Objetlist.size() == 0)
@@ -196,7 +196,7 @@ void Facette::genereFacette()
 
 void Facette::OnButton_OKClick(wxCommandEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     numeroGroupe   = SpinCtrl_Groupe  ->GetValue() ;    // Par précaution, mais déjà fait !
     numeroMateriau = SpinCtrl_Materiau->GetValue() ;    // idem

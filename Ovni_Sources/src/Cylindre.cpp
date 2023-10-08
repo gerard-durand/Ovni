@@ -105,7 +105,7 @@ void Cylindre::OnButton_AnnulerClick(wxCommandEvent& event)
     OnClose(close_event);
 }
 
-void Cylindre::Genere_Sommets(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Sommets(BddInter *Element, Object *p_Objet)
 {
     int i,j, numero;
     float angle,pas_angle;
@@ -170,7 +170,7 @@ void Cylindre::Genere_Luminances(BddInter* Element)
     }
 }
 
-void Cylindre::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Normales_Sommets(BddInter *Element, Object *p_Objet)
 {
     // Normales aux sommets
     int numero;
@@ -202,7 +202,7 @@ void Cylindre::Genere_Normales_Sommets(BddInter* Element, Object *p_Objet)
     }
 }
 
-void Cylindre::Genere_Facettes(BddInter* Element, Object *p_Objet)
+void Cylindre::Genere_Facettes(BddInter *Element, Object *p_Objet)
 {
     wxString str_loc;
     int numero,i,i0,i1,i2,i3;
@@ -252,7 +252,7 @@ void Cylindre::genereCylindre()
     int new_num;
     Object *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     if (Element->Objetlist.size() == 0)
         new_num = 1;
@@ -293,7 +293,7 @@ void Cylindre::genereCylindre()
 
 void Cylindre::OnButton_OKClick(wxCommandEvent& event)
 {
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     arete = wxAtof(TextCtrl_Arete->GetValue());
     centre_primitive[0] = wxAtof(TextCtrl_X->GetValue());

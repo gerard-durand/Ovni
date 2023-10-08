@@ -116,9 +116,9 @@ void Ellipsoide::genereEllipsoide()
 {
     wxString num_obj;
     int new_num;
-    Object * p_Objet;
+    Object *p_Objet;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     if (Element->Objetlist.size() == 0)
         new_num = 1;
@@ -160,7 +160,7 @@ void Ellipsoide::OnButton_OKClick(wxCommandEvent& event)
 {
     wxString str;
 
-    BddInter* Element = MAIN->Element;
+    BddInter *Element = MAIN->Element;
 
     rayon = wxAtof(TextCtrl_Rayon->GetValue());
     centre_primitive[0] = wxAtof(TextCtrl_X->GetValue());

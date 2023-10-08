@@ -416,7 +416,7 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
 // Initialement, c'était OnRadioBox_SelectionSelect avec des RadioBox_Selection->GetSelection(xx) ... mais soucis en darkmode si wxWidgets < 3.3.0
 
     BddInter *Element = MAIN->Element;
-    Object * objet_courant;
+    Object   *objet_courant;
 
     wxString str_reset;
     str_reset.clear();                              // Vide pour forcer un affichage de case sans rien dedans
@@ -505,7 +505,7 @@ void SelectionPanel::OnRadioButton_GrpMatSelect(wxCommandEvent& event)
 void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
-    Face * Facette_courante;
+    Face     *Facette_courante;
 
     unsigned int i,j,n_val;
 
@@ -601,7 +601,7 @@ void SelectionPanel::OnButton_DeleteClick(wxCommandEvent& event)
 void SelectionPanel::OnButton_UndoDeleteClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
-    Face * Facette_courante;
+    Face     *Facette_courante;
 
 // le mode_point n'est pas concerné
     if (Element->mode_selection == Element->selection_facette) {
@@ -656,7 +656,7 @@ void SelectionPanel::OnButton_MasquerClick(wxCommandEvent& event)
 void SelectionPanel::OnButton_UndoMasquerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
-    Face * Facette_courante;
+    Face     *Facette_courante;
 
     if (Element->mode_selection == Element->selection_facette) {
         Element->ToSelect = UndoListe;                      // Remettre en place la liste ToSelect depuis UndoListe
@@ -708,7 +708,7 @@ void SelectionPanel::Reset_ListeObjets()
 void SelectionPanel::OnButton_ReafficherClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
-    Face * Facette_courante;
+    Face     *Facette_courante;
     unsigned int i;
 
     for (i=0; i<Element->Objetlist.size(); i++) {

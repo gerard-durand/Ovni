@@ -78,8 +78,8 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
 
 // Adapté de la version Tcl d'Ovni
 
-    BddInter * Element=MAIN->Element;
-    Face * Facette_courante;
+    BddInter *Element=MAIN->Element;
+    Face     *Facette_courante;
 
 	int indice = -1 ;
     int indice_facette, indice_facette_deb, objet, face ;
@@ -192,7 +192,7 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
 
 void SelectionManuelleFacettes::OnSpinCtrl_NumObjetChange(wxSpinEvent& event)
 {
-    BddInter * Element=MAIN->Element;
+    BddInter *Element=MAIN->Element;
     wxString str_loc;
 
     int NumeroObjet = SpinCtrl_NumObjet->GetValue();
@@ -203,7 +203,7 @@ void SelectionManuelleFacettes::OnSpinCtrl_NumObjetChange(wxSpinEvent& event)
 
 void SelectionManuelleFacettes::OnButton_ResetClick(wxCommandEvent& event)
 {
-    BddInter * Element=MAIN->Element;
+    BddInter *Element=MAIN->Element;
 
     wxKeyEvent key_event;
     key_event.m_keyCode = 'S';

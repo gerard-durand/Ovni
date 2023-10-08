@@ -82,7 +82,7 @@ class Cone: public wxDialog
 		void OnClose(wxCloseEvent& event);
 		void OnSpinCtrl_NbSecteursChange(wxSpinEvent& event);
 		//*)
-        OvniFrame *MAIN;
+        OvniFrame* MAIN;
 
         float centre_primitive[3];
 		float longueur;
