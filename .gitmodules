@@ -4,3 +4,6 @@
 [submodule "ivcon-tl-code"]
 	path = ivcon-tl-code
 	url = https://git.code.sf.net/p/ivcon-tl/code
+[submodule "freeglut_git3.4"]
+	path = freeglut_git3.4
+	url = https://github.com/FreeGLUTProject/freeglut.git
