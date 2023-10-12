@@ -9,7 +9,7 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_SIZE(BddInter::OnSize)
     EVT_PAINT(BddInter::OnPaint)
     EVT_ERASE_BACKGROUND(BddInter::OnEraseBackground)
-    EVT_KEY_DOWN( BddInter::OnKeyDown )
+    EVT_KEY_DOWN(BddInter::OnKeyDown )
     EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved) // Semble (?) réagir plus vite si placé avant EVT_MOUSE_EVENTS
     EVT_MOUSE_EVENTS(BddInter::OnMouse)
     EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)

@@ -77,7 +77,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	wxFlexGridSizer* FlexGridSizer1;
 	wxFlexGridSizer* FlexGridSizer3;
 
-	Create(parent, wxID_ANY, _T("Préférences de l\'application"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+	Create(parent, wxID_ANY, _T("Préférences de l\'application"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER, _T("wxID_ANY"));
 	Hide();
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Valeurs = coefficient par rapport à la diagonale de la boîte englobante "), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE, _T("ID_STATICTEXT1"));

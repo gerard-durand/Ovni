@@ -51,13 +51,13 @@ PositionSource::PositionSource(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Button_Defaut = new wxButton(this, ID_BUTTON3, _T("Défaut"), wxPoint(32,136), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Defaut->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_SPINCTRLDOUBLE1,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosXChange);
-	Connect(ID_SPINCTRLDOUBLE2,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosYChange);
-	Connect(ID_SPINCTRLDOUBLE3,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosZChange);
-	Connect(ID_SPINCTRLDOUBLE4,wxEVT_SPINCTRLDOUBLE,(wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosWChange);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PositionSource::OnButton_QuitterClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PositionSource::OnButton_DefautClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&PositionSource::OnClose);
+	Connect(ID_SPINCTRLDOUBLE1, wxEVT_SPINCTRLDOUBLE, (wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosXChange);
+	Connect(ID_SPINCTRLDOUBLE2, wxEVT_SPINCTRLDOUBLE, (wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosYChange);
+	Connect(ID_SPINCTRLDOUBLE3, wxEVT_SPINCTRLDOUBLE, (wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosZChange);
+	Connect(ID_SPINCTRLDOUBLE4, wxEVT_SPINCTRLDOUBLE, (wxObjectEventFunction)&PositionSource::OnSpinCtrlDouble_PosWChange);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&PositionSource::OnButton_QuitterClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&PositionSource::OnButton_DefautClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&PositionSource::OnClose);
 	//*)
 
 //    this->Pos_Parent=parent;

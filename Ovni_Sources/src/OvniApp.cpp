@@ -36,11 +36,21 @@ bool OvniApp::OnInit() {
 
 // D'après : https://wiki.wxwidgets.org/Converting_everything_to_and_from_wxString
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());
+    wxString fname(f.GetName());
     wxString appPath(f.GetPath());
-    snprintf(Message,1024,"Chemin de l'exécutable :\n%s\n",(const char*)appPath.utf8_str());
+    wxString wxbuild(wxVERSION_STRING);
+    snprintf(Message,1024,"Chemin de l'exécutable \"%s\" :\n%s\n",(const char*)fname.utf8_str(),(const char*)appPath.utf8_str());
     printf("%s",Message);
 //    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
     wxSetWorkingDirectory(appPath);
+
+#ifndef WXUSINGDLL
+    sprintf(Message,"Version compilée en statique avec %s\n",(const char*)wxbuild.utf8_str());
+    printf("%s",Message);
+#else
+    sprintf(Message,"Version utilisant les dlls %s\n",(const char*)wxbuild.utf8_str());
+    printf("%s",Message);
+#endif // WXUSINGDLL
 
     //(*AppInitialize
     bool wxsOK = true;

@@ -368,6 +368,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MAIN_b->Menu_AjouteFacette      ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_AjouteSphere       ->SetTextColour(Forg);
     this->MAIN_b->Menu_AjouteSphere       ->SetBackgroundColour(Back);
+    this->MAIN_b->Menu_AjouteTore         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteTore         ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_AjouteIcosaedre    ->SetTextColour(Forg);
     this->MAIN_b->Menu_AjouteIcosaedre    ->SetBackgroundColour(Back);
     this->MAIN_b->Menu_SupprimerDerniere  ->SetTextColour(Forg);
