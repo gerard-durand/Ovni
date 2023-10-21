@@ -4,7 +4,7 @@
 		<title>Préférences de l&apos;application</title>
 		<hidden>1</hidden>
 		<id_arg>0</id_arg>
-		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE</style>
+		<style>wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="yes">
 			<orient>wxVERTICAL</orient>
 			<object class="sizeritem">

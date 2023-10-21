@@ -915,6 +915,8 @@ public :
     bool  test_seuil_gouraud_def       = true;
     bool  traiter_doublons_aretes_def  = true;      // Si true, traite les doublons d'arêtes à la génération. Mais ça peut être long si ce n'est pas nécessaire !
     bool  forcer_simplification_doublons_aretes_def = false;
+    bool  afficher_sliders_def         = true;      // Au lancement d'Ovni, affichage ou pas des Sliders/Curseurs en bas de la fenêtre d'Ovni
+
 
     bool  antialiasing_soft_def        = false;     // Antialiasing par défaut non fait par OpenGL pour éviter les soucis avec cartes graphiques ne le supportant pas
     bool  Forcer_1_Seul_Objet_def      = false;     // Pour forcer la lecture des fichiers .obj dans 1 seul Objet 3D
@@ -969,6 +971,7 @@ public :
     bool  msg_warning              = msg_warning_def;
     bool  traiter_doublons_aretes  = traiter_doublons_aretes_def;
     bool  forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
+    bool  afficher_sliders         = afficher_sliders_def;
     int   nb_threads               = nb_threads_def;
     int   nb_max_threads;
     int   icon_index               = icon_index_def;

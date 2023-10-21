@@ -146,6 +146,7 @@ void BddInter::ResetData() {
     traiter_doublons_aretes = traiter_doublons_aretes_def;
     icon_index              = icon_index_def;
     icon_size               = icon_sizes[icon_index];
+//    afficher_sliders        = afficher_sliders_def;
 
     nb_threads              = nb_threads_def;
     if ((nb_threads <= 0) || (nb_threads >= nb_max_threads)) {

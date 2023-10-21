@@ -905,6 +905,13 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         // Note : ne pas mettre Element->exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
     }
 
+    if (!Element->afficher_sliders) {   // Masquage éventuel des sliders/curseurs du bas de l'interface
+        wxKeyEvent key_event;
+        key_event.m_keyCode = 'C';      // Simuler un appui sur la touche 'C'
+        key_event.SetShiftDown(true);   // majuscule pour enlever les sliders/curseurs de l'affichage
+        Element->OnKeyDown(key_event);
+    }
+
     Ouvrir_Fichier();
 
     if (retour_Display == wxID_YES) {
@@ -1077,9 +1084,9 @@ void OvniFrame::Init_Boutons(void)
     Slider_x->Enable();
     Slider_y->Enable();
     Slider_z->Enable();
-
+                                        // Affichage des sliders par défaut (on ne connait pas encore la valeur de afficher_sliders qui sera lue dans Ovni.ini)
     Panel_Sliders->Update();            // à ce niveau, pas encore affichés, donc ne sert à pas grand chose (idem 3 lignes Panel_Sliders)
-    Panel_Sliders->Show(true);          // => Sliders affichés
+    Panel_Sliders->Show(true);          // => Sliders/Curseurs affichés de base
     Panel_Sliders->Refresh(true);
     if (verbose) printf("Sortie OvniFrame::Init_Boutons\n");
 }
@@ -2092,7 +2099,7 @@ void OvniFrame::OnSlider_xCmdScroll(wxScrollEvent& event)
 // Routines pour traiter les évênements de déplacement des curseurs d'angles (Sliders)
         float val = event.GetInt();
         Element->m_gldata.rotx = val;
-        Element->m_gldata.roty = Slider_y->GetValue();  // C'est rotx qui a changé mais relire tout de même les autres sliders : permet de
+        Element->m_gldata.roty = Slider_y->GetValue();  // C'est rotx qui a changé mais relire tout de même les autres sliders/curseurs : permet de
         Element->m_gldata.rotz = Slider_z->GetValue();  // rafaichir des valeurs qui peuvent avoir été modifiées de 180° dans certains calculs
         if (PositionObsAzimutSite_Panel->IsShown()) SetAngles();
         if (ZoomSpecifique_Panel->IsShown())        SetAngles();
@@ -2259,7 +2266,7 @@ void OvniFrame::Toggle_Sliders(wxCommandEvent& event)
 
 void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 {
-/** \brief Pour afficher ou masquer l'espace réservé aux Sliders
+/** \brief Pour afficher ou masquer l'espace réservé aux Sliders/Curseurs
  *
  * \param event
  *
@@ -2275,11 +2282,14 @@ void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 
     if (Panel_Sliders->IsShown()) {
         Panel_Sliders->Hide();
-        New_y_size = ClientSize_GL.y + ClientSize_Sl.y;     // Récupérer la place occupée par les Sliders pour l'ajouter à la taille OpenGL
+        Element->afficher_sliders = false;
+        New_y_size = ClientSize_GL.y + ClientSize_Sl.y;     // Récupérer la place occupée par les Sliders/Curseurs pour l'ajouter à la taille OpenGL
     } else {
         Panel_Sliders->Show();
+        Element->afficher_sliders = true;
         New_y_size = ClientSize_GL.y ;
     }
+    Element->ini_file_modified = true;
     ResizeOpenGL(ClientSize_GL.x, New_y_size);              // Redimensionner la fenètre OpenGL
     New_y_size += ClientSize_Pa.y;                          // Calculer la taille de la BoxSizer1 (OpenGL + Sliders + Panel 1)
 

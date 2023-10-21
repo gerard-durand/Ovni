@@ -166,11 +166,12 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
 
         if (event.ShiftDown()) {    // C'est un 'C' majuscule
             MAIN_b->Toggle_Sliders(cmd_event);
-            if (MAIN_b->Panel_Sliders->IsShown()) {         // Tester si le Panneau des sliders est visible
+            if (afficher_sliders) {                     // Tester si le Panneau des sliders/curseurs est visible
                 MAIN_b->Button_Sliders->SetValue(true) ;    // Oui <=> Bouton enfoncé
             } else {
                 MAIN_b->Button_Sliders->SetValue(false) ;   // Non <=> Bouton relevé
             }
+            ini_file_modified = true;
             break;
         }
 

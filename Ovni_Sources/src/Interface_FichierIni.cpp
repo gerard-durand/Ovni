@@ -30,6 +30,7 @@ const char *initN="Nb_Threads="         ;
 const char *initO="TestDbAretes="       ;
 const char *initP="Taille_Icones="      ;
 const char *initQ="Dark_Mode="          ;
+const char *initR="Sliders_ON_OFF="     ;
 
 FILE *f_init;
 
@@ -285,6 +286,16 @@ void BddInter::Ouvrir_ini_file()
                 sscanf(p_txt_wrk,"%d",&darkmode) ;              // Récupère la valeur de DarkMode
                 continue;   // Passer au while suivant
             }
+            len = strlen( initR);
+            icmp= strncmp(initR,Message,len) ;                  // Test sur 27ème mot clé
+            ibool = 1;                                          // initialisation par défaut
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de Sliders_ON_OFF
+                if (ibool == 0) afficher_sliders = false;
+                else            afficher_sliders = true;
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
         fclose(f_init);
@@ -329,6 +340,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
         fprintf(f_init,"%s%d\n",initP,icon_size);
         fprintf(f_init,"%s%d\n",initQ,darkmode);
+        fprintf(f_init,"%s%d\n",initR,afficher_sliders);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;

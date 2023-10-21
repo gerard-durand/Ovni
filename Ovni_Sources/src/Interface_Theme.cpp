@@ -195,7 +195,7 @@ void BddInter::Switch_theme(bool theme_b)
     bool methode_boucle = false;    // Pour tester 2 méthodes, une avec boucles (true), + élégante mais qui plante parfois, et une très bourrine, mais plus fiable !
 
     if (theme_b) {
-        Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour(); // Sur ce slider en Z, le bleu original est trop foncé
+        Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour(); // Sur ce slider/curseur en Z, le bleu original est trop foncé
         Forg    = New_Forg;
         Back    = New_Back;
         Gris    = New_Gris;

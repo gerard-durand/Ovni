@@ -195,7 +195,7 @@ void BddInter::OnEraseBackground(wxEraseEvent& WXUNUSED(event)) {
 }
 
 void BddInter::Reset_Sliders() {
-// Calcul et affichage de la position des sliders pour un quaternion donné dans m_gldata.quat
+// Calcul et affichage de la position des sliders/curseurs pour un quaternion donné dans m_gldata.quat
     build_rotmatrix(matquat, m_gldata.quat);
     CalculAngles(*matquat, m_gldata.rotx, m_gldata.roty, m_gldata.rotz);
     Slider_x->SetValue(lround(m_gldata.rotx));
