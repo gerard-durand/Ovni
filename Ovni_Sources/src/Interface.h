@@ -1216,14 +1216,14 @@ public :
     void make_1_sommet();
     void make_face();
     void make_1_face();
-    void make_1_face(int , const std::vector<int> &);       // Ne fonctionne pas. Fait planter Ovni. Bug quelquepart ?
+    void make_1_face(int , const std::vector<int> &);
     void make_normale();
     void make_1_normale();
     void make_aspect_face();
     void make_1_aspect_face();
     void make_luminance();
     void make_1_luminance();
-    void make_1_luminance(int , const std::vector<int> &);  // Ici, ça marche
+    void make_1_luminance(int , const std::vector<int> &);
 
     void make_vecteur();
     void make_1_vecteur();

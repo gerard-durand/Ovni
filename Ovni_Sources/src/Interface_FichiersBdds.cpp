@@ -282,7 +282,7 @@ void BddInter::create_bdd() {
 //                        NumerosSommets   = facette_courante->getF_sommets();
 //                        this->N_elements = facette_courante->getNumero();
 //                        make_1_luminance();
-                        make_1_luminance(facette_courante->getNumero(),facette_courante->getF_sommets()); // OK ici
+                        make_1_luminance(facette_courante->getNumero(),facette_courante->getF_sommets());
                         facette_courante->flat = false ;
                     }
 
@@ -1247,11 +1247,10 @@ void BddInter::LoadOBJ()
                     for (i=0; i<n ; i++) {
                         Numeros[i] = valp[i+1];
                     }
-                    str.clear();
-                    this->N_elements = nfac;
-                    this->Set_numeros(Numeros);
-                    this->make_1_face();
-//                    this->make_1_face(nfac,Numeros);
+                    str.clear();                        // Important à garder, sinon souci par la suite dans make_1_normale!
+                    this->N_elements = nfac;            // Idem
+//                    this->Set_numeros(Numeros);
+//                    this->make_1_face();                    this->make_1_face(nfac,Numeros);
 
                     this->Setxyz(1.,0.,0.);
                     this->make_1_normale();             // Normale bidon. Sera mise à jour plus tard.
@@ -1276,7 +1275,7 @@ void BddInter::LoadOBJ()
 //                        this->N_elements = nfac;
 //                        this->Set_numeros(Numeros);
 //                        this->make1luminance();
-                        this->make_1_luminance(nfac,Numeros);                 // OK ici
+                        this->make_1_luminance(nfac,Numeros);
                         Face_ij->flat = false;              // Facette non plane
                         this->Objetlist[o].flat = false;    // donc l'objet aussi
                     } else {
@@ -1526,10 +1525,10 @@ void BddInter::LoadM3D()
             sscanf(s1,"%d%d%d%d%d%d%d", &norm, &sommet[0], &sommet[1],&sommet[2], &normal[0], &normal[1] , &normal[2]) ;
 
             for (i=0; i<3; i++) Numeros[i] = sommet[i]+1;// Ajouter 1 au n°, car on commence à 1 et non 0
-            this->N_elements = nfac;
-            this->Set_numeros(Numeros);
-            this->make_1_face();
-//            this->make_1_face(nfac,Numeros);
+//            this->N_elements = nfac;
+//            this->Set_numeros(Numeros);
+//            this->make_1_face();
+            this->make_1_face(nfac,Numeros);
 
             test_flat = false;
             for (i=0; i<3; i++) {
@@ -1539,7 +1538,7 @@ void BddInter::LoadM3D()
             }
 //            this->Set_numeros(Numeros);
 //            this->make_1_luminance();
-            this->make_1_luminance(nfac,Numeros); // OK ici
+            this->make_1_luminance(nfac,Numeros);
             Objet_courant->Facelist[nfac-1].flat = test_flat; // Facette non plane si le numéro de vecteurs est compatible
 
             Calcul_Normale_Barycentre(indiceObjet_courant,nfac-1);
@@ -1854,9 +1853,9 @@ void BddInter::LoadPLY()
             Numeros_Sommets[i] = npoint;
         }
         N_elements = nfac;
-        this->Set_numeros(Numeros_Sommets);
-        make_1_face();
-//        this->make_1_face(nfac, Numeros_Sommets);
+//        this->Set_numeros(Numeros_Sommets);
+//        make_1_face();
+        this->make_1_face(nfac, Numeros_Sommets);
         Objet_courant->Facelist[nfac-1].flat = true;  // provisoire
         this->Setxyz(1.,0.,0.); // Provisoire
         make_1_normale();
@@ -2233,10 +2232,10 @@ void BddInter::LoadPLY_Stanford()
                 int nb_som = flist->nverts;
                 Numeros.resize(nb_som);
                 for (k=0; k<nb_som; k++) Numeros[k]=(flist->verts[k]) +1;
-                this->N_elements = j+1;
-                this->Set_numeros(Numeros) ;
-                make_1_face();
-//                make_1_face(j+1,Numeros);
+//                this->N_elements = j+1;
+//                this->Set_numeros(Numeros) ;
+//                make_1_face();
+                make_1_face(j+1,Numeros);
                 facette_courante = &(objet_courant->Facelist[j]);
                 facette_courante->groupe     = groupe_def;
                 facette_courante->codmatface = codmatface_def;
@@ -2311,10 +2310,10 @@ void BddInter::LoadPLY_Stanford()
                     }
                     Numeros[2] = tlist->verts[k+2] +1;
 
-                    this->N_elements = nfaces+1;
-                    this->Set_numeros(Numeros) ;
-                    make_1_face();
-//                    make_1_face(nfaces+1,Numeros);
+//                    this->N_elements = nfaces+1;
+//                    this->Set_numeros(Numeros) ;
+//                    make_1_face();
+                    make_1_face(nfaces+1,Numeros);
                     facette_courante = &(objet_courant->Facelist[nfaces]);
                     facette_courante->groupe     = groupe_def;
                     facette_courante->codmatface = codmatface_def;
@@ -2462,6 +2461,7 @@ void BddInter::LoadOFF()
         make_aspect_face();
 
         // Lecture des facettes
+        str.clear();
         for (nfac=1; nfac <= nb_fac; nfac++) {
             fscanf(f,"%d",&nsommets);
             Numeros.resize(nsommets);
@@ -2469,11 +2469,11 @@ void BddInter::LoadOFF()
                 fscanf(f,"%d", &n) ;
                 Numeros[i] = n+1; // Ajouter 1 au n°, car on commence à 1 et non 0
             }
-            str.clear();
-            this->N_elements = nfac;
-            this->Set_numeros(Numeros) ;
-            make_1_face();
-//            make_1_face(nfac,Numeros);
+//            str.clear();
+//            this->N_elements = nfac;
+//            this->Set_numeros(Numeros) ;
+//            make_1_face();
+            make_1_face(nfac,Numeros);
             objet_courant->Facelist[nfac-1].flat = true; // provisoire
 
             fgets(s1,200,f) ; //Terminer la lecture de cette ligne. Il reste parfois des données (normales ? autres ?)
@@ -2654,11 +2654,11 @@ void BddInter::LoadSTL() {
                 for (i=0; i< 3; i++) {
                     Numeros[i] = numero_sommet++;
                 }
-                str.clear();
-                this->N_elements = numero_facette;
-                this->Set_numeros(Numeros) ;
-                make_1_face();
-//                make_1_face(numero_facette,Numeros);
+                str.clear();                        // Important pour le make_1_normale suivant
+                this->N_elements = numero_facette;  // Idem
+//                this->Set_numeros(Numeros) ;
+//                make_1_face();
+                make_1_face(numero_facette,Numeros);
                 facette_courante = &(objet_courant->Facelist[numero_facette-1]);
                 facette_courante->flat       = false;   // Pas de normales aux sommets dans un STL => activer la possibilité de les calculer
                 facette_courante->groupe     = groupe_def;
@@ -2739,11 +2739,11 @@ void BddInter::LoadSTL() {
             for (j=0; j< 3; j++) {
                 Numeros[j] = numero_sommet++;
             }
-            str.clear();
-            this->N_elements = numero_facette;
-            this->Set_numeros(Numeros) ;
-            make_1_face();
-//            make_1_face(numero_facette,Numeros);
+            str.clear();                        // Important pour le make_1_normale suivant
+            this->N_elements = numero_facette;  // Idem
+//            this->Set_numeros(Numeros) ;
+//            make_1_face();
+            make_1_face(numero_facette,Numeros);
             facette_courante = &(objet_courant->Facelist[numero_facette-1]);
             facette_courante->flat       = false;   // Pas de normales aux sommets dans un STL => activer la possibilité de les calculer
             facette_courante->groupe     = groupe_def;
@@ -3214,12 +3214,12 @@ int BddInter::decoder_node (Lib3dsNode *node)
             Numeros[1] = N1 = mesh->faces[i].index[1];
             Numeros[2] = N2 = mesh->faces[i].index[2];
             for (k=0; k<3; k++) Numeros[k]++;           // Ajouter 1 au n°, car on commence à 1 et non 0
-            this->N_elements = nfac;
-            Set_numeros(Numeros);
+//            this->N_elements = nfac;
+//            Set_numeros(Numeros);
 //            printf("Numeros Sommets : %d %d %d\n",Numeros[0],Numeros[1],Numeros[2]);
             str.clear();
-            make_1_face();
-//            make_1_face(nfac,Numeros);
+//            make_1_face();
+            make_1_face(nfac,Numeros);
 
 // Calcul de la normale au barycentre de la facette via lib3ds_mesh_calculate_face_normals
             lib3ds_vector_copy(this->xyz, normal_B[i]);
@@ -3244,7 +3244,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
 //            str.clear();
 //            this->N_elements = nfac;
 //            make_1_luminance();
-            make_1_luminance(nfac,Numeros);   // OK ici
+            make_1_luminance(nfac,Numeros);
 
 // Identification des matériaux (s'il y en a)
             num_mat = -123 ;
@@ -4290,6 +4290,7 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
 
 Sortie:
     Update_Dialog(stream.TellI(), fichierBdd_length);   // Ici, on ne devrait pas être loin de la fin du fichier
+
     if (EnCours)
         printf("\n");
     if (verbose) printf("Sortie de BddInter::ParseEntitiesDXF     : nb3DFACE : %d, nbLINE : %d, nbLayer : %d, nbVector : %d en %s\n",nb3DFACE,nbLINE,nbLayer,nbVector,(type_return ? "true" : "false"));

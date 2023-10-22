@@ -9,7 +9,7 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_SIZE(BddInter::OnSize)
     EVT_PAINT(BddInter::OnPaint)
     EVT_ERASE_BACKGROUND(BddInter::OnEraseBackground)
-    EVT_KEY_DOWN(BddInter::OnKeyDown )
+    EVT_KEY_DOWN(BddInter::OnKeyDown)
     EVT_MOUSEWHEEL(BddInter::OnMouseWheelMoved) // Semble (?) réagir plus vite si placé avant EVT_MOUSE_EVENTS
     EVT_MOUSE_EVENTS(BddInter::OnMouse)
     EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)
@@ -396,6 +396,8 @@ bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
 // retourne true si le bouton Cancel a été activé. Sinon, retourne false.
 // Le paramêtre "cancel" peut être omis. Dans ce cas, il est pris par défaut à false.
 
+    int new_val,old_val;
+
     if (!progress_dialog_en_cours) {
         if ((clock() - time_deb_dialog) > Dialog_Delay) {   // Pour temporiser le début d'affichage du ProgressDialog
 
@@ -420,20 +422,16 @@ bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
 //            if (style | wxPD_CAN_ABORT) progress_dialog->m_btnAbort->SetLabel("Interrompre"); // Ne marche pas car m_btnAbort a été déclaré private
             progress_dialog->Update(0);   // Par précaution
             progress_dialog_en_cours = true;
-            int new_val = round(position*100./max_value);
+            new_val = std::min((int)round(position*100./max_value), 100);   // écréter sur la valeur max de "range"
             progress_dialog->Update(new_val);
-            if (progress_dialog->WasCancelled()) return true;       // Abandonner si détection de pression sur le bouton "Cancel"
+            if (progress_dialog->WasCancelled()) return true;               // Abandonner si détection de pression sur le bouton "Cancel"
         }
     } else {
-        int old_val = progress_dialog->GetValue();
-        int new_val = round(position*100./max_value);
+        old_val = progress_dialog->GetValue();
+        new_val = std::min((int)round(position*100./max_value), 100);       // écréter sur la valeur max de "range"
         if (old_val != new_val) {
-            if (new_val >= 100) {
-                progress_dialog->Update(99); // Pour se donner une "petite" chance de voir "presque" la fin. Mais ne semble pas très efficace !
-            } else {
-                progress_dialog->Update(new_val);
-                if (progress_dialog->WasCancelled()) return true;   // Abandonner si détection de pression sur le bouton "Cancel"
-            }
+            progress_dialog->Update(new_val);
+            if (progress_dialog->WasCancelled()) return true;               // Abandonner si détection de pression sur le bouton "Cancel"
         }
     }
     return false;
@@ -442,9 +440,9 @@ bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
 void BddInter::Fermer_progress_dialog()
 {
     if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);
+        progress_dialog->Update(100);           // Utile ?
         wxDELETE(progress_dialog);
-        progress_dialog_en_cours = false;    // Par précaution
+        progress_dialog_en_cours = false;       // Par précaution
     }
 }
 
@@ -527,7 +525,7 @@ void BddInter::make_1_face() {
 }
 
 void BddInter::make_1_face(int Numero, const std::vector<int> &Numeros_Sommets) {
-// Cette version ne semble pas être correctement vue/exécutée par le compilateur ! Pourtant c'est OK avec make_1_luminance !! Where is the bug ?
+
     Face New1Face;
     Object *Objet_courant;
 
@@ -2009,7 +2007,7 @@ void BddInter::Calcul_All_Normales() {
 //            NumerosSommets = objet_courant->Facelist[i].getF_sommets();
 //            N_elements     = objet_courant->Facelist[i].getNumero();
 //            make_1_luminance();
-            make_1_luminance(facette_courante->getNumero(),facette_courante->getF_sommets()); // OK ici
+            make_1_luminance(facette_courante->getNumero(),facette_courante->getF_sommets());
         }
 //        printf("%d vl %d %d\n",o,objet_courant->Nb_vecteurs,objet_courant->Nb_luminances);
     }
@@ -2679,7 +2677,7 @@ void BddInter::Genere_Luminances(Object *objet_courant, int Nb_facettes)
 //        this->N_elements = numero;
 //        this->Set_numeros(NumerosSommets);
 //        this->make_1_luminance();
-        this->make_1_luminance(i+1,objet_courant->Facelist[i].getF_sommets());  // OK ici
+        this->make_1_luminance(i+1,objet_courant->Facelist[i].getF_sommets());
     }
 }
 
