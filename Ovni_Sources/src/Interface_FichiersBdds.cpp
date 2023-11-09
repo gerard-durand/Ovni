@@ -622,7 +622,7 @@ void BddInter::LectureXML_G3d (FILE *f)
             fprintf(stderr, "Erreur de lecture du fichier XML\n");
             exit(-1);
         }
-        Update_Dialog(ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftell(f), fichierBdd_length);
         done = feof(f);
 
         if (XML_Parse(p, XML_Buff, len, done) == XML_STATUS_ERROR) {
@@ -1146,7 +1146,7 @@ void BddInter::LoadOBJ()
             first = 1 ;
             while (fgets(s1,660,f) != nullptr) { // Jusqu'à la fin de fichier
         //        printf("%s",s1) ;
-                Update_Dialog(ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftell(f), fichierBdd_length);
 
                 if (!strncmp(s1,"g ",2) && !Forcer_1_Seul_Objet) {
                     if (first) {
@@ -1485,7 +1485,7 @@ void BddInter::LoadM3D()
             this->make_1_sommet();
         }
 
-        Update_Dialog(ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftell(f), fichierBdd_length);
 
         // Lecture du nombre de Normales aux sommets
         fgets(s1,100,f) ;
@@ -1504,7 +1504,7 @@ void BddInter::LoadM3D()
             this->make_1_vecteur();
         }
 
-        Update_Dialog(ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftell(f), fichierBdd_length);
 
         // Lecture du nombre de facettes
         fgets(s1,100,f) ;
@@ -1546,7 +1546,7 @@ void BddInter::LoadM3D()
             Objet_courant->Facelist[nfac-1].groupe     = groupe_def;
             Objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
 
-            Update_Dialog(ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftell(f), fichierBdd_length);
         }
         Objet_courant->Nb_facettes  = nb_fac;
         Objet_courant->Nb_normales  = nb_fac;
@@ -1788,7 +1788,7 @@ void BddInter::LoadPLY()
             fgets(s1,100,f) ;   // Passer le cr
         }
 
-        Update_Dialog(ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftell(f), fichierBdd_length);
 
         buildGroupes(nb_groupes, index_grp, i_warn, materi);
 
@@ -1875,7 +1875,7 @@ void BddInter::LoadPLY()
             printf("Warning : Trop de facettes dans le fichier ( > %d)\n",nfac) ;
         }
 
-        Update_Dialog(ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftell(f), fichierBdd_length);
     }
 
     Fermer_progress_dialog();
@@ -2176,7 +2176,7 @@ void BddInter::LoadPLY_Stanford()
                 }
                 free(vlist); // Libérer la mémoire de chaque vertex
 
-                Update_Dialog(ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
+                Update_Dialog((long long)ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
             }
 
             if (vert_other == nullptr || face_other == nullptr) {
@@ -2249,7 +2249,7 @@ void BddInter::LoadPLY_Stanford()
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
                 free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
 
-                Update_Dialog(ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftell(f), fichierBdd_length);
             }
 
         } else if (equal_strings ((char*)"tristrips", elem_name)) {
@@ -2334,7 +2334,7 @@ void BddInter::LoadPLY_Stanford()
                 printf("Liste des facettes redimmensionnée\n");
                 free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
 
-                Update_Dialog(ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftell(f), fichierBdd_length);
             }
 
         }/*else
@@ -2452,7 +2452,7 @@ void BddInter::LoadOFF()
             this->Setxyz(vx,vy,vz);
             this->make_1_sommet();
 
-            Update_Dialog(ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftell(f), fichierBdd_length);
         }
 
         this->N_elements = nb_fac;
@@ -2481,7 +2481,7 @@ void BddInter::LoadOFF()
             objet_courant->Facelist[nfac-1].groupe     = groupe_def;
             objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
 
-            Update_Dialog(ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftell(f), fichierBdd_length);
         }
         objet_courant->Nb_facettes  = nb_fac;
         objet_courant->Nb_normales  = nb_fac;
@@ -2681,7 +2681,7 @@ void BddInter::LoadSTL() {
                 numero_sommetB++;
             }
 
-            Update_Dialog(ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftell(f), fichierBdd_length);
         }
 
     } else {
@@ -2784,7 +2784,7 @@ void BddInter::LoadSTL() {
                 facette_courante->groupe     = rang-1;  // Pour donner une valeur différente du matériau
             }
 
-            Update_Dialog(ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftell(f), fichierBdd_length);
         }
         if (erreur_couleurs) {
             // les tableaux MatAmbient_avionG et MatDiffuse_avionG sont trops petits
@@ -2941,7 +2941,7 @@ void BddInter::Load3DS()
     long cpt;
     for (p = f3ds->nodes,cpt=0; p != 0; p = p->next,cpt++) {
         decoder_node(p);
-        Update_Dialog(cpt,meshes);                          // Faute d'avoir accès à la position en lecture dans f3ds (ou f)
+        Update_Dialog((long long)cpt,(long long)meshes);                          // Faute d'avoir accès à la position en lecture dans f3ds (ou f)
     }
 
 //    numObjet_suiv += ((o_3ds+10)/10)*10 ; // Pour arrondir à la dizaine supérieure
@@ -3611,7 +3611,7 @@ void BddInter::LoadBDD() {
 ////                m_gauge->Refresh();
 //            }
 ////        }
-        Update_Dialog(fichierBdd.tellg(), fichierBdd_length);
+        Update_Dialog((long long)fichierBdd.tellg(), fichierBdd_length);
     }
 //    m_gauge->SetValue(100);
 //    m_gauge->Update();
@@ -4181,13 +4181,13 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
     {
         GetLines(text, line1, line2);
 
-        Update_Dialog(stream.TellI(), fichierBdd_length);   // Utilise la position courante dans le stream et sa longueur totale pour afficher la barre de progression
+        Update_Dialog((long long)stream.TellI(), fichierBdd_length);   // Utilise la position courante dans le stream et sa longueur totale pour afficher la barre de progression
 
         Nlignes++;
-        if ((Nlignes%Nlignes_test) == 0) {                  // Cette marque de progression à la console n'est plus très utile...
-            EnCours = true;
-            printf("."); fflush(stdout);
-        }
+//        if ((Nlignes%Nlignes_test) == 0) {                  // Cette marque de progression à la console n'est plus très utile...
+//            EnCours = true;
+//            printf("."); fflush(stdout);
+//        }
         if (line1 == "0" && state > 0)
         {
             // flush entity : tant que state == 0, la lecture d'une 3DFACE ou LINE n'est pas terminée
@@ -4289,10 +4289,10 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
     type_return = false;    // On ne devrait pas sortir par ici. Il manque quelquechose en fin de fichier ? Un ENDSEC non trouvé ?
 
 Sortie:
-    Update_Dialog(stream.TellI(), fichierBdd_length);   // Ici, on ne devrait pas être loin de la fin du fichier
+    Update_Dialog((long long)stream.TellI(), fichierBdd_length);   // Ici, on ne devrait pas être loin de la fin du fichier
 
-    if (EnCours)
-        printf("\n");
+//    if (EnCours)
+//        printf("\n");
     if (verbose) printf("Sortie de BddInter::ParseEntitiesDXF     : nb3DFACE : %d, nbLINE : %d, nbLayer : %d, nbVector : %d en %s\n",nb3DFACE,nbLINE,nbLayer,nbVector,(type_return ? "true" : "false"));
     Fermer_progress_dialog();
     nb3DFACE_DXF = nb3DFACE;

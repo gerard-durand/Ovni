@@ -655,7 +655,10 @@ class BddInter: public wxGLCanvas {
     wxTimer *m_timer = nullptr;
     wxGenericProgressDialog *progress_dialog = nullptr;     // wxGenericProgressDialog plutôt que wxProgressDialog car mieux en Darkmode
     clock_t time_deb_dialog;
+    int display_range = 200;                                // range pour l'affichage de la barre de progression. 200 (300 ou 400) va un peu plus loin que 100 (valeur par défaut)
+    int display_test  = display_range-1;                    // Valeur de test pour éviter un dernier Update() trop tôt
     bool progress_dialog_en_cours;
+
     Lib3dsIo *io;
 
 //    Sommetmemory *Smemory;
@@ -1261,7 +1264,7 @@ public :
 
 //    void Forcer_OnPaint(wxPaintEvent& event);
     void OnTimer_Bdd(wxTimerEvent& event);
-    bool Update_Dialog(long, long, bool cancel=false);
+    bool Update_Dialog(long long, long long, bool cancel=false);
     void Fermer_progress_dialog();
 
 protected:

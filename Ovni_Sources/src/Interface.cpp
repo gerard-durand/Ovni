@@ -390,7 +390,7 @@ void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
     }
 }
 
-bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
+bool BddInter::Update_Dialog(long long position, long long max_value, bool cancel)
 {
 // Si cancel est true, affiche un bouton "Cancel" puis
 // retourne true si le bouton Cancel a été activé. Sinon, retourne false.
@@ -403,34 +403,39 @@ bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
 
 // un wxGenericProgressDialog est OK en mode Darkmode alors qu'un wxProgressDialog reste avec les couleurs standard de Windows !
 
-            int style = wxPD_AUTO_HIDE;
-            if (cancel) style = wxPD_CAN_ABORT | wxPD_AUTO_HIDE;
+            int style = wxPD_AUTO_HIDE;                             // Souci : quand 100% arrive, le dialogue s'efface bien, mais ça semble toujours
+            if (cancel) style = wxPD_CAN_ABORT | wxPD_AUTO_HIDE;    // un peu tôt car la barre affichée n'est pas au bout (mais tout est fait) !
 
 //                                          wxPD_CAN_ABORT |
+//                                          wxPD_CAN_SKIP  |
 //                                          wxPD_APP_MODAL |
 //                                          wxPD_ELAPSED_TIME |
 //                                          wxPD_ESTIMATED_TIME |
 //                                          wxPD_REMAINING_TIME |
-//                                          wxPD_AUTO_HIDE
+//                                          wxPD_AUTO_HIDE |
+//                                          wxPD_SMOOTH
 
             progress_dialog = new wxGenericProgressDialog(Dialog_Titre,
                                           Dialog_Comment,   // Pour afficher le nom du fichier
-                                          100,              // range
+                                          display_range,    // range (valeur par défaut 100 un peu juste, mettre plutôt 200, 300 ou 400)
                                           this,             // parent
                                           style
                                          );
 //            if (style | wxPD_CAN_ABORT) progress_dialog->m_btnAbort->SetLabel("Interrompre"); // Ne marche pas car m_btnAbort a été déclaré private
             progress_dialog->Update(0);   // Par précaution
             progress_dialog_en_cours = true;
-            new_val = std::min((int)round(position*100./max_value), 100);   // écréter sur la valeur max de "range"
+
+            new_val = std::min((int)round(position*display_range/max_value), display_range);    // écréter sur la valeur max de "range"
             progress_dialog->Update(new_val);
-            if (progress_dialog->WasCancelled()) return true;               // Abandonner si détection de pression sur le bouton "Cancel"
+            if (progress_dialog->WasCancelled()) return true;                                   // Abandonner si détection de pression sur le bouton "Cancel"
         }
     } else {
         old_val = progress_dialog->GetValue();
-        new_val = std::min((int)round(position*100./max_value), 100);       // écréter sur la valeur max de "range"
-        if (old_val != new_val) {
-            progress_dialog->Update(new_val);
+        new_val = std::min((int)round(position*display_range/max_value), display_range);        // écréter sur la valeur max de "range"
+        if(new_val == display_range) return false;                      // Pour que le 100% ne soit fait que par Fermer_progress_dialog
+        if (old_val != new_val) {                                       // Ne faire que si les valeurs diffèrent de l'affichage précédent
+            if (new_val < display_test) progress_dialog->Update(new_val+1); // Update de new_val+1 puis new_val permet de forcer un rafraichissement immédiat de progress_dialog
+            progress_dialog->Update(new_val);                               // mais il faut le faire avant que new_val+1 soit à 100% de display_range
             if (progress_dialog->WasCancelled()) return true;               // Abandonner si détection de pression sur le bouton "Cancel"
         }
     }
@@ -440,8 +445,8 @@ bool BddInter::Update_Dialog(long position, long max_value, bool cancel)
 void BddInter::Fermer_progress_dialog()
 {
     if (progress_dialog_en_cours) {
-        progress_dialog->Update(100);           // Utile ?
-        wxDELETE(progress_dialog);
+        progress_dialog->Update(display_range); // Utile ?
+        wxDELETE(progress_dialog);              // Utile ? par précaution pour détruire progress_dialog (pas seulement le masquer via wxPD_AUTO_HIDE)
         progress_dialog_en_cours = false;       // Par précaution
     }
 }
@@ -1018,15 +1023,15 @@ void BddInter::Genere_Tableau_Aretes(Object *objet)
                     Dialog_Comment  = wxS("Objet : ")+objet->GetwxName();
                     Dialog_Delay    = NB_DELTA_TICKS;                           // Ce sera forcément le cas car test sur delta_time la première fois
                     progress_dialog_en_cours = false;
-                    cancelled = Update_Dialog((long)i, (long)nbaretes, true);   // true pour afficher le bouton "Cancel"
+                    cancelled = Update_Dialog((long long)i, (long long)nbaretes, true);   // true pour afficher le bouton "Cancel"
                 }
-                printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
+//                printf(".");            // On pourrait aussi afficher successivement | / - \ avec des backspaces.
                 time_c = clock();
                 if (cancelled) break;   // Pour sortir de la boucle interne en j. Plutôt bizzare ici, mais il y a des fois où ça repart !
             }
         }
         if(cancelled) break;            // Pour sortir aussi de la boucle en i
-        if(progress_dialog_en_cours) cancelled = Update_Dialog((long)i, (long)nbaretes, true); // Placé ici, mais l'effet n'est pas immédiat car il faut d'abord terminer le for en j.
+        if(progress_dialog_en_cours) cancelled = Update_Dialog((long long)i, (long long)nbaretes, true); // Placé ici, mais l'effet n'est pas immédiat car il faut d'abord terminer le for en j.
         if(cancelled) break;            // Pour sortir immédiatement du for
     }
 
@@ -2237,7 +2242,7 @@ void BddInter::Simplification_BDD()
     Object *objet_courant;
     Face   *Facette_courante;
     int tabPoints_j;
-    long Nb_test, compteur;
+    long long Nb_test, compteur;
 
     bool modification, indic;
     bool cancelled = false;
