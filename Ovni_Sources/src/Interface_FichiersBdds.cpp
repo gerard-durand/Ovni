@@ -4160,12 +4160,12 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
     bool EnCours      = false;
     bool type_return  = true;
     int  Nvector      = 3;              // Par défaut, facettes triangulaires
-    int  Nlignes      = 0;              // Compteur de lignes
     int  nb3DFACE     = 0;
     int  nbLINE       = 0;
     int  nbLayer      = 0;
     int  nbVector     = 0;
-    int  Nlignes_test = 10000;          // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
+//    int  Nlignes      = 0;              // Compteur de lignes
+//    int  Nlignes_test = 10000;          // Toutes les Nlignes_test afficher un . histoire de faire patienter et montrer que ça tourne !
     int  colour       = -1;
 
     if (verbose) printf("Entree de BddInter::ParseEntitiesDXF\n");
@@ -4183,7 +4183,7 @@ bool BddInter::ParseEntitiesDXF(wxInputStream& stream)
 
         Update_Dialog((long long)stream.TellI(), fichierBdd_length);   // Utilise la position courante dans le stream et sa longueur totale pour afficher la barre de progression
 
-        Nlignes++;
+//        Nlignes++;
 //        if ((Nlignes%Nlignes_test) == 0) {                  // Cette marque de progression à la console n'est plus très utile...
 //            EnCours = true;
 //            printf("."); fflush(stdout);

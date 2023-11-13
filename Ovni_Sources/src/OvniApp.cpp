@@ -12,6 +12,8 @@
 #include <wx/stdpaths.h>
 #include <wx/filefn.h>
 
+#include "version.h"
+
 //(*AppHeaders
 #include "OvniMain.h"
 #include <wx/image.h>
@@ -43,12 +45,14 @@ bool OvniApp::OnInit() {
     printf("%s",Message);
 //    printf(utf8_To_ibm(Message));        // Ne sert plus car console windows supporte l'utf8
     wxSetWorkingDirectory(appPath);
+    wxString Ovni_version = AutoVersion::FULLVERSION_STRING ;
+    Ovni_version = Ovni_version.BeforeLast(_T('.'));
 
 #ifndef WXUSINGDLL
-    sprintf(Message,"Version compilée en statique avec %s\n",(const char*)wxbuild.utf8_str());
+    sprintf(Message,"Version %s compilée en statique avec %s\n",(const char*)Ovni_version.utf8_str(),(const char*)wxbuild.utf8_str());
     printf("%s",Message);
 #else
-    sprintf(Message,"Version utilisant les dlls %s\n",(const char*)wxbuild.utf8_str());
+    sprintf(Message,"Version %s utilisant les dlls %s\n",(const char*)Ovni_version.utf8_str(),(const char*)wxbuild.utf8_str());
     printf("%s",Message);
 #endif // WXUSINGDLL
 
