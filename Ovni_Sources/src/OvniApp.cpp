@@ -34,7 +34,7 @@ bool OvniApp::OnInit() {
 
 #if _WIN32
     system("chcp 65001  > nul");    // Pour coder en UTF-8 les sorties dans la console DOS sous Windows
-#endif
+#endif								// Il peut être nécessaire de rajouter C:\Windows\System32 à la variable d'environnement Path du système
 
 // D'après : https://wiki.wxwidgets.org/Converting_everything_to_and_from_wxString
     wxFileName f(wxStandardPaths::Get().GetExecutablePath());

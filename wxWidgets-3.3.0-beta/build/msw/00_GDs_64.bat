@@ -12,15 +12,15 @@ REM echo *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 REM echo _ >> log.txt
 set CB_ID=cb_64
 
-echo %time% >> 00_test.txt
-mingw32-make -f makefile.gcc -j 4 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% clean
-echo %time% >> 00_test.txt
-mingw32-make -f makefile.gcc -j 4 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% CXXFLAGS="-std=gnu++20"
+echo Nettoyage : %time% >> 00_test.txt
+mingw32-make -f makefile.gcc -j 10 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% clean
+echo makefile  : %time% >> 00_test.txt
+mingw32-make -f makefile.gcc -j 10 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% CXXFLAGS="-std=gnu++20"
 rem >log.txt 2>&1
-echo %time% >> 00_test.txt
+echo strip     : %time% >> 00_test.txt
 strip ..\..\lib\gcc_dll\wxmsw330u_gcc_%CB_ID%.dll
 strip ..\..\lib\gcc_dll\wxmsw330u_gl_gcc_%CB_ID%.dll
-echo %time% >> 00_test.txt
+echo fin       : %time% >> 00_test.txt
 
 ren C:\msys64\usr\bin\shx.exe sh.exe
 REM ren C:\Utilitaires_Msys-Unix\bin\shx.exe sh.exe

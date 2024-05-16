@@ -1,0 +1,562 @@
+<html><head></head>
+
+<body background="docs_files/bg.gif" bgcolor="BLACK" link="yellow" text="WHITE" vlink="yellow">
+
+Quick links:
+
+<ul>
+<li><a href="http://g95.sourceforge.net/G95Manual.pdf">G95 Manual (pdf)</a>
+</li><li><a href="http://g95.sourceforge.net/docs.html#starting">Getting started</a>
+</li><li><a href="http://g95.sourceforge.net/docs.html#rung95">Running G95</a>
+</li><li><a href="http://g95.sourceforge.net/docs.html#progs">Running g95 programs</a>
+</li><li><a href="http://g95.sourceforge.net/docs.html#interface">Interfacing to g95 programs</a>
+<p><br></p><p>
+</p></li><li><a href="http://g95.sourceforge.net/howto.html#emacs">Setting up emacs with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#photran">Setting up Photran with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#lapack">Configuring LAPACK with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#arpack">Configuring ARPACK with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#mpich">Configuring MPICH2-1.0.1 with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#blacs">Configuring BLACS with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#scalapack">Configuring SCALAPACK with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#superlu">Configuring SUPERLU-3.0 with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#umfpack">Configuring UMFPACK with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#mumps">Configuring MUMPS-4.3.2 with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#aztec">Configuring AZTEC-2.1 with g95</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#matlab">How to link g95 programs with MATLAB</a>
+</li><li><a href="http://g95.sourceforge.net/howto.html#matlabwin">How to link g95 programs with MATLAB (windows)</a>
+</li></ul>
+
+<h1><a name="starting">Getting started:</a></h1>
+
+
+G95 can be installed without root permission but currently requires a
+symbolic link from a specific directory to your install directory.
+
+<ol>
+
+<li> Unpack the downloaded tarball (e.g. g95-x86-linux.tgz) in a
+directory of your choice: <p>
+
+</p><pre>   tar -zxvf g95-x86-linux.tgz
+</pre>
+
+</li><li> For your convenience, you can create another symbolic link from a
+directory in your $PATH (e.g. ~/bin) to the executable
+
+<pre>   ln -s $PWD/g95-install/bin/*g95* ~/bin/g95
+</pre>
+
+</li></ol>
+
+You should now be able to run g95 and create executables.  Run a
+g95-compiled program with the argument "--help" to get a list of
+environment variables and error code numbers. <p>
+
+</p><hr>
+
+<h1><a name="rung95">Running G95</a></h1>
+
+<h3>Basic options:</h3>
+
+<table>
+<tbody><tr><td>-c</td>
+<td>Compile only, do not run the linker. </td></tr>
+
+<tr><td>-o</td>
+<td>Specify the name of the output file, either an object file or
+the executable.</td></tr>
+</tbody></table>
+
+Multiple source and object files can be specified at once.  Fortran
+files are indicated by names ending in ".f", ".F", ".for", ".FOR",
+".f90", ".F90", ".f95", ".F95", ".f03" and ".F03".  Multiple source
+files can be specified.  Object files can be specified as well and
+will be linked to form an executable. <p>
+
+Files ending in uppercase letters are preprocessed with the C
+preprocessor by default, files ending in lowercase letters are not
+preprocessed by default. </p><p>
+
+Files ending in ".f", ".F", ".for", and ".FOR" are assumed to be fixed
+form source compatible with old f77 files.  Files ending in ".f90",
+".F90", ".f95", ".F95", ".f03" and ".F03" are assumed to be free
+source form. </p><p>
+
+Simple examples:
+
+<table>
+<tbody><tr><td>g95 -c hello.f90</td>
+<td>Compiles hello.f90 to an object file named hello.o.</td></tr>
+
+<tr><td>g95 hello.f90</td>
+<td>Compiles hello.f90 and links it to produce an executable a.out.</td></tr>
+
+<tr><td>g95 -c h1.f90 h2.f90 h3.f90</td>
+<td>Compiles multiple source files.  If all goes well, object files h1.o,
+h2.o and h3.o are created. </td></tr>
+
+<tr><td>g95 -o hello h1.f90 h2.f90 h3.f90</td>
+<td>Compiles multiple source files and links them together to an
+executable file named 'hello'.</td></tr>
+
+</tbody></table>
+
+
+</p><h3>Preprocessor options</h3>
+
+G95 can handle files that contain C preprocessor constructs.
+
+<table>
+<tbody><tr><td>-cpp</td>
+<td>Force the input files to be run through the C preprocessor</td></tr>
+
+<tr><td>-no-cpp</td>
+<td>Prevent the input files from being preprocessed</td></tr>
+
+<tr><td>-D<i>name[=value]</i></td><td>Define a preprocessor macro</td></tr>
+
+<tr><td>-U<i>name</i></td><td>Undefine a preprocessor macro</td></tr>
+
+<tr><td>-E</td><td>Show preprocessed source only</td></tr>
+
+<tr><td>-I<i>directory</i></td>
+<td>Append 'directory' to the include and module files search path.
+Files are searched for in various directories in this order:
+Directory of the main source file, the current directory, directories
+specified by -I, directories specified in the G95_INCLUDE_PATH
+environment variable and finally the system directories.</td></tr>
+</tbody></table>
+
+
+<h3>Fortran options</h3>
+
+<table>
+<tbody><tr><td>-Wall</td><td>Enable most warning messages</td></tr>
+
+<tr><td>-Werror</td><td>Change warnings into errors</td></tr>
+
+<tr><td>-Wimplicit-none</td><td>Same as -fimplicit-none</td></tr>
+
+<tr><td>-Wline-truncation</td><td>Warn about truncated source lines</td></tr>
+
+<tr><td>-Wobsolete</td><td>Warn about obsolete constructs</td></tr>
+
+<tr><td>-Wno=<i>numbers</i></td>
+    <td>Disable a comma separated list of warning numbers</td></tr>
+
+<tr><td>-Wunused-vars</td>
+    <td>Warn about unused variables</td></tr>
+
+<tr><td>-Wunset-vars</td>
+    <td>Warn about unset variables</td></tr>
+
+<tr><td>-Wunused-module-vars</td>
+    <td>Warn about unused module variables.  Useful for ONLY clauses</td></tr>
+
+<tr><td>-Wunused-module-procs</td>
+    <td>Warn about unused module procedures.  Useful for ONLY clauses</td></tr>
+
+<tr><td>-Wprecision-loss</td>
+    <td>Warn about precision loss in implicit type conversions</td></tr>
+
+<tr><td>-fbackslash</td>
+    <td>Interpret backslashes in character constants as escape codes.
+        Use -fno-backslash to treat backslashes literally.</td></tr>
+
+<tr><td>-fdollar-ok</td>
+    <td>Allow dollar signs in entity names</td>
+
+</tr><tr><td>-fendian=</td>
+    <td>Force the endianness of unformatted reads and writes.  The
+        value must be 'big' or 'little'.  Overrides environment variables.
+    </td></tr>
+
+<tr><td>-ffixed-form</td>
+    <td>Assume that the source file is fixed form</td></tr>
+
+<tr><td>-ffixed-line-length-132</td>
+    <td>132 character line width in fixed mode</td></tr>
+
+<tr><td>-ffixed-line-length-80</td>
+    <td>80 character line width in fixed mode</td></tr>
+
+<tr><td>-ffree-form</td>
+    <td>Assume that the source file is free form</td></tr>
+
+<tr><td>-fimplicit-none</td>
+    <td>Specify that no implicit typing is allowed, unless overridden
+        by explicit IMPLICIT statements</td></tr>
+
+<tr><td>-fintrinsic-extensions</td>
+    <td>Enable g95-specific intrinsic functions even in a -std= mode</td></tr>
+
+<tr><td>-fintrinsic-extensions=proc1,proc2,...</td>
+    <td>Include selected intrinsic functions even in a -std= mode.
+        The list is comma-separated and case insensitive.</td></tr>
+
+<tr><td>-fmod=<i>directory</i></td>
+    <td>Put module files in <i>directory</i></td></tr>
+
+<tr><td>-fmodule-private</td>
+    <td>Set default accessibility of module-entities to PRIVATE</td></tr>
+
+<tr><td>-ftr15581</td>
+    <td>Enable the TR15581 allocatable array extensions even in -std=F
+        or -std=f95 modes. </td></tr>
+
+<tr><td>-M</td>
+    <td>Produce a Makefile dependency line on standard output</td></tr>
+
+<tr><td>-std=F</td>     <td>Warn about non-F features</td></tr>
+<tr><td>-std=f2003</td> <td>Strict fortran 2003 checking</td></tr>
+<tr><td>-std=f95</td>   <td>Strict fortran 95 checking</td></tr>
+
+<tr><td>-i4</td>
+    <td>Set kinds of integers without specification to kind=4 (32 bits)
+    </td></tr>
+<tr><td>-i8</td>
+    <td>Set kinds of integers without specification to kind=8 (64 bits)
+    </td></tr>
+<tr><td>-r8</td>
+    <td>Set kinds of reals without kind specifications to double
+        precision</td></tr>
+<tr><td>-d8</td><td>Implies -i8 and -r8.</td></tr>
+
+</tbody></table>
+
+
+<h3>Code generation options</h3>
+
+<table>
+
+<tbody><tr><td>-fbounds-check</td>
+    <td>Check array and substring bounds at runtime</td></tr>
+
+<tr><td>-fcase-upper</td>
+    <td>Make all public symbols uppercase</td></tr>
+
+<tr><td>-fleading-underscore</td>
+    <td>Add a leading underscore to public names</td></tr>
+
+<tr><td>-fonetrip</td>
+    <td>Execute DO-loops at least once. (Buggy fortran 66)</td></tr>
+
+<tr><td>-fpack-derived</td>
+    <td>Try to layout derived types as compact as possible.  Requires
+        less memory, but may be slower</td></tr>
+
+<tr><td>-fqkind=<i>n</i></td>
+    <td>Set the kind for a real with the 'q' exponent to <i>n</i></td></tr>
+
+<tr><td>-fsecond-underscore</td>
+    <td>Append a second trailing underscore in names having an
+        underscore (default).  Use -fno-second-underscore to
+        suppress.</td></tr>
+
+<tr><td>-fshort-circuit</td>
+    <td>Cause the .AND. and .OR. operators to not compute the second
+        operand if the value of the expression is known from the first
+        operand.</td></tr>
+
+<tr><td>-fsloppy-char</td>
+    <td>Suppress errors when writing non-character data to character
+        descriptors</td></tr>
+
+<tr><td>-fstatic</td>
+    <td>Put local variables in static memory where possible.  This is
+        not the same as linking things statically (-static). </td></tr>
+
+<tr><td>-ftrace</td>
+    <td>'-ftrace=frame' will insert code to allow stack tracebacks on
+abnormal end of program.  This will slow down your program. '-ftrace=full'
+additionally allows finding the line number of arithmetic exceptions
+(slower).  Default is '-ftrace=none'. </td></tr>
+
+<tr><td>-funderscoring</td>
+    <td>Append a trailing underscore in global names (default).
+        Use -fno-underscoring to suppress. </td></tr>
+
+<tr><td>-max-frame-size=<i>n</i></td>
+    <td>How large a single stack frame will get before arrays are
+        allocated dynamically</td></tr>
+
+<tr><td>-finteger=n </td>
+<td>Initialize uninitialized scalar integer variables to n</td></tr>
+
+<tr><td>-flogical=</td>
+<td>Initialize uninitialized scalar logical variables.  Legal values are
+none, true and false.</td></tr>
+
+<tr><td>-freal=</td>
+<td>Initialize uninitialized scalar real and complex variables.  Legal
+values are none, zero, nan, inf, +inf and -inf.</td></tr>
+
+<tr><td>-fpointer=</td>
+<td>Initialize scalar pointers.  Legal values are none, null and
+invalid.</td></tr>
+
+<tr><td>-fround=</td>
+<td>Controls compile-time rounding.  Legal values are nearest, plus,
+minus and zero.  Default is round to nearest, plus is round to plus
+infinity, minus is minus infinity, zero is towards zero.
+</td></tr>
+
+<tr><td>-fzero</td>
+<td>Initialize numeric types to zero, logical values to false and
+pointers to null.  The other initialization options override this
+one.</td></tr>
+
+</tbody></table>
+
+
+
+<h1><a name="progs">Running g95 programs</a></h1>
+
+The g95 runtime environement provides many options for tweaking the
+behaviour of your program once it runs.  These are controllable
+through environment variables.  Running a g95-compiled program with
+the --help option will dump all of these options to standard output.<p>
+
+The values of the various variables are always strings, but the
+strings can be interpreted as integers or boolean truth values.  Only
+the first character of a boolean is examined and must be 't', 'f',
+'y', 'n', '1' or '0' (uppercase OK too).  If a value is bad, no error
+is issued and the default is used. </p><p>
+
+
+<p>
+
+</p><table>
+
+<tbody><tr valign="top"><td>G95_STDIN_UNIT</td><td>Integer</td>
+    <td>Unit number that will be preconnected to standard input.
+        No preconnection if negative, default is 5.</td></tr>
+
+<tr valign="top"><td>G95_STDOUT_UNIT</td><td>Integer</td>
+    <td>Unit number that will be preconnected to standard output.
+        No preconnection if negative, default is 6.</td></tr>
+
+<tr valign="top"><td>G95_STDERR_UNIT</td><td>Integer</td>
+    <td>Unit number that will be preconnected to standard error.
+        No preconnection if negative, default is 0.</td></tr>
+
+<tr valign="top"><td>G95_USE_STDERR</td><td>Boolean</td>
+    <td> Sends library output to standard error instead of standard output.
+         Default is Yes. </td></tr><tr valign="top"><td>G95_ENDIAN</td><td>String</td>
+    <td>Endian format to use for I/O of unformatted data.  Values are
+        BIG, LITTLE or NATIVE.  Default is NATIVE. </td></tr>
+
+<tr valign="top"><td>G95_CR</td><td>Boolean</td></tr>
+    <tr><td>Output carriage returns for formatted sequential records.
+        Default true on windows, false elsewhere.</td></tr>
+
+<tr valign="top"><td>G95_IGNORE_ENDFILE</td><td>Boolean</td>
+    <td>Ignore attempts to read past the ENDFILE record in sequential
+        access mode.  Default false</td></tr>
+
+<tr valign="top"><td>G95_TMPDIR</td><td>String</td>
+    <td>Directory for scratch files.  Overrides the TMP environment variable.
+        If TMP is not set /var/tmp is used.  No default</td></tr>
+
+<tr valign="top"><td>G95_UNBUFFERED_ALL</td><td>Boolean</td>
+    <td>If TRUE, all output is unbuffered.  This will slow down large
+        writes but can be useful for forcing data to be displayed immediately.
+        Default is False.</td></tr>
+
+<tr valign="top"><td>G95_SHOW_LOCUS</td><td>Boolean</td>
+    <td>If TRUE, print filename and line number where runtime errors
+        happen.  Default is Yes. </td></tr>
+
+<tr valign="top"><td>G95_OPTIONAL_PLUS</td><td>Boolean</td>
+    <td>Print optional plus signs in numbers where permitted.  Default FALSE.
+    </td></tr>
+
+<tr valign="top"><td>G95_DEFAULT_RECL</td><td>Integer</td>
+    <td>Default maximum record length for sequential files.  Most useful for
+        adjusting line length of preconnected units.  Default is
+        50000000. </td></tr>
+
+<tr valign="top"><td>G95_LIST_SEPARATOR</td><td>String</td>
+    <td>Separator to use when writing list output.  May contain any
+        number of spaces and at most one comma.  Default is a single
+        space. </td></tr>
+
+<tr valign="top"><td>G95_COMMA</td><td>Boolean</td>
+    <td>Use a comma character as the default decimal point for I/O.
+        Default false.</td></tr>
+
+<tr valign="top"><td>G95_EXPAND_UNPRINTABLE</td><td>Boolean</td>
+    <td>For formatted output, print otherwise unprintable characters
+        with \-sequences.  Default No. </td></tr>
+
+<tr valign="top"><td>G95_QUIET</td><td>Boolean</td>
+    <td>Suppress bell characters (\a) in formatted output.
+        Default No.</td></tr>
+
+<tr valign="top"><td>G95_SYSTEM_CLOCK</td><td>Integer</td>
+    <td>Number of ticks per second reported by the SYSTEM_CLOCK()
+        intrinsic in microseconds.  Zero disables the clock.
+        Default 100000.</td></tr>
+
+<tr valign="top"><td>G95_SEED_RNG</td><td>Boolean</td>
+    <td>If true, seeds the random number generator with a new seed
+        when the program is run.  Default false.</td></tr>
+
+<tr valign="top"><td>G95_MINUS_ZERO</td><td>Boolean</td>
+    <td>If true, prints minus zero with a minus sign in formatted (non-list)
+        output, contrary to the standard.  Default FALSE.</td></tr>
+
+<tr valign="top"><td>G95_ABORT</td><td>Boolean</td>
+    <td>If true, dumps core on abnormal program end.  Useful for finding
+        the locus of the problem.  Default FALSE.</td></tr>
+
+<tr valign="top"><td>G95_MEM_INIT</td><td>String</td>
+    <td>How to initialize allocated memory.  Default value is NONE for
+        no initialization (faster), NAN for a Not-a-Number with the
+        mantissa 0x40f95 or a custom hexadecimal value.</td></tr>
+
+<tr valign="top"><td>G95_MEM_SEGMENTS</td><td>Integer</td>
+    <td>Maximum number of still-allocated memory segments to display
+        when program ends.  0 means show none, less than 0 means show all.
+        Default 25</td></tr>
+
+<tr valign="top"><td>G95_MEM_MAXALLOC</td><td>Boolean</td>
+    <td>If true, shows the maximum number of bytes allocated in user
+        memory during the program run. Default No.</td></tr>
+
+<tr valign="top"><td>G95_MEM_MXFAST</td><td>Integer</td>
+    <td>Maximum request size for handing requests in from fastbins.
+        Fastbins are quicker but fragment more easily.  Default 64
+        bytes. </td></tr>
+
+<tr valign="top"><td>G95_MEM_TRIM_THRESHOLD</td><td>Integer</td>
+    <td>Amount of top-most memory to keep around until it is returned
+        to the operating system.  -1 prevents returning memory to the
+        system.  Useful in long-lived programs.  Default 262144. </td></tr>
+
+<tr valign="top"><td>G95_MEM_TOP_PAD</td><td>Integer</td>
+    <td>Extra space to allocate when getting memory from the OS.
+        Can speed up future requests.  Default 0. </td></tr>
+
+<tr valign="top"><td>G95_SIGHUP</td><td>String</td>
+    <td>Whether the program will IGNORE, ABORT or SUSPEND on SIGHUP.
+        Default ABORT.</td></tr>
+
+<tr valign="top"><td>G95_SIGINT</td><td>String</td>
+    <td>Whether the program will IGNORE or ABORT or SUSPEND on SIGINT.
+        Default ABORT</td></tr>
+
+<tr valign="top"><td>G95_FPU_ROUND</td><td>String</td>
+    <td>Set floating point rounding mode.  Values are NEAREST, UP,
+        DOWN, ZERO.  Default is NEAREST. </td></tr>
+
+<tr valign="top"><td>G95_FPU_PRECISION</td><td>String</td>
+    <td>Precision of intermediate results.  Value can be 24, 53 and
+        64. Default 64.  Only available on x86 and IA64 compatibles. </td></tr>
+
+<tr valign="top"><td>G95_FPU_DENORMAL</td><td>Boolean</td>
+    <td>Raise a floating point exception when denormal numbers are
+        encountered.  Default no. </td></tr>
+
+<tr valign="top"><td>G95_FPU_INVALID</td><td>Boolean</td>
+    <td>Raise a floating point exception on an invalid operation.
+        Default No.</td></tr>
+
+<tr valign="top"><td>G95_FPU_ZERODIV</td><td>Boolean</td>
+    <td>Raise a floating point exception when dividing by zero.
+        Default No.</td></tr>
+
+<tr valign="top"><td>G95_FPU_OVERFLOW</td><td>Boolean</td>
+    <td>Raise a floating point exception on overflow.  Default No.</td></tr>
+
+<tr valign="top"><td>G95_FPU_UNDERFLOW</td><td>Boolean</td>
+    <td>Raise a floating point exception on underflow.  Default No.</td></tr>
+
+<tr valign="top"><td>G95_FPU_INEXACT</td><td>Boolean</td>
+    <td>Raise a floating point exception on precision loss.
+        Default No</td></tr>
+
+<tr valign="top"><td>G95_FPU_EXCEPTIONS</td><td>Boolean</td>
+    <td>Whether masked floating point exceptions should be shown after
+        the program ends. Default No</td></tr>
+
+<tr valign="top"><td>G95_UNIT_x</td><td>String</td>
+    <td>Overrides the default unit name for unit x.</td></tr>
+
+<tr valign="top"><td>G95_UNBUFFERED_x</td><td>Boolean</td>
+    <td>If true, unit x is unbuffered</td></tr>
+
+</tbody></table>
+
+
+</p><h3>Runtime error codes</h3>
+
+<table>
+<tbody><tr><td>-2  </td><td> End of record</td></tr>
+<tr><td>-1  </td><td> End of file</td></tr>
+<tr><td>0   </td><td> Successful return</td></tr>
+<tr><td>    </td><td> Operating system errno codes (1 - 199)</td></tr>
+<tr><td>200 </td><td> Conflicting statement options</td></tr>
+<tr><td>201 </td><td> Bad statement option</td></tr>
+<tr><td>202 </td><td> Missing statement option</td></tr>
+<tr><td>203 </td><td> File already opened in another unit</td></tr>
+<tr><td>204 </td><td> Unattached unit</td></tr>
+<tr><td>205 </td><td> FORMAT error</td></tr>
+<tr><td>206 </td><td> Incorrect ACTION specified</td></tr>
+<tr><td>207 </td><td> Read past ENDFILE record</td></tr>
+<tr><td>208 </td><td> Bad value during read</td></tr>
+<tr><td>209 </td><td> Numeric overflow on read</td></tr>
+<tr><td>210 </td><td> Out of memory</td></tr>
+<tr><td>211 </td><td> Array already allocated</td></tr>
+<tr><td>212 </td><td> Deallocated a bad pointer</td></tr>
+<tr><td>214 </td><td> Corrupt record in unformatted sequential-access file
+            </td></tr>
+<tr><td>215 </td><td> Reading more data than the record size (RECL)</td></tr>
+<tr><td>216 </td><td> Writing more data than the record size (RECL)</td></tr>
+</tbody></table>
+
+
+<h1><a name="interface">Interfacing with g95 programs</a></h1>
+
+While g95 produces stand-alone executables, it is occasionally
+desirable to interface with other programs, usually C.  The first
+difficulty that multi-language program will face is the names of the
+public symbols.  G95 follows the f2c convention of adding an
+underscore to public names, or two underscores if the name contains an
+underscore.  The -fno-second-underscore and -fno-underscoring can be
+useful to force g95 to produce names compatible with your C
+compiler. <p>
+
+Use the 'nm' program to look at the .o files being produce by both
+compilers. </p><p>
+
+G95 folds public names to lowercase as well, unless -fupper-case is
+given, in which case everything will be upper case.  Module names are
+represented as <i>module-name</i>_MP_<i>name</i>. </p><p>
+
+  After linking, there are two main cases: Fortran calling C
+subroutines and C calling fortran subroutines. </p><p>
+
+  For C calling fortran subroutines, the fortran subroutines will
+often call fortran library subroutines that expect the heap to be
+initialized in some way.  To force a manual initialization from C,
+call g95_runtime_start() to initialize the fortran library and
+g95_runtime_stop() when done. 
+
+  The prototype of the g95_runtime_start() is:
+
+</p><pre>  void g95_runtime_start(int argc, char *argv[]);
+</pre>
+
+The library has to be able to process command-line options.  If this
+is awkward to do and your program doesn't have a need for command-line
+arguments, pass argc=0 and argv=NULL. <p>
+
+
+On OSX/Tiger, include '-lSystemStubs' when using g95 to run the
+linker and linking objects files compiled by gcc. </p><p>
+
+
+</p><center>© 2004 Free Software Foundation</center>
+
+</body></html>

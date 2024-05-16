@@ -24,6 +24,7 @@
 #include "wx/timer.h"
 #include "wx/sizer.h"
 #include "wx/bmpbndl.h"
+#include "wx/overlay.h"
 
 enum wxAuiManagerDock
 {
@@ -51,7 +52,8 @@ enum wxAuiManagerOption
     wxAUI_MGR_DEFAULT = wxAUI_MGR_ALLOW_FLOATING |
                         wxAUI_MGR_TRANSPARENT_HINT |
                         wxAUI_MGR_HINT_FADE |
-                        wxAUI_MGR_NO_VENETIAN_BLINDS_FADE
+                        wxAUI_MGR_NO_VENETIAN_BLINDS_FADE |
+                        wxAUI_MGR_LIVE_RESIZE
 };
 
 
@@ -160,7 +162,7 @@ public:
         DefaultPane();
     }
 
-    ~wxAuiPaneInfo() {}
+    ~wxAuiPaneInfo() = default;
 
     // Write the safe parts of a newly loaded PaneInfo structure "source" into "this"
     // used on loading perspectives etc.
@@ -416,7 +418,7 @@ public:
     void SetFlags(unsigned int flags);
     unsigned int GetFlags() const;
 
-    static bool AlwaysUsesLiveResize();
+    static bool AlwaysUsesLiveResize(const wxWindow* window = nullptr);
     bool HasLiveResize() const;
 
     void SetManagedWindow(wxWindow* managedWnd);
@@ -485,8 +487,6 @@ public:
     virtual void ShowHint(const wxRect& rect);
     virtual void HideHint();
 
-    void OnHintActivate(wxActivateEvent& event);
-
 public:
 
     // deprecated -- please use SetManagedWindow()
@@ -496,8 +496,6 @@ public:
     wxDEPRECATED( wxFrame* GetFrame() const );
 
 protected:
-
-    void UpdateHintWindowConfig();
 
     void DoFrameLayout();
 
@@ -611,10 +609,11 @@ protected:
     double m_dockConstraintX;  // 0.0 .. 1.0; max pct of window width a dock can consume
     double m_dockConstraintY;  // 0.0 .. 1.0; max pct of window height a dock can consume
 
-    wxFrame* m_hintWnd;         // transparent hint window, if supported by platform
     wxTimer m_hintFadeTimer;    // transparent fade timer
     wxByte m_hintFadeAmt;       // transparent fade amount
     wxByte m_hintFadeMax;       // maximum value of hint fade
+
+    wxOverlay m_overlay;
 
     void* m_reserved;
 

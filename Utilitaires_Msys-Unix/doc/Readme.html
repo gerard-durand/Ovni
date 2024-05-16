@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Readme for g95 on Windows</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Linux)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Doug">
+	<META NAME="CHANGED" CONTENT="20080530;16542800">
+</HEAD>
+<BODY LANG="en-CA" DIR="LTR">
+<P><BR><BR>
+</P>
+<H1><FONT FACE="monospace">The g95-MinGW.exe G95 Installer</FONT></H1>
+<P STYLE="margin-left: 1.06cm; margin-bottom: 0cm"><A HREF="#About"><FONT FACE="monospace">About
+MinGW</FONT></A><BR><A HREF="#Requirements"><FONT FACE="monospace">Requirements</FONT></A><BR><A HREF="#INSTALLING_THE_MINGW_G95_FORTRAN"><FONT FACE="monospace">Installing
+the MinGW G95 Fortran Compiler</FONT></A><BR><A HREF="#INSTALLING_ON_WINDOWS_9598ME"><FONT FACE="monospace">Installing
+on Windows 95/98/ME</FONT></A><BR><A HREF="#INSTALLING_ON_WINDOWS_NT2000XP"><FONT FACE="monospace">Installing
+on Windows NT/2000/XP</FONT></A> 
+</P>
+<P STYLE="margin-left: 1.06cm; margin-bottom: 0cm"><FONT FACE="Courier New">Installing
+on indows Vista</FONT><BR><FONT FACE="monospace">The GNU G95 Fortran
+Compiler</FONT><BR><A HREF="#Support"><FONT FACE="monospace">Support</FONT></A><BR><A HREF="#Documentation"><FONT FACE="monospace">Documentation</FONT></A><BR><A HREF="#AUTHOR"><FONT FACE="monospace">Author</FONT></A></P>
+<P><BR><BR><BR>
+</P>
+<P>G95-MinGW.exe is a self-extracting installer for the free GNU g95
+Fortran compiler. It works on Windows VISTA, XP, 2000, ME, 95 and 98.
+</P>
+<P>The g95-MinGW.exe installer allows the user to specify any install
+directory for g95. However, if MinGW is already installed on your
+system, it is best to install g95 in the root MinGW directory. </P>
+<P>If MinGW is installed, install g95 in your mingw directory and
+include the mingw\bin directory in your PATH. </P>
+<P>On systems without MinGW, g95 can be installed along with an
+additional set of programs and libraries from the MinGW distribution
+that are needed to run g95. All these programs and libraries are
+included in the self-extracting installer. They will be installed for
+you if you respond by clicking the &quot;Ok&quot; button when the
+installer asks: &quot;Install MinGW Utilities and libs?&quot; </P>
+<P>Responding with &quot;Ok&quot; is recommended even when installing
+g95 into a MinGW directory structure, as doing so will ensure you
+have fairly recently updated versions of these files. The PATH and
+the LIBRARY_PATH environment variables should be properly set up to
+find the g95 bin and lib directories. The LIBRARY_PATH environment
+variable should be set to the g95 lib directory. (G95_LIBRARY_PATH is
+used by the g95-MinGW-41.exe installer to prevent conflicts with
+other programs.) </P>
+<P><FONT FACE="Courier New, monospace">The g95 installer contains all
+the libraries and programs needed to successfully use the g95
+compiler, and produce executables for Windows systems. These include
+the GNU linker, ld.exe, and assembler, as.exe from the MinGW binutils
+package, as well as numerous libraries essential for g95.</FONT></P>
+<H2><A NAME="About"></A><FONT FACE="monospace">About MinGW</FONT></H2>
+<P><FONT FACE="monospace">MinGW (&quot;Minimalistic GNU for Windows&quot;)
+provides an environment for compiling and linking code based on the
+GNU GCC and binutils projects, which will work on Win32 platforms.
+Further information, and the complete distribution of MinGW is
+available from:</FONT><BR><BR>  <FONT FACE="monospace"><A HREF="http://www.mingw.org/download.shtml">http://www.mingw.org/download.shtml</A>.</FONT></P>
+<H2><A NAME="Requirements"></A><FONT FACE="monospace">Requirements</FONT></H2>
+<UL>
+	<LI><P><FONT FACE="monospace">About 15 MB free space on your hard
+	drive </FONT>
+	</P>
+</UL>
+<P><BR><BR>
+</P>
+<H2><A NAME="INSTALLING_THE_MINGW_G95_FORTRAN"></A><FONT FACE="monospace">INSTALLING
+THE MINGW G95 FORTRAN COMPILER</FONT></H2>
+<P><FONT FACE="monospace">The g95-MinGW.exe g95 installer extracts
+the files needed for g95 to run on supported Windows systems with or
+without MinGW already installed. Where MinGW is not installed a
+minimal set of support files from the MinGW distribution and the
+MinGW binutils package is required. These can also be installed if
+installing into MinGW. Doing this, especially if it is a the first
+time g95 is installed, will ensure that all the files that g95 needs
+to run are available immediately. To do this, when the message box
+asks: &quot;Install MinGW Utilities and libs?&quot;, respond by
+clicking &quot;Ok&quot;.</FONT></P>
+<P><FONT FACE="monospace">The PATH environment variable may then be
+set to include the path to MinGW and the g95 executable, eg
+c:\g95\bin.</FONT></P>
+<P><FONT FACE="monospace">Avoid directory names containing spaces,
+e.g. &quot;c:\Program Files\..&quot; </FONT></P>
+<P><FONT FACE="monospace">Avoid duplicate entries in your PATH.</FONT></P>
+<P><FONT FACE="monospace">If you are installing G95-MinGW.exe, set
+the LIBRARY_PATH environment variable to the location of your
+MinGW\lib directory. If you downloaded the g95-MinGW-41.exe
+installer, set G95_LIBRARY_PATH environment variable to the location
+of your MinGW\lib directory, eg c:\g95\lib.</FONT></P>
+<P><FONT FACE="monospace">G95 also uses the environment variable TMP
+for saving temporary files. TMP should be set to point to a directory
+on your system. </FONT>
+</P>
+<P><FONT FACE="monospace">The g95-MinGW.exe g95 installer extracts
+the files needed for g95 to run on supported Windows systems with or
+without MinGW already installed. Where MinGW is not installed a
+minimal set of support files from the MinGW distribution and the
+MinGW binutils package is required. These can also be installed if
+installing into MinGW. Doing this, especially if doing a first time
+g95 install, will ensure that all the files that g95 needs to run are
+available immediately. To do this, when the installer pops up a
+message box asking: &quot;Install MinGW Utilities and libs?&quot;,
+respond by clicking &quot;Ok&quot;.</FONT><BR><BR><FONT FACE="monospace">The
+PATH environment variable may then be set to include the path to
+MinGW and the g95 executable.</FONT></P>
+<H2><A NAME="INSTALLING_ON_WINDOWS_9598ME"></A><FONT FACE="monospace">INSTALLING
+ON WINDOWS 95/98/ME</FONT></H2>
+<P><FONT FACE="monospace">In Windows 95/98/ME the PATH is usually set
+in the autoexec.bat file, which is stored in the root directory of
+your hard disk; i.e. c:\. Edit this file and add the following lines:</FONT></P>
+<PRE STYLE="margin-bottom: 0.5cm"> <FONT FACE="monospace">PATH=&lt;MinGW_bin_path&gt;;&lt;g95_install_path&gt;;%PATH%</FONT>
+ <FONT FACE="monospace">SET LIBRARY_PATH=&lt;MinGW_library_path&gt;</FONT></PRE><P>
+  <BR><FONT FACE="monospace">where &lt;MinGW_bin_path&gt; is the full
+path to the bin directory of your MinGW installation, and
+&lt;g95_install_path&gt; is the path to the directory containing
+g95.exe, and &lt;MinGW_library_path&gt; is the full path to the
+MinGW\lib directory.</FONT><BR>      <BR><FONT FACE="monospace">You
+can do this by opening this file in Notepad or any other editor,
+adding the above line at the end, and then saving the changes. You
+must reboot for the changes to take effect.</FONT></P>
+<H2><A NAME="INSTALLING_ON_WINDOWS_NT2000XP"></A><FONT FACE="monospace">INSTALLING
+ON WINDOWS NT/2000/XP</FONT></H2>
+<P><FONT FACE="monospace">In Windows NT/2000/XP the PATH variable can
+be set by going to the Control Panel, selecting System, and then
+locating the environment (or advanced, environment) section.</FONT><BR><BR><FONT FACE="monospace">Add
+a new variable named LIBRARY_PATH and set its value to
+&lt;MinGW_library_path&gt;, i.e., the full path to the MinGW\lib
+directory.</FONT><BR><BR><FONT FACE="monospace">Similarly add a new
+variable named PATH (or edit it if already present) and set its value
+to:</FONT></P>
+<PRE STYLE="margin-bottom: 0.5cm"> <FONT FACE="monospace">&lt;MinGW_install_path&gt;;&lt;g95_install_path&gt;;%PATH%</FONT></PRE><P>
+    <BR><FONT FACE="monospace">Alternatively, place the following
+line in a batch file, and run it before invoking g95.</FONT></P>
+<PRE STYLE="margin-bottom: 0.5cm"> <FONT FACE="monospace">PATH=&lt;MinGW_install_path&gt;;&lt;g95_install_path&gt;;%PATH%</FONT>
+ <FONT FACE="monospace">SET LIBRARY_PATH = &lt;MinGW_library_path&gt;</FONT></PRE><P>
+<BR><FONT FACE="monospace">Replace &lt;MinGW_install_path&gt; with
+the full path to the bin directory of your MinGW installation, and
+&lt;g95_install_path&gt; with the path to the directory containing
+g95.exe, and &lt;MinGW_library_path&gt; with the full path to the
+MinGW\lib directory.</FONT></P>
+<P> 
+</P>
+<H2><FONT FACE="monospace">INSTALLING ON WINDOWS VISTA</FONT></H2>
+<P><FONT FACE="monospace">For Windows VISTA, in addition to the
+procedures outlined above for Windows XP, add the directory:</FONT></P>
+<P><FONT FACE="monospace">&lt;g95_install_path&gt;\lib\gcc-lib\i686-pc-mingw32\4.x.x</FONT></P>
+<P><FONT FACE="monospace">to both the PATH and LIBRARY_PATH
+environment variables, where &lt;g95_install_path&gt; is the
+directory where g95 is installed. Change &quot;4.x.x&quot; to the
+appropriate directory for the g95 version you installed.</FONT></P>
+<H2><A NAME="The_GNU_G95_Fortran_Compiler"></A><FONT FACE="monospace">The
+GNU G95 Fortran Compiler</FONT></H2>
+<P><FONT FACE="monospace">The g95 website URL is: <A HREF="http://www.g95.org/">http://www.g95.org</A>.
+</FONT><BR><BR><FONT FACE="monospace">For license details see the
+file COPYING.txt included in this package.</FONT><BR><BR><FONT FACE="monospace">The
+source code for g95 is available at:
+<A HREF="http://www.g95.org/g95_source.tgz">http://ftp.g95.org/g95_source.tgz</A></FONT><BR><BR><FONT FACE="monospace">Bug
+reports should be sent to Andy Vaught: <A HREF="mailto://andyv@firstinter.net">andyv@firstinter.net</A></FONT></P>
+<H2><A NAME="Support"></A><FONT FACE="monospace">Support</FONT></H2>
+<P><FONT FACE="monospace">For user support try posting a message on
+the g95 message board at:
+<A HREF="http://groups-beta.google.com/group/gg95">http://groups-beta.google.com/group/gg95</A></FONT><BR><BR><FONT FACE="monospace">Please
+include appropriate details such as:</FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">the
+	platform and OS you are using </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">the build
+	of g95 (use 'g95 -v' and post the output) </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">any
+	compiler options used   </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">the error
+	message </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">example
+	code snippet that caused the error </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">specify
+	the version of MinGW used </FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">whether
+	you have another g95 version installed</FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm">  <FONT FACE="monospace">output
+	from the command &quot;echo $PATH&quot; in a Msys shell </FONT>
+	</P>
+	<LI><P>  <FONT FACE="monospace">any other pertinent information </FONT>
+	</P>
+</UL>
+<P>  
+</P>
+<H2><A NAME="Documentation"></A><FONT FACE="monospace">Documentation</FONT></H2>
+<P><FONT FACE="monospace">A manual for using the G95 compiler is
+provided in the doc directory. This can be viewed using the free
+<A HREF="http://www.adobe.com/products/acrobat/readstep2.html">Acrobat
+Reader</A>or in a word processor that supports pdf.</FONT><BR>  
+</P>
+<H2><A NAME="AUTHOR"></A><FONT FACE="monospace">AUTHOR</FONT></H2>
+<P><FONT FACE="monospace">The script for building the g95-MinGW.exe
+installer was written by Doug Cox, <A HREF="mailto://tcc@sentex.net">tcc@sentex.net</A>.<BR></FONT><BR><BR>
+</P>
+</BODY>
+</HTML>

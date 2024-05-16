@@ -592,9 +592,8 @@ void BddInter::LectureXML_G3d (FILE *f)
 
     rewind(f);
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     indice_premierObjet = this->Objetlist.size();   // Pour utilisation en cas de fusion
@@ -622,7 +621,7 @@ void BddInter::LectureXML_G3d (FILE *f)
             fprintf(stderr, "Erreur de lecture du fichier XML\n");
             exit(-1);
         }
-        Update_Dialog((long long)ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftello64(f), fichierBdd_length);
         done = feof(f);
 
         if (XML_Parse(p, XML_Buff, len, done) == XML_STATUS_ERROR) {
@@ -894,10 +893,8 @@ void BddInter::LoadOBJ()
     }
     f = fopen(buffer.data(),"r");	//ouverture du fichier
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
-//    printf("Taille : %lld %lld\n",fichierBdd_length,std::filesystem::file_size(buffer.data()));
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     fgets(s1,160,f) ;
@@ -1146,7 +1143,7 @@ void BddInter::LoadOBJ()
             first = 1 ;
             while (fgets(s1,660,f) != nullptr) { // Jusqu'à la fin de fichier
         //        printf("%s",s1) ;
-                Update_Dialog((long long)ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftello64(f), fichierBdd_length);
 
                 if (!strncmp(s1,"g ",2) && !Forcer_1_Seul_Objet) {
                     if (first) {
@@ -1286,7 +1283,7 @@ void BddInter::LoadOBJ()
                     continue;
                 }
 
-//                Update_Dialog(ftell(f), fichierBdd_length); // pas efficace ici à cause des continue
+//                Update_Dialog(ftello64(f), fichierBdd_length); // pas efficace ici à cause des continue
             }
 //            nfac_t += nfac;     // Dernière mise à jour ici, car en dehors de la boucle des objets !
 
@@ -1402,9 +1399,8 @@ void BddInter::LoadM3D()
 
     f = fopen(buffer.data(),"r");   //ouverture du fichier
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     fgets(s1,160,f);
@@ -1485,7 +1481,7 @@ void BddInter::LoadM3D()
             this->make_1_sommet();
         }
 
-        Update_Dialog((long long)ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftello64(f), fichierBdd_length);
 
         // Lecture du nombre de Normales aux sommets
         fgets(s1,100,f) ;
@@ -1504,7 +1500,7 @@ void BddInter::LoadM3D()
             this->make_1_vecteur();
         }
 
-        Update_Dialog((long long)ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftello64(f), fichierBdd_length);
 
         // Lecture du nombre de facettes
         fgets(s1,100,f) ;
@@ -1546,7 +1542,7 @@ void BddInter::LoadM3D()
             Objet_courant->Facelist[nfac-1].groupe     = groupe_def;
             Objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
 
-            Update_Dialog((long long)ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftello64(f), fichierBdd_length);
         }
         Objet_courant->Nb_facettes  = nb_fac;
         Objet_courant->Nb_normales  = nb_fac;
@@ -1641,9 +1637,8 @@ void BddInter::LoadPLY()
 
     f = fopen(buffer.data(),"r");	//ouverture du fichier
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     fgets(s1,160,f);
@@ -1788,7 +1783,7 @@ void BddInter::LoadPLY()
             fgets(s1,100,f) ;   // Passer le cr
         }
 
-        Update_Dialog((long long)ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftello64(f), fichierBdd_length);
 
         buildGroupes(nb_groupes, index_grp, i_warn, materi);
 
@@ -1875,7 +1870,7 @@ void BddInter::LoadPLY()
             printf("Warning : Trop de facettes dans le fichier ( > %d)\n",nfac) ;
         }
 
-        Update_Dialog((long long)ftell(f), fichierBdd_length);
+        Update_Dialog((long long)ftello64(f), fichierBdd_length);
     }
 
     Fermer_progress_dialog();
@@ -2176,7 +2171,7 @@ void BddInter::LoadPLY_Stanford()
                 }
                 free(vlist); // Libérer la mémoire de chaque vertex
 
-                Update_Dialog((long long)ftell(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
+                Update_Dialog((long long)ftello64(f), fichierBdd_length);     // mieux car utilise la taille réelle et la position
             }
 
             if (vert_other == nullptr || face_other == nullptr) {
@@ -2249,7 +2244,7 @@ void BddInter::LoadPLY_Stanford()
                 Calcul_Normale_Barycentre(indiceObjet_courant,j);
                 free(flist);     // Libérer la mémoire de chaque Ply facettes (malloc de flist)
 
-                Update_Dialog((long long)ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftello64(f), fichierBdd_length);
             }
 
         } else if (equal_strings ((char*)"tristrips", elem_name)) {
@@ -2334,7 +2329,7 @@ void BddInter::LoadPLY_Stanford()
                 printf("Liste des facettes redimmensionnée\n");
                 free(tlist);     // Libérer la mémoire de chaque Ply tristrips (malloc de tlist)
 
-                Update_Dialog((long long)ftell(f), fichierBdd_length);
+                Update_Dialog((long long)ftello64(f), fichierBdd_length);
             }
 
         }/*else
@@ -2386,9 +2381,8 @@ void BddInter::LoadOFF()
     }
     f=fopen(buffer.data(),"r");	//ouverture du fichier
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     fgets(s1,160,f) ;
@@ -2452,7 +2446,7 @@ void BddInter::LoadOFF()
             this->Setxyz(vx,vy,vz);
             this->make_1_sommet();
 
-            Update_Dialog((long long)ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftello64(f), fichierBdd_length);
         }
 
         this->N_elements = nb_fac;
@@ -2481,7 +2475,7 @@ void BddInter::LoadOFF()
             objet_courant->Facelist[nfac-1].groupe     = groupe_def;
             objet_courant->Facelist[nfac-1].codmatface = codmatface_def;
 
-            Update_Dialog((long long)ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftello64(f), fichierBdd_length);
         }
         objet_courant->Nb_facettes  = nb_fac;
         objet_courant->Nb_normales  = nb_fac;
@@ -2539,9 +2533,8 @@ void BddInter::LoadSTL() {
     }
     f = fopen(buffer.data(),"r");   //ouverture du fichier
 
-    fseek(f,0,SEEK_END);
-    fichierBdd_length = ftell(f);
-    rewind(f);
+    fstat64(fileno(f), &s_statfichier);
+    fichierBdd_length = s_statfichier.st_size;
     printf("Taille : %lld\n",fichierBdd_length);
 
     cptr=fgets(s1,81,f) ;           // 80 caractères +1 pour permettre un \n
@@ -2681,7 +2674,7 @@ void BddInter::LoadSTL() {
                 numero_sommetB++;
             }
 
-            Update_Dialog((long long)ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftello64(f), fichierBdd_length);
         }
 
     } else {
@@ -2694,7 +2687,7 @@ void BddInter::LoadSTL() {
 
         fclose(f);                      // Fermer le fichier car ouvert précédemment en mode Ascii
         f = fopen(buffer.data(),"rb");  // Le réouvrir en mode lecture+binaire
-        fseek(f,80,0);                  // passer les 80 premiers octets d'entête (déjà lus et décodés)
+        fseek(f,80,0);                  // passer les 80 premiers octets d'entête (déjà lus et décodés) : ici fseek suffit, mais on aurait pu mettre fseeko64
 
         fread(&nb_triangles,sizeof(UINT32),1,f);
         printf("Nombre de triangles : %d\n",nb_triangles);
@@ -2784,7 +2777,7 @@ void BddInter::LoadSTL() {
                 facette_courante->groupe     = rang-1;  // Pour donner une valeur différente du matériau
             }
 
-            Update_Dialog((long long)ftell(f), fichierBdd_length);
+            Update_Dialog((long long)ftello64(f), fichierBdd_length);
         }
         if (erreur_couleurs) {
             // les tableaux MatAmbient_avionG et MatDiffuse_avionG sont trops petits
@@ -2815,7 +2808,7 @@ void BddInter::LoadSTL() {
 //static long
 //fileio_tell_func(void *self) {
 //    FILE *f = (FILE*)self;
-//    return(ftell(f));
+//    return(ftello64(f));
 //}
 
 // Pour fichier au format Autodesk 3DS
@@ -3290,7 +3283,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
             facette_courante->afficher   = true;       // Pour afficher la facette
             facette_courante->deleted    = false;
             facette_courante->flat       = false;      // En réalité, la facette peut être plane : les 3 normales calculées aux sommets = normale au barycentre/
-//            printf("%ld\n",ftell(f));                 // retourne toujours 0 avec f = fopen(buffer.data(),"rb"); fait dans Load_3DS
+//            printf("%ld\n",ftello64(f));                 // retourne toujours 0 avec f = fopen(buffer.data(),"rb"); fait dans Load_3DS
 
         }
 
@@ -3325,7 +3318,7 @@ void BddInter::LoadBDD() {
 // On pourrait décoder d'autres mots comme OMBRAGE / SHADING (ce qui permettrait d'imposer des facettes planes ou avec lissage de Gouraud/Phong ou ...)
 
     Object *objet_courant=nullptr;
-    int x1 = 0;
+//    int x1 = 0;
     unsigned int i;
     int mode_lecture= 0;
     int non_retenus = 0;
@@ -3592,7 +3585,7 @@ void BddInter::LoadBDD() {
         } else {
                 if (mode_lecture > 0) printf("mode_lecture = %d : POURQUOI passer par ici ????\n",mode_lecture);
         }
-        x1++;
+//        x1++;
 //        printf("ligne : %d\n",x1);
 
 //        int val  = m_gauge->GetValue();

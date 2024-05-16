@@ -13,7 +13,6 @@
 #include "wx/frame.h"
 
 class QMainWindow;
-class QScrollArea;
 
 class WXDLLIMPEXP_CORE wxFrame : public wxFrameBase
 {
@@ -42,8 +41,14 @@ public:
                 const wxString& name = wxASCII_STR(wxFrameNameStr));
 
     virtual void SetMenuBar(wxMenuBar *menubar) override;
+
+#if wxUSE_STATUSBAR
     virtual void SetStatusBar(wxStatusBar *statusBar ) override;
+#endif // wxUSE_STATUSBAR
+
+#if wxUSE_TOOLBAR
     virtual void SetToolBar(wxToolBar *toolbar) override;
+#endif // wxUSE_TOOLBAR
 
     virtual void SetWindowStyleFlag( long style ) override;
 
@@ -51,7 +56,6 @@ public:
     virtual void RemoveChild( wxWindowBase *child ) override;
 
     QMainWindow *GetQMainWindow() const;
-    virtual QScrollArea *QtGetScrollBarsContainer() const override;
 
 protected:
     virtual wxPoint GetClientAreaOrigin() const override;

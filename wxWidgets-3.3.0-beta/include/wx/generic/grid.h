@@ -140,7 +140,7 @@ class WXDLLIMPEXP_CORE wxGridCellWorker : public wxSharedClientDataContainer,
                                           public wxRefCounter
 {
 public:
-    wxGridCellWorker() { }
+    wxGridCellWorker() = default;
 
     wxGridCellWorker(const wxGridCellWorker& other);
 
@@ -593,7 +593,7 @@ public:
 class WXDLLIMPEXP_CORE wxGridHeaderLabelsRenderer
 {
 public:
-    virtual ~wxGridHeaderLabelsRenderer() {}
+    virtual ~wxGridHeaderLabelsRenderer() = default;
 
     // Draw the border around cell window.
     virtual void DrawBorder(const wxGrid& grid,
@@ -968,19 +968,24 @@ public:
     void SetCol( int n ) { m_col = n; }
     void Set( int row, int col ) { m_row = row; m_col = col; }
 
+    bool IsFullySpecified() const
+    {
+        return (m_row != -1 && m_col != -1);
+    }
+
     bool operator==( const wxGridCellCoords& other ) const
     {
-        return (m_row == other.m_row  &&  m_col == other.m_col);
+        return (m_row == other.m_row && m_col == other.m_col);
     }
 
     bool operator!=( const wxGridCellCoords& other ) const
     {
-        return (m_row != other.m_row  ||  m_col != other.m_col);
+        return (m_row != other.m_row || m_col != other.m_col);
     }
 
     bool operator!() const
     {
-        return (m_row == -1 && m_col == -1 );
+        return (m_row == -1 && m_col == -1);
     }
 
 private:
@@ -1464,7 +1469,7 @@ using wxUnsignedToIntHashMap = std::unordered_map<unsigned, int>;
 struct WXDLLIMPEXP_CORE wxGridSizesInfo
 {
     // default ctor, initialize m_sizeDefault and m_customSizes later
-    wxGridSizesInfo() { }
+    wxGridSizesInfo() = default;
 
     // ctor used by wxGrid::Get{Col,Row}Sizes()
     wxGridSizesInfo(int defSize, const wxArrayInt& allSizes);
@@ -2284,6 +2289,8 @@ public:
 
     void ClearSelection();
 
+    bool CopySelection();
+
     bool IsInSelection( int row, int col ) const;
 
     bool IsInSelection( const wxGridCellCoords& coords ) const
@@ -2374,6 +2381,7 @@ public:
     // ------- drag and drop
 #if wxUSE_DRAG_AND_DROP
     virtual void SetDropTarget(wxDropTarget *dropTarget) override;
+    virtual wxDropTarget* GetDropTarget() const override;
 #endif // wxUSE_DRAG_AND_DROP
 
 
@@ -2741,7 +2749,6 @@ protected:
 
     void OnSize( wxSizeEvent& );
     void OnKeyDown( wxKeyEvent& );
-    void OnKeyUp( wxKeyEvent& );
     void OnChar( wxKeyEvent& );
 
 

@@ -13,3 +13,8 @@ exit
 which sed
 exit
 exit
+echo "123." | sed -E 's/([[:digit:]]*)\./\1\
+next line/'
+nl=$'\n'
+echo "123." | sed 's/\./'"\\${nl}"'next line/'
+exit

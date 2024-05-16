@@ -782,19 +782,22 @@ typedef short int WXTYPE;
 
 
 #define wxDEFINE_COMPARISON(op, T1, T2, cmp) \
-    inline bool operator op(T1 x, T2 y) { return cmp(x, y, op); }
+    friend bool operator op(T1 x, T2 y) { return cmp(x, y, op); }
 
 #define wxDEFINE_COMPARISON_REV(op, T1, T2, cmp, oprev) \
-    inline bool operator op(T2 y, T1 x) { return cmp(x, y, oprev); }
+    friend bool operator op(T2 y, T1 x) { return cmp(x, y, oprev); }
 
 #define wxDEFINE_COMPARISON_BY_REV(op, T1, T2, oprev) \
-    inline bool operator op(T1 x, T2 y) { return y oprev x; }
+    friend bool operator op(T1 x, T2 y) { return y oprev x; }
 
 /*
     Define all 6 comparison operators (==, !=, <, <=, >, >=) for the given
     types in the specified order. The implementation is provided by the cmp
     macro. Normally wxDEFINE_ALL_COMPARISONS should be used as comparison
     operators are usually symmetric.
+
+    Note that comparison operators are defined as hidden friends and so this
+    macro can only be used inside the class declaration.
  */
 #define wxDEFINE_COMPARISONS(T1, T2, cmp) \
     wxFOR_ALL_COMPARISONS_3(wxDEFINE_COMPARISON, T1, T2, cmp)
@@ -803,6 +806,9 @@ typedef short int WXTYPE;
     Define all 6 comparison operators (==, !=, <, <=, >, >=) for the given
     types in the specified order, implemented in terms of existing operators
     for the reverse order.
+
+    Note that comparison operators are defined as hidden friends and so this
+    macro can only be used inside the class declaration.
  */
 #define wxDEFINE_COMPARISONS_BY_REV(T1, T2) \
     wxFOR_ALL_COMPARISONS_2_REV(wxDEFINE_COMPARISON_BY_REV, T1, T2)
@@ -3036,11 +3042,25 @@ typedef const void* WXWidget;
 /*  macros to define a class without copy ctor nor assignment operator */
 /*  --------------------------------------------------------------------------- */
 
+/* Obsolete macros kept only for compatibility, just use the corresponding
+   C++11 keywords directly in the class definition when writing new code. */
 #define wxMEMBER_DELETE = delete
+
+/* Also note that these macro do _not_ require a semicolon after them for
+   compatibility with wxWidgets 3.2. */
 #define wxDECLARE_DEFAULT_COPY_CTOR(classname) \
     public:                                    \
         classname(const classname&) = default;
 
+#define wxDECLARE_DEFAULT_COPY(classname)  \
+    wxDECLARE_DEFAULT_COPY_CTOR(classname) \
+    classname& operator=(const classname&) = default;
+
+#define wxDECLARE_DEFAULT_COPY_AND_DEF(classname) \
+    classname() = default;                        \
+    wxDECLARE_DEFAULT_COPY(classname);
+
+/* These macros do require a semicolon after them. */
 #define wxDECLARE_NO_COPY_CLASS(classname)      \
     private:                                    \
         classname(const classname&) wxMEMBER_DELETE; \

@@ -666,6 +666,7 @@ class BddInter: public wxGLCanvas {
 
     std::vector<wxString>     wxStringlist;
     std::ifstream fichierBdd;
+    struct stat64 s_statfichier;
     unsigned long long fichierBdd_length;
     bool timer_bis = false;
     int margin = 2;

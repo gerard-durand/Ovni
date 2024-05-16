@@ -264,8 +264,8 @@ class WXDLLIMPEXP_AUI wxAuiToolBarArt
 {
 public:
 
-    wxAuiToolBarArt() { }
-    virtual ~wxAuiToolBarArt() { }
+    wxAuiToolBarArt() = default;
+    virtual ~wxAuiToolBarArt() = default;
 
     virtual wxAuiToolBarArt* Clone() = 0;
     virtual void SetFlags(unsigned int flags) = 0;
@@ -627,6 +627,12 @@ public:
 protected:
     void Init();
 
+    // Override to return the minimum acceptable size because under wxMSW this
+    // function returns DEFAULT_ITEM_HEIGHT (see wxControl::DoGetBestSize())
+    // which is not suitable as height/width for a horizontal/vertical toolbar
+    // if icon sizes are much smaller than DEFAULT_ITEM_HEIGHT.
+    virtual wxSize DoGetBestSize() const override;
+
     virtual void OnCustomRender(wxDC& WXUNUSED(dc),
                                 const wxAuiToolBarItem& WXUNUSED(item),
                                 const wxRect& WXUNUSED(rect)) { }
@@ -693,7 +699,13 @@ protected:
     bool m_gripperVisible;
     bool m_overflowVisible;
 
-    bool RealizeHelper(wxClientDC& dc, bool horizontal);
+    // This function is only kept for compatibility, don't use in the new code.
+    bool RealizeHelper(wxClientDC& dc, bool horizontal)
+    {
+        RealizeHelper(dc, horizontal ? wxHORIZONTAL : wxVERTICAL);
+        return true;
+    }
+
     static bool IsPaneValid(long style, const wxAuiPaneInfo& pane);
     bool IsPaneValid(long style) const;
     void SetArtFlags() const;
@@ -704,6 +716,8 @@ protected:
 private:
     // Common part of OnLeaveWindow() and OnCaptureLost().
     void DoResetMouseState();
+
+    wxSize RealizeHelper(wxClientDC& dc, wxOrientation orientation);
 
     wxDECLARE_EVENT_TABLE();
     wxDECLARE_CLASS(wxAuiToolBar);

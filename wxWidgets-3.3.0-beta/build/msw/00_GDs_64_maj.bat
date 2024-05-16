@@ -13,7 +13,7 @@ REM echo _ >> log.txt
 set CB_ID=cb_64
 
 echo %time% >> 00_test.txt
-mingw32-make -f makefile.gcc -j 4 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% CXXFLAGS="-std=gnu++20"
+mingw32-make -f makefile.gcc -j 10 SHARED=1 MONOLITHIC=1 BUILD=release VENDOR=%CB_ID% CXXFLAGS="-std=gnu++20"
 rem >log.txt 2>&1
 echo %time% >> 00_test.txt
 strip ..\..\lib\gcc_dll\wxmsw330u_gcc_%CB_ID%.dll
