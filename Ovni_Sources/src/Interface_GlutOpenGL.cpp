@@ -82,6 +82,7 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
     float   quat[4];
     GLfloat m[4][4];
     int multi_s = 0;
+    static bool SetCurrentOK = false;
 
     // must always be here
     wxPaintDC dc(this);
@@ -89,7 +90,11 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
     if (verbose) printf("Entree BddInter::OnPaint\n");
 #if wxCHECK_VERSION(3,0,0)
-    SetCurrent(*m_glRC);
+    if (!SetCurrentOK) {
+        SetCurrent(*m_glRC);
+        SetCurrentOK = true;    // Il suffit de faire le SetCurrent une seule fois
+    }
+
 #else
 #ifndef __WXMOTIF__
     if (!GetContext()) return;
@@ -204,6 +209,7 @@ void BddInter::Reset_Sliders() {
 }
 
 void BddInter::ResetProjectionMode() {
+//    int static compteur=0;
     if (verbose) printf("Entree ResetProjectionMode\n");
 
     wxSize ClientSize = this->GetParent()->GetSize();
@@ -221,29 +227,30 @@ void BddInter::ResetProjectionMode() {
 
 //    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(this->GetParent());
 //    MAIN->ResizeOpenGL(ClientSize.GetX(), ClientSize.GetY());
-
-//    int w, h;
-//    GetClientSize(&w, &h);
-//    printf("ClientSize X/Y %d %d\n", w, h);
+    if (verbose) {
+        int w, h;
+        GetClientSize(&w, &h);
+        printf("ClientSize X/Y %d %d\n", w, h);
+    }
 
 #if wxCHECK_VERSION(3,0,0)
-    {
-//printf(" 5\n");fflush(stdout);
-        SetCurrent(*m_glRC);
+//    compteur++;
+
+//    SetCurrent(*m_glRC);    // utile ?????
 #else
 #ifndef __WXMOTIF__
     if ( GetContext() )
 #endif
-    {
         SetCurrent();
 #endif // wxCHECK_VERSION
-//printf(" 6\n");fflush(stdout);
+    if (verbose) {
+        printf(" 6\n");fflush(stdout);
+    }
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);   // ici .x et .y, pas .GetX et .GetY ? à vérifier peut-être
         glMatrixMode(GL_MODELVIEW);
 
-   }
     if (verbose) printf("Sortie ResetProjectionMode\n");
 }
 

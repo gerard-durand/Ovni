@@ -6,18 +6,18 @@
 //*)
 
 //(*IdInit(DeplacerBdd)
-const long DeplacerBdd::ID_STATICTEXT1 = wxNewId();
-const long DeplacerBdd::ID_STATICLINE1 = wxNewId();
-const long DeplacerBdd::ID_STATICTEXT2 = wxNewId();
-const long DeplacerBdd::ID_STATICTEXT3 = wxNewId();
-const long DeplacerBdd::ID_STATICTEXT4 = wxNewId();
-const long DeplacerBdd::ID_TEXTCTRL1 = wxNewId();
-const long DeplacerBdd::ID_TEXTCTRL2 = wxNewId();
-const long DeplacerBdd::ID_TEXTCTRL3 = wxNewId();
-const long DeplacerBdd::ID_BUTTON1 = wxNewId();
-const long DeplacerBdd::ID_BUTTON2 = wxNewId();
-const long DeplacerBdd::ID_BUTTON3 = wxNewId();
-const long DeplacerBdd::ID_BUTTON4 = wxNewId();
+const wxWindowID DeplacerBdd::ID_STATICTEXT1 = wxNewId();
+const wxWindowID DeplacerBdd::ID_STATICLINE1 = wxNewId();
+const wxWindowID DeplacerBdd::ID_STATICTEXT2 = wxNewId();
+const wxWindowID DeplacerBdd::ID_STATICTEXT3 = wxNewId();
+const wxWindowID DeplacerBdd::ID_STATICTEXT4 = wxNewId();
+const wxWindowID DeplacerBdd::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID DeplacerBdd::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID DeplacerBdd::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID DeplacerBdd::ID_BUTTON1 = wxNewId();
+const wxWindowID DeplacerBdd::ID_BUTTON2 = wxNewId();
+const wxWindowID DeplacerBdd::ID_BUTTON3 = wxNewId();
+const wxWindowID DeplacerBdd::ID_BUTTON4 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(DeplacerBdd,wxDialog)
@@ -52,12 +52,12 @@ DeplacerBdd::DeplacerBdd(wxWindow* parent,wxWindowID id,const wxPoint& pos,const
 	Button_Quitter = new wxButton(this, ID_BUTTON4, _T("Quitter"), wxPoint(168,168), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_CentrerClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_OKClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_InverserClick);
-	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DeplacerBdd::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&DeplacerBdd::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&DeplacerBdd::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&DeplacerBdd::OnButton_CentrerClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&DeplacerBdd::OnButton_OKClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&DeplacerBdd::OnButton_InverserClick);
+	Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&DeplacerBdd::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&DeplacerBdd::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&DeplacerBdd::OnClose);
 	//*)
 //	this->Deplacer_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

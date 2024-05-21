@@ -1095,6 +1095,7 @@ public :
     bool OK_ToSave = false; // Mis à true lors de la lecture d'un fichier et testé dans SaveTo (pas de save si OK_ToSave = false !!!)
     bool verbose= false;    // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : init via OvniMain.h
     void SaveTo (wxString, int);
+    void WarningAccess(wxString);
     void SaveBDD(wxString);
     void SaveOBJ(wxString);
     void SaveOFF(wxString);

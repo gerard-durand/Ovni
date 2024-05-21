@@ -4653,6 +4653,11 @@ void BddInter::SaveTo(wxString str, int index) {
 
 // Les boucles for des fonctions Save* ne sont a priori pas parallélisables : les fichiers créés doivent être séquentiels
 
+void BddInter::WarningAccess(wxString str) {
+    wxString Msg = _T("Écriture dans le fichier ") + str + _(" impossible !"); //wxNomsFichiers est OK sauf si sauvegarde automatique
+    DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+}
+
 void BddInter::SaveBDD(wxString str) {
     wxCharBuffer  buffer;
     std::vector<int>   numeros_Sommets;
@@ -4671,12 +4676,13 @@ void BddInter::SaveBDD(wxString str) {
     int nouvel_indice;
     bool test_np;
 
+    wxString str_loc = wxFileNameFromPath(str); // Traitement particulier pour la sauvegarde automatique dans Autosave.bdd
+
     buffer=str.mb_str();
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+        WarningAccess(str_loc);                 // wxNomsFichiers est OK sauf si sauvegarde automatique
         return;
     }
 
@@ -4977,8 +4983,7 @@ void BddInter::SaveOBJ(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+        WarningAccess(wxNomsFichiers);
         return;
     }
 
@@ -5200,8 +5205,7 @@ void BddInter::SaveOFF(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+        WarningAccess(wxNomsFichiers);
         return;
     }
     printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
@@ -5335,8 +5339,7 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
         myfile.open(buffer.data(), std::ofstream::binary);
     }
     if (!myfile.is_open()) {
-        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+        WarningAccess(wxNomsFichiers);
         return;
     }
 
@@ -5456,8 +5459,7 @@ void BddInter::SaveG3D(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        wxString Msg = "Écriture dans le fichier " + wxNomsFichiers + _(" impossible !");
-        DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
+        WarningAccess(wxNomsFichiers);
         return;
     }
 

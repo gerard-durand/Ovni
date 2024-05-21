@@ -10,10 +10,11 @@
 			<object class="sizeritem">
 				<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 					<label>Valeurs = coefficient par rapport à la diagonale de la boîte englobante </label>
+					<size>-1,15</size>
 					<style>wxALIGN_CENTRE</style>
 				</object>
 				<flag>wxALL|wxEXPAND</flag>
-				<border>5</border>
+				<border>1</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
@@ -30,7 +31,7 @@
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 							<label>Longueur des axes</label>
-							<size>260,15</size>
+							<size>340,16</size>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -39,11 +40,10 @@
 						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE1" variable="SpinCtrlDouble_axes" member="yes">
 							<value>0,25</value>
 							<max>1,000000</max>
-							<increment>0,010000</increment>
-							<size>80,23</size>
+							<size>80,21</size>
 							<handler function="OnSpinCtrlDouble_axesChange" entry="EVT_SPINCTRLDOUBLE" />
 						</object>
-						<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
 					</object>
 					<object class="sizeritem">
@@ -58,8 +58,7 @@
 						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE2" variable="SpinCtrlDouble_norm" member="yes">
 							<value>0,05</value>
 							<max>1,000000</max>
-							<increment>0,010000</increment>
-							<size>80,23</size>
+							<size>80,21</size>
 							<handler function="OnSpinCtrlDouble_normChange" entry="EVT_SPINCTRLDOUBLE" />
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
@@ -67,7 +66,7 @@
 						<option>1</option>
 					</object>
 				</object>
-				<flag>wxALL|wxEXPAND</flag>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>1</border>
 			</object>
 			<object class="sizeritem">
@@ -81,7 +80,7 @@
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 							<label>Rayon de la source</label>
-							<size>260,16</size>
+							<size>340,16</size>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -90,8 +89,7 @@
 						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE3" variable="SpinCtrlDouble_src" member="yes">
 							<value>0,03</value>
 							<max>1,000000</max>
-							<increment>0,010000</increment>
-							<size>80,23</size>
+							<size>80,21</size>
 							<handler function="OnSpinCtrlDouble_srcChange" entry="EVT_SPINCTRLDOUBLE" />
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -110,7 +108,7 @@
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox_AntialiasingSoft" member="yes">
 					<label>Anti-aliasing géré par OpenGL</label>
-					<size>200,20</size>
+					<size>-1,-1</size>
 					<handler function="OnCheckBox_AntialiasingSoftClick" entry="EVT_CHECKBOX" />
 				</object>
 				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
@@ -125,25 +123,28 @@
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX8" variable="CheckBox_1SeulObjet3D" member="yes">
 					<label>Forcer la lecture des fichiers .obj et .dxf dans 1 seul Objet 3D</label>
+					<size>-1,-1</size>
 					<handler function="OnCheckBox_1SeulObjet3DClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX2" variable="CheckBox_LectureOptimisee" member="yes">
 					<label>Lecture optimisée des tableaux de points des fichiers de type .obj</label>
+					<size>-1,-1</size>
 					<handler function="OnCheckBox_LectureOptimiseeClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX3" variable="CheckBox_TestDecalage3DS" member="yes">
 					<label>Lecture du décalage éventuel des objets dans les fichiers .3ds</label>
+					<size>-1,-1</size>
 					<handler function="OnCheckBox_TestDecalage3DSClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxALL|wxEXPAND</flag>
+				<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
@@ -155,9 +156,10 @@
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX4" variable="CheckBox_Seuillage" member="yes">
 					<label>Calculs et visualisation avec seuillage des normales</label>
+					<size>-1,-1</size>
 					<handler function="OnCheckBox_SeuillageClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxALL|wxALIGN_LEFT</flag>
+				<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
@@ -168,20 +170,20 @@
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText_Gouraud" member="yes">
 							<label>Seuil de comparaison des normales (degrés) :</label>
-							<size>260,16</size>
+							<size>300,16</size>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
-						<border>5</border>
+						<border>25</border>
 					</object>
 					<object class="sizeritem">
 						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE4" variable="SpinCtrlDouble_SeuilGouraud" member="yes">
 							<value>35,0</value>
 							<max>90,000000</max>
 							<increment>0,500000</increment>
-							<size>80,23</size>
+							<size>80,21</size>
 							<handler function="OnSpinCtrlDouble_SeuilGouraudChange" entry="EVT_SPINCTRLDOUBLE" />
 						</object>
-						<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
 					</object>
 					<object class="sizeritem">
@@ -189,21 +191,21 @@
 							<label>Coefficient multiplicateur du 2ème angle :</label>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
-						<border>5</border>
+						<border>25</border>
 					</object>
 					<object class="sizeritem">
 						<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE5" variable="SpinCtrlDouble_SeuilGouraud2" member="yes">
 							<value>1,6</value>
 							<max>3,000000</max>
 							<increment>0,100000</increment>
-							<size>80,23</size>
+							<size>80,21</size>
 							<handler function="OnSpinCtrlDouble_SeuilGouraud2Change" entry="EVT_SPINCTRLDOUBLE" />
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
 					</object>
 				</object>
-				<flag>wxALL|wxEXPAND</flag>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>1</border>
 			</object>
 			<object class="sizeritem">
@@ -212,8 +214,8 @@
 					<enabled>0</enabled>
 					<handler function="OnCheckBox_RecNormales_SeuilleesClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
-				<border>5</border>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>25</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX5" variable="CheckBox_CalculNormales" member="yes">
@@ -226,10 +228,9 @@
 			<object class="sizeritem">
 				<object class="wxCheckBox" name="ID_CHECKBOX11" variable="CheckBox_NotFlat" member="yes">
 					<label>Forcer toutes les facettes à être NON planes</label>
-					<pos>0,0</pos>
 					<handler function="OnCheckBox_NotFlatClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxALL</flag>
+				<flag>wxLEFT|wxRIGHT</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
@@ -237,7 +238,7 @@
 					<label>Supprimer les doublons d&apos;arêtes des facettes</label>
 					<handler function="OnCheckBox_TraiterDoublonsAretesClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxBOTTOM|wxLEFT|wxRIGHT</flag>
+				<flag>wxLEFT|wxRIGHT</flag>
 				<border>5</border>
 				<option>1</option>
 			</object>
@@ -258,8 +259,8 @@
 				<object class="wxBoxSizer" variable="BoxSizer5" member="no">
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
-							<label>0 &lt;=&gt; Pas de sauvegarde</label>
-							<size>260,16</size>
+							<label>0 &lt;=&gt; Sans sauvegarde automatique</label>
+							<size>340,16</size>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -267,7 +268,7 @@
 					<object class="sizeritem">
 						<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl_PasSvg" member="yes">
 							<value>0</value>
-							<size>80,23</size>
+							<size>80,21</size>
 							<maxsize>78,0</maxsize>
 							<handler function="OnSpinCtrl_PasSvgChange" entry="EVT_SPINCTRL" />
 						</object>
@@ -293,7 +294,8 @@
 						<item>Méthode 3     </item>
 					</content>
 					<default>1</default>
-					<size>382,48</size>
+					<pos>-1,-1</pos>
+					<size>382,40</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_TriangulationSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -308,7 +310,7 @@
 						<item>Trackball</item>
 					</content>
 					<default>1</default>
-					<size>382,48</size>
+					<size>382,40</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_TrackballSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -324,7 +326,7 @@
 						<item>32 x 32            </item>
 						<item>48 x 48</item>
 					</content>
-					<size>382,48</size>
+					<size>382,40</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_IconSizeSelect" entry="EVT_RADIOBOX" />
 				</object>
@@ -343,7 +345,7 @@
 					<checked>1</checked>
 					<handler function="OnCheckBox_DisplayFpsClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxALL|wxEXPAND</flag>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
@@ -359,7 +361,7 @@
 					<fg>wxSYS_COLOUR_BTNTEXT</fg>
 					<handler function="OnCheckBox_CreerBackupClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxALL|wxEXPAND</flag>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
@@ -369,8 +371,8 @@
 					<fg>wxSYS_COLOUR_BTNTEXT</fg>
 					<handler function="OnCheckBox_SupprBackupClick" entry="EVT_CHECKBOX" />
 				</object>
-				<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
-				<border>5</border>
+				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<border>25</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxStaticLine" name="ID_STATICLINE11" variable="StaticLine11" member="yes">
@@ -384,16 +386,17 @@
 					<style>wxALIGN_CENTRE</style>
 				</object>
 				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
-				<border>2</border>
+				<border>5</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxBoxSizer" variable="BoxSizer2" member="yes">
 					<object class="sizeritem">
 						<object class="wxTextCtrl" name="ID_TEXTCTRL10" variable="TextCtrl_WorkDir" member="yes">
 							<value>C:</value>
-							<size>294,21</size>
+							<size>394,21</size>
 							<style>wxTE_RIGHT</style>
 							<handler function="OnTextCtrl_WorkDirText" entry="EVT_TEXT" />
+							<handler function="OnTextCtrl_WorkDirText" entry="EVT_TEXT_ENTER" />
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_BOTTOM</flag>
 						<border>5</border>
@@ -401,7 +404,7 @@
 					<object class="sizeritem">
 						<object class="wxButton" name="ID_BUTTON1" variable="Button_tmp_rep" member="yes">
 							<label>...</label>
-							<size>40,23</size>
+							<size>40,21</size>
 							<fg>wxSYS_COLOUR_BTNTEXT</fg>
 							<handler function="OnButton_tmp_repClick" entry="EVT_BUTTON" />
 						</object>
@@ -422,8 +425,8 @@
 				<object class="wxBoxSizer" variable="BoxSizer6" member="yes">
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT10" variable="StaticText5" member="yes">
-							<label>Nombre de threads OpenMP (0 &lt;=&gt; auto)</label>
-							<size>260,16</size>
+							<label>Nombre de threads OpenMP (0 &lt;=&gt; automatique)</label>
+							<size>340,16</size>
 						</object>
 						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -431,7 +434,7 @@
 					<object class="sizeritem">
 						<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl_Threads" member="yes">
 							<value>0</value>
-							<size>80,23</size>
+							<size>80,22</size>
 							<maxsize>78,0</maxsize>
 							<handler function="OnSpinCtrl_ThreadsChange" entry="EVT_SPINCTRL" />
 						</object>
@@ -439,7 +442,7 @@
 						<border>5</border>
 					</object>
 				</object>
-				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">

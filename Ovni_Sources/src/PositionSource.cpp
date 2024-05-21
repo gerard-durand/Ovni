@@ -6,17 +6,17 @@
 //*)
 
 //(*IdInit(PositionSource)
-const long PositionSource::ID_STATICTEXT5 = wxNewId();
-const long PositionSource::ID_STATICTEXT1 = wxNewId();
-const long PositionSource::ID_STATICTEXT2 = wxNewId();
-const long PositionSource::ID_STATICTEXT3 = wxNewId();
-const long PositionSource::ID_STATICTEXT4 = wxNewId();
-const long PositionSource::ID_SPINCTRLDOUBLE1 = wxNewId();
-const long PositionSource::ID_SPINCTRLDOUBLE2 = wxNewId();
-const long PositionSource::ID_SPINCTRLDOUBLE3 = wxNewId();
-const long PositionSource::ID_SPINCTRLDOUBLE4 = wxNewId();
-const long PositionSource::ID_BUTTON2 = wxNewId();
-const long PositionSource::ID_BUTTON3 = wxNewId();
+const wxWindowID PositionSource::ID_STATICTEXT5 = wxNewId();
+const wxWindowID PositionSource::ID_STATICTEXT1 = wxNewId();
+const wxWindowID PositionSource::ID_STATICTEXT2 = wxNewId();
+const wxWindowID PositionSource::ID_STATICTEXT3 = wxNewId();
+const wxWindowID PositionSource::ID_STATICTEXT4 = wxNewId();
+const wxWindowID PositionSource::ID_SPINCTRLDOUBLE1 = wxNewId();
+const wxWindowID PositionSource::ID_SPINCTRLDOUBLE2 = wxNewId();
+const wxWindowID PositionSource::ID_SPINCTRLDOUBLE3 = wxNewId();
+const wxWindowID PositionSource::ID_SPINCTRLDOUBLE4 = wxNewId();
+const wxWindowID PositionSource::ID_BUTTON2 = wxNewId();
+const wxWindowID PositionSource::ID_BUTTON3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(PositionSource,wxDialog)

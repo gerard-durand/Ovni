@@ -346,7 +346,7 @@ void BddInter::Stocker_ini_file()
         fclose(f_init) ;
     }
     else {
-        wxString wxMessage=_T("Ecriture impossible dans le fichier .ini");
+        wxString wxMessage=_T("Écriture impossible dans le fichier .ini");
         DisplayMessage(wxMessage,true);
 //        return ;
     }
