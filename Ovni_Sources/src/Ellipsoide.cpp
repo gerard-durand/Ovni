@@ -123,13 +123,13 @@ void Ellipsoide::genereEllipsoide()
     if (Element->Objetlist.size() == 0)
         new_num = 1;
     else
-        new_num = Element->Objetlist.rbegin()->GetValue() +1;
+        new_num = Element->Objetlist.rbegin()->GetNumero() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Ellipsoide - ") + num_obj;
     Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
 //    printf("size : %d\n",Element->Objetlist.size());
-    int indiceObjet = Element->indiceObjet_courant;
+    int indiceObjet = Element->GetIndiceObjetCourant();
 
     printf("centre : %f %f %f\nrayon  : %f\n",centre_primitive[0],centre_primitive[1],centre_primitive[2],rayon);
     printf("Nombre de meridiens  : %d\n",Nb_Meridiens) ;
@@ -149,11 +149,11 @@ void Ellipsoide::genereEllipsoide()
     Element->Genere_Normales_Sommets_Sphere(Nb_Meridiens, Nb_Paralleles, coefx, coefy, coefz);
 
     Element->Genere_Tableau_Points_Facettes(p_Objet);
-    Element->Genere_Tableau_Aretes_OK = true;
+    Element->SetGenereTableauAretes_OK(true);
     Element->Genere_Tableau_Aretes(p_Objet);
     Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
 }
 
 void Ellipsoide::OnButton_OKClick(wxCommandEvent& event)
@@ -177,13 +177,13 @@ void Ellipsoide::OnButton_OKClick(wxCommandEvent& event)
 
     genereEllipsoide();
 
-    Element->type_fichier   = 1;  // Marquer comme si c'était un fichier .bdd
-    Element->type_dxf   = false;
-    Element->m_gllist   = 0;
+    Element->SetTypeFichier(1);     // Marquer comme si c'était un fichier .bdd
+    Element->SetTypeDxf(false);
+    Element->m_gllist = 0;
 
     Element->Search_Min_Max();
-    Element->m_loaded = true;
-    Element->OK_ToSave= true;
+    Element->SetFileLoaded(true);
+    Element->SetOK_ToSave (true);
     Element->Refresh();
     Hide();
 }

@@ -44,7 +44,7 @@ class PropertiesPanel: public wxDialog
 		wxStaticText* numero_facette;
 		wxStaticText* numero_objet;
 		//*)
-		wxString str;
+//		wxString str;
 
 	protected:
 

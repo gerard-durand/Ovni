@@ -70,6 +70,7 @@
 					<Add library="libwxjpeg.a" />
 					<Add library="libwxtiff.a" />
 					<Add library="libwxzlib.a" />
+					<Add library="libwxwebp.a" />
 					<Add library="libkernel32.a" />
 					<Add library="libuser32.a" />
 					<Add library="libgdi32.a" />
@@ -90,6 +91,8 @@
 					<Add library="libopengl32.a" />
 					<Add library="libglu32.a" />
 					<Add library="libwinmm.a" />
+					<Add library="libgdiplus.a" />
+					<Add library="libmsimg32.a" />
 					<Add directory="$(#wx3x)/lib/gcc_lib" />
 				</Linker>
 			</Target>
@@ -125,7 +128,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-std=gnu++20" />
+			<Add option="-std=gnu++26" />
 			<Add option="-m64" />
 			<Add option="-Wno-comment" />
 			<Add option="-Wno-unused-variable" />

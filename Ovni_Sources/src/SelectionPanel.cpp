@@ -200,8 +200,8 @@ void SelectionPanel::InitPanel()
 
     if (RadioButton_Selection_Points->GetValue()) {
         Element->mode_selection = Element->selection_point;
-        Element->show_points    = true;
-        Element->detection_survol_point = true;
+        Element->SetShowPoints(true);
+        Element->SetDetectionSurvolPoint(true);
 //        Element->style = GL_POINTS;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Points\""));
         Button_OuvrirReperage->Enable();
@@ -247,8 +247,8 @@ void SelectionPanel::InitPanel()
     } else if (RadioButton_Selection_Facettes->GetValue()) {
 
         Element->mode_selection = Element->selection_facette;
-        Element->show_points    = false;
-        Element->detection_survol_point = false;
+        Element->SetShowPoints(false);
+        Element->SetDetectionSurvolPoint(false);
 //        Element->style = GL_POLYGON;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Facettes\""));
         Button_OuvrirReperage->Enable();
@@ -301,8 +301,8 @@ void SelectionPanel::InitPanel()
 
         Element->mode_selection = Element->selection_objet;
         // On pourrait effacer une éventuelle sélection de facettes via key_event.m_keyCode = 'S'; Element->OnKeyDown(key_event);
-        Element->show_points    = false;
-        Element->detection_survol_point = false;
+        Element->SetShowPoints(false);
+        Element->SetDetectionSurvolPoint(false);
 //        Element->style = GL_POLYGON;
         Button_OuvrirReperage->SetLabel(_T("Ouvrir la fenêtre \"Repérage/Objets\""));
         Button_OuvrirReperage->Enable();    // Disable() en version Tcl. Pourquoi ?
@@ -372,14 +372,14 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
 
     Hide(); // Masquer la fenêtre
 
-    MAIN->toggle_outils = false;
+    MAIN->SetToggleOutils(false);
     MAIN->Button_Outils->SetValue(false);
     if (MAIN->Button_Points->GetValue())    // Si le bouton Afficher les points est activé, remettre show_points à true
-        Element->show_points = true;
+        Element->SetShowPoints(true);
     else
-        Element->show_points = false;   // sinon, false
+        Element->SetShowPoints(false);       // sinon, false
 
-    Element->detection_survol_point = false;
+    Element->SetDetectionSurvolPoint(false);
 
     if (Element->mode_selection == Element->selection_objet) {
         Element->m_gllist = 0;
@@ -387,8 +387,8 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     Element->listeObjets.clear();
     Element->listePoints.clear();
     for (unsigned int i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected=false;
-    Element->SelectionObjet = 0;
-    if ((Element->mode_selection == Element->selection_point) && (Element->type_fichier != 0)) {
+    Element->SetSelectionObjet(0);
+    if ((Element->mode_selection == Element->selection_point) && (Element->GetTypeFichier() != 0)) {
         wxKeyEvent key_event;
         key_event.m_keyCode = 'S';                          // Raz de la sélection de points, sinon pb lors du basculement en mode selection_facette
         Element->OnKeyDown(key_event);                      // Simule une pression sur la touche S au clavier => Reset de la sélection des facettes
@@ -399,7 +399,7 @@ void SelectionPanel::OnClose(wxCloseEvent& event)
     wxCommandEvent new_event;
     OnRadioButton_GrpMatSelect(new_event);                  // Remettre en état les choix et labels groupe/matériau (par simulation d'un clic)
 
-    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+    if (Element->GetTypeDxf()) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->Refresh();
 }
@@ -450,7 +450,7 @@ void SelectionPanel::OnRadioButton_SelectionSelect(wxCommandEvent& event)
     TextCtrl_NumGroupe  ->SetValue(str_reset);
     TextCtrl_NumMateriau->SetValue(str_reset);
 
-    if (Element->type_dxf) return;      // Ne rien faire de plus si on est sur un fichier .dxf => sortir directement (en évitant le Refresh() notamment !)
+    if (Element->GetTypeDxf()) return;      // Ne rien faire de plus si on est sur un fichier .dxf => sortir directement (en évitant le Refresh() notamment !)
 
     wxKeyEvent key_event;               // Raz de la liste de points/facettes sélectionnés
     key_event.m_keyCode = 'S';
@@ -499,7 +499,7 @@ void SelectionPanel::OnRadioButton_GrpMatSelect(wxCommandEvent& event)
             str_grpmat += str;              // Concaténation des valeurs
         }
     }
-    TextCtrl_NumerosUtilises->SetLabel(str_grpmat);
+    TextCtrl_NumerosUtilises->SetValue(str_grpmat); // Plutôt que SetLabel
 }
 
 void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
@@ -547,7 +547,7 @@ void SelectionPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     }
     OnRadioButton_GrpMatSelect(event) ; // Simuler un clic sur Groupe/Matériau pour regénérer la liste affichée dans l'interface
 
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -845,7 +845,7 @@ void SelectionPanel::OnTextCtrl_NomObjetText(wxCommandEvent& event)
             Nouveau_nom = Nouveau_nom.utf8_str();   // Conversion de utf8 en string
             Element->Objetlist[*it].SetName(Nouveau_nom);
             printf("Nouveau nom de l'objet : %s\n",Element->Objetlist[*it].GetName());
-            Element->bdd_modifiee = true;
+            Element->SetBddModifiee(true);
         } else {
             if (Element->listeObjets.size() > 1) printf("Le changement de nom d'Objet ne fonctionne que sur la selection d'un seul objet !\n");
         }
@@ -948,7 +948,7 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
     for (o=0; o<Element->listeObjets.size(); ++o, it--) {
         Objet_courant = &(Element->Objetlist[*it]);
         if (o == 0) Objet_base = Objet_courant;
-        printf("Objet %d, numero %d, %s\n",o,Objet_courant->GetValue(),Objet_courant->GetName());
+        printf("Objet %d, numero %d, %s\n",o,Objet_courant->GetNumero(),Objet_courant->GetName());
         if (o == 0) {
             New_Nb_sommets    = Objet_courant->Nb_sommets;
             New_Nb_facettes   = Objet_courant->Nb_facettes;
@@ -1032,10 +1032,10 @@ void SelectionPanel::OnButton_FusionnerClick(wxCommandEvent& event)
     Element->listeObjets.clear();                       // Ceinture et bretelles
 
     Button_Fusionner->Disable();                        // ???
-    Element->show_points    = false;                    // Devrait être déjà ainsi ???
-    Element->m_gllist       = Element->glliste_objets;
+    Element->SetShowPoints(false);                     // Devrait être déjà ainsi ???
+    Element->m_gllist = Element->glliste_objets;
     Element->Refresh();
-    Element->bdd_modifiee   = true;
+    Element->SetBddModifiee(true);
 
     RadioButton_Selection_Objets->SetValue(true);       // Devrait être déjà ainsi ???
     Element->mode_selection = Element->selection_objet; //      "           "

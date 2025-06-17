@@ -109,6 +109,9 @@ class TranslationPanel: public wxDialog
 		void OnTextCtrl_YGTextEnter(wxCommandEvent& event);
 		void OnTextCtrl_ZGTextEnter(wxCommandEvent& event);
 		//*)
+
+        OvniFrame* MAIN;
+
 		void Appliquer_Translation(double, double, double);
 //		void ToDo();
 		double Pas_G, Pas_F;
@@ -117,7 +120,6 @@ class TranslationPanel: public wxDialog
 		double Cumul_Z, Cumul_ZG, Cumul_ZF;
 		double tx, ty, tz;
 		wxString wxTexte;
-        OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

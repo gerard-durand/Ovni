@@ -35,6 +35,8 @@
     Certaines de ces fonctions bénéficient d'un <a name="raccourci"></a>raccourci
     clavier (rappelé entre parenthèses dans ce menu).<br>
     <ul>
+      <li><b>A</b> :  (en majuscule) force la création immédiate du fichier Autosave.bdd 
+	                  dans le répertoire de travail, si toutefois la Bdd a été modifiée ;</li>
       <li><b>s</b> : remise à zéro des sélections (<b>s</b> ou <b>S</b>) ;</li>
       <li><b>k</b> : complémente/inverse la sélection des facettes objet/objet (<b>k</b>
         ou <b>K</b>) ;</li>
@@ -55,7 +57,7 @@
       <li><b>z</b> : Par défaut, les 2 options ci-dessus laissent les facettes
         sélectionnées actives. Cette option permet de désélectionner (ou
         resélectionner) automatiquement les facettes une fois l'action réalisée
-        (<b>z</b> ou <b>Z</b>) ;</li>
+        (<b>z</b> ou <b>Z</b>).</li>
     </ul>
     Note : les raccourcis clavier ne fonctionnent que si c'est la fenêtre OpenGL
     qui est active (ou qui a le focus !). C'est normalement toujours le cas.
@@ -130,10 +132,12 @@
     La combinaison de touches <b>Ctrl + R</b> force un ré-affichage de la
     fenêtre OpenGL 3D. Parfois utile quand la mise à jour graphique n'a pas été
     faite correctement.<br>
-    <p> La touche <b>a</b> (ou <b>A</b>) est l'équivalent du menu <b>Préférences/Anti-aliasing
+    <p> La touche <b>a</b> (en minuscule) est l'équivalent du menu <b>Préférences/Anti-aliasing
         géré par OpenGL</b>. Elle active l'anti-aliasing des lignes mais aussi
       celui des polygones (via l'option GL_MULTISAMPLE). Le driver de la carte
       graphique doit être configuré pour supporter cette option. </p>
+    <p> La touche <b>q</b> (ou <b>Q</b>) est l'équivalent du menu <b>Fichier/Quitter</b>. 
+		Idem pour la touche <b>échap./Escape</b></p>
     <p> La touche <b>t</b> (ou <b>T</b>) est l'équivalent du menu <b>Préférences/Mode
         de Rotation à la souris</b>. Elle permet de basculer du mode de rotation
       directe des axes X, Y et Z de la bdd vers le mode "Trackball" (et
@@ -174,11 +178,13 @@
     <h3 =""=""><span style="color: #33cc00;"><i>Sauvegardes automatiques :</i></span></h3>
     Une procédure de sauvegarde automatique se lance toutes les 5 minutes (par
     défaut) quand la base de données en mémoire est modifiée. Elle crée un
-    fichier <b>Autosave.bdd</b> qui sera supprimé lors de la sortie normale de
-    l'application. En cas de crash, ce fichier reste sur le disque et sera
-    détecté au lancement suivant. On pourra ouvrir ce fichier, mais il faudra <b><font
-        color="red">impérativement</font></b> l'enregistrer sous un nouveau nom
+    fichier <b>Autosave.bdd</b> dans le répertoire de travail, qui sera supprimé lors 
+	de la sortie normale de l'application. En cas de crash, ce fichier reste sur le disque 
+	et sera détecté au lancement suivant. On pourra ouvrir ce fichier, mais il faudra 
+	<b><font color="red">impérativement</font></b> l'enregistrer sous un nouveau nom
     si on souhaite le conserver.<br>
+	À noter que la touche <b>A</b> (en majuscule) permet une création immédiate de ce 
+	fichier de sauvegarde, à condition cependant que la base de données ait été modifiée.<br>
     <br>
   </body>
 </html>

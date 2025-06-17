@@ -21,14 +21,6 @@ class ModificationPanel: public wxDialog
 
 		ModificationPanel(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~ModificationPanel();
-        bool Bool_souder  = false;
-        bool Bool_diviser = false;
-        int  division;
-        bool activer_transparence = false;
-        int  NumeroMateriau = 0, NumeroGroupe = 0;
-        bool FacetteCreeePlane = false;
-        bool aretes_calculees;
-//        wxWindow*  Mod_Parent;
 
 		//(*Declarations(ModificationPanel)
 		wxButton* Button_Annuler;
@@ -69,45 +61,74 @@ class ModificationPanel: public wxDialog
 		wxToggleButton* ToggleButton_Souder;
 		//*)
 
+		// Gettet / Setter
+		void SetActiverTransparence(bool value) {
+		    activer_transparence = value;
+		};
+		bool GetActiverTransparence() {
+		    return activer_transparence;
+		};
+		int GetNumeroGroupe() {
+		    return NumeroGroupe;
+		};
+		int GetNumeroMateriau() {
+		    return NumeroMateriau;
+		};
+		bool GetFacetteCreeePlane() {
+		    return FacetteCreeePlane;
+		};
+		void SetAretesCalculees(bool value) {
+		    aretes_calculees = value;
+		};
+		bool GetBoolSouder() {
+		    return Bool_souder;
+		};
+		bool GetBoolDiviser() {
+		    return Bool_diviser;
+		};
+		int GetDivision() {
+		    return division;
+		};
+
 	protected:
 
 		//(*Identifiers(ModificationPanel)
-		static const long ID_STATICTEXT1;
-		static const long ID_TOGGLEBUTTON1;
-		static const long ID_SPINCTRL1;
-		static const long ID_STATICTEXT2;
-		static const long ID_TOGGLEBUTTON2;
-		static const long ID_PANEL2;
-		static const long ID_STATICTEXT3;
-		static const long ID_STATICTEXT4;
-		static const long ID_STATICTEXT5;
-		static const long ID_SPINCTRL2;
-		static const long ID_SPINCTRL3;
-		static const long ID_TOGGLEBUTTON4;
-		static const long ID_BUTTON4;
-		static const long ID_BUTTON5;
-		static const long ID_BUTTON6;
-		static const long ID_CHECKBOX2;
-		static const long ID_PANEL4;
-		static const long ID_STATICTEXT6;
-		static const long ID_TOGGLEBUTTON3;
-		static const long ID_BUTTON8;
-		static const long ID_STATICLINE1;
-		static const long ID_PANEL6;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		static const long ID_TEXTCTRL1;
-		static const long ID_BUTTON9;
-		static const long ID_BUTTON10;
-		static const long ID_BUTTON11;
-		static const long ID_BUTTON12;
-		static const long ID_BUTTON1;
-		static const long ID_CHECKBOX1;
-		static const long ID_CHECKBOX3;
-		static const long ID_PANEL8;
-		static const long ID_BUTTON13;
-		static const long ID_PANEL9;
-		static const long ID_PANEL10;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_TOGGLEBUTTON1;
+		static const wxWindowID ID_SPINCTRL1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_TOGGLEBUTTON2;
+		static const wxWindowID ID_PANEL2;
+		static const wxWindowID ID_STATICTEXT3;
+		static const wxWindowID ID_STATICTEXT4;
+		static const wxWindowID ID_STATICTEXT5;
+		static const wxWindowID ID_SPINCTRL2;
+		static const wxWindowID ID_SPINCTRL3;
+		static const wxWindowID ID_TOGGLEBUTTON4;
+		static const wxWindowID ID_BUTTON4;
+		static const wxWindowID ID_BUTTON5;
+		static const wxWindowID ID_BUTTON6;
+		static const wxWindowID ID_CHECKBOX2;
+		static const wxWindowID ID_PANEL4;
+		static const wxWindowID ID_STATICTEXT6;
+		static const wxWindowID ID_TOGGLEBUTTON3;
+		static const wxWindowID ID_BUTTON8;
+		static const wxWindowID ID_STATICLINE1;
+		static const wxWindowID ID_PANEL6;
+		static const wxWindowID ID_STATICTEXT7;
+		static const wxWindowID ID_STATICTEXT8;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_BUTTON9;
+		static const wxWindowID ID_BUTTON10;
+		static const wxWindowID ID_BUTTON11;
+		static const wxWindowID ID_BUTTON12;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_CHECKBOX1;
+		static const wxWindowID ID_CHECKBOX3;
+		static const wxWindowID ID_PANEL8;
+		static const wxWindowID ID_BUTTON13;
+		static const wxWindowID ID_PANEL9;
+		static const wxWindowID ID_PANEL10;
 		//*)
 
 	private:
@@ -138,11 +159,21 @@ class ModificationPanel: public wxDialog
 		void OnCheckBox_NotFlatClick(wxCommandEvent& event);
 		void OnPanel6Paint(wxPaintEvent& event);
 		//*)
+
         OvniFrame* MAIN;
+
         int  old_modeGL;
         int  old_mode_selection;
         bool old_show_points;
         bool old_show_lines;
+        bool Bool_souder          = false;
+        bool Bool_diviser         = false;
+        int  division;
+        bool activer_transparence = false;
+        bool FacetteCreeePlane    = false;
+        bool aretes_calculees;
+
+        int  NumeroMateriau = 0, NumeroGroupe = 0;
 
 		DECLARE_EVENT_TABLE()
 };

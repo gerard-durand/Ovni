@@ -158,8 +158,8 @@ void ZoomSpecifique::OnButton_AppliquerClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->m_gldata.fmult_diag = wxAtof(TextCtrl_Distance->GetValue());
-    Element->m_gldata.zoom       = wxAtof(TextCtrl_FoV->GetValue());
+    Element->m_gldata.fmult_diagonale = wxAtof(TextCtrl_Distance->GetValue());
+    Element->m_gldata.zoom            = wxAtof(TextCtrl_FoV->GetValue());
     Element->SetPosObs(false);
     Element->ResetProjectionMode();
     Element->Refresh();
@@ -169,25 +169,25 @@ void ZoomSpecifique::OnButton_ResetClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->m_gldata.fmult_diag = Element->fmult_diag_def;
+    Element->m_gldata.fmult_diagonale = Element->GetFmultDiagonaleDef();
     Element->m_gldata.rotx = Element->m_gldata.roty = Element->m_gldata.rotz = 0.0;
     StaticText_Warning->Hide(); // roty est à 0
     SpinCtrl_LSI->SetValue(90);
     if (Element->MPosObs->IsShown()) Element->MPosObs->SpinCtrl_LSI->SetValue(90);
     SpinCtrl_LAZ->SetValue(0);
     if (Element->MPosObs->IsShown()) Element->MPosObs->SpinCtrl_LAZ->SetValue(0);
-    Element->reset_zoom    = true;
-    Element->SetPosObs(Element->reset_zoom);
+    Element->SetResetZoom(true);
+    Element->SetPosObs(true);
     Element->ResetProjectionMode();
     MAIN->SetAngles();
 
     float val = Element->m_gldata.zoom;
     wxString str_loc;
     str_loc.Printf(_T("%4.3f"),val);
-    TextCtrl_FoV->SetLabel(str_loc);
-    val = -(Element->m_gldata.posz +Element->centreRot[2])/Element->diagonale_save;
+    TextCtrl_FoV->SetValue(str_loc);        // Plutôt que SetLabel pour wxWidgets 3.3
+    val = -(Element->m_gldata.posz +Element->centreRot[2])/Element->GetDiagonaleSave();
     str_loc.Printf(_T("%4.3f"),val);
-    TextCtrl_Distance->SetLabel(str_loc);
+    TextCtrl_Distance->SetValue(str_loc);   // Plutôt que SetLabel pour wxWidgets 3.3
 
     Element->Refresh();
 }

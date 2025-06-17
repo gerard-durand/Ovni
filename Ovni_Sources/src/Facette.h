@@ -18,8 +18,8 @@ class Facette: public wxDialog
 		Facette(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Facette();
 //        wxWindow* Facette_Parent;
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 
 		//(*Declarations(Facette)
@@ -88,8 +88,13 @@ class Facette: public wxDialog
 		void OnButton_AnnulerClick(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		//*)
+
         OvniFrame* MAIN;
+
 		void genereFacette();
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
 
 		DECLARE_EVENT_TABLE()
 };

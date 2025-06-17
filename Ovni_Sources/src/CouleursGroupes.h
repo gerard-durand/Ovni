@@ -22,7 +22,8 @@ class CouleursGroupes: public wxDialog
 
 		//(*Declarations(CouleursGroupes)
 		wxButton* Button_Quitter;
-		wxButton* Button_Reset;
+		wxButton* Button_Reset_ALL;
+		wxButton* Button_Reset_Couleur;
 		wxColourPickerCtrl* ColourPickerCtrl_Ambient;
 		wxColourPickerCtrl* ColourPickerCtrl_Diffuse;
 		wxSpinCtrl* SpinCtrl_Groupes;
@@ -38,18 +39,19 @@ class CouleursGroupes: public wxDialog
 	protected:
 
 		//(*Identifiers(CouleursGroupes)
-		static const long ID_STATICTEXT1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT2;
-		static const long ID_SPINCTRL1;
-		static const long ID_STATICTEXT3;
-		static const long ID_TEXTCTRL1;
-		static const long ID_STATICTEXT4;
-		static const long ID_STATICTEXT5;
-		static const long ID_COLOURPICKERCTRL1;
-		static const long ID_COLOURPICKERCTRL2;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON3;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_STATICLINE1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_SPINCTRL1;
+		static const wxWindowID ID_STATICTEXT3;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_STATICTEXT4;
+		static const wxWindowID ID_STATICTEXT5;
+		static const wxWindowID ID_COLOURPICKERCTRL1;
+		static const wxWindowID ID_COLOURPICKERCTRL2;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON3;
+		static const wxWindowID ID_BUTTON2;
 		//*)
 
 	private:
@@ -63,8 +65,13 @@ class CouleursGroupes: public wxDialog
 		void OnColourPickerCtrl_AmbientColourChanged(wxColourPickerEvent& event);
 		void OnColourPickerCtrl_DiffuseColourChanged(wxColourPickerEvent& event);
 		void OnButton_ResetClick(wxCommandEvent& event);
+		void OnButton1Click(wxCommandEvent& event);
+		void OnButton_Reset_CouleurClick(wxCommandEvent& event);
+		void OnButton_Reset_ALLClick(wxCommandEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
+
 		int Numero_Groupe;
 
 		DECLARE_EVENT_TABLE()

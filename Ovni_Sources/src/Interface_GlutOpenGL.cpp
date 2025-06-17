@@ -56,7 +56,7 @@ void BddInter::OnSize(wxSizeEvent& event)
 //    wxSize s;
 //    s = event.GetSize();
 //    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(this->GetParent());
-//    MAIN->ResizeOpenGL(s.GetWidth(), s.GetHeight());
+//    MAIN->Resize_OpenGL(s.GetWidth(), s.GetHeight());
 //    MAIN->Element->Refresh();
 //    // Reset the OpenGL view aspect
 //    ResetProjectionMode();
@@ -83,6 +83,9 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
     GLfloat m[4][4];
     int multi_s = 0;
     static bool SetCurrentOK = false;
+
+    static int old_size_x = frame_size_x;   // Initialisation (exécuté seulement une fois)
+    static int old_size_y = frame_size_y;   // " "
 
     // must always be here
     wxPaintDC dc(this);
@@ -185,10 +188,24 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 //    glFlush();    // Pas forcément utile car le SwapBuffers ci-dessous le ferait implicitement
 
     // Swap
-    SwapBuffers();
 
 //    event.Skip(); // ne pas faire si on a mis WXUNUSED(event) dans la déclaration de OnPaint
                     // si on met event, le Skip ne trace pas tout (ou seulement après avoir bougé la souris par ex !)
+
+    wxRect frame_xy = this->GetGrandParent()->GetRect();    // Récupère la position et la taille de la fenêtre actuelle d'OvniFrame
+    bool test = false;
+    if ((old_size_x != frame_xy.width) || (old_size_y != frame_xy.height)) test = true;
+    if (test) {                                             // Si la taille est différente, c'est qu'on a déplacé les bords et donc mettre à jour
+        old_size_x = frame_size_x = frame_xy.width;
+        old_size_y = frame_size_y = frame_xy.height;
+        ini_file_modified = true;                           // Pour enregistrer ces nouvelles tailles en sortie d'Ovni
+        if (verbose) {
+            printf("tailles changées\n");
+            printf("tailles : %d %d %d %d\n",frame_xy.width,frame_xy.height,old_size_x,old_size_y);
+        }
+    }
+
+    SwapBuffers();
 
     if (verbose) printf("Sortie BddInter::OnPaint\n");
 }
@@ -226,7 +243,7 @@ void BddInter::ResetProjectionMode() {
 //    printf("ClientSize ter X/Y %d %d\n", ClientSize.GetX(), ClientSize.GetY());
 
 //    OvniFrame* MAIN=dynamic_cast<OvniFrame*>(this->GetParent());
-//    MAIN->ResizeOpenGL(ClientSize.GetX(), ClientSize.GetY());
+//    MAIN->Resize_OpenGL(ClientSize.GetX(), ClientSize.GetY());
     if (verbose) {
         int w, h;
         GetClientSize(&w, &h);
@@ -358,7 +375,7 @@ void BddInter::Tracer_normale(const std::vector <float> &o, const std::vector <f
 	glPopMatrix();
 }
 
-void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFacette, bool tracerFacette, GLfloat couleur[3])
+void BddInter::coloriserFacette(unsigned int indiceObjet, unsigned int indiceFacette, bool tracerFacette, const GLfloat couleur[3])
 {
 // colorise les facettes sélectionnées ou la facette surlignée et y ajoute éventuellement la/les normale(s)
 
@@ -493,7 +510,7 @@ void BddInter::DrawOpenGL() {
         glDeleteLists(glliste_objets,1);    // Supprime la liste des objets
         m_gllist = glliste_objets;
         glNewList( glliste_objets, GL_COMPILE);
-        if (MPanel->activer_transparence) {
+        if (MPanel->GetActiverTransparence()) {
             glEnable(GL_BLEND);
             glDepthMask(GL_FALSE);
             glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
@@ -578,7 +595,7 @@ Boucle:
                                 glMaterialfv(GL_FRONT, GL_SHININESS, MatShininess_avionG);
 
                                 if (SelectionObjet != 0) { // On est en mode Repérage d'objets => Coloriser l'objet sélectionné en rouge
-                                    if ((SelectionObjet == i+1) || Objet_i->selected ) {            // 1er test utile ??
+                                    if ((SelectionObjet == (int)i+1) || Objet_i->selected ) {            // 1er test utile ??
                                         glMaterialfv(GL_FRONT, GL_AMBIENT,   MatAmbient_avionR)  ;
                                         glMaterialfv(GL_FRONT, GL_DIFFUSE,   MatDiffuse_avionR)  ;
                                         glMaterialfv(GL_FRONT, GL_SPECULAR,  MatSpecular_avionR) ;
@@ -739,16 +756,16 @@ Boucle:
             glDisable(GL_CULL_FACE);
         }
 
-        if (MPanel->activer_transparence) {
+        if (MPanel->GetActiverTransparence()) {
             glDepthMask(GL_TRUE);
             glDisable(GL_BLEND);
         }
 
         glEndList();
 
-        if (MPanel->Bool_souder) {
+        if (MPanel->GetBoolSouder()) {
             modeGL = points;
-        } else if(MPanel->Bool_diviser) {
+        } else if(MPanel->GetBoolDiviser()) {
             modeGL = aretes;
         } else {
             modeGL = standard;
@@ -813,7 +830,7 @@ Boucle:
     if (show_plein)  {
         glCallList(glliste_objets);     // La valeur m_gllist semble écrasée ou différente de 1 dans certains cas (grosses BDD notamment) : pourquoi ?
         if (verbose) printf("DrawOpenGL : liste objets\n");
-        if ((mode_selection == selection_facette) && !MPanel->Bool_souder && !ToSelect.ListeSelect.empty()) {
+        if ((mode_selection == selection_facette) && !MPanel->GetBoolSouder() && !ToSelect.ListeSelect.empty()) {
             if (verbose) printf("liste select\n");
             glCallList(glliste_select);
         }
@@ -1682,7 +1699,7 @@ void BddInter::SetPosObs(bool resetFoV) {
 //
 //    if (diagonale_save > 1000)
 //        m_gldata.posz = -4.0*diagonale_save -centreRot[2] ;
-    m_gldata.posz = -m_gldata.fmult_diag*diagonale_save -centreRot[2] ;     //Mieux que 1000 surtout sur des bases dont les min-max sont dans ces valeurs. Peut-être mettre plus 10* par exemple au lieu de 4 ?
+    m_gldata.posz = -m_gldata.fmult_diagonale*diagonale_save -centreRot[2] ;     //Mieux que 1000 surtout sur des bases dont les min-max sont dans ces valeurs. Peut-être mettre plus 10* par exemple au lieu de 4 ?
 
     FoV = std::max(fabs(x_max-x_min), fabs(y_max-y_min));
     m_gldata.depl_xy = FoV/100.;
@@ -1758,13 +1775,13 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
 //                    glPushName(0);
                 this->DrawOpenGL();
             }
-            if (MPanel->Bool_souder || mode == points) {
+            if (MPanel->GetBoolSouder() || mode == points) {
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_point, width_point, viewport); // cf version tcl ligne 6554
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
                 glCallList(glliste_points);
                 face_under_mouse = -1;
-                if ((MPanel->Bool_souder) && (point_under_mouse != -1)) {
+                if ((MPanel->GetBoolSouder()) && (point_under_mouse != -1)) {
                     ToSelect.ListeSelect.clear();
                     m_gllist = 0;   // Refaire toutes les listes car les facettes, les arêtes ont changé (les points sont à jour : on pourrait éviter de les reconstruire !)
                 } else {
@@ -1772,7 +1789,7 @@ void BddInter::testPicking(int cursorX, int cursorY, int mode, bool OnOff) {
                 }
                 Refresh();
             }
-            if (MPanel->Bool_diviser) {
+            if (MPanel->GetBoolDiviser()) {
                 gluPickMatrix((GLdouble)cursorX, (GLdouble)(viewport[3] -cursorY -offset_pointeur), width_ligne, width_ligne, viewport); // cf version tcl ligne 6552
                 gluPerspective(m_gldata.zoom, (GLfloat)ClientSize.x/ClientSize.y, m_gldata.zNear, m_gldata.zFar);
                 glMatrixMode(GL_MODELVIEW);
@@ -1918,7 +1935,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
             if (MSelect->IsShown()) {   // On peut le faire même si MSelect n'est pas affiché
                 MSelect->TextCtrl_NomObjet->ChangeValue(wxString(this->Objetlist[objet].GetName(), wxConvUTF8));    // si fichier bdd en utf8
     //            MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
-                str.Printf(_T("%d"),this->Objetlist[objet].GetValue());
+                str.Printf(_T("%d"),this->Objetlist[objet].GetNumero());
                 MSelect->TextCtrl_NumObjet->SetValue(str);
                 str.Printf(_T("%d"),objet);
                 MSelect->TextCtrl_IndObjet->SetValue(str);
@@ -1966,8 +1983,8 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         Genere_Tableau_Points_Facettes(objet_courant);
                         Genere_Tableau_Aretes(objet_courant);
                         new_facette    = &(objet_courant->Facelist[new_indice]);
-                        new_facette->groupe     = MPanel->NumeroGroupe;             // OK mais l'effet n'est pas immédiat si affichage coloré (via bouton groupes ou matériaux)
-                        new_facette->codmatface = MPanel->NumeroMateriau;
+                        new_facette->groupe     = MPanel->GetNumeroGroupe();        // OK mais l'effet n'est pas immédiat si affichage coloré (via bouton groupes ou matériaux)
+                        new_facette->codmatface = MPanel->GetNumeroMateriau();
                         NumerosSommets = new_facette->F_sommets;
                         new_facette->L_sommets    = NumerosSommets;                 // Recopie provisoire des numéros de sommets de facettes dans les numéros de vecteurs pour les lumminances
                         new_facette->Nb_Sommets_F = new_facette->F_sommets.size();  // Ajustement des tailles des vecteurs = sommets
@@ -1984,7 +2001,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                             Genere_Normale_1_Sommet(objet_courant,indice_pt,indice_vec);
                             indice_vec++;
                         }
-                        objet_courant->Facelist[new_indice].flat = MPanel->FacetteCreeePlane;   // dépend de la case à cocher "Plane" du dialogue "ModificationPanel
+                        objet_courant->Facelist[new_indice].flat = MPanel->GetFacetteCreeePlane();   // dépend de la case à cocher "Plane" du dialogue "ModificationPanel
                         ToSelect.verrouiller_ListeSelect(false);
                         MPanel->Button_SupprimerFacette->Enable();
                         MPanel->Button_InverserNormale ->Enable();
@@ -2018,7 +2035,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                 MSelect->TextCtrl_Selection->SetValue(str);
             }
 
-            if (MPanel->Bool_souder) {
+            if (MPanel->GetBoolSouder()) {
                 if(Smemory == nullptr) {
                     // Enregistrer le premier point sélectionné dans Smemory
                     if (test_print) printf("Memoire 1 : objet %d, point %d\n", objet, point);
@@ -2112,7 +2129,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
 //                    MSelect->TextCtrl_NomObjet->ChangeValue(this->Objetlist[objet].GetwxName());
                 }
                 if (objet != -1) {
-                    str.Printf(_T("%d"),this->Objetlist[objet].GetValue());     // Numéro de l'objet (!= son indice)
+                    str.Printf(_T("%d"),this->Objetlist[objet].GetNumero());     // Numéro de l'objet (!= son indice)
                     MSelect->TextCtrl_NumObjet->SetValue(str);
                 } else {
                     MSelect->TextCtrl_NumObjet->SetValue(_T(""));
@@ -2181,7 +2198,7 @@ void BddInter::processHits(GLint hits, bool OnOff) {
                         str_grpmat += str;
                     }
                 }
-                MSelect->TextCtrl_NumerosUtilises->SetLabel(str_grpmat);
+                MSelect->TextCtrl_NumerosUtilises->SetValue(str_grpmat);    // Plutôt que SetLabel pour wxWidgets 3.3
                 if (mode_selection == selection_objet) {
                     m_gllist = 0;
                     Refresh();

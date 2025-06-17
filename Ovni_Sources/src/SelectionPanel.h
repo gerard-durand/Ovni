@@ -151,10 +151,12 @@ class SelectionPanel: public wxDialog
 		void OnCheckBox_ForcerFlatClick(wxCommandEvent& event);
 		void OnButton_FusionnerClick(wxCommandEvent& event);
 		//*)
+
+        OvniFrame* MAIN;
+
 		void InitPanel();
 		void Reset_ListeObjets();
 //		void ToDo();
-        OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

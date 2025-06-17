@@ -514,7 +514,7 @@ void TranslationPanel::Appliquer_Translation(double tx, double ty, double tz)
         Element->listeFacettes.clear();
     }
 
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
     Element->m_gllist = 0;
     Element->Search_Min_Max();
     Element->Refresh();

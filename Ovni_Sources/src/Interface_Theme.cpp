@@ -176,14 +176,14 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 //    this->MAIN_b->Refresh();
 }
 
-// Ci-dessous, evrait pouvoir être supprimé une fois la bascule vers wxWidgets 3.3 définitive...
+// Ci-dessous, devrait pouvoir être supprimé une fois la bascule vers wxWidgets 3.3 définitive...
 
 void BddInter::Switch_theme(bool theme_b)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
 // Version pour wxWidgets avant la 3.3
 // Certains éléments, comme les separators dans les menus, la barre de menu principale,... restent sur fond clair !
-// Sera mieux géré avec wxWidgets 3.3 et +, mais avec d'autres soucis !
+// Mieux géré avec wxWidgets 3.3 et +, mais avec d'autres soucis !
 
 // Test pour Basculer du thème standard vers un thème sombre. Mais semble assez (oups, très) laborieux !
 
@@ -589,19 +589,21 @@ void BddInter::Switch_theme(bool theme_b)
 // CouleursGroupes
     this->MCGroup->SetForegroundColour(Forg);
     this->MCGroup->SetBackgroundColour(Back);
-    this->MCGroup->StaticText1      ->SetForegroundColour(Forg);
-    this->MCGroup->StaticText2      ->SetForegroundColour(Forg);
-    this->MCGroup->StaticText3      ->SetForegroundColour(Forg);
-    this->MCGroup->StaticText4      ->SetForegroundColour(Forg);
-    this->MCGroup->StaticText5      ->SetForegroundColour(Forg);
-    this->MCGroup->SpinCtrl_Groupes ->SetForegroundColour(Forg);
-    this->MCGroup->SpinCtrl_Groupes ->SetBackgroundColour(Gris);
-    this->MCGroup->TextCtrl_Materiau->SetForegroundColour(Forg);
-    this->MCGroup->TextCtrl_Materiau->SetBackgroundColour(Gris);
-    this->MCGroup->Button_Reset     ->SetForegroundColour(Forg);
-    this->MCGroup->Button_Reset     ->SetBackgroundColour(Gris);
-    this->MCGroup->Button_Quitter   ->SetForegroundColour(Forg);
-    this->MCGroup->Button_Quitter   ->SetBackgroundColour(Gris);
+    this->MCGroup->StaticText1          ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText2          ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText3          ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText4          ->SetForegroundColour(Forg);
+    this->MCGroup->StaticText5          ->SetForegroundColour(Forg);
+    this->MCGroup->SpinCtrl_Groupes     ->SetForegroundColour(Forg);
+    this->MCGroup->SpinCtrl_Groupes     ->SetBackgroundColour(Gris);
+    this->MCGroup->TextCtrl_Materiau    ->SetForegroundColour(Forg);
+    this->MCGroup->TextCtrl_Materiau    ->SetBackgroundColour(Gris);
+    this->MCGroup->Button_Reset_Couleur ->SetForegroundColour(Forg);
+    this->MCGroup->Button_Reset_Couleur ->SetBackgroundColour(Gris);
+    this->MCGroup->Button_Reset_ALL     ->SetForegroundColour(Forg);
+    this->MCGroup->Button_Reset_ALL     ->SetBackgroundColour(Gris);
+    this->MCGroup->Button_Quitter       ->SetForegroundColour(Forg);
+    this->MCGroup->Button_Quitter       ->SetBackgroundColour(Gris);
     this->MCGroup->Refresh();
 
 // Cube

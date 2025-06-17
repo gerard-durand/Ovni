@@ -57,7 +57,8 @@ void ReperageGroupe::OnSpinButton1Change(wxSpinEvent& event)
 
     wxString str;
 
-    Element->groupes = Element->materials = false;  // Invalider la colorisation complète des groupes et matériaux
+    Element->SetGroupes  (false);           // Invalider la colorisation complète des groupes et matériaux
+    Element->SetMaterials(false);
 
     int num = SpinButton1->GetValue();
 
@@ -71,13 +72,13 @@ void ReperageGroupe::OnSpinButton1Change(wxSpinEvent& event)
     }
     if (num == 0) {
         str.Printf(_T("Aucun"));
-        Element->GroupeMateriau[0]=0;
+        Element->SetGroupeMateriau(0, 0);
     } else {
         auto it = Element->listeGroupes.begin();
         for (int n=1; n<num; n++, it++) ;   // Pointer la num_ième valeur
         str.Printf(_T("%d"),(int)*it);      // Récupérer la num_ième valeur numérique de la liste
-        Element->GroupeMateriau[0]=1  ;
-        Element->GroupeMateriau[1]=*it;
+        Element->SetGroupeMateriau(0, 1);
+        Element->SetGroupeMateriau(1,*it);
     }
     TextCtrl1->SetValue(str);
     Element->m_gllist = 0;
@@ -95,9 +96,9 @@ void ReperageGroupe::OnClose(wxCloseEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->GroupeMateriau[0]=0;;
-    Element->groupes   = MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked();     // Restitution des valeurs conformément à l'interface (menu et boutons)
-    Element->materials = MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked();
+    Element->SetGroupeMateriau(0, 0);
+    Element->SetGroupes  (MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked());     // Restitution des valeurs conformément à l'interface (menu et boutons)
+    Element->SetMaterials(MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked());
     Element->m_gllist  = 0;
     Element->Refresh();
     Hide();

@@ -19,8 +19,8 @@ class Cone: public wxDialog
 		Cone(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Cone();
 //		wxWindow* Cone_Parent;
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 		//(*Declarations(Cone)
 		wxButton* Button_Annuler;
@@ -82,6 +82,7 @@ class Cone: public wxDialog
 		void OnClose(wxCloseEvent& event);
 		void OnSpinCtrl_NbSecteursChange(wxSpinEvent& event);
 		//*)
+
         OvniFrame* MAIN;
 
         float centre_primitive[3];
@@ -90,6 +91,9 @@ class Cone: public wxDialog
 		int   NbPoints;
 		int   n_slices;
 		int   n_secteurs;
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
 
 		void genereCone();
 		void Genere_Facettes        (BddInter*, Object*);

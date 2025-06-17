@@ -17,8 +17,8 @@ class Tore: public wxDialog
 
 		Tore(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Tore();
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 		//(*Declarations(Tore)
 		wxButton* Button_Annuler;
@@ -85,6 +85,9 @@ class Tore: public wxDialog
 		float rayon_cercle;
 		int   NbPoints;
 		int   n_secteurs;
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
 
 		void Genere_Tore();
 		void Genere_Facettes(BddInter*, Object*);

@@ -71,12 +71,7 @@ BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowI
     centre_auto.resize(3);  // Idem
 
     // Initialiser les tables de couleurs avec les valeurs par défaut
-    for (int j=0; j<4; j++) {
-        for (int i=0; i<nb_couleurs; i++) {
-            MatAmbient_avionG[i][j] = MatAmbient_avionG_def[i][j];
-            MatDiffuse_avionG[i][j] = MatDiffuse_avionG_def[i][j];
-        }
-    }
+    ResetMateriauAvionG();
 
     nb_max_threads = omp_get_max_threads(); // Récupérer en entrée le nombre max de threads/processeurs pour OpenMP
     ResetData();                            // Remettre aux valeurs par défaut
@@ -161,7 +156,7 @@ void BddInter::ResetData() {
     m_gldata.rotx           = 0.0f;
     m_gldata.roty           = 0.0f;
     m_gldata.rotz           = 0.0f;
-    m_gldata.fmult_diag     = fmult_diag_def;
+    m_gldata.fmult_diagonale= fmult_diagonale_def;
     reset_zoom              = true;
     SetPosObs(reset_zoom);
     mode_selection          = selection_facette;
@@ -176,9 +171,9 @@ void BddInter::ResetData() {
     trackball(m_gldata.quat, 0.0f, 0.0f, 0.0f, 0.0f);
 
 //    antialiasing_soft   = antialiasing_soft_def;  // à vérifier, mais pas forcément utile
-    test_decalage3ds    = test_decalage3ds_def;
-    Forcer_1_Seul_Objet = Forcer_1_Seul_Objet_def;
-    lect_obj_opt        = lect_obj_opt_def;
+    test_decalage3ds         = test_decalage3ds_def;
+    Forcer_1_Seul_Objet      = Forcer_1_Seul_Objet_def;
+    lect_obj_opt             = lect_obj_opt_def;
     forcer_simplification_doublons_aretes = forcer_simplification_doublons_aretes_def;
     if (Forcer_1_Seul_Objet) lect_obj_opt = false;              // Pas d'optimisation si 1 seul Objet 3D dans un fichier .obj
     CalculNormalesLectureBdd = CalculNormalesLectureBdd_def;
@@ -201,7 +196,7 @@ void BddInter::ResetData() {
         MPrefs->RadioBox_Trackball       ->SetSelection(m_gldata.mode_Trackball);
         MPrefs->CheckBox_DisplayFps      ->SetValue(viewFps_def);
         MPrefs->CheckBox_CalculNormales  ->SetValue(CalculNormalesLectureBdd);
-        if (test_seuil_gouraud) MPrefs   ->CheckBox_RecNormales_Seuillees->Enable();
+        if (test_seuil_Gouraud) MPrefs   ->CheckBox_RecNormales_Seuillees->Enable();
         else                    MPrefs   ->CheckBox_RecNormales_Seuillees->Disable();
         MPrefs->CheckBox_RecNormales_Seuillees->SetValue(Enr_Normales_Seuillees);
         MPrefs->CheckBox_TraiterDoublonsAretes->SetValue(traiter_doublons_aretes);
@@ -210,7 +205,7 @@ void BddInter::ResetData() {
         MPrefs->SpinCtrl_PasSvg ->SetValue(svg_time);
 
         // Reset du répertoire de travail par défaut = chemin de l'exécutable
-        MPrefs->TextCtrl_WorkDir->SetLabel(wxWorkDir);
+        MPrefs->TextCtrl_WorkDir->SetValue(wxWorkDir);  // Plutôt que SetLabel
         MPrefs->SpinCtrl_Threads->SetValue(nb_threads);
     }
     if (MPosObs != nullptr) {
@@ -229,7 +224,7 @@ void BddInter::ResetData() {
         if (MZoomSpec->IsShown()) {
            str.Printf(_T("%4.3f"),m_gldata.zoom);
            MZoomSpec->TextCtrl_FoV->SetValue(str);
-           str.Printf(_T("%4.3f"),m_gldata.fmult_diag);
+           str.Printf(_T("%4.3f"),m_gldata.fmult_diagonale);
            MZoomSpec->TextCtrl_Distance->SetValue(str);
         }
     }
@@ -252,16 +247,16 @@ void BddInter::ResetData() {
         str.Printf(_T("%7.1e"),tolerance);
         MPanel->TextCtrl_Tolerance   ->SetValue(str);
         MPanel->CheckBox_Transparence->SetValue(false);
-        MPanel->activer_transparence = false;
+        MPanel->SetActiverTransparence(false);
         MPanel->CheckBox_NotFlat     ->SetValue(NotFlat);
     }
     if (MRotation != nullptr) {
-        MRotation->RotX = MRotation->RotY = MRotation->RotZ = 0.0;
+        MRotation->SetRotX(0.0); MRotation->SetRotY(0.0); MRotation->SetRotZ(0.0);
         MRotation->RadioBox_Centre->SetSelection(0);
     }
     if (MScale != nullptr) {
-        MScale->ScaleX = MScale->ScaleY = MScale->ScaleZ = 1.0;
-        str.Printf(_T("%4.1f"),MScale->ScaleX);
+        MScale->SetScaleX(1.0); MScale->SetScaleY(1.0); MScale->SetScaleZ(1.0);
+        str.Printf(_T("%4.1f"), MScale->GetScaleX());
         MScale->TextCtrl_ScaleX->SetValue(str);
         MScale->TextCtrl_ScaleY->SetValue(str);
         MScale->TextCtrl_ScaleZ->SetValue(str);
@@ -377,7 +372,7 @@ void BddInter::OnTimer_Bdd(wxTimerEvent& WXUNUSED(event))
             m_gauge->Update();
         }
 //        m_gauge->Update();                              // Non indispensable mais peut donner un affichage plus fluide
-//        wxLogStatus(_("i %d %d"),i,m_gauge->GetValue());
+//        wxLogStatus(_T("i %d %d"),i,m_gauge->GetValue());
     } else {                        // On est arrivé au max
         m_timer->Stop();
         if (timer_bis) {            // La première fois, timer_bis est false
@@ -476,7 +471,7 @@ void BddInter::make_objet() {
     Object NewObject(Nom_Objet,wxStringlist[1]);
     NewObject.afficher = true;                          // Par défaut, on affiche l'objet
     NewObject.deleted  = false;                         // Et on le marque comme "non supprimé" (pas tout de suite !)
-    if (Numero_base != 0) NewObject.SetValue(NewObject.GetValue() + Numero_base) ; // Changer le numéro d'objet (value) en y ajoutant un offset (Numero_base) !
+    if (Numero_base != 0) NewObject.SetNumero(NewObject.GetNumero() + Numero_base) ; // Changer le numéro d'objet (value) en y ajoutant un offset (Numero_base) !
     wxStringlist.clear();
     this->Objetlist.push_back(NewObject);
     indiceObjet_courant = this->Objetlist.size() -1;    // plus judicieux à faire ici plutôt qu'après des make_objet ? A vérifier
@@ -1585,7 +1580,7 @@ void BddInter::Diviser_Arete(int objet, int face, int line) {
     numero_b = indice_b +1;
     Sommet_a = objet_cible->Sommetlist[indice_a];
     Sommet_b = objet_cible->Sommetlist[indice_b];
-    if (MPanel->division == -1) {   // On est dans "Ajouter sous le pointeur"
+    if (MPanel->GetDivision() == -1) {   // On est dans "Ajouter sous le pointeur"
         // Calcul des positions sur l'écran des 2 sommets
         glGetDoublev(GL_MODELVIEW_MATRIX,modelview);
 		glGetDoublev(GL_PROJECTION_MATRIX,proj);
@@ -1612,7 +1607,7 @@ void BddInter::Diviser_Arete(int objet, int face, int line) {
     } else vecteurs_presents = false;
     for (l=1; l<div_limit; l++) {
         NewSommet = Sommet_a;
-        if (MPanel->division != -1) t = (float)l/div_limit;
+        if (MPanel->GetDivision() != -1) t = (float)l/div_limit;
         for (k=0; k<NewSommet.point.size(); k++) {
             NewSommet.point[k] = Sommet_a.point[k] + (Sommet_b.point[k]-Sommet_a.point[k])*t;
         }
@@ -1836,7 +1831,7 @@ void BddInter::souderPoints(int objet, int point) {
         Genere_Tableau_Aretes(objet_origine);                           // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
         buildAllLines();                                                // Indispensable sinon blocage apparent après 2 soudures
         Refresh();
-    } else MPanel->aretes_calculees = false;
+    } else MPanel->SetAretesCalculees(false);
 
     undo_memory++;
     MPanel->Button_Undo->Enable();
@@ -1896,7 +1891,7 @@ void BddInter::UNDO_ONE() {
                 Genere_Tableau_Aretes(objet_courant);                         // Car peut-être long si beaucoup de facettes à cause du test des doublons d'arêtes
 //                buildAllLines();                                            // Indispensable ??? sinon blocage apparent après 2 soudures
 //                Refresh();                                                  //  " "
-            } else MPanel->aretes_calculees = false;
+            } else MPanel->SetAretesCalculees(false);
         }
         undo_memory--;
         if (undo_memory == 0) {
@@ -1926,7 +1921,7 @@ bool BddInter::Calcul_Normale_Seuillee(int indice_objet_cur, int ind_fac, int in
     objet_cur = &(this->Objetlist[indice_objet_cur]);
     test_np   = false ;
     np = Vector3D();//    SetCoordonnees(np,0.,0.,0.) ;                             // Initialisation
-    if (test_seuil_gouraud) {
+    if (test_seuil_Gouraud) {
         if (!((Produit_Scalaire(NormaleFacette,NormaleSommet) > seuil_Gouraud) || (seuil_Gouraud <= -0.999 ))) {
             npoint  = objet_cur->Facelist[ind_fac].F_sommets[ind_P] -1;              // Ici c'est le numéro d'indice du sommet qu'il faut récupérer
             p_Point = &(objet_cur->Pointslist[npoint]);
@@ -3093,7 +3088,7 @@ void BddInter::Genere_Normales_Aux_Sommets(unsigned int o, int nb_p)
     for (indice_point=0; indice_point < nb_p; indice_point++) {
         if ((indice_point%500000) == 0 && verbose) { // 500 à l'origine, histoire de faire patienter, mais n'est plus très utile maintenant.(encore + avec omp !!)
             sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d",
-                    objet_courant->GetValue(), indice_point);
+                    objet_courant->GetNumero(), indice_point);
             printf("%s",utf8_To_ibm(Message));
 //            printf("\rCalcul des normales aux sommets de l'objet %2d : %8d", objet_courant->GetValue(), indice_point);
             fflush(stdout); // Nécessaire sur cc SUN, sinon la ligne n'apparaît pas
@@ -3112,7 +3107,7 @@ void BddInter::Genere_Normales_Aux_Sommets(unsigned int o, int nb_p)
     }
     if (verbose) {
         sprintf(Message,"\rCalcul des normales aux sommets de l'objet %2d : %8d\n",
-                objet_courant->GetValue(), nb_p);
+                objet_courant->GetNumero(), nb_p);
 //                objet_courant->GetValue(), indice_point);
         printf("%s",utf8_To_ibm(Message));
 //        printf("\rCalcul des normales aux sommets de l'objet %2d : %8d\n", objet_courant->GetValue(), indice_point);

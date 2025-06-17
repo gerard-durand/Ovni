@@ -18,8 +18,8 @@ class Icosaedre: public wxDialog
 		Icosaedre(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Icosaedre();
 //		wxWindow* Icosaedre_Parent;
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 		//(*Declarations(Icosaedre)
 		wxButton* Button_Annuler;
@@ -71,9 +71,15 @@ class Icosaedre: public wxDialog
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		void OnInit(wxInitDialogEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
+
         float centre_primitive[3];
 		float rayon;
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
+
 		void genereIcosaedre();
 		void Genere_Sommets         (BddInter* , Object*);
         void Genere_Normales_Sommets(BddInter* , Object*);

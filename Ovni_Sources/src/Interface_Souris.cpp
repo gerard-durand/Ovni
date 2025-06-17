@@ -87,11 +87,11 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             // Recopier en dehors de wxSmith, ce qui a été créé (ID_POPUP, CONNECT, ...) puis supprimer le popup menu de wxSmith !
             wxMenuItem* Popup_RAZ;
             if (mode_selection == selection_point)
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des points\t(s)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des points\ts"),   wxEmptyString, wxITEM_NORMAL);
             else if (mode_selection == selection_objet)
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des objets\t(s)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des objets\ts"),   wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des facettes\t(s)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_RAZ = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ, wxS("RAZ de sélection des facettes\ts"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_RAZ->SetBackgroundColour(Back);
             Popup_RAZ->SetTextColour(Forg);
@@ -100,7 +100,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             wxMenuItem* Popup_Complemt = nullptr;
             if (mode_selection == selection_facette) {
-                Popup_Complemt = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\t(k)"),   wxEmptyString, wxITEM_NORMAL);
+                Popup_Complemt = new wxMenuItem((&My_popupmenu), ID_POPUP_COMPLEMT, wxS("Sélectionner les facettes complémentaires\tk"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
                 Popup_Complemt->SetBackgroundColour(Back);
                 Popup_Complemt->SetTextColour(Forg);
@@ -111,16 +111,16 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             wxMenuItem* Popup_Centrer;
             if (this->ToSelect.ListeSelect.size() > 0)
-                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Centrer la rotation sur la sélection\t(c)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Centrer la rotation sur la sélection\tc"), wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Recentrer sur la rotation par défaut\t(c)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Centrer = new wxMenuItem((&My_popupmenu), ID_POPUP_CENTRER, wxS("Recentrer sur la rotation par défaut\tc"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Centrer->SetBackgroundColour(Back);
             Popup_Centrer->SetTextColour(Forg);
 #endif // wxCHECK_VERSION
             My_popupmenu.Append(Popup_Centrer);
 
-            wxMenuItem* Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, wxS("Étendre la sélection\t(x)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Etendre = new wxMenuItem((&My_popupmenu), ID_POPUP_ETENDRE, wxS("Étendre la sélection\tx"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Etendre->SetBackgroundColour(Back);
             Popup_Etendre->SetTextColour(Forg);
@@ -131,7 +131,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             My_popupmenu.AppendSeparator();
 
-            wxMenuItem* Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, wxS("Masquer les facettes sélectionnées\t(Numpad Suppr)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Masquer = new wxMenuItem((&My_popupmenu), ID_POPUP_MASQUER, wxS("Masquer les facettes sélectionnées\tKP_Delete"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Masquer->SetBackgroundColour(Back);
             Popup_Masquer->SetTextColour(Forg);
@@ -139,7 +139,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append (Popup_Masquer);
             if (desactiver_menu) Popup_Masquer->Enable(false);
 
-            wxMenuItem* Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\t(Suppr)"),      wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Delete  = new wxMenuItem((&My_popupmenu), ID_POPUP_DELETE,  wxS("Supprimer les facettes sélectionnées\tDel"),     wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Delete->SetBackgroundColour(Back);
             Popup_Delete->SetTextColour(Forg);
@@ -159,16 +159,16 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             wxMenuItem* Popup_Inverser ;
             if (this->ToSelect.ListeSelect.size() > 0)
-                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser les normales sélectionnées\t(i)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser les normales sélectionnées\ti"), wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser toutes les normales\t(i)"),        wxEmptyString, wxITEM_NORMAL);
+                Popup_Inverser = new wxMenuItem((&My_popupmenu), ID_POPUP_INVERSER_N, wxS("Inverser toutes les normales\ti"),        wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Inverser->SetBackgroundColour(Back);
             Popup_Inverser->SetTextColour(Forg);
 #endif
             My_popupmenu.Append(Popup_Inverser);
 
-            wxMenuItem* Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, wxS("Inverser le sens de parcours des facettes sélectionnées\t(p)"), wxEmptyString, wxITEM_NORMAL);
+            wxMenuItem* Popup_Reverse  = new wxMenuItem((&My_popupmenu), ID_POPUP_PARCOURS_I, wxS("Inverser le sens de parcours des facettes sélectionnées\tp"), wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Reverse->SetBackgroundColour(Back);
             Popup_Reverse->SetTextColour(Forg);
@@ -178,9 +178,9 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             wxMenuItem* Popup_Raz_Select;
             if (this->Raz_Selection_F)
-                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Désactiver la désélection automatique\t(z)"), wxEmptyString, wxITEM_NORMAL);
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Désactiver la désélection automatique\tz"), wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Activer la désélection automatique\t(z)"),    wxEmptyString, wxITEM_NORMAL);
+                Popup_Raz_Select = new wxMenuItem((&My_popupmenu), ID_POPUP_RAZ_SELECT, wxS("Activer la désélection automatique\tz"),    wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Raz_Select->SetBackgroundColour(Back);
             Popup_Raz_Select->SetTextColour(Forg);
@@ -202,9 +202,9 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
             wxMenuItem* Popup_Afficher_NormalesSommets;
             if (AfficherNormalesSommets)
-                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Ne pas afficher les normales aux sommets"),  wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Ne pas afficher les normales aux sommets"), wxEmptyString, wxITEM_NORMAL);
             else
-                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Afficher les normales aux sommets"),         wxEmptyString, wxITEM_NORMAL);
+                Popup_Afficher_NormalesSommets = new wxMenuItem((&My_popupmenu), ID_POPUP_NORM_S, wxS("Afficher les normales aux sommets"),        wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Afficher_NormalesSommets->SetBackgroundColour(Back);
             Popup_Afficher_NormalesSommets->SetTextColour(Forg);
@@ -212,7 +212,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append(Popup_Afficher_NormalesSommets);
 
             wxMenuItem* Popup_Forcer_Facettes_Planes;
-            Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         wxS("Forcer les facettes à être planes"),  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_Planes = new wxMenuItem((&My_popupmenu), ID_POPUP_FLAT,         wxS("Forcer les facettes à être planes"),        wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_Planes->SetBackgroundColour(Back);
             Popup_Forcer_Facettes_Planes->SetTextColour(Forg);
@@ -220,7 +220,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
             My_popupmenu.Append(Popup_Forcer_Facettes_Planes);
 
             wxMenuItem* Popup_Forcer_Facettes_NonPlanes;
-            Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  wxS("Forcer les facettes à être non planes"),  wxEmptyString, wxITEM_NORMAL);
+            Popup_Forcer_Facettes_NonPlanes = new wxMenuItem((&My_popupmenu), ID_POPUP_NOT_FLAT,  wxS("Forcer les facettes à être non planes"),   wxEmptyString, wxITEM_NORMAL);
 #if !wxCHECK_VERSION(3,3,0)
             Popup_Forcer_Facettes_NonPlanes->SetBackgroundColour(Back);
             Popup_Forcer_Facettes_NonPlanes->SetTextColour(Forg);
@@ -385,12 +385,12 @@ void BddInter::OnMouse(wxMouseEvent& event) {
 
         } else {    // Tout autre évênement de souris non déjà traité ci-dessus
 
-//            if(MPanel->Bool_souder || show_points) {    // Ici, survol des points affichés, soit simplement affichés, soit en mode de soudure de points
+//            if(MPanel->GetBoolSouder() || show_points) {    // Ici, survol des points affichés, soit simplement affichés, soit en mode de soudure de points
             if (detection_survol_point) {    // Ici, survol des points affichés, soit simplement affichés, soit en mode de soudure de points
                                                         // Si show_points seulement, l'affichage est rallenti à cause de la détection de points survolés
 
                 hits = 0;   // Initialisation
-                if(MPanel->Bool_souder) modeGL = points;      // On ne passe pas en mode sélection de points si show_points seulement !
+                if(MPanel->GetBoolSouder()) modeGL = points;      // On ne passe pas en mode sélection de points si show_points seulement !
                 wxSize ClientSize = this->GetSize();
                 glGetIntegerv(GL_VIEWPORT, viewport);
                 glSelectBuffer(BUFSIZE, selectBuffer);
@@ -411,8 +411,8 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                 hits = glRenderMode(GL_RENDER);
                 if(hits != 0) {
                     if (WhoIsUnderTheMouse(hits, 0)) {
-                        Search_Min_Max();                           // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
-                        if (show_points && !MPanel->Bool_souder) {  // En mode show_points seulement, pas en mode soudure de points
+                        Search_Min_Max();                               // Pourquoi ? pour être sûr d'avoir les bons min-max en mémoire ?
+                        if (show_points && !MPanel->GetBoolSouder()) {  // En mode show_points seulement, pas en mode soudure de points
                             if ((point_under_mouse != point_under_mouse_old) || (objet_under_mouse != objet_under_mouse_old)) {
                                 if (verbose) printf("Survol du point %d de l'objet %d\n", point_under_mouse, objet_under_mouse);
                                 objet_under_mouse_old = objet_under_mouse;  // Mémoriser les valeurs pour ne pas afficher plusieurs fois de suite la même chose !
@@ -420,7 +420,7 @@ void BddInter::OnMouse(wxMouseEvent& event) {
                             }
                         }
                         m_gllist = glliste_points_selected;         // Pour ne reconstruire que la liste de points sélectionnés
-                        if (MPanel->Bool_souder) {
+                        if (MPanel->GetBoolSouder()) {
                             if (ifexist_sommet(objet_under_mouse_old,point_under_mouse_old)) Objetlist[objet_under_mouse_old].Sommetlist[point_under_mouse_old].selected = false;
                             if (ifexist_sommet(objet_under_mouse    ,point_under_mouse))     Objetlist[objet_under_mouse].Sommetlist[point_under_mouse].selected = false;
                             // Plutôt que de reconstruire toute la liste de points, seuls 2 points suffisent en superposition, 1 point jaune survolé et un point rouge stocké

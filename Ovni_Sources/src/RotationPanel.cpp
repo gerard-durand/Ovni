@@ -119,7 +119,7 @@ RotationPanel::~RotationPanel()
 
 void RotationPanel::OnClose(wxCloseEvent& event)
 {
-    MAIN->Element->Rotation_Objets = false;
+    MAIN->Element->SetRotationObjets(false);
     Hide();
 }
 
@@ -199,11 +199,11 @@ void RotationPanel::Init_Centre_Rotation()
             }
         }
         if (Nb_p != 0) {
-            Element->Centre_X = cx1/Nb_p; // ATTENTION : si Nb_p = 0, Centre_X _Y et _Z ne sont pas initialisés !!!!
-            Element->Centre_Y = cy1/Nb_p;
-            Element->Centre_Z = cz1/Nb_p;
+            Element->SetCentre_X(cx1/Nb_p); // ATTENTION : si Nb_p = 0, Centre_X _Y et _Z ne sont pas initialisés !!!!
+            Element->SetCentre_Y(cy1/Nb_p);
+            Element->SetCentre_Z(cz1/Nb_p);
         } else {
-            Element->Centre_X = Element->Centre_Y = Element->Centre_Z = 0.0 ; // à vérifier si c'est un bon choix
+            Element->SetCentre_X(0.0); Element->SetCentre_Y(0.0); Element->SetCentre_Z(0.0) ; // à vérifier si c'est un bon choix
         }
 //        printf("Centre_Rotation Barycentre : %f %f %f\n",Element->Centre_X,Element->Centre_Y,Element->Centre_Z);
         break;
@@ -227,9 +227,9 @@ void RotationPanel::Init_Centre_Rotation()
                 cz2 = (val > cz2 ? val : cz2);
             }
         }
-        Element->Centre_X = (cx1 + cx2)/2;
-        Element->Centre_Y = (cy1 + cy2)/2;
-        Element->Centre_Z = (cz1 + cz2)/2;
+        Element->SetCentre_X((cx1 + cx2)/2);
+        Element->SetCentre_Y((cy1 + cy2)/2);
+        Element->SetCentre_Z((cz1 + cz2)/2);
 //        printf("Centre_Rotation Boite      : %f %f %f\n",Element->Centre_X,Element->Centre_Y,Element->Centre_Z);
         break;
 
@@ -243,36 +243,42 @@ void RotationPanel::Init_Centre_Rotation()
 
 void RotationPanel::OnTextCtrl_XText(wxCommandEvent& event)
 {
-    MAIN->Element->Centre_X = wxAtof(TextCtrl_AngleX->GetValue());
-    printf("Centre_Rotation Entree X   : %f %f %f\n",MAIN->Element->Centre_X,MAIN->Element->Centre_Y,MAIN->Element->Centre_Z);
+    BddInter *Element = MAIN->Element;
+
+    Element->SetCentre_X(wxAtof(TextCtrl_AngleX->GetValue()));
+    printf("Centre_Rotation Entree X   : %f %f %f\n",Element->GetCentre_X(),Element->GetCentre_Y(),Element->GetCentre_Z());
 }
 
 void RotationPanel::OnTextCtrl_YText(wxCommandEvent& event)
 {
-    MAIN->Element->Centre_Y = wxAtof(TextCtrl_AngleY->GetValue());
-    printf("Centre_Rotation Entree Y   : %f %f %f\n",MAIN->Element->Centre_X,MAIN->Element->Centre_Y,MAIN->Element->Centre_Z);
+    BddInter *Element = MAIN->Element;
+
+    Element->SetCentre_Y(wxAtof(TextCtrl_AngleY->GetValue()));
+    printf("Centre_Rotation Entree Y   : %f %f %f\n",Element->GetCentre_X(),Element->GetCentre_Y(),Element->GetCentre_Z());
 }
 
 void RotationPanel::OnTextCtrl_ZText(wxCommandEvent& event)
 {
-    MAIN->Element->Centre_Z = wxAtof(TextCtrl_AngleZ->GetValue());
-    printf("Centre_Rotation Entree Z   : %f %f %f\n",MAIN->Element->Centre_X,MAIN->Element->Centre_Y,MAIN->Element->Centre_Z);
+    BddInter *Element = MAIN->Element;
+
+    Element->SetCentre_Z(wxAtof(TextCtrl_AngleZ->GetValue()));
+    printf("Centre_Rotation Entree Z   : %f %f %f\n",Element->GetCentre_X(),Element->GetCentre_Y(),Element->GetCentre_Z());
 }
 
 void RotationPanel::OnButton_ValiderPointClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Centre_X = wxAtof(TextCtrl_X->GetValue());   // Pas toujours nécessaire !
-    Element->Centre_Y = wxAtof(TextCtrl_Y->GetValue());
-    Element->Centre_Z = wxAtof(TextCtrl_Z->GetValue());
+    Element->SetCentre_X(wxAtof(TextCtrl_X->GetValue()));   // Pas toujours nécessaire !
+    Element->SetCentre_Y(wxAtof(TextCtrl_Y->GetValue()));
+    Element->SetCentre_Z(wxAtof(TextCtrl_Z->GetValue()));
 //    printf("Centre_Rotation Entree     : %f %f %f\n",MAIN->Element->Centre_X,MAIN->Element->Centre_Y,MAIN->Element->Centre_Z);
 }
 
 void RotationPanel::OnTextCtrl_AngleXText(wxCommandEvent& event)
 {
     RotX = wxAtof(TextCtrl_AngleX->GetValue()); // Pour une entrée directe (sans le SpinButton)
-    MAIN->Element->Rot_X = RotX;
+    MAIN->Element->SetRot_X(RotX);
     Appliquer_Rotation_Visuelle();
 }
 
@@ -293,7 +299,7 @@ void RotationPanel::OnSpinButton_XChangeDown(wxSpinEvent& event)
 void RotationPanel::OnSpinButton_XChange(wxSpinEvent& event)
 {
     SpinButton_X->SetValue(0);              // Raz
-    MAIN->Element->Rot_X = RotX;
+    MAIN->Element->SetRot_X(RotX);
     wxTexte.Printf(format, RotX);
     TextCtrl_AngleX->SetValue(wxTexte);     // Afficher la valeur calculée par incrémentation/décrémentation
     Appliquer_Rotation_Visuelle();
@@ -302,7 +308,7 @@ void RotationPanel::OnSpinButton_XChange(wxSpinEvent& event)
 void RotationPanel::OnTextCtrl_AngleYText(wxCommandEvent& event)
 {
     RotY = wxAtof(TextCtrl_AngleY->GetValue());
-    MAIN->Element->Rot_Y = RotY;
+    MAIN->Element->SetRot_Y(RotY);
     Appliquer_Rotation_Visuelle();
 }
 
@@ -323,7 +329,7 @@ void RotationPanel::OnSpinButton_YChangeDown(wxSpinEvent& event)
 void RotationPanel::OnSpinButton_YChange(wxSpinEvent& event)
 {
     SpinButton_Y->SetValue(0);  // Raz
-    MAIN->Element->Rot_Y = RotY;
+    MAIN->Element->SetRot_Y(RotY);
     wxTexte.Printf(format, RotY);
     TextCtrl_AngleY->SetValue(wxTexte);
     Appliquer_Rotation_Visuelle();
@@ -332,7 +338,7 @@ void RotationPanel::OnSpinButton_YChange(wxSpinEvent& event)
 void RotationPanel::OnTextCtrl_AngleZText(wxCommandEvent& event)
 {
     RotZ = wxAtof(TextCtrl_AngleZ->GetValue());
-    MAIN->Element->Rot_Z = RotZ;
+    MAIN->Element->SetRot_Z(RotZ);
     Appliquer_Rotation_Visuelle();
 }
 
@@ -353,7 +359,7 @@ void RotationPanel::OnSpinButton_ZChangeDown(wxSpinEvent& event)
 void RotationPanel::OnSpinButton_ZChange(wxSpinEvent& event)
 {
     SpinButton_Z->SetValue(0);  // Raz
-    MAIN->Element->Rot_Z = RotZ;
+    MAIN->Element->SetRot_Z(RotZ);
     wxTexte.Printf(format, RotZ);
     TextCtrl_AngleZ->SetValue(wxTexte);
     Appliquer_Rotation_Visuelle();
@@ -364,7 +370,7 @@ void RotationPanel::Appliquer_Rotation_Visuelle()
     BddInter *Element = MAIN->Element;
 // Ici, c'est une application visuelle, sans modification de Bdd
 //    printf("Rotation en X, Y et Z : %3.1f %3.1f %3.1f\n",RotX, RotY, RotZ);
-    Element->Rotation_Objets = true;
+    Element->SetRotationObjets(true);
     Element->m_gllist = 0;
     Element->Refresh();
 
@@ -459,6 +465,10 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
     Object  *objet_courant;
     Sommet  *sommet_courant;
 
+    double Centre_X = Element->GetCentre_X();
+    double Centre_Y = Element->GetCentre_Y();
+    double Centre_Z = Element->GetCentre_Z();
+
     n_val   = Element->listeObjets.size();
     auto it = Element->listeObjets.begin();
 
@@ -472,9 +482,9 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
 #pragma omp parallel for private(sommet_courant)
         for (j=0; j<ns; j++) {
             sommet_courant = &(objet_courant->Sommetlist[j]);
-            sommet_courant->point[0] -= Element->Centre_X;
-            sommet_courant->point[1] -= Element->Centre_Y;
-            sommet_courant->point[2] -= Element->Centre_Z;
+            sommet_courant->point[0] -= Centre_X;
+            sommet_courant->point[1] -= Centre_Y;
+            sommet_courant->point[2] -= Centre_Z;
         }
         // Effectuer les 3 rotations dans l'ordre X, Y et Z (en mode graphique on a fait l'inverse Z, Y, X !!!) sinon on n'obtient pas la même chose au final.
         Rotation_Objet_X(*it,RotX*to_Rad);
@@ -484,9 +494,9 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
 #pragma omp parallel for private(sommet_courant)
         for (j=0; j<ns; j++) {
             sommet_courant = &(objet_courant->Sommetlist[j]);
-            sommet_courant->point[0] += Element->Centre_X;
-            sommet_courant->point[1] += Element->Centre_Y;
-            sommet_courant->point[2] += Element->Centre_Z;
+            sommet_courant->point[0] += Centre_X;
+            sommet_courant->point[1] += Centre_Y;
+            sommet_courant->point[2] += Centre_Z;
         }
 
         // Calcul des normales aux barycentre des facettes
@@ -500,8 +510,8 @@ void RotationPanel::OnButton_AppliquerClick(wxCommandEvent& event)
         Element->Genere_Normales_Aux_Sommets(o,ns);
     }
 
-    Element->bdd_modifiee    = true;
-    Element->Rotation_Objets = false;
+    Element->SetBddModifiee(true);
+    Element->SetRotationObjets(false);
     Element->m_gllist = 0;
     Element->Refresh();
 

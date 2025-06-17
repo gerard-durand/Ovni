@@ -87,7 +87,7 @@ void BddInter::create_bdd() {
         clearall();                                                         // RAZ global
         wxNomsFichiers = wxFileNameFromPath(get_file());                    // N'extraire que le nom du fichier (pas le path !)
     } else {                                                            // Fusion avec la bdd déjà en mémoire
-        Numero_base = this->Objetlist.rbegin()->GetValue();                 // Retourne la "value" du dernier objet de la liste
+        Numero_base = this->Objetlist.rbegin()->GetNumero();                 // Retourne la "value" du dernier objet de la liste
         Numero_base = ((Numero_base + 10)/10)*10;                           // Pour calculer un offset de numérotation et commencer à la dizaine supérieure
         wxNomsFichiers += _T(" + ") + wxFileNameFromPath(get_file());       // Concaténer avec le nom du/des fichier(s) précédent(s)
     }
@@ -356,16 +356,16 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                     Element->make_objet();
                     // Initialisations pour un objet
 //                    o=++i_objetXML_courant ;
-                    o = i_objetXML_courant = Element->indiceObjet_courant; //Objetlist.size() -1;
+                    o = i_objetXML_courant = Element->GetIndiceObjetCourant(); //Objetlist.size() -1;
                     Objet_courant = &(Element->Objetlist[o]);
                     Objet_courant->afficher = true;
                     Objet_courant->deleted  = false;
                     Objet_courant->flat     = true;
-//                    Element->indiceObjet_courant   = o;
+//                    Element->SetIndiceObjetCourant(o);
                 }
                 if (!strcmp(attr[i],"id")) {
-                    Element->Objetlist[o].SetValue(atoi(attr[i+1])+Element->Numero_base);   // En cas de fusion, on ajoute Numero_base en offset
-                    printf("Indice objet : %d balise id+offset : %d\n",i_objetXML_courant,Element->Objetlist[o].GetValue()); // atoi(attr[i+1])+Element->Numero_base
+                    Element->Objetlist[o].SetNumero(atoi(attr[i+1])+Element->GetNumeroBase());   // En cas de fusion, on ajoute Numero_base en offset
+                    printf("Indice objet : %d balise id+offset : %d\n",i_objetXML_courant,Element->Objetlist[o].GetNumero()); // atoi(attr[i+1])+Element->Numero_base
                 }
                 if (!strcmp(attr[i],"nom")) {
 
@@ -654,7 +654,7 @@ void BddInter::LectureXML_G3d (FILE *f)
 
     for (o=indice_premierObjet; o< nb_objets; o++) {
 		indiceObjet_courant = o;
-        sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetValue());
+        sprintf(Message,"\nNuméro de l'objet %2d                 : %d\n",o,this->Objetlist[indiceObjet_courant].GetNumero());
         printf("%s",utf8_To_ibm(Message));
         wxCharBuffer buf_nom = this->Objetlist[o].GetName();    // Normalement déjà en utf8 dans le format g3d
         printf("Nom de l'objet %2d                    : %s\n",o,buf_nom.data());
@@ -3633,7 +3633,7 @@ void BddInter::LoadBDD() {
     printf("\nNb objets      %d\n",(int)this->Objetlist.size());
 
     for (i=0; i<this->Objetlist.size(); ++i) {
-        printf("Objet %2d, numero %2d, Nb_facettes : %4d\n",i,this->Objetlist[i].GetValue(), this->Objetlist[i].Nb_facettes);
+        printf("Objet %2d, numero %2d, Nb_facettes : %4d\n",i,this->Objetlist[i].GetNumero(), this->Objetlist[i].Nb_facettes);
 
         if (this->Objetlist[i].mat_position) TraiterMatricePosition(i) ;
     }
@@ -4641,11 +4641,11 @@ void BddInter::SaveTo(wxString str, int index) {
                 SaveSTL(str, false);    // Appel en mode binaire
                 break;
             default:
-                wxMessageBox(_T("Type de fichier non reconnu!"),_T("Error"));
+                wxMessageBox(wxS("Type de fichier non reconnu!"),_T("Erreur"));
                 break;
             }
         } else {
-            wxMessageBox(_T("Type de fichier non valide!"),_T("Error"));
+            wxMessageBox(wxS("Type de fichier non valide!"),_T("Erreur"));
         }
 
     }
@@ -4654,7 +4654,13 @@ void BddInter::SaveTo(wxString str, int index) {
 // Les boucles for des fonctions Save* ne sont a priori pas parallélisables : les fichiers créés doivent être séquentiels
 
 void BddInter::WarningAccess(wxString str) {
-    wxString Msg = _T("Écriture dans le fichier ") + str + _(" impossible !"); //wxNomsFichiers est OK sauf si sauvegarde automatique
+//    wxString str_name = wxFileNameFromPath(str);
+//    wxString str_path = wxPathOnly(str);
+    wxFileName Full_name(str);                      // Full_name est de la class wxFileName
+    wxString str_name = Full_name.GetName();        // Extraire le Nom du fichier seul, Idem que ci-dessus, mais la fonction wxFileNameFromPath est obsolète
+    wxString str_path = Full_name.GetPathWithSep(); // Extraire le Chemin/Path du fichier
+    wxString Msg = wxS("Écriture dans le fichier ") + str_name + wxS(" impossible !"); //wxNomsFichiers est OK sauf si sauvegarde automatique
+    Msg         += wxS("\nVérifier si le chemin d'accès au fichier est OK en écriture :\n" + str_path);
     DisplayBox(Msg,"Avertissement");//        wxMessageBox(Msg,"Avertissement");
 }
 
@@ -4676,13 +4682,13 @@ void BddInter::SaveBDD(wxString str) {
     int nouvel_indice;
     bool test_np;
 
-    wxString str_loc = wxFileNameFromPath(str); // Traitement particulier pour la sauvegarde automatique dans Autosave.bdd
+//    wxString str_loc = wxFileNameFromPath(str); // Traitement particulier pour la sauvegarde automatique dans Autosave.bdd
 
     buffer=str.mb_str();
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        WarningAccess(str_loc);                 // wxNomsFichiers est OK sauf si sauvegarde automatique
+        WarningAccess(str);                     // wxNomsFichiers est OK sauf si sauvegarde automatique
         return;
     }
 
@@ -4709,7 +4715,7 @@ void BddInter::SaveBDD(wxString str) {
 //            }
         }
         myfile << "<OBJET> ";
-        myfile << objet_courant->GetValue();
+        myfile << objet_courant->GetNumero();
         myfile << " ";
         myfile << objet_courant->GetName();                           // Problèmes possibles avec les caractères accentués non Ascii ou UTF8
 //        wxString mystring = this->Objetlist[i].GetwxName();                 // Récupère le nom wxString
@@ -4852,7 +4858,7 @@ void BddInter::SaveBDD(wxString str) {
             myfile << std::setw(5) << compteur;
             myfile << "\t";
             myfile << std::setw(2) << numeros_Sommets.size();
-            bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
+            bool test_composite = (test_seuil_Gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
             if (test_composite) {
                 NormaleFacette = Face_ij->getNormale_b();
             }
@@ -4983,7 +4989,7 @@ void BddInter::SaveOBJ(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        WarningAccess(wxNomsFichiers);
+        WarningAccess(str); // wxNomsFichiers);
         return;
     }
 
@@ -5086,7 +5092,7 @@ void BddInter::SaveOBJ(wxString str) {
             myfile << "f";
             if (compteur_luminances != 0) {                         // Il y a des des normales aux sommets
                 numeros_Sommets_L = Face_ij->getL_sommets();
-                if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                if (test_seuil_Gouraud && Enr_Normales_Seuillees) {
                     NormaleFacette = Face_ij->getNormale_b();
                 }
             }
@@ -5098,7 +5104,7 @@ void BddInter::SaveOBJ(wxString str) {
                 if (compteur_luminances != 0) {                     // Il y des des normales aux sommets
                     if (numeros_Sommets_L.size() == 0) continue;    // Si pas de normales aux sommets sur cette facette en particulier, passer à la suivante
                     myfile << "//";                                 // le champ entre les 2 / est réservé aux textures. Non utilisé dans Ovni
-                    if (test_seuil_gouraud && Enr_Normales_Seuillees) {
+                    if (test_seuil_Gouraud && Enr_Normales_Seuillees) {
                         NormaleSommet = objet_courant->Vecteurlist[Face_ij->L_sommets[k]-1].point;
                         test_np = Calcul_Normale_Seuillee(o,j,k,NormaleFacette,NormaleSommet) ;
                         if (test_np) {
@@ -5205,7 +5211,7 @@ void BddInter::SaveOFF(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        WarningAccess(wxNomsFichiers);
+        WarningAccess(str) ; //wxNomsFichiers);
         return;
     }
     printf("\nNombre d'objets initiaux : %d\n",(int)this->Objetlist.size());
@@ -5339,7 +5345,7 @@ void BddInter::SaveSTL(wxString str, bool ascii) {
         myfile.open(buffer.data(), std::ofstream::binary);
     }
     if (!myfile.is_open()) {
-        WarningAccess(wxNomsFichiers);
+        WarningAccess(str); // wxNomsFichiers);
         return;
     }
 
@@ -5459,7 +5465,7 @@ void BddInter::SaveG3D(wxString str) {
     std::ofstream myfile;
     myfile.open (buffer.data());
     if (!myfile.is_open()) {
-        WarningAccess(wxNomsFichiers);
+        WarningAccess(str); // wxNomsFichiers);
         return;
     }
 
@@ -5551,7 +5557,7 @@ void BddInter::SaveG3D(wxString str) {
         }
 
         myfile << "\t\t<objet id=\"";
-        myfile << objet_courant->GetValue();
+        myfile << objet_courant->GetNumero();
         myfile << "\" nom=\"";
 //        wxString mystring = objet_courant->GetwxName();                         // Récupère le nom wxString
 //        std::string stlstring = std::string(mystring.mb_str(wxConvUTF8));   // et convertion en UTF8
@@ -5625,7 +5631,7 @@ void BddInter::SaveG3D(wxString str) {
 
             numeros_Sommets_L=Face_ij->getL_sommets();
             if ((numeros_Sommets_L.size() != 0) || !Face_ij->flat) {
-                bool test_composite = (test_seuil_gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
+                bool test_composite = (test_seuil_Gouraud && Enr_Normales_Seuillees) || (Face_ij->flat) ;
                 if (test_composite) {
                     NormaleFacette = Face_ij->getNormale_b();
                 }

@@ -83,7 +83,8 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
     wxString str1,str2,str3;
     bool chkB;
 
-    Element->groupes = Element->materials = false;  // Invalider la colorisation complète des groupes et matériaux
+    Element->SetGroupes  (false);                   // Invalider la colorisation complète des groupes et matériaux
+    Element->SetMaterials(false);
 
     int num = SpinButton_indice->GetValue();
     if (num >= (int)Element->Objetlist.size()) {
@@ -94,7 +95,7 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
         num = (int)Element->Objetlist.size() -1;    // Bouclage sur l'indice max (car clic sur la flèche v)
         SpinButton_indice ->SetValue(num);
     }
-    Element->SelectionObjet = num+1;                // 0 si aucun objet sélectionné
+    Element->SetSelectionObjet(num+1);              // 0 si aucun objet sélectionné
     if (num == -1) {
         str1.Printf(_T("Non sélectionné"));
         str2.Printf(_T(""));
@@ -112,7 +113,7 @@ void ReperageObjet::OnSpinButton_indiceChange(wxSpinEvent& event)
         str1.Printf(_T("%d"),num);
         str3 = str1;
         TextCtrl_indice->SetValue(str1);
-        int num_obj = Element->Objetlist[num].GetValue();
+        int num_obj = Element->Objetlist[num].GetNumero();
         str1.Printf(_T("%d"),num_obj);
         str2 =  wxString(Element->Objetlist[num].GetName(), wxConvUTF8);
         chkB = !Element->Objetlist[num].afficher;
@@ -198,11 +199,11 @@ void ReperageObjet::OnClose(wxCloseEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->SelectionObjet = 0;    // Raz de sélection d'objet en sortie
+    Element->SetSelectionObjet(0);      // Raz de sélection d'objet en sortie
     for (unsigned int i=0; i<Element->Objetlist.size(); i++) Element->Objetlist[i].selected = false;
-    Element->GroupeMateriau[0]=0;
-    Element->groupes   = MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked();     // Restitution des valeurs conformément à l'interface (menu et boutons)
-    Element->materials = MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked();
+    Element->SetGroupeMateriau(0, 0);
+    Element->SetGroupes  (MAIN->Menu_Reperage_Couleurs_Groupes->IsChecked());       // Restitution des valeurs conformément à l'interface (menu et boutons)
+    Element->SetMaterials(MAIN->Menu_Reperage_Couleurs_Materiaux->IsChecked());
     Element->m_gllist  = 0;
     Element->Refresh();
     Hide();
@@ -242,6 +243,6 @@ void ReperageObjet::OnButton_renommerClick(wxCommandEvent& event)
     if (!nom_utf8) Nouveau_nom = Nouveau_nom.utf8_str();    // Le nom n'est pas en utf8 (donc probablement en Ansi avec accents) : le convertir en utf8
     if (indiceObjet >= 0) {     // Par précaution car si -1, le bouton Renommer est désactivé
         Element->Objetlist[indiceObjet].SetName(Nouveau_nom);
-        Element->bdd_modifiee = true;
+        Element->SetBddModifiee(true);
     }
 }

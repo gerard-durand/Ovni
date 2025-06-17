@@ -332,7 +332,7 @@
 				<object class="separator" />
 				<object class="wxMenuItem" name="ID_MENUITEM14" variable="Menu_SensDesNormales" member="yes">
 					<label>Sens des normales</label>
-					<accel>(n)</accel>
+					<accel>n</accel>
 					<help>Colorise différemment les facettes mal orientées</help>
 					<handler function="OnMenu_SensDesNormalesSelected" entry="EVT_MENU" />
 					<checkable>1</checkable>

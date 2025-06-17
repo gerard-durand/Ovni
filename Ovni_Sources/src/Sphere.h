@@ -19,8 +19,8 @@ class Sphere: public wxDialog
 		Sphere(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Sphere();
 //		wxWindow* Sphere_Parent;
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 		//(*Declarations(Sphere)
 		wxButton* Button_Annuler;
@@ -78,6 +78,7 @@ class Sphere: public wxDialog
 		void OnSpinCtrl_GroupeChange(wxSpinEvent& event);
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
 
         float centre_primitive[3];
@@ -86,6 +87,9 @@ class Sphere: public wxDialog
 		int   Nb_Meridiens;
 		int   Nb_Paralleles;
 		bool  New_typeSphere;
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
 
 		void genereSphere();
 

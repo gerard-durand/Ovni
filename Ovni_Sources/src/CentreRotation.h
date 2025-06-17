@@ -33,15 +33,15 @@ class CentreRotation: public wxDialog
 	protected:
 
 		//(*Identifiers(CentreRotation)
-		static const long ID_STATICTEXT1;
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT3;
-		static const long ID_STATICTEXT4;
-		static const long ID_SPINCTRLDOUBLE1;
-		static const long ID_SPINCTRLDOUBLE2;
-		static const long ID_SPINCTRLDOUBLE3;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_STATICTEXT3;
+		static const wxWindowID ID_STATICTEXT4;
+		static const wxWindowID ID_SPINCTRLDOUBLE1;
+		static const wxWindowID ID_SPINCTRLDOUBLE2;
+		static const wxWindowID ID_SPINCTRLDOUBLE3;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
 		//*)
 
 	private:
@@ -55,6 +55,7 @@ class CentreRotation: public wxDialog
 		void OnButton_OKClick(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		//*)
+
         OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

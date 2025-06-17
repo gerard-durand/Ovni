@@ -73,7 +73,7 @@ void SelectionManuelleObjets::OnButton_AucunClick(wxCommandEvent& event)
         Element->Objetlist[indice_objet].selected = false;
         indice_objet++;
     }
-    Element->SelectionObjet = 0;
+    Element->SetSelectionObjet(0);
 
 // Il faut aussi mettre à jour le contenu des items dans SelectionPanel
 
@@ -84,7 +84,7 @@ void SelectionManuelleObjets::OnButton_AucunClick(wxCommandEvent& event)
     MAIN->Selections_Panel->TextCtrl_NumObjet ->SetValue(_T(""));
     MAIN->Selections_Panel->Button_Fusionner  ->Disable();
 
-    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+    if (Element->GetTypeDxf()) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->m_gllist = 0;
     Element->Refresh();
@@ -100,7 +100,7 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
     int n = CheckListBox1->GetCount();
     unsigned int indice_objet = 0;  // Pour découpler l'indice d'objet avec celui de la CheckBoxList (en cas d'objets supprimés)
     Element->listeObjets.clear();
-    Element->SelectionObjet = 0;
+    Element->SetSelectionObjet(0);
     for (int i=0; i<n; i++) {
         CheckListBox1->Check(i);
         while (Element->Objetlist[indice_objet].deleted) indice_objet++;
@@ -109,7 +109,7 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
         indice_objet++;
         chk_compteur++;
     }
-    Element->SelectionObjet = -1;
+    Element->SetSelectionObjet(-1);;
 
     wxString str_loc;
     str_loc.Printf(_T("%d"),n);
@@ -120,7 +120,7 @@ void SelectionManuelleObjets::OnButton_TousClick(wxCommandEvent& event)
          MAIN->Selections_Panel->Button_Fusionner->Enable();
     else MAIN->Selections_Panel->Button_Fusionner->Disable();
 
-    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+    if (Element->GetTypeDxf()) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->m_gllist = 0;
     Element->Refresh();
@@ -141,7 +141,7 @@ void SelectionManuelleObjets::OnCheckListBox1Toggled(wxCommandEvent& event)
         while (Element->Objetlist[indice_objet].deleted) indice_objet++;    // Passer les objets supprimés (incrémenter l'indice)
         Element->Objetlist[indice_objet].selected = chkB;
         if (chkB) {
-            Element->SelectionObjet=indice_objet;
+            Element->SetSelectionObjet(indice_objet);
             Element->listeObjets.push_back(indice_objet);
             compteur++;
         }
@@ -162,19 +162,19 @@ void SelectionManuelleObjets::OnCheckListBox1Toggled(wxCommandEvent& event)
             MAIN->Selections_Panel->TextCtrl_NumObjet->SetValue(_T(""));
             MAIN->Selections_Panel->Button_Fusionner->Enable();
         } else {
-            str_loc = wxString(Element->Objetlist[Element->SelectionObjet].GetName(), wxConvUTF8);
+            str_loc = wxString(Element->Objetlist[Element->GetSelectionObjet()].GetName(), wxConvUTF8);
             MAIN->Selections_Panel->TextCtrl_NomObjet ->ChangeValue(str_loc);
-            str_loc.Printf(_T("%d"),Element->SelectionObjet);
+            str_loc.Printf(_T("%d"),Element->GetSelectionObjet());
             MAIN->Selections_Panel->TextCtrl_NumObjet->SetValue(str_loc);
             MAIN->Selections_Panel->Button_Fusionner ->Disable();
         }
     }
     if (compteur == 0)
-        Element->SelectionObjet =  0;
+        Element->SetSelectionObjet(0);
     else
-        Element->SelectionObjet = -1;
+        Element->SetSelectionObjet(-1);
 
-    if (Element->type_dxf) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
+    if (Element->GetTypeDxf()) return;                          // Sortir directement en évitant le Refresh() si on est sur un fichier .dxf)
 
     Element->m_gllist = 0;
     Element->Refresh();

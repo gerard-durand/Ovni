@@ -36,7 +36,12 @@ class ScalePanel: public wxDialog
 		wxTextCtrl* TextCtrl_ScaleY;
 		wxTextCtrl* TextCtrl_ScaleZ;
 		//*)
-		double ScaleX, ScaleY, ScaleZ;
+		double GetScaleX()      {return ScaleX;}
+		void   SetScaleX(double value) {ScaleX = value;}
+//		double GetScaleY()      {return ScaleY;}
+		void   SetScaleY(double value) {ScaleY = value;}
+//		double GetScaleZ()      {return ScaleZ;}
+		void   SetScaleZ(double value) {ScaleZ = value;}
 
 	protected:
 
@@ -81,13 +86,17 @@ class ScalePanel: public wxDialog
 		void OnSpinButton_ZChangeDown(wxSpinEvent& event);
 		void OnInit(wxInitDialogEvent& event);
 		//*)
+
+        OvniFrame* MAIN;
+
+		double ScaleX, ScaleY, ScaleZ;
+
 //		void ToDo();
 		void Init_Centre_Scale();
 		void Appliquer_Scale_Visuelle();
 		wxString wxTexte;
 		bool   Synchrones;
 		double Incr;
-        OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

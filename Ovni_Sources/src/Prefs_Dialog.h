@@ -78,8 +78,8 @@ class Prefs_Dialog: public wxDialog
 		wxTextCtrl* TextCtrl_WorkDir;
 		//*)
 		void OnSpinCtrl_PasSvgChange_pub(wxSpinEvent& event);
-		wxString str;
-		wxString defaultPath;
+//		wxString str;
+//		wxString defaultPath;
 
 	protected:
 
@@ -173,7 +173,10 @@ class Prefs_Dialog: public wxDialog
 		void OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event);
 		void OnRadioBox_IconSizeSelect(wxCommandEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
+
+        wxString defaultPath;
 
 		DECLARE_EVENT_TABLE()
 };

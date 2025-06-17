@@ -90,16 +90,16 @@ void ScalePanel::OnClose(wxCloseEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Changer_Echelle = false;
+    Element->SetChangerEchelle(false);
     ScaleX = ScaleY = ScaleZ = 1.0;
     wxTexte.Printf(format_Sc,ScaleX);
     CheckBox_ScaleUnique->SetValue(true);
     TextCtrl_ScaleX->SetValue(wxTexte);
     TextCtrl_ScaleY->SetValue(wxTexte);
     TextCtrl_ScaleZ->SetValue(wxTexte);
-    Element->Scale_X = ScaleX;
-    Element->Scale_Y = ScaleY;
-    Element->Scale_Z = ScaleZ;
+    Element->SetScale_X(ScaleX);
+    Element->SetScale_Y(ScaleY);
+    Element->SetScale_Z(ScaleZ);
     Hide();
 }
 
@@ -113,9 +113,9 @@ void ScalePanel::OnInit(wxInitDialogEvent& event)
     ScaleX = wxAtof(TextCtrl_ScaleX->GetValue());
     ScaleY = wxAtof(TextCtrl_ScaleY->GetValue());
     ScaleZ = wxAtof(TextCtrl_ScaleZ->GetValue());
-    Element->Scale_X = ScaleX;
-    Element->Scale_Y = ScaleY;
-    Element->Scale_Z = ScaleZ;
+    Element->SetScale_X(ScaleX);
+    Element->SetScale_Y(ScaleY);
+    Element->SetScale_Z(ScaleZ);
     wxTexte.Printf(format_Sc,ScaleX);
     TextCtrl_ScaleX->SetValue(wxTexte);
     wxTexte.Printf(format_Sc,ScaleY);
@@ -216,11 +216,11 @@ void ScalePanel::Init_Centre_Scale()
         }
     }
     if (Nb_p != 0) {
-        Element->Centre_X = cx1/Nb_p; // ATTENTION : si Nb_p = 0, Centre_X _Y et _Z ne sont pas initialisés !!!!
-        Element->Centre_Y = cy1/Nb_p;
-        Element->Centre_Z = cz1/Nb_p;
+        Element->SetCentre_X(cx1/Nb_p); // ATTENTION : si Nb_p = 0, Centre_X _Y et _Z ne sont pas initialisés !!!!
+        Element->SetCentre_Y(cy1/Nb_p);
+        Element->SetCentre_Z(cz1/Nb_p);
     } else {
-        Element->Centre_X = Element->Centre_Y = Element->Centre_Z = 0.0 ; // à vérifier si c'est un bon choix (plutôt barycentre global ? ou centre boîte englobante)
+        Element->SetCentre_X(0.0); Element->SetCentre_Y(0.0); Element->SetCentre_Z(0.0) ; // à vérifier si c'est un bon choix (plutôt barycentre global ? ou centre boîte englobante)
     }
 }
 
@@ -325,12 +325,12 @@ void ScalePanel::Appliquer_Scale_Visuelle()
     BddInter *Element = MAIN->Element;
 
     if (Synchrones) ScaleY = ScaleZ = ScaleX;
-    Element->Scale_X = ScaleX;
-    Element->Scale_Y = ScaleY;
-    Element->Scale_Z = ScaleZ;
+    Element->SetScale_X(ScaleX);
+    Element->SetScale_Y(ScaleY);
+    Element->SetScale_Z(ScaleZ);
 
 //    printf("Scale en X, Y et Z : %3.1f %3.1f %3.1f\n",ScaleX, ScaleY, ScaleZ);
-    Element->Changer_Echelle = true;
+    Element->SetChangerEchelle(true);
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -346,6 +346,13 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
     Points *p_Point;
     std::vector<int> NumerosSommets;
 
+    double Scale_X  = Element->GetScale_X();
+    double Scale_Y  = Element->GetScale_Y();
+    double Scale_Z  = Element->GetScale_Z();
+    double Centre_X = Element->GetCentre_X();
+    double Centre_Y = Element->GetCentre_Y();
+    double Centre_Z = Element->GetCentre_Z();
+
     if (Element->mode_selection == Element->selection_objet) {
         n_val   = Element->listeObjets.size();
         auto it = Element->listeObjets.begin();
@@ -359,19 +366,19 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
             // Recentrer l'objet en 0,0,0
             for (j=0; j<ns; j++) {
                 sommet_courant = &(objet_courant->Sommetlist[j]);
-                sommet_courant->point[0] -= Element->Centre_X;
-                sommet_courant->point[1] -= Element->Centre_Y;
-                sommet_courant->point[2] -= Element->Centre_Z;
+                sommet_courant->point[0] -= Centre_X;
+                sommet_courant->point[1] -= Centre_Y;
+                sommet_courant->point[2] -= Centre_Z;
 
             // Effectuer les 3 mises à l'échelle sur les 3 axes.
-                sommet_courant->point[0] *= Element->Scale_X;
-                sommet_courant->point[1] *= Element->Scale_Y;
-                sommet_courant->point[2] *= Element->Scale_Z;
+                sommet_courant->point[0] *= Scale_X;
+                sommet_courant->point[1] *= Scale_Y;
+                sommet_courant->point[2] *= Scale_Z;
 
             // Remettre l'objet en place (translation inverse)
-                sommet_courant->point[0] += Element->Centre_X;
-                sommet_courant->point[1] += Element->Centre_Y;
-                sommet_courant->point[2] += Element->Centre_Z;
+                sommet_courant->point[0] += Centre_X;
+                sommet_courant->point[1] += Centre_Y;
+                sommet_courant->point[2] += Centre_Z;
             }
 
             if (!Synchrones) {  // Si les 3 Scale_* sont identiques, les normales ne changent pas
@@ -411,17 +418,17 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
             Element->listeFacettes.clear();
             for (j=0; j<n_val; j++, jt++) {
                 sommet_courant = &(objet_courant->Sommetlist[*jt]);
-                sommet_courant->point[0] -= Element->Centre_X;          // Recentrer les points de l'objet en 0,0,0
-                sommet_courant->point[1] -= Element->Centre_Y;
-                sommet_courant->point[2] -= Element->Centre_Z;
+                sommet_courant->point[0] -= Centre_X;          // Recentrer les points de l'objet en 0,0,0
+                sommet_courant->point[1] -= Centre_Y;
+                sommet_courant->point[2] -= Centre_Z;
 
-                sommet_courant->point[0] *= Element->Scale_X;           // Effectuer les 3 mises à l'échelle sur les 3 axes.
-                sommet_courant->point[1] *= Element->Scale_Y;
-                sommet_courant->point[2] *= Element->Scale_Z;
+                sommet_courant->point[0] *= Scale_X;           // Effectuer les 3 mises à l'échelle sur les 3 axes.
+                sommet_courant->point[1] *= Scale_Y;
+                sommet_courant->point[2] *= Scale_Z;
 
-                sommet_courant->point[0] += Element->Centre_X;          // Remettre les points de l'objet en place (translation inverse)
-                sommet_courant->point[1] += Element->Centre_Y;
-                sommet_courant->point[2] += Element->Centre_Z;
+                sommet_courant->point[0] += Centre_X;          // Remettre les points de l'objet en place (translation inverse)
+                sommet_courant->point[1] += Centre_Y;
+                sommet_courant->point[2] += Centre_Z;
 
                 p_Point = &(objet_courant->Pointslist[*jt]);
                 unsigned int n_fac = p_Point->IndicesFacettes.size();
@@ -473,18 +480,18 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
 
             for (j=0; j<objet_courant->Nb_sommets; j++) {
                 sommet_courant = &(objet_courant->Sommetlist[j]);
-                if (sommet_courant->selected) {                         // Ne traiter que les sommets sélectionnés
-                    sommet_courant->point[0] -= Element->Centre_X;          // Recentrer les points de l'objet en 0,0,0
-                    sommet_courant->point[1] -= Element->Centre_Y;
-                    sommet_courant->point[2] -= Element->Centre_Z;
+                if (sommet_courant->selected) {                     // Ne traiter que les sommets sélectionnés
+                    sommet_courant->point[0] -= Centre_X;               // Recentrer les points de l'objet en 0,0,0
+                    sommet_courant->point[1] -= Centre_Y;
+                    sommet_courant->point[2] -= Centre_Z;
 
-                    sommet_courant->point[0] *= Element->Scale_X;           // Effectuer les 3 mises à l'échelle sur les 3 axes.
-                    sommet_courant->point[1] *= Element->Scale_Y;
-                    sommet_courant->point[2] *= Element->Scale_Z;
+                    sommet_courant->point[0] *= Scale_X;                // Effectuer les 3 mises à l'échelle sur les 3 axes.
+                    sommet_courant->point[1] *= Scale_Y;
+                    sommet_courant->point[2] *= Scale_Z;
 
-                    sommet_courant->point[0] += Element->Centre_X;          // Remettre les points de l'objet en place (translation inverse)
-                    sommet_courant->point[1] += Element->Centre_Y;
-                    sommet_courant->point[2] += Element->Centre_Z;
+                    sommet_courant->point[0] += Centre_X;               // Remettre les points de l'objet en place (translation inverse)
+                    sommet_courant->point[1] += Centre_Y;
+                    sommet_courant->point[2] += Centre_Z;
 
                     p_Point = &(objet_courant->Pointslist[j]);
                     unsigned int n_fac = p_Point->IndicesFacettes.size();
@@ -510,8 +517,8 @@ void ScalePanel::OnButton_AppliquerClick(wxCommandEvent& event)
 //        OnButton_AnnulerClick(event);
     }
 
-    Element->bdd_modifiee    = true;
-    Element->Changer_Echelle = false;
+    Element->SetBddModifiee(true);
+    Element->SetChangerEchelle(false);
     Element->m_gllist = 0;
     Element->Refresh();
     wxCloseEvent close_event;

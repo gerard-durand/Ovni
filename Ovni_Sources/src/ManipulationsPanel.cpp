@@ -97,7 +97,7 @@ void ManipulationsPanel::OnInit(wxInitDialogEvent& event)
     CheckBox_Y->SetValue(false);
     CheckBox_Z->SetValue(false);
     Button_Creer->Disable();
-    MAIN->Element->Symetrie_Objets = false;
+    MAIN->Element->SetSymetrieObjets(false);
 }
 
 void ManipulationsPanel::OnClose(wxCloseEvent& event)
@@ -108,7 +108,7 @@ void ManipulationsPanel::OnClose(wxCloseEvent& event)
         CheckBox_Y->SetValue(false);
         CheckBox_Z->SetValue(false);
         Button_Creer->Disable();
-        MAIN->Element->Symetrie_Objets = false;
+        MAIN->Element->SetSymetrieObjets(false);
         MAIN->Element->Refresh();
     }
     Hide();
@@ -156,7 +156,7 @@ void ManipulationsPanel::OnButton_ScaleClick(wxCommandEvent& event)
 void ManipulationsPanel::OnCheckBox_XClick(wxCommandEvent& event)
 {
     CheckBox_XYZ = (CheckBox_X->GetValue() || CheckBox_Y->GetValue() || CheckBox_Z->GetValue());
-    MAIN->Element->Symetrie_Objets = false;
+    MAIN->Element->SetSymetrieObjets(false);
     if (CheckBox_XYZ) {
         Button_Creer->Enable();
         CreerBoiteObjet();
@@ -167,7 +167,7 @@ void ManipulationsPanel::OnCheckBox_XClick(wxCommandEvent& event)
 void ManipulationsPanel::OnCheckBox_YClick(wxCommandEvent& event)
 {
     CheckBox_XYZ = (CheckBox_X->GetValue() || CheckBox_Y->GetValue() || CheckBox_Z->GetValue());
-    MAIN->Element->Symetrie_Objets = false;
+    MAIN->Element->SetSymetrieObjets(false);
     if (CheckBox_XYZ) {
         Button_Creer->Enable();
         CreerBoiteObjet();
@@ -178,7 +178,7 @@ void ManipulationsPanel::OnCheckBox_YClick(wxCommandEvent& event)
 void ManipulationsPanel::OnCheckBox_ZClick(wxCommandEvent& event)
 {
     CheckBox_XYZ = (CheckBox_X->GetValue() || CheckBox_Y->GetValue() || CheckBox_Z->GetValue());
-    MAIN->Element->Symetrie_Objets = false;
+    MAIN->Element->SetSymetrieObjets(false);
     if (CheckBox_XYZ) {
         Button_Creer->Enable();
         CreerBoiteObjet();
@@ -225,26 +225,12 @@ void ManipulationsPanel::CreerBoiteObjet()
             }
         }
     }
-    Element->Symetrie_Objets = true;
-    Element->x1_b1 = Element->x1_b2 = x1b1; // Recopie de la boîte originale dans la boîte symétrisée (initialisation)
-    Element->x2_b1 = Element->x2_b2 = x2b1;
-    Element->y1_b1 = Element->y1_b2 = y1b1;
-    Element->y2_b1 = Element->y2_b2 = y2b1;
-    Element->z1_b1 = Element->z1_b2 = z1b1;
-    Element->z2_b1 = Element->z2_b2 = z2b1;
+    Element->SetSymetrieObjets(true);
+    Element->SetBoiteSymetrique (x1b1,x2b1,y1b1,y2b1,z1b1,z2b1);
 
-    if (CheckBox_X->GetValue()) {       // Symétrise la boîte en X
-        Element->x1_b2 *= -1.;
-        Element->x2_b2 *= -1.;
-    }
-    if (CheckBox_Y->GetValue()) {       // Symétrise la boîte en Y
-        Element->y1_b2 *= -1.;
-        Element->y2_b2 *= -1.;
-    }
-    if (CheckBox_Z->GetValue()) {       // Symétrise la boîte en Z
-        Element->z1_b2 *= -1.;
-        Element->z2_b2 *= -1.;
-    }
+    if (CheckBox_X->GetValue()) {Element->SetBoiteSymetriserX();}   // Symétrise la boîte en X
+    if (CheckBox_Y->GetValue()) {Element->SetBoiteSymetriserY();}   // Symétrise la boîte en Y
+    if (CheckBox_Z->GetValue()) {Element->SetBoiteSymetriserZ();}   // Symétrise la boîte en Z
 }
 
 void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
@@ -277,7 +263,7 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
 
     indiceObjet = Element->Objetlist.size() -1;                 // Numéro d'indice du dernier objet
     numero_max  = 0;
-    for (i=0; i<=indiceObjet; i++) numero_max = std::max(numero_max,Element->Objetlist[i].GetValue());
+    for (i=0; i<=indiceObjet; i++) numero_max = std::max(numero_max,Element->Objetlist[i].GetNumero());
 //    printf("\nNumero maximal : %d\n",numero_max);
     new_numero = ((numero_max/10) +1)*10;
 
@@ -286,10 +272,10 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
         Element->Objetlist.push_back(Element->Objetlist[o]);    // Push_back d'une copie de l'objet initial
         objet_courant = &(Element->Objetlist[o]);
         indiceObjet = Element->Objetlist.size() -1;             // Numéro d'indice de l'objet créé
-        Element->indiceObjet_courant = indiceObjet;             // Enregistrer ce numéro d'indice dans BddInter
+        Element->SetIndiceObjetCourant(indiceObjet);            // Enregistrer ce numéro d'indice dans BddInter
 
         objet_nouveau = &(Element->Objetlist[indiceObjet]);
-        objet_nouveau->SetValue(new_numero);                    // Nouveau numéro pour le nouvel objet
+        objet_nouveau->SetNumero(new_numero);                   // Nouveau numéro pour le nouvel objet
         wxString Ancien_nom  = objet_courant->GetwxName();
         wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - par symetrie");  // Ajouter "par symetrie" au nom de l'objet original
         objet_nouveau->SetName(Nouveau_nom);
@@ -335,23 +321,25 @@ void ManipulationsPanel::OnButton_CreerClick(wxCommandEvent& event)
         }
         objet_nouveau->selected = false;    // Ne pas marquer le nouvel objet comme étant sélectionné
     }
-//    Element->Symetrie_Objets = false; // En commentaire pour laisser affichée la boîte englobante du/des objet(s) sélectionnés
+//    Element->SetSymetrieObjets(false); // En commentaire pour laisser affichée la boîte englobante du/des objet(s) sélectionnés
     Element->m_gllist = 0;
     Element->Search_Min_Max();          // Mettre à jour les min-max pour la boîte englobante
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
     Element->Refresh();
 //    ToDo();
 }
 
 void ManipulationsPanel::OnButton_RazClick(wxCommandEvent& event)
 {
+    BddInter *Element = MAIN->Element;
+
     CheckBox_XYZ = false;
     CheckBox_X->SetValue(false);
     CheckBox_Y->SetValue(false);
     CheckBox_Z->SetValue(false);
     Button_Creer->Disable();
-    MAIN->Element->Symetrie_Objets = false;
-    MAIN->Element->Refresh();
+    Element->SetSymetrieObjets(false);
+    Element->Refresh();
 }
 
 void ManipulationsPanel::NewObjet_SelectedFacets(wxCommandEvent& event){    // Pour appeler depuis OvniFrame::OnPopup_CreerObjetFacettesSelected
@@ -385,7 +373,7 @@ void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
 
     numero_max = 0;
     new_indice = Element->Objetlist.size();
-    for (i_obj =0; i_obj<new_indice; i_obj++) numero_max = std::max(numero_max,Element->Objetlist[i_obj].GetValue());
+    for (i_obj =0; i_obj<new_indice; i_obj++) numero_max = std::max(numero_max,Element->Objetlist[i_obj].GetNumero());
     if (premiere_fois)
         new_numero = ((numero_max/10) +1)*10;   // Pour bien différentier ce qu'on sépare, la première fois
     else
@@ -395,9 +383,9 @@ void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
 
     Element->Objetlist.push_back(Element->Objetlist[indice_objet]);         // Push_back d'une copie de l'objet initial en entier
     objet_courant = &(Element->Objetlist[indice_objet]);
-    Element->indiceObjet_courant = new_indice;                              // Enregistrer le numéro d'indice dans BddInter
+    Element->SetIndiceObjetCourant(new_indice);                             // Enregistrer le numéro d'indice dans BddInter
     objet_nouveau = &(Element->Objetlist[new_indice]);
-    objet_nouveau->SetValue(new_numero);
+    objet_nouveau->SetNumero(new_numero);
 //    wxString Ancien_nom  = objet_courant->GetwxName();
     wxString Nouveau_nom = objet_courant->GetwxName() + _T(" - Extrait");   // Modifier le nom (ou bien le demander à l'écran)
     objet_nouveau->SetName(Nouveau_nom);
@@ -417,7 +405,7 @@ void ManipulationsPanel::OnButton_NewObjetClick(wxCommandEvent& event)
     key_event.m_keyCode = 'S';
     Element->OnKeyDown(key_event);   // Simule une pression sur la touche S au clavier => Reset de la sélection de facettes
 
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
 
     // En sortie, peut-être forcer (simuler) un clic sur Quitter, mais peut généer si on fait plusieurs fois de suite cette opération
 

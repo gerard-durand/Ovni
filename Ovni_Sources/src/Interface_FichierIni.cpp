@@ -31,6 +31,8 @@ const char *initO="TestDbAretes="       ;
 const char *initP="Taille_Icones="      ;
 const char *initQ="Dark_Mode="          ;
 const char *initR="Sliders_ON_OFF="     ;
+const char *initS="Frame_Size_X="       ;
+const char *initT="Frame_Size_Y="       ;
 
 FILE *f_init;
 
@@ -41,6 +43,7 @@ void BddInter::Ouvrir_ini_file()
 
     f_init = fopen(fichier_init,"r") ;      // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != nullptr) {
+        printf("Ouverture et lecture du fichier d'initialisation : %s\n",fichier_init);
         while ((Lu = fgets(Message,300,f_init)) != nullptr) {
             len = strlen( init1);
             icmp= strncmp(init1,Message,len) ;                  // Test sur 1er mot clé
@@ -109,8 +112,8 @@ void BddInter::Ouvrir_ini_file()
                 p_txt_wrk = &Message[len] ;
                 sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de test_seuil_gouraud
                 if (ibool == 0)
-                     test_seuil_gouraud = false;
-                else test_seuil_gouraud = true ;
+                     test_seuil_Gouraud = false;
+                else test_seuil_Gouraud = true ;
                 continue;   // Passer au while suivant
             }
             len = strlen( init9);
@@ -296,6 +299,20 @@ void BddInter::Ouvrir_ini_file()
                 else            afficher_sliders = true;
                 continue;   // Passer au while suivant
             }
+            len = strlen( initS);
+            icmp= strncmp(initS,Message,len) ;                  // Test sur 28ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&frame_size_x) ;          // Récupère la valeur de la taille en x de frame
+                continue;   // Passer au while suivant
+            }
+            len = strlen( initT);
+            icmp= strncmp(initT,Message,len) ;                  // Test sur 29ème mot clé
+            if (!icmp) {
+                p_txt_wrk = &Message[len] ;
+                sscanf(p_txt_wrk,"%d",&frame_size_y) ;          // Récupère la valeur de la taille en y de frame
+                continue;   // Passer au while suivant
+            }
         }
         ini_file_modified = false;      // Contenu du fichier ini_file non modifié (pas encore !!)
         fclose(f_init);
@@ -319,7 +336,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",init5,Forcer_1_Seul_Objet);
         fprintf(f_init,"%s%d\n",init6,lect_obj_opt);
         fprintf(f_init,"%s%d\n",init7,test_decalage3ds);
-        fprintf(f_init,"%s%d\n",init8,test_seuil_gouraud);
+        fprintf(f_init,"%s%d\n",init8,test_seuil_Gouraud);
         fprintf(f_init,"%s%f\n",init9,angle_Gouraud);
         fprintf(f_init,"%s%f\n",initA,fmult_Gouraud);
         fprintf(f_init,"%s%d\n",initB,Enr_Normales_Seuillees);
@@ -341,6 +358,8 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initP,icon_size);
         fprintf(f_init,"%s%d\n",initQ,darkmode);
         fprintf(f_init,"%s%d\n",initR,afficher_sliders);
+        fprintf(f_init,"%s%d\n",initS,frame_size_x);
+        fprintf(f_init,"%s%d\n",initT,frame_size_y);
 
 //        fprintf(f_init,"TEST\n") ;
         fclose(f_init) ;

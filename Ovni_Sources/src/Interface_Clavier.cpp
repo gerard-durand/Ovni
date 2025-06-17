@@ -677,7 +677,14 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         wxTheApp->ExitMainLoop();
         break;
 
-    case 'A':                                   // Bascule du mode Antialiasing OpenGL
+    case 'A':
+    // ou 'a'
+        if (event.ShiftDown()) {    // C'est un 'A' majuscule
+            // Forcer un Autosave immédiat
+            this->MAIN_b->OnTimer_Autosave();
+            break;
+        }
+        // C'est un a en minuscule => Bascule du mode Antialiasing OpenGL
         antialiasing_soft = !antialiasing_soft;
         if (MPrefs->IsShown()) {
             MPrefs->CheckBox_AntialiasingSoft->SetValue(antialiasing_soft); // Modifier la case à cocher si le dialogue Préférences est affiché

@@ -131,12 +131,12 @@ void Facette::genereFacette()
     if (Element->Objetlist.size() == 0)
         new_num = 1;
     else
-        new_num = Element->Objetlist.rbegin()->GetValue() +1;
+        new_num = Element->Objetlist.rbegin()->GetNumero() +1;
     num_obj.Printf(_T("%d"),new_num);
     Element->str = _T("<OBJET> ") + num_obj + _T(" Facette - ") + num_obj;
     Element->make_objet();
     Element->Objetlist.rbegin()->primitive = true;
-    int indiceObjet = Element->indiceObjet_courant;
+    int indiceObjet = Element->GetIndiceObjetCourant();
 
     p_Objet = &(Element->Objetlist[indiceObjet]);
 
@@ -187,11 +187,11 @@ void Facette::genereFacette()
     p_Objet->Nb_luminances = 0;
 
     Element->Genere_Tableau_Points_Facettes(p_Objet);
-    Element->Genere_Tableau_Aretes_OK = true;
+    Element->SetGenereTableauAretes_OK(true);
     Element->Genere_Tableau_Aretes(p_Objet);
     Element->Genere_Liste_Groupes_Materiaux(p_Objet);
 
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
 }
 
 void Facette::OnButton_OKClick(wxCommandEvent& event)
@@ -203,13 +203,13 @@ void Facette::OnButton_OKClick(wxCommandEvent& event)
 
     genereFacette();
 
-    Element->type_fichier   = 1;  // Marquer comme si c'était un fichier .bdd
-    Element->type_dxf       = false;
-    Element->m_gllist       = 0;
+    Element->SetTypeFichier(1);     // Marquer comme si c'était un fichier .bdd
+    Element->SetTypeDxf(false);
+    Element->m_gllist = 0;
 
     Element->Search_Min_Max();
-    Element->m_loaded = true;
-    Element->OK_ToSave= true;
+    Element->SetFileLoaded(true);
+    Element->SetOK_ToSave (true);
     Element->Refresh();
     Hide();
 }

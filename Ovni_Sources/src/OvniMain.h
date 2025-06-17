@@ -212,12 +212,6 @@ class OvniFrame: public wxFrame
         BddInter *Element=nullptr;
         OvniFrame(wxWindow* parent, wxWindowID id = -1);
         virtual ~OvniFrame();
-        bool OnInit();
-        enum wxbuildinfoformat{short_f, long_f};
-        wxString wxbuildinfo(wxbuildinfoformat);
-        wxPoint  wxPrefs_pos;
-        wxPoint  wxModificationPanel_pos;
-        wxPoint  wxPropertiesPanel_pos;
 
         Aide_html*                  AideHtml_Panel;
         CentreRotation*             CentreRotation_Panel;
@@ -252,17 +246,17 @@ class OvniFrame: public wxFrame
         TranslationPanel*           Translation_Panel;
         ZoomSpecifique*             ZoomSpecifique_Panel;
 
-        bool toggle_modif = false;
-        bool toggle_outils= false;
-        bool New_file     = true;
-        bool verbose      = false;   // il y en a aussi un dans BddInter qui utilise une copie de celui-ci !
+        void SetToggleOutils(bool value) {  // Setter pour toggle_outils (pas besoin de Getter)
+            this->toggle_outils = value;
+        };
+        void SetToggleModifs(bool value) {  // Setter pour toggle_modifs (pas besoin de Getter)
+            this->toggle_modifs = value;
+        };
 
-//        int FilterIndex=0;
-//        static wxString s_extFileDef;
-//        void changeangle();
         void Ouvrir_Fichier();
         int  Ouvrir_Ini();
-        void ResizeOpenGL(int , int );
+
+//        void Resize_OpenGL(int , int );    // Pour test d'appels en dehors de OvniFrame
         void SetAngles();
         int  SetNewIcons(int);
         void Redisplay_Proprietes(wxCommandEvent& event);
@@ -271,7 +265,7 @@ class OvniFrame: public wxFrame
         void Toggle_Groupes      (wxCommandEvent& event);
         void Toggle_Materiaux    (wxCommandEvent& event);
 
-// ID_POPUP_* créés par wxSmith en private initialement, puis déplacés ici en public
+// ID_POPUP_* créés par wxSmith en private initialement, puis déplacés ici en public (besoins d'accès aussi dans Interface*)
         static const long ID_POPUP_RAZ;
         static const long ID_POPUP_COMPLEMT;
         static const long ID_POPUP_ETENDRE;
@@ -294,6 +288,7 @@ class OvniFrame: public wxFrame
         void ReperageFacette_activer();
 
         wxMenuItem* Menu_ReOpen3ds=nullptr; // Pour réouvrir spécifiquement un fichier 3ds en changeant le mode de décalage
+        void OnTimer_Autosave();            // Pour pouvoir appeler immédiatement un enregistrement dans Autosave.bdd via une touche au clavier (! actuellement)
 
     private:
         //(*Handlers(OvniFrame)
@@ -439,94 +434,94 @@ class OvniFrame: public wxFrame
         static const long ID_BUTTON20;
 
 		//(*Identifiers(OvniFrame)
-		static const long ID_STATICTEXT1;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_STATICTEXT2;
-		static const long ID_BUTTON3;
-		static const long ID_BUTTON4;
-		static const long ID_BUTTON5;
-		static const long ID_BUTTON6;
-		static const long ID_PANEL1;
-		static const long ID_GLCANVAS;
-		static const long ID_SLIDER_X;
-		static const long ID_SLIDER_Y;
-		static const long ID_SLIDER_Z;
-		static const long ID_PANEL2;
-		static const long idOpenFile;
-		static const long idReopenFile;
-		static const long idAddFile;
-		static const long idSaveFile;
-		static const long idSaveFileAs;
-		static const long idProperties;
-		static const long idPrefs;
-		static const long idHardware;
-		static const long idMenuQuit;
-		static const long menu_Affichage_Points;
-		static const long menu_Affichage_Filaire;
-		static const long menu_Affichage_Plein;
-		static const long menu_Affichage_Axes;
-		static const long menu_Affichage_Boite;
-		static const long menu_Affichage_Source;
-		static const long ID_MENUITEM1;
-		static const long ID_MENUITEM2;
-		static const long ID_MENUITEM3;
-		static const long ID_MENUITEM4;
-		static const long ID_MENUITEM5;
-		static const long ID_MENUITEM6;
-		static const long ID_MENUITEM7;
-		static const long ID_MENUITEM8;
-		static const long ID_MENUITEM32;
-		static const long ID_MENUITEM33;
-		static const long ID_MENUITEM34;
-		static const long ID_MENUITEM35;
-		static const long ID_MENUITEM36;
-		static const long ID_MENUITEM37;
-		static const long ID_MENUITEM38;
-		static const long ID_MENUITEM51;
-		static const long ID_MENUITEM39;
-		static const long ID_MENUITEM9;
-		static const long ID_MENUITEM10;
-		static const long ID_MENUITEM11;
-		static const long ID_MENUITEM12;
-		static const long ID_MENUITEM13;
-		static const long ID_MENUITEM14;
-		static const long menu_reperage_couleurs_facettes;
-		static const long menu_reperage_couleurs_groupes;
-		static const long menu_reperage_couleurs_materiaux;
-		static const long ID_MENUITEM50;
-		static const long ID_MENUITEM49;
-		static const long ID_MENUITEM48;
-		static const long ID_MENUITEM40;
-		static const long ID_MENUITEM41;
-		static const long ID_MENUITEM42;
-		static const long ID_MENUITEM15;
-		static const long ID_MENUITEM16;
-		static const long ID_MENUITEM28;
-		static const long ID_MENUITEM29;
-		static const long ID_MENUITEM30;
-		static const long ID_MENUITEM31;
-		static const long ID_MENUITEM52;
-		static const long ID_MENUITEM17;
-		static const long ID_MENUITEM18;
-		static const long ID_MENUITEM19;
-		static const long ID_MENUITEM20;
-		static const long ID_MENUITEM21;
-		static const long ID_MENUITEM22;
-		static const long ID_MENUITEM23;
-		static const long ID_MENUITEM24;
-		static const long ID_MENUITEM27;
-		static const long ID_MENUITEM25;
-		static const long ID_MENUITEM26;
-		static const long ID_MENUITEM43;
-		static const long ID_MENUITEM44;
-		static const long ID_MENUITEM45;
-		static const long ID_MENUITEM46;
-		static const long ID_MENUITEM47;
-		static const long idMenuHelp;
-		static const long idMenuAbout;
-		static const long ID_STATUSBAR1;
-		static const long ID_TIMER1;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_BUTTON3;
+		static const wxWindowID ID_BUTTON4;
+		static const wxWindowID ID_BUTTON5;
+		static const wxWindowID ID_BUTTON6;
+		static const wxWindowID ID_PANEL1;
+		static const wxWindowID ID_GLCANVAS;
+		static const wxWindowID ID_SLIDER_X;
+		static const wxWindowID ID_SLIDER_Y;
+		static const wxWindowID ID_SLIDER_Z;
+		static const wxWindowID ID_PANEL2;
+		static const wxWindowID idOpenFile;
+		static const wxWindowID idReopenFile;
+		static const wxWindowID idAddFile;
+		static const wxWindowID idSaveFile;
+		static const wxWindowID idSaveFileAs;
+		static const wxWindowID idProperties;
+		static const wxWindowID idPrefs;
+		static const wxWindowID idHardware;
+		static const wxWindowID idMenuQuit;
+		static const wxWindowID menu_Affichage_Points;
+		static const wxWindowID menu_Affichage_Filaire;
+		static const wxWindowID menu_Affichage_Plein;
+		static const wxWindowID menu_Affichage_Axes;
+		static const wxWindowID menu_Affichage_Boite;
+		static const wxWindowID menu_Affichage_Source;
+		static const wxWindowID ID_MENUITEM1;
+		static const wxWindowID ID_MENUITEM2;
+		static const wxWindowID ID_MENUITEM3;
+		static const wxWindowID ID_MENUITEM4;
+		static const wxWindowID ID_MENUITEM5;
+		static const wxWindowID ID_MENUITEM6;
+		static const wxWindowID ID_MENUITEM7;
+		static const wxWindowID ID_MENUITEM8;
+		static const wxWindowID ID_MENUITEM32;
+		static const wxWindowID ID_MENUITEM33;
+		static const wxWindowID ID_MENUITEM34;
+		static const wxWindowID ID_MENUITEM35;
+		static const wxWindowID ID_MENUITEM36;
+		static const wxWindowID ID_MENUITEM37;
+		static const wxWindowID ID_MENUITEM38;
+		static const wxWindowID ID_MENUITEM51;
+		static const wxWindowID ID_MENUITEM39;
+		static const wxWindowID ID_MENUITEM9;
+		static const wxWindowID ID_MENUITEM10;
+		static const wxWindowID ID_MENUITEM11;
+		static const wxWindowID ID_MENUITEM12;
+		static const wxWindowID ID_MENUITEM13;
+		static const wxWindowID ID_MENUITEM14;
+		static const wxWindowID menu_reperage_couleurs_facettes;
+		static const wxWindowID menu_reperage_couleurs_groupes;
+		static const wxWindowID menu_reperage_couleurs_materiaux;
+		static const wxWindowID ID_MENUITEM50;
+		static const wxWindowID ID_MENUITEM49;
+		static const wxWindowID ID_MENUITEM48;
+		static const wxWindowID ID_MENUITEM40;
+		static const wxWindowID ID_MENUITEM41;
+		static const wxWindowID ID_MENUITEM42;
+		static const wxWindowID ID_MENUITEM15;
+		static const wxWindowID ID_MENUITEM16;
+		static const wxWindowID ID_MENUITEM28;
+		static const wxWindowID ID_MENUITEM29;
+		static const wxWindowID ID_MENUITEM30;
+		static const wxWindowID ID_MENUITEM31;
+		static const wxWindowID ID_MENUITEM52;
+		static const wxWindowID ID_MENUITEM17;
+		static const wxWindowID ID_MENUITEM18;
+		static const wxWindowID ID_MENUITEM19;
+		static const wxWindowID ID_MENUITEM20;
+		static const wxWindowID ID_MENUITEM21;
+		static const wxWindowID ID_MENUITEM22;
+		static const wxWindowID ID_MENUITEM23;
+		static const wxWindowID ID_MENUITEM24;
+		static const wxWindowID ID_MENUITEM27;
+		static const wxWindowID ID_MENUITEM25;
+		static const wxWindowID ID_MENUITEM26;
+		static const wxWindowID ID_MENUITEM43;
+		static const wxWindowID ID_MENUITEM44;
+		static const wxWindowID ID_MENUITEM45;
+		static const wxWindowID ID_MENUITEM46;
+		static const wxWindowID ID_MENUITEM47;
+		static const wxWindowID idMenuHelp;
+		static const wxWindowID idMenuAbout;
+		static const wxWindowID ID_STATUSBAR1;
+		static const wxWindowID ID_TIMER1;
 		//*)
 
         static const long idReopenFile3ds;
@@ -536,9 +531,28 @@ class OvniFrame: public wxFrame
         //opengl methods
         wxGLContext* m_glcontext;
         void Init_OpenGL(void);
-//        void ResizeOpenGL(int iWidth, int iHeight);   // Déplacé en public pour tests
+        void Resize_OpenGL(int , int);  // à déplacer en public pour tests d'accès en dehors de OvniFrame
         void Init_Boutons(void);
+
         unsigned char *pixelsRGB;
+
+        enum     wxbuildinfoformat{short_f, long_f};
+        wxString wxbuildinfo(wxbuildinfoformat);
+        wxPoint  wxPrefs_pos;
+        wxPoint  wxModificationPanel_pos;
+        wxPoint  wxPropertiesPanel_pos;
+
+        int ovni_frame_sx ;             // Pour enregistrer localement la taille de la fenêtre principale OvniFrame
+        int ovni_frame_sy ;             // indépendamment de celles dans BddInter : frame_size_x et frame_size_y
+
+        bool New_file = true;
+        bool verbose  = false;          // il y en a aussi un dans BddInter qui utilise une copie de celui-ci !
+
+        bool toggle_modifs = false;
+        bool toggle_outils = false;
+
+        bool exists_Autosave= false;    // Sera mis à true par la première sauvegarde automatique
+        bool OK_FichierCree = false;
 
         DECLARE_EVENT_TABLE()
 

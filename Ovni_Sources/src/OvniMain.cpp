@@ -125,94 +125,94 @@ const long OvniFrame::ID_BUTTON20 = wxNewId();
 
 // Constantes d'identifications gérées par wxSmith
 //(*IdInit(OvniFrame)
-const long OvniFrame::ID_STATICTEXT1 = wxNewId();
-const long OvniFrame::ID_BUTTON1 = wxNewId();
-const long OvniFrame::ID_BUTTON2 = wxNewId();
-const long OvniFrame::ID_STATICTEXT2 = wxNewId();
-const long OvniFrame::ID_BUTTON3 = wxNewId();
-const long OvniFrame::ID_BUTTON4 = wxNewId();
-const long OvniFrame::ID_BUTTON5 = wxNewId();
-const long OvniFrame::ID_BUTTON6 = wxNewId();
-const long OvniFrame::ID_PANEL1 = wxNewId();
-const long OvniFrame::ID_GLCANVAS = wxNewId();
-const long OvniFrame::ID_SLIDER_X = wxNewId();
-const long OvniFrame::ID_SLIDER_Y = wxNewId();
-const long OvniFrame::ID_SLIDER_Z = wxNewId();
-const long OvniFrame::ID_PANEL2 = wxNewId();
-const long OvniFrame::idOpenFile = wxNewId();
-const long OvniFrame::idReopenFile = wxNewId();
-const long OvniFrame::idAddFile = wxNewId();
-const long OvniFrame::idSaveFile = wxNewId();
-const long OvniFrame::idSaveFileAs = wxNewId();
-const long OvniFrame::idProperties = wxNewId();
-const long OvniFrame::idPrefs = wxNewId();
-const long OvniFrame::idHardware = wxNewId();
-const long OvniFrame::idMenuQuit = wxNewId();
-const long OvniFrame::menu_Affichage_Points = wxNewId();
-const long OvniFrame::menu_Affichage_Filaire = wxNewId();
-const long OvniFrame::menu_Affichage_Plein = wxNewId();
-const long OvniFrame::menu_Affichage_Axes = wxNewId();
-const long OvniFrame::menu_Affichage_Boite = wxNewId();
-const long OvniFrame::menu_Affichage_Source = wxNewId();
-const long OvniFrame::ID_MENUITEM1 = wxNewId();
-const long OvniFrame::ID_MENUITEM2 = wxNewId();
-const long OvniFrame::ID_MENUITEM3 = wxNewId();
-const long OvniFrame::ID_MENUITEM4 = wxNewId();
-const long OvniFrame::ID_MENUITEM5 = wxNewId();
-const long OvniFrame::ID_MENUITEM6 = wxNewId();
-const long OvniFrame::ID_MENUITEM7 = wxNewId();
-const long OvniFrame::ID_MENUITEM8 = wxNewId();
-const long OvniFrame::ID_MENUITEM32 = wxNewId();
-const long OvniFrame::ID_MENUITEM33 = wxNewId();
-const long OvniFrame::ID_MENUITEM34 = wxNewId();
-const long OvniFrame::ID_MENUITEM35 = wxNewId();
-const long OvniFrame::ID_MENUITEM36 = wxNewId();
-const long OvniFrame::ID_MENUITEM37 = wxNewId();
-const long OvniFrame::ID_MENUITEM38 = wxNewId();
-const long OvniFrame::ID_MENUITEM51 = wxNewId();
-const long OvniFrame::ID_MENUITEM39 = wxNewId();
-const long OvniFrame::ID_MENUITEM9 = wxNewId();
-const long OvniFrame::ID_MENUITEM10 = wxNewId();
-const long OvniFrame::ID_MENUITEM11 = wxNewId();
-const long OvniFrame::ID_MENUITEM12 = wxNewId();
-const long OvniFrame::ID_MENUITEM13 = wxNewId();
-const long OvniFrame::ID_MENUITEM14 = wxNewId();
-const long OvniFrame::menu_reperage_couleurs_facettes = wxNewId();
-const long OvniFrame::menu_reperage_couleurs_groupes = wxNewId();
-const long OvniFrame::menu_reperage_couleurs_materiaux = wxNewId();
-const long OvniFrame::ID_MENUITEM50 = wxNewId();
-const long OvniFrame::ID_MENUITEM49 = wxNewId();
-const long OvniFrame::ID_MENUITEM48 = wxNewId();
-const long OvniFrame::ID_MENUITEM40 = wxNewId();
-const long OvniFrame::ID_MENUITEM41 = wxNewId();
-const long OvniFrame::ID_MENUITEM42 = wxNewId();
-const long OvniFrame::ID_MENUITEM15 = wxNewId();
-const long OvniFrame::ID_MENUITEM16 = wxNewId();
-const long OvniFrame::ID_MENUITEM28 = wxNewId();
-const long OvniFrame::ID_MENUITEM29 = wxNewId();
-const long OvniFrame::ID_MENUITEM30 = wxNewId();
-const long OvniFrame::ID_MENUITEM31 = wxNewId();
-const long OvniFrame::ID_MENUITEM52 = wxNewId();
-const long OvniFrame::ID_MENUITEM17 = wxNewId();
-const long OvniFrame::ID_MENUITEM18 = wxNewId();
-const long OvniFrame::ID_MENUITEM19 = wxNewId();
-const long OvniFrame::ID_MENUITEM20 = wxNewId();
-const long OvniFrame::ID_MENUITEM21 = wxNewId();
-const long OvniFrame::ID_MENUITEM22 = wxNewId();
-const long OvniFrame::ID_MENUITEM23 = wxNewId();
-const long OvniFrame::ID_MENUITEM24 = wxNewId();
-const long OvniFrame::ID_MENUITEM27 = wxNewId();
-const long OvniFrame::ID_MENUITEM25 = wxNewId();
-const long OvniFrame::ID_MENUITEM26 = wxNewId();
-const long OvniFrame::ID_MENUITEM43 = wxNewId();
-const long OvniFrame::ID_MENUITEM44 = wxNewId();
-const long OvniFrame::ID_MENUITEM45 = wxNewId();
-const long OvniFrame::ID_MENUITEM46 = wxNewId();
-const long OvniFrame::ID_MENUITEM47 = wxNewId();
-const long OvniFrame::idMenuHelp = wxNewId();
-const long OvniFrame::idMenuAbout = wxNewId();
-const long OvniFrame::ID_STATUSBAR1 = wxNewId();
-const long OvniFrame::ID_TIMER1 = wxNewId();
+const wxWindowID OvniFrame::ID_STATICTEXT1 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON1 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON2 = wxNewId();
+const wxWindowID OvniFrame::ID_STATICTEXT2 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON3 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON4 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON5 = wxNewId();
+const wxWindowID OvniFrame::ID_BUTTON6 = wxNewId();
+const wxWindowID OvniFrame::ID_PANEL1 = wxNewId();
+const wxWindowID OvniFrame::ID_GLCANVAS = wxNewId();
+const wxWindowID OvniFrame::ID_SLIDER_X = wxNewId();
+const wxWindowID OvniFrame::ID_SLIDER_Y = wxNewId();
+const wxWindowID OvniFrame::ID_SLIDER_Z = wxNewId();
+const wxWindowID OvniFrame::ID_PANEL2 = wxNewId();
+const wxWindowID OvniFrame::idOpenFile = wxNewId();
+const wxWindowID OvniFrame::idReopenFile = wxNewId();
+const wxWindowID OvniFrame::idAddFile = wxNewId();
+const wxWindowID OvniFrame::idSaveFile = wxNewId();
+const wxWindowID OvniFrame::idSaveFileAs = wxNewId();
+const wxWindowID OvniFrame::idProperties = wxNewId();
+const wxWindowID OvniFrame::idPrefs = wxNewId();
+const wxWindowID OvniFrame::idHardware = wxNewId();
+const wxWindowID OvniFrame::idMenuQuit = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Points = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Filaire = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Plein = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Axes = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Boite = wxNewId();
+const wxWindowID OvniFrame::menu_Affichage_Source = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM1 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM2 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM3 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM4 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM5 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM6 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM7 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM8 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM32 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM33 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM34 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM35 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM36 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM37 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM38 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM51 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM39 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM9 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM10 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM11 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM12 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM13 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM14 = wxNewId();
+const wxWindowID OvniFrame::menu_reperage_couleurs_facettes = wxNewId();
+const wxWindowID OvniFrame::menu_reperage_couleurs_groupes = wxNewId();
+const wxWindowID OvniFrame::menu_reperage_couleurs_materiaux = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM50 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM49 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM48 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM40 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM41 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM42 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM15 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM16 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM28 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM29 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM30 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM31 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM52 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM17 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM18 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM19 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM20 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM21 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM22 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM23 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM24 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM27 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM25 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM26 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM43 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM44 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM45 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM46 = wxNewId();
+const wxWindowID OvniFrame::ID_MENUITEM47 = wxNewId();
+const wxWindowID OvniFrame::idMenuHelp = wxNewId();
+const wxWindowID OvniFrame::idMenuAbout = wxNewId();
+const wxWindowID OvniFrame::ID_STATUSBAR1 = wxNewId();
+const wxWindowID OvniFrame::ID_TIMER1 = wxNewId();
 //*)
 
 // Constantes d'identifications pour le menu popup (clic droit à la souris)
@@ -249,7 +249,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
  *
  */
 
-//    verbose = true;
+//    verbose = true; // Déclaré dans OvniMain et recopié dans BddInter
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
 
     if (verbose) printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
@@ -462,7 +462,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_ReperageObjet = new wxMenuItem(Menu_Reperage, ID_MENUITEM13, _T("Objet"), wxEmptyString, wxITEM_NORMAL);
     Menu_Reperage->Append(Menu_ReperageObjet);
     Menu_Reperage->AppendSeparator();
-    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\t(n)"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
+    Menu_SensDesNormales = new wxMenuItem(Menu_Reperage, ID_MENUITEM14, _T("Sens des normales\tn"), _T("Colorise différemment les facettes mal orientées"), wxITEM_CHECK);
     Menu_Reperage->Append(Menu_SensDesNormales);
     Menu_Reperage->AppendSeparator();
     Menu_Reperage_Couleurs_Facettes = new wxMenuItem(Menu_Reperage, menu_reperage_couleurs_facettes, _T("Couleurs facettes"), wxEmptyString, wxITEM_CHECK);
@@ -840,7 +840,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     AideHtml_Panel                  = new Aide_html(this,wxID_ANY);
 
     New_file = true;
-//    s_extFileDef = wxEmptyString;
 
     int arg_c = wxGetApp().argc;
     wxString par_0(wxGetApp().argv[0]);         // Nom de la commande
@@ -866,12 +865,15 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //          wxSize(300, 300), wxSUNKEN_BORDER);
 ////        this->GLCanvas = dynamic_cast<wxGLCanvas*>(Element); // Les this->GLCanvas commentés par /// ne semblent pas servir à quelque chose !!!
 //        this->GLCanvas->SetSize(wxSize(860, 600));    // Sera fait plus tard ...
-        Element->Numero_base = 0;
+        Element->SetNumeroBase(0);
     }
 
+    ovni_frame_sx = Element->GetFrameSizeX();  // Récupère en local d'OvniFrame les tailles de la fenêtre principale
+    ovni_frame_sy = Element->GetFrameSizeY();
+
 /* Test de nouvelle taille d'icône */
-    if (Element->icon_size != 16) {
-        int new_width = SetNewIcons(Element->icon_size);
+    if (Element->GetIconSize() != 16) {
+        int new_width = SetNewIcons(Element->GetIconSize());
         wxRect rect   = this->GetRect();                    // récupère position et taille de la fenêtre
         int new_posx  = rect.x-(new_width-rect.width)/2;    // Calcul du nouveau début en X
         this->SetPosition(wxPoint(new_posx ,rect.y));       // pour recentrer si besoin...
@@ -902,14 +904,16 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
             // Le fichier Autosave ne sert pas => le supprimer maintenant, sinon il restera tant qu'une nouvelle sauvegarde n'aura pas été activée par le timer !
             wxRemoveFile(Fichier_svg);
         }
-        // Note : ne pas mettre Element->exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
+        // Note : ne pas mettre exists_Autosave à true ici. Sera fait lors de la première activation du wxTimer Timer_Save.
     }
 
-    if (!Element->afficher_sliders) {   // Masquage éventuel des sliders/curseurs du bas de l'interface
+    if (!Element->GetAfficherSliders()) {           // Masquage éventuel des sliders/curseurs du bas de l'interface
         wxKeyEvent key_event;
-        key_event.m_keyCode = 'C';      // Simuler un appui sur la touche 'C'
-        key_event.SetShiftDown(true);   // majuscule pour enlever les sliders/curseurs de l'affichage
+        key_event.m_keyCode = 'C';              // Simuler un appui sur la touche 'C'
+        key_event.SetShiftDown(true);           // majuscule pour enlever les sliders/curseurs de l'affichage
+        bool test = Element->ini_file_modified; // Sauvegarde de la valeur avant OnKeyDown
         Element->OnKeyDown(key_event);
+        Element->ini_file_modified = test;
     }
 
     Ouvrir_Fichier();
@@ -920,12 +924,13 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         OnMenu_Enregistrer_Sous(event_cmd);
     }
 
-    Timer_Save.Stop();                                                          // Arrêt du timer par précaution
-    if (Element->svg_time > 0) Timer_Save.Start(Element->svg_time*60000,false); // Lancer le timer si svg_time > 0
+    Timer_Save.Stop();                                                  // Arrêt du timer par précaution
+    int svgTimeLocal = Element->GetSvgTime();
+    if (svgTimeLocal > 0) Timer_Save.Start(svgTimeLocal*60000,false);   // Lancer le timer si svg_time > 0
 
 #if wxCHECK_VERSION(3,3,0)
-    if (Element->darkmode >= 0 ) {
-        Element->theme_b = Element->darkmode;
+    if (Element->GetDarkmode() >= 0 ) {
+        Element->SetThemeB(Element->GetDarkmode());
     }
     if (wxSystemSettings::GetAppearance().IsDark()) {
 // Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
@@ -970,25 +975,45 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     }
 #else
     if (Element->darkmode >= 0 ) {
-        Element->theme_b = (bool)(1 - Element->darkmode);
+        Element->SetThemeB((bool)(1 - Element->GetDarkmode()));
         wxKeyEvent key_event;
         key_event.m_keyCode = 'W';
         Element->OnKeyDown(key_event);
     }
 #endif // wxCHECK_VERSION
 
-//    printf("Sortie OvniFrame, wxSize x:%d y:%d\n",ClientSize->GetX(), ClientSize->GetY());
+// Code pour imposer une autre taille / position. La nouvelle taille est celle stockée dans Ovni.ini (sinon celle par défaut)
 
+    wxRect frame_rect = this->GetRect();                                                // Récupère la position et la taille actuelle de OvniFrame
+    bool test = Element->ini_file_modified;                                             // Sauvegarde locale car Update() peut le modifier
+    this->SetSize(ovni_frame_sx,ovni_frame_sy);
+    int pos_x = frame_rect.x;
+    int pos_y = frame_rect.y;
+    pos_x = pos_x + (frame_rect.width  - ovni_frame_sx)/2; if (pos_x < 0) pos_x = -8;   // Centrer la fenêtre si possible, mais forcer le coin
+    pos_y = pos_y + (frame_rect.height - ovni_frame_sy)/2; if (pos_y < 0) pos_y = 0;    // haut/gauche de la fenêtre à être affiché en bord l'écran
+    this->SetPosition(wxPoint(pos_x, pos_y));                                           // Un offset de -8 pixels sur pos_x évite un petit décalage en x
+//    this->Center(); // Plutôt que les 5 lignes précédentes. Ansi, c'est le coin bas/droite qui s'affiche en cas de débordement
+    this->Update();
+    frame_rect = this->GetRect();
+    Element->ini_file_modified = test;                                                  // Restitue la valeur qui peut avoir changé via le Update
+    if (ovni_frame_sx != frame_rect.width)  Element->ini_file_modified = true;
+    if (ovni_frame_sy != frame_rect.height) Element->ini_file_modified = true;
+    ovni_frame_sx = frame_rect.width;                           // Réactualisation des tailles aux différents endroits
+    ovni_frame_sy = frame_rect.height;
+    Element->SetFrameSizeX(ovni_frame_sx);
+    Element->SetFrameSizeY(ovni_frame_sy);
     if (verbose) printf("Sortie OvniFrame::OvniFrame\n");
 }
 
-bool OvniFrame::OnInit() {
-    if (verbose) printf("Entree OvniFrame::OnInit\n");
-    const wxSize ClientSize = GetClientSize();
-    ResizeOpenGL(ClientSize.x, ClientSize.y);
-    if (verbose) printf("Sortie OvniFrame::OnInit") ; //, GL x:%d y:%d\n",ClientSize.x, ClientSize.y);
-    return 1;
-}
+// Ne sert pas ?
+//bool OvniFrame::OnInit() {
+//    if (verbose) printf("Entree OvniFrame::OnInit\n");
+//    const wxSize ClientSize = GetClientSize();
+//    Resize_OpenGL(ClientSize.x, ClientSize.y);
+////    if (verbose)
+//        printf("Sortie OvniFrame::OnInit GL x:%d y:%d\n",ClientSize.x, ClientSize.y);
+//    return 1;
+//}
 
 OvniFrame::~OvniFrame() {
     //(*Destroy(OvniFrame)
@@ -1045,8 +1070,8 @@ void OvniFrame::Init_OpenGL(void) {
   * \param iWidth : the new width of the view port
   * \param iHeight: the new height of the view port
   */
-void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
-/** \brief OvniFrame::ResizeOpenGL : Redimensionne la fenêtre OpenGL
+void OvniFrame::Resize_OpenGL(int iWidth, int iHeight) {
+/** \brief OvniFrame::Resize_OpenGL : Redimensionne la fenêtre OpenGL
  *
  * \param iWidth  largeur de la fenêtre
  * \param iHeight hauteur de la fenêtre
@@ -1054,7 +1079,7 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
  */
     int iw, ih;
 
-    if (verbose) printf("Entree OvniFrame::ResizeOpenGL\n");
+    if (verbose) printf("Entree OvniFrame::Resize_OpenGL\n");
 
     iw = iWidth;
     ih = iHeight;
@@ -1065,7 +1090,17 @@ void OvniFrame::ResizeOpenGL(int iWidth, int iHeight) {
 
 	Element->Resize();
 
-    if (verbose) printf("Sortie OvniFrame::ResizeOpenGL\n");
+	wxRect frame_rect = this->GetRect();
+    if (Element->GetFrameSizeX() != frame_rect.width)  {
+        Element->SetFrameSizeX(frame_rect.width) ;  // Forcer l'égalité
+        Element->ini_file_modified = true;
+    }
+    if (Element->GetFrameSizeY() != frame_rect.height) {
+        Element->SetFrameSizeY(frame_rect.height);
+        Element->ini_file_modified = true;
+    }
+
+    if (verbose) printf("Sortie OvniFrame::Resize_OpenGL\n");
 }
 
 void OvniFrame::Init_Boutons(void)
@@ -1197,9 +1232,12 @@ int OvniFrame::SetNewIcons(int icon_size)
 
     button_pos += (button_size +20);                            // Mettre un peu plus sinon le dernier bouton est tronqué
 
-    wxRect rect  = this->GetRect();                             // récupère position et taille de la fenêtre
-    wxSize ClientSizeXY = wxSize(button_pos,rect.height);       // Ajuster la taille minimale de la fenêtre
+//    wxRect rect  = this->GetRect();                             // récupère position et taille de la fenêtre
+    wxSize MinSizeXY = this->GetMinSize();
+    wxSize ClientSizeXY = wxSize(button_pos,MinSizeXY.GetY());//rect.height);       // Ajuster la taille minimale de la fenêtre
     this->SetMinSize(ClientSizeXY);
+    this->SetSize(ClientSizeXY);
+    this->Center();
 
     return(button_pos);
 }
@@ -1221,7 +1259,7 @@ bool OvniFrame::OnBdd_modifiee()
         for (int i=0; i < (int)Element->Objetlist.size(); i++) if (Element->Objetlist[i].deleted) ok--;
         if (ok <= 0) return(true);                      // Idem car là aussi, il ne reste rien !
     }
-    if (Element->bdd_modifiee || Element->Elements_Supprimes) {
+    if (Element->GetBddModifiee() || Element->GetElementsSupprimes()) {
         wxString wxMessage = _T("La Base de Données 3D a été modifiée.\nVoulez-vous :\n");
         wxMessage         += _T("    1 : l'enregistrer puis Quitter . . . . . . . . . (Oui)\n");
 #if wxCHECK_VERSION(3,0,0)
@@ -1309,12 +1347,12 @@ void OvniFrame::OnClose(wxCloseEvent& event) {
     OnPal_modifiee();
 
     // Suppression éventuelle du fichier de backup (fichier original recopié en *.bak)
-    if (Element->CreerBackup && Element->SupprBackup && Element->OK_FichierCree) test = wxRemoveFile(Element->get_file() + _T(".bak")) ;  // Suppression du .bak
+    if (Element->GetCreerBackup() && Element->GetSupprBackup() && OK_FichierCree) test = wxRemoveFile(Element->get_file() + _T(".bak")) ;  // Suppression du .bak
 
     // On est arrivé ici, donc tout s'est bien passé => supprimer la sauvegarde automatique (s'il y en a une)
     // Note : Un fichier Autosave déjà existant ne sera pas affecté si aucune sauvegarde n'a été effectuée lors de cette exécution d'Ovni
     //        Mais normalement, il a été supprimé lors de sa détection à l'ouverture d'Ovni.
-    if (Element->exists_Autosave) {
+    if (exists_Autosave) {
         wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
         wxRemoveFile(Fichier_svg);
     }
@@ -1328,7 +1366,7 @@ void OvniFrame::OnGLCanvasPaint(wxPaintEvent& event) {
 
     const wxSize ClientSize = Element->GetClientSize();
 //    printf("ClientSize x/y %d %d\n",ClientSize.x, ClientSize.y);
-    ResizeOpenGL(ClientSize.x, ClientSize.y);
+    Resize_OpenGL(ClientSize.x, ClientSize.y);
 
 //    m_glcontext->SetCurrent(*GLCanvas);
     event.Skip();                               // Indispensable
@@ -1400,7 +1438,7 @@ void OvniFrame::OnButton_PleinToggle(wxCommandEvent& event) {
         Menu_Affichage_Plein->Check(false);
 
     if (Element != nullptr) {
-        Element->show_plein = Button_Plein->GetValue();
+        Element->SetShowPlein(Button_Plein->GetValue());
         Element->Refresh();
     }
 }
@@ -1418,7 +1456,7 @@ void OvniFrame::OnMenu_Affichage_PleinSelected(wxCommandEvent& event) {
         Button_Plein->SetValue(false);
 
     if (Element != nullptr) {
-        Element->show_plein = Menu_Affichage_Plein->IsChecked();
+        Element->SetShowPlein(Menu_Affichage_Plein->IsChecked());
         Element->Refresh();
     }
 }
@@ -1436,7 +1474,7 @@ void OvniFrame::OnButton_AxesToggle(wxCommandEvent& event) {
         Menu_Affichage_Axes->Check(false);
 
     if (Element != nullptr) {
-        Element->show_axes = Button_Axes->GetValue();
+        Element->SetShowAxes(Button_Axes->GetValue());
         Element->Refresh();
     }
 }
@@ -1454,7 +1492,7 @@ void OvniFrame::OnMenu_Affichage_AxesSelected(wxCommandEvent& event) {
         Button_Axes->SetValue(false);
 
     if (Element != nullptr) {
-        Element->show_axes = Menu_Affichage_Axes->IsChecked();
+        Element->SetShowAxes(Menu_Affichage_Axes->IsChecked());
         Element->Refresh();
     }
 }
@@ -1472,7 +1510,7 @@ void OvniFrame::OnButton_BoiteToggle(wxCommandEvent& event) {
         Menu_Affichage_Boite->Check(false);
 
     if (Element != nullptr) {
-        Element->show_box = Button_Boite->GetValue();
+        Element->SetShowBox(Button_Boite->GetValue());
         Element->Refresh();
     }
 }
@@ -1490,7 +1528,7 @@ void OvniFrame::OnMenu_Affichage_BoiteSelected(wxCommandEvent& event) {
         Button_Boite->SetValue(false);
 
     if (Element != nullptr) {
-        Element->show_box = Menu_Affichage_Boite->IsChecked() ;
+        Element->SetShowBox(Menu_Affichage_Boite->IsChecked()) ;
         Element->Refresh();
     }
 }
@@ -1508,7 +1546,7 @@ void OvniFrame::OnButton_SourceToggle(wxCommandEvent& event) {
         Menu_Affichage_Source->Check(false);
 
     if(Element != nullptr) {
-        Element->show_light = Button_Source->GetValue();
+        Element->SetShowLight(Button_Source->GetValue());
         Element->Refresh();
     }
 }
@@ -1526,7 +1564,7 @@ void OvniFrame::OnMenu_Affichage_SourceSelected(wxCommandEvent& event) {
         Button_Source->SetValue(false);
 
     if(Element != nullptr) {
-        Element->show_light = Menu_Affichage_Source->IsChecked();
+        Element->SetShowLight(Menu_Affichage_Source->IsChecked());
         Element->Refresh();
     }
 }
@@ -1544,8 +1582,8 @@ void OvniFrame::OnButton_PointsToggle(wxCommandEvent& event) {
         Menu_Affichage_Points->Check(false);
 
     if (Element != nullptr) {
-        Element->show_points = Button_Points->GetValue();
-        if ((Element->show_points) && (!Element->liste_sommets_OK)) {
+        Element->SetShowPoints(Button_Points->GetValue());
+        if ((Element->GetShowPoints()) && (!Element->GetListeSommets_OK())) {
             printf("Construction de la liste OpenGL de sommets\n");
             Element->m_gllist = Element->glliste_points;
         }
@@ -1566,8 +1604,8 @@ void OvniFrame::OnMenu_Affichage_PointsSelected(wxCommandEvent& event) {
         Button_Points->SetValue(false);
 
     if (Element != nullptr) {
-        Element->show_points = Menu_Affichage_Points->IsChecked();
-        if ((Element->show_points) && (!Element->liste_sommets_OK)) {
+        Element->SetShowPoints(Menu_Affichage_Points->IsChecked());
+        if ((Element->GetShowPoints()) && (!Element->GetListeSommets_OK())) {
             printf("Construction de la liste OpenGL de sommets\n");
             Element->m_gllist = Element->glliste_points;
         }
@@ -1581,14 +1619,14 @@ void OvniFrame::Genere_Liste_Aretes() {
  *
  *
  */
-    if (!Element->Genere_Tableau_Aretes_OK) {
+    if (!Element->GetGenereTableauAretes_OK()) {
         printf("Construction de Genere_Tableau_Aretes\n");
         for (unsigned int i=0; i<Element->Objetlist.size(); ++i) {
              Element->Genere_Tableau_Aretes(&(Element->Objetlist[i]));
         }
-        Element->Genere_Tableau_Aretes_OK = true;
+        Element->SetGenereTableauAretes_OK(true);
     }
-    if (!Element->liste_aretes_OK) {
+    if (!Element->GetListeAretes_OK()) {
         printf("Construction de la liste OpenGL d'arêtes\n");
         Element->m_gllist = Element->glliste_lines;
     }
@@ -1607,8 +1645,8 @@ void OvniFrame::OnButton_FilaireToggle(wxCommandEvent& event) {
         Menu_Affichage_Filaire->Check(false);
 
     if(Element != nullptr) {
-        Element->show_lines = Button_Filaire->GetValue();
-        if (Element->show_lines) {
+        Element->SetShowLines(Button_Filaire->GetValue());
+        if (Element->GetShowLines()) {
             Genere_Liste_Aretes();
         }
         Element->Refresh();
@@ -1628,8 +1666,8 @@ void OvniFrame::OnMenu_Affichage_FilaireSelected(wxCommandEvent& event) {
         Button_Filaire->SetValue(false) ;
 
     if (Element != nullptr) {
-        Element->show_lines = Menu_Affichage_Filaire->IsChecked();
-        if (Element->show_lines) {
+        Element->SetShowLines(Menu_Affichage_Filaire->IsChecked());
+        if (Element->GetShowLines()) {
             Genere_Liste_Aretes();
         }
         Element->Refresh();
@@ -1652,11 +1690,11 @@ void OvniFrame::OnButton_GroupesToggle(wxCommandEvent& event) {
             Menu_Reperage_Couleurs_Groupes  ->Check(true);
             Menu_Reperage_Couleurs_Materiaux->Check(false);
             Menu_Reperage_Couleurs_Facettes ->Check(false);
-            Element->groupes  = true;
-            Element->materials= false;
+            Element->SetGroupes  (true);
+            Element->SetMaterials(false);
         } else {
             Menu_Reperage_Couleurs_Groupes  ->Check(false);
-            Element->groupes  = false;
+            Element->SetGroupes(false);
         }
         if (Button_Materiaux->GetValue()) Button_Materiaux->SetValue(false);    // Options exclusives !
         Element->m_gllist = 0;
@@ -1680,11 +1718,11 @@ void OvniFrame::OnButton_MateriauxToggle(wxCommandEvent& event) {
             Menu_Reperage_Couleurs_Groupes  ->Check(false);
             Menu_Reperage_Couleurs_Materiaux->Check(true) ;
             Menu_Reperage_Couleurs_Facettes ->Check(false);
-            Element->groupes  = false;
-            Element->materials= true;
+            Element->SetGroupes  (false);
+            Element->SetMaterials(true);
         } else {
             Menu_Reperage_Couleurs_Materiaux->Check(false);
-            Element->materials= false;
+            Element->SetMaterials(false);
         }
         if (Button_Groupes->GetValue()) Button_Groupes->SetValue(false);        // Options exclusives !
         Element->m_gllist = 0;
@@ -1712,11 +1750,11 @@ void OvniFrame::OnMenu_Reperage_Couleurs_GroupesSelected(wxCommandEvent& event)
         Button_Materiaux->SetValue(false);
         Menu_Reperage_Couleurs_Materiaux->Check(false);
         Menu_Reperage_Couleurs_Facettes ->Check(false);
-        Element->groupes  = true ;
-        Element->materials= false;
+        Element->SetGroupes  (true) ;
+        Element->SetMaterials(false);
     } else {
         Button_Groupes->SetValue(false);
-        Element->groupes  = false;
+        Element->SetGroupes(false);
     }
     Element->m_gllist = 0;
     Element->Refresh();
@@ -1729,11 +1767,11 @@ void OvniFrame::OnMenu_Reperage_Couleurs_MateriauxSelected(wxCommandEvent& event
         Button_Groupes  ->SetValue(false);
         Menu_Reperage_Couleurs_Groupes ->Check(false);
         Menu_Reperage_Couleurs_Facettes->Check(false);
-        Element->groupes  = false;
-        Element->materials= true ;
+        Element->SetGroupes  (false);
+        Element->SetMaterials(true) ;
     } else {
         Button_Materiaux->SetValue(false);
-        Element->materials= false;
+        Element->SetMaterials(false);
     }
     Element->m_gllist = 0;
     Element->Refresh();
@@ -1749,7 +1787,7 @@ void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
     bool points_affiches;
 
     New_file = false;                           // => le nom du fichier est déjà connu (via get_file)
-    Element->Numero_base = 0;                   // Réinitialisation complète
+    Element->SetNumeroBase(0);                  // Réinitialisation complète
     points_affiches = Button_Points->GetValue();
     if (points_affiches) {
         Button_Points->SetValue(false);         // Forcer la suppression d'affichage des points (sinon l'affichage devient vide si c'était actif !)
@@ -1762,7 +1800,7 @@ void OvniFrame::OnMenu_ReOpenSelected(wxCommandEvent& event)
 //        Element->m_gllist = 0 ;
 //        Element->Refresh();
 //    }
-    Element->bdd_modifiee = false;
+    Element->SetBddModifiee(false);
 }
 
 void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
@@ -1774,10 +1812,10 @@ void OvniFrame::OnMenu_ReOpen3dsSelected(wxCommandEvent& event)
  */
 // Reopen spécifique pour fichiers 3ds
 
-    this->Element->test_decalage3ds = !this->Element->test_decalage3ds; // Inverser le test...
-                                                                        // Ici, on ne marque pas de changement du fichier init (ini_file_modified inchangé)
-    if (this->Preferences_Panel->IsShown()) {                             // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
-        this->Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(this->Element->test_decalage3ds);
+    this->Element->SetTestDecalage3ds(!this->Element->GetTestDecalage3ds());    // Inverser le test...
+                                                                                // Ici, on ne marque pas de changement du fichier init (ini_file_modified inchangé)
+    if (this->Preferences_Panel->IsShown()) {                                   // Afficher le nouveau status de la case à cocher si le menu préférences est affiché
+        this->Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(this->Element->GetTestDecalage3ds());
     }
     OnMenu_ReOpenSelected(event) ;
 }
@@ -1791,7 +1829,7 @@ void OvniFrame::OnMenu_OpenSelected(wxCommandEvent& event)
  */
 //    printf("Entree OpenSelected\n");
     New_file = true;
-    Element->Numero_base = 0;
+    Element->SetNumeroBase(0);
     Ouvrir_Fichier();
 
 //    printf("Sortie OpenSelected\n");
@@ -1805,7 +1843,7 @@ void OvniFrame::OnMenu_AddFileSelected(wxCommandEvent& event)
  *
  */
     New_file = true;
-    Element->Numero_base = Element->Objetlist.size();   // Pour continuer la numérotation (sans repartir de 0 dans "value" d'un Object)
+    Element->SetNumeroBase(Element->Objetlist.size());      // Pour continuer la numérotation (sans repartir de 0 dans "value" d'un Object)
     Ouvrir_Fichier();
 }
 
@@ -1893,7 +1931,7 @@ void OvniFrame::Ouvrir_Fichier()
     if (first_time) {                                                   // Pour afficher un écran vide à fond bleu, la première fois
         Show(true);
         Element->m_gllist = 0;
-        Element->m_loaded = true;                                       // Faire comme si un fichier avait été chargé !
+        Element->SetFileLoaded(true);                                   // Faire comme si un fichier avait été chargé !
 //        Element->Refresh(true);
         Update();
         first_time = false;                                             // Les fois suivantes, on ne passera plus par là
@@ -1913,16 +1951,16 @@ void OvniFrame::Ouvrir_Fichier()
         printf("Chargement du fichier en cours...\n");
 
         if (New_file) Element->set_file(Nom_Fichier);
-        if (Element->Numero_base == 0) Element->set_firstFile(Nom_Fichier); // En cas de fusion, on conserve le nom du 1er fichier choisi
+        if (Element->GetNumeroBase() == 0) Element->set_firstFile(Nom_Fichier); // En cas de fusion, on conserve le nom du 1er fichier choisi
 
         Element->create_bdd();
 
-        if (Element->type_fichier < 0) Erreur_lecture = true;
+        if (Element->GetTypeFichier() < 0) Erreur_lecture = true;
 
         if (!Erreur_lecture) {
 
-            Element->OK_ToSave      = true;                         // Le fichier ouvert peut être enregistré (ré-enregistré)
-            Element->OK_FichierCree = false;                        // mais ne l'a pas encoré été !
+            Element->SetOK_ToSave(true);                         // Le fichier ouvert peut être enregistré (ré-enregistré)
+            OK_FichierCree     = false;                        // mais ne l'a pas encoré été !
 
             this->Menu_SensDesNormales->Enable() ;
             this->Menu_ReOpen->Enable();                            // Activer le menu "Réouvrir"
@@ -1933,14 +1971,14 @@ void OvniFrame::Ouvrir_Fichier()
                 if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
                     this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
                                                           _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
-                    if (Element->theme_b) {
-                        this->Menu_ReOpen3ds->SetTextColour(Element->New_Forg);
-                        this->Menu_ReOpen3ds->SetBackgroundColour(Element->New_Back);
+                    if (Element->GetThemeB()) {
+                        this->Menu_ReOpen3ds->SetTextColour(Element->GetNewForegroundColour());
+                        this->Menu_ReOpen3ds->SetBackgroundColour(Element->GetNewBackgroundColour());
                     }
                     this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
                     this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas
                 }
-                if (this->Element->test_decalage3ds)                // Proposer de réouvrir avec le test inverse de ce qui est en cours
+                if (this->Element->GetTestDecalage3ds())            // Proposer de réouvrir avec le test inverse de ce qui est en cours
                     this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds sans décalages"));
                 else
                     this->Menu_ReOpen3ds->SetItemLabel(_T("Réouvrir le fichier 3ds avec décalages"));
@@ -1955,11 +1993,11 @@ void OvniFrame::Ouvrir_Fichier()
             this->Menu_Enregistrer->Enable();                       // Activer le menu "Enregistrer"
             this->Menu_Enregistrer_Sous->Enable();                  // Activer le menu "Enregistrer sous..."
             Preferences_Panel->CheckBox_CreerBackup->Enable();      // Activer la case à cocher de création d'un fichier .bak
-            if (Element->CreerBackup)
+            if (Element->GetCreerBackup())
                 Preferences_Panel->CheckBox_SupprBackup->Enable();  // Activer la case à cocher de suppression du fichier .bak
 
-            if (Element->Numero_base != 0) {
-                Element->bdd_modifiee = true;                   // On a fait une fusion => marquer la bdd comme modifiée
+            if (Element->GetNumeroBase() != 0) {
+                Element->SetBddModifiee(true);                  // On a fait une fusion => marquer la bdd comme modifiée
                 Menu_Enregistrer->Enable(false);                // On désactive "Enregistrer". Seul le choix "Enregistrer sous..." restera actif.
             }
 
@@ -1973,7 +2011,7 @@ void OvniFrame::Ouvrir_Fichier()
         //wxMessageBox(_T("Fichier vide !"));
         if (Element->Objetlist.size() == 0) {               // On a appuyé sur Annuler mais aucun objet n'est déjà présent
             Element->m_gllist = 0;
-            Element->m_loaded = true;                           // Faire comme si un fichier avait été chargé !
+            Element->SetFileLoaded(true);                       // Faire comme si un fichier avait été chargé !
             Update();                                           // Avec wxWidgets 3.1.4 remplace les 2 lignes ci-dessous ! Marche aussi avec 3.1.3
 //            wxPaintEvent cmdPaint;                              // Pour déclencher un évênement OnPaint qui affichera alors un fond bleu uniforme, vide d'objet
 //            Element->BddInter::Forcer_OnPaint(cmdPaint);        // Note : inutile avec wxWidgets 2.8, mais pas avec 3.1 et +
@@ -1984,10 +2022,10 @@ void OvniFrame::Ouvrir_Fichier()
     }
 
     this->Menu_AddFile->Enable();                                       // Activer le menu "AddFile"
-    if (Element->type_fichier == 0) this->Menu_AddFile->Enable(false);  // sauf si a déjà lu un fichier dxf (Disable() n'existe pas !)
+    if (Element->GetTypeFichier() == 0) this->Menu_AddFile->Enable(false);  // sauf si a déjà lu un fichier dxf (Disable() n'existe pas !)
 
     wxSpinEvent cmd_spin;
-    Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->svg_time);    // Initialiser la valeur du spinbutton
+    Preferences_Panel->SpinCtrl_PasSvg->SetValue(Element->GetSvgTime());// Initialiser la valeur du spinbutton
     Preferences_Panel->OnSpinCtrl_PasSvgChange_pub(cmd_spin);           // Simuler un clic pour déclencher le timer de sauvegardes automatiques
 
     if (wxIsBusy()) wxEndBusyCursor();                                  // Désactive le curseur Busy (s'il était actif)
@@ -2011,29 +2049,29 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
 
     bool svg = Element->ini_file_modified;  // Sauvegarde, car il est modifié (via un des (ou les ?) SetValue et/ou SetLabel ?)
 
-    if (Element->verbose) printf("Entree OnMenu_Preferences : m_gllist=%d\n",Element->m_gllist);
+    if (verbose) printf("Entree OnMenu_Preferences : m_gllist=%d\n",Element->m_gllist);
 
-    Preferences_Panel->SpinCtrlDouble_axes->SetValue(Element->len_axe);
-    Preferences_Panel->SpinCtrlDouble_norm->SetValue(Element->len_normales);
-    Preferences_Panel->SpinCtrlDouble_src ->SetValue(Element->ray_sun);
+    Preferences_Panel->SpinCtrlDouble_axes->SetValue(Element->GetLenAxe());
+    Preferences_Panel->SpinCtrlDouble_norm->SetValue(Element->GetLenNormales());
+    Preferences_Panel->SpinCtrlDouble_src ->SetValue(Element->GetRaySun());
 
-    Preferences_Panel->CheckBox_AntialiasingSoft->SetValue(Element->antialiasing_soft);
+    Preferences_Panel->CheckBox_AntialiasingSoft->SetValue(Element->GetAntialiasingSoft());
 
-    Preferences_Panel->CheckBox_1SeulObjet3D->SetValue(Element->Forcer_1_Seul_Objet);
-    Preferences_Panel->CheckBox_LectureOptimisee->SetValue(Element->lect_obj_opt);
-    if (Element->Forcer_1_Seul_Objet)
+    Preferences_Panel->CheckBox_1SeulObjet3D->SetValue(Element->GetForcer_1_SeulObjet());
+    Preferences_Panel->CheckBox_LectureOptimisee->SetValue(Element->GetLectObjOpt());
+    if (Element->GetForcer_1_SeulObjet())
         Preferences_Panel->CheckBox_LectureOptimisee->Disable();
     else
         Preferences_Panel->CheckBox_LectureOptimisee->Enable();
 
-    Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(Element->test_decalage3ds);
+    Preferences_Panel->CheckBox_TestDecalage3DS->SetValue(Element->GetTestDecalage3ds());
 
-    Preferences_Panel->CheckBox_CalculNormales ->SetValue(Element->CalculNormalesLectureBdd);
+    Preferences_Panel->CheckBox_CalculNormales ->SetValue(Element->GetCalculNormalesLectureBdd());
 
-    chkB = Element->test_seuil_gouraud;
+    chkB = Element->GetTestSeuilGouraud();
     Preferences_Panel->CheckBox_Seuillage->SetValue(chkB);
-    Preferences_Panel->SpinCtrlDouble_SeuilGouraud ->SetValue(Element->angle_Gouraud);
-    Preferences_Panel->SpinCtrlDouble_SeuilGouraud2->SetValue(Element->fmult_Gouraud);
+    Preferences_Panel->SpinCtrlDouble_SeuilGouraud ->SetValue(Element->GetAngleGouraud());
+    Preferences_Panel->SpinCtrlDouble_SeuilGouraud2->SetValue(Element->GetFmultGouraud());
     if (chkB) {
         Preferences_Panel->StaticText_Gouraud            ->Enable();
         Preferences_Panel->StaticText_Gouraud2           ->Enable();
@@ -2047,44 +2085,44 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
         Preferences_Panel->SpinCtrlDouble_SeuilGouraud2  ->Disable();
         Preferences_Panel->CheckBox_RecNormales_Seuillees->Disable();
     }
-    Preferences_Panel->CheckBox_RecNormales_Seuillees->SetValue(Element->Enr_Normales_Seuillees);
-    Preferences_Panel->CheckBox_NotFlat->SetValue(Element->NotFlat);
-    Preferences_Panel->CheckBox_TraiterDoublonsAretes->SetValue(Element->traiter_doublons_aretes);
+    Preferences_Panel->CheckBox_RecNormales_Seuillees->SetValue(Element->GetEnrNormalesSeuillees());
+    Preferences_Panel->CheckBox_NotFlat->SetValue(Element->GetNotFlat());
+    Preferences_Panel->CheckBox_TraiterDoublonsAretes->SetValue(Element->GetTraiterDoublonsAretes());
 
-    ival = Element->svg_time;
+    ival = Element->GetSvgTime();
     Preferences_Panel->SpinCtrl_PasSvg->SetValue(ival);
 
-    if (ival > 0 && Element->bdd_modifiee) {
+    if (ival > 0 && Element->GetBddModifiee()) {
         Timer_Save.Start(ival*60000,false); // Ne démarre le timer que si le pas de sauvegarde est > 0 et si la Bdd a été modifiée
     } else {
         Timer_Save.Stop();                  // Sinon, arrêt du timer
     }
 
-    Preferences_Panel->RadioBox_Triangulation->SetSelection(Element->methode_Triangulation);
+    Preferences_Panel->RadioBox_Triangulation->SetSelection(Element->GetMethodeTriangulation());
 
     Preferences_Panel->RadioBox_Trackball  ->SetSelection(Element->m_gldata.mode_Trackball);
 
-    Preferences_Panel->CheckBox_DisplayFps ->SetValue(Element->viewFps);
+    Preferences_Panel->CheckBox_DisplayFps ->SetValue(Element->GetViewFps());
 
-    Preferences_Panel->CheckBox_CreerBackup->SetValue(Element->CreerBackup);
-    Preferences_Panel->CheckBox_SupprBackup->SetValue(Element->SupprBackup);
-    Preferences_Panel->CheckBox_SupprBackup->Enable(Element->CreerBackup) ;     // Conditionner le mode Enable au contenu de CreerBack
+    Preferences_Panel->CheckBox_CreerBackup->SetValue(Element->GetCreerBackup());
+    Preferences_Panel->CheckBox_SupprBackup->SetValue(Element->GetSupprBackup());
+    Preferences_Panel->CheckBox_SupprBackup->Enable(  Element->GetCreerBackup());   // Conditionner le mode Enable au contenu de CreerBack
 
 //    Preferences_Panel->TextCtrl_WorkDir->SetStyle(-1,-1,wxTextAttr(wxTE_RIGHT));
-    Preferences_Panel->TextCtrl_WorkDir->SetLabel(Element->wxWorkDir);
+    Preferences_Panel->TextCtrl_WorkDir->SetValue(Element->wxWorkDir);  // Plutôt que SetLabel
 //    Preferences_Panel->TextCtrl_WorkDir->SetStyle(-1,-1,wxTextAttr(wxTE_RIGHT)); // A revoir : Ne marche pas. L'idée est de cadrer à droite pour voir la fin du nom de répertoire
 //    wxTextAttr* style=wxTE_RIGHT;
 
-    Preferences_Panel->SpinCtrl_Threads ->SetMax  (Element->nb_max_threads);
-    Preferences_Panel->SpinCtrl_Threads ->SetValue(Element->nb_threads);
-    Preferences_Panel->RadioBox_IconSize->SetSelection(Element->icon_index);
+    Preferences_Panel->SpinCtrl_Threads ->SetMax  (Element->GetNbMaxThreads());
+    Preferences_Panel->SpinCtrl_Threads ->SetValue(Element->GetNbThreads());
+    Preferences_Panel->RadioBox_IconSize->SetSelection(Element->GetIconIndex());
 
     Element->ini_file_modified = svg;   // Restitution de la valeur qu'il y avait en entrée
 
     Preferences_Panel->Show();
     event.Skip();                       //N'a pas l'air utile
 
-    if (Element->verbose) printf("Sortie OnMenu_Preferences : m_gllist=%d\n",Element->m_gllist);
+    if (verbose) printf("Sortie OnMenu_Preferences : m_gllist=%d\n",Element->m_gllist);
 }
 
 void OvniFrame::OnSize(wxSizeEvent& event)
@@ -2141,7 +2179,7 @@ void OvniFrame::OnMenu_EnregistrerSelected(wxCommandEvent& event)
  */
     bool test=true;
     wxString wxNomFichier = Element->get_firstFile().BeforeLast('.') + _T(".bdd");
-    if (Element->CreerBackup) {
+    if (Element->GetCreerBackup()) {
         if (wxFileExists(wxNomFichier)) {           // On n'ajoute le .bak que si le fichier .bdd existe déjà (fichier original de type SDM donc)
             wxString wxNomFichier_bak = wxNomFichier + _T(".bak") ;
             if (wxFileExists(wxNomFichier_bak)) test = wxRemoveFile(wxNomFichier_bak); // Si le fichier .bak existe déjà, le supprimer
@@ -2159,12 +2197,12 @@ void OvniFrame::OnMenu_EnregistrerSelected(wxCommandEvent& event)
     if (!output_stream.IsOk()) {
 //        //wxLogError("Cannot save current contents in file '%s'.", saveFileDialog.GetPath());
         printf("ERREUR d'ouverture du fichier %s !\n",(const char*)wxNomFichier.mb_str());
-        Element->OK_FichierCree = false;
+        OK_FichierCree = false;
         return;
     }
     if (Element != nullptr) {
         Element->SaveBDD(wxNomFichier);
-        Element->OK_FichierCree = true; // Cet indicateur n'a de sens que pour le menu "Enregistrer", pas "Enregistrer sous..."
+        OK_FichierCree = true;      // Cet indicateur n'a de sens que pour le menu "Enregistrer", pas "Enregistrer sous..."
     }
 }
 
@@ -2253,7 +2291,7 @@ void OvniFrame::OnOutils_Selec_DeplSelected(wxCommandEvent& event)
 
 void OvniFrame::OnOutils_ModificationsSelected(wxCommandEvent& event)
 {
-    str.Printf(_T("%7.1e"),Element->tolerance);
+    str.Printf(_T("%7.1e"),Element->GetTolerance());
     Modifications_Panel->TextCtrl_Tolerance->SetValue(str);
     Modifications_Panel->Show();
     Modifications_Panel->Refresh();
@@ -2282,15 +2320,15 @@ void OvniFrame::OnButton_SlidersToggle(wxCommandEvent& event)
 
     if (Panel_Sliders->IsShown()) {
         Panel_Sliders->Hide();
-        Element->afficher_sliders = false;
+        Element->SetAfficherSliders(false);
         New_y_size = ClientSize_GL.y + ClientSize_Sl.y;     // Récupérer la place occupée par les Sliders/Curseurs pour l'ajouter à la taille OpenGL
     } else {
         Panel_Sliders->Show();
-        Element->afficher_sliders = true;
+        Element->SetAfficherSliders(true);
         New_y_size = ClientSize_GL.y ;
     }
     Element->ini_file_modified = true;
-    ResizeOpenGL(ClientSize_GL.x, New_y_size);              // Redimensionner la fenètre OpenGL
+    Resize_OpenGL(ClientSize_GL.x, New_y_size);              // Redimensionner la fenètre OpenGL
     New_y_size += ClientSize_Pa.y;                          // Calculer la taille de la BoxSizer1 (OpenGL + Sliders + Panel 1)
 
 //    BoxSizer1->SetSizeHints(this);
@@ -2312,7 +2350,7 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
     bool flat;
 
     if(Element != nullptr) {
-        Element->smooth  = !Element->smooth;
+        Element->SetSmooth(!Element->GetSmooth());
         // On vérifie si tous les objets ne sont pas plats
         flat = true;
         for (o=0; o<Element->Objetlist.size(); o++) {
@@ -2323,7 +2361,7 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
 //                if (!flat) break;
 //            }
         }
-        if ((Element->smooth) && (flat)) {
+        if ((Element->GetSmooth()) && (flat)) {
             wxString Msg = _T("Lissage de Gouraud impossible.\nTous les objets sont plats : pas de normales aux sommets !\n");
             Msg +=         _T("Recalculer les normales* ou relancer la lecture en cochant la case adéquate du dialogue \"Fichier/Préférences\"");
             Msg +=         _T("\n\n* Il peut être nécessaire de simplifier d'abord la Bdd et cocher \"Forcer facettes à NON planes\"\n");
@@ -2331,14 +2369,14 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
 
             DisplayMessage(Msg,true);
             Button_Gouraud->SetValue(false);    // Simuler un nouveau clic sur le bouton pour le remettre à l'état initial
-            Element->smooth = false;
+            Element->SetSmooth(false);
             return; // On ne fait rien de plus !
         }
         Element->m_gldata.initialized=false;
         Element->m_gllist = 0;
         Element->Refresh();
 //        Element->Toggle_Gouraud();
-//        Button_Gouraud->SetValue(Element->smooth);  // Forcer l'état du bouton à être conforme à smooth
+//        Button_Gouraud->SetValue(Element->GetSmooth());  // Forcer l'état du bouton à être conforme à smooth
 //        Refresh();                                  // Pour l'interface, surtout si smooth n'était pas conforme à l'état du bouton.
     }
 }
@@ -2346,20 +2384,20 @@ void OvniFrame::OnButton_GouraudToggle(wxCommandEvent& event)
 void OvniFrame::OnButton_ModifsToggle(wxCommandEvent& event)
 {
     if (Element != nullptr) {
-        str.Printf(_T("%7.1e"),Element->tolerance);
+        str.Printf(_T("%7.1e"),Element->GetTolerance());
         Modifications_Panel->TextCtrl_Tolerance->SetValue(str);
-        if (toggle_modif == true) {
-            toggle_modif  = false;
+        if (toggle_modifs == true) {
+            toggle_modifs  = false;
             Modifications_Panel->Hide();
             Modifications_Panel->Refresh();
         } else {
-            toggle_modif  = true;
+            toggle_modifs  = true;
             Modifications_Panel->Show();
             Modifications_Panel->Refresh();
         }
     } else {
         Button_Modifs->SetValue(false); // Forcer à rester en position haute
-        toggle_modif = false;
+        toggle_modifs = false;
     }
 }
 
@@ -2367,12 +2405,12 @@ void OvniFrame::OnMenu_SensDesNormalesSelected(wxCommandEvent& event)
 {
 // Cet affichage est prioritaire par rapport aux autres modes de colorisation
 
-    if (Element->show_CW_CCW == false) {
+    if (Element->GetShow_CW_CCW() == false) {
         Menu_SensDesNormales->Check(true);
-        Element->show_CW_CCW = true;
+        Element->SetShow_CW_CCW(true);
     } else {
         Menu_SensDesNormales->Check(false);
-        Element->show_CW_CCW = false;
+        Element->SetShow_CW_CCW(false);
     }
     Element->m_gllist = 0;
     Element->m_gldata.initialized=false;
@@ -2496,7 +2534,7 @@ void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
     // Inverser le sens de parcours des facettes sélectionnées
     if (Element != nullptr) {
         Element->Inverser_Parcours_Selected();
-        if (Element->show_CW_CCW) Element->m_gllist = 0;                  // Utile si Sens des normales est activé. Sans effet visuel sinon
+        if (Element->GetShow_CW_CCW()) Element->m_gllist = 0;                  // Utile si Sens des normales est activé. Sans effet visuel sinon
         Element->Refresh();
     }
 }
@@ -2504,7 +2542,7 @@ void OvniFrame::OnPopup_Reverse_ParcoursSelected(wxCommandEvent& event)
 void OvniFrame::OnPopup_Raz_Select_FSelected(wxCommandEvent& event)
 {   // Inverser le flag Raz_Selection_F (<=> Touche clavier 'Z'
     if (Element != nullptr) {
-        Element->Raz_Selection_F   = !(Element->Raz_Selection_F);
+        Element->SetRazSelectionF(!(Element->GetRazSelectionF()));
         Element->ini_file_modified = true;                          // Ovni.ini à modifier
     }
 }
@@ -2600,22 +2638,29 @@ void OvniFrame::OnMenu_ProprietesSelected(wxCommandEvent& event)
     unsigned int taille;
 
     if (Element->Objetlist.size() == 0) {   // Les initialisations ont dans ce cas été court-circuitées, donc le faire ici.
-        Element->nb_objets_reels = Element->nb_facettes = Element->nb_aretes = Element->nb_sommets = 0;
-        Element->nb_3points = Element->nb_4points = Element->nb_sommets_max = Element->numero_objet_max = Element->numero_facette_max = 0;
+        Element->SetNbObjetsReels(0);
+        Element->SetNbSommets(0);
+        Element->SetNbSommetsMax(0);
+        Element->SetNbFacettes(0);
+        Element->SetNbAretes(0);
+        Element->SetNb3Points(0);
+        Element->SetNb4Points(0);
+        Element->SetNumeroObjetMax(0);
+        Element->SetNumeroFacetteMax(0);
     }
 // Nom du/des fichier(s)
-    Properties_Panel->StaticTextNomBdd->SetLabel(Element->wxNomsFichiers);
+    Properties_Panel->StaticTextNomBdd->SetLabel(Element->GetWxNomsFichiers());
 
 // Nombre d'objets
-    String_local.Printf(_T("%d"),Element->nb_objets_reels);
+    String_local.Printf(_T("%d"),Element->GetNbObjetsReels());
     Properties_Panel->nb_objets->SetLabel(String_local);
 
 // Nombre de facettes
-    String_local.Printf(_T("%d"),Element->nb_facettes);
+    String_local.Printf(_T("%d"),Element->GetNbFacettes());
     Properties_Panel->nb_facettes->SetLabel(String_local);
 
 // Nombre d'arêtes
-    String_local.Printf(_T("%d"),Element->nb_aretes);
+    String_local.Printf(_T("%d"),Element->GetNbAretes());
     Properties_Panel->nb_aretes->SetLabel(String_local);
 
 // Nombre de groupes
@@ -2629,34 +2674,34 @@ void OvniFrame::OnMenu_ProprietesSelected(wxCommandEvent& event)
     Properties_Panel->nb_materiaux->SetLabel(String_local);
 
 // Nombre de sommets
-    String_local.Printf(_T("%d"),Element->nb_sommets);
+    String_local.Printf(_T("%d"),Element->GetNbSommets());
     Properties_Panel->nb_points->SetLabel(String_local);
 
 // Nombre de facettes à 3 sommets
-    String_local.Printf(_T("%d"),Element->nb_3points);
+    String_local.Printf(_T("%d"),Element->GetNb3Points());
     Properties_Panel->nb_3Points->SetLabel(String_local);
 
 // Nombre de facettes à 4sommets ou plus
-    String_local.Printf(_T("%d"),Element->nb_4points);
+    String_local.Printf(_T("%d"),Element->GetNb4Points());
     Properties_Panel->nb_4Points->SetLabel(String_local);
 
 // Nombre max de sommets dans les facettes
-    String_local.Printf(_T("%d"),Element->nb_sommets_max);
+    String_local.Printf(_T("%d"),Element->GetNbSommetsMax());
     Properties_Panel->nb_maxPoints->SetLabel(String_local);
 
 // Numéro de l'objet ou se trouve cette facette avec le nombre max de sommets
-    String_local.Printf(_T("%d"),Element->numero_objet_max);
+    String_local.Printf(_T("%d"),Element->GetNumeroObjetMax());
     Properties_Panel->numero_objet->SetLabel(String_local);
 
 // Numéro de la facette dans cet objet avec le nombre max de sommets
-    String_local.Printf(_T("%d"),Element->numero_facette_max);
+    String_local.Printf(_T("%d"),Element->GetNumeroFacetteMax());
     Properties_Panel->numero_facette->SetLabel(String_local);
 
 // Dimensions de la boîte englobante
     float x_min,x_max,y_min,y_max,z_min,z_max;
-    x_min = Element->x_min; x_max = Element->x_max;
-    y_min = Element->y_min; y_max = Element->y_max;
-    z_min = Element->z_min; z_max = Element->z_max;
+    x_min = Element->Get_X_min_box(); x_max = Element->Get_X_max_box();
+    y_min = Element->Get_Y_min_box(); y_max = Element->Get_Y_max_box();
+    z_min = Element->Get_Z_min_box(); z_max = Element->Get_Z_max_box();
     String_local.Printf(_T("X : %8.4f\t%8.4f\nY : %8.4f\t%8.4f\nZ : %8.4f\t%8.4f\n----------\n%5.3f*%5.3f*%5.3f"),
                                                 x_min,x_max,
                                                 y_min,y_max,
@@ -2745,16 +2790,16 @@ void OvniFrame::OnMenu_PositionObservateurSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_PositionSourceSelected(wxCommandEvent& event)
 {
-    PositionSource_Panel->SpinCtrlDouble_PosX->SetValue(Element->Light0Position[0]);
-    PositionSource_Panel->SpinCtrlDouble_PosY->SetValue(Element->Light0Position[1]);
-    PositionSource_Panel->SpinCtrlDouble_PosZ->SetValue(Element->Light0Position[2]);
-    PositionSource_Panel->SpinCtrlDouble_PosW->SetValue(Element->Light0Position[3]);
+    PositionSource_Panel->SpinCtrlDouble_PosX->SetValue(Element->GetLight0Position(0));
+    PositionSource_Panel->SpinCtrlDouble_PosY->SetValue(Element->GetLight0Position(1));
+    PositionSource_Panel->SpinCtrlDouble_PosZ->SetValue(Element->GetLight0Position(2));
+    PositionSource_Panel->SpinCtrlDouble_PosW->SetValue(Element->GetLight0Position(3));
     PositionSource_Panel->Show();
 }
 
 void OvniFrame::OnMenu_CentreRotationSelected(wxCommandEvent& event)
 {
-    if (Element->centrageRotAuto) {
+    if (Element->GetCentrageRotAuto()) {
         Element->centreRot = Element->centre_auto ;
         Element->Refresh();
     }
@@ -2767,8 +2812,8 @@ void OvniFrame::OnMenu_CentreRotationSelected(wxCommandEvent& event)
 void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 {
 
-    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
-    if (Element->materials)  Element->materials = false;
+    if (Element->GetGroupes())    Element->SetGroupes  (false);                     // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->GetMaterials())  Element->SetMaterials(false);
 
     ReperageGroupe_Panel->SpinButton1->SetValue(0);
     ReperageGroupe_Panel->SpinButton1->SetMax(Element->listeGroupes.size()+1);      // Ajout de +1 pour pouvoir boucler
@@ -2779,8 +2824,8 @@ void OvniFrame::OnMenu_ReperageGroupeSelected(wxCommandEvent& event)
 
 void OvniFrame::OnMenu_ReperageMateriauSelected(wxCommandEvent& event)
 {
-    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
-    if (Element->materials)  Element->materials = false;
+    if (Element->GetGroupes())    Element->SetGroupes  (false);                     // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->GetMaterials())  Element->SetMaterials(false);
 
     ReperageMateriau_Panel->SpinButton1->SetValue(0);
     ReperageMateriau_Panel->SpinButton1->SetMax(Element->listeMateriaux.size()+1);  // Ajout de +1 pour pouvoir boucler
@@ -2797,8 +2842,8 @@ void OvniFrame::ReperageObjet_activer()
 
 void OvniFrame::OnMenu_ReperageObjetSelected(wxCommandEvent& event)
 {
-    if (Element->groupes)    Element->groupes   = false;                            // forcer l'affichage sans colorisation des groupes ni des matériaux
-    if (Element->materials)  Element->materials = false;
+    if (Element->GetGroupes())    Element->SetGroupes  (false);                     // forcer l'affichage sans colorisation des groupes ni des matériaux
+    if (Element->GetMaterials())  Element->SetMaterials(false);
 
     ReperageObjet_Panel->SpinButton_indice ->SetValue(-1);                          // SpinButton sur -1
     ReperageObjet_Panel->SpinButton_indice ->SetMax(Element->Objetlist.size());     // pour pouvoir boucler
@@ -2852,7 +2897,7 @@ void OvniFrame::OnOutils_ReafficherSelected(wxCommandEvent& event)
 #pragma omp parallel for
         for (j=0; j<objet_i->Facelist.size(); j++) objet_i->Facelist[j].afficher = true;
     }
-    Element->Elements_Masques = false;
+    Element->SetElementsMasques(false);
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -2867,11 +2912,11 @@ void OvniFrame::OnOutils_Supprimer_MasquesSelected(wxCommandEvent& event)
     for (i=0; i<Element->Objetlist.size(); i++) {
         objet_i = &(Element->Objetlist[i]);
         objet_i->deleted = !objet_i->afficher;
-        if (objet_i->deleted) Element->Elements_Supprimes = true;
+        if (objet_i->deleted) Element->SetElementsSupprimes(true);
 #pragma omp parallel for
         for (j=0; j<objet_i->Facelist.size(); j++) {
             objet_i->Facelist[j].deleted = !objet_i->Facelist[j].afficher;
-            if (objet_i->Facelist[j].deleted) Element->Elements_Supprimes = true;
+            if (objet_i->Facelist[j].deleted) Element->SetElementsSupprimes(true);
         }
     }
     Element->m_gllist = 0;  // Peut-être pas utile car les objets supprimés ne sont déjà plus affichés
@@ -2894,7 +2939,7 @@ void OvniFrame::OnOutils_UnDeleteSelected(wxCommandEvent& event)
             objet_i->Facelist[j].afficher = true;   // + réafficher
         }
     }
-    Element->Elements_Supprimes= false;
+    Element->SetElementsSupprimes(false);
     Element->m_gllist = 0;
     Element->Refresh();
 }
@@ -2914,7 +2959,7 @@ void OvniFrame::OnMenu_ReperagePointSelected(wxCommandEvent& event)
     int IndiceObjet = 0;
     ReperagePoint_Panel->SpinCtrl_IndicePoint->SetMax(Element->Objetlist[IndiceObjet].Sommetlist.size() -1);
     ReperagePoint_Panel->SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str.Printf(_T("%d"),num_obj);
     ReperagePoint_Panel->Text_NumeroObjet->SetValue(str);
 //    str = Element->Objetlist[IndiceObjet].GetwxName();
@@ -2927,7 +2972,7 @@ void OvniFrame::OnMenu_ReperagePointSelected(wxCommandEvent& event)
     ReperagePoint_Panel->Text_ValeurX->SetValue(str);
     ReperagePoint_Panel->Text_ValeurY->SetValue(str);
     ReperagePoint_Panel->Text_ValeurZ->SetValue(str);
-    Element->show_star = false;
+    Element->SetShowStar(false);
 
     ReperagePoint_Panel->Show();
 }
@@ -2947,7 +2992,7 @@ void OvniFrame::OnMenu_ReperageFacetteSelected(wxCommandEvent& event)
     int IndiceObjet = 0;
     ReperageFacette_Panel->SpinCtrl_IndiceFacette->SetMax(Element->Objetlist[IndiceObjet].Facelist.size()); // indice max +1 pour boucler
     ReperageFacette_Panel->SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str.Printf(_T("%d"),num_obj);
     ReperageFacette_Panel->Text_NumeroObjet->SetValue(str);
 //    str = Element->Objetlist[IndiceObjet].GetwxName();
@@ -2955,7 +3000,7 @@ void OvniFrame::OnMenu_ReperageFacetteSelected(wxCommandEvent& event)
     ReperageFacette_Panel->Text_NomObjet->SetValue(str);
 
 // Init facette
-    Element->Facette_Surlignee = false;
+    Element->SetFacetteSurlignee(false);
     ReperageFacette_Panel->SpinCtrl_IndiceFacette->SetValue(-1);
     str.Printf(_T("")) ;
     ReperageFacette_Panel->Text_NbSommets->SetValue(str);
@@ -2969,7 +3014,7 @@ void OvniFrame::OnMenu_ReperageFacetteSelected(wxCommandEvent& event)
 void OvniFrame::OnButton_Normale_BarycentreClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormale->SetValue(Button_Normale_Barycentre->GetValue());       // Synchroniser le bouton et la checkbox
-    Element->AfficherNormaleFacette = Button_Normale_Barycentre->GetValue();                            // et la variable d'affichage
+    Element->SetAfficherNormaleFacette(Button_Normale_Barycentre->GetValue());                          // et la variable d'affichage
     Element->m_gllist = Element->glliste_select; //0 : pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
@@ -2977,7 +3022,7 @@ void OvniFrame::OnButton_Normale_BarycentreClick(wxCommandEvent& event)
 void OvniFrame::OnButton_Normales_SommetsClick(wxCommandEvent& event)
 {
     ReperageFacette_Panel->CheckBox_VisuNormales_Sommets->SetValue(Button_Normales_Sommets->GetValue());// Synchroniser le bouton et la checkbox
-    Element->AfficherNormalesSommets = Button_Normales_Sommets->GetValue();                             // et la variable d'affichage
+    Element->SetAfficherNormalesSommets(Button_Normales_Sommets->GetValue());                             // et la variable d'affichage
     Element->m_gllist = Element->glliste_select; //0 : pas très heureux ! Voir si on peut éviter de regénérer toutes les listes
     Element->Refresh();
 }
@@ -3045,7 +3090,7 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
 
     int indiceObjet = Element->Objetlist.size() -1;
     if (indiceObjet < 0) {      // Il ne reste rien !
-        Element->OK_ToSave = false;
+        Element->SetOK_ToSave(false);
         return;
     }
     while (Element->Objetlist[indiceObjet].deleted) indiceObjet--;              // décompter les derniers objets s'ils sont déjà deleted !
@@ -3094,7 +3139,7 @@ void OvniFrame::OnMenu_SupprimerDerniereSelected(wxCommandEvent& event)
         Element->Refresh();
     } else {
         printf("Plus de primitives ajoutees !\n");
-        if (indiceObjet < 0) Element->OK_ToSave = false;    // Il ne reste plus d'objets à enregistrer
+        if (indiceObjet < 0) Element->SetOK_ToSave(false);  // Il ne reste plus d'objets à enregistrer
     }
 }
 
@@ -3221,12 +3266,12 @@ void OvniFrame::OnMenu_EnregistrerPaletteSelected(wxCommandEvent& event)
         std::ofstream myfile;
         myfile.open (buffer.data());
         if (myfile.is_open()) {
-            for (i=0; i<Element->nb_couleurs; i++) {
+            for (i=0; i<Element->GetNbCouleurs(); i++) {
                 myfile << std::setw(3) << i ;
-                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatAmbient_avionG[i][j];
+                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->GetMatAmbientAvionG(i,j);
                 myfile << "\n";
                 myfile << std::setw(3) << i ;
-                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->MatDiffuse_avionG[i][j];
+                for (j=0; j<4; j++) myfile << " " << std::fixed << std::setprecision(4) << std::setw(6) << Element->GetMatDiffuseAvionG(i,j);
                 myfile << "\n";
             }
             myfile.close();
@@ -3254,20 +3299,22 @@ void OvniFrame::OnMenu_RelirePaletteSelected(wxCommandEvent& event)
         buffer=Nom_Fichier_Palette.mb_str();
         std::ifstream myfile;
         myfile.open (buffer.data());
-        for (i=0; i<Element->nb_couleurs; i++) {
+        GLfloat value;
+        for (i=0; i<Element->GetNbCouleurs(); i++) {
             myfile >> k;
             if (myfile.eof()) break;    // Fin de fichier atteinte trop tôt !
-            for (j=0; j<4; j++) myfile >> Element->MatAmbient_avionG[i][j];
+            for (j=0; j<4; j++) {myfile >> value ; Element->SetMatAmbientAvionG(i,j,value);}
             myfile >> k;
             if (myfile.eof()) break;    // Fin de fichier atteinte trop tôt !
-            for (j=0; j<4; j++) myfile >> Element->MatDiffuse_avionG[i][j];
+//            for (j=0; j<4; j++) myfile >> Element->MatDiffuse_avionG[i][j];
+            for (j=0; j<4; j++) {myfile >> value ; Element->SetMatDiffuseAvionG(i,j,value);}
         }
         if (myfile.eof()) printf("Seulement %d groupes dans ce fichier !!\n",i-1) ;
 
         myfile.close();
 
-        if((Element->groupes) || (Element->materials)) {    // A ne faire que si l'un des modes affichage des groupes ou matériaux est actif
-            Element->m_gllist = 0;                          // Mettre l'affichage à jour
+        if((Element->GetGroupes()) || (Element->GetMaterials())) {  // A ne faire que si l'un des modes affichage des groupes ou matériaux est actif
+            Element->m_gllist = 0;                                  // Mettre l'affichage à jour
             Element->Refresh();
         }
     }
@@ -3278,13 +3325,13 @@ void OvniFrame::OnMenu_CouleurDesGroupesSelected(wxCommandEvent& event)
     // Initialiser avec la couleur 0
     wxColor col;
     int Numero_couleur = CouleursGroupes_Panel->SpinCtrl_Groupes->GetValue();
-    col.Set(lround(Element->MatAmbient_avionG[Numero_couleur][0]*255),
-            lround(Element->MatAmbient_avionG[Numero_couleur][1]*255),
-            lround(Element->MatAmbient_avionG[Numero_couleur][2]*255));
+    col.Set(lround((Element->GetMatAmbientAvionG(Numero_couleur,0))*255),
+            lround((Element->GetMatAmbientAvionG(Numero_couleur,1))*255),
+            lround((Element->GetMatAmbientAvionG(Numero_couleur,2))*255));
     CouleursGroupes_Panel->ColourPickerCtrl_Ambient->SetColour(col);
-    col.Set(lround(Element->MatDiffuse_avionG[Numero_couleur][0]*255),
-            lround(Element->MatDiffuse_avionG[Numero_couleur][1]*255),
-            lround(Element->MatDiffuse_avionG[Numero_couleur][2]*255));
+    col.Set(lround((Element->GetMatDiffuseAvionG(Numero_couleur,0))*255),
+            lround((Element->GetMatDiffuseAvionG(Numero_couleur,1))*255),
+            lround((Element->GetMatDiffuseAvionG(Numero_couleur,2))*255));
     CouleursGroupes_Panel->ColourPickerCtrl_Diffuse->SetColour(col);
 //    CouleursGroupes_Panel->TextCtrl_Materiau->SetLabel(_T("Aucun")); // Inutile car soit déjà comme ça, soit changé et conforme à SpinCtrl_Groupes
     CouleursGroupes_Panel->Show();
@@ -3460,15 +3507,20 @@ void OvniFrame::Lire_Image(int &largeur, int &hauteur)
 
 void OvniFrame::OnTimer_SaveTrigger(wxTimerEvent& event)
 {
+    OnTimer_Autosave();
+}
+
+void OvniFrame::OnTimer_Autosave()  // Cette fonction est publique et peut donc être appelée directement, sans passer par le Timer
+{
     wxString Fichier_svg;
-    if (Element->bdd_modifiee) {                    // Sauvegarde automatique inutile si la bdd n'a pas changé
+    if (Element->GetBddModifiee()) {                    // Sauvegarde automatique inutile si la bdd n'a pas changé
         printf("Sauvegarde automatique ...\n");
         Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
 //        printf("Enregistrement dans : %s\n",(const char *)Fichier_svg.mb_str()) ;
         Element->SaveTo(Fichier_svg,0);
-        Element->bdd_modifiee = true;               // Garder/Forcer la valeur à true car on a enregistré la sauvegarde sous un autre nom (Autosave.bdd)
+        Element->SetBddModifiee(true);              // Garder/Forcer la valeur à true car on a enregistré la sauvegarde sous un autre nom (Autosave.bdd)
                                                     // et peut-être ailleurs que dans le répertoire d'origine du fichier bdd initial
-        Element->exists_Autosave = true;            // Marquer que le fichier Autosave a été créé ici ! Mais ne détecte pas s'il y a eu une erreur dans SaveTo !
+        exists_Autosave = true;                     // Marquer que le fichier Autosave a été créé ici ! Mais ne détecte pas s'il y a eu une erreur dans SaveTo !
     }
 }
 
@@ -3479,11 +3531,11 @@ void OvniFrame::OnMenu_ZoomSpecifiqueSelected(wxCommandEvent& event)
     float val = Element->m_gldata.zoom;
     wxString str_loc;
     str_loc.Printf(_T("%4.3f"),val);
-    ZoomSpecifique_Panel->TextCtrl_FoV->SetLabel(str_loc);
-    val = -(Element->m_gldata.posz +Element->centreRot[2])/Element->diagonale_save;
+    ZoomSpecifique_Panel->TextCtrl_FoV->SetValue(str_loc);      // Plutôt que SetLabel pour wxWidgets 3.3
+    val = -(Element->m_gldata.posz +Element->centreRot[2])/Element->GetDiagonaleSave();
     str_loc.Printf(_T("%4.3f"),val);
-    ZoomSpecifique_Panel->TextCtrl_Distance->SetLabel(str_loc);
-    ZoomSpecifique_Panel->Show();                   // Afficher d'abord, sinon SetAngles ne modifie pas les valeurs Site Azimut !
+    ZoomSpecifique_Panel->TextCtrl_Distance->SetValue(str_loc); // Plutôt que SetLabel pour wxWidgets 3.3
+    ZoomSpecifique_Panel->Show();                               // Afficher d'abord, sinon SetAngles ne modifie pas les valeurs Site Azimut !
     SetAngles();
 }
 

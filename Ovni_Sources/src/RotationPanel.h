@@ -45,7 +45,9 @@ class RotationPanel: public wxDialog
 		wxTextCtrl* TextCtrl_Y;
 		wxTextCtrl* TextCtrl_Z;
 		//*)
-		double RotX, RotY, RotZ;
+		void SetRotX(double value) {RotX = value;}
+		void SetRotY(double value) {RotY = value;}
+		void SetRotZ(double value) {RotZ = value;}
 
 	protected:
 
@@ -102,6 +104,11 @@ class RotationPanel: public wxDialog
 		void OnTextCtrl_AngleYText(wxCommandEvent& event);
 		void OnTextCtrl_AngleZText(wxCommandEvent& event);
 		//*)
+
+        OvniFrame* MAIN;
+
+		double RotX, RotY, RotZ;
+
 //		void ToDo();
 		void Appliquer_Rotation_Visuelle();
 		void Init_Centre_Rotation();
@@ -110,7 +117,6 @@ class RotationPanel: public wxDialog
 		void Rotation_Objet_Z(int, double);
 		wxString wxTexte;
 		double Incr;
-        OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

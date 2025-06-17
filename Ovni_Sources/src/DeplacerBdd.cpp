@@ -116,7 +116,7 @@ void DeplacerBdd::OnButton_OKClick(wxCommandEvent& event)
     Element->Search_Min_Max();
     Element->SetPosObs(true);
     Element->ResetProjectionMode();
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
     Element->Refresh();
 }
 
@@ -153,12 +153,12 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
     Sommet  *sommet_i;
     wxString str;
 
-    Element->centrageRotAuto = true;
+    Element->SetCentrageRotAuto(true);
     Element->m_gllist = 0;
 //    Element->Search_Min_Max();
-    dx = (Element->x_min + Element->x_max)/2;   // Centre de la boîte englobante
-    dy = (Element->y_min + Element->y_max)/2;
-    dz = (Element->z_min + Element->z_max)/2;
+    dx = (Element->Get_X_min_box() + Element->Get_X_max_box())/2;   // Centre de la boîte englobante
+    dy = (Element->Get_Y_min_box() + Element->Get_Y_max_box())/2;
+    dz = (Element->Get_Z_min_box() + Element->Get_Z_max_box())/2;
 
     str.Printf(_T("%5.3f"),-dx);                // Formater les nouvelles valeurs en texte
     TextCtrl_DeplX->SetValue(str);              // et mettre à jour les fenêtres d'entrée
@@ -183,6 +183,6 @@ void DeplacerBdd::OnButton_CentrerClick(wxCommandEvent& event)
     Element->Search_Min_Max();
     Element->SetPosObs(true);
     Element->ResetProjectionMode();
-    Element->bdd_modifiee = true;
+    Element->SetBddModifiee(true);
     Element->Refresh();
 }

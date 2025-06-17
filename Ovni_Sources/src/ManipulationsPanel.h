@@ -71,9 +71,12 @@ class ManipulationsPanel: public wxDialog
 		void OnInit(wxInitDialogEvent& event);
 		void OnButton_NewObjetClick(wxCommandEvent& event);
 		//*)
+
+        OvniFrame* MAIN;
+
 //		void ToDo();
 		void CreerBoiteObjet();
-        OvniFrame* MAIN;
+
         bool CheckBox_XYZ;
         double x1b1,x2b1,y1b1,y2b1,z1b1,z2b1; // Boite 1 : originale
 

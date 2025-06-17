@@ -86,6 +86,8 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
     char *ptr, c ;
     bool moins ;
 
+    bool verbose = Element->GetVerbose();
+
     objet = SpinCtrl_NumObjet->GetValue();
     wxString wxChaine   = TextCtrl_Numeros->GetValue();
     wxCharBuffer buffer = wxChaine.mb_str();
@@ -104,7 +106,7 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
                     if (indice < (int)Element->Objetlist[objet].Nb_facettes-1) {
                         // N'ajouter que si non déjà présent dans la Liste
                         if (!Element->ToSelect.check_if_in_ListeSelect(objet,indice)) {
-                            if (Element->verbose) printf("objet %d, facette %d\n",objet,indice);
+                            if (verbose) printf("objet %d, facette %d\n",objet,indice);
                             Element->ToSelect.add_one(objet,indice);
 //                            Element->colorface(objet,indice);
                             Element->Objetlist[objet].Facelist[indice].selected = true;
@@ -117,7 +119,7 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
             if (indice_facette < (int)Element->Objetlist[objet].Nb_facettes-1) {
                 // N'ajouter que si non déjà présent dans la Liste
                 if (!Element->ToSelect.check_if_in_ListeSelect(objet,indice_facette)) {
-                    if (Element->verbose) printf("objet %d, facette %d\n",objet,indice_facette);
+                    if (verbose) printf("objet %d, facette %d\n",objet,indice_facette);
                     Element->ToSelect.add_one(objet,indice_facette);
 //                    Element->colorface(objet,indice_facette);
                     Element->Objetlist[objet].Facelist[indice_facette].selected = true;
@@ -169,9 +171,9 @@ void SelectionManuelleFacettes::OnButton_ValiderClick(wxCommandEvent& event)
             objet = Element->ToSelect.ListeSelect[i].objet;
             face  = Element->ToSelect.ListeSelect[i].face_sommet;
             Facette_courante = &(Element->Objetlist[objet].Facelist[face]);
-            if (Element->verbose) printf("%d %d %d %d %d\n", i, objet, face,
-                                                             Facette_courante->groupe,
-                                                             Facette_courante->codmatface);
+            if (verbose) printf("%d %d %d %d %d\n", i, objet, face,
+                                                       Facette_courante->groupe,
+                                                       Facette_courante->codmatface);
             if (Facette_courante->groupe     != first_grp) groupes_egaux   = false;
             if (Facette_courante->codmatface != first_mat) materiaux_egaux = false;
         }

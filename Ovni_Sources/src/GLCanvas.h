@@ -13,7 +13,7 @@ struct GLData
     float quat[4];              // orientation of object
     float zoom;                 // field of view in degrees
     float zoom_step;            // Incrément de zoom
-    float fmult_diag;           // Facteur multiplicatif / diagonale de boîte englobante
+    float fmult_diagonale;      // Facteur multiplicatif / diagonale de boîte englobante
     float zNear;
     float zFar;
     float posx, posy, posz;     // Position du centre

@@ -290,7 +290,7 @@ void Prefs_Dialog::OnSpinCtrlDouble_axesChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->len_axe = SpinCtrlDouble_axes->GetValue();
+    Element->SetLenAxe(SpinCtrlDouble_axes->GetValue());
     Element->buildRepereOXYZ();
     Element->ini_file_modified = true ;
     Element->Refresh();
@@ -300,7 +300,7 @@ void Prefs_Dialog::OnSpinCtrlDouble_normChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->len_normales = SpinCtrlDouble_norm->GetValue();
+    Element->SetLenNormales(SpinCtrlDouble_norm->GetValue());
     Element->ini_file_modified = true ;
     Element->m_gllist = Element->glliste_select; //0;      // Ne regénére que la liste des facettes sélectionnées => les normales des facettes
     Element->Refresh();
@@ -310,7 +310,7 @@ void Prefs_Dialog::OnSpinCtrlDouble_srcChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->ray_sun = SpinCtrlDouble_src->GetValue();
+    Element->SetRaySun(SpinCtrlDouble_src->GetValue());
     Element->ini_file_modified = true ;
     Element->Refresh();
 }
@@ -319,7 +319,7 @@ void Prefs_Dialog::OnCheckBox_SeuillageClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    CheckBox_RecNormales_Seuillees->SetValue(MAIN->Element->Enr_Normales_Seuillees);
+    CheckBox_RecNormales_Seuillees->SetValue(MAIN->Element->GetEnrNormalesSeuillees());
     bool chkB = CheckBox_Seuillage->GetValue();
     if (chkB) {
         StaticText_Gouraud            ->Enable() ;
@@ -336,7 +336,7 @@ void Prefs_Dialog::OnCheckBox_SeuillageClick(wxCommandEvent& event)
 //        CheckBox_RecNormales_Seuillees->SetValue(chkB);
     }
 
-    Element->test_seuil_gouraud = chkB;
+    Element->SetTestSeuilGouraud(chkB);
     Element->ini_file_modified  = true ;
     Element->m_gllist = 0;
     Element->Refresh();
@@ -347,16 +347,16 @@ void Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraudChange(wxSpinDoubleEvent& event)
     BddInter *Element = MAIN->Element;
 
     float val = SpinCtrlDouble_SeuilGouraud->GetValue();
-    Element->angle_Gouraud  = val;
+    Element->SetAngleGouraud(val);
     float seuil = cos(val*to_Rad);
     if (val >= 179.9) seuil = -1.0f;
-    Element->seuil_Gouraud  = seuil;
+    Element->SetSeuilGouraud(seuil);
 
-    val *= MAIN->Element->fmult_Gouraud;
+    val *= MAIN->Element->GetFmultGouraud();
     if (val > 90.0) val = 180.0;
     seuil = cos(val*to_Rad);
     if (val >= 179.9) seuil    = -1.0f;
-    Element->seuil_Gouraud2    = seuil;
+    Element->SetSeuilGouraud2(seuil);
     Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
@@ -367,12 +367,12 @@ void Prefs_Dialog::OnSpinCtrlDouble_SeuilGouraud2Change(wxSpinDoubleEvent& event
     BddInter *Element = MAIN->Element;
 
     float val = SpinCtrlDouble_SeuilGouraud2->GetValue();
-    Element->fmult_Gouraud = val;
-    val *= MAIN->Element->angle_Gouraud;
+    Element->SetFmultGouraud(val);
+    val *= MAIN->Element->GetAngleGouraud();
     if (val > 90.0) val = 180.0;    // Forcer les valeurs > 90° (comme en version Tcl)
     float seuil= cos(val*to_Rad);
     if (val >= 179.9)   seuil  = -1.0f;
-    Element->seuil_Gouraud2    = seuil;
+    Element->SetSeuilGouraud2(seuil);
     Element->ini_file_modified = true ;
     Element->m_gllist = 0;
     Element->Refresh();
@@ -391,7 +391,8 @@ void Prefs_Dialog::OnSpinCtrl_PasSvgChange_pub(wxSpinEvent& event)
 void Prefs_Dialog::OnSpinCtrl_PasSvgChange(wxSpinEvent& event)
 {
     int svg_time_local;
-    MAIN->Element->svg_time = svg_time_local = SpinCtrl_PasSvg->GetValue();
+    svg_time_local = SpinCtrl_PasSvg->GetValue();
+    MAIN->Element->SetSvgTime(svg_time_local);
     MAIN->Timer_Save.Stop();                                    // Arrêt du timer
     if (svg_time_local > 0) {                                   // Puis le relancer si svg_time > 0
         MAIN->Timer_Save.Start(svg_time_local*60000,false);     // Convertir des minutes en millisecondes et démarrer le timer
@@ -431,7 +432,7 @@ void Prefs_Dialog::OnCheckBox_AntialiasingSoftClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->antialiasing_soft = CheckBox_AntialiasingSoft->GetValue();//Antialiasing_Soft;
+    Element->SetAntialiasingSoft(CheckBox_AntialiasingSoft->GetValue());//Antialiasing_Soft;
 //    MAIN->Element->m_gldata.initialized=false;
 //    MAIN->Element->ResetProjectionMode();
     Element->buildAllLines();
@@ -459,25 +460,31 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
 // Longueur des axes
-    val = Element->len_axe = Element->len_axe_def;
+    val = Element->GetLenAxeDef();
+    Element->SetLenAxe(val);
     SpinCtrlDouble_axes->SetValue(val) ;
 
 // Longueur des normales
-    val = Element->len_normales = Element->len_normales_def;
+    val = Element->GetLenNormalesDef();
+    Element->SetLenNormales(val);
     SpinCtrlDouble_norm->SetValue(val) ;
 
 // Rayon du "Soleil"
-    val = Element->ray_sun = Element->ray_sun_def;
+    val = Element->GetRaySunDef();
+    Element->SetRaySun(val);
     SpinCtrlDouble_src->SetValue(val) ;
 
 // Case à cocher Antialiasing Soft
-    chkB = Element->antialiasing_soft = Element->antialiasing_soft_def;
+    chkB = Element->GetAntialiasingSoftDef();
+    Element->SetAntialiasingSoft(chkB);
     CheckBox_AntialiasingSoft->SetValue(chkB);
 
 // Case à cocher des fichiers .obj
-    chkB  = Element->Forcer_1_Seul_Objet = Element->Forcer_1_Seul_Objet_def;
+    chkB  = Element->GetForcer_1_SeulObjetDef();
+    Element->SetForcer_1_SeulObjet(chkB);
     CheckBox_1SeulObjet3D->SetValue(chkB);
-    chkB2 = Element->lect_obj_opt = Element->lect_obj_opt_def;
+    chkB2 = Element->GetLectObjOptDef();
+    Element->SetLectObjOpt(chkB2);
     CheckBox_LectureOptimisee->SetValue(chkB2);
     if (chkB)
         CheckBox_LectureOptimisee->Disable() ;
@@ -485,35 +492,41 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
         CheckBox_LectureOptimisee->Enable();
 
 // Case à cocher "Lecture décalage éventuel 3ds
-    chkB = Element->test_decalage3ds = Element->test_decalage3ds_def;
+    chkB = Element->GetTestDecalage3dsDef();
+    Element->SetTestDecalage3ds(chkB);
     CheckBox_TestDecalage3DS->SetValue(chkB);
 
 // Case à cocher calcul des normales aux sommets dès la lecture
-    chkB = Element->CalculNormalesLectureBdd = Element->CalculNormalesLectureBdd_def;
+    chkB = Element->GetCalculNormalesLectureBddDef();
+    Element->SetCalculNormalesLectureBdd(chkB);
     CheckBox_CalculNormales->SetValue(chkB);
 
 // Case à cocher du traitement des doublons d'arêtes
-    chkB = Element->traiter_doublons_aretes = Element->traiter_doublons_aretes_def;
+    chkB = Element->GetTraiterDoublonsAretesDef();
+    Element->SetTraiterDoublonsAretes(chkB);
     CheckBox_TraiterDoublonsAretes->SetValue(chkB);
 
 // Case à cocher de Test du seuillage de Gouraud et activation/désactivation des valeurs de seuil
-    chkB = Element->test_seuil_gouraud = Element->test_seuil_gouraud_def;
+    chkB = Element->GetTestSeuilGouraudDef();
+    Element->SetTestSeuilGouraud(chkB);
     CheckBox_Seuillage->SetValue(chkB);
-    val = Element->angle_Gouraud_def;
+    val = Element->GetAngleGouraudDef();
     float cos_val = cos(val*to_Rad);
     if (val >= 179.9) cos_val = -1.0f;
-    Element->seuil_Gouraud = cos_val;
-    Element->angle_Gouraud = val;
+    Element->SetSeuilGouraud(cos_val);
+    Element->SetAngleGouraud(val);
     SpinCtrlDouble_SeuilGouraud->SetValue(val);
 
-    val = Element->fmult_Gouraud = Element->fmult_Gouraud_def;
+    val = Element->GetFmultGouraudDef();
+    Element->SetFmultGouraud(val);
     SpinCtrlDouble_SeuilGouraud2->SetValue(val);
-    val *= Element->angle_Gouraud_def ;
+    val *= Element->GetAngleGouraudDef() ;
     cos_val = cos(val*to_Rad);
     if (val >= 179.9) cos_val = -1.0f;
-    Element->seuil_Gouraud2 = cos_val;
-    ival = Element->Enr_Normales_Seuillees = Element->Enr_Normales_Seuillees_def;
-    CheckBox_RecNormales_Seuillees->SetValue(ival);
+    Element->SetSeuilGouraud2(cos_val);
+    chkB2 = Element->GetEnrNormalesSeuilleesDef();
+    Element->SetEnrNormalesSeuillees(chkB2);
+    CheckBox_RecNormales_Seuillees->SetValue(chkB2);
     if (chkB) {
         StaticText_Gouraud            ->Enable() ;
         StaticText_Gouraud2           ->Enable() ;
@@ -528,34 +541,40 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
         CheckBox_RecNormales_Seuillees->Disable();
 //        CheckBox_RecNormales_Seuillees->SetValue(chkB);
     }
-    chkB = Element->NotFlat = Element->NotFlat_def;
+    chkB = Element->GetNotFlatDef();
+    Element->SetNotFlat(chkB);
     CheckBox_NotFlat->SetValue(chkB);
 
 // Pas temporel des sauvegardes
-    ival = Element->svg_time = Element->svg_time_def;
+    ival = Element->GetSvgTimeDef();
+    Element->SetSvgTime(ival);
     SpinCtrl_PasSvg->SetValue(ival);
     wxSpinEvent cmd_spin;
     OnSpinCtrl_PasSvgChange(cmd_spin);    // Simule un clic pour réactualiser/réinitialiser le timer
 
 // Mode de triangulation
-    ival = Element->methode_Triangulation = Element->methode_Triangulation_def;
+    ival = Element->GetMethodeTriangulationDef();
+    Element->SetMethodeTriangulation(ival);
     RadioBox_Triangulation->SetSelection(ival);
 
 // Mode Trackball ou Rotation directe
-    ival = Element->m_gldata.mode_Trackball = Element->mode_Trackball_def;
+    ival = Element->m_gldata.mode_Trackball = Element->GetModeTrackballDef();
     RadioBox_Trackball->SetSelection(ival);
 
 // Case à cocher pour l'affichage des FPS
-    chkB = Element->viewFps = Element->viewFps_def;
+    chkB = Element->GetViewFpsDef();
+    Element->SetViewFps(chkB);
     CheckBox_DisplayFps->SetValue(chkB);
 
 // Case à cocher pour la création d'un fichier .bak
-    chkB = Element->CreerBackup = Element->CreerBackup_def;
+    chkB = Element->GetCreerBackupDef();
+    Element->SetCreerBackup(chkB);
     CheckBox_CreerBackup->SetValue(chkB);
     CheckBox_SupprBackup->Enable(chkB);     // N'activer la case à cocher de suppression du .bak que si sa création a été demandée
 
 // Case à cocher pour la suppression du fichier .bak en sortie de programme
-    chkB = Element->SupprBackup = Element->SupprBackup_def;
+    chkB = Element->GetSupprBackupDef();
+    Element->SetSupprBackup(chkB);
     CheckBox_SupprBackup->SetValue(chkB);
 
 // Reset du répertoire de travail
@@ -565,15 +584,19 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     char Message[512];
     sprintf(Message,"Répertoire de travail :\n%s\n",(const char*)Element->wxOvniPath.utf8_str());
     printf("%s",utf8_To_ibm(Message));
-    TextCtrl_WorkDir->SetLabel(Element->wxOvniPath);
+    TextCtrl_WorkDir->SetValue(Element->wxOvniPath);    // Plutôt que SetLabel
 
-    Element->nb_threads      = Element->nb_threads_def;
-    SpinCtrl_Threads->SetValue(Element->nb_threads);
+    Element->SetNbThreads(Element->GetNbThreadsDef());
+    SpinCtrl_Threads->SetValue(Element->GetNbThreads());
     omp_set_dynamic(1);
 
-    Element->icon_index = Element->icon_index_def;
-    Element->icon_size  = Element->icon_sizes[Element->icon_index];
-    RadioBox_IconSize->SetSelection(Element->icon_index);
+    Element->SetFrameSizeX(Element->GetFrameSizeXDef());
+    Element->SetFrameSizeY(Element->GetFrameSizeYDef());
+
+    int IconIndex_local = Element->GetIconIndexDef();
+    Element->SetIconIndex(IconIndex_local);
+    Element->SetIconSize (IconIndex_local);
+    RadioBox_IconSize->SetSelection(IconIndex_local);
     OnRadioBox_IconSizeSelect(event);   // Simule un changement de taille d'icône
 
     Element->ini_file_modified = true ;
@@ -585,7 +608,7 @@ void Prefs_Dialog::OnCheckBox_DisplayFpsClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->viewFps = CheckBox_DisplayFps->GetValue();
+    Element->SetViewFps(CheckBox_DisplayFps->GetValue());
     Element->ini_file_modified = true ;
     Element->Refresh();
 }
@@ -594,7 +617,7 @@ void Prefs_Dialog::OnCheckBox_TestDecalage3DSClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->test_decalage3ds = CheckBox_TestDecalage3DS->GetValue();
+    Element->SetTestDecalage3ds(CheckBox_TestDecalage3DS->GetValue());
     Element->ini_file_modified= true ;
 }
 
@@ -602,7 +625,7 @@ void Prefs_Dialog::OnCheckBox_LectureOptimiseeClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->lect_obj_opt = CheckBox_LectureOptimisee->GetValue();
+    Element->SetLectObjOpt(CheckBox_LectureOptimisee->GetValue());
     Element->ini_file_modified = true ;
 }
 
@@ -610,7 +633,7 @@ void Prefs_Dialog::OnCheckBox_RecNormales_SeuilleesClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Enr_Normales_Seuillees = CheckBox_RecNormales_Seuillees->GetValue();
+    Element->SetEnrNormalesSeuillees(CheckBox_RecNormales_Seuillees->GetValue());
     Element->ini_file_modified = true ;
 }
 
@@ -621,7 +644,7 @@ void Prefs_Dialog::OnCheckBox_1SeulObjet3DClick(wxCommandEvent& event)
     bool chkB;
 
     chkB = CheckBox_1SeulObjet3D->GetValue();
-    Element->Forcer_1_Seul_Objet = chkB;
+    Element->SetForcer_1_SeulObjet(chkB);
     if (chkB) {
         CheckBox_LectureOptimisee->Disable();
     } else {
@@ -634,14 +657,13 @@ void Prefs_Dialog::OnCheckBox_CalculNormalesClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->CalculNormalesLectureBdd = CheckBox_CalculNormales->GetValue();
+    Element->SetCalculNormalesLectureBdd(CheckBox_CalculNormales->GetValue());
     Element->ini_file_modified = true ;
 }
 
 void Prefs_Dialog::OnRadioBox_TriangulationSelect(wxCommandEvent& event)
 {
-    MAIN->Element->methode_Triangulation = RadioBox_Triangulation->GetSelection();
-//    printf("Methode de Triangulation dans Preference : %d\n",MAIN->Element->methode_Triangulation);
+    MAIN->Element->SetMethodeTriangulation(RadioBox_Triangulation->GetSelection());
 }
 
 void Prefs_Dialog::OnCheckBox_CreerBackupClick(wxCommandEvent& event)
@@ -649,7 +671,7 @@ void Prefs_Dialog::OnCheckBox_CreerBackupClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
 
     bool ChkB = CheckBox_CreerBackup->GetValue();
-    Element->CreerBackup = ChkB;
+    Element->SetCreerBackup(ChkB);
     CheckBox_SupprBackup->Enable(ChkB);
     Element->ini_file_modified = true ;
 }
@@ -658,7 +680,7 @@ void Prefs_Dialog::OnCheckBox_SupprBackupClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->SupprBackup = CheckBox_SupprBackup->GetValue();
+    Element->SetSupprBackup(CheckBox_SupprBackup->GetValue());
     Element->ini_file_modified = true ;
 }
 
@@ -666,7 +688,7 @@ void Prefs_Dialog::OnCheckBox_NotFlatClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->NotFlat = CheckBox_NotFlat->GetValue();
+    Element->SetNotFlat(CheckBox_NotFlat->GetValue());
     Element->ini_file_modified = true ;
 }
 
@@ -679,15 +701,15 @@ void Prefs_Dialog::OnSpinCtrl_ThreadsChange(wxSpinEvent& event)
     BddInter *Element = MAIN->Element;
 
     int ival = SpinCtrl_Threads->GetValue();
-    if ((ival <= 0) || (ival >= Element->nb_max_threads)) {
-        omp_set_dynamic(1);         // Nombre de threads automatique, soit le maximum
-        if (ival >= Element->nb_max_threads) ival = Element->nb_max_threads;
-        omp_set_num_threads(Element->nb_max_threads);                       // Par précaution, mais pas indispensable !
+    if ((ival <= 0) || (ival >= Element->GetNbMaxThreads())) {
+        omp_set_dynamic(1);                                                     // Nombre de threads automatique, soit le maximum
+        if (ival >= Element->GetNbMaxThreads()) ival = Element->GetNbMaxThreads();
+        omp_set_num_threads(Element->GetNbMaxThreads());                        // Par précaution, mais pas indispensable !
     } else {
-        omp_set_dynamic(0);         // Forcer le nombre de threads
+        omp_set_dynamic(0);                                                     // Forcer le nombre de threads
         omp_set_num_threads(ival);
     }
-    Element->nb_threads        = ival;
+    Element->SetNbThreads(ival);
     Element->ini_file_modified = true ;
 }
 
@@ -695,7 +717,7 @@ void Prefs_Dialog::OnCheckBox_TraiterDoublonsAretesClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->traiter_doublons_aretes = CheckBox_TraiterDoublonsAretes->GetValue();
+    Element->SetTraiterDoublonsAretes(CheckBox_TraiterDoublonsAretes->GetValue());
     Element->ini_file_modified       = true ;
 }
 
@@ -703,14 +725,15 @@ void Prefs_Dialog::OnRadioBox_IconSizeSelect(wxCommandEvent& event)
 {
     BddInter *Element  = MAIN->Element;
 
-    Element->icon_size = Element->icon_sizes[RadioBox_IconSize->GetSelection()];    // soit 16, 24, 32 ou 48 car 4 choix proposés à l'affichage dans Préférences
-    int new_width      = MAIN->SetNewIcons(Element->icon_size) ;
-    int new_height     = Element->icon_size+9;
+    Element->SetIconSize(RadioBox_IconSize->GetSelection());        // soit 16, 24, 32 ou 48 car 4 choix proposés à l'affichage dans Préférences
+    int IconSize_local = Element->GetIconSize();
+    int new_width      = MAIN->SetNewIcons(IconSize_local) ;
+    int new_height     = IconSize_local + 9;
     MAIN->Panel1->SetMinSize(wxSize(new_width,new_height));
     MAIN->Panel1->SetSize   (wxSize(new_width,new_height));
 
-    wxRect rect          = MAIN->GetRect();                                         // récupère position et taille de la fenêtre
-    wxSize* ClientSizeXY = new wxSize(new_width,rect.height);                       // Ajuster la taille de la fenêtre
+    wxRect rect          = MAIN->GetRect();                         // récupère position et taille de la fenêtre
+    wxSize* ClientSizeXY = new wxSize(new_width,rect.height);       // Ajuster la taille de la fenêtre
     MAIN->SetSize(*ClientSizeXY);
     Element->ini_file_modified = true ;
     delete ClientSizeXY;

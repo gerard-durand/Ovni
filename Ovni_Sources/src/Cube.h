@@ -24,8 +24,8 @@ class Cube: public wxDialog
 		Cube(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~Cube();
 //		wxWindow* Cube_Parent;
-		int numeroGroupe  = 0;
-		int numeroMateriau= 0;
+//		int numeroGroupe  = 0;
+//		int numeroMateriau= 0;
 
 		//(*Declarations(Cube)
 		wxButton* Button_Annuler;
@@ -77,10 +77,14 @@ class Cube: public wxDialog
 		void OnSpinCtrl_GroupeChange(wxSpinEvent& event);
 		void OnSpinCtrl_MateriauChange(wxSpinEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
 
         float centre_primitive[3];
 		float arete;
+
+		int numeroGroupe   = 0;
+		int numeroMateriau = 0;
 
 		void Genere_Cube();
 		void Genere_Facettes(BddInter*, Object*);//int);

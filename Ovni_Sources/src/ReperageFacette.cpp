@@ -135,9 +135,9 @@ void ReperageFacette::OnClose(wxCloseEvent& event)
     int IndiceFacette = SpinCtrl_IndiceFacette->GetValue();
 
     if (CheckBox_Laisser->IsChecked() && (IndiceFacette >= 0))
-        Element->Facette_Surlignee = true;
+        Element->SetFacetteSurlignee(true);
     else
-        Element->Facette_Surlignee = false;
+        Element->SetFacetteSurlignee(false);
     Element->Refresh();
     Hide();
 }
@@ -186,13 +186,13 @@ void ReperageFacette::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
         SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
     }
     SpinCtrl_IndiceFacette->SetMax(Element->Objetlist[IndiceObjet].Facelist.size());
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str_num.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str_num);
 //    str_nom = Element->Objetlist[IndiceObjet].GetwxName();
     str_nom =  wxString(Element->Objetlist[IndiceObjet].GetName(), wxConvUTF8);
     Text_NomObjet->SetValue(str_nom);
-    Element->Facette_Surlignee = false;
+    Element->SetFacetteSurlignee(false);
     int IndiceFacette = SpinCtrl_IndiceFacette->GetValue();
     if (IndiceFacette == -2) {
         IndiceFacette = SpinCtrl_IndiceFacette->GetMax() -1;        // si -2, on boucle sur l'indice max, soit Facelist.size() -1
@@ -217,9 +217,9 @@ void ReperageFacette::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
         int Nb_points = Element->Objetlist[IndiceObjet].Facelist[IndiceFacette].Nb_Sommets_F;
         SpinCtrl_IndiceSommet->SetMax(Nb_points);                           // Mettre 1 de plus pour permettre le bouclage
         str.Printf(_T("%d"),Nb_points);
-        Element->Facette_Surlignee        = true;
-        Element->Numero_Objet_a_Surligner = IndiceObjet;
-        Element->Numero_Facette_Surlignee = IndiceFacette;
+        Element->SetFacetteSurlignee(true);
+        Element->SetNumeroObjet_ASurligner(IndiceObjet);
+        Element->SetNumeroFacetteSurlignee(IndiceFacette);
         if (Element->Objetlist[IndiceObjet].Facelist[IndiceFacette].afficher == true)
             Button_Masquer->SetLabel(_T("Masquer la facette"));
         else
@@ -284,15 +284,15 @@ void ReperageFacette::OnCheckBox_VisuSommetsClick(wxCommandEvent& event)
             SpinCtrl_IndiceSommet->SetMax(wxAtoi(Text_NbSommets->GetValue()));  // Mettre un de plus pour pouvoir boucler si max atteind !
             wxSpinEvent event_spin(wxEVT_COMMAND_SPINCTRL_UPDATED);             // Simuler un changement SpinEvent de indiceSommet
             OnSpinCtrl_IndiceSommetChange(event_spin);
-            Element->Sommets_Surlignes = true;
-            Element->Numero_Sommet_a_Surligner = wxAtoi(TextCtrl_NumeroSommet->GetValue());
+            Element->SetSommetsSurlignes(true);
+            Element->SetNumeroSommet_ASurligner(wxAtoi(TextCtrl_NumeroSommet->GetValue()));
         } else {
             SpinCtrl_IndiceSommet->Disable();
-            Element->Sommets_Surlignes = false;
+            Element->SetSommetsSurlignes(false);
         }
     } else {
         SpinCtrl_IndiceSommet->Disable();
-        Element->Sommets_Surlignes = false;
+        Element->SetSommetsSurlignes(false);
     }
     Element->Refresh();
 }
@@ -312,7 +312,7 @@ void ReperageFacette::OnSpinCtrl_IndiceSommetChange(wxSpinEvent& event)
         int NumeroCourant = NumerosSommets[SpinCtrl_IndiceSommet->GetValue()];
         str.Printf(_T("%d"),NumeroCourant);
         TextCtrl_NumeroSommet->SetValue(str);
-        Element->Numero_Sommet_a_Surligner = wxAtoi(TextCtrl_NumeroSommet->GetValue());
+        Element->SetNumeroSommet_ASurligner(wxAtoi(TextCtrl_NumeroSommet->GetValue()));
     } else TextCtrl_NumeroSommet->SetValue(_T(""));
 
     Element->Refresh();
@@ -337,7 +337,7 @@ void ReperageFacette::OnButton_CentrerRotationClick(wxCommandEvent& event)
             xyz_sommet = Element->Objetlist[IndiceObjet].Sommetlist[NumerosSommets[k]-1].getPoint();
             for (i=0; i<3; i++) centre_facette[i] += xyz_sommet[i];
         }
-        Element->centrageRotAuto = false;
+        Element->SetCentrageRotAuto(false);
         // Imposer le point central de la facette comme nouveau centre de rotation
         for (i=0; i<3; i++) Element->centreRot[i] = centre_facette[i]/ns;
         Element->SetPosObs(false);    // Reset de la position observée (centreRot) mais sans changer le zoom
@@ -354,7 +354,7 @@ void ReperageFacette::OnButton_MasquerClick(wxCommandEvent& event)
     if (IndiceFacette >= 0) {
         if (Element->Objetlist[IndiceObjet].Facelist[IndiceFacette].afficher) {
             Element->Objetlist[IndiceObjet].Facelist[IndiceFacette].afficher=false;
-            Element->Elements_Masques = true;                 // Indique au niveau global qu'une facette a été masquée
+            Element->SetElementsMasques(true);                      // Indique au niveau global qu'une facette a été masquée
             Button_Masquer->SetLabel(_T("Réafficher la facette"));  // Changer l'intitulé du bouton
         } else {
             Element->Objetlist[IndiceObjet].Facelist[IndiceFacette].afficher=true;
@@ -372,7 +372,7 @@ void ReperageFacette::OnButton_ResetClick(wxCommandEvent& event)
     BddInter *Element = MAIN->Element;
     wxString str;
 
-    Element->centrageRotAuto = true;
+    Element->SetCentrageRotAuto(true);
     Element->centreRot = Element->centre_auto;
     Element->SetPosObs(false);
 
@@ -381,7 +381,7 @@ void ReperageFacette::OnButton_ResetClick(wxCommandEvent& event)
     int IndiceObjet = 0;
     SpinCtrl_IndiceFacette->SetMax(Element->Objetlist[IndiceObjet].Facelist.size() -1);
     SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str);
     str = wxString(Element->Objetlist[IndiceObjet].GetName(), wxConvUTF8);
@@ -391,8 +391,8 @@ void ReperageFacette::OnButton_ResetClick(wxCommandEvent& event)
     SpinCtrl_IndiceFacette->SetValue(-1);
     str.Printf(_T("")) ;
     Text_NbSommets->SetValue(str);
-    Element->Facette_Surlignee = false;
-    Element->Sommets_Surlignes = false;
+    Element->SetFacetteSurlignee(false);
+    Element->SetSommetsSurlignes(false);
     Button_Masquer->SetLabel(_T("Masquer la facette"));
     ButtonsDisable();
 
@@ -421,7 +421,7 @@ void ReperageFacette::OnButton_DelFacetteClick(wxCommandEvent& event)
         Element->m_gllist = 0;
         wxSpinEvent cmd_spin;
         OnSpinCtrl_IndiceObjetChange(cmd_spin); // Simule un spin button pour rafraichir l'interface
-        Element->Elements_Supprimes = true;     // Indique au niveau global qu'une facette a été supprimée
+        Element->SetElementsSupprimes(true);    // Indique au niveau global qu'une facette a été supprimée
         Element->Refresh();
     }
 }
@@ -495,7 +495,7 @@ void ReperageFacette::OnButton_PermuterClick(wxCommandEvent& event)
         objet_courant->Facelist[IndiceFacette].setFsommet(NumerosSommets);
         // Permuter aussi les numéros des normales aux sommets (seulement s'ils existent), pas forcément les mêmes numéros que pour les facettes
         if (objet_courant->Facelist[IndiceFacette].L_sommets.size() != 0) {
-            NumerosSommets = objet_courant->Facelist[IndiceFacette].getL_sommets();  // En toute rigueur NumerosVecteurs
+            NumerosSommets = objet_courant->Facelist[IndiceFacette].getL_sommets();     // En toute rigueur NumerosVecteurs
             last = NumerosSommets.back();
             NumerosSommets.pop_back();
             NumerosSommets.insert(NumerosSommets.begin(),last);
@@ -508,14 +508,14 @@ void ReperageFacette::OnButton_PermuterClick(wxCommandEvent& event)
 
 void ReperageFacette::OnCheckBox_VisuNormaleClick(wxCommandEvent& event)
 {
-    MAIN->Button_Normale_Barycentre->SetValue(CheckBox_VisuNormale->GetValue());        // Synchoniser le bouton avec la checkbox
-    MAIN->Element->AfficherNormaleFacette = CheckBox_VisuNormale->GetValue();
+    MAIN->Button_Normale_Barycentre->SetValue(CheckBox_VisuNormale->GetValue());        // Synchroniser le bouton avec la checkbox
+    MAIN->Element->SetAfficherNormaleFacette(CheckBox_VisuNormale->GetValue());
     MAIN->Element->Refresh();
 }
 
 void ReperageFacette::OnCheckBox_VisuNormales_SommetsClick(wxCommandEvent& event)
 {
-    MAIN->Button_Normales_Sommets->SetValue(CheckBox_VisuNormales_Sommets->GetValue()); // Synchoniser le bouton avec la checkbox
-    MAIN->Element->AfficherNormalesSommets = CheckBox_VisuNormales_Sommets->GetValue();
+    MAIN->Button_Normales_Sommets->SetValue(CheckBox_VisuNormales_Sommets->GetValue()); // Synchroniser le bouton avec la checkbox
+    MAIN->Element->SetAfficherNormalesSommets(CheckBox_VisuNormales_Sommets->GetValue());
     MAIN->Element->Refresh();
 }

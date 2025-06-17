@@ -34,7 +34,6 @@ class ReperageObjet: public wxDialog
 		wxTextCtrl* TextCtrl_NumObjet;
 		wxTextCtrl* TextCtrl_indice;
 		//*)
-		OvniFrame* MAIN;
 
 	protected:
 
@@ -65,6 +64,8 @@ class ReperageObjet: public wxDialog
 		void OnCheckBox_renommerClick(wxCommandEvent& event);
 		void OnButton_renommerClick(wxCommandEvent& event);
 		//*)
+
+		OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
 };

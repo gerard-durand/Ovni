@@ -74,8 +74,8 @@ void PositionSource::OnSpinCtrlDouble_PosXChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Light0Position[0]=SpinCtrlDouble_PosX->GetValue();
-    Element->m_gldata.initialized=false;
+    Element->SetLight0Position(0, SpinCtrlDouble_PosX->GetValue());
+    Element->m_gldata.initialized = false;
     Element->Refresh();
 }
 
@@ -83,8 +83,8 @@ void PositionSource::OnSpinCtrlDouble_PosYChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Light0Position[1]=SpinCtrlDouble_PosY->GetValue();
-    Element->m_gldata.initialized=false;
+    Element->SetLight0Position(1, SpinCtrlDouble_PosY->GetValue());
+    Element->m_gldata.initialized = false;
     Element->Refresh();
 }
 
@@ -92,8 +92,8 @@ void PositionSource::OnSpinCtrlDouble_PosZChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Light0Position[2]=SpinCtrlDouble_PosZ->GetValue();
-    Element->m_gldata.initialized=false;
+    Element->SetLight0Position(2, SpinCtrlDouble_PosZ->GetValue());
+    Element->m_gldata.initialized = false;
     Element->Refresh();
 }
 
@@ -101,8 +101,8 @@ void PositionSource::OnSpinCtrlDouble_PosWChange(wxSpinDoubleEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    Element->Light0Position[3]=SpinCtrlDouble_PosW->GetValue();
-    Element->m_gldata.initialized=false;
+    Element->SetLight0Position(3, SpinCtrlDouble_PosW->GetValue());
+    Element->m_gldata.initialized = false;
     Element->Refresh();
 }
 
@@ -110,13 +110,12 @@ void PositionSource::OnButton_DefautClick(wxCommandEvent& event)
 {
     BddInter *Element = MAIN->Element;
 
-    for (int i=0;i<4;i++) {
-        Element->Light0Position[i] = Element->Light0Position_def[i];
-    }
-    SpinCtrlDouble_PosX->SetValue(Element->Light0Position[0]);
-    SpinCtrlDouble_PosY->SetValue(Element->Light0Position[1]);
-    SpinCtrlDouble_PosZ->SetValue(Element->Light0Position[2]);
-    SpinCtrlDouble_PosW->SetValue(Element->Light0Position[3]);
+    Element->ResetLight0Position();
+
+    SpinCtrlDouble_PosX->SetValue(Element->GetLight0Position(0));
+    SpinCtrlDouble_PosY->SetValue(Element->GetLight0Position(1));
+    SpinCtrlDouble_PosZ->SetValue(Element->GetLight0Position(2));
+    SpinCtrlDouble_PosW->SetValue(Element->GetLight0Position(3));
     Element->m_gldata.initialized=false;
     Element->Refresh();
 }

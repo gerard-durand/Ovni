@@ -28,7 +28,6 @@ class PositionObs_AzimutSite: public wxDialog
 		wxStaticText* StaticText5;
 		wxStaticText* StaticText_Warning;
 		//*)
-		wxString str;
 //        wxWindow* Pos_Parent;
 
 	protected:
@@ -53,6 +52,7 @@ class PositionObs_AzimutSite: public wxDialog
 		void OnClose(wxCloseEvent& event);
 		void OnButton_QuitClick(wxCommandEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

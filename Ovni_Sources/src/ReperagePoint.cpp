@@ -139,9 +139,9 @@ void ReperagePoint::OnClose(wxCloseEvent& event)
    int IndicePoint = SpinCtrl_IndicePoint->GetValue();
 
     if (CheckBox_Laisser->IsChecked() && (IndicePoint >= 0))
-        Element->show_star = true;
+        Element->SetShowStar(true);
     else
-        Element->show_star = false;
+        Element->SetShowStar(false);
     Element->Refresh();
     Hide();
 }
@@ -170,7 +170,7 @@ void ReperagePoint::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
         SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
     }
     SpinCtrl_IndicePoint->SetMax(Element->Objetlist[IndiceObjet].Sommetlist.size() -1);
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str_num.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str_num);
 //    str_nom = Element->Objetlist[IndiceObjet].GetwxName();
@@ -182,7 +182,7 @@ void ReperagePoint::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
         Text_ValeurX->SetValue(str);
         Text_ValeurY->SetValue(str);
         Text_ValeurZ->SetValue(str);
-        Element->show_star = false;
+        Element->SetShowStar(false);
     } else {
         xyz_sommet = Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].getPoint();
         if (xyz_sommet.empty()) {                                           // Point qui n'a pas été initialisé ???
@@ -190,7 +190,7 @@ void ReperagePoint::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
             Text_ValeurX->SetValue(str);
             Text_ValeurY->SetValue(str);
             Text_ValeurZ->SetValue(str);
-            Element->show_star = false;
+            Element->SetShowStar(false);
         } else {
             str.Printf(_T("%f"),xyz_sommet[0]);
             Text_ValeurX->SetValue(str);
@@ -198,8 +198,8 @@ void ReperagePoint::OnSpinCtrl_IndiceObjetChange(wxSpinEvent& event)
             Text_ValeurY->SetValue(str);
             str.Printf(_T("%f"),xyz_sommet[2]);
             Text_ValeurZ->SetValue(str);
-            Element->show_star = true;
-            Element->point_star= xyz_sommet;
+            Element->SetShowStar(true);
+            Element->SetPointStar(xyz_sommet);
         }
     }
     if (MAIN->Selections_Panel->IsShown()) {                                // Mise à jour de SelectionPanel s'il est affiché
@@ -233,7 +233,7 @@ void ReperagePoint::OnButton_CentrerClick(wxCommandEvent& event)
     int IndicePoint = SpinCtrl_IndicePoint->GetValue();
     if (IndicePoint >= 0) {
         xyz_sommet = Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].getPoint();
-        Element->centrageRotAuto = false;
+        Element->SetCentrageRotAuto(false);
         Element->centreRot = xyz_sommet;  // Imposer le point comme nouveau centre de rotation
         Element->SetPosObs(false);        // Reset de la position observée (centreRot) mais sans changer le zoom
         Element->Refresh();
@@ -261,13 +261,13 @@ void ReperagePoint::OnButton_ResetClick(wxCommandEvent& event)
     if (Button_UndoZ->IsEnabled()) OnButton_UndoZClick(event_button);
     OnCheckBox_ZClick(event_check);
 
-    Element->centrageRotAuto = true;
+    Element->SetCentrageRotAuto(true);
     Element->centreRot = Element->centre_auto ;
     Element->SetPosObs(false);
 
     int IndiceObjet = 0;
     SpinCtrl_IndiceObjet->SetValue(IndiceObjet);
-    int num_obj = Element->Objetlist[IndiceObjet].GetValue();
+    int num_obj = Element->Objetlist[IndiceObjet].GetNumero();
     str.Printf(_T("%d"),num_obj);
     Text_NumeroObjet->SetValue(str);
     str = wxString(Element->Objetlist[IndiceObjet].GetName(), wxConvUTF8);
@@ -280,7 +280,7 @@ void ReperagePoint::OnButton_ResetClick(wxCommandEvent& event)
     Text_ValeurY->SetValue(str);
     Text_ValeurZ->SetValue(str);
 
-    Element->show_star=false;
+    Element->SetShowStar(false);
     Element->Refresh();
 }
 
@@ -334,7 +334,7 @@ void ReperagePoint::OnButton_ModifierXClick(wxCommandEvent& event)
         Button_UndoX->Enable();
         xyz_sommet[0] = wxAtof(Text_ValeurX->GetValue());
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     } else Button_UndoX->Disable();
@@ -354,7 +354,7 @@ void ReperagePoint::OnButton_ModifierYClick(wxCommandEvent& event)
         Button_UndoY->Enable();
         xyz_sommet[1] = wxAtof(Text_ValeurY->GetValue());
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     } else Button_UndoY->Disable();
@@ -374,7 +374,7 @@ void ReperagePoint::OnButton_ModifierZClick(wxCommandEvent& event)
         Button_UndoZ->Enable();
         xyz_sommet[2] = wxAtof(Text_ValeurZ->GetValue());
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     } else Button_UndoZ->Disable();
@@ -396,7 +396,7 @@ void ReperagePoint::OnButton_UndoXClick(wxCommandEvent& event)
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
         str.Printf(_T("%f"),Old_X);
         Text_ValeurX->SetValue(str);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     }
@@ -418,7 +418,7 @@ void ReperagePoint::OnButton_UndoYClick(wxCommandEvent& event)
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
         str.Printf(_T("%f"),Old_Y);
         Text_ValeurY->SetValue(str);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     }
@@ -440,7 +440,7 @@ void ReperagePoint::OnButton_UndoZClick(wxCommandEvent& event)
         Element->Objetlist[IndiceObjet].Sommetlist[IndicePoint].setPoint(xyz_sommet);
         str.Printf(_T("%f"),Old_Z);
         Text_ValeurZ->SetValue(str);
-        Element->point_star = xyz_sommet;
+        Element->SetPointStar(xyz_sommet);
         Element->m_gllist   = 0;
         Element->Refresh();
     }
