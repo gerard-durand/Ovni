@@ -1,0 +1,2 @@
+Ces fichiers existent dans msys64\usr\bin et en versions plus récentes.
+Placés ici pour éviter le double/triple emploi !
