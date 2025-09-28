@@ -6,8 +6,8 @@
 //*)
 
 //(*IdInit(Aide_html)
-const long Aide_html::ID_HTMLWINDOW1 = wxNewId();
-const long Aide_html::ID_BUTTON1 = wxNewId();
+const wxWindowID Aide_html::ID_HTMLWINDOW1 = wxNewId();
+const wxWindowID Aide_html::ID_BUTTON1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Aide_html,wxDialog)
@@ -35,9 +35,9 @@ Aide_html::Aide_html(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Quitter"), wxPoint(544,448), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Aide_html::OnButton_OKClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Aide_html::OnClose);
-	Connect(wxEVT_SIZE,(wxObjectEventFunction)&Aide_html::OnResize);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Aide_html::OnButton_OKClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Aide_html::OnClose);
+	Connect(wxEVT_SIZE, (wxObjectEventFunction)&Aide_html::OnResize);
 	//*)
 //	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 	wxSize s;

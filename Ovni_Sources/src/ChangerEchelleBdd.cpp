@@ -6,14 +6,14 @@
 //*)
 
 //(*IdInit(ChangerEchelleBdd)
-const long ChangerEchelleBdd::ID_STATICTEXT1 = wxNewId();
-const long ChangerEchelleBdd::ID_STATICLINE1 = wxNewId();
-const long ChangerEchelleBdd::ID_STATICTEXT2 = wxNewId();
-const long ChangerEchelleBdd::ID_TEXTCTRL1 = wxNewId();
-const long ChangerEchelleBdd::ID_STATICLINE2 = wxNewId();
-const long ChangerEchelleBdd::ID_BUTTON1 = wxNewId();
-const long ChangerEchelleBdd::ID_BUTTON2 = wxNewId();
-const long ChangerEchelleBdd::ID_BUTTON3 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_STATICLINE1 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_STATICLINE2 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_BUTTON1 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_BUTTON2 = wxNewId();
+const wxWindowID ChangerEchelleBdd::ID_BUTTON3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ChangerEchelleBdd,wxDialog)
@@ -47,10 +47,10 @@ ChangerEchelleBdd::ChangerEchelleBdd(wxWindow* parent,wxWindowID id,const wxPoin
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(200,88), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChangerEchelleBdd::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChangerEchelleBdd::OnButton_InverserClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChangerEchelleBdd::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ChangerEchelleBdd::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChangerEchelleBdd::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChangerEchelleBdd::OnButton_InverserClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChangerEchelleBdd::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ChangerEchelleBdd::OnClose);
 	//*)
 //	this->ChangerEchelleBdd_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

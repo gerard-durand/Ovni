@@ -1,0 +1,1 @@
+ATTENTION : la version statique avec 3.2.4 marche bien dans extract.bat (extraction des chaînes dans le source de codeblocks) mais celle dynamique avec 3.3.0 ne créée pas correctement le fichier plugins_xrc2. A REVOIR

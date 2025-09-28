@@ -33,14 +33,14 @@ class ChangerEchelleBdd: public wxDialog
 	protected:
 
 		//(*Identifiers(ChangerEchelleBdd)
-		static const long ID_STATICTEXT1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT2;
-		static const long ID_TEXTCTRL1;
-		static const long ID_STATICLINE2;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_BUTTON3;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_STATICLINE1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_STATICLINE2;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_BUTTON3;
 		//*)
 
 	private:
@@ -51,6 +51,7 @@ class ChangerEchelleBdd: public wxDialog
 		void OnButton_QuitterClick(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		//*)
+
         OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

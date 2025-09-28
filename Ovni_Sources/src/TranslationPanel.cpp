@@ -6,31 +6,31 @@
 //*)
 
 //(*IdInit(TranslationPanel)
-const long TranslationPanel::ID_STATICTEXT1 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL1 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT2 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL2 = wxNewId();
-const long TranslationPanel::ID_BUTTON1 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT3 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL3 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON1 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT4 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL4 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON2 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT5 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL5 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON3 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT6 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL6 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON4 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT7 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL7 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON5 = wxNewId();
-const long TranslationPanel::ID_STATICTEXT8 = wxNewId();
-const long TranslationPanel::ID_TEXTCTRL8 = wxNewId();
-const long TranslationPanel::ID_SPINBUTTON6 = wxNewId();
-const long TranslationPanel::ID_BUTTON2 = wxNewId();
-const long TranslationPanel::ID_BUTTON3 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT1 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT2 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID TranslationPanel::ID_BUTTON1 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT3 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON1 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT4 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON2 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT5 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL5 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON3 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT6 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL6 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON4 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT7 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL7 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON5 = wxNewId();
+const wxWindowID TranslationPanel::ID_STATICTEXT8 = wxNewId();
+const wxWindowID TranslationPanel::ID_TEXTCTRL8 = wxNewId();
+const wxWindowID TranslationPanel::ID_SPINBUTTON6 = wxNewId();
+const wxWindowID TranslationPanel::ID_BUTTON2 = wxNewId();
+const wxWindowID TranslationPanel::ID_BUTTON3 = wxNewId();
 //*)
 
 wxString format_1 = _T("%4.2f");    // Format pour les écritures des multiples du pas grossier
@@ -91,28 +91,28 @@ TranslationPanel::TranslationPanel(wxWindow* parent,wxWindowID id,const wxPoint&
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(232,192), wxSize(104,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasGrossierText);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasFinText);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TranslationPanel::OnButton_ValiderClick);
-	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_XGTextEnter);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeUp);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeDown);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeUp);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeDown);
-	Connect(ID_TEXTCTRL5,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_YGTextEnter);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeUp);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeDown);
-	Connect(ID_SPINBUTTON4,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeUp);
-	Connect(ID_SPINBUTTON4,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeDown);
-	Connect(ID_TEXTCTRL7,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&TranslationPanel::OnTextCtrl_ZGTextEnter);
-	Connect(ID_SPINBUTTON5,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeUp);
-	Connect(ID_SPINBUTTON5,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeDown);
-	Connect(ID_SPINBUTTON6,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZFChangeUp);
-	Connect(ID_SPINBUTTON6,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZFChangeDown);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TranslationPanel::OnButton_OKClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TranslationPanel::OnButton_AnnulerClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&TranslationPanel::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&TranslationPanel::OnClose);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasGrossierText);
+	Connect(ID_TEXTCTRL2, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&TranslationPanel::OnTextCtrl_PasFinText);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&TranslationPanel::OnButton_ValiderClick);
+	Connect(ID_TEXTCTRL3, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&TranslationPanel::OnTextCtrl_XGTextEnter);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeUp);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_XGChangeDown);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeUp);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_XFChangeDown);
+	Connect(ID_TEXTCTRL5, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&TranslationPanel::OnTextCtrl_YGTextEnter);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeUp);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_YGChangeDown);
+	Connect(ID_SPINBUTTON4, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeUp);
+	Connect(ID_SPINBUTTON4, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_YFChangeDown);
+	Connect(ID_TEXTCTRL7, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&TranslationPanel::OnTextCtrl_ZGTextEnter);
+	Connect(ID_SPINBUTTON5, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeUp);
+	Connect(ID_SPINBUTTON5, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZGChangeDown);
+	Connect(ID_SPINBUTTON6, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZFChangeUp);
+	Connect(ID_SPINBUTTON6, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&TranslationPanel::OnSpinButton_ZFChangeDown);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&TranslationPanel::OnButton_OKClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&TranslationPanel::OnButton_AnnulerClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&TranslationPanel::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&TranslationPanel::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

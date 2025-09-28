@@ -88,12 +88,10 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Longueur des axes"), wxDefaultPosition, wxSize(340,16), 0, _T("ID_STATICTEXT2"));
 	FlexGridSizer1->Add(StaticText2, 0, wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 	SpinCtrlDouble_axes = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE1, _T("0,25"), wxDefaultPosition, wxSize(80,21), 0, 0, 1, 0, 0.01, _T("ID_SPINCTRLDOUBLE1"));
-	SpinCtrlDouble_axes->SetValue(_T("0,25"));
 	FlexGridSizer1->Add(SpinCtrlDouble_axes, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Longueur des normales"), wxDefaultPosition, wxSize(260,16), 0, _T("ID_STATICTEXT3"));
 	FlexGridSizer1->Add(StaticText3, 0, wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 	SpinCtrlDouble_norm = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE2, _T("0,05"), wxDefaultPosition, wxSize(80,21), 0, 0, 1, 0, 0.01, _T("ID_SPINCTRLDOUBLE2"));
-	SpinCtrlDouble_norm->SetValue(_T("0,05"));
 	FlexGridSizer1->Add(SpinCtrlDouble_norm, 1, wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1->Add(FlexGridSizer1, 0, wxLEFT|wxRIGHT|wxEXPAND, 1);
 	StaticLine4 = new wxStaticLine(this, ID_STATICLINE4, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE4"));
@@ -102,7 +100,6 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Rayon de la source"), wxDefaultPosition, wxSize(340,16), 0, _T("ID_STATICTEXT4"));
 	BoxSizer4->Add(StaticText4, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL, 5);
 	SpinCtrlDouble_src = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE3, _T("0,03"), wxDefaultPosition, wxSize(80,21), 0, 0, 1, 0, 0.01, _T("ID_SPINCTRLDOUBLE3"));
-	SpinCtrlDouble_src->SetValue(_T("0,03"));
 	BoxSizer4->Add(SpinCtrlDouble_src, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1->Add(BoxSizer4, 0, wxLEFT|wxRIGHT|wxEXPAND, 1);
 	StaticLine5 = new wxStaticLine(this, ID_STATICLINE5, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE5"));
@@ -130,12 +127,10 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticText_Gouraud = new wxStaticText(this, ID_STATICTEXT5, _T("Seuil de comparaison des normales (degrés) :"), wxDefaultPosition, wxSize(300,16), 0, _T("ID_STATICTEXT5"));
 	FlexGridSizer3->Add(StaticText_Gouraud, 0, wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 25);
 	SpinCtrlDouble_SeuilGouraud = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE4, _T("35,0"), wxDefaultPosition, wxSize(80,21), 0, 0, 90, 0, 0.5, _T("ID_SPINCTRLDOUBLE4"));
-	SpinCtrlDouble_SeuilGouraud->SetValue(_T("35,0"));
 	FlexGridSizer3->Add(SpinCtrlDouble_SeuilGouraud, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticText_Gouraud2 = new wxStaticText(this, ID_STATICTEXT6, _T("Coefficient multiplicateur du 2ème angle :"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	FlexGridSizer3->Add(StaticText_Gouraud2, 0, wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 25);
 	SpinCtrlDouble_SeuilGouraud2 = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE5, _T("1,6"), wxDefaultPosition, wxSize(80,21), 0, 0, 3, 0, 0.1, _T("ID_SPINCTRLDOUBLE5"));
-	SpinCtrlDouble_SeuilGouraud2->SetValue(_T("1,6"));
 	FlexGridSizer3->Add(SpinCtrlDouble_SeuilGouraud2, 0, wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1->Add(FlexGridSizer3, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
 	CheckBox_RecNormales_Seuillees = new wxCheckBox(this, ID_CHECKBOX6, _T("Enregistrement dans la Bdd des normales aux sommets seuillées"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX6"));
@@ -159,7 +154,6 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("0 <=> Sans sauvegarde automatique"), wxDefaultPosition, wxSize(340,16), 0, _T("ID_STATICTEXT8"));
 	BoxSizer5->Add(StaticText8, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL, 5);
 	SpinCtrl_PasSvg = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxDefaultPosition, wxSize(80,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_PasSvg->SetValue(_T("0"));
 	SpinCtrl_PasSvg->SetMaxSize(wxSize(78,0));
 	BoxSizer5->Add(SpinCtrl_PasSvg, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1->Add(BoxSizer5, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 5);
@@ -226,7 +220,6 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT10, _T("Nombre de threads OpenMP (0 <=> automatique)"), wxDefaultPosition, wxSize(340,16), 0, _T("ID_STATICTEXT10"));
 	BoxSizer6->Add(StaticText5, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_VERTICAL, 5);
 	SpinCtrl_Threads = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxDefaultPosition, wxSize(80,22), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Threads->SetValue(_T("0"));
 	SpinCtrl_Threads->SetMaxSize(wxSize(78,0));
 	BoxSizer6->Add(SpinCtrl_Threads, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1->Add(BoxSizer6, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 5);

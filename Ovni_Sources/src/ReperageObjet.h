@@ -38,18 +38,18 @@ class ReperageObjet: public wxDialog
 	protected:
 
 		//(*Identifiers(ReperageObjet)
-		static const long ID_STATICTEXT1;
-		static const long ID_TEXTCTRL1;
-		static const long ID_SPINBUTTON1;
-		static const long ID_TEXTCTRL3;
-		static const long ID_TEXTCTRL2;
-		static const long ID_STATICTEXT2;
-		static const long ID_BUTTON1;
-		static const long ID_CHECKBOX1;
-		static const long ID_CHECKBOX2;
-		static const long ID_CHECKBOX3;
-		static const long ID_BUTTON3;
-		static const long ID_BUTTON2;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_SPINBUTTON1;
+		static const wxWindowID ID_TEXTCTRL3;
+		static const wxWindowID ID_TEXTCTRL2;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_CHECKBOX1;
+		static const wxWindowID ID_CHECKBOX2;
+		static const wxWindowID ID_CHECKBOX3;
+		static const wxWindowID ID_BUTTON3;
+		static const wxWindowID ID_BUTTON2;
 		//*)
 
 	private:

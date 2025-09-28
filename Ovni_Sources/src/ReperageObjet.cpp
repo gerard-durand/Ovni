@@ -8,18 +8,18 @@
 #include "utf8.h"
 
 //(*IdInit(ReperageObjet)
-const long ReperageObjet::ID_STATICTEXT1 = wxNewId();
-const long ReperageObjet::ID_TEXTCTRL1 = wxNewId();
-const long ReperageObjet::ID_SPINBUTTON1 = wxNewId();
-const long ReperageObjet::ID_TEXTCTRL3 = wxNewId();
-const long ReperageObjet::ID_TEXTCTRL2 = wxNewId();
-const long ReperageObjet::ID_STATICTEXT2 = wxNewId();
-const long ReperageObjet::ID_BUTTON1 = wxNewId();
-const long ReperageObjet::ID_CHECKBOX1 = wxNewId();
-const long ReperageObjet::ID_CHECKBOX2 = wxNewId();
-const long ReperageObjet::ID_CHECKBOX3 = wxNewId();
-const long ReperageObjet::ID_BUTTON3 = wxNewId();
-const long ReperageObjet::ID_BUTTON2 = wxNewId();
+const wxWindowID ReperageObjet::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ReperageObjet::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ReperageObjet::ID_SPINBUTTON1 = wxNewId();
+const wxWindowID ReperageObjet::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID ReperageObjet::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID ReperageObjet::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ReperageObjet::ID_BUTTON1 = wxNewId();
+const wxWindowID ReperageObjet::ID_CHECKBOX1 = wxNewId();
+const wxWindowID ReperageObjet::ID_CHECKBOX2 = wxNewId();
+const wxWindowID ReperageObjet::ID_CHECKBOX3 = wxNewId();
+const wxWindowID ReperageObjet::ID_BUTTON3 = wxNewId();
+const wxWindowID ReperageObjet::ID_BUTTON2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ReperageObjet,wxDialog)
@@ -57,14 +57,14 @@ ReperageObjet::ReperageObjet(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	Button_InverserNormales = new wxButton(this, ID_BUTTON2, _T("Inverser les normales"), wxPoint(8,128), wxSize(136,26), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_InverserNormales->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&ReperageObjet::OnSpinButton_indiceChange);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnButton_OKClick);
-	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnCheckBox_masquerClick);
-	Connect(ID_CHECKBOX2,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnCheckBox_supprimerClick);
-	Connect(ID_CHECKBOX3,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnCheckBox_renommerClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnButton_renommerClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageObjet::OnButton_InverserNormalesClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ReperageObjet::OnClose);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&ReperageObjet::OnSpinButton_indiceChange);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnButton_OKClick);
+	Connect(ID_CHECKBOX1, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnCheckBox_masquerClick);
+	Connect(ID_CHECKBOX2, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnCheckBox_supprimerClick);
+	Connect(ID_CHECKBOX3, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnCheckBox_renommerClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnButton_renommerClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageObjet::OnButton_InverserNormalesClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ReperageObjet::OnClose);
 	//*)
 //	this->Obj_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

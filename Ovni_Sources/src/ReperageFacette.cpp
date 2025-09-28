@@ -7,30 +7,30 @@
 //*)
 
 //(*IdInit(ReperageFacette)
-const long ReperageFacette::ID_STATICTEXT1 = wxNewId();
-const long ReperageFacette::ID_STATICTEXT2 = wxNewId();
-const long ReperageFacette::ID_SPINCTRL1 = wxNewId();
-const long ReperageFacette::ID_SPINCTRL2 = wxNewId();
-const long ReperageFacette::ID_TEXTCTRL1 = wxNewId();
-const long ReperageFacette::ID_STATICTEXT3 = wxNewId();
-const long ReperageFacette::ID_TEXTCTRL2 = wxNewId();
-const long ReperageFacette::ID_STATICTEXT4 = wxNewId();
-const long ReperageFacette::ID_TEXTCTRL3 = wxNewId();
-const long ReperageFacette::ID_CHECKBOX4 = wxNewId();
-const long ReperageFacette::ID_SPINCTRL3 = wxNewId();
-const long ReperageFacette::ID_TEXTCTRL4 = wxNewId();
-const long ReperageFacette::ID_CHECKBOX1 = wxNewId();
-const long ReperageFacette::ID_CHECKBOX2 = wxNewId();
-const long ReperageFacette::ID_BUTTON1 = wxNewId();
-const long ReperageFacette::ID_BUTTON3 = wxNewId();
-const long ReperageFacette::ID_BUTTON4 = wxNewId();
-const long ReperageFacette::ID_BUTTON5 = wxNewId();
-const long ReperageFacette::ID_BUTTON6 = wxNewId();
-const long ReperageFacette::ID_BUTTON7 = wxNewId();
-const long ReperageFacette::ID_CHECKBOX3 = wxNewId();
-const long ReperageFacette::ID_BUTTON8 = wxNewId();
-const long ReperageFacette::ID_BUTTON9 = wxNewId();
-const long ReperageFacette::ID_STATICTEXT5 = wxNewId();
+const wxWindowID ReperageFacette::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ReperageFacette::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ReperageFacette::ID_SPINCTRL1 = wxNewId();
+const wxWindowID ReperageFacette::ID_SPINCTRL2 = wxNewId();
+const wxWindowID ReperageFacette::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ReperageFacette::ID_STATICTEXT3 = wxNewId();
+const wxWindowID ReperageFacette::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID ReperageFacette::ID_STATICTEXT4 = wxNewId();
+const wxWindowID ReperageFacette::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID ReperageFacette::ID_CHECKBOX4 = wxNewId();
+const wxWindowID ReperageFacette::ID_SPINCTRL3 = wxNewId();
+const wxWindowID ReperageFacette::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID ReperageFacette::ID_CHECKBOX1 = wxNewId();
+const wxWindowID ReperageFacette::ID_CHECKBOX2 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON1 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON3 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON4 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON5 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON6 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON7 = wxNewId();
+const wxWindowID ReperageFacette::ID_CHECKBOX3 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON8 = wxNewId();
+const wxWindowID ReperageFacette::ID_BUTTON9 = wxNewId();
+const wxWindowID ReperageFacette::ID_STATICTEXT5 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ReperageFacette,wxDialog)
@@ -47,9 +47,7 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Indice de la facette :"), wxPoint(8,59), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Indice/Numéro de l\'objet :"), wxPoint(8,11), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	SpinCtrl_IndiceFacette = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(128,56), wxSize(98,21), 0, -2, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_IndiceFacette->SetValue(_T("0"));
 	SpinCtrl_IndiceObjet = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(160,8), wxSize(80,21), 0, -1, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_IndiceObjet->SetValue(_T("0"));
 	Text_NumeroObjet = new wxTextCtrl(this, ID_TEXTCTRL1, _T("nnn"), wxPoint(240,8), wxSize(64,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Text_NumeroObjet->Disable();
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Nom :"), wxPoint(8,35), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
@@ -61,7 +59,6 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	CheckBox_VisuSommets = new wxCheckBox(this, ID_CHECKBOX4, _T("Visualisation des sommets de la facette"), wxPoint(24,116), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX4"));
 	CheckBox_VisuSommets->SetValue(false);
 	SpinCtrl_IndiceSommet = new wxSpinCtrl(this, ID_SPINCTRL3, _T("0"), wxPoint(40,136), wxSize(122,21), 0, -1, 100, 0, _T("ID_SPINCTRL3"));
-	SpinCtrl_IndiceSommet->SetValue(_T("0"));
 	SpinCtrl_IndiceSommet->Disable();
 	TextCtrl_NumeroSommet = new wxTextCtrl(this, ID_TEXTCTRL4, wxEmptyString, wxPoint(176,136), wxSize(128,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	TextCtrl_NumeroSommet->Disable();
@@ -94,21 +91,21 @@ ReperageFacette::ReperageFacette(wxWindow* parent,wxWindowID id,const wxPoint& p
 	wxFont StaticText_WarningFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD,false,_T("Arial"),wxFONTENCODING_DEFAULT);
 	StaticText_Warning->SetFont(StaticText_WarningFont);
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceFacetteChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceObjetChange);
-	Connect(ID_CHECKBOX4,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuSommetsClick);
-	Connect(ID_SPINCTRL3,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceSommetChange);
-	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormaleClick);
-	Connect(ID_CHECKBOX2,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormales_SommetsClick);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_InvNormaleClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_DelFacetteClick);
-	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_UndoDelClick);
-	Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_MasquerClick);
-	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_PermuterClick);
-	Connect(ID_BUTTON7,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_CentrerRotationClick);
-	Connect(ID_BUTTON8,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_ResetClick);
-	Connect(ID_BUTTON9,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageFacette::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ReperageFacette::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceFacetteChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceObjetChange);
+	Connect(ID_CHECKBOX4, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuSommetsClick);
+	Connect(ID_SPINCTRL3, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&ReperageFacette::OnSpinCtrl_IndiceSommetChange);
+	Connect(ID_CHECKBOX1, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormaleClick);
+	Connect(ID_CHECKBOX2, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnCheckBox_VisuNormales_SommetsClick);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_InvNormaleClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_DelFacetteClick);
+	Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_UndoDelClick);
+	Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_MasquerClick);
+	Connect(ID_BUTTON6, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_PermuterClick);
+	Connect(ID_BUTTON7, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_CentrerRotationClick);
+	Connect(ID_BUTTON8, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_ResetClick);
+	Connect(ID_BUTTON9, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageFacette::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ReperageFacette::OnClose);
 	//*)
 //	this->Facette_Parent=parent;
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);

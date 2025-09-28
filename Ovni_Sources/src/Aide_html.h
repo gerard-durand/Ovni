@@ -24,8 +24,8 @@ class Aide_html: public wxDialog
 	protected:
 
 		//(*Identifiers(Aide_html)
-		static const long ID_HTMLWINDOW1;
-		static const long ID_BUTTON1;
+		static const wxWindowID ID_HTMLWINDOW1;
+		static const wxWindowID ID_BUTTON1;
 		//*)
 
 	private:

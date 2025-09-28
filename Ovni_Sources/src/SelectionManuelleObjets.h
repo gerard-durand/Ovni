@@ -26,10 +26,10 @@ class SelectionManuelleObjets: public wxDialog
 	protected:
 
 		//(*Identifiers(SelectionManuelleObjets)
-		static const long ID_CHECKLISTBOX1;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_BUTTON3;
+		static const wxWindowID ID_CHECKLISTBOX1;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_BUTTON3;
 		//*)
 
 	private:
@@ -41,6 +41,7 @@ class SelectionManuelleObjets: public wxDialog
 		void OnButton_QuitterClick(wxCommandEvent& event);
 		void OnCheckListBox1Toggled(wxCommandEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

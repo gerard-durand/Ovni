@@ -6,10 +6,10 @@
 //*)
 
 //(*IdInit(SelectionManuelleObjets)
-const long SelectionManuelleObjets::ID_CHECKLISTBOX1 = wxNewId();
-const long SelectionManuelleObjets::ID_BUTTON1 = wxNewId();
-const long SelectionManuelleObjets::ID_BUTTON2 = wxNewId();
-const long SelectionManuelleObjets::ID_BUTTON3 = wxNewId();
+const wxWindowID SelectionManuelleObjets::ID_CHECKLISTBOX1 = wxNewId();
+const wxWindowID SelectionManuelleObjets::ID_BUTTON1 = wxNewId();
+const wxWindowID SelectionManuelleObjets::ID_BUTTON2 = wxNewId();
+const wxWindowID SelectionManuelleObjets::ID_BUTTON3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(SelectionManuelleObjets,wxDialog)
@@ -32,11 +32,11 @@ SelectionManuelleObjets::SelectionManuelleObjets(wxWindow* parent,wxWindowID id,
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(160,200), wxSize(64,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_CHECKLISTBOX1,wxEVT_COMMAND_CHECKLISTBOX_TOGGLED,(wxObjectEventFunction)&SelectionManuelleObjets::OnCheckListBox1Toggled);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleObjets::OnButton_AucunClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleObjets::OnButton_TousClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleObjets::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&SelectionManuelleObjets::OnClose);
+	Connect(ID_CHECKLISTBOX1, wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, (wxObjectEventFunction)&SelectionManuelleObjets::OnCheckListBox1Toggled);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleObjets::OnButton_AucunClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleObjets::OnButton_TousClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleObjets::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&SelectionManuelleObjets::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

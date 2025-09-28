@@ -6,29 +6,29 @@
 //*)
 
 //(*IdInit(RotationPanel)
-const long RotationPanel::ID_STATICTEXT1 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL1 = wxNewId();
-const long RotationPanel::ID_BUTTON1 = wxNewId();
-const long RotationPanel::ID_STATICBOX1 = wxNewId();
-const long RotationPanel::ID_RADIOBOX1 = wxNewId();
-const long RotationPanel::ID_STATICTEXT2 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL2 = wxNewId();
-const long RotationPanel::ID_STATICTEXT3 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL3 = wxNewId();
-const long RotationPanel::ID_STATICTEXT4 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL4 = wxNewId();
-const long RotationPanel::ID_STATICTEXT5 = wxNewId();
-const long RotationPanel::ID_STATICTEXT6 = wxNewId();
-const long RotationPanel::ID_STATICTEXT7 = wxNewId();
-const long RotationPanel::ID_BUTTON2 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL5 = wxNewId();
-const long RotationPanel::ID_SPINBUTTON1 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL6 = wxNewId();
-const long RotationPanel::ID_SPINBUTTON2 = wxNewId();
-const long RotationPanel::ID_TEXTCTRL7 = wxNewId();
-const long RotationPanel::ID_SPINBUTTON3 = wxNewId();
-const long RotationPanel::ID_BUTTON3 = wxNewId();
-const long RotationPanel::ID_BUTTON4 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT1 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID RotationPanel::ID_BUTTON1 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICBOX1 = wxNewId();
+const wxWindowID RotationPanel::ID_RADIOBOX1 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT2 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT3 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT4 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT5 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT6 = wxNewId();
+const wxWindowID RotationPanel::ID_STATICTEXT7 = wxNewId();
+const wxWindowID RotationPanel::ID_BUTTON2 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL5 = wxNewId();
+const wxWindowID RotationPanel::ID_SPINBUTTON1 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL6 = wxNewId();
+const wxWindowID RotationPanel::ID_SPINBUTTON2 = wxNewId();
+const wxWindowID RotationPanel::ID_TEXTCTRL7 = wxNewId();
+const wxWindowID RotationPanel::ID_SPINBUTTON3 = wxNewId();
+const wxWindowID RotationPanel::ID_BUTTON3 = wxNewId();
+const wxWindowID RotationPanel::ID_BUTTON4 = wxNewId();
 //*)
 
 wxString format= _T("%4.1f");
@@ -43,69 +43,69 @@ RotationPanel::RotationPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 {
 	//(*Initialize(RotationPanel)
 	Create(parent, wxID_ANY, _T("Rotation"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("wxID_ANY"));
-	SetClientSize(wxSize(360,371));
+	SetClientSize(wxSize(392,342));
 	Move(wxPoint(30,30));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Pas angulaire en degrés"), wxPoint(8,12), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	TextCtrl_PasAngulaire = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(152,8), wxDefaultSize, wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-	Button_ValiderPas = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(272,8), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	TextCtrl_PasAngulaire = new wxTextCtrl(this, ID_TEXTCTRL1, _T("1.0"), wxPoint(176,8), wxSize(121,28), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	Button_ValiderPas = new wxButton(this, ID_BUTTON1, _T("Valider"), wxPoint(304,8), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_ValiderPas->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _T("Centre de Rotation"), wxPoint(2,40), wxSize(356,176), 0, _T("ID_STATICBOX1"));
+	StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _T("Centre de Rotation"), wxPoint(0,40), wxSize(392,168), 0, _T("ID_STATICBOX1"));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
 	    _T("Barycentre de la sélection"),
 	    _T("Boîte englobante de la sélection"),
 	    _T("Point particulier à entrer (et valider) ci-dessous")
 	};
-	RadioBox_Centre = new wxRadioBox(this, ID_RADIOBOX1, wxEmptyString, wxPoint(32,56), wxSize(296,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("X :"), wxPoint(8,156), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(32,152), wxSize(72,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+	RadioBox_Centre = new wxRadioBox(this, ID_RADIOBOX1, wxEmptyString, wxPoint(16,56), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("X :"), wxPoint(16,152), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(40,152), wxSize(80,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	TextCtrl_X->Disable();
-	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Y :"), wxPoint(128,156), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	TextCtrl_Y = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(152,152), wxSize(72,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Y :"), wxPoint(136,152), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+	TextCtrl_Y = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(168,152), wxSize(80,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL3"));
 	TextCtrl_Y->Disable();
-	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Z :"), wxPoint(248,156), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(272,152), wxSize(80,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Z :"), wxPoint(272,150), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(296,150), wxSize(80,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	TextCtrl_Z->Disable();
-	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Angle de rotation en X :"), wxPoint(40,228), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Angle de rotation en Y :"), wxPoint(40,260), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
-	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Angle de rotation en Z :"), wxPoint(40,292), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
-	Button_ValiderPoint = new wxButton(this, ID_BUTTON2, _T("Valider"), wxPoint(104,184), wxSize(152,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Angle de rotation en X :"), wxPoint(56,216), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Angle de rotation en Y :"), wxPoint(56,248), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Angle de rotation en Z :"), wxPoint(56,280), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
+	Button_ValiderPoint = new wxButton(this, ID_BUTTON2, _T("Valider"), wxPoint(120,176), wxSize(152,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_ValiderPoint->Disable();
 	Button_ValiderPoint->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	TextCtrl_AngleX = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0"), wxPoint(200,224), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
-	SpinButton_X = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(288,224), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
+	TextCtrl_AngleX = new wxTextCtrl(this, ID_TEXTCTRL5, _T("0"), wxPoint(232,216), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL5"));
+	SpinButton_X = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(320,216), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton_X->SetRange(-360, 360);
-	TextCtrl_AngleY = new wxTextCtrl(this, ID_TEXTCTRL6, _T("0"), wxPoint(200,256), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL6"));
-	SpinButton_Y = new wxSpinButton(this, ID_SPINBUTTON2, wxPoint(288,256), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON2"));
+	TextCtrl_AngleY = new wxTextCtrl(this, ID_TEXTCTRL6, _T("0"), wxPoint(232,248), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL6"));
+	SpinButton_Y = new wxSpinButton(this, ID_SPINBUTTON2, wxPoint(320,248), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON2"));
 	SpinButton_Y->SetRange(-360, 360);
-	TextCtrl_AngleZ = new wxTextCtrl(this, ID_TEXTCTRL7, _T("0"), wxPoint(200,288), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-	SpinButton_Z = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(288,288), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
+	TextCtrl_AngleZ = new wxTextCtrl(this, ID_TEXTCTRL7, _T("0"), wxPoint(232,280), wxSize(88,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+	SpinButton_Z = new wxSpinButton(this, ID_SPINBUTTON3, wxPoint(320,280), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON3"));
 	SpinButton_Z->SetRange(-360, 360);
-	Button_Appliquer = new wxButton(this, ID_BUTTON3, _T("Appliquer"), wxPoint(40,336), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button_Appliquer = new wxButton(this, ID_BUTTON3, _T("Appliquer"), wxPoint(40,312), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Appliquer->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	Button_Annuler = new wxButton(this, ID_BUTTON4, _T("Annuler"), wxPoint(200,336), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+	Button_Annuler = new wxButton(this, ID_BUTTON4, _T("Annuler"), wxPoint(216,312), wxSize(120,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_PasAngulaireText);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&RotationPanel::OnButton_ValiderPasClick);
-	Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&RotationPanel::OnRadioBox_CentreSelect);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_XText);
-	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_YText);
-	Connect(ID_TEXTCTRL4,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_ZText);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&RotationPanel::OnButton_ValiderPointClick);
-	Connect(ID_TEXTCTRL5,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleXText);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&RotationPanel::OnSpinButton_XChangeUp);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&RotationPanel::OnSpinButton_XChangeDown);
-	Connect(ID_TEXTCTRL6,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleYText);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&RotationPanel::OnSpinButton_YChangeUp);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&RotationPanel::OnSpinButton_YChangeDown);
-	Connect(ID_TEXTCTRL7,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleZText);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&RotationPanel::OnSpinButton_ZChangeUp);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&RotationPanel::OnSpinButton_ZChangeDown);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&RotationPanel::OnButton_AppliquerClick);
-	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&RotationPanel::OnButton_AnnulerClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&RotationPanel::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&RotationPanel::OnClose);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_PasAngulaireText);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&RotationPanel::OnButton_ValiderPasClick);
+	Connect(ID_RADIOBOX1, wxEVT_COMMAND_RADIOBOX_SELECTED, (wxObjectEventFunction)&RotationPanel::OnRadioBox_CentreSelect);
+	Connect(ID_TEXTCTRL2, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_XText);
+	Connect(ID_TEXTCTRL3, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_YText);
+	Connect(ID_TEXTCTRL4, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_ZText);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&RotationPanel::OnButton_ValiderPointClick);
+	Connect(ID_TEXTCTRL5, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleXText);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&RotationPanel::OnSpinButton_XChangeUp);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&RotationPanel::OnSpinButton_XChangeDown);
+	Connect(ID_TEXTCTRL6, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleYText);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&RotationPanel::OnSpinButton_YChangeUp);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&RotationPanel::OnSpinButton_YChangeDown);
+	Connect(ID_TEXTCTRL7, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&RotationPanel::OnTextCtrl_AngleZText);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&RotationPanel::OnSpinButton_ZChangeUp);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&RotationPanel::OnSpinButton_ZChangeDown);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&RotationPanel::OnButton_AppliquerClick);
+	Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&RotationPanel::OnButton_AnnulerClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&RotationPanel::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&RotationPanel::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

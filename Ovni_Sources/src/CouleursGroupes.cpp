@@ -36,7 +36,6 @@ CouleursGroupes::CouleursGroupes(wxWindow* parent,wxWindowID id,const wxPoint& p
 	StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(0,24), wxSize(368,1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Numéro de groupe :"), wxPoint(48,32), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	SpinCtrl_Groupes = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(224,32), wxSize(90,23), 0, -1, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupes->SetValue(_T("0"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Numéro de matériau :"), wxPoint(48,64), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	TextCtrl_Materiau = new wxTextCtrl(this, ID_TEXTCTRL1, _T("Aucun"), wxPoint(224,64), wxSize(88,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	TextCtrl_Materiau->Disable();
