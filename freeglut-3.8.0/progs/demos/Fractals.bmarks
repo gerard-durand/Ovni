@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<BrowseTracker_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="Fractals\fractals.c" open="1" top="0" tabpos="1">
+		<Cursor position="4439" topLine="166" />
+		<BrowseMarks positions="" />
+	</File>
+</BrowseTracker_layout_file>

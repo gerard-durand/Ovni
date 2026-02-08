@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1364830851 source:d:\users\gerard\documents\programmation\freeglut\freeglut-3.2.1\progs\demos\lorenz\lorenz.c
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<string.h>
+	<math.h>
+	<GL/freeglut.h>
+	<crtdbg.h>
+
+1066736514 d:\users\gerard\documents\programmation\freeglut\freeglut-3.2.1\include\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1453322919 d:\users\gerard\documents\programmation\freeglut\freeglut-3.2.1\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1522639010 d:\users\gerard\documents\programmation\freeglut\freeglut-3.2.1\include\gl\freeglut_ext.h
+	<stdarg.h>
+	"freeglut_ucall.h"
+
+1522096351 d:\users\gerard\documents\programmation\freeglut\freeglut-3.2.1\include\gl\freeglut_ucall.h
+	<stdarg.h>
+	<stdlib.h>
+

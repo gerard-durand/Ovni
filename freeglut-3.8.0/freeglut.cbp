@@ -1,0 +1,2548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="freeglut"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/libfreeglut.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DFREEGLUT_EXPORTS"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 freeglut"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/libfreeglut.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DFREEGLUT_EXPORTS"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 freeglut/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/lib/libfreeglut_static.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 freeglut_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="freeglut_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/lib/libfreeglut_static.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 freeglut_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/CallbackMaker.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 CallbackMaker"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/CallbackMaker.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 CallbackMaker/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/CallbackMaker_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 CallbackMaker_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CallbackMaker_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/CallbackMaker_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 CallbackMaker_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_random.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_random"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_random.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_random/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_random_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_random_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Fractals_random_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Fractals_random_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Fractals_random_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Lorenz.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Lorenz"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Lorenz.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Lorenz/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Lorenz_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Lorenz_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lorenz_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/Lorenz_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 Lorenz_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="One">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/One.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 One"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="One/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/One.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 One/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="One_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/One_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 One_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="One_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/One_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 One_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="resizer">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/resizer.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 resizer"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="resizer/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/resizer.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 resizer/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="resizer_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/resizer_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 resizer_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="resizer_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/resizer_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 resizer_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/multi-touch.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 multi-touch"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/multi-touch.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 multi-touch/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/multi-touch_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 multi-touch_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="multi-touch_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/multi-touch_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 multi-touch_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="shapes">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/shapes.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 shapes"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="shapes/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/shapes.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 shapes/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="shapes_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/shapes_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 shapes_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="shapes_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/shapes_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 shapes_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/smooth_opengl3.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 smooth_opengl3"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/smooth_opengl3.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 smooth_opengl3/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/smooth_opengl3_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 smooth_opengl3_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="smooth_opengl3_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/smooth_opengl3_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 smooth_opengl3_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/spaceball.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 spaceball"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/spaceball.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 spaceball/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/spaceball_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 spaceball_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spaceball_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/spaceball_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 spaceball_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="joystick">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/joystick.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 joystick"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="joystick/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/joystick.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 joystick/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="joystick_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/joystick_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 joystick_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="joystick_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/joystick_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 joystick_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subwin">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/subwin.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 subwin"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subwin/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/subwin.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 subwin/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subwin_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/subwin_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 subwin_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subwin_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/subwin_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 subwin_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_callback.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_callback"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_callback.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_callback/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_callback_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_callback_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer_callback_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/timer_callback_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 timer_callback_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/keyboard.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 keyboard"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/keyboard.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 keyboard/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/keyboard_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 keyboard_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="keyboard_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/keyboard_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 keyboard_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/indexed_color.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 indexed_color"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/indexed_color.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 indexed_color/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/indexed_color_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 indexed_color_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="indexed_color_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/indexed_color_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 indexed_color_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="3dview">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/3dview.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 3dview"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="3dview/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/3dview.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 3dview/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="3dview_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/3dview_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 3dview_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="3dview_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/3dview_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 3dview_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="accum">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/accum.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 accum"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="accum/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/accum.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 accum/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="accum_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/accum_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 accum_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="accum_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/accum_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 accum_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="windows">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/windows.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 windows"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="windows/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/windows.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 windows/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="windows_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/windows_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 windows_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="windows_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/windows_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 windows_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="vsync">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/vsync.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 vsync"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="vsync/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/vsync.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 vsync/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="vsync_static">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/vsync_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 vsync_static"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="vsync_static/fast">
+				<Option output="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin/vsync_static.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add option="-D_WIN32_WINNT=0x0601"/>
+					<Add option="-DWINVER=0x0601"/>
+					<Add option="-DHAVE_CONFIG_H"/>
+					<Add option="-DFREEGLUT_STATIC"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include"/>
+					<Add directory="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 vsync_static/fast"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW64/bin/mingw32-make.exe -f &quot;C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/freeglut.rc">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include/GL/freeglut.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include/GL/freeglut_ext.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include/GL/freeglut_std.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/include/GL/freeglut_ucall.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/3dview/3dview.c">
+			<Option target="3dview"/>
+			<Option target="3dview_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/CallbackMaker/CallbackMaker.c">
+			<Option target="CallbackMaker"/>
+			<Option target="CallbackMaker_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/Fractals/fractals.c">
+			<Option target="Fractals"/>
+			<Option target="Fractals_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/Fractals_random/fractals_random.c">
+			<Option target="Fractals_random"/>
+			<Option target="Fractals_random_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/Lorenz/lorenz.c">
+			<Option target="Lorenz"/>
+			<Option target="Lorenz_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/One/one.c">
+			<Option target="One"/>
+			<Option target="One_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/One/one.rc">
+			<Option target="One"/>
+			<Option target="One_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/accum/accum.c">
+			<Option target="accum"/>
+			<Option target="accum_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/indexed_color/idxcol.c">
+			<Option target="indexed_color"/>
+			<Option target="indexed_color_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/joystick/joystick.c">
+			<Option target="joystick"/>
+			<Option target="joystick_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/keyboard/keyboard.c">
+			<Option target="keyboard"/>
+			<Option target="keyboard_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/multi-touch/multi-touch.c">
+			<Option target="multi-touch"/>
+			<Option target="multi-touch_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/resizer/resizer.c">
+			<Option target="resizer"/>
+			<Option target="resizer_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/shapes/glmatrix.c">
+			<Option target="shapes"/>
+			<Option target="shapes_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/shapes/glmatrix.h">
+			<Option target="shapes"/>
+			<Option target="shapes_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/shapes/shapes.c">
+			<Option target="shapes"/>
+			<Option target="shapes_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/smooth_opengl3/smooth_opengl3.c">
+			<Option target="smooth_opengl3"/>
+			<Option target="smooth_opengl3_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/spaceball/spaceball.c">
+			<Option target="spaceball"/>
+			<Option target="spaceball_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/spaceball/vmath.c">
+			<Option target="spaceball"/>
+			<Option target="spaceball_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/spaceball/vmath.h">
+			<Option target="spaceball"/>
+			<Option target="spaceball_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/subwin/subwin.c">
+			<Option target="subwin"/>
+			<Option target="subwin_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/timer/timer.c">
+			<Option target="timer"/>
+			<Option target="timer_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/timer_callback/timer.c">
+			<Option target="timer_callback"/>
+			<Option target="timer_callback_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/vsync/vsync.c">
+			<Option target="vsync"/>
+			<Option target="vsync_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/progs/demos/windows/windows.c">
+			<Option target="windows"/>
+			<Option target="windows_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_callback_macros.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_callbacks.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_cursor.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_display.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_ext.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_font.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_font_data.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_gamemode.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_geometry.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_gl2.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_gl2.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_init.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_init.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_input_devices.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_internal.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_joystick.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_main.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_menu.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_misc.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_overlay.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_spaceball.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_state.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_stroke_mono_roman.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_stroke_roman.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_structure.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_teapot.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_teapot_data.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_videoresize.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_window.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_cmap_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_cursor_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_display_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_ext_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_gamemode_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_init_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_input_devices_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_internal_mswin.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_joystick_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_main_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_menu_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_spaceball_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_state_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_structure_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/mswin/fg_window_mswin.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/util/xparsegeometry_repl.c">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/util/xparsegeometry_repl.h">
+			<Option target="freeglut"/>
+			<Option target="freeglut_static"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/src/fg_version.h.in">
+			<Option virtualFolder="CMake Files\src\"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/cmake/FreeGLUTConfig.cmake.in">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/cmake/config.h.in">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/cmake/freeglut.pc.in">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/cmake/freeglut.rc.in">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

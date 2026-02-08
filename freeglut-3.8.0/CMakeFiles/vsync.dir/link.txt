@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\vsync.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\vsync.dir/objects.a @CMakeFiles\vsync.dir\objects1.rsp
+C:\MinGW64\bin\cc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\vsync.dir/objects.a -Wl,--no-whole-archive -o bin\vsync.exe -Wl,--out-implib,lib\libvsync.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\vsync.dir\linkLibs.rsp

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<BrowseTracker_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="spaceball\vmath.c" open="1" top="0" tabpos="2">
+		<Cursor position="0" topLine="0" />
+		<BrowseMarks positions="" />
+	</File>
+	<File name="spaceball\vmath.inl" open="1" top="0" tabpos="4">
+		<Cursor position="558" topLine="5" />
+		<BrowseMarks positions="" />
+	</File>
+	<File name="spaceball\spaceball.c" open="1" top="1" tabpos="1">
+		<Cursor position="1223" topLine="0" />
+		<BrowseMarks positions="" />
+	</File>
+	<File name="spaceball\vmath.h" open="1" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
+		<BrowseMarks positions="" />
+	</File>
+</BrowseTracker_layout_file>

@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\accum.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\accum.dir/objects.a @CMakeFiles\accum.dir\objects1.rsp
+C:\MinGW64\bin\cc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\accum.dir/objects.a -Wl,--no-whole-archive -o bin\accum.exe -Wl,--out-implib,lib\libaccum.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\accum.dir\linkLibs.rsp

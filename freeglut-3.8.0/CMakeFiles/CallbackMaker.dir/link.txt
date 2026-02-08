@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\CallbackMaker.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\CallbackMaker.dir/objects.a @CMakeFiles\CallbackMaker.dir\objects1.rsp
+C:\MinGW64\bin\cc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\CallbackMaker.dir/objects.a -Wl,--no-whole-archive -o bin\CallbackMaker.exe -Wl,--out-implib,lib\libCallbackMaker.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\CallbackMaker.dir\linkLibs.rsp

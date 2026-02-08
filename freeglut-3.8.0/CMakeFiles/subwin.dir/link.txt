@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\subwin.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\subwin.dir/objects.a @CMakeFiles\subwin.dir\objects1.rsp
+C:\MinGW64\bin\cc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\subwin.dir/objects.a -Wl,--no-whole-archive -o bin\subwin.exe -Wl,--out-implib,lib\libsubwin.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\subwin.dir\linkLibs.rsp

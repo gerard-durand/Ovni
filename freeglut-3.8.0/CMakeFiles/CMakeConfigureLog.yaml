@@ -1,0 +1,3124 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    message: |
+      The system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeMinGWFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "mingw32-make.exe"
+    candidate_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/MinGW64/bin/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+      - "/REGISTRY-NOTFOUND/bin/"
+      - "c:/MinGW/bin/"
+      - "/MinGW/bin/"
+      - "/REGISTRY-NOTFOUND/MinGW/bin/"
+    searched_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/mingw32-make.exe.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/mingw32-make.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/mingw32-make.exe.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/mingw32-make.exe"
+      - "C:/MinGW64/bin/mingw32-make.exe.com"
+    found: "C:/MinGW64/bin/mingw32-make.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:63 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "C compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: false
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "cc"
+      - "gcc"
+      - "cl"
+      - "bcc"
+      - "xlc"
+      - "icx"
+      - "clang"
+    candidate_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/MinGW64/bin/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cl.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cl.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/cl"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/bcc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/bcc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/bcc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/xlc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/xlc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/xlc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/icx.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/icx.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/icx"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/clang.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/clang.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/clang"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cl.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cl.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/cl"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/bcc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/bcc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/bcc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/xlc.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/xlc.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/xlc"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/icx.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/icx.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/icx"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/clang.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/clang.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/clang"
+      - "C:/MinGW64/bin/cc.com"
+    found: "C:/MinGW64/bin/cc.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/MinGW64/bin/cc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/4.2.3/CompilerIdC/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/ar.com"
+    found: "C:/MinGW64/bin/ar.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/ranlib.com"
+    found: "C:/MinGW64/bin/ranlib.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/strip.com"
+    found: "C:/MinGW64/bin/strip.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/ld.com"
+    found: "C:/MinGW64/bin/ld.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/nm.com"
+    found: "C:/MinGW64/bin/nm.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/objdump.com"
+    found: "C:/MinGW64/bin/objdump.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/objcopy.com"
+    found: "C:/MinGW64/bin/objcopy.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/readelf.com"
+    found: "C:/MinGW64/bin/readelf.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/dlltool.com"
+    found: "C:/MinGW64/bin/dlltool.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/addr2line.com"
+    found: "C:/MinGW64/bin/addr2line.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/tapi.com"
+      - "C:/MinGW64/bin/tapi.exe"
+      - "C:/MinGW64/bin/tapi"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/tapi.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/tapi.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/tapi"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/tapi.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/tapi.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/tapi"
+      - "C:/msys64/tapi.com"
+      - "C:/msys64/tapi.exe"
+      - "C:/msys64/tapi"
+      - "C:/msys64/usr/bin/tapi.com"
+      - "C:/msys64/usr/bin/tapi.exe"
+      - "C:/msys64/usr/bin/tapi"
+      - "C:/Utilitaires_Msys-Unix/bin/tapi.com"
+      - "C:/Utilitaires_Msys-Unix/bin/tapi.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/tapi"
+      - "C:/Windows/tapi.com"
+      - "C:/Windows/tapi.exe"
+      - "C:/Windows/tapi"
+      - "C:/Windows/System32/tapi.com"
+      - "C:/Windows/System32/tapi.exe"
+      - "C:/Windows/System32/tapi"
+      - "C:/Windows/System32/wbem/tapi.com"
+      - "C:/Windows/System32/wbem/tapi.exe"
+      - "C:/Windows/System32/wbem/tapi"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi"
+      - "C:/Windows/System32/OpenSSH/tapi.com"
+      - "C:/Windows/System32/OpenSSH/tapi.exe"
+      - "C:/Windows/System32/OpenSSH/tapi"
+      - "C:/Program Files/dotnet/tapi.com"
+      - "C:/Program Files/dotnet/tapi.exe"
+      - "C:/Program Files/dotnet/tapi"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/tapi.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/tapi.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/tapi"
+      - "C:/Program Files/SlikSvn/bin/tapi.com"
+      - "C:/Program Files/SlikSvn/bin/tapi.exe"
+      - "C:/Program Files/SlikSvn/bin/tapi"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/tapi.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/tapi.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/tapi"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/tapi.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/tapi.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/tapi"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/tapi.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/tapi.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/tapi"
+      - "C:/Program Files/doxygen/bin/tapi.com"
+      - "C:/Program Files/doxygen/bin/tapi.exe"
+      - "C:/Program Files/doxygen/bin/tapi"
+      - "C:/Program Files/Graphviz/bin/tapi.com"
+      - "C:/Program Files/Graphviz/bin/tapi.exe"
+      - "C:/Program Files/Graphviz/bin/tapi"
+      - "C:/Program Files (x86)/HTML Help Workshop/tapi.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/tapi.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/tapi"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/tapi.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/tapi.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/tapi"
+      - "C:/Program Files/TortoiseSVN/bin/tapi.com"
+      - "C:/Program Files/TortoiseSVN/bin/tapi.exe"
+      - "C:/Program Files/TortoiseSVN/bin/tapi"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/tapi.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/tapi.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/tapi"
+      - "C:/Program Files/TortoiseGit/bin/tapi.com"
+      - "C:/Program Files/TortoiseGit/bin/tapi.exe"
+      - "C:/Program Files/TortoiseGit/bin/tapi"
+      - "C:/Program Files/CMake/bin/tapi.com"
+      - "C:/Program Files/CMake/bin/tapi.exe"
+      - "C:/Program Files/CMake/bin/tapi"
+      - "C:/Program Files/Git/cmd/tapi.com"
+      - "C:/Program Files/Git/cmd/tapi.exe"
+      - "C:/Program Files/Git/cmd/tapi"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/tapi.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/tapi.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/tapi"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/tapi.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/tapi.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/tapi"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/tapi.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/tapi.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-15.2"
+      - "gcc-ar-15"
+      - "gcc-ar15"
+      - "gcc-ar"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/gcc-ar-15.2.com"
+      - "C:/MinGW64/bin/gcc-ar-15.2.exe"
+      - "C:/MinGW64/bin/gcc-ar-15.2"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15.2"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15.2"
+      - "C:/msys64/gcc-ar-15.2.com"
+      - "C:/msys64/gcc-ar-15.2.exe"
+      - "C:/msys64/gcc-ar-15.2"
+      - "C:/msys64/usr/bin/gcc-ar-15.2.com"
+      - "C:/msys64/usr/bin/gcc-ar-15.2.exe"
+      - "C:/msys64/usr/bin/gcc-ar-15.2"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15.2.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15.2.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15.2"
+      - "C:/Windows/gcc-ar-15.2.com"
+      - "C:/Windows/gcc-ar-15.2.exe"
+      - "C:/Windows/gcc-ar-15.2"
+      - "C:/Windows/System32/gcc-ar-15.2.com"
+      - "C:/Windows/System32/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/gcc-ar-15.2"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2.com"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2"
+      - "C:/Program Files/dotnet/gcc-ar-15.2.com"
+      - "C:/Program Files/dotnet/gcc-ar-15.2.exe"
+      - "C:/Program Files/dotnet/gcc-ar-15.2"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15.2"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15.2"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15.2"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15.2"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15.2"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15.2"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15.2"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15.2.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15.2.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15.2"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15.2"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15.2.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15.2.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15.2"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15.2"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2.com"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15.2"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15.2"
+      - "C:/MinGW64/bin/gcc-ar-15.com"
+      - "C:/MinGW64/bin/gcc-ar-15.exe"
+      - "C:/MinGW64/bin/gcc-ar-15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar-15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar-15"
+      - "C:/msys64/gcc-ar-15.com"
+      - "C:/msys64/gcc-ar-15.exe"
+      - "C:/msys64/gcc-ar-15"
+      - "C:/msys64/usr/bin/gcc-ar-15.com"
+      - "C:/msys64/usr/bin/gcc-ar-15.exe"
+      - "C:/msys64/usr/bin/gcc-ar-15"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar-15"
+      - "C:/Windows/gcc-ar-15.com"
+      - "C:/Windows/gcc-ar-15.exe"
+      - "C:/Windows/gcc-ar-15"
+      - "C:/Windows/System32/gcc-ar-15.com"
+      - "C:/Windows/System32/gcc-ar-15.exe"
+      - "C:/Windows/System32/gcc-ar-15"
+      - "C:/Windows/System32/wbem/gcc-ar-15.com"
+      - "C:/Windows/System32/wbem/gcc-ar-15.exe"
+      - "C:/Windows/System32/wbem/gcc-ar-15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15"
+      - "C:/Program Files/dotnet/gcc-ar-15.com"
+      - "C:/Program Files/dotnet/gcc-ar-15.exe"
+      - "C:/Program Files/dotnet/gcc-ar-15"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-15"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar-15"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar-15"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar-15"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar-15"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15.com"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ar-15"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ar-15"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar-15"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar-15"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar-15"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar-15"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar-15"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.com"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar-15"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.com"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar-15"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar-15"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar-15"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar-15"
+      - "C:/MinGW64/bin/gcc-ar15.com"
+      - "C:/MinGW64/bin/gcc-ar15.exe"
+      - "C:/MinGW64/bin/gcc-ar15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ar15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ar15"
+      - "C:/msys64/gcc-ar15.com"
+      - "C:/msys64/gcc-ar15.exe"
+      - "C:/msys64/gcc-ar15"
+      - "C:/msys64/usr/bin/gcc-ar15.com"
+      - "C:/msys64/usr/bin/gcc-ar15.exe"
+      - "C:/msys64/usr/bin/gcc-ar15"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar15.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar15.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ar15"
+      - "C:/Windows/gcc-ar15.com"
+      - "C:/Windows/gcc-ar15.exe"
+      - "C:/Windows/gcc-ar15"
+      - "C:/Windows/System32/gcc-ar15.com"
+      - "C:/Windows/System32/gcc-ar15.exe"
+      - "C:/Windows/System32/gcc-ar15"
+      - "C:/Windows/System32/wbem/gcc-ar15.com"
+      - "C:/Windows/System32/wbem/gcc-ar15.exe"
+      - "C:/Windows/System32/wbem/gcc-ar15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15"
+      - "C:/Program Files/dotnet/gcc-ar15.com"
+      - "C:/Program Files/dotnet/gcc-ar15.exe"
+      - "C:/Program Files/dotnet/gcc-ar15"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar15.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar15.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar15"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar15.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar15.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ar15"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar15.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar15.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ar15"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar15.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar15.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ar15"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar15.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar15.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ar15"
+      - "C:/Program Files/doxygen/bin/gcc-ar15.com"
+      - "C:/Program Files/doxygen/bin/gcc-ar15.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ar15"
+      - "C:/Program Files/Graphviz/bin/gcc-ar15.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ar15.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ar15"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar15.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar15.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ar15"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar15.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar15.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ar15"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar15.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar15.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ar15"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar15.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar15.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ar15"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar15.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar15.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ar15"
+      - "C:/Program Files/CMake/bin/gcc-ar15.com"
+      - "C:/Program Files/CMake/bin/gcc-ar15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar15"
+      - "C:/Program Files/Git/cmd/gcc-ar15.com"
+      - "C:/Program Files/Git/cmd/gcc-ar15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar15"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar15.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar15.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ar15"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar15.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar15.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ar15"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar15.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar15.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ar15"
+      - "C:/MinGW64/bin/gcc-ar.com"
+    found: "C:/MinGW64/bin/gcc-ar.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-15.2"
+      - "gcc-ranlib-15"
+      - "gcc-ranlib15"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "C:/MinGW64/bin/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+    searched_directories:
+      - "C:/MinGW64/bin/gcc-ranlib-15.2.com"
+      - "C:/MinGW64/bin/gcc-ranlib-15.2.exe"
+      - "C:/MinGW64/bin/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15.2"
+      - "C:/msys64/gcc-ranlib-15.2.com"
+      - "C:/msys64/gcc-ranlib-15.2.exe"
+      - "C:/msys64/gcc-ranlib-15.2"
+      - "C:/msys64/usr/bin/gcc-ranlib-15.2.com"
+      - "C:/msys64/usr/bin/gcc-ranlib-15.2.exe"
+      - "C:/msys64/usr/bin/gcc-ranlib-15.2"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15.2.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15.2.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15.2"
+      - "C:/Windows/gcc-ranlib-15.2.com"
+      - "C:/Windows/gcc-ranlib-15.2.exe"
+      - "C:/Windows/gcc-ranlib-15.2"
+      - "C:/Windows/System32/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/gcc-ranlib-15.2"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2"
+      - "C:/Program Files/dotnet/gcc-ranlib-15.2.com"
+      - "C:/Program Files/dotnet/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/dotnet/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15.2"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15.2"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15.2.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15.2"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15.2"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15.2.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15.2.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15.2"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15.2"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15.2.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15.2.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15.2"
+      - "C:/MinGW64/bin/gcc-ranlib-15.com"
+      - "C:/MinGW64/bin/gcc-ranlib-15.exe"
+      - "C:/MinGW64/bin/gcc-ranlib-15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib-15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib-15"
+      - "C:/msys64/gcc-ranlib-15.com"
+      - "C:/msys64/gcc-ranlib-15.exe"
+      - "C:/msys64/gcc-ranlib-15"
+      - "C:/msys64/usr/bin/gcc-ranlib-15.com"
+      - "C:/msys64/usr/bin/gcc-ranlib-15.exe"
+      - "C:/msys64/usr/bin/gcc-ranlib-15"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib-15"
+      - "C:/Windows/gcc-ranlib-15.com"
+      - "C:/Windows/gcc-ranlib-15.exe"
+      - "C:/Windows/gcc-ranlib-15"
+      - "C:/Windows/System32/gcc-ranlib-15.com"
+      - "C:/Windows/System32/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/gcc-ranlib-15"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15"
+      - "C:/Program Files/dotnet/gcc-ranlib-15.com"
+      - "C:/Program Files/dotnet/gcc-ranlib-15.exe"
+      - "C:/Program Files/dotnet/gcc-ranlib-15"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-15"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib-15"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib-15"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib-15"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib-15"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib-15"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib-15"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib-15"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib-15"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib-15"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib-15"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib-15"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib-15"
+      - "C:/MinGW64/bin/gcc-ranlib15.com"
+      - "C:/MinGW64/bin/gcc-ranlib15.exe"
+      - "C:/MinGW64/bin/gcc-ranlib15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/gcc-ranlib15"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/gcc-ranlib15"
+      - "C:/msys64/gcc-ranlib15.com"
+      - "C:/msys64/gcc-ranlib15.exe"
+      - "C:/msys64/gcc-ranlib15"
+      - "C:/msys64/usr/bin/gcc-ranlib15.com"
+      - "C:/msys64/usr/bin/gcc-ranlib15.exe"
+      - "C:/msys64/usr/bin/gcc-ranlib15"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib15.com"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib15.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/gcc-ranlib15"
+      - "C:/Windows/gcc-ranlib15.com"
+      - "C:/Windows/gcc-ranlib15.exe"
+      - "C:/Windows/gcc-ranlib15"
+      - "C:/Windows/System32/gcc-ranlib15.com"
+      - "C:/Windows/System32/gcc-ranlib15.exe"
+      - "C:/Windows/System32/gcc-ranlib15"
+      - "C:/Windows/System32/wbem/gcc-ranlib15.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib15.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15"
+      - "C:/Program Files/dotnet/gcc-ranlib15.com"
+      - "C:/Program Files/dotnet/gcc-ranlib15.exe"
+      - "C:/Program Files/dotnet/gcc-ranlib15"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib15"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib15.com"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/SlikSvn/bin/gcc-ranlib15"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/gcc-ranlib15"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib15.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib15.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/gcc-ranlib15"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/gcc-ranlib15"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib15.com"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/doxygen/bin/gcc-ranlib15"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib15.com"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/Graphviz/bin/gcc-ranlib15"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/gcc-ranlib15"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib15.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib15.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/gcc-ranlib15"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib15.com"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/TortoiseSVN/bin/gcc-ranlib15"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib15.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib15.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/gcc-ranlib15"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib15.com"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/TortoiseGit/bin/gcc-ranlib15"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib15.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib15.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/gcc-ranlib15"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib15.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib15.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/gcc-ranlib15"
+      - "C:/MinGW64/bin/gcc-ranlib.com"
+    found: "C:/MinGW64/bin/gcc-ranlib.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindCodeBlocks.cmake:8 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake:50 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_CODEBLOCKS_EXECUTABLE"
+    description: "The CodeBlocks executable"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "codeblocks"
+    candidate_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/MinGW64/bin/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files (x86)/freeglut/bin/"
+      - "C:/Program Files (x86)/freeglut/sbin/"
+      - "C:/Program Files (x86)/freeglut/"
+    searched_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/codeblocks.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/codeblocks.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/codeblocks"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/codeblocks.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/codeblocks.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/codeblocks"
+      - "C:/MinGW64/bin/codeblocks.com"
+      - "C:/MinGW64/bin/codeblocks.exe"
+      - "C:/MinGW64/bin/codeblocks"
+      - "C:/msys64/codeblocks.com"
+      - "C:/msys64/codeblocks.exe"
+      - "C:/msys64/codeblocks"
+      - "C:/msys64/usr/bin/codeblocks.com"
+      - "C:/msys64/usr/bin/codeblocks.exe"
+      - "C:/msys64/usr/bin/codeblocks"
+      - "C:/Utilitaires_Msys-Unix/bin/codeblocks.com"
+      - "C:/Utilitaires_Msys-Unix/bin/codeblocks.exe"
+      - "C:/Utilitaires_Msys-Unix/bin/codeblocks"
+      - "C:/Windows/codeblocks.com"
+      - "C:/Windows/codeblocks.exe"
+      - "C:/Windows/codeblocks"
+      - "C:/Windows/System32/codeblocks.com"
+      - "C:/Windows/System32/codeblocks.exe"
+      - "C:/Windows/System32/codeblocks"
+      - "C:/Windows/System32/wbem/codeblocks.com"
+      - "C:/Windows/System32/wbem/codeblocks.exe"
+      - "C:/Windows/System32/wbem/codeblocks"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/codeblocks.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/codeblocks.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/codeblocks"
+      - "C:/Windows/System32/OpenSSH/codeblocks.com"
+      - "C:/Windows/System32/OpenSSH/codeblocks.exe"
+      - "C:/Windows/System32/OpenSSH/codeblocks"
+      - "C:/Program Files/dotnet/codeblocks.com"
+      - "C:/Program Files/dotnet/codeblocks.exe"
+      - "C:/Program Files/dotnet/codeblocks"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/codeblocks.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/codeblocks.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/codeblocks"
+      - "C:/Program Files/SlikSvn/bin/codeblocks.com"
+      - "C:/Program Files/SlikSvn/bin/codeblocks.exe"
+      - "C:/Program Files/SlikSvn/bin/codeblocks"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/codeblocks.com"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/codeblocks.exe"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/codeblocks"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/codeblocks.com"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/codeblocks.exe"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/codeblocks"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/codeblocks.com"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/codeblocks.exe"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/codeblocks"
+      - "C:/Program Files/doxygen/bin/codeblocks.com"
+      - "C:/Program Files/doxygen/bin/codeblocks.exe"
+      - "C:/Program Files/doxygen/bin/codeblocks"
+      - "C:/Program Files/Graphviz/bin/codeblocks.com"
+      - "C:/Program Files/Graphviz/bin/codeblocks.exe"
+      - "C:/Program Files/Graphviz/bin/codeblocks"
+      - "C:/Program Files (x86)/HTML Help Workshop/codeblocks.com"
+      - "C:/Program Files (x86)/HTML Help Workshop/codeblocks.exe"
+      - "C:/Program Files (x86)/HTML Help Workshop/codeblocks"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/codeblocks.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/codeblocks.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/codeblocks"
+      - "C:/Program Files/TortoiseSVN/bin/codeblocks.com"
+      - "C:/Program Files/TortoiseSVN/bin/codeblocks.exe"
+      - "C:/Program Files/TortoiseSVN/bin/codeblocks"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/codeblocks.com"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/codeblocks.exe"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/codeblocks"
+      - "C:/Program Files/TortoiseGit/bin/codeblocks.com"
+      - "C:/Program Files/TortoiseGit/bin/codeblocks.exe"
+      - "C:/Program Files/TortoiseGit/bin/codeblocks"
+      - "C:/Program Files/CMake/bin/codeblocks.com"
+      - "C:/Program Files/CMake/bin/codeblocks.exe"
+      - "C:/Program Files/CMake/bin/codeblocks"
+      - "C:/Program Files/Git/cmd/codeblocks.com"
+      - "C:/Program Files/Git/cmd/codeblocks.exe"
+      - "C:/Program Files/Git/cmd/codeblocks"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/codeblocks.com"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/codeblocks.exe"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/codeblocks"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/codeblocks.com"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/codeblocks.exe"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/codeblocks"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/codeblocks.com"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/codeblocks.exe"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/codeblocks"
+      - "C:/Program Files/bin/codeblocks.com"
+      - "C:/Program Files/bin/codeblocks.exe"
+      - "C:/Program Files/bin/codeblocks"
+      - "C:/Program Files/sbin/codeblocks.com"
+      - "C:/Program Files/sbin/codeblocks.exe"
+      - "C:/Program Files/sbin/codeblocks"
+      - "C:/Program Files/codeblocks.com"
+      - "C:/Program Files/codeblocks.exe"
+      - "C:/Program Files/codeblocks"
+      - "C:/Program Files (x86)/bin/codeblocks.com"
+      - "C:/Program Files (x86)/bin/codeblocks.exe"
+      - "C:/Program Files (x86)/bin/codeblocks"
+      - "C:/Program Files (x86)/sbin/codeblocks.com"
+      - "C:/Program Files (x86)/sbin/codeblocks.exe"
+      - "C:/Program Files (x86)/sbin/codeblocks"
+      - "C:/Program Files (x86)/codeblocks.com"
+      - "C:/Program Files (x86)/codeblocks.exe"
+      - "C:/Program Files (x86)/codeblocks"
+      - "C:/Program Files/CMake/bin/codeblocks.com"
+      - "C:/Program Files/CMake/bin/codeblocks.exe"
+      - "C:/Program Files/CMake/bin/codeblocks"
+      - "C:/Program Files/CMake/sbin/codeblocks.com"
+      - "C:/Program Files/CMake/sbin/codeblocks.exe"
+      - "C:/Program Files/CMake/sbin/codeblocks"
+      - "C:/Program Files/CMake/codeblocks.com"
+      - "C:/Program Files/CMake/codeblocks.exe"
+      - "C:/Program Files/CMake/codeblocks"
+      - "C:/Program Files (x86)/freeglut/bin/codeblocks.com"
+      - "C:/Program Files (x86)/freeglut/bin/codeblocks.exe"
+      - "C:/Program Files (x86)/freeglut/bin/codeblocks"
+      - "C:/Program Files (x86)/freeglut/sbin/codeblocks.com"
+      - "C:/Program Files (x86)/freeglut/sbin/codeblocks.exe"
+      - "C:/Program Files (x86)/freeglut/sbin/codeblocks"
+      - "C:/Program Files (x86)/freeglut/codeblocks.com"
+      - "C:/Program Files (x86)/freeglut/codeblocks.exe"
+      - "C:/Program Files (x86)/freeglut/codeblocks"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/freeglut"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/freeglut"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineRCCompiler.cmake:40 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-GNU.cmake:167 (enable_language)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-GNU-C.cmake:2 (__windows_compiler_gnu)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake:48 (include)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_RC_COMPILER"
+    description: "RC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "windres"
+      - "windres"
+    candidate_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/MinGW64/bin/"
+      - "C:/msys64/"
+      - "C:/msys64/usr/bin/"
+      - "C:/Utilitaires_Msys-Unix/bin/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/SlikSvn/bin/"
+      - "C:/Program Files (x86)/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files/Common Files/Propellerhead Software/ReWire/"
+      - "C:/Program Files (x86)/gs/gs10.03.0/bin/"
+      - "C:/Program Files/doxygen/bin/"
+      - "C:/Program Files/Graphviz/bin/"
+      - "C:/Program Files (x86)/HTML Help Workshop/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR/"
+      - "C:/Program Files/TortoiseSVN/bin/"
+      - "C:/Program Files (x86)/AOMEI/AOMEI Backupper/8.0.0/"
+      - "C:/Program Files/TortoiseGit/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Users/Gerard/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Gerard/AppData/Local/Programs/MiKTeX/miktex/bin/x64/"
+      - "C:/Users/Gerard/AppData/Local/Muse Hub/lib/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files (x86)/freeglut/bin/"
+      - "C:/Program Files (x86)/freeglut/sbin/"
+      - "C:/Program Files (x86)/freeglut/"
+    searched_directories:
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/windres.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/windres.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/java8path/windres"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/windres.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/windres.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/windres"
+      - "C:/MinGW64/bin/windres.com"
+    found: "C:/MinGW64/bin/windres.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\MinGW64\\bin"
+        - "C:\\msys64"
+        - "C:\\msys64\\usr\\bin"
+        - "C:\\Utilitaires_Msys-Unix\\bin"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\SlikSvn\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files\\Common Files\\Propellerhead Software\\ReWire\\"
+        - "C:\\Program Files (x86)\\gs\\gs10.03.0\\bin"
+        - "C:\\Program Files\\doxygen\\bin"
+        - "C:\\Program Files\\Graphviz\\bin"
+        - "C:\\Program Files (x86)\\HTML Help Workshop"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\TortoiseSVN\\bin"
+        - "C:\\Program Files (x86)\\AOMEI\\AOMEI Backupper\\8.0.0"
+        - "C:\\Program Files\\TortoiseGit\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\Gerard\\AppData\\Local\\Muse Hub\\lib"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/freeglut"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/freeglut"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_2a975/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_2a975.dir\\build.make CMakeFiles/cmTC_2a975.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n'
+        Building C object CMakeFiles/cmTC_2a975.dir/CMakeCCompilerABI.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -v -o CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj -c "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=C:\\MinGW64\\bin\\cc.exe
+        Target: x86_64-w64-mingw32
+        Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev11, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (Rev11, Built by MSYS2 project) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/cc1.exe -quiet -v -iprefix C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/ -D_REENTRANT C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\\cmTC_2a975.dir\\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccNyaPpN.s
+        GNU C23 (Rev11, Built by MSYS2 project) version 15.2.0 (x86_64-w64-mingw32)
+        	compiled by GNU C version 15.2.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"
+        ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include"
+        ignoring nonexistent directory "D:/M/msys64/mingw64/include"
+        ignoring duplicate directory "/mingw64/include"
+        ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"
+        ignoring nonexistent directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"
+        ignoring nonexistent directory "D:/M/msys64/mingw64/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed
+        End of search list.
+        Compiler executable checksum: e70c38be4d5294272a75efe431920b13
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccNyaPpN.s
+        GNU assembler version 2.45.1 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45.1
+        COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.'
+        Linking C executable cmTC_2a975.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_2a975.dir\\link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=C:\\MinGW64\\bin\\cc.exe
+        COLLECT_LTO_WRAPPER=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe
+        Target: x86_64-w64-mingw32
+        Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev11, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (Rev11, Built by MSYS2 project) 
+        COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2a975.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_2a975.'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccdsaY0c.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_2a975.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_2a975.dir/objects.a --no-whole-archive --out-implib libcmTC_2a975.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        collect2 version 15.2.0
+        C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccdsaY0c.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_2a975.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_2a975.dir/objects.a --no-whole-archive --out-implib libcmTC_2a975.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        GNU ld (GNU Binutils) 2.45.1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2a975.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_2a975.'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_2a975.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_2a975.dir/objects.a @CMakeFiles\\cmTC_2a975.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe -v -Wl,-v -Wl,--whole-archive CMakeFiles\\cmTC_2a975.dir/objects.a -Wl,--no-whole-archive -o cmTC_2a975.exe -Wl,--out-implib,libcmTC_2a975.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include]
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        end of search list found
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include] ==> [C:/msys64/mingw64/include]
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        implicit include dirs: [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include;C:/msys64/mingw64/include;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n']
+        ignore line: []
+        ignore line: [Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_2a975/fast]
+        ignore line: [C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_2a975.dir\\build.make CMakeFiles/cmTC_2a975.dir/build]
+        ignore line: [mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-51ad1n']
+        ignore line: [Building C object CMakeFiles/cmTC_2a975.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [C:\\MinGW64\\bin\\cc.exe   -v -o CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj -c "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\MinGW64\\bin\\cc.exe]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev11, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (Rev11  Built by MSYS2 project) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\']
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/cc1.exe -quiet -v -iprefix C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/ -D_REENTRANT C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\\cmTC_2a975.dir\\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccNyaPpN.s]
+        ignore line: [GNU C23 (Rev11  Built by MSYS2 project) version 15.2.0 (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version 15.2.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"]
+        ignore line: [ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include"]
+        ignore line: [ignoring nonexistent directory "D:/M/msys64/mingw64/include"]
+        ignore line: [ignoring duplicate directory "/mingw64/include"]
+        ignore line: [ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"]
+        ignore line: [ignoring nonexistent directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"]
+        ignore line: [ignoring nonexistent directory "D:/M/msys64/mingw64/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: e70c38be4d5294272a75efe431920b13]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\']
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccNyaPpN.s]
+        ignore line: [GNU assembler version 2.45.1 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45.1]
+        ignore line: [COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_2a975.dir\\CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_2a975.exe]
+        ignore line: ["C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_2a975.dir\\link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\MinGW64\\bin\\cc.exe]
+        ignore line: [COLLECT_LTO_WRAPPER=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev11, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (Rev11  Built by MSYS2 project) ]
+        ignore line: [COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2a975.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_2a975.']
+        link line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccdsaY0c.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_2a975.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_2a975.dir/objects.a --no-whole-archive --out-implib libcmTC_2a975.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll] ==> ignore
+          arg [-plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccdsaY0c.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_2a975.exe] ==> ignore
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc] ==> dir [C:/msys64/mingw64/bin/../lib/gcc]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles\\cmTC_2a975.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_2a975.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [collect2 version 15.2.0]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\Gerard\\AppData\\Local\\Temp\\ccdsaY0c.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_2a975.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_2a975.dir/objects.a --no-whole-archive --out-implib libcmTC_2a975.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        linker tool for 'C': C:/msys64/mingw64/x86_64-w64-mingw32/bin/ld.exe
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o] ==> [C:/msys64/mingw64/lib/crt2.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o] ==> [C:/msys64/mingw64/lib/default-manifest.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc] ==> [C:/msys64/mingw64/lib/gcc]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> [C:/msys64/mingw64/x86_64-w64-mingw32/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib] ==> [C:/msys64/mingw64/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> [C:/msys64/mingw64/x86_64-w64-mingw32/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..] ==> [C:/msys64/mingw64/lib]
+        implicit libs: [mingw32;gcc;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc;mingwex;kernel32]
+        implicit objs: [C:/msys64/mingw64/lib/crt2.o;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o;C:/msys64/mingw64/lib/default-manifest.o;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        implicit dirs: [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0;C:/msys64/mingw64/lib/gcc;C:/msys64/mingw64/x86_64-w64-mingw32/lib;C:/msys64/mingw64/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (PROJECT)"
+    message: |
+      Running the C compiler's linker: "C:/msys64/mingw64/x86_64-w64-mingw32/bin/ld.exe" "-v"
+      GNU ld (GNU Binutils) 2.45.1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:542 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file sys/types.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-i388dn"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-i388dn"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-i388dn'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_b9a18/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_b9a18.dir\\build.make CMakeFiles/cmTC_b9a18.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-i388dn'
+        Building C object CMakeFiles/cmTC_b9a18.dir/HAVE_SYS_TYPES_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_b9a18.dir\\HAVE_SYS_TYPES_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-i388dn\\HAVE_SYS_TYPES_H.c
+        Linking C executable cmTC_b9a18.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_b9a18.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_b9a18.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_b9a18.dir/objects.a @CMakeFiles\\cmTC_b9a18.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_b9a18.dir/objects.a -Wl,--no-whole-archive -o cmTC_b9a18.exe -Wl,--out-implib,libcmTC_b9a18.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_b9a18.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-i388dn'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:543 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file unistd.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fgnub1"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fgnub1"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fgnub1'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_964bd/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_964bd.dir\\build.make CMakeFiles/cmTC_964bd.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fgnub1'
+        Building C object CMakeFiles/cmTC_964bd.dir/HAVE_UNISTD_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_964bd.dir\\HAVE_UNISTD_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-fgnub1\\HAVE_UNISTD_H.c
+        Linking C executable cmTC_964bd.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_964bd.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_964bd.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_964bd.dir/objects.a @CMakeFiles\\cmTC_964bd.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_964bd.dir/objects.a -Wl,--no-whole-archive -o cmTC_964bd.exe -Wl,--out-implib,libcmTC_964bd.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_964bd.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fgnub1'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:544 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file sys/time.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-nillus"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-nillus"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_SYS_TIME_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-nillus'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_7d513/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_7d513.dir\\build.make CMakeFiles/cmTC_7d513.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-nillus'
+        Building C object CMakeFiles/cmTC_7d513.dir/HAVE_SYS_TIME_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_7d513.dir\\HAVE_SYS_TIME_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-nillus\\HAVE_SYS_TIME_H.c
+        Linking C executable cmTC_7d513.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_7d513.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_7d513.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_7d513.dir/objects.a @CMakeFiles\\cmTC_7d513.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_7d513.dir/objects.a -Wl,--no-whole-archive -o cmTC_7d513.exe -Wl,--out-implib,libcmTC_7d513.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_7d513.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-nillus'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:545 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file stdbool.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-tvdoa0"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-tvdoa0"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_STDBOOL_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-tvdoa0'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_65b2f/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_65b2f.dir\\build.make CMakeFiles/cmTC_65b2f.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-tvdoa0'
+        Building C object CMakeFiles/cmTC_65b2f.dir/HAVE_STDBOOL_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_65b2f.dir\\HAVE_STDBOOL_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-tvdoa0\\HAVE_STDBOOL_H.c
+        Linking C executable cmTC_65b2f.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_65b2f.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_65b2f.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_65b2f.dir/objects.a @CMakeFiles\\cmTC_65b2f.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_65b2f.dir/objects.a -Wl,--no-whole-archive -o cmTC_65b2f.exe -Wl,--out-implib,libcmTC_65b2f.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_65b2f.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-tvdoa0'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:546 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file sys/param.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-5liaq8"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-5liaq8"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_SYS_PARAM_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-5liaq8'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_a56dc/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_a56dc.dir\\build.make CMakeFiles/cmTC_a56dc.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-5liaq8'
+        Building C object CMakeFiles/cmTC_a56dc.dir/HAVE_SYS_PARAM_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_a56dc.dir\\HAVE_SYS_PARAM_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-5liaq8\\HAVE_SYS_PARAM_H.c
+        Linking C executable cmTC_a56dc.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_a56dc.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_a56dc.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_a56dc.dir/objects.a @CMakeFiles\\cmTC_a56dc.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_a56dc.dir/objects.a -Wl,--no-whole-archive -o cmTC_a56dc.exe -Wl,--out-implib,libcmTC_a56dc.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_a56dc.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-5liaq8'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:547 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file sys/ioctl.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-gy6rfl"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-gy6rfl"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_SYS_IOCTL_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-gy6rfl'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_52687/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_52687.dir\\build.make CMakeFiles/cmTC_52687.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-gy6rfl'
+        Building C object CMakeFiles/cmTC_52687.dir/HAVE_SYS_IOCTL_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_52687.dir\\HAVE_SYS_IOCTL_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-gy6rfl\\HAVE_SYS_IOCTL_H.c
+        C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-gy6rfl\\HAVE_SYS_IOCTL_H.c:2:10: fatal error: sys/ioctl.h: No such file or directory
+            2 | #include <sys/ioctl.h>
+              |          ^~~~~~~~~~~~~
+        compilation terminated.
+        mingw32-make[1]: *** [CMakeFiles\\cmTC_52687.dir\\build.make:80: CMakeFiles/cmTC_52687.dir/HAVE_SYS_IOCTL_H.c.obj] Error 1
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-gy6rfl'
+        mingw32-make: *** [Makefile:133: cmTC_52687/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:548 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file fcntl.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-l2bj6t"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-l2bj6t"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_FCNTL_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-l2bj6t'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_8e814/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_8e814.dir\\build.make CMakeFiles/cmTC_8e814.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-l2bj6t'
+        Building C object CMakeFiles/cmTC_8e814.dir/HAVE_FCNTL_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_8e814.dir\\HAVE_FCNTL_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-l2bj6t\\HAVE_FCNTL_H.c
+        Linking C executable cmTC_8e814.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_8e814.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_8e814.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_8e814.dir/objects.a @CMakeFiles\\cmTC_8e814.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_8e814.dir/objects.a -Wl,--no-whole-archive -o cmTC_8e814.exe -Wl,--out-implib,libcmTC_8e814.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_8e814.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-l2bj6t'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:549 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file usbhid.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-lturgx"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-lturgx"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_USBHID_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-lturgx'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_f1a37/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_f1a37.dir\\build.make CMakeFiles/cmTC_f1a37.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-lturgx'
+        Building C object CMakeFiles/cmTC_f1a37.dir/HAVE_USBHID_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_f1a37.dir\\HAVE_USBHID_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-lturgx\\HAVE_USBHID_H.c
+        C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-lturgx\\HAVE_USBHID_H.c:2:10: fatal error: usbhid.h: No such file or directory
+            2 | #include <usbhid.h>
+              |          ^~~~~~~~~~
+        compilation terminated.
+        mingw32-make[1]: *** [CMakeFiles\\cmTC_f1a37.dir\\build.make:80: CMakeFiles/cmTC_f1a37.dir/HAVE_USBHID_H.c.obj] Error 1
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-lturgx'
+        mingw32-make: *** [Makefile:133: cmTC_f1a37/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckFunctionExists.cmake:167 (try_compile)"
+      - "CMakeLists.txt:550 (CHECK_FUNCTION_EXISTS)"
+    checks:
+      - "Looking for gettimeofday"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-rc429h"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-rc429h"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_GETTIMEOFDAY"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-rc429h'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_a7e1b/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_a7e1b.dir\\build.make CMakeFiles/cmTC_a7e1b.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-rc429h'
+        Building C object CMakeFiles/cmTC_a7e1b.dir/CheckFunctionExists.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -o CMakeFiles\\cmTC_a7e1b.dir\\CheckFunctionExists.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-rc429h\\CheckFunctionExists.c
+        Linking C executable cmTC_a7e1b.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_a7e1b.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_a7e1b.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_a7e1b.dir/objects.a @CMakeFiles\\cmTC_a7e1b.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic -DCHECK_FUNCTION_EXISTS=gettimeofday -Wl,--whole-archive CMakeFiles\\cmTC_a7e1b.dir/objects.a -Wl,--no-whole-archive -o cmTC_a7e1b.exe -Wl,--out-implib,libcmTC_a7e1b.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_a7e1b.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-rc429h'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckFunctionExists.cmake:167 (try_compile)"
+      - "CMakeLists.txt:551 (CHECK_FUNCTION_EXISTS)"
+    checks:
+      - "Looking for XParseGeometry"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-0jbpg2"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-0jbpg2"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_XPARSEGEOMETRY"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-0jbpg2'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_f899f/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_f899f.dir\\build.make CMakeFiles/cmTC_f899f.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-0jbpg2'
+        Building C object CMakeFiles/cmTC_f899f.dir/CheckFunctionExists.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry -o CMakeFiles\\cmTC_f899f.dir\\CheckFunctionExists.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-0jbpg2\\CheckFunctionExists.c
+        Linking C executable cmTC_f899f.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_f899f.dir\\link.txt --verbose=1
+        C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\\cmTC_f899f.dir/objects.a(CheckFunctionExists.c.obj):CheckFunctionExists.c:(.text+0x15): undefined reference to `XParseGeometry'
+        collect2.exe: error: ld returned 1 exit status
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_f899f.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_f899f.dir/objects.a @CMakeFiles\\cmTC_f899f.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry -Wl,--whole-archive CMakeFiles\\cmTC_f899f.dir/objects.a -Wl,--no-whole-archive -o cmTC_f899f.exe -Wl,--out-implib,libcmTC_f899f.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_f899f.dir\\linkLibs.rsp
+        mingw32-make[1]: *** [CMakeFiles\\cmTC_f899f.dir\\build.make:103: cmTC_f899f.exe] Error 1
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-0jbpg2'
+        mingw32-make: *** [Makefile:133: cmTC_f899f/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:559 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file stdint.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-w5lv49"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-w5lv49"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-w5lv49'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_640d8/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_640d8.dir\\build.make CMakeFiles/cmTC_640d8.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-w5lv49'
+        Building C object CMakeFiles/cmTC_640d8.dir/HAVE_STDINT_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_640d8.dir\\HAVE_STDINT_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-w5lv49\\HAVE_STDINT_H.c
+        Linking C executable cmTC_640d8.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_640d8.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_640d8.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_640d8.dir/objects.a @CMakeFiles\\cmTC_640d8.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_640d8.dir/objects.a -Wl,--no-whole-archive -o cmTC_640d8.exe -Wl,--out-implib,libcmTC_640d8.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_640d8.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-w5lv49'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFiles.cmake:201 (try_compile)"
+      - "CMakeLists.txt:560 (CHECK_INCLUDE_FILES)"
+    checks:
+      - "Looking for include file inttypes.h"
+    directories:
+      source: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fx7y7b"
+      binary: "C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fx7y7b"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -Wall -pedantic"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "HAVE_INTTYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fx7y7b'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/MinGW64/bin/mingw32-make.exe -f Makefile cmTC_7b73e/fast
+        C:/MinGW64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_7b73e.dir\\build.make CMakeFiles/cmTC_7b73e.dir/build
+        mingw32-make[1]: Entering directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fx7y7b'
+        Building C object CMakeFiles/cmTC_7b73e.dir/HAVE_INTTYPES_H.c.obj
+        C:\\MinGW64\\bin\\cc.exe   -Wall -pedantic  -o CMakeFiles\\cmTC_7b73e.dir\\HAVE_INTTYPES_H.c.obj -c C:\\Users\\Gerard\\Documents\\Programmation\\Freeglut\\freeglut-3.8.0\\CMakeFiles\\CMakeScratch\\TryCompile-fx7y7b\\HAVE_INTTYPES_H.c
+        Linking C executable cmTC_7b73e.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_7b73e.dir\\link.txt --verbose=1
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_7b73e.dir/objects.a
+        C:\\MinGW64\\bin\\ar.exe qc CMakeFiles\\cmTC_7b73e.dir/objects.a @CMakeFiles\\cmTC_7b73e.dir\\objects1.rsp
+        C:\\MinGW64\\bin\\cc.exe  -Wall -pedantic  -Wl,--whole-archive CMakeFiles\\cmTC_7b73e.dir/objects.a -Wl,--no-whole-archive -o cmTC_7b73e.exe -Wl,--out-implib,libcmTC_7b73e.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\cmTC_7b73e.dir\\linkLibs.rsp
+        mingw32-make[1]: Leaving directory 'C:/Users/Gerard/Documents/Programmation/Freeglut/freeglut-3.8.0/CMakeFiles/CMakeScratch/TryCompile-fx7y7b'
+        
+      exitCode: 0
+...

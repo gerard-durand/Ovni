@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\shapes_static.dir/objects.a
+C:\MinGW64\bin\ar.exe qc CMakeFiles\shapes_static.dir/objects.a @CMakeFiles\shapes_static.dir\objects1.rsp
+C:\MinGW64\bin\cc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\shapes_static.dir/objects.a -Wl,--no-whole-archive -o bin\shapes_static.exe -Wl,--out-implib,lib\libshapes_static.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\shapes_static.dir\linkLibs.rsp
