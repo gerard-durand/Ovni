@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\multi-touch_static.dir/objects.a
-C:\MinGW64\bin\ar.exe qc CMakeFiles\multi-touch_static.dir/objects.a @CMakeFiles\multi-touch_static.dir\objects1.rsp
-C:\MinGW64\bin\gcc.exe -O2 -Wall -pedantic -s -Wl,--whole-archive CMakeFiles\multi-touch_static.dir/objects.a -Wl,--no-whole-archive -o bin\multi-touch_static.exe -Wl,--out-implib,lib\libmulti-touch_static.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\multi-touch_static.dir\linklibs.rsp

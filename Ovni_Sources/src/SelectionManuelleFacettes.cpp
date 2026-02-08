@@ -6,15 +6,15 @@
 //*)
 
 //(*IdInit(SelectionManuelleFacettes)
-const long SelectionManuelleFacettes::ID_STATICTEXT1 = wxNewId();
-const long SelectionManuelleFacettes::ID_SPINCTRL1 = wxNewId();
-const long SelectionManuelleFacettes::ID_STATICTEXT2 = wxNewId();
-const long SelectionManuelleFacettes::ID_STATICTEXT3 = wxNewId();
-const long SelectionManuelleFacettes::ID_STATICTEXT4 = wxNewId();
-const long SelectionManuelleFacettes::ID_TEXTCTRL1 = wxNewId();
-const long SelectionManuelleFacettes::ID_BUTTON1 = wxNewId();
-const long SelectionManuelleFacettes::ID_BUTTON3 = wxNewId();
-const long SelectionManuelleFacettes::ID_BUTTON2 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_STATICTEXT1 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_SPINCTRL1 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_STATICTEXT2 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_STATICTEXT3 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_STATICTEXT4 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_BUTTON1 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_BUTTON3 = wxNewId();
+const wxWindowID SelectionManuelleFacettes::ID_BUTTON2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(SelectionManuelleFacettes,wxDialog)
@@ -30,7 +30,6 @@ SelectionManuelleFacettes::SelectionManuelleFacettes(wxWindow* parent,wxWindowID
 	Move(wxDefaultPosition);
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Indice de l\'objet :"), wxPoint(8,12), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	SpinCtrl_NumObjet = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(192,8), wxSize(129,23), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_NumObjet->SetValue(_T("0"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Nom :"), wxPoint(8,40), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	StaticText_NomObjet = new wxStaticText(this, ID_STATICTEXT3, _T("Nom Objet"), wxPoint(48,40), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	StaticText_Numeros = new wxStaticText(this, ID_STATICTEXT4, _T("Indices des facettes (séparés par espace, virgule ou - ) :"), wxPoint(8,64), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
@@ -42,11 +41,11 @@ SelectionManuelleFacettes::SelectionManuelleFacettes(wxWindow* parent,wxWindowID
 	Button_Quitter = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(224,120), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnSpinCtrl_NumObjetChange);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_ValiderClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_ResetClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&SelectionManuelleFacettes::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&SelectionManuelleFacettes::OnSpinCtrl_NumObjetChange);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_ValiderClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_ResetClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&SelectionManuelleFacettes::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&SelectionManuelleFacettes::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

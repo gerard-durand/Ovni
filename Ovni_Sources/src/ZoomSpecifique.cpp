@@ -7,21 +7,21 @@
 //*)
 
 //(*IdInit(ZoomSpecifique)
-const long ZoomSpecifique::ID_STATICTEXT1 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT2 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT3 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT4 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT5 = wxNewId();
-const long ZoomSpecifique::ID_SPINCTRL1 = wxNewId();
-const long ZoomSpecifique::ID_SPINCTRL2 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT6 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT7 = wxNewId();
-const long ZoomSpecifique::ID_TEXTCTRL1 = wxNewId();
-const long ZoomSpecifique::ID_TEXTCTRL2 = wxNewId();
-const long ZoomSpecifique::ID_BUTTON2 = wxNewId();
-const long ZoomSpecifique::ID_BUTTON1 = wxNewId();
-const long ZoomSpecifique::ID_BUTTON3 = wxNewId();
-const long ZoomSpecifique::ID_STATICTEXT8 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT3 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT4 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT5 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_SPINCTRL1 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_SPINCTRL2 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT6 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT7 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_BUTTON2 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_BUTTON1 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_BUTTON3 = wxNewId();
+const wxWindowID ZoomSpecifique::ID_STATICTEXT8 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ZoomSpecifique,wxDialog)
@@ -41,9 +41,7 @@ ZoomSpecifique::ZoomSpecifique(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Azimut"), wxPoint(64,32), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Site"), wxPoint(224,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_LAZ = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(40,48), wxSize(104,21), 0, -1, 360, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_LAZ->SetValue(_T("0"));
 	SpinCtrl_LSI = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(192,48), wxSize(104,21), 0, -180, 180, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_LSI->SetValue(_T("0"));
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Distance de visée (exprimée en \nmultiple de la diagonale)"), wxPoint(8,92), wxSize(176,32), 0, _T("ID_STATICTEXT6"));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Champ de vue (degrés)"), wxPoint(8,132), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	TextCtrl_Distance = new wxTextCtrl(this, ID_TEXTCTRL1, _T("10.00"), wxPoint(192,96), wxSize(102,24), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
@@ -61,16 +59,16 @@ ZoomSpecifique::ZoomSpecifique(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	wxFont StaticText_WarningFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD,false,_T("Arial"),wxFONTENCODING_DEFAULT);
 	StaticText_Warning->SetFont(StaticText_WarningFont);
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ZoomSpecifique::OnSpinCtrl_LAZChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&ZoomSpecifique::OnSpinCtrl_LSIChange);
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ZoomSpecifique::OnTextCtrl_DistanceText);
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ZoomSpecifique::OnTextCtrl_FoVText);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ZoomSpecifique::OnButton_ResetClick);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ZoomSpecifique::OnButton_QuitClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ZoomSpecifique::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&ZoomSpecifique::OnSpinCtrl_LAZChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&ZoomSpecifique::OnSpinCtrl_LSIChange);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&ZoomSpecifique::OnTextCtrl_DistanceText);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
+	Connect(ID_TEXTCTRL2, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&ZoomSpecifique::OnTextCtrl_FoVText);
+	Connect(ID_TEXTCTRL2, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ZoomSpecifique::OnButton_ResetClick);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ZoomSpecifique::OnButton_AppliquerClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ZoomSpecifique::OnButton_QuitClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ZoomSpecifique::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

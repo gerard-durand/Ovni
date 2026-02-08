@@ -49,34 +49,34 @@ class PropertiesPanel: public wxDialog
 	protected:
 
 		//(*Identifiers(PropertiesPanel)
-		static const long ID_STATICTEXT1;
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT3;
-		static const long ID_STATICTEXT4;
-		static const long ID_STATICTEXT5;
-		static const long ID_STATICTEXT6;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		static const long ID_STATICTEXT9;
-		static const long ID_STATICTEXT10;
-		static const long ID_STATICTEXT11;
-		static const long ID_STATICTEXT12;
-		static const long ID_STATICTEXT13;
-		static const long ID_STATICTEXT14;
-		static const long ID_STATICTEXT15;
-		static const long ID_STATICTEXT16;
-		static const long ID_STATICTEXT17;
-		static const long ID_STATICTEXT18;
-		static const long ID_STATICTEXT19;
-		static const long ID_STATICTEXT20;
-		static const long ID_STATICTEXT21;
-		static const long ID_STATICTEXT22;
-		static const long ID_STATICTEXT23;
-		static const long ID_STATICTEXT24;
-		static const long ID_STATICTEXT25;
-		static const long ID_STATICTEXT26;
-		static const long ID_STATICTEXT27;
-		static const long ID_BUTTON1;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_STATICTEXT3;
+		static const wxWindowID ID_STATICTEXT4;
+		static const wxWindowID ID_STATICTEXT5;
+		static const wxWindowID ID_STATICTEXT6;
+		static const wxWindowID ID_STATICTEXT7;
+		static const wxWindowID ID_STATICTEXT8;
+		static const wxWindowID ID_STATICTEXT9;
+		static const wxWindowID ID_STATICTEXT10;
+		static const wxWindowID ID_STATICTEXT11;
+		static const wxWindowID ID_STATICTEXT12;
+		static const wxWindowID ID_STATICTEXT13;
+		static const wxWindowID ID_STATICTEXT14;
+		static const wxWindowID ID_STATICTEXT15;
+		static const wxWindowID ID_STATICTEXT16;
+		static const wxWindowID ID_STATICTEXT17;
+		static const wxWindowID ID_STATICTEXT18;
+		static const wxWindowID ID_STATICTEXT19;
+		static const wxWindowID ID_STATICTEXT20;
+		static const wxWindowID ID_STATICTEXT21;
+		static const wxWindowID ID_STATICTEXT22;
+		static const wxWindowID ID_STATICTEXT23;
+		static const wxWindowID ID_STATICTEXT24;
+		static const wxWindowID ID_STATICTEXT25;
+		static const wxWindowID ID_STATICTEXT26;
+		static const wxWindowID ID_STATICTEXT27;
+		static const wxWindowID ID_BUTTON1;
 		//*)
 
 	private:

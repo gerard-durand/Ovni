@@ -7,30 +7,30 @@
 //*)
 
 //(*IdInit(Facette)
-const long Facette::ID_STATICTEXT1 = wxNewId();
-const long Facette::ID_TEXTCTRL1 = wxNewId();
-const long Facette::ID_STATICTEXT2 = wxNewId();
-const long Facette::ID_TEXTCTRL2 = wxNewId();
-const long Facette::ID_STATICTEXT3 = wxNewId();
-const long Facette::ID_TEXTCTRL3 = wxNewId();
-const long Facette::ID_STATICTEXT4 = wxNewId();
-const long Facette::ID_TEXTCTRL4 = wxNewId();
-const long Facette::ID_STATICTEXT5 = wxNewId();
-const long Facette::ID_TEXTCTRL5 = wxNewId();
-const long Facette::ID_STATICTEXT6 = wxNewId();
-const long Facette::ID_TEXTCTRL6 = wxNewId();
-const long Facette::ID_STATICTEXT7 = wxNewId();
-const long Facette::ID_TEXTCTRL7 = wxNewId();
-const long Facette::ID_STATICTEXT8 = wxNewId();
-const long Facette::ID_TEXTCTRL8 = wxNewId();
-const long Facette::ID_STATICTEXT9 = wxNewId();
-const long Facette::ID_TEXTCTRL9 = wxNewId();
-const long Facette::ID_STATICTEXT10 = wxNewId();
-const long Facette::ID_SPINCTRL1 = wxNewId();
-const long Facette::ID_STATICTEXT11 = wxNewId();
-const long Facette::ID_SPINCTRL2 = wxNewId();
-const long Facette::ID_BUTTON1 = wxNewId();
-const long Facette::ID_BUTTON2 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT1 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT2 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT3 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT4 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT5 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL5 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT6 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL6 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT7 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL7 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT8 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL8 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT9 = wxNewId();
+const wxWindowID Facette::ID_TEXTCTRL9 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT10 = wxNewId();
+const wxWindowID Facette::ID_SPINCTRL1 = wxNewId();
+const wxWindowID Facette::ID_STATICTEXT11 = wxNewId();
+const wxWindowID Facette::ID_SPINCTRL2 = wxNewId();
+const wxWindowID Facette::ID_BUTTON1 = wxNewId();
+const wxWindowID Facette::ID_BUTTON2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Facette,wxDialog)
@@ -72,20 +72,18 @@ Facette::Facette(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize&
 	TextCtrl_P3Z = new wxTextCtrl(this, ID_TEXTCTRL9, _T("0.0"), wxPoint(360,56), wxSize(80,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL9"));
 	StaticText10 = new wxStaticText(this, ID_STATICTEXT10, _T("Numéro de Groupe :"), wxPoint(8,83), wxDefaultSize, 0, _T("ID_STATICTEXT10"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(136,80), wxSize(80,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	StaticText11 = new wxStaticText(this, ID_STATICTEXT11, _T("Numéro de Matériau :"), wxPoint(232,83), wxDefaultSize, 0, _T("ID_STATICTEXT11"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(360,80), wxSize(80,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(128,112), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(240,112), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Facette::OnSpinCtrl_GroupeChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Facette::OnSpinCtrl_MateriauChange);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Facette::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Facette::OnButton_AnnulerClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Facette::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Facette::OnSpinCtrl_GroupeChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Facette::OnSpinCtrl_MateriauChange);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Facette::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Facette::OnButton_AnnulerClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Facette::OnClose);
 	//*)
 //	this->Facette_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

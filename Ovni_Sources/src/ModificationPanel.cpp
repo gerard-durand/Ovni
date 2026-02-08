@@ -62,7 +62,6 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	ToggleButton_Ajouter = new wxToggleButton(Panel2, ID_TOGGLEBUTTON1, _T("Ajouter sous le pointeur"), wxPoint(32,4), wxSize(176,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON1"));
 	ToggleButton_Ajouter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	SpinCtrl_NbSegments = new wxSpinCtrl(Panel2, ID_SPINCTRL1, _T("2"), wxPoint(88,32), wxSize(46,24), 0, 2, 100, 2, _T("ID_SPINCTRL1"));
-	SpinCtrl_NbSegments->SetValue(_T("2"));
 	SpinCtrl_NbSegments->Disable();
 	StaticText2 = new wxStaticText(Panel2, ID_STATICTEXT2, _T("segments"), wxPoint(144,32), wxDLG_UNIT(Panel2,wxSize(32,9)), wxALIGN_CENTRE|wxFULL_REPAINT_ON_RESIZE, _T("ID_STATICTEXT2"));
 	ToggleButton_Diviser = new wxToggleButton(Panel2, ID_TOGGLEBUTTON2, _T("Diviser en"), wxPoint(8,32), wxSize(72,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON2"));
@@ -74,9 +73,7 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText4 = new wxStaticText(Panel4, ID_STATICTEXT4, _T("Avec le numéro de groupe"), wxPoint(8,2), wxSize(144,16), 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(Panel4, ID_STATICTEXT5, _T("Avec le numéro de matériau"), wxPoint(8,22), wxSize(152,16), 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_Groupe = new wxSpinCtrl(Panel4, ID_SPINCTRL2, _T("0"), wxPoint(168,0), wxSize(46,20), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	SpinCtrl_Materiau = new wxSpinCtrl(Panel4, ID_SPINCTRL3, _T("0"), wxPoint(168,20), wxSize(46,20), 0, 0, 15, 0, _T("ID_SPINCTRL3"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 	ToggleButton_CreerFacette = new wxToggleButton(Panel4, ID_TOGGLEBUTTON4, _T("Créer"), wxPoint(16,40), wxSize(88,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON4"));
 	ToggleButton_CreerFacette->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(Panel4, ID_BUTTON4, _T("Annuler la création en cours"), wxPoint(16,68), wxSize(208,24), 0, wxDefaultValidator, _T("ID_BUTTON4"));

@@ -57,7 +57,6 @@
 		<object class="wxSpinCtrlDouble" name="ID_SPINCTRLDOUBLE4" variable="SpinCtrlDouble_PosW" member="yes">
 			<value>0</value>
 			<max>1,000000</max>
-			<increment>0,010000</increment>
 			<pos>88,104</pos>
 			<size>96,23</size>
 			<handler function="OnSpinCtrlDouble_PosWChange" entry="EVT_SPINCTRLDOUBLE" />

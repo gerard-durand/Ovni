@@ -6,22 +6,22 @@
 //*)
 
 //(*IdInit(Cube)
-const long Cube::ID_STATICTEXT1 = wxNewId();
-const long Cube::ID_TEXTCTRL1 = wxNewId();
-const long Cube::ID_STATICLINE1 = wxNewId();
-const long Cube::ID_STATICTEXT2 = wxNewId();
-const long Cube::ID_STATICTEXT3 = wxNewId();
-const long Cube::ID_TEXTCTRL2 = wxNewId();
-const long Cube::ID_STATICTEXT4 = wxNewId();
-const long Cube::ID_TEXTCTRL3 = wxNewId();
-const long Cube::ID_STATICTEXT5 = wxNewId();
-const long Cube::ID_TEXTCTRL4 = wxNewId();
-const long Cube::ID_BUTTON1 = wxNewId();
-const long Cube::ID_BUTTON2 = wxNewId();
-const long Cube::ID_STATICTEXT6 = wxNewId();
-const long Cube::ID_SPINCTRL1 = wxNewId();
-const long Cube::ID_STATICTEXT7 = wxNewId();
-const long Cube::ID_SPINCTRL2 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT1 = wxNewId();
+const wxWindowID Cube::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID Cube::ID_STATICLINE1 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT2 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT3 = wxNewId();
+const wxWindowID Cube::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT4 = wxNewId();
+const wxWindowID Cube::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT5 = wxNewId();
+const wxWindowID Cube::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID Cube::ID_BUTTON1 = wxNewId();
+const wxWindowID Cube::ID_BUTTON2 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT6 = wxNewId();
+const wxWindowID Cube::ID_SPINCTRL1 = wxNewId();
+const wxWindowID Cube::ID_STATICTEXT7 = wxNewId();
+const wxWindowID Cube::ID_SPINCTRL2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Cube,wxDialog)
@@ -48,28 +48,26 @@ Cube::Cube(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(0,28), wxSize(400,2), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _T("Coordonnées du centre du cube :"), wxPoint(112,32), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("X :"), wxPoint(8,59), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(24,56), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+	TextCtrl_X = new wxTextCtrl(this, ID_TEXTCTRL2, _T("0.0"), wxPoint(24,56), wxSize(108,28), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Y :"), wxPoint(136,59), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-	TextCtrl_Y = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(152,56), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+	TextCtrl_Y = new wxTextCtrl(this, ID_TEXTCTRL3, _T("0.0"), wxPoint(152,56), wxSize(108,28), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Z :"), wxPoint(264,59), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(280,56), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(280,56), wxSize(108,28), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(88,120), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(208,120), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _T("Numéro de Groupe :"), wxPoint(8,91), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(120,88), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Matériau :"), wxPoint(200,91), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(320,88), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Cube::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Cube::OnButton_AnnulerClick);
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Cube::OnSpinCtrl_GroupeChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Cube::OnSpinCtrl_MateriauChange);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&Cube::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Cube::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Cube::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Cube::OnButton_AnnulerClick);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Cube::OnSpinCtrl_GroupeChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Cube::OnSpinCtrl_MateriauChange);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&Cube::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Cube::OnClose);
 	//*)
 //	this->Cube_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

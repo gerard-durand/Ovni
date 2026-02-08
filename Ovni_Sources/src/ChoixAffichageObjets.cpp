@@ -6,11 +6,11 @@
 //*)
 
 //(*IdInit(ChoixAffichageObjets)
-const long ChoixAffichageObjets::ID_STATICTEXT1 = wxNewId();
-const long ChoixAffichageObjets::ID_CHECKLISTBOX1 = wxNewId();
-const long ChoixAffichageObjets::ID_BUTTON1 = wxNewId();
-const long ChoixAffichageObjets::ID_BUTTON2 = wxNewId();
-const long ChoixAffichageObjets::ID_BUTTON3 = wxNewId();
+const wxWindowID ChoixAffichageObjets::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ChoixAffichageObjets::ID_CHECKLISTBOX1 = wxNewId();
+const wxWindowID ChoixAffichageObjets::ID_BUTTON1 = wxNewId();
+const wxWindowID ChoixAffichageObjets::ID_BUTTON2 = wxNewId();
+const wxWindowID ChoixAffichageObjets::ID_BUTTON3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ChoixAffichageObjets,wxDialog)
@@ -42,12 +42,12 @@ ChoixAffichageObjets::ChoixAffichageObjets(wxWindow* parent,wxWindowID id,const 
 	Button_Quitter = new wxButton(this, ID_BUTTON3, _T("Quitter"), wxPoint(176,168), wxSize(80,26), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_CHECKLISTBOX1,wxEVT_COMMAND_CHECKLISTBOX_TOGGLED,(wxObjectEventFunction)&ChoixAffichageObjets::OnCheckListBox1Toggled);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChoixAffichageObjets::OnButton_AucunClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChoixAffichageObjets::OnButton_TousClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ChoixAffichageObjets::OnButton_QuitterClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ChoixAffichageObjets::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ChoixAffichageObjets::OnClose);
+	Connect(ID_CHECKLISTBOX1, wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, (wxObjectEventFunction)&ChoixAffichageObjets::OnCheckListBox1Toggled);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChoixAffichageObjets::OnButton_AucunClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChoixAffichageObjets::OnButton_TousClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ChoixAffichageObjets::OnButton_QuitterClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&ChoixAffichageObjets::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ChoixAffichageObjets::OnClose);
 	//*)
 //	this->Chk_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

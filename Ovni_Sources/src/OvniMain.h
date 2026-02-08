@@ -520,7 +520,6 @@ class OvniFrame: public wxFrame
 		static const wxWindowID ID_MENUITEM47;
 		static const wxWindowID idMenuHelp;
 		static const wxWindowID idMenuAbout;
-		static const wxWindowID ID_STATUSBAR1;
 		static const wxWindowID ID_TIMER1;
 		//*)
 

@@ -2594,7 +2594,8 @@ void BddInter::LoadSTL() {
         // Compter le nombre de facettes et sommets (1ère lecture)
         rewind(f);
         fgets(s1,160,f) ;                   // Les lignes contiennent moins de 160 caractères (plutôt 60). On prévoie large donc.
-        while (strncmp(s1,"endsolid ",9)) { // Lire tant que la chaîne endsolid n'a pas été trouvée. ERREUR : Que se passe t-il si elle n'existe pas ???
+        while (strncmp(s1,"endsolid",8)) {  // Lire tant que la chaîne endsolid n'a pas été trouvée. ERREUR : Que se passe t-il si elle n'existe pas ???
+                                            // initialement "endsolid ",9, mais pb s'il n'y a pas d'espace après endsolid et pas de rappel du nom de la bdd
             cptr=fgets(s1,160,f) ;          // Peut-il y avoir des lignes vides ?
             if (cptr == nullptr) {
                 printf("Erreur\n");         // Ligne "endsolid " non trouvée ?
@@ -2638,7 +2639,7 @@ void BddInter::LoadSTL() {
         numero_facette= 1;
         Numeros.resize(3);
 
-        while (strncmp(s1,"endsolid ",9)) {
+        while (strncmp(s1,"endsolid",8)) {  // initialement "endsolid ",9, mais pb s'il n'y a pas d'espace après endsolid et pas de rappel du nom de la bdd
             fgets(s1,160,f) ;
             cptr = s1;
             while (*cptr == ' ') cptr++;

@@ -6,31 +6,31 @@
 //*)
 
 //(*IdInit(Ellipsoide)
-const long Ellipsoide::ID_STATICTEXT1 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL1 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT2 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL2 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT3 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL3 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT4 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL4 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT5 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL5 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT6 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL6 = wxNewId();
-const long Ellipsoide::ID_BUTTON1 = wxNewId();
-const long Ellipsoide::ID_BUTTON2 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT7 = wxNewId();
-const long Ellipsoide::ID_SPINCTRL1 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT8 = wxNewId();
-const long Ellipsoide::ID_SPINCTRL2 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT9 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL7 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT10 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL8 = wxNewId();
-const long Ellipsoide::ID_STATICTEXT11 = wxNewId();
-const long Ellipsoide::ID_TEXTCTRL9 = wxNewId();
-const long Ellipsoide::ID_CHECKBOX1 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT1 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT2 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT3 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT4 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT5 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL5 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT6 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL6 = wxNewId();
+const wxWindowID Ellipsoide::ID_BUTTON1 = wxNewId();
+const wxWindowID Ellipsoide::ID_BUTTON2 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT7 = wxNewId();
+const wxWindowID Ellipsoide::ID_SPINCTRL1 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT8 = wxNewId();
+const wxWindowID Ellipsoide::ID_SPINCTRL2 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT9 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL7 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT10 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL8 = wxNewId();
+const wxWindowID Ellipsoide::ID_STATICTEXT11 = wxNewId();
+const wxWindowID Ellipsoide::ID_TEXTCTRL9 = wxNewId();
+const wxWindowID Ellipsoide::ID_CHECKBOX1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Ellipsoide,wxDialog)
@@ -70,10 +70,8 @@ Ellipsoide::Ellipsoide(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(8,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(136,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("Numéro de Matériau :"), wxPoint(216,107), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(336,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Coefficients en X :"), wxPoint(8,139), wxDefaultSize, 0, _T("ID_STATICTEXT9"));
 	TextCtrl_CoefX = new wxTextCtrl(this, ID_TEXTCTRL7, _T("1.0"), wxPoint(104,136), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
 	StaticText10 = new wxStaticText(this, ID_STATICTEXT10, _T("Y :"), wxPoint(192,139), wxDefaultSize, 0, _T("ID_STATICTEXT10"));
@@ -83,11 +81,11 @@ Ellipsoide::Ellipsoide(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	CheckBox_NewSphere = new wxCheckBox(this, ID_CHECKBOX1, _T("Nouveau tracé (alterné)"), wxPoint(232,10), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox_NewSphere->SetValue(false);
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Ellipsoide::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Ellipsoide::OnButton_AnnulerClick);
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Ellipsoide::OnSpinCtrl_GroupeChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Ellipsoide::OnSpinCtrl_MateriauChange);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Ellipsoide::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Ellipsoide::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Ellipsoide::OnButton_AnnulerClick);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Ellipsoide::OnSpinCtrl_GroupeChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Ellipsoide::OnSpinCtrl_MateriauChange);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Ellipsoide::OnClose);
 	//*)
 //	this->Ellipsoide_Parent=parent;
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);

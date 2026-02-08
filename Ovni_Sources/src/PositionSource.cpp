@@ -39,13 +39,9 @@ PositionSource::PositionSource(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	Pos_Z->SetForegroundColour(wxColour(0,0,255));
 	Pos_W = new wxStaticText(this, ID_STATICTEXT4, _T("W :"), wxPoint(60,107), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	SpinCtrlDouble_PosX = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE1, _T("0"), wxPoint(88,32), wxSize(96,23), 0, -100, 100, 0, 0.5, _T("ID_SPINCTRLDOUBLE1"));
-	SpinCtrlDouble_PosX->SetValue(_T("0"));
 	SpinCtrlDouble_PosY = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE2, _T("0"), wxPoint(88,56), wxSize(96,23), 0, -100, 100, 0, 0.5, _T("ID_SPINCTRLDOUBLE2"));
-	SpinCtrlDouble_PosY->SetValue(_T("0"));
 	SpinCtrlDouble_PosZ = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE3, _T("0"), wxPoint(88,80), wxSize(96,23), 0, -100, 100, 0, 0.5, _T("ID_SPINCTRLDOUBLE3"));
-	SpinCtrlDouble_PosZ->SetValue(_T("0"));
 	SpinCtrlDouble_PosW = new wxSpinCtrlDouble(this, ID_SPINCTRLDOUBLE4, _T("0"), wxPoint(88,104), wxSize(96,23), 0, 0, 1, 0, 0.01, _T("ID_SPINCTRLDOUBLE4"));
-	SpinCtrlDouble_PosW->SetValue(_T("0"));
 	Button_Quitter = new wxButton(this, ID_BUTTON2, _T("Quitter"), wxPoint(128,136), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Quitter->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Defaut = new wxButton(this, ID_BUTTON3, _T("Défaut"), wxPoint(32,136), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));

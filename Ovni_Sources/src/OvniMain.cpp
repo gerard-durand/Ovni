@@ -211,7 +211,6 @@ const wxWindowID OvniFrame::ID_MENUITEM46 = wxNewId();
 const wxWindowID OvniFrame::ID_MENUITEM47 = wxNewId();
 const wxWindowID OvniFrame::idMenuHelp = wxNewId();
 const wxWindowID OvniFrame::idMenuAbout = wxNewId();
-const wxWindowID OvniFrame::ID_STATUSBAR1 = wxNewId();
 const wxWindowID OvniFrame::ID_TIMER1 = wxNewId();
 //*)
 
@@ -553,7 +552,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Menu_Aide->Append(MenuItem_About);
     MenuBar_Globale->Append(Menu_Aide, _T("Aide"));
     SetMenuBar(MenuBar_Globale);
-    StatusBar1 = new wxStatusBar(this, ID_STATUSBAR1, 0, _T("ID_STATUSBAR1"));
+    StatusBar1 = new wxStatusBar(this, wxID_ANY, 0, _T("wxID_ANY"));
     int __wxStatusBarWidths_1[1] = { -1 };
     int __wxStatusBarStyles_1[1] = { wxSB_NORMAL };
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);

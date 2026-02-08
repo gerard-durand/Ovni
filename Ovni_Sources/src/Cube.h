@@ -49,22 +49,22 @@ class Cube: public wxDialog
 	protected:
 
 		//(*Identifiers(Cube)
-		static const long ID_STATICTEXT1;
-		static const long ID_TEXTCTRL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT3;
-		static const long ID_TEXTCTRL2;
-		static const long ID_STATICTEXT4;
-		static const long ID_TEXTCTRL3;
-		static const long ID_STATICTEXT5;
-		static const long ID_TEXTCTRL4;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_STATICTEXT6;
-		static const long ID_SPINCTRL1;
-		static const long ID_STATICTEXT7;
-		static const long ID_SPINCTRL2;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_STATICLINE1;
+		static const wxWindowID ID_STATICTEXT2;
+		static const wxWindowID ID_STATICTEXT3;
+		static const wxWindowID ID_TEXTCTRL2;
+		static const wxWindowID ID_STATICTEXT4;
+		static const wxWindowID ID_TEXTCTRL3;
+		static const wxWindowID ID_STATICTEXT5;
+		static const wxWindowID ID_TEXTCTRL4;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_STATICTEXT6;
+		static const wxWindowID ID_SPINCTRL1;
+		static const wxWindowID ID_STATICTEXT7;
+		static const wxWindowID ID_SPINCTRL2;
 		//*)
 
 	private:

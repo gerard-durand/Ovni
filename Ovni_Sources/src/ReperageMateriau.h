@@ -30,11 +30,11 @@ class ReperageMateriau: public wxDialog
 	protected:
 
 		//(*Identifiers(ReperageMateriau)
-		static const long ID_STATICTEXT1;
-		static const long ID_TEXTCTRL1;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_SPINBUTTON1;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_TEXTCTRL1;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_SPINBUTTON1;
 		//*)
 
 	private:
@@ -44,6 +44,7 @@ class ReperageMateriau: public wxDialog
 		void OnButton_QuitClick(wxCommandEvent& event);
 		void OnClose(wxCloseEvent& event);
 		//*)
+
 		OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()

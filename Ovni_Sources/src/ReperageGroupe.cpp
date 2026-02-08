@@ -8,11 +8,11 @@
 #include "OvniMain.h"
 
 //(*IdInit(ReperageGroupe)
-const long ReperageGroupe::ID_STATICTEXT1 = wxNewId();
-const long ReperageGroupe::ID_TEXTCTRL1 = wxNewId();
-const long ReperageGroupe::ID_BUTTON1 = wxNewId();
-const long ReperageGroupe::ID_BUTTON2 = wxNewId();
-const long ReperageGroupe::ID_SPINBUTTON1 = wxNewId();
+const wxWindowID ReperageGroupe::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ReperageGroupe::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ReperageGroupe::ID_BUTTON1 = wxNewId();
+const wxWindowID ReperageGroupe::ID_BUTTON2 = wxNewId();
+const wxWindowID ReperageGroupe::ID_SPINBUTTON1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ReperageGroupe,wxDialog)
@@ -36,9 +36,9 @@ ReperageGroupe::ReperageGroupe(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	SpinButton1 = new wxSpinButton(this, ID_SPINBUTTON1, wxPoint(208,16), wxSize(17,24), wxSP_VERTICAL|wxSP_ARROW_KEYS, _T("ID_SPINBUTTON1"));
 	SpinButton1->SetRange(-1, 100);
 
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ReperageGroupe::OnButton_QuitClick);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&ReperageGroupe::OnSpinButton1Change);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ReperageGroupe::OnClose);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ReperageGroupe::OnButton_QuitClick);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&ReperageGroupe::OnSpinButton1Change);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ReperageGroupe::OnClose);
 	//*)
 //	this->Grp_Parent=parent;
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);

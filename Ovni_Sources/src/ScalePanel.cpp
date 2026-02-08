@@ -6,21 +6,21 @@
 //*)
 
 //(*IdInit(ScalePanel)
-const long ScalePanel::ID_STATICTEXT1 = wxNewId();
-const long ScalePanel::ID_TEXTCTRL1 = wxNewId();
-const long ScalePanel::ID_BUTTON1 = wxNewId();
-const long ScalePanel::ID_STATICTEXT2 = wxNewId();
-const long ScalePanel::ID_STATICTEXT3 = wxNewId();
-const long ScalePanel::ID_STATICTEXT4 = wxNewId();
-const long ScalePanel::ID_TEXTCTRL2 = wxNewId();
-const long ScalePanel::ID_SPINBUTTON1 = wxNewId();
-const long ScalePanel::ID_TEXTCTRL3 = wxNewId();
-const long ScalePanel::ID_SPINBUTTON2 = wxNewId();
-const long ScalePanel::ID_TEXTCTRL4 = wxNewId();
-const long ScalePanel::ID_SPINBUTTON3 = wxNewId();
-const long ScalePanel::ID_CHECKBOX1 = wxNewId();
-const long ScalePanel::ID_BUTTON2 = wxNewId();
-const long ScalePanel::ID_BUTTON3 = wxNewId();
+const wxWindowID ScalePanel::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ScalePanel::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID ScalePanel::ID_BUTTON1 = wxNewId();
+const wxWindowID ScalePanel::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ScalePanel::ID_STATICTEXT3 = wxNewId();
+const wxWindowID ScalePanel::ID_STATICTEXT4 = wxNewId();
+const wxWindowID ScalePanel::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID ScalePanel::ID_SPINBUTTON1 = wxNewId();
+const wxWindowID ScalePanel::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID ScalePanel::ID_SPINBUTTON2 = wxNewId();
+const wxWindowID ScalePanel::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID ScalePanel::ID_SPINBUTTON3 = wxNewId();
+const wxWindowID ScalePanel::ID_CHECKBOX1 = wxNewId();
+const wxWindowID ScalePanel::ID_BUTTON2 = wxNewId();
+const wxWindowID ScalePanel::ID_BUTTON3 = wxNewId();
 //*)
 
 wxString format_Sc=_T("%5.3f");
@@ -59,22 +59,22 @@ ScalePanel::ScalePanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	Button_Annuler = new wxButton(this, ID_BUTTON3, _T("Annuler"), wxPoint(152,208), wxSize(96,24), 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_IncrementText);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ScalePanel::OnButton_ValiderClick);
-	Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleXText);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&ScalePanel::OnSpinButton_XChangeUp);
-	Connect(ID_SPINBUTTON1,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&ScalePanel::OnSpinButton_XChangeDown);
-	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleYText);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&ScalePanel::OnSpinButton_YChangeUp);
-	Connect(ID_SPINBUTTON2,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&ScalePanel::OnSpinButton_YChangeDown);
-	Connect(ID_TEXTCTRL4,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleZText);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEUP,(wxObjectEventFunction)&ScalePanel::OnSpinButton_ZChangeUp);
-	Connect(ID_SPINBUTTON3,wxEVT_SCROLL_LINEDOWN,(wxObjectEventFunction)&ScalePanel::OnSpinButton_ZChangeDown);
-	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ScalePanel::OnCheckBox_ScaleUniqueClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ScalePanel::OnButton_AppliquerClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ScalePanel::OnButton_AnnulerClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ScalePanel::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ScalePanel::OnClose);
+	Connect(ID_TEXTCTRL1, wxEVT_COMMAND_TEXT_ENTER, (wxObjectEventFunction)&ScalePanel::OnTextCtrl_IncrementText);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ScalePanel::OnButton_ValiderClick);
+	Connect(ID_TEXTCTRL2, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleXText);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&ScalePanel::OnSpinButton_XChangeUp);
+	Connect(ID_SPINBUTTON1, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&ScalePanel::OnSpinButton_XChangeDown);
+	Connect(ID_TEXTCTRL3, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleYText);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&ScalePanel::OnSpinButton_YChangeUp);
+	Connect(ID_SPINBUTTON2, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&ScalePanel::OnSpinButton_YChangeDown);
+	Connect(ID_TEXTCTRL4, wxEVT_COMMAND_TEXT_UPDATED, (wxObjectEventFunction)&ScalePanel::OnTextCtrl_ScaleZText);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEUP, (wxObjectEventFunction)&ScalePanel::OnSpinButton_ZChangeUp);
+	Connect(ID_SPINBUTTON3, wxEVT_SCROLL_LINEDOWN, (wxObjectEventFunction)&ScalePanel::OnSpinButton_ZChangeDown);
+	Connect(ID_CHECKBOX1, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ScalePanel::OnCheckBox_ScaleUniqueClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ScalePanel::OnButton_AppliquerClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ScalePanel::OnButton_AnnulerClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&ScalePanel::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ScalePanel::OnClose);
 	//*)
 	this->MAIN = dynamic_cast<OvniFrame*>(parent);
 }

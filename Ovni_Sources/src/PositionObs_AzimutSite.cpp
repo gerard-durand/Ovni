@@ -7,15 +7,15 @@
 //*)
 
 //(*IdInit(PositionObs_AzimutSite)
-const long PositionObs_AzimutSite::ID_STATICTEXT1 = wxNewId();
-const long PositionObs_AzimutSite::ID_STATICTEXT2 = wxNewId();
-const long PositionObs_AzimutSite::ID_STATICTEXT3 = wxNewId();
-const long PositionObs_AzimutSite::ID_STATICTEXT4 = wxNewId();
-const long PositionObs_AzimutSite::ID_STATICTEXT5 = wxNewId();
-const long PositionObs_AzimutSite::ID_SPINCTRL1 = wxNewId();
-const long PositionObs_AzimutSite::ID_SPINCTRL2 = wxNewId();
-const long PositionObs_AzimutSite::ID_BUTTON3 = wxNewId();
-const long PositionObs_AzimutSite::ID_STATICTEXT6 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT1 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT2 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT3 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT4 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT5 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_SPINCTRL1 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_SPINCTRL2 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_BUTTON3 = wxNewId();
+const wxWindowID PositionObs_AzimutSite::ID_STATICTEXT6 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(PositionObs_AzimutSite,wxDialog)
@@ -35,9 +35,7 @@ PositionObs_AzimutSite::PositionObs_AzimutSite(wxWindow* parent,wxWindowID id,co
 	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _T("Azimut"), wxPoint(64,32), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Site"), wxPoint(224,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_LAZ = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(40,48), wxSize(104,21), 0, -1, 360, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_LAZ->SetValue(_T("0"));
 	SpinCtrl_LSI = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(192,48), wxSize(104,21), 0, -180, 180, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_LSI->SetValue(_T("0"));
 	Button_Quit = new wxButton(this, ID_BUTTON3, _T("OK"), wxPoint(112,88), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
 	Button_Quit->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText_Warning = new wxStaticText(this, ID_STATICTEXT6, _T("Attention : Rotation en Y <> 0 !"), wxPoint(56,72), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
@@ -46,10 +44,10 @@ PositionObs_AzimutSite::PositionObs_AzimutSite(wxWindow* parent,wxWindowID id,co
 	wxFont StaticText_WarningFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD,false,_T("Arial"),wxFONTENCODING_DEFAULT);
 	StaticText_Warning->SetFont(StaticText_WarningFont);
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&PositionObs_AzimutSite::OnSpinCtrl_LAZChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&PositionObs_AzimutSite::OnSpinCtrl_LSIChange);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PositionObs_AzimutSite::OnButton_QuitClick);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&PositionObs_AzimutSite::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&PositionObs_AzimutSite::OnSpinCtrl_LAZChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&PositionObs_AzimutSite::OnSpinCtrl_LSIChange);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&PositionObs_AzimutSite::OnButton_QuitClick);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&PositionObs_AzimutSite::OnClose);
 	//*)
 //	printf("Entree PositionObs_AzimutSite\n");
 //	this->Pos_Parent=parent;

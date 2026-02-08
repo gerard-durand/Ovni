@@ -31,6 +31,7 @@
 		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl_X" member="yes">
 			<value>0.0</value>
 			<pos>24,56</pos>
+			<size>108,28</size>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 			<label>Y :</label>
@@ -39,6 +40,7 @@
 		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl_Y" member="yes">
 			<value>0.0</value>
 			<pos>152,56</pos>
+			<size>108,28</size>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 			<label>Z :</label>
@@ -47,6 +49,7 @@
 		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrl_Z" member="yes">
 			<value>0.0</value>
 			<pos>280,56</pos>
+			<size>108,28</size>
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button_OK" member="yes">
 			<label>Accepter</label>

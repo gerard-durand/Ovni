@@ -7,27 +7,27 @@
 //*)
 
 //(*IdInit(Cone)
-const long Cone::ID_STATICTEXT1 = wxNewId();
-const long Cone::ID_TEXTCTRL1 = wxNewId();
-const long Cone::ID_STATICTEXT2 = wxNewId();
-const long Cone::ID_TEXTCTRL2 = wxNewId();
-const long Cone::ID_STATICTEXT3 = wxNewId();
-const long Cone::ID_TEXTCTRL3 = wxNewId();
-const long Cone::ID_STATICTEXT4 = wxNewId();
-const long Cone::ID_TEXTCTRL4 = wxNewId();
-const long Cone::ID_STATICTEXT5 = wxNewId();
-const long Cone::ID_TEXTCTRL5 = wxNewId();
-const long Cone::ID_STATICTEXT6 = wxNewId();
-const long Cone::ID_TEXTCTRL6 = wxNewId();
-const long Cone::ID_STATICTEXT7 = wxNewId();
-const long Cone::ID_SPINCTRL1 = wxNewId();
-const long Cone::ID_STATICTEXT8 = wxNewId();
-const long Cone::ID_SPINCTRL2 = wxNewId();
-const long Cone::ID_BUTTON1 = wxNewId();
-const long Cone::ID_BUTTON2 = wxNewId();
-const long Cone::ID_CHECKBOX1 = wxNewId();
-const long Cone::ID_STATICTEXT9 = wxNewId();
-const long Cone::ID_SPINCTRL3 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT1 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT2 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT3 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT4 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT5 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL5 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT6 = wxNewId();
+const wxWindowID Cone::ID_TEXTCTRL6 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT7 = wxNewId();
+const wxWindowID Cone::ID_SPINCTRL1 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT8 = wxNewId();
+const wxWindowID Cone::ID_SPINCTRL2 = wxNewId();
+const wxWindowID Cone::ID_BUTTON1 = wxNewId();
+const wxWindowID Cone::ID_BUTTON2 = wxNewId();
+const wxWindowID Cone::ID_CHECKBOX1 = wxNewId();
+const wxWindowID Cone::ID_STATICTEXT9 = wxNewId();
+const wxWindowID Cone::ID_SPINCTRL3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Cone,wxDialog)
@@ -63,10 +63,8 @@ Cone::Cone(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	TextCtrl_NbPoints = new wxTextCtrl(this, ID_TEXTCTRL6, _T("16"), wxPoint(224,80), wxSize(96,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(4,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(120,104), wxSize(96,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("Numéro de Matériau :"), wxPoint(232,107), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(360,104), wxSize(96,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(120,192), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(232,192), wxSize(96,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
@@ -75,14 +73,13 @@ Cone::Cone(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 	CheckBox_FermerCone->SetValue(false);
 	StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _T("Nombre de secteurs"), wxPoint(4,139), wxDefaultSize, 0, _T("ID_STATICTEXT9"));
 	SpinCtrl_NbSecteurs = new wxSpinCtrl(this, ID_SPINCTRL3, _T("1"), wxPoint(120,136), wxSize(96,21), 0, 1, 20, 1, _T("ID_SPINCTRL3"));
-	SpinCtrl_NbSecteurs->SetValue(_T("1"));
 
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Cone::OnSpinCtrl_GroupeChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Cone::OnSpinCtrl_MateriauChange);
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Cone::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Cone::OnButton_AnnulerClick);
-	Connect(ID_SPINCTRL3,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Cone::OnSpinCtrl_NbSecteursChange);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Cone::OnClose);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Cone::OnSpinCtrl_GroupeChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Cone::OnSpinCtrl_MateriauChange);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Cone::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Cone::OnButton_AnnulerClick);
+	Connect(ID_SPINCTRL3, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Cone::OnSpinCtrl_NbSecteursChange);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Cone::OnClose);
 	//*)
 //	this->Cone_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

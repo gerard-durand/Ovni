@@ -6,20 +6,20 @@
 //*)
 
 //(*IdInit(ManipulationsPanel)
-const long ManipulationsPanel::ID_STATICTEXT1 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON1 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON2 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON3 = wxNewId();
-const long ManipulationsPanel::ID_STATICTEXT2 = wxNewId();
-const long ManipulationsPanel::ID_CHECKBOX1 = wxNewId();
-const long ManipulationsPanel::ID_CHECKBOX2 = wxNewId();
-const long ManipulationsPanel::ID_CHECKBOX3 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON4 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON5 = wxNewId();
-const long ManipulationsPanel::ID_STATICLINE1 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON6 = wxNewId();
-const long ManipulationsPanel::ID_BUTTON7 = wxNewId();
-const long ManipulationsPanel::ID_STATICLINE2 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_STATICTEXT1 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON1 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON2 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON3 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_STATICTEXT2 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_CHECKBOX1 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_CHECKBOX2 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_CHECKBOX3 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON4 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON5 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_STATICLINE1 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON6 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_BUTTON7 = wxNewId();
+const wxWindowID ManipulationsPanel::ID_STATICLINE2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(ManipulationsPanel,wxDialog)
@@ -67,18 +67,18 @@ ManipulationsPanel::ManipulationsPanel(wxWindow* parent,wxWindowID id,const wxPo
 	Button_NewObjet->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticLine2 = new wxStaticLine(this, ID_STATICLINE2, wxPoint(0,224), wxSize(256,4), wxLI_HORIZONTAL, _T("ID_STATICLINE2"));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_TranslationClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_RotationClick);
-	Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_ScaleClick);
-	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_XClick);
-	Connect(ID_CHECKBOX2,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_YClick);
-	Connect(ID_CHECKBOX3,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_ZClick);
-	Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_CreerClick);
-	Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_RazClick);
-	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_QuitterClick);
-	Connect(ID_BUTTON7,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ManipulationsPanel::OnButton_NewObjetClick);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&ManipulationsPanel::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&ManipulationsPanel::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_TranslationClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_RotationClick);
+	Connect(ID_BUTTON3, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_ScaleClick);
+	Connect(ID_CHECKBOX1, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_XClick);
+	Connect(ID_CHECKBOX2, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_YClick);
+	Connect(ID_CHECKBOX3, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnCheckBox_ZClick);
+	Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_CreerClick);
+	Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_RazClick);
+	Connect(ID_BUTTON6, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_QuitterClick);
+	Connect(ID_BUTTON7, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&ManipulationsPanel::OnButton_NewObjetClick);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&ManipulationsPanel::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&ManipulationsPanel::OnClose);
 	//*)
 
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

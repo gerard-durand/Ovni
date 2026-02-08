@@ -6,34 +6,34 @@
 //*)
 
 //(*IdInit(PropertiesPanel)
-const long PropertiesPanel::ID_STATICTEXT1 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT2 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT3 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT4 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT5 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT6 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT7 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT8 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT9 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT10 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT11 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT12 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT13 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT14 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT15 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT16 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT17 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT18 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT19 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT20 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT21 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT22 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT23 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT24 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT25 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT26 = wxNewId();
-const long PropertiesPanel::ID_STATICTEXT27 = wxNewId();
-const long PropertiesPanel::ID_BUTTON1 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT1 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT2 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT3 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT4 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT5 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT6 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT7 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT8 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT9 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT10 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT11 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT12 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT13 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT14 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT15 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT16 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT17 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT18 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT19 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT20 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT21 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT22 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT23 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT24 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT25 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT26 = wxNewId();
+const wxWindowID PropertiesPanel::ID_STATICTEXT27 = wxNewId();
+const wxWindowID PropertiesPanel::ID_BUTTON1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(PropertiesPanel,wxDialog)
@@ -88,7 +88,7 @@ PropertiesPanel::PropertiesPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	BoutonOK->SetFocus();
 	BoutonOK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PropertiesPanel::OnBoutonOKClick);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&PropertiesPanel::OnBoutonOKClick);
 	//*)
 }
 

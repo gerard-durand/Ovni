@@ -7,22 +7,22 @@
 //*)
 
 //(*IdInit(Icosaedre)
-const long Icosaedre::ID_STATICTEXT1 = wxNewId();
-const long Icosaedre::ID_TEXTCTRL1 = wxNewId();
-const long Icosaedre::ID_STATICTEXT2 = wxNewId();
-const long Icosaedre::ID_TEXTCTRL2 = wxNewId();
-const long Icosaedre::ID_STATICTEXT3 = wxNewId();
-const long Icosaedre::ID_TEXTCTRL3 = wxNewId();
-const long Icosaedre::ID_STATICTEXT4 = wxNewId();
-const long Icosaedre::ID_TEXTCTRL4 = wxNewId();
-const long Icosaedre::ID_STATICTEXT5 = wxNewId();
-const long Icosaedre::ID_SPINCTRL3 = wxNewId();
-const long Icosaedre::ID_BUTTON1 = wxNewId();
-const long Icosaedre::ID_BUTTON2 = wxNewId();
-const long Icosaedre::ID_STATICTEXT7 = wxNewId();
-const long Icosaedre::ID_SPINCTRL1 = wxNewId();
-const long Icosaedre::ID_STATICTEXT8 = wxNewId();
-const long Icosaedre::ID_SPINCTRL2 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT1 = wxNewId();
+const wxWindowID Icosaedre::ID_TEXTCTRL1 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT2 = wxNewId();
+const wxWindowID Icosaedre::ID_TEXTCTRL2 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT3 = wxNewId();
+const wxWindowID Icosaedre::ID_TEXTCTRL3 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT4 = wxNewId();
+const wxWindowID Icosaedre::ID_TEXTCTRL4 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT5 = wxNewId();
+const wxWindowID Icosaedre::ID_SPINCTRL3 = wxNewId();
+const wxWindowID Icosaedre::ID_BUTTON1 = wxNewId();
+const wxWindowID Icosaedre::ID_BUTTON2 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT7 = wxNewId();
+const wxWindowID Icosaedre::ID_SPINCTRL1 = wxNewId();
+const wxWindowID Icosaedre::ID_STATICTEXT8 = wxNewId();
+const wxWindowID Icosaedre::ID_SPINCTRL2 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Icosaedre,wxDialog)
@@ -54,24 +54,21 @@ Icosaedre::Icosaedre(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	TextCtrl_Z = new wxTextCtrl(this, ID_TEXTCTRL4, _T("0.0"), wxPoint(328,40), wxSize(72,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
 	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _T("Nombre de Subdivisions :"), wxPoint(80,76), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_Subdiv = new wxSpinCtrl(this, ID_SPINCTRL3, _T("0"), wxPoint(224,72), wxSize(74,23), 0, 0, 8, 0, _T("ID_SPINCTRL3"));
-	SpinCtrl_Subdiv->SetValue(_T("0"));
 	Button_OK = new wxButton(this, ID_BUTTON1, _T("Accepter"), wxPoint(104,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	Button_OK->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	Button_Annuler = new wxButton(this, ID_BUTTON2, _T("Annuler"), wxPoint(208,136), wxSize(88,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Button_Annuler->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Numéro de Groupe :"), wxPoint(8,107), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	SpinCtrl_Groupe = new wxSpinCtrl(this, ID_SPINCTRL1, _T("0"), wxPoint(128,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL1"));
-	SpinCtrl_Groupe->SetValue(_T("0"));
 	StaticText8 = new wxStaticText(this, ID_STATICTEXT8, _T("Numéro de Matériau :"), wxPoint(208,107), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	SpinCtrl_Materiau = new wxSpinCtrl(this, ID_SPINCTRL2, _T("0"), wxPoint(328,104), wxSize(72,21), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
-	SpinCtrl_Materiau->SetValue(_T("0"));
 
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Icosaedre::OnButton_OKClick);
-	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Icosaedre::OnButton_AnnulerClick);
-	Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Icosaedre::OnSpinCtrl_GroupeChange);
-	Connect(ID_SPINCTRL2,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Icosaedre::OnSpinCtrl_MateriauChange);
-	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&Icosaedre::OnInit);
-	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Icosaedre::OnClose);
+	Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Icosaedre::OnButton_OKClick);
+	Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Icosaedre::OnButton_AnnulerClick);
+	Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Icosaedre::OnSpinCtrl_GroupeChange);
+	Connect(ID_SPINCTRL2, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Icosaedre::OnSpinCtrl_MateriauChange);
+	Connect(wxID_ANY, wxEVT_INIT_DIALOG, (wxObjectEventFunction)&Icosaedre::OnInit);
+	Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Icosaedre::OnClose);
 	//*)
 //	this->Icosaedre_Parent=parent;
     this->MAIN = dynamic_cast<OvniFrame*>(parent);

@@ -29,11 +29,11 @@ class ChoixAffichageObjets: public wxDialog
 	protected:
 
 		//(*Identifiers(ChoixAffichageObjets)
-		static const long ID_STATICTEXT1;
-		static const long ID_CHECKLISTBOX1;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_BUTTON3;
+		static const wxWindowID ID_STATICTEXT1;
+		static const wxWindowID ID_CHECKLISTBOX1;
+		static const wxWindowID ID_BUTTON1;
+		static const wxWindowID ID_BUTTON2;
+		static const wxWindowID ID_BUTTON3;
 		//*)
 
 	private:
@@ -47,6 +47,7 @@ class ChoixAffichageObjets: public wxDialog
 		void OnInit(wxInitDialogEvent& event);
 		void OnClose(wxCloseEvent& event);
 		//*)
+
         OvniFrame* MAIN;
 
 		DECLARE_EVENT_TABLE()
