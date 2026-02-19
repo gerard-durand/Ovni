@@ -103,6 +103,9 @@ BddInter::~BddInter()
 #if wxCHECK_VERSION(3,0,0)
     delete m_glRC;
 #endif // wxCHECK_VERSION
+    if (verbose)
+        printf("Sortie par BddInter::~BddInter\n");
+
 }
 int BddInter::Convert_Rotx_LSI() {
     int ival;

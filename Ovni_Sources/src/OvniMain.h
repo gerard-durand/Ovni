@@ -286,9 +286,11 @@ class OvniFrame: public wxFrame
         void ReperageObjet_activer();
         void ReperagePoint_activer();
         void ReperageFacette_activer();
+        void OnTerminer(wxKeyEvent& event); // En public, pour appeler OvniFrame::OnClose depuis BddInter::OnKeyUpDown
 
         wxMenuItem* Menu_ReOpen3ds=nullptr; // Pour réouvrir spécifiquement un fichier 3ds en changeant le mode de décalage
         void OnTimer_Autosave();            // Pour pouvoir appeler immédiatement un enregistrement dans Autosave.bdd via une touche au clavier (! actuellement)
+        void SetVerbose(bool);
 
     private:
         //(*Handlers(OvniFrame)

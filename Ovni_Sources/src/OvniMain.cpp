@@ -1022,6 +1022,8 @@ OvniFrame::~OvniFrame() {
     delete m_glcontext;         // Utile ?
     delete GLCanvas;            // ""
     DeletePendingEvents();      // ""
+    if (verbose)
+        printf("Sortie par OvniFrame::~OvniFrame\n");
     wxTheApp->ExitMainLoop();   // Pour voir si utile en cas de crash dans Ovni
 }
 
@@ -1301,6 +1303,20 @@ void OvniFrame::OnPal_modifiee()
     }
 }
 
+void OvniFrame::OnTerminer(wxKeyEvent& event)
+{
+/** \brief OvniFrame::OnTerminer : Sortie d'Ovni par OnTerminer (Touche Q ou Esc appelle OnClose)
+ *
+ * \param event
+ *
+ */
+
+    if (verbose)
+        printf("Sortie par OvniFrame::OnTerminer\n");
+    wxCloseEvent close_event;
+    OnClose(close_event);
+}
+
 void OvniFrame::OnQuit(wxCommandEvent& event)
 {
 /** \brief OvniFrame::OnQuit : Sortie d'Ovni par Quit (appelle OnClose)
@@ -1311,7 +1327,10 @@ void OvniFrame::OnQuit(wxCommandEvent& event)
 
 // OnQuit <=> onClose
     wxCloseEvent close_event;
+    if (verbose)
+        printf("Sortie par OvniFrame::OnQuit\n");
     OnClose(close_event);
+
 }
 
 void OvniFrame::OnAbout(wxCommandEvent& event) {
@@ -1331,6 +1350,10 @@ void OvniFrame::OnAbout(wxCommandEvent& event) {
 
 //    wxMessageBox(msg, _T("Ovni version wxWidgets...")); // <=> wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
 //    event.Skip();
+}
+
+void OvniFrame::SetVerbose(bool verb) {
+    verbose = verb;
 }
 
 void OvniFrame::OnClose(wxCloseEvent& event) {
@@ -1355,9 +1378,12 @@ void OvniFrame::OnClose(wxCloseEvent& event) {
         wxString Fichier_svg = Element->wxWorkDir + Element->Fichier_Autosvg;
         wxRemoveFile(Fichier_svg);
     }
-// Ici, un Close() ne suffit pas. Pourquoi ?
+// Ici, un Close() ne marche pas... bouclage sur lui-même !
     Destroy();
-    exit(0);
+    if(verbose)
+        printf("Sortie par OvniFrame::OnClose\n");
+//    wxTheApp->ExitMainLoop();   // Ne change rien ? sera fait dans le destructeur ~OvniFrame
+    return; //    exit(0);  // return plutôt que exit car empêche la sortie via les destructeurs
 }
 
 void OvniFrame::OnGLCanvasPaint(wxPaintEvent& event) {

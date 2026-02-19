@@ -497,6 +497,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     case 'V':
 // ou    case 'v':
         verbose = !verbose ;
+        this->MAIN_b->SetVerbose(verbose);                          // Remonter la valeur de verbose dans MAIN_b (le parent OvniFrame)
         printf("Mode bavard : %s\n",verbose ? "true" : "false") ;
         break;
 
@@ -671,11 +672,13 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         }
         break;
 
-// Quitter par les touches Q ou Escape (en plus de Alt-X déjà programmé et les icônes X de fermeture)
+// Quitter par les touches Q ou Escape (en plus des icônes X de fermeture)
     case 'Q':
     case WXK_ESCAPE:
-        wxTheApp->ExitMainLoop();
-        break;
+        if (verbose)
+            printf("Sortie directe par la touche Q\n");
+        this->MAIN_b->OnTerminer(event);
+        return; // retour direct, inutile de passer par break
 
     case 'A':
     // ou 'a'
