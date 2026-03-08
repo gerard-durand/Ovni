@@ -453,6 +453,9 @@ public:
     void SetArtProvider(wxAuiDockArt* artProvider);
     wxAuiDockArt* GetArtProvider() const;
 
+    // Return the minimum size for any pane.
+    wxSize GetMinPaneSize() const;
+
     // Change the sides where docks for minimized panes can be created.
     // Must include one or more of wxLEFT, wxRIGHT, wxTOP, wxBOTTOM and must
     // currently be called before there any minimized panes.
@@ -482,6 +485,11 @@ public:
     bool InsertPane(wxWindow* window,
                  const wxAuiPaneInfo& insertLocation,
                  int insertLevel = wxAUI_INSERT_PANE);
+
+    bool SplitPane(wxWindow* window,
+                   wxWindow* newWindow,
+                   int direction,
+                   const wxPoint& dropPos = wxDefaultPosition);
 
     bool DetachPane(wxWindow* window);
 
@@ -523,6 +531,8 @@ public:
                  wxWindow* paneWindow,
                  const wxPoint& pt,
                  const wxPoint& offset = wxPoint{});
+
+    wxSize CalculateNewSplitSize() const;
 
     void DrawHintRect(
                  wxWindow* paneWindow,

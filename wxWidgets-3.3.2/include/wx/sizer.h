@@ -374,7 +374,7 @@ public:
     float GetRatio() const
         { return m_ratio; }
 
-    virtual wxRect GetRect() { return m_rect; }
+    virtual wxRect GetRect() const { return m_rect; }
 
     // set a sizer item id (different from a window id, all sizer items,
     // including spacers, can have an associated id)

@@ -636,6 +636,9 @@ public:
     // Override to call DoIdleUpdate().
     virtual void UpdateWindowUI(long flags = wxUPDATE_UI_NONE) override;
 
+    // This function is for internal use only, don't call it from your code.
+    bool CanStretch() const;
+
 protected:
     void Init();
 
@@ -723,6 +726,9 @@ protected:
 private:
     // Common part of OnLeaveWindow() and OnCaptureLost().
     void DoResetMouseState();
+
+    // Common part of On{Right,Middle}Up().
+    void DoRightOrMiddleUp(wxMouseEvent& evt, wxEventType eventType);
 
     wxSize RealizeHelper(wxReadOnlyDC& dc, wxOrientation orientation);
 
