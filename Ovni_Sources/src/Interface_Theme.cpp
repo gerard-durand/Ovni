@@ -6,7 +6,8 @@
 
 // Encore beaucoup de code en commentaires (tests divers) car le mode Dark, est encore en développement sous wxWidgets 3.3
 
-void BddInter::Switch_theme_wx33(bool theme_b)
+#if wxCHECK_VERSION(3,3,0)                  // Version de Switch_theme pour wxWidgets 3.3 et +
+void BddInter::Switch_theme(bool darkmode)  // Plutôt que Switch_theme_wx33, donner le même nom que si version inférieure: choix fait via #if wxCHECK_VERSION(3,3,0)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
 // Version pour wxWidgets 3.3 et +
@@ -19,17 +20,17 @@ void BddInter::Switch_theme_wx33(bool theme_b)
     wxColour Forg;
     wxColour Back;
 
-//        this->MAIN_b->MenuFile->UpdateUI();
-//        this->MAIN_b->MenuBar_Globale->UpdateMenus();
-//        this->MAIN_b->MenuBar_Globale->Refresh();
-//        Backg = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
-//        this->MAIN_b->Panel1->Refresh();
-//        this->MAIN_b->Panel_Sliders->Refresh();
-//        this->MAIN_b->StatusBar1->Refresh();
-//        this->MAIN_b->Button_Droite->UpdateWindowUI();
-//        this->MAIN_b->Button_Droite->SetBackgroundColour(Backg);
-//        this->MAIN_b->Button_Droite->Refresh();
-
+/*        this->MAIN_b->MenuFile->UpdateUI();
+        this->MAIN_b->MenuBar_Globale->UpdateMenus();
+        this->MAIN_b->MenuBar_Globale->Refresh();
+        Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
+        this->MAIN_b->Panel1->Refresh();
+        this->MAIN_b->Panel_Sliders->Refresh();
+        this->MAIN_b->StatusBar1->Refresh();
+        this->MAIN_b->Button_Droite->UpdateWindowUI();
+        this->MAIN_b->Button_Droite->SetBackgroundColour(Back);
+        this->MAIN_b->Button_Droite->Refresh();
+*/
     this->MAIN_b->MenuBar_Globale->Refresh();
     Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
 //    printf("Back 0x%06x\n",Back.GetRGB());
@@ -98,6 +99,7 @@ void BddInter::Switch_theme_wx33(bool theme_b)
     this->MPrefs->RadioBox_Trackball            ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_Triangulation        ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_IconSize             ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_DarkMode             ->SetForegroundColour(Forg);
 
     this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
     this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
@@ -160,7 +162,7 @@ void BddInter::Switch_theme_wx33(bool theme_b)
 
 // Ajustement de la couleur Bleue utilisée par quelques éléments car elle est trop foncée sur fond sombre : remplacer par du Cyan
     wxColour New_blue;
-    if (theme_b)
+    if (darkmode)
         New_blue = *wxCYAN;
     else
         New_blue = *wxBLUE;
@@ -172,13 +174,17 @@ void BddInter::Switch_theme_wx33(bool theme_b)
     this->MPosLight->Pos_Z      ->SetForegroundColour(New_blue);
     this->MTrans   ->StaticText7->SetForegroundColour(New_blue);
     this->MTrans   ->StaticText8->SetForegroundColour(New_blue);
+//    this->MPrefs->SpinCtrlDouble_axes->SetForegroundColour(New_blue);
+//    this->MPrefs->SpinCtrlDouble_norm->SetForegroundColour(New_blue);
+//    this->MPrefs->SpinCtrlDouble_src ->SetForegroundColour(New_blue);
 
 //    this->MAIN_b->Refresh();
 }
 
+#else
 // Ci-dessous, devrait pouvoir être supprimé une fois la bascule vers wxWidgets 3.3 définitive...
 
-void BddInter::Switch_theme(bool theme_b)
+void BddInter::Switch_theme(bool darkmode)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
 // Version pour wxWidgets avant la 3.3
@@ -194,7 +200,7 @@ void BddInter::Switch_theme(bool theme_b)
     wxColour Bleu_svg ;
     bool methode_boucle = false;    // Pour tester 2 méthodes, une avec boucles (true), + élégante mais qui plante parfois, et une très bourrine, mais plus fiable !
 
-    if (theme_b) {
+    if (darkmode) {
         Bleu_svg= this->MAIN_b->Slider_z->GetForegroundColour(); // Sur ce slider/curseur en Z, le bleu original est trop foncé
         Forg    = New_Forg;
         Back    = New_Back;
@@ -488,7 +494,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MAIN_b->Menu_Aide->UpdateUI();
     }
 
-    if (theme_b)
+    if (darkmode)
         this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);   // Bleu initial trop foncé, mettre plutôt Cyan pour darkmode
     else
         this->MAIN_b->Slider_z->SetForegroundColour(Bleu_svg);  // Reset de la couleur originale
@@ -502,7 +508,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPosCRot->SetForegroundColour(Forg);
     this->MPosCRot->SetBackgroundColour(Back);
     this->MPosCRot->StaticText1->SetForegroundColour(Forg);
-    if (theme_b)
+    if (darkmode)
         this->MPosCRot->StaticText4->SetForegroundColour(New_Forg);
     else
         this->MPosCRot->StaticText4->SetForegroundColour(Bleu_svg);
@@ -676,7 +682,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MDeplacer->SetForegroundColour(Forg);
     this->MDeplacer->SetBackgroundColour(Back);
     this->MDeplacer->StaticText1  ->SetForegroundColour(Forg);
-    if (theme_b) {
+    if (darkmode) {
         this->MDeplacer->StaticText4->SetForegroundColour(New_Forg);
      } else {
         this->MDeplacer->StaticText4->SetForegroundColour(Bleu_svg);
@@ -830,7 +836,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MManip->Button_Scale      ->SetBackgroundColour(Gris);
     this->MManip->Button_NewObjet   ->SetForegroundColour(Forg);
     this->MManip->Button_NewObjet   ->SetBackgroundColour(Gris);
-    if (theme_b) {
+    if (darkmode) {
         this->MManip->StaticText1   ->SetForegroundColour(New_Back);
         this->MManip->StaticText1   ->SetBackgroundColour(New_Forg);
         this->MManip->StaticText2   ->SetForegroundColour(New_Back);
@@ -848,7 +854,7 @@ void BddInter::Switch_theme(bool theme_b)
 // ModificationPanel
     this->MPanel->SetForegroundColour(Forg);
     this->MPanel->SetBackgroundColour(Back);
-    if (theme_b) {
+    if (darkmode) {
         this->MPanel->StaticText1   ->SetForegroundColour(New_Back);
         this->MPanel->StaticText1   ->SetBackgroundColour(New_Forg);
         this->MPanel->StaticText3   ->SetForegroundColour(New_Back);
@@ -941,7 +947,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPosLight->SetBackgroundColour(Back);
     this->MPosLight->StaticText1->SetForegroundColour(Forg);
     this->MPosLight->Pos_W      ->SetForegroundColour(Forg);
-    if (theme_b) {
+    if (darkmode) {
         this->MPosLight->Pos_Z  ->SetForegroundColour(*wxCYAN); // Couleur bleue initiale trop foncée en darkmode
     } else {
         this->MPosLight->Pos_Z  ->SetForegroundColour(Bleu_svg);
@@ -1012,6 +1018,8 @@ void BddInter::Switch_theme(bool theme_b)
     this->MPrefs->RadioBox_Triangulation    ->SetBackgroundColour(Back);
     this->MPrefs->RadioBox_IconSize ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_IconSize ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_DarkMode ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_DarkMode ->SetBackgroundColour(Back);
     this->MPrefs->TextCtrl_WorkDir  ->SetForegroundColour(Forg);
     this->MPrefs->TextCtrl_WorkDir  ->SetBackgroundColour(Gris);
     this->MPrefs->Button_tmp_rep    ->SetForegroundColour(Forg);
@@ -1025,7 +1033,7 @@ void BddInter::Switch_theme(bool theme_b)
 // PropertiesPanel
     this->MProps->SetForegroundColour(Forg);
     this->MProps->SetBackgroundColour(Back);
-    if (theme_b) {
+    if (darkmode) {
         this->MProps->StaticText1       ->SetForegroundColour(New_Back);
         this->MProps->StaticText1       ->SetBackgroundColour(New_Forg);
         this->MProps->StaticTextNomBdd  ->SetForegroundColour(New_Back);
@@ -1301,7 +1309,7 @@ void BddInter::Switch_theme(bool theme_b)
 // SelectionPanel
     this->MSelect->SetForegroundColour(Forg);
     this->MSelect->SetBackgroundColour(Back);
-    if (theme_b) {
+    if (darkmode) {
         this->MSelect->StaticText1              ->SetForegroundColour(New_Back);    // <=> *wxBLACK (en fait sur ces items, Forg/Back inversés)
         this->MSelect->StaticText1              ->SetBackgroundColour(New_Forg);    // <=> *wxWHITE
         this->MSelect->StaticText2              ->SetForegroundColour(New_Back);
@@ -1441,7 +1449,7 @@ void BddInter::Switch_theme(bool theme_b)
     this->MTrans->SetBackgroundColour(Back);
     this->MTrans->StaticText1->SetForegroundColour(Forg);
     this->MTrans->StaticText2->SetForegroundColour(Forg);
-    if (theme_b) {
+    if (darkmode) {
         this->MTrans->StaticText7->SetForegroundColour(New_Forg);
         this->MTrans->StaticText8->SetForegroundColour(New_Forg);
      } else {
@@ -1522,3 +1530,4 @@ void BddInter::Switch_theme(bool theme_b)
 //    this->MAIN_b->Refresh();
 
 }
+#endif // wxCHECK_VERSION

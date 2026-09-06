@@ -70,7 +70,7 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
     Face    *Facette_courante;
     Sommet  *Sommet_courant;
     wxString wxMessage;
-//    static bool theme_b = false;
+    bool static DisplayMessage_Premiere_Fois=true;  // Le message associé à la touche W ne sera affiché qu'une seule fois par session
 //    int next;
 //    int nb_menus;
 
@@ -711,17 +711,20 @@ void BddInter::OnKeyDown(wxKeyEvent& event) {
         break;
 
     case 'W':
-        theme_b = !theme_b;                     // Test pour Basculer du thème standard vers un thème sombre... Pas très fiable, plante parfois !!!
-#if wxCHECK_VERSION(3,3,0)
-//        if (theme_b) wxGetApp().MSWEnableDarkMode(1);// wxApp::DarkMode_Always
-//        else         wxGetApp().MSWEnableDarkMode(0);// wxApp::DarkMode_Auto
-        if (theme_b) wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings); // Et si MySettings a déjà été créé ?
-        else         wxTheApp->MSWEnableDarkMode(0);
-        Switch_theme_wx33(theme_b);
-#else
-        Switch_theme(theme_b);
-#endif
-        darkmode = (int)theme_b*2 -1;   // darkmode = -1 pour thème clair standard, darkmode = +1 pour thème sombre (0, pour suivre le thème système, non disponible ici)
+        darkmode = !darkmode;                                   // Test pour Basculer du thème standard vers un thème sombre ou inversement... Pas toujours très fiable, plante parfois !!!
+        if (MPrefs->IsShown()) {
+            MPrefs->RadioBox_DarkMode->SetSelection(darkmode);  // Modifier la radiobox si le dialogue Préférences est affiché
+        }
+        if (DisplayMessage_Premiere_Fois) {
+            wxMessage = _T("Le basculement de Mode entre Thème Clair et Sombre ne sera complet qu'après un redémarrage d'Ovni");
+            DisplayMessage(wxMessage,true);
+            DisplayMessage_Premiere_Fois = false;
+        }
+
+        if (darkmode) wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, My_DarkSettings);
+        else          wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Never,  My_DarkSettings);    // 0 ne marche plus. En fait, avec Auto, suit le thème donné pas Windows, sinon Never force le mode thème clair
+        Switch_theme(darkmode);                                     // Pas sûr que ce soit très utile....
+
         ini_file_modified = true;
         this->MAIN_b ->Refresh();
         break;

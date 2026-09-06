@@ -23,11 +23,11 @@
 #include <wx/timer.h>
 //*)
 
-#if !wxCHECK_VERSION(3,0,0)
+/*#if !wxCHECK_VERSION(3,0,0)
     #include <wx/things/toggle.h>       // Pour avoir wxCustomButton dans wxWidgets 2.8.12
 //    #include <wx/things/spinctld.h>
 #endif
-
+*/
 class OvniFrame;                        // Déplacé ici depuis interface.h où ce n'était pas logique !
 
 // Includes des différents boîtes de dialogues / Panels
@@ -177,7 +177,6 @@ class OvniFrame: public wxFrame
          wxTimer Timer_Save;
          //*)
 
-#if wxCHECK_VERSION(3,0,0)
          wxToggleButton* Button_Axes;
          wxToggleButton* Button_Boite;
          wxToggleButton* Button_Filaire;
@@ -192,22 +191,6 @@ class OvniFrame: public wxFrame
          wxToggleButton* Button_Points;
          wxToggleButton* Button_Sliders;
          wxToggleButton* Button_Source;
-#else
-         wxCustomButton* Button_Axes;
-         wxCustomButton* Button_Boite;
-         wxCustomButton* Button_Filaire;
-         wxCustomButton* Button_Gouraud;
-         wxCustomButton* Button_Groupes;
-         wxCustomButton* Button_Materiaux;
-         wxCustomButton* Button_Modifs;
-         wxCustomButton* Button_Normale_Barycentre;
-         wxCustomButton* Button_Normales_Sommets;
-         wxCustomButton* Button_Outils;
-         wxCustomButton* Button_Plein;
-         wxCustomButton* Button_Points;
-         wxCustomButton* Button_Sliders;
-         wxCustomButton* Button_Source;
-#endif // wxCHECK_VERSION
 
         BddInter *Element=nullptr;
         OvniFrame(wxWindow* parent, wxWindowID id = -1);

@@ -46,6 +46,7 @@ const wxWindowID Prefs_Dialog::ID_STATICLINE7 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_RADIOBOX1 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_RADIOBOX2 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_RADIOBOX3 = wxNewId();
+const wxWindowID Prefs_Dialog::ID_RADIOBOX4 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_STATICLINE8 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_CHECKBOX7 = wxNewId();
 const wxWindowID Prefs_Dialog::ID_STATICLINE10 = wxNewId();
@@ -161,7 +162,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(StaticLine7, 0, wxALL|wxEXPAND, 0);
 	wxString __wxRadioBoxChoices_1[3] =
 	{
-	    _T("Méthode 1     "),
+	    _T("Méthode 1          "),
 	    _T("Méthode 2     "),
 	    _T("Méthode 3     ")
 	};
@@ -170,7 +171,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(RadioBox_Triangulation, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	wxString __wxRadioBoxChoices_2[2] =
 	{
-	    _T("Directe            "),
+	    _T("Directe                "),
 	    _T("Trackball")
 	};
 	RadioBox_Trackball = new wxRadioBox(this, ID_RADIOBOX2, _T("Mode de rotation à la souris"), wxDefaultPosition, wxSize(382,40), 2, __wxRadioBoxChoices_2, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX2"));
@@ -178,14 +179,22 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	BoxSizer1->Add(RadioBox_Trackball, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	wxString __wxRadioBoxChoices_3[4] =
 	{
-	    _T("16 x16           "),
-	    _T("24 x 24            "),
-	    _T("32 x 32            "),
+	    _T("16 x 16                               "),
+	    _T("24 x 24                   "),
+	    _T("32 x 32              "),
 	    _T("48 x 48")
 	};
 	RadioBox_IconSize = new wxRadioBox(this, ID_RADIOBOX3, _T("Taille des icônes de la barre d\'outils"), wxDefaultPosition, wxSize(382,40), 4, __wxRadioBoxChoices_3, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX3"));
 	RadioBox_IconSize->SetSelection(0);
-	BoxSizer1->Add(RadioBox_IconSize, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
+	BoxSizer1->Add(RadioBox_IconSize, 0, wxLEFT|wxEXPAND, 5);
+	wxString __wxRadioBoxChoices_4[2] =
+	{
+	    _T("Thème Clair"),
+	    _T("Thème Sombre")
+	};
+	RadioBox_DarkMode = new wxRadioBox(this, ID_RADIOBOX4, _T("Thème de Couleur de l\'Interface"), wxDefaultPosition, wxSize(382,40), 2, __wxRadioBoxChoices_4, 1, wxRA_SPECIFY_ROWS, wxDefaultValidator, _T("ID_RADIOBOX4"));
+	RadioBox_DarkMode->SetSelection(0);
+	BoxSizer1->Add(RadioBox_DarkMode, 0, wxLEFT|wxRIGHT|wxEXPAND, 5);
 	StaticLine8 = new wxStaticLine(this, ID_STATICLINE8, wxDefaultPosition, wxSize(380,2), wxLI_HORIZONTAL, _T("ID_STATICLINE8"));
 	BoxSizer1->Add(StaticLine8, 0, wxALL|wxEXPAND, 0);
 	CheckBox_DisplayFps = new wxCheckBox(this, ID_CHECKBOX7, _T("Affichage du nombre de frames OpenGL par secondes (fps)"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX7"));
@@ -254,6 +263,7 @@ Prefs_Dialog::Prefs_Dialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Connect(ID_RADIOBOX1, wxEVT_COMMAND_RADIOBOX_SELECTED, (wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TriangulationSelect);
 	Connect(ID_RADIOBOX2, wxEVT_COMMAND_RADIOBOX_SELECTED, (wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_TrackballSelect);
 	Connect(ID_RADIOBOX3, wxEVT_COMMAND_RADIOBOX_SELECTED, (wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_IconSizeSelect);
+	Connect(ID_RADIOBOX4, wxEVT_COMMAND_RADIOBOX_SELECTED, (wxObjectEventFunction)&Prefs_Dialog::OnRadioBox_DarkModeSelect);
 	Connect(ID_CHECKBOX7, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_DisplayFpsClick);
 	Connect(ID_CHECKBOX9, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_CreerBackupClick);
 	Connect(ID_CHECKBOX10, wxEVT_COMMAND_CHECKBOX_CLICKED, (wxObjectEventFunction)&Prefs_Dialog::OnCheckBox_SupprBackupClick);
@@ -554,6 +564,11 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     ival = Element->m_gldata.mode_Trackball = Element->GetModeTrackballDef();
     RadioBox_Trackball->SetSelection(ival);
 
+// DarkMode
+    chkB = Element->GetDarkMode_def();
+    Element->SetDarkMode(chkB);
+    RadioBox_DarkMode->SetSelection((int)chkB);
+
 // Case à cocher pour l'affichage des FPS
     chkB = Element->GetViewFpsDef();
     Element->SetViewFps(chkB);
@@ -591,6 +606,8 @@ void Prefs_Dialog::OnButton_ResetClick(wxCommandEvent& event)
     Element->SetIconSize (IconIndex_local);
     RadioBox_IconSize->SetSelection(IconIndex_local);
     OnRadioBox_IconSizeSelect(event);   // Simule un changement de taille d'icône
+
+//    Element->Switch_theme(Element->GetThemeB());  // Ne marche pas ici ?
 
     Element->ini_file_modified = true ;
     Element->m_gllist = 0;
@@ -730,4 +747,19 @@ void Prefs_Dialog::OnRadioBox_IconSizeSelect(wxCommandEvent& event)
     MAIN->SetSize(*ClientSizeXY);
     Element->ini_file_modified = true ;
     delete ClientSizeXY;
+}
+
+void Prefs_Dialog::OnRadioBox_DarkModeSelect(wxCommandEvent& event)
+{
+    BddInter *Element  = MAIN->Element;
+
+    if(Element->GetVerbose()) printf("Avant Mode Couleur Interface : %d, darkmode : %d\n",RadioBox_DarkMode->GetSelection(), Element->GetDarkMode());//, Element->GetDarkmode());
+
+    bool local_darkmode = (bool)RadioBox_DarkMode->GetSelection();
+    local_darkmode = !local_darkmode;             // Prendre l'inverse pour contrer la première instruction de l'effet de la touche W
+    Element->SetDarkMode(local_darkmode);
+    wxKeyEvent k_event;
+    k_event.m_keyCode = 'W';
+    Element->OnKeyDown(k_event);   // Simule une pression sur la touche W au clavier
+    if(Element->GetVerbose()) printf("Après Mode Couleur Interface : %d, darkmode : %d\n",RadioBox_DarkMode->GetSelection(), Element->GetDarkMode());//, Element->GetDarkmode());
 }

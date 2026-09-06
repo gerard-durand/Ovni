@@ -251,20 +251,28 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //    verbose = true; // Déclaré dans OvniMain et recopié dans BddInter
     if (verbose) printf("Entree OvniFrame:OvniFrame\n");
 
-    if (verbose) printf("IsDark       : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
+    if (verbose) printf("IsDark        : %d\n",wxSystemSettings::GetAppearance().IsDark() );          // vérification du mode courant
 
 #if defined(__WXMSW__)              // Teste si on est sous Windows, car le Darkmode y est spécifique
-    int local_darkmode = -1;
-    local_darkmode = wxSystemOptions().GetOptionInt("msw.dark-mode");   // suivant la valeur de WX_MSW_DARK_MODE peut valoir 0, 1 ou 2
-    if (verbose) printf("msw.dark-mode: %d\n",local_darkmode);
-    local_darkmode = Ouvrir_Ini();                                      // De toute façon c'est le contenu de Ovni.ini qui prévaut (mais valeurs -1, 0 ou 1)
-    if (wxSystemSettings::GetAppearance().IsDark()) local_darkmode = 1; // On a forcé le darkmode via set WX_MSW_DARK_MODE=2 en ligne de commande avant de lancer Ovni
-#if wxCHECK_VERSION(3,3,0)          // Darkmode réellement supporté si version de wxWidgets > 3.3
-    if (local_darkmode >= 0) {
-        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, new MySettings());
+
+    int local_darkmode = 0;         // Thème Clair à l'initialisation
+    local_darkmode = Ouvrir_Ini();
+    if (verbose) printf("local_darkmode: %d\n",local_darkmode);
+    if (wxSystemOptions().GetOptionInt("msw.dark-mode") == 2) {     // Si WX_MSW_DARK_MODE a été passé en ligne de commande, il peut valoir 0=Standard, 1=System ou 2=Sombre.
+        local_darkmode = 1;                                         // Si 2, alors forcer le thème Sombre qquelle que soit la valeur dans Ovni.ini
+        if (verbose) printf("msw.dark-mode : 2 => force local_darkmode a 1\n"); // ATTENTION : le enum DarkMode de wx/msw/app.h a les même valeurs, mais pas dans le même ordre !
     }
-    if (verbose) printf("IsSystemDark : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );    // Dark mode en cours du système
-#endif // wxCHECK_VERSION
+
+    My_DarkSettings = new MySettings();                                         // Darkmode réellement supporté si version de wxWidgets >= 3.3
+    if (local_darkmode > 0) {
+        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, My_DarkSettings);   // My_DarkSettings plutôt que new MySettings(), sinon 4 x new au total > fuite mémoire probable
+    } else {
+        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Never,  My_DarkSettings);   // DarkMode_Never (ou _Auto) valable depuis 3.3.4
+    }
+    if (verbose) {
+        printf("IsSystemDark  : %d\n",wxSystemSettings::GetAppearance().IsSystemDark() );   // Pour Info : Dark mode en cours de Windows
+        printf("IsDark Ovni   : %d\n",wxSystemSettings::GetAppearance().IsDark());          // DarkMode en cours d'Ovni
+    }
 
 #endif // __WXMSW__
 
@@ -654,7 +662,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 
     // Initialement créés par wxSmith (pour wxWidgets 2.8.12) ainsi que les déclarations des ID_POPUP_*
 
-#if wxCHECK_VERSION(3,0,0)
 // wxCustomButton existe (généré via C::B + wxWidgets 3.0 et +) mais plantages. Utiliser plutôt wxBitmapToggleButton qui donne le même comportement
 // mais n'existe pas sous wxWidget 2.8.12. De plus non géré pas wxSmith => génération manuelle.
 // A partir de 3.1.6 essayer wxBitmapBundle(...) plutôt que wxBitmap(...)
@@ -690,51 +697,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Button_Sliders = new wxBitmapToggleButton(Panel1,ID_BUTTON18,wxBitmapBundle::FromSVGFile(_T("./Icones/wxSlider.svg"), SizeXY_icones), wxPoint(724,0),SizeXY_button,0,wxDefaultValidator,_T("ID_BUTTON18"));
     Button_Groupes = new wxBitmapToggleButton(Panel1,ID_BUTTON19,wxBitmapBundle::FromSVGFile(_T("./Icones/groupes.svg"),  SizeXY_icones), wxPoint(748,0),SizeXY_button,0,wxDefaultValidator,_T("ID_BUTTON19"));
     Button_Materiaux=new wxBitmapToggleButton(Panel1,ID_BUTTON20,wxBitmapBundle::FromSVGFile(_T("./Icones/materiau.svg"), SizeXY_icones), wxPoint(772,0),SizeXY_button,0,wxDefaultValidator,_T("ID_BUTTON20"));
-
-#else
-    Button_Points = new wxCustomButton(Panel1,ID_BUTTON7,wxEmptyString,wxBitmap(wxImage(_T("./Icones/points.png"))),wxPoint(460,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_TOP,wxDefaultValidator,_T("ID_BUTTON7"));
-    Button_Points->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/points.png"))));
-    Button_Points->SetBitmapDisabled(Button_Points->CreateBitmapDisabled(Button_Points->GetBitmapLabel()));
-    Button_Filaire = new wxCustomButton(Panel1,ID_BUTTON8,wxEmptyString,wxBitmap(wxImage(_T("./Icones/filaire.png"))),wxPoint(484,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_TOP,wxDefaultValidator,_T("ID_BUTTON8"));
-    Button_Filaire->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/filaire.png"))));
-    Button_Filaire->SetBitmapDisabled(Button_Filaire->CreateBitmapDisabled(Button_Filaire->GetBitmapLabel()));
-    Button_Plein = new wxCustomButton(Panel1,ID_BUTTON9,wxEmptyString,wxBitmap(wxImage(_T("./Icones/plein.png"))),wxPoint(508,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON9"));
-    Button_Plein->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/plein.png"))));
-    Button_Plein->SetBitmapDisabled(Button_Plein->CreateBitmapDisabled(Button_Plein->GetBitmapLabel()));
-    Button_Axes = new wxCustomButton(Panel1,ID_BUTTON10,wxEmptyString,wxBitmap(wxImage(_T("./Icones/axes.png"))),wxPoint(532,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON10"));
-    Button_Axes->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/axes.png"))));
-    Button_Axes->SetBitmapDisabled(Button_Axes->CreateBitmapDisabled(Button_Axes->GetBitmapLabel()));
-    Button_Boite = new wxCustomButton(Panel1,ID_BUTTON11,wxEmptyString,wxBitmap(wxImage(_T("./Icones/boite.png"))),wxPoint(556,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON11"));
-    Button_Boite->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/boite.png"))));
-    Button_Boite->SetBitmapDisabled(Button_Boite->CreateBitmapDisabled(Button_Boite->GetBitmapLabel()));
-    Button_Normale_Barycentre = new wxCustomButton(Panel1,ID_BUTTON12,wxEmptyString,wxBitmap(wxImage(_T("./Icones/B_Normales.png"))),wxPoint(580,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON12"));
-    Button_Normale_Barycentre->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/B_Normales.png"))));
-    Button_Normale_Barycentre->SetBitmapDisabled(Button_Normale_Barycentre->CreateBitmapDisabled(Button_Normale_Barycentre->GetBitmapLabel()));
-    Button_Normales_Sommets = new wxCustomButton(Panel1,ID_BUTTON13,wxEmptyString,wxBitmap(wxImage(_T("./Icones/S_Normales.png"))),wxPoint(604,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON13"));
-    Button_Normales_Sommets->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/S_Normales.png"))));
-    Button_Normales_Sommets->SetBitmapDisabled(Button_Normales_Sommets->CreateBitmapDisabled(Button_Normales_Sommets->GetBitmapLabel()));
-    Button_Source = new wxCustomButton(Panel1,ID_BUTTON14,wxEmptyString,wxBitmap(wxImage(_T("./Icones/sun.png"))),wxPoint(628,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON14"));
-    Button_Source->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/sun.png"))));
-    Button_Source->SetBitmapDisabled(Button_Source->CreateBitmapDisabled(Button_Source->GetBitmapLabel()));
-    Button_Gouraud = new wxCustomButton(Panel1,ID_BUTTON15,wxEmptyString,wxBitmap(wxImage(_T("./Icones/gouraud.png"))),wxPoint(652,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON15"));
-    Button_Gouraud->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/gouraud.png"))));
-    Button_Gouraud->SetBitmapDisabled(Button_Gouraud->CreateBitmapDisabled(Button_Gouraud->GetBitmapLabel()));
-    Button_Outils = new wxCustomButton(Panel1,ID_BUTTON16,wxEmptyString,wxBitmap(wxImage(_T("./Icones/outils.png"))),wxPoint(676,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON16"));
-    Button_Outils->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/outils.png"))));
-    Button_Outils->SetBitmapDisabled(Button_Outils->CreateBitmapDisabled(Button_Outils->GetBitmapLabel()));
-    Button_Modifs = new wxCustomButton(Panel1,ID_BUTTON17,wxEmptyString,wxBitmap(wxImage(_T("./Icones/modifs.png"))),wxPoint(700,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON17"));
-    Button_Modifs->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/modifs.png"))));
-    Button_Modifs->SetBitmapDisabled(Button_Modifs->CreateBitmapDisabled(Button_Modifs->GetBitmapLabel()));
-    Button_Sliders = new wxCustomButton(Panel1,ID_BUTTON18,wxEmptyString,wxBitmap(wxImage(_T("./Icones/wxSlider.png"))),wxPoint(724,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON18"));
-    Button_Sliders->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/wxSlider16.png"))));
-    Button_Sliders->SetBitmapDisabled(Button_Sliders->CreateBitmapDisabled(Button_Sliders->GetBitmapLabel()));
-    Button_Groupes = new wxCustomButton(Panel1,ID_BUTTON19,wxEmptyString,wxBitmap(wxImage(_T("./Icones/groupes.png"))),wxPoint(748,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON19"));
-    Button_Groupes->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/groupes.png"))));
-    Button_Groupes->SetBitmapDisabled(Button_Groupes->CreateBitmapDisabled(Button_Groupes->GetBitmapLabel()));
-    Button_Materiaux = new wxCustomButton(Panel1,ID_BUTTON20,wxEmptyString,wxBitmap(wxImage(_T("./Icones/materiau.png"))),wxPoint(772,0),wxSize(24,24),wxCUSTBUT_TOGGLE|wxCUSTBUT_BOTTOM,wxDefaultValidator,_T("ID_BUTTON20"));
-    Button_Materiaux->SetBitmapSelected(wxBitmap(wxImage(_T("./Icones/materiau.png"))));
-    Button_Materiaux->SetBitmapDisabled(Button_Materiaux->CreateBitmapDisabled(Button_Materiaux->GetBitmapLabel()));
-#endif // wxCHECK_VERSION
 
     Connect(ID_BUTTON7, wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_PointsToggle);
     Connect(ID_BUTTON8, wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,(wxObjectEventFunction)&OvniFrame::OnButton_FilaireToggle);
@@ -772,7 +734,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //    ID_POPUP_NORM_F_bis = ID_POPUP_NORM_F;
 //    ID_POPUP_NORM_S_bis = ID_POPUP_NORM_S;
 
-// Connexion manuelle pour la réouverture spécifique de fichiers 3ds (car non vréé via wxSmith)
+// Connexion manuelle pour la réouverture spécifique de fichiers 3ds (car non créé via wxSmith)
     Connect(idReopenFile3ds,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&OvniFrame::OnMenu_ReOpen3dsSelected);
 
 // Affichage d'une aide lors du survol de boutons par la souris
@@ -798,7 +760,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Init_OpenGL();
     int argc=1;
     char *argv=(char*)"Ovni";
-    glutInit(&argc,&argv);  // On pourrait récupérer les véritables arguments via wxGetApp().argc et wxGetApp.argv[*], mais peu d'intérêt ici pout glutInit, de + ce sont des wxString
+    glutInit(&argc,&argv);  // On pourrait récupérer les véritables arguments via wxGetApp().argc et wxGetApp.argv[*], mais peu d'intérêt ici pour glutInit, de + ce sont des wxString
 //    glutSetOption(GLUT_MULTISAMPLE,4);    // à faire avant tracé de fenêtre Glut, mais fait aussi dans wxGLCanvas
 //    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);   // Ajout 02/2020 pour test : serait déjà fait dans wxGLCanvas ?
     Init_Boutons();
@@ -927,10 +889,13 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     int svgTimeLocal = Element->GetSvgTime();
     if (svgTimeLocal > 0) Timer_Save.Start(svgTimeLocal*60000,false);   // Lancer le timer si svg_time > 0
 
-#if wxCHECK_VERSION(3,3,0)
-    if (Element->GetDarkmode() >= 0 ) {
-        Element->SetThemeB(Element->GetDarkmode());
+    if ((local_darkmode > 0) || (wxSystemOptions().GetOptionInt("msw.dark-mode") == 2)) {   // On a forcé le mode Sombre soit dans Ovni.ini soit via Ovni_64_DarkMode.cmd avec set WX_MSW_DARK_MODE=2
+        Element->SetDarkMode(true);                                                         // Le test sur msw.dark-mode n'est sans doute pas utile car déjà fait pour initier local_darkmode
+        Preferences_Panel->RadioBox_DarkMode->SetSelection(1);
+//        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, My_DarkSettings);             // Déjà fait !
+        Element->Switch_theme(true);                                                   // Si on ne le fait pas, certains éléments de linterface restent en mode Thème Clair
     }
+
     if (wxSystemSettings::GetAppearance().IsDark()) {
 // Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
         wxColour New_blue = *wxCYAN;
@@ -972,14 +937,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
 //
 //        Refresh();
     }
-#else
-    if (Element->darkmode >= 0 ) {
-        Element->SetThemeB((bool)(1 - Element->GetDarkmode()));
-        wxKeyEvent key_event;
-        key_event.m_keyCode = 'W';
-        Element->OnKeyDown(key_event);
-    }
-#endif // wxCHECK_VERSION
 
 // Code pour imposer une autre taille / position. La nouvelle taille est celle stockée dans Ovni.ini (sinon celle par défaut)
 
@@ -1030,17 +987,17 @@ OvniFrame::~OvniFrame() {
 int OvniFrame::Ouvrir_Ini() {
 /** \brief Version spéciale de Ouvrir_ini_file ne récupérant que la valeur du mot clé Dark_Mode s'il y est présent
  *
- * \return Valeur lue (0 si thème par défaut, 1 pour forcer le thème sombre) ou -1 pour forcer le thème clair (ou absent)
+ * \return Valeur lue (0 si thème clair par défaut, 1 pour forcer le thème sombre)
  *
  */
 //    const char *fichier_init="Ovni.ini";
     const char *initQ="Dark_Mode=";
-    int local_darkmode = -1;
     char *Lu, *p_txt_wrk;
-    int icmp, ibool, len ;
+    int icmp, len ;
     char Message[512];
     FILE *f_init;
 
+    int local_darkmode = 0;
     f_init = fopen(fichier_init,"r") ;  // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != nullptr) {
         while ((Lu = fgets(Message,300,f_init)) != nullptr) {
@@ -1263,18 +1220,12 @@ bool OvniFrame::OnBdd_modifiee()
     if (Element->GetBddModifiee() || Element->GetElementsSupprimes()) {
         wxString wxMessage = _T("La Base de Données 3D a été modifiée.\nVoulez-vous :\n");
         wxMessage         += _T("    1 : l'enregistrer puis Quitter . . . . . . . . . (Oui)\n");
-#if wxCHECK_VERSION(3,0,0)
         wxMessage         += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Quitter)\n");
-#else
-        wxMessage         += _T("    2 : quitter sans l'enregistrer . . . . . . . . . (Non)\n");
-#endif // wxCHECK_VERSION
         wxMessage         += _T("    3 : ne pas l'enregistrer ni Quitter Ovni (Annuler) ?");
 
         wxGenericMessageDialog *query = new wxGenericMessageDialog(nullptr, wxMessage, _T("Question..."),
                                         wxYES_NO | wxYES_DEFAULT | wxCANCEL | wxICON_QUESTION); // Note : avec wxWidgets > 3, sous Windows, plus de wxICON_QUESTION !
-#if wxCHECK_VERSION(3,0,0)
         query->SetYesNoCancelLabels(_T("Oui"),_T("Quitter"),_T("Annuler"));
-#endif // wxCHECK_VERSION
 
         wxCommandEvent event_cmd;
         retour_Show = query->ShowModal();
@@ -1345,9 +1296,9 @@ void OvniFrame::OnAbout(wxCommandEvent& event) {
     aboutInfo.SetDescription(msg);
     aboutInfo.SetWebSite("https://github.com/gerard-durand/Ovni");  // Si appel simple à wxAboutBox active en fait wxGenericAboutBox
 
-    wxGenericAboutBox(aboutInfo);   // L'appel direct à wxGenericAboutBox ne fonctionne pas si on n'a pas #include <wx/generic/aboutdlgg.h>.
-                                    //Ici, sous MSW, on peut le forcer indirectement grâce à SetWebSite (ou SetLicence ?) !
-
+    wxGenericAboutBox(aboutInfo, this); // L'appel direct à wxGenericAboutBox ne fonctionne pas si on n'a pas #include <wx/generic/aboutdlgg.h>.
+                                        // Ici, sous MSW, on peut le forcer indirectement grâce à SetWebSite (ou SetLicence ?) !
+//    wxAboutBox(aboutInfo, this);      // wxGenericAboutBox est silencieux, wxAboutBox ne l'est pas (petite sonnerie en plus)
 //    wxMessageBox(msg, _T("Ovni version wxWidgets...")); // <=> wxMessageDialog(this,msg,_T("Ovni version wxWidgets...")).ShowModal();
 //    event.Skip();
 }
@@ -1996,7 +1947,7 @@ void OvniFrame::Ouvrir_Fichier()
                 if (!this->Menu_ReOpen3ds) {                        // à ne faire que si le menu n'est pas déjà présent
                     this->Menu_ReOpen3ds = new wxMenuItem(this->MenuFile, this->idReopenFile3ds, _T("Réouvrir 3ds"),
                                                           _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
-                    if (Element->GetThemeB()) {
+                    if (Element->GetDarkMode()) {
                         this->Menu_ReOpen3ds->SetTextColour(Element->GetNewForegroundColour());
                         this->Menu_ReOpen3ds->SetBackgroundColour(Element->GetNewBackgroundColour());
                     }
@@ -2126,6 +2077,7 @@ void OvniFrame::OnMenu_PreferencesSelected(wxCommandEvent& event)
     Preferences_Panel->RadioBox_Triangulation->SetSelection(Element->GetMethodeTriangulation());
 
     Preferences_Panel->RadioBox_Trackball  ->SetSelection(Element->m_gldata.mode_Trackball);
+    Preferences_Panel->RadioBox_DarkMode   ->SetSelection(Element->GetDarkMode());
 
     Preferences_Panel->CheckBox_DisplayFps ->SetValue(Element->GetViewFps());
 

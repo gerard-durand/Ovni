@@ -3,9 +3,11 @@
 
 // Pour test du darkmode sous Windows à partir de wxWidgets 3.3.0 (beta)
 #if defined(__WXMSW__)
-#if wxCHECK_VERSION(3,3,0)
 
 #include <wx/msw/darkmode.h>
+
+wxDarkModeSettings *My_DarkSettings;
+
 class MySettings : public wxDarkModeSettings
 {
 public:
@@ -37,7 +39,6 @@ public:
         }
     }
 };
-#endif // wxCHECK_VERSION
 #endif // __WXMSW__
 
 #endif // OVNIDARKMODE_H_INCLUDED

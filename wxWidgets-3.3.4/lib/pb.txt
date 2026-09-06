@@ -1,0 +1,4 @@
+dans les dernières versions de libwxmsw33u.a (statique), certains .o ou certains points d'entrée n'y sont plus, du coup l'édition de liens d'Ovni ou de demo_penguin_wxs en statique ne fonctionne plus.
+Si on ajoute dans lib64 : monolib_dc.o, monolib_gdiplus.o, monolib_graphics.o, monolib_nonownedwnd.o de la version précédente de libwxmsw33u_gl.a et qu'on ajoute ces fichiers, seulement pour l'édition de liens, ça remarche !
+
+(en fait, monolib_dc.o, monolib_gdiplus.o suffisent)

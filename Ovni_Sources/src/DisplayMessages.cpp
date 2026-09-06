@@ -16,9 +16,7 @@ void DisplayMessage(wxString wxMessage, bool bip)
 long DisplayMessage(wxString wxMessage, wxString title, long style)
 {
     wxGenericMessageDialog *query = new wxGenericMessageDialog(nullptr, wxMessage, title, style);
-#if wxCHECK_VERSION(3,0,0)
     query->SetYesNoLabels(_T("Oui"),_T("Non"));     // Sinon par défaut on a Yes No (car appelé avec au moins le style wxYES_NO)
-#endif // wxCHECK_VERSION
     long retour_Show = query->ShowModal();
     query->Destroy();
     return retour_Show;

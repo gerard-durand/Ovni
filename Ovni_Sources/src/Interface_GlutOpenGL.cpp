@@ -92,19 +92,11 @@ void BddInter::OnPaint( wxPaintEvent& WXUNUSED(event) )
 //    wxSize ClientSize = this->GetParent()->GetSize();
 
     if (verbose) printf("Entree BddInter::OnPaint\n");
-#if wxCHECK_VERSION(3,0,0)
+
     if (!SetCurrentOK) {
         SetCurrent(*m_glRC);
         SetCurrentOK = true;    // Il suffit de faire le SetCurrent une seule fois
     }
-
-#else
-#ifndef __WXMOTIF__
-    if (!GetContext()) return;
-#endif
-
-    SetCurrent();
-#endif // wxCHECK_VERSION
 
     // Initialize OpenGL
     if (!m_gldata.initialized) {
@@ -250,16 +242,6 @@ void BddInter::ResetProjectionMode() {
         printf("ClientSize X/Y %d %d\n", w, h);
     }
 
-#if wxCHECK_VERSION(3,0,0)
-//    compteur++;
-
-//    SetCurrent(*m_glRC);    // utile ?????
-#else
-#ifndef __WXMOTIF__
-    if ( GetContext() )
-#endif
-        SetCurrent();
-#endif // wxCHECK_VERSION
     if (verbose) {
         printf(" 6\n");fflush(stdout);
     }
@@ -504,7 +486,7 @@ void BddInter::DrawOpenGL() {
         wxBeginBusyCursor();    // Active le curseur Busy pendant la génération des listes
 
         Search_Min_Max();       // Pour mettre à jour les différents compteurs d'objets, facettes, points ... Met aussi à jour diagonale_save et centrage_auto
-        int nb_normales_seuillees = 0;      // A déclarer plutôt ailleurs, mais initialiser ici
+        nb_normales_seuillees = 0;          // Déclarée dans Interface.h, mais initialisé ici
         style = GL_POLYGON;                 // Déplacé ici, en dehors des boucles car, en l'état, invariant
 
         glDeleteLists(glliste_objets,1);    // Supprime la liste des objets

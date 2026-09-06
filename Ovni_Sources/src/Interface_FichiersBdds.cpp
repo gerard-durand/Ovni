@@ -369,11 +369,7 @@ static void XMLCALL start_XML_Element(void *data, const char *el, const char **a
                 }
                 if (!strcmp(attr[i],"nom")) {
 
-#if wxCHECK_VERSION(3,0,0)
                     wxString wxNom = wxString(attr[i+1]);
-#else
-                    wxString wxNom = wxString::FromAscii(attr[i+1]);
-#endif // wxCHECK_VERSION
 
                     Element->Objetlist[o].SetName(wxNom);
                     printf("Indice objet : %d Nom lu dans la balise nom : %s\n",i_objetXML_courant,attr[i+1]);
@@ -1126,11 +1122,7 @@ void BddInter::LoadOBJ()
             }
             printf("\nNom de l'objet : %s\n",nom_obj) ;   // c'est le Nom par défaut (si pas de "g ")
 
-#if wxCHECK_VERSION(3,0,0)
             wxString wxNom=wxString(nom_obj);
-#else
-            wxString wxNom=wxString::FromAscii(nom_obj);
-#endif
             nom_utf8 = is_utf8(wxNom.data());
             if (!nom_utf8) wxNom = wxNom.utf8_str();        // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
             this->Objetlist[indice_premierObjet].SetName(wxNom);
@@ -1154,11 +1146,8 @@ void BddInter::LoadOBJ()
                         nfac  =0 ;
                     }
 
-#if wxCHECK_VERSION(3,0,0)
                     wxNom = wxString(Lire_chaine(s1+2));                    // Nom de l'objet
-#else
-                    wxNom = wxString::FromAscii(Lire_chaine(s1+2));
-#endif // wxCHECK_VERSION
+
                     nom_utf8 = is_utf8(wxNom.data());
                     if (!nom_utf8) wxNom = wxNom.utf8_str();                // Le nom n'est pas en utf8 (donc probablement en Ansi) : le convertir en utf8
 
@@ -1450,11 +1439,7 @@ void BddInter::LoadM3D()
         *cptr = '\0' ;                              // Puis éliminer ce " de fin
         printf("Objet :%4d, Nom : %s\n",o,nom_obj);
 
-#if wxCHECK_VERSION(3,0,0)
         wxString wxNom=wxString(nom_obj);
-#else
-        wxString wxNom=wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
         this->str.Printf(_T("<OBJET> %d "),o);
         this->str += wxNom;
@@ -1804,11 +1789,7 @@ void BddInter::LoadPLY()
             strcpy(nom_prec, nom_obj) ;
             str.Printf(_T("<OBJET> %d "),o);
 
-#if wxCHECK_VERSION(3,0,0)
             wxString wxNom=wxString(nom_obj);
-#else
-            wxString wxNom=wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
             str += wxNom;
             make_objet();
@@ -2405,11 +2386,7 @@ void BddInter::LoadOFF()
     for (o=0; o< Nb_objets; o++) {
         sprintf(nom_obj, "Objet OFF - %d",o) ;
 
-#if wxCHECK_VERSION(3,0,0)
         wxString NomObj=wxString(nom_obj);
-#else
-        wxString NomObj=wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
         str.Printf(_T("<OBJET> %d "),o);//+Numero_base);
         str += NomObj;
@@ -2610,11 +2587,7 @@ void BddInter::LoadSTL() {
 
         // Remplir l'objet (2ème lecture)
 
-#if wxCHECK_VERSION(3,0,0)
         wxString NomObj=wxString(nom_obj);
-#else
-        wxString NomObj=wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
         str.Printf(_T("<OBJET> %d "),0+Numero_base);    // Voir si Numero_base est utile (en cas de lecture de plusieurs fichiers ?)
         str += NomObj;
@@ -2695,11 +2668,7 @@ void BddInter::LoadSTL() {
 
         // Remplir l'objet
 
-#if wxCHECK_VERSION(3,0,0)
         wxString NomObj=wxString(nom_obj);
-#else
-        wxString NomObj=wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
         str.Printf(_T("<OBJET> %d "),0+Numero_base);    // Numero_base ?? voir plus haut.
         str += NomObj;
@@ -3101,11 +3070,7 @@ int BddInter::decoder_node (Lib3dsNode *node)
         str.Printf(_T("<OBJET> "));
         str += wx_num_obj;
 
-#if wxCHECK_VERSION(3,0,0)
         wxString wxNom = wxString(nom_obj);
-#else
-        wxString wxNom = wxString::FromAscii(nom_obj);
-#endif // wxCHECK_VERSION
 
         // Récupération du nombre de points
         nb_p = mesh->nvertices ;
@@ -3390,11 +3355,7 @@ void BddInter::LoadBDD() {
         if (ligne.empty())   continue;                  // Si la ligne est vide, passer à la suivante
         if (ligne[0] == '#') continue;                  // Si c'est une ligne de commentaires, passer à la suivante
 
-#if wxCHECK_VERSION(3,0,0)
         str = wxString(ligne);
-#else
-        str = wxString::FromAscii(ligne.c_str());
-#endif // wxCHECK_VERSION
 
         if((ligne.find("<OBJET>") != notFound) || (ligne.find("<OBJECT>") != notFound)) { // La ligne contient <OBJET> (ou <OBJECT> en version SDM anglaise)
 //            printf("<OBJET> %d %d %d\n",ligne.find("<OBJET>"),ligne.find("<OBJECT>"),std::string::npos);

@@ -289,7 +289,7 @@
 				<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox_Triangulation" member="yes">
 					<label>Méthode de triangulation</label>
 					<content>
-						<item>Méthode 1     </item>
+						<item>Méthode 1          </item>
 						<item>Méthode 2     </item>
 						<item>Méthode 3     </item>
 					</content>
@@ -306,7 +306,7 @@
 				<object class="wxRadioBox" name="ID_RADIOBOX2" variable="RadioBox_Trackball" member="yes">
 					<label>Mode de rotation à la souris</label>
 					<content>
-						<item>Directe            </item>
+						<item>Directe                </item>
 						<item>Trackball</item>
 					</content>
 					<default>1</default>
@@ -321,14 +321,28 @@
 				<object class="wxRadioBox" name="ID_RADIOBOX3" variable="RadioBox_IconSize" member="yes">
 					<label>Taille des icônes de la barre d&apos;outils</label>
 					<content>
-						<item>16 x16           </item>
-						<item>24 x 24            </item>
-						<item>32 x 32            </item>
+						<item>16 x 16                               </item>
+						<item>24 x 24                   </item>
+						<item>32 x 32              </item>
 						<item>48 x 48</item>
 					</content>
 					<size>382,40</size>
 					<style>wxRA_SPECIFY_ROWS</style>
 					<handler function="OnRadioBox_IconSizeSelect" entry="EVT_RADIOBOX" />
+				</object>
+				<flag>wxLEFT|wxEXPAND</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxRadioBox" name="ID_RADIOBOX4" variable="RadioBox_DarkMode" member="yes">
+					<label>Thème de Couleur de l&apos;Interface</label>
+					<content>
+						<item>Thème Clair</item>
+						<item>Thème Sombre</item>
+					</content>
+					<size>382,40</size>
+					<style>wxRA_SPECIFY_ROWS</style>
+					<handler function="OnRadioBox_DarkModeSelect" entry="EVT_RADIOBOX" />
 				</object>
 				<flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
 				<border>5</border>

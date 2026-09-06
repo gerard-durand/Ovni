@@ -15,26 +15,11 @@ BEGIN_EVENT_TABLE(BddInter, wxGLCanvas)
     EVT_TIMER(wxID_ANY,BddInter::OnTimer_Bdd)
 END_EVENT_TABLE()
 
-#if wxCHECK_VERSION(3,1,0)
 BddInter::BddInter(wxWindow *parent, const wxGLAttributes& AttribList, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
 // Explicitly create a new rendering context instance for this canvas.
     wxGLCanvas(parent, AttribList, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
 {
     m_glRC = new wxGLContext(this);
-#else
-BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowID id, const wxPoint& pos, const wxSize& size, long style, bool main_verbose, const wxString& name):
-
-#if wxCHECK_VERSION(3,0,0)
-    wxGLCanvas(parent, id, AttribList, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name)
-{
-// Explicitly create a new rendering context instance for this canvas.
-    m_glRC = new wxGLContext(this);
-
-#else
-    wxGLCanvas(parent, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE, name, AttribList)
-{
-#endif // wxCHECK_VERSION
-#endif
 
 /** \brief BddInter::BddInter Création/Initialisation de la classe BddInter
  *
@@ -76,6 +61,11 @@ BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowI
     nb_max_threads = omp_get_max_threads(); // Récupérer en entrée le nombre max de threads/processeurs pour OpenMP
     ResetData();                            // Remettre aux valeurs par défaut
     Ouvrir_ini_file();                      // Lire dans le fichier .ini les valeurs éventuellement modifiées / défaut
+#if defined(__WXMSW__)
+    if (wxSystemOptions().GetOptionInt("msw.dark-mode") == 2) { // WX_MSW_DARK_MODE passé en ligne de commande peut valoir 0, 1 ou 2.
+        darkmode = true;                                        // Si 2, alors forcer le thème Sombre
+    }
+#endif // defined
     pal_file_modified = false;              // Fichier palette non lu, donc par défaut, non modifié !
     if ((nb_threads <= 0) || (nb_threads >= nb_max_threads)) {
         omp_set_dynamic(1);                 // Nombre de threads automatique, soit le maximum
@@ -100,9 +90,7 @@ BddInter::BddInter(wxWindow *parent, const int* AttribList,            wxWindowI
 
 BddInter::~BddInter()
 {
-#if wxCHECK_VERSION(3,0,0)
     delete m_glRC;
-#endif // wxCHECK_VERSION
     if (verbose)
         printf("Sortie par BddInter::~BddInter\n");
 
@@ -144,6 +132,7 @@ void BddInter::ResetData() {
     traiter_doublons_aretes = traiter_doublons_aretes_def;
     icon_index              = icon_index_def;
     icon_size               = icon_sizes[icon_index];
+    darkmode                = darkmode_def;
 //    afficher_sliders        = afficher_sliders_def;
 
     nb_threads              = nb_threads_def;
@@ -197,6 +186,7 @@ void BddInter::ResetData() {
         MPrefs->CheckBox_LectureOptimisee->SetValue(lect_obj_opt);
         MPrefs->RadioBox_Triangulation   ->SetSelection(methode_Triangulation);
         MPrefs->RadioBox_Trackball       ->SetSelection(m_gldata.mode_Trackball);
+        MPrefs->RadioBox_DarkMode        ->SetSelection(darkmode);
         MPrefs->CheckBox_DisplayFps      ->SetValue(viewFps_def);
         MPrefs->CheckBox_CalculNormales  ->SetValue(CalculNormalesLectureBdd);
         if (test_seuil_Gouraud) MPrefs   ->CheckBox_RecNormales_Seuillees->Enable();
@@ -1410,8 +1400,6 @@ void BddInter::BuildAllFacettes_Selected() {
     if (verbose)
         printf("Reconstruction de la liste des facettes sélectionnées\n");
 
-//    int nb_normales_seuillees = 0; // A déclarer plutôt ailleurs, mais initialiser ici
-
     for (i=0; i<this->ToSelect.ListeSelect.size(); i++) {
 
         int objet = this->ToSelect.ListeSelect[i].objet;
@@ -1467,7 +1455,6 @@ void BddInter::BuildAllFacettes_Selected() {
                             NormaleSommet = Objet_i->Vecteurlist[Face_ij->L_sommets[k]-1].point;
 //                            test_np =
                             Calcul_Normale_Seuillee(i,j,k,NormaleFacette,NormaleSommet) ;
- //                           if (test_np) nb_normales_seuillees++;
                             glNormal3f(NormaleSommet[0], NormaleSommet[1], NormaleSommet[2]);
                         } else {
                             // Facette plane

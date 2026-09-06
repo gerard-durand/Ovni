@@ -41,6 +41,8 @@ void BddInter::Ouvrir_ini_file()
     char *Lu, *p_txt_wrk;
     int icmp, ibool, len ;
 
+    darkmode = darkmode_def;
+
     f_init = fopen(fichier_init,"r") ;      // Si le fichier n'existe pas, l'ignorer => Utiliser les valeurs par défaut
     if (f_init != nullptr) {
         printf("Ouverture et lecture du fichier d'initialisation : %s\n",fichier_init);
@@ -283,10 +285,14 @@ void BddInter::Ouvrir_ini_file()
             }
             len = strlen( initQ);
             icmp= strncmp(initQ,Message,len) ;                  // Test sur 26ème mot clé
-            darkmode = -1;                                      // initialisation par défaut
             if (!icmp) {
                 p_txt_wrk = &Message[len] ;
-                sscanf(p_txt_wrk,"%d",&darkmode) ;              // Récupère la valeur de DarkMode
+                sscanf(p_txt_wrk,"%d",&ibool) ;                 // Récupère la valeur de DarkMode
+                if (ibool > 0) {
+                    darkmode = true;
+                } else {
+                    darkmode = false;
+                }
                 continue;   // Passer au while suivant
             }
             len = strlen( initR);
@@ -356,7 +362,7 @@ void BddInter::Stocker_ini_file()
         fprintf(f_init,"%s%d\n",initN,nb_threads) ;
         fprintf(f_init,"%s%d\n",initO,traiter_doublons_aretes) ;
         fprintf(f_init,"%s%d\n",initP,icon_size);
-        fprintf(f_init,"%s%d\n",initQ,darkmode);
+        fprintf(f_init,"%s%d\n",initQ,(int)darkmode);
         fprintf(f_init,"%s%d\n",initR,afficher_sliders);
         fprintf(f_init,"%s%d\n",initS,frame_size_x);
         fprintf(f_init,"%s%d\n",initT,frame_size_y);

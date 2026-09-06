@@ -19,6 +19,7 @@
 #include <wx/tokenzr.h>
 #include <wx/txtstrm.h>
 #include <wx/wfstream.h>
+#include <wx/sysopt.h>
 #include <wx/wx.h>
 
 #include <GL/freeglut.h>
@@ -687,8 +688,8 @@ class BddInter: public wxGLCanvas {
     double diagonale_save ;
 
 // Tests de thème
-    bool theme_b = false;   // Théme dark/clair expérimental pour wxWidgets < version 3.3
-    int  darkmode= -1;      // Valeur enregistrée dans Ovni.ini (plus ou moins <=> theme_b pour wxWidgets version >= 3.3)
+    bool darkmode  = false;              // Théme dark/clair expérimental pour wxWidgets < version 3.3
+    const bool darkmode_def  = darkmode;  // Thème clair par défaut
 
     const wxColour Noir     = wxColour(*wxBLACK);// = wxColour(0,0,0);//    (*wxBLACK);
     const wxColour Blanc    = wxColour(*wxWHITE);
@@ -982,6 +983,8 @@ class BddInter: public wxGLCanvas {
     bool  click_sur_segment        = false;
     bool  test_rectangle_selection = false;
 
+    int   nb_normales_seuillees    = 0;
+
     bool  reset_zoom               = true;
 
     bool  verbose                  = false; // Pour activer à l'écran certaines sorties intermédiaires (switch via la lettre v ou V au clavier) : initialisé via OvniMain.h
@@ -993,9 +996,7 @@ class BddInter: public wxGLCanvas {
     float fps ;
     char  Message_fps[20];    // Pour stocker le message des FPS
 
-#if wxCHECK_VERSION(3,0,0)
     wxGLContext *m_glRC;
-#endif // wxCHECK_VERSION
 
     typedef enum {Both, Avant, Arriere} TYPESELECTION;
 //    int  TypeSelection = 0; // Both
@@ -1183,7 +1184,7 @@ public :
              long style            = 0,
              bool main_verbose     = false,
              const wxString& name  = wxT("TestGLCanvas"));
-//#else
+/*#else
     BddInter(wxWindow *parent,
              const int* AttribList = nullptr,
              wxWindowID id         = wxID_ANY,
@@ -1191,7 +1192,7 @@ public :
              const wxSize& size    = wxDefaultSize,
              long style            = 0,
              bool main_verbose     = false,
-             const wxString& name  = wxT("TestGLCanvas"));
+             const wxString& name  = wxT("TestGLCanvas")); */
 //#endif // wxCHECK_VERSION
     ~BddInter();
 
@@ -1298,9 +1299,9 @@ public :
 
     wxColour GetNewBackgroundColour() {return New_Back;}
     wxColour GetNewForegroundColour() {return New_Forg;}
-    void SetThemeB(bool value) {theme_b = value;}
-    bool GetThemeB()    {return theme_b;}
-    int  GetDarkmode()  {return darkmode;}
+    void SetDarkMode(bool value) {darkmode = value;}
+    bool GetDarkMode()    {return darkmode;}
+    bool GetDarkMode_def(){return darkmode_def;}
 
     int GetNbCouleurs() {return nb_couleurs;};  // Pas forcément utile car nb_couleurs est initialisé par un #define
 
@@ -1586,6 +1587,8 @@ public :
 
     wxString GetWxNomsFichiers() {return wxNomsFichiers;}
 
+    void Switch_theme(bool);
+
 //    void Forcer_OnPaint(wxPaintEvent& event);Forcer_1_Seul_Obj
 protected:
     void OnPaint(wxPaintEvent& event);
@@ -1685,9 +1688,6 @@ private :
     void coloriserFacette(unsigned int, unsigned int, bool, const GLfloat couleur[3]);
     void Draw_Rectangle_Selection();
     void Selection_rectangle(GLint, GLint);
-
-    void Switch_theme(bool);
-    void Switch_theme_wx33(bool);
 
     void DrawOpenGL();
 
