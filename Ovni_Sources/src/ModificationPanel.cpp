@@ -66,10 +66,10 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	StaticText2 = new wxStaticText(Panel2, ID_STATICTEXT2, _T("segments"), wxPoint(144,32), wxDLG_UNIT(Panel2,wxSize(32,9)), wxALIGN_CENTRE|wxFULL_REPAINT_ON_RESIZE, _T("ID_STATICTEXT2"));
 	ToggleButton_Diviser = new wxToggleButton(Panel2, ID_TOGGLEBUTTON2, _T("Diviser en"), wxPoint(8,32), wxSize(72,24), 0, wxDefaultValidator, _T("ID_TOGGLEBUTTON2"));
 	ToggleButton_Diviser->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
-	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,162), wxSize(240,18), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
+	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _T("Création de facettes"), wxPoint(0,164), wxSize(240,18), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
 	StaticText3->SetForegroundColour(wxColour(255,255,255));
 	StaticText3->SetBackgroundColour(wxColour(0,0,0));
-	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,180), wxSize(240,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
+	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(0,182), wxSize(240,144), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
 	StaticText4 = new wxStaticText(Panel4, ID_STATICTEXT4, _T("Avec le numéro de groupe"), wxPoint(8,2), wxSize(144,16), 0, _T("ID_STATICTEXT4"));
 	StaticText5 = new wxStaticText(Panel4, ID_STATICTEXT5, _T("Avec le numéro de matériau"), wxPoint(8,22), wxSize(152,16), 0, _T("ID_STATICTEXT5"));
 	SpinCtrl_Groupe = new wxSpinCtrl(Panel4, ID_SPINCTRL2, _T("0"), wxPoint(168,0), wxSize(46,20), 0, 0, 100, 0, _T("ID_SPINCTRL2"));
@@ -98,10 +98,10 @@ ModificationPanel::ModificationPanel(wxWindow* parent,wxWindowID id,const wxPoin
 	Button_Undo->Disable();
 	Button_Undo->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
 	StaticLine1 = new wxStaticLine(Panel6, ID_STATICLINE1, wxPoint(0,32), wxSize(240,0), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
-	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,322), wxSize(240,18), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
+	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _T("Divers"), wxPoint(0,324), wxSize(240,18), wxALIGN_CENTRE, _T("ID_STATICTEXT7"));
 	StaticText7->SetForegroundColour(wxColour(255,255,255));
 	StaticText7->SetBackgroundColour(wxColour(0,0,0));
-	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,340), wxSize(240,208), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
+	Panel8 = new wxPanel(this, ID_PANEL8, wxPoint(0,342), wxSize(240,210), wxTAB_TRAVERSAL, _T("ID_PANEL8"));
 	StaticText8 = new wxStaticText(Panel8, ID_STATICTEXT8, _T("Tolérance d\'égalité %"), wxPoint(16,8), wxSize(128,16), 0, _T("ID_STATICTEXT8"));
 	TextCtrl_Tolerance = new wxTextCtrl(Panel8, ID_TEXTCTRL1, _T("0"), wxPoint(152,8), wxSize(72,20), wxTE_RIGHT, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	Button_InverserTout = new wxButton(Panel8, ID_BUTTON9, _T("Inverser toutes les normales"), wxPoint(16,32), wxSize(208,24), 0, wxDefaultValidator, _T("ID_BUTTON9"));

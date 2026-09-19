@@ -577,7 +577,7 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_DroiteClick);
     Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_HautClick);
     Connect(ID_BUTTON6, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&OvniFrame::OnButton_BasClick);
-    GLCanvas->Connect(wxEVT_PAINT, (wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint, NULL, this);
+    GLCanvas->Connect(wxEVT_PAINT, (wxObjectEventFunction)&OvniFrame::OnGLCanvasPaint, nullptr, this);
     Connect(ID_SLIDER_X, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
     Connect(ID_SLIDER_X, wxEVT_COMMAND_SLIDER_UPDATED, (wxObjectEventFunction)&OvniFrame::OnSlider_xCmdScroll);
     Connect(ID_SLIDER_Y, wxEVT_SCROLL_THUMBTRACK, (wxObjectEventFunction)&OvniFrame::OnSlider_yCmdScroll);
@@ -889,14 +889,12 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
     int svgTimeLocal = Element->GetSvgTime();
     if (svgTimeLocal > 0) Timer_Save.Start(svgTimeLocal*60000,false);   // Lancer le timer si svg_time > 0
 
-    if ((local_darkmode > 0) || (wxSystemOptions().GetOptionInt("msw.dark-mode") == 2)) {   // On a forcé le mode Sombre soit dans Ovni.ini soit via Ovni_64_DarkMode.cmd avec set WX_MSW_DARK_MODE=2
+//    if ((local_darkmode > 0) || (wxSystemOptions().GetOptionInt("msw.dark-mode") == 2)) {   // On a forcé le mode Sombre soit dans Ovni.ini soit via Ovni_64_DarkMode.cmd avec set WX_MSW_DARK_MODE=2
+    if (wxSystemSettings::GetAppearance().IsDark()) {
         Element->SetDarkMode(true);                                                         // Le test sur msw.dark-mode n'est sans doute pas utile car déjà fait pour initier local_darkmode
         Preferences_Panel->RadioBox_DarkMode->SetSelection(1);
-//        wxTheApp->MSWEnableDarkMode(wxApp::DarkMode_Always, My_DarkSettings);             // Déjà fait !
-        Element->Switch_theme(true);                                                   // Si on ne le fait pas, certains éléments de linterface restent en mode Thème Clair
-    }
+        Element->Switch_theme_menus(true);
 
-    if (wxSystemSettings::GetAppearance().IsDark()) {
 // Ajustement de la couleur bleue utilisée par quelques éléments car trop foncée sur fond sombre : remplacer par Cyan
         wxColour New_blue = *wxCYAN;
         Slider_z                         ->SetForegroundColour(New_blue);
@@ -906,36 +904,6 @@ OvniFrame::OvniFrame(wxWindow* parent,wxWindowID id) {
         PositionSource_Panel->Pos_Z      ->SetForegroundColour(New_blue);
         Translation_Panel   ->StaticText7->SetForegroundColour(New_blue);
         Translation_Panel   ->StaticText8->SetForegroundColour(New_blue);
-
-//        COLORREF colSys = ::GetSysColor(wxSYS_COLOUR_BTNFACE);
-//        test = wxRGBToColour(colSys);
-//    printf("Test RVB wxSYS_COLOUR_BTNFACE : %d %d %d ou 0x%2.2x%2.2x%2.2x\n",test.GetRed(),test.GetGreen(),test.GetBlue(),test.GetRed(),test.GetGreen(),test.GetBlue());
-
-// Tests pour coloriser d'autres élements de l'interface graphique
-// En fait, OK si pour les boutons on choisi pour couleur du texte "Texte des boutons" plutôt que la valeur par défaut !
-//        SetForegroundColour(New_blue);
-//        Button_Droite     ->SetForegroundColour(New_blue);
-//        Button_Gauche     ->SetForegroundColour(New_blue);
-//        Button_Haut       ->SetForegroundColour(New_blue);
-//        Button_Bas        ->SetForegroundColour(New_blue);
-//        Button_ZoomMoins  ->SetForegroundColour(New_blue);
-//        Button_ZoomPlus   ->SetForegroundColour(New_blue);
-//        StaticText1       ->SetForegroundColour(New_blue); // marche pas sans le Refresh()
-//        StaticText2       ->SetForegroundColour(New_blue); // ""
-//        MenuBar_Globale   ->SetForegroundColour(New_blue); // sans effet ? En fait il faut toucher à COLORREF COL_STANDARD = 0xffff00; dans darkmode.cpp (ligne 505)
-
-// Pour les menus, c'est plus compliqué ...
-
-//// Suite : pourrait fonctionner au moins en partie, mais pénible à faire ...
-////        Menu_Open         ->SetTextColour(New_blue);
-////        Menu_Open         ->SetBackgroundColour(*wxBLACK);
-////        MenuFile->Remove (Menu_Open);       // Il en faut au moins 1 pour que UpdateUI() fonctionne
-////        MenuFile->Prepend(Menu_Open);
-////        Menu_ReOpen       ->SetTextColour(New_blue);
-////        Menu_ReOpen       ->SetBackgroundColour(*wxBLACK);
-////        MenuFile->UpdateUI();
-//
-//        Refresh();
     }
 
 // Code pour imposer une autre taille / position. La nouvelle taille est celle stockée dans Ovni.ini (sinon celle par défaut)
@@ -1874,13 +1842,15 @@ void OvniFrame::Ouvrir_Fichier()
     Element->MScale_0  = ChangerEchelleBdd_Panel;
     Element->MChoice_O = ChoixAffichageObjets_Panel;
     Element->MCone     = Cone_Panel;
-    Element->MCGroup   = CouleursGroupes_Panel;
     Element->MCube     = Cube_Panel;
     Element->MCylindre = Cylindre_Panel;
-    Element->MDeplacer = DeplacerBdd_Panel;
     Element->MEllips   = Ellipsoide_Panel;
     Element->MFacet    = Facette_Panel;
+    Element->MSphere   = Sphere_Panel;
     Element->MIcosa    = Icosaedre_Panel;
+    Element->MTore     = Tore_Panel;
+    Element->MCGroup   = CouleursGroupes_Panel;
+    Element->MDeplacer = DeplacerBdd_Panel;
     Element->MManip    = Manipulations_Panel;
     Element->MPanel    = Modifications_Panel;
     Element->MPosObs   = PositionObsAzimutSite_Panel;
@@ -1897,7 +1867,6 @@ void OvniFrame::Ouvrir_Fichier()
     Element->MSelect   = Selections_Panel;
     Element->MSelFac   = Selections_Manuelles_Facettes;
     Element->MSelObj   = Selections_Manuelles_Objets;
-    Element->MSphere   = Sphere_Panel;
     Element->MTrans    = Translation_Panel;
     Element->MZoomSpec = ZoomSpecifique_Panel;
     Element->MHelp     = AideHtml_Panel;
@@ -1949,7 +1918,7 @@ void OvniFrame::Ouvrir_Fichier()
                                                           _T("Réouvre le fichier tel qu\'il est sur le disque mais en changeant le test de décalage"), wxITEM_NORMAL);
                     if (Element->GetDarkMode()) {
                         this->Menu_ReOpen3ds->SetTextColour(Element->GetNewForegroundColour());
-                        this->Menu_ReOpen3ds->SetBackgroundColour(Element->GetNewBackgroundColour());
+//                        this->Menu_ReOpen3ds->SetBackgroundColour(Element->GetNewBackgroundColour()); // Laisser le système gérer le background
                     }
                     this->MenuFile->Insert(2,this->Menu_ReOpen3ds); // à insérer en position 2
                     this->Menu_ReOpen3ds->Enable(true);             // Activer le menu "Réouvrir 3ds", mais l'est d'office dans ce cas

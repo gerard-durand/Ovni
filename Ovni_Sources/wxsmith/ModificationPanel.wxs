@@ -52,14 +52,14 @@
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 			<label>Création de facettes</label>
-			<pos>0,162</pos>
+			<pos>0,164</pos>
 			<size>240,18</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxPanel" name="ID_PANEL4" variable="Panel4" member="yes">
-			<pos>0,180</pos>
+			<pos>0,182</pos>
 			<size>240,144</size>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 				<label>Avec le numéro de groupe</label>
@@ -155,15 +155,15 @@
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
 			<label>Divers</label>
-			<pos>0,322</pos>
+			<pos>0,324</pos>
 			<size>240,18</size>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
 			<style>wxALIGN_CENTRE</style>
 		</object>
 		<object class="wxPanel" name="ID_PANEL8" variable="Panel8" member="yes">
-			<pos>0,340</pos>
-			<size>240,208</size>
+			<pos>0,342</pos>
+			<size>240,210</size>
 			<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
 				<label>Tolérance d&apos;égalité %</label>
 				<pos>16,8</pos>

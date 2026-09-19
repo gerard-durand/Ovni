@@ -14,14 +14,14 @@ public:
     virtual wxColour GetMenuColour(wxMenuColour which)
     {
         if ( which == wxMenuColour::StandardFg )
-            return *wxCYAN;
+            return *wxCYAN;                         // Pour coloriser le menu principal (Fichier Affichage Primitive ...). Ne colorise pas les sous-menus comme Ouvrir .... dans Fichier
 
         return wxDarkModeSettings::GetMenuColour(which);
     }
 
     wxColour GetColour(wxSystemColour index) override
     {
-    switch ( index )
+    switch ( index )                                // Pour coloriser divers élements de l'interface, les textes
         {
         case wxSYS_COLOUR_MENUTEXT:
         case wxSYS_COLOUR_WINDOWTEXT:

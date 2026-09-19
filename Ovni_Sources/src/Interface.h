@@ -693,7 +693,7 @@ class BddInter: public wxGLCanvas {
 
     const wxColour Noir     = wxColour(*wxBLACK);// = wxColour(0,0,0);//    (*wxBLACK);
     const wxColour Blanc    = wxColour(*wxWHITE);
-    const wxColour New_Back = wxColour(*wxBLACK);
+    const wxColour New_Back = wxColour(50,50,50);
     const wxColour New_Gris = wxColour(70,70,70);
     const wxColour New_Forg = wxColour(*wxCYAN); ; //(*wxWHITE);
 
@@ -1137,12 +1137,14 @@ public :
     ChoixAffichageObjets    *MChoice_O = nullptr;
     Cone                    *MCone     = nullptr;
     Cube                    *MCube     = nullptr;
-    CouleursGroupes         *MCGroup   = nullptr;
     Cylindre                *MCylindre = nullptr;
-    DeplacerBdd             *MDeplacer = nullptr;
     Ellipsoide              *MEllips   = nullptr;
     Facette                 *MFacet    = nullptr;
+    Sphere                  *MSphere   = nullptr;
     Icosaedre               *MIcosa    = nullptr;
+    Tore                    *MTore     = nullptr;
+    CouleursGroupes         *MCGroup   = nullptr;
+    DeplacerBdd             *MDeplacer = nullptr;
     ManipulationsPanel      *MManip    = nullptr;
     ModificationPanel       *MPanel    = nullptr;
     PositionObs_AzimutSite  *MPosObs   = nullptr;
@@ -1159,7 +1161,6 @@ public :
     SelectionPanel          *MSelect   = nullptr;
     SelectionManuelleFacettes *MSelFac = nullptr;
     SelectionManuelleObjets *MSelObj   = nullptr;
-    Sphere                  *MSphere   = nullptr;
     TranslationPanel        *MTrans    = nullptr;
     ZoomSpecifique          *MZoomSpec = nullptr;
 
@@ -1588,6 +1589,7 @@ public :
     wxString GetWxNomsFichiers() {return wxNomsFichiers;}
 
     void Switch_theme(bool);
+    void Switch_theme_menus(bool);
 
 //    void Forcer_OnPaint(wxPaintEvent& event);Forcer_1_Seul_Obj
 protected:

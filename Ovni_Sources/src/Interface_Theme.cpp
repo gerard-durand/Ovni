@@ -6,100 +6,345 @@
 
 // Encore beaucoup de code en commentaires (tests divers) car le mode Dark, est encore en développement sous wxWidgets 3.3
 
+void BddInter::Switch_theme_menus(bool darkmode)
+{
+/* Note : dans OvniMain.cpp dans la rubrique //(*Initialize(OvniFrame), juste avant le MenuFile->Append(Menu_Open); on pourrait ajouter quelque chose comme
+   if (local_darkmode) MenuFile->SetTextColour(*wxCYAN); // mais voir comment récupérer ce wxCYAN de façon plus globale pour pouvoir le changer facilement au niveau général.
+   Mais ça se trouve dans un bloc de lignes généré automatiquement par wxSmith.
+   Tant qu'on ne change rien dans Ovniframe.wxs, ça marche, mais à la génération suivante, suite à une modification dans Ovniframe.wxs, ce sera perdu.
+   L'option Code Complémentaire dans OvniFrame.wxs aurait pu faire l'affaire, mais le code est ajouté après le Append et donc, ça ne va pas. Dommage.
+*/
+
+    size_t nb,num_menu,nb_menus,nb_item;
+    wxMenu*     menu;
+    wxMenuItem* item;
+
+    wxColour Forg;
+//    wxColour Back;
+
+    if (darkmode) {
+        Forg = New_Forg;
+//        Back = New_Back;
+    } else {
+        Forg = wxNullColour;    // <> couleur standard
+//        Back = wxNullColour;
+    }
+
+#define methode_boucle 0
+// Methode_boucle à 0 <=> false, à 1 <=> true
+
+#if methode_boucle
+
+/* Parcourir en boucle les menus fonctionne mais amene souvent un plantage si on active plusieurs fois cette option.
+   C'est la succession de Remove, Prepend qui fait planter, mais sans ça, pas de changement de couleur !
+   Parcourir 1 par 1 avec les noms n'a pas ce souci, mais pas beaucoup d'intérêt car plus lourd à programmer.
+   Après le redémarrage d'Ovni, s'il est en Darkmode, ça se passera bien !
+*/
+// Astuce obtenue via google Mode IA avec la recherche "GetMenuItems wxwidgets" en y ajoutant "modifier dynamiquement" dans poser une question
+
+    nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();               // Nombre de menus dans la barre (Fichier Affichage ...)
+    for (num_menu=0; num_menu<nb_menus; num_menu++) {
+        menu     = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
+        wxMenuItemList& listeItems = menu->GetMenuItems();
+        nb_item  = menu->GetMenuItemCount();                                // Nombre de sous-menus pour chacun des menus de la barre
+        if (verbose)
+            printf("num_menu %lld, nb_item %lld\n",num_menu,nb_item);
+//        for (nb=0; nb<nb_item; nb++,node=node->GetNext()) {
+        nb = 0;
+        for (wxMenuItemList::iterator it = listeItems.begin(); it != listeItems.end(); ++it) {
+//        for (wxMenuItem* item : menu->GetMenuItems()) {
+            item = *it;
+            if (item->IsSeparator()) continue;      // Si c'est un séparateur, passer au menu suivant, car les Set*Colour n'y fonctionnent pas bien
+            item->SetTextColour(Forg);
+//            item->SetBackgroundColour(Back);
+            if (nb == 0) {
+                menu->Remove(item);
+                menu->Prepend(item);
+                nb++;
+            }
+         }
+         menu->UpdateUI();                          // N'est plus indispensable semble t-il
+       }
+
+#else // <=> !methode_boucle
+
+/* Ici, c'est la méthode bourrin où on parcourt 1 à 1 tous les sous-menus par leur nom */
+
+    this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
+
+    this->MAIN_b->MenuFile->Remove (this->MAIN_b->Menu_Open);       // Il en faut au moins 1 pour que UpdateUI() fonctionne
+    this->MAIN_b->MenuFile->Prepend(this->MAIN_b->Menu_Open);
+
+    this->MAIN_b->Menu_ReOpen       ->SetTextColour(Forg);
+    if (this->MAIN_b->Menu_ReOpen3ds != nullptr) {
+        this->MAIN_b->Menu_ReOpen3ds->SetTextColour(Forg);
+    }
+    this->MAIN_b->Menu_AddFile      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Enregistrer  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Enregistrer_Sous->SetTextColour(Forg);
+    this->MAIN_b->Menu_Proprietes   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Preferences  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Hardware3D   ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_Quitter  ->SetTextColour(Forg);
+
+//    this->MAIN_b->MenuFile->UpdateUI();
+
+    this->MAIN_b->Menu_Affichage_Points   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage->Remove (this->MAIN_b->Menu_Affichage_Points); // Il en faut au moins 1, sinon UpdateUI ne fait rien !
+    this->MAIN_b->Menu_Affichage->Prepend(this->MAIN_b->Menu_Affichage_Points);
+    this->MAIN_b->Menu_Affichage_Filaire  ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Plein    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Axes     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Boite    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Affichage_Source   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Origine            ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeFace          ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeProfil        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_VueDeDessus        ->SetTextColour(Forg);
+    this->MAIN_b->Menu_PositionObservateur->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomSpecifique     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentreRotation     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_PositionSource     ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Affichage->UpdateUI();
+
+    this->MAIN_b->Menu_AjouteCone         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Primitive->Remove (this->MAIN_b->Menu_AjouteCone);
+    this->MAIN_b->Menu_Primitive->Prepend(this->MAIN_b->Menu_AjouteCone);
+    this->MAIN_b->Menu_AjouteCube         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteCylindre     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteEllipsoide   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteFacette      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteSphere       ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteTore         ->SetTextColour(Forg);
+    this->MAIN_b->Menu_AjouteIcosaedre    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SupprimerDerniere  ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Primitive->UpdateUI();
+
+    this->MAIN_b->Menu_ReperagePoint                ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage->Remove (this->MAIN_b->Menu_ReperagePoint);
+    this->MAIN_b->Menu_Reperage->Prepend(this->MAIN_b->Menu_ReperagePoint);
+    this->MAIN_b->Menu_ReperageFacette              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageGroupe               ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageMateriau             ->SetTextColour(Forg);
+    this->MAIN_b->Menu_ReperageObjet                ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SensDesNormales              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Facettes   ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Groupes    ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Reperage_Couleurs_Materiaux  ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Reperage->UpdateUI();
+
+    this->MAIN_b->MenuItem_ImageJpeg->SetTextColour(Forg);
+    this->MAIN_b->Menu_Image->Remove (this->MAIN_b->MenuItem_ImageJpeg);
+    this->MAIN_b->Menu_Image->Prepend(this->MAIN_b->MenuItem_ImageJpeg);
+    this->MAIN_b->MenuItem_ImagePng ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_ImagePpm ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Image->UpdateUI();
+
+    this->MAIN_b->Menu_RAZ_SelectionFacettes->SetTextColour(Forg);
+    this->MAIN_b->Menu_Outils->Remove (this->MAIN_b->Menu_RAZ_SelectionFacettes);
+    this->MAIN_b->Menu_Outils->Prepend(this->MAIN_b->Menu_RAZ_SelectionFacettes);
+    this->MAIN_b->Menu_MasquerFacettes      ->SetTextColour(Forg);
+    this->MAIN_b->Menu_SupprimerFacettes    ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Selec_Depl         ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Modifications      ->SetTextColour(Forg);
+    this->MAIN_b->Outils_choix_afficher     ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Reafficher         ->SetTextColour(Forg);
+    this->MAIN_b->Outils_Supprimer_Masques  ->SetTextColour(Forg);
+    this->MAIN_b->Outils_UnDelete           ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Retracer3D           ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Outils->UpdateUI();
+
+    this->MAIN_b->MenuItem_SigneX ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Transformations->Remove (this->MAIN_b->MenuItem_SigneX);
+    this->MAIN_b->Menu_Transformations->Prepend(this->MAIN_b->MenuItem_SigneX);
+    this->MAIN_b->MenuItem_SigneY ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_SigneZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXY ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermYZ ->SetTextColour(Forg);
+    this->MAIN_b->MenuItem_PermXYZ->SetTextColour(Forg);
+    this->MAIN_b->Inverser_Toutes_les_Normales  ->SetTextColour(Forg);
+    this->MAIN_b->Inverse_All_Selected_Normales ->SetTextColour(Forg);
+    this->MAIN_b->Menu_DeplacerBdd              ->SetTextColour(Forg);
+    this->MAIN_b->Menu_FacteurEchelleBdd        ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Transformations->UpdateUI();
+
+    this->MAIN_b->Menu_CouleurDesGroupes ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Options->Remove (this->MAIN_b->Menu_CouleurDesGroupes);
+    this->MAIN_b->Menu_Options->Prepend(this->MAIN_b->Menu_CouleurDesGroupes);
+    this->MAIN_b->Menu_RelirePalette     ->SetTextColour(Forg);
+    this->MAIN_b->Menu_EnregistrerPalette->SetTextColour(Forg);
+    this->MAIN_b->Menu_ZoomAuto          ->SetTextColour(Forg);
+    this->MAIN_b->Menu_CentrageAuto      ->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Options->UpdateUI();
+
+    this->MAIN_b->MenuItem_Aide ->SetTextColour(Forg);
+    this->MAIN_b->Menu_Aide->Remove (this->MAIN_b->MenuItem_Aide);
+    this->MAIN_b->Menu_Aide->Prepend(this->MAIN_b->MenuItem_Aide);
+    this->MAIN_b->MenuItem_About->SetTextColour(Forg);
+
+//    this->MAIN_b->Menu_Aide->UpdateUI();
+
+#endif  // !methode_boucle
+
+}
+
 #if wxCHECK_VERSION(3,3,0)                  // Version de Switch_theme pour wxWidgets 3.3 et +
+
 void BddInter::Switch_theme(bool darkmode)  // Plutôt que Switch_theme_wx33, donner le même nom que si version inférieure: choix fait via #if wxCHECK_VERSION(3,3,0)
 {
-// Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
+// Pour basculer au vol entre un thème clair et un thème foncé pendant l'exécution d'Ovni. Pas besoin si thème choisi au démarrage.
 // Version pour wxWidgets 3.3 et +
 
-// La colorisation faite ici n'affecte que l'interface principale. La colorisation complète ne sera obtenue qu'au redémarrage d'Ovni.
+// La colorisation faite ici affecte surtout l'interface principale (sinon il faut re-coloriser 1 à 1 les élements !). La colorisation complète ne sera obtenue qu'au redémarrage d'Ovni.
+// Fait aussi sur la boîte de dialogue Modifications, mais plutôt fastidieux
 
 // A ce niveau, il faut balayer certains éléments déjà créés pour les re-coloriser
-// Certains boutons ne sont pas traités => restent comme dans le thème clair par défaut
 
     wxColour Forg;
     wxColour Back;
 
-/*        this->MAIN_b->MenuFile->UpdateUI();
-        this->MAIN_b->MenuBar_Globale->UpdateMenus();
-        this->MAIN_b->MenuBar_Globale->Refresh();
-        Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
-        this->MAIN_b->Panel1->Refresh();
-        this->MAIN_b->Panel_Sliders->Refresh();
-        this->MAIN_b->StatusBar1->Refresh();
-        this->MAIN_b->Button_Droite->UpdateWindowUI();
-        this->MAIN_b->Button_Droite->SetBackgroundColour(Back);
-        this->MAIN_b->Button_Droite->Refresh();
-*/
-    this->MAIN_b->MenuBar_Globale->Refresh();
-    Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
+    if (darkmode) {
+        Forg = New_Forg;
+        Back = New_Back;
+    } else {
+        Forg = wxNullColour;    // <> couleur standard
+        Back = wxNullColour;
+    }
+
+// Fenêtre principale (on ajuste des éléments 1 par 1)
+
+//    this->MAIN_b->MenuBar_Globale->Refresh();
+///    Back = this->MAIN_b->MenuBar_Globale->GetBackgroundColour();
 //    printf("Back 0x%06x\n",Back.GetRGB());
 //    wxColour test = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
 //    printf("test 0x%06x\n",test.GetRGB());
-    Forg = this->MAIN_b->MenuBar_Globale->GetForegroundColour();
+///    Forg = this->MAIN_b->MenuBar_Globale->GetForegroundColour();
 //    printf("Forg 0x%06x\n",Forg.GetRGB());
 //    test = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUTEXT);
 //    printf("test 0x%06x\n",test.GetRGB());
 //    Back = this->MAIN_b->Button_Gauche->GetBackgroundColour();
-    this->MAIN_b->SetBackgroundColour(Back);
-//    wxButtonBase().SetBackgroundColour(Back);
-//    wxButtonBase().Refresh();
-    this->MAIN_b->Button_Droite             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Droite             ->SetForegroundColour(Forg);
-    this->MAIN_b->Button_Gauche             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Gauche             ->SetForegroundColour(Forg);
-    this->MAIN_b->Button_Haut               ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Haut               ->SetForegroundColour(Forg);
-    this->MAIN_b->Button_Bas                ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Bas                ->SetForegroundColour(Forg);
-    this->MAIN_b->Button_ZoomPlus           ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_ZoomPlus           ->SetForegroundColour(Forg);
-    this->MAIN_b->Button_ZoomMoins          ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_ZoomMoins          ->SetForegroundColour(Forg);
 
-    this->MAIN_b->Button_Points             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Filaire            ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Plein              ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Axes               ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Boite              ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Normales_Sommets   ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Normale_Barycentre ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Source             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Gouraud            ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Sliders            ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Modifs             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Outils             ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Groupes            ->SetBackgroundColour(Back);
-    this->MAIN_b->Button_Materiaux          ->SetBackgroundColour(Back);
-    this->MAIN_b->StatusBar1                ->SetBackgroundColour(Back);    // Ne fonctionne pas ?
+    this->MAIN_b->SetForegroundColour(Forg);
+//    this->MAIN_b->SetBackgroundColour(Back);  // Inutile car fait automatiquement
 
-    this->MPanel->Panel2 ->SetBackgroundColour(Back);
-    this->MPanel->Panel4 ->SetBackgroundColour(Back);
-    this->MPanel->Panel6 ->SetBackgroundColour(Back);
-    this->MPanel->Panel8 ->SetBackgroundColour(Back);
-    this->MPanel->Panel10->SetBackgroundColour(Back);
-    this->MPanel->CheckBox_FacettePlane->SetForegroundColour(Forg);
-    this->MPanel->CheckBox_NotFlat     ->SetForegroundColour(Forg);
-    this->MPanel->CheckBox_Transparence->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Droite     ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Gauche     ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Haut       ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_Bas        ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_ZoomPlus   ->SetForegroundColour(Forg);
+    this->MAIN_b->Button_ZoomMoins  ->SetForegroundColour(Forg);
+    this->MAIN_b->MenuBar_Globale   ->SetForegroundColour(Forg);    // Ne marche pas (ou il manque quelquechose ?)
 
+    this->MAIN_b->StaticText1       ->SetForegroundColour(Forg);
+    this->MAIN_b->StaticText2       ->SetForegroundColour(Forg);
+
+#if 1   /// si 0, colorisation standard des modes clair et sombre, si 1, colorise diverses parties en cyan quand on est en mode sombre
+        /// En fait, c'est pour des changements dynamiques via la touche W ou le choix de thème dans Préférences.
+        /// Au démarrage suivant, si on est en darkmode ce sera fait d'office par le système.
+        /// La plupart des SetBackgroundColour ne sont plus utiles car faits semble t-il par le système.
+
+// Boîte de dialogue Préférences
+
+    this->MPrefs->StaticText1                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText2                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText3                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText4                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText5                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText7                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText8                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText9                   ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText_Gouraud            ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText_Gouraud2           ->SetForegroundColour(Forg);
+    this->MPrefs->TextCtrl_WorkDir              ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_axes           ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_norm           ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_src            ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrl_PasSvg               ->SetForegroundColour(Forg);
+    this->MPrefs->SpinCtrl_Threads              ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_1SeulObjet3D         ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_LectureOptimisee     ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TestDecalage3DS      ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_Seuillage            ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_AntialiasingSoft     ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_CalculNormales       ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_CreerBackup          ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_DisplayFps           ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_LectureOptimisee     ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_NotFlat              ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_TraiterDoublonsAretes->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_RecNormales_Seuillees->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_Seuillage            ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_SupprBackup          ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_TestDecalage3DS      ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_CreerBackup          ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_SupprBackup          ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_Trackball            ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_Triangulation        ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_IconSize             ->SetForegroundColour(Forg);
     this->MPrefs->RadioBox_DarkMode             ->SetForegroundColour(Forg);
+    this->MPrefs->Button_tmp_rep                ->SetForegroundColour(Forg);
+    this->MPrefs->Button_tmp_rep                ->SetBackgroundColour(Back);
+    this->MPrefs->Button_Reset                  ->SetForegroundColour(Forg);
+    this->MPrefs->Button_Reset                  ->SetBackgroundColour(Back);
+    this->MPrefs->Button_OK                     ->SetForegroundColour(Forg);
+    this->MPrefs->Button_OK                     ->SetBackgroundColour(Back);
+
+// Boîte de dialogue Modifications  (on ajuste des éléments 1 par 1)
+
+    this->MPanel->CheckBox_FacettePlane     ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_NotFlat          ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_Transparence     ->SetForegroundColour(Forg);
+
+    this->MPanel->StaticText1               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText2               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText3               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText4               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText5               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText6               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText7               ->SetForegroundColour(Forg);
+    this->MPanel->StaticText8               ->SetForegroundColour(Forg);
+    this->MPanel->TextCtrl_Tolerance        ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Ajouter      ->SetBackgroundColour(Back);    // là, il le faut !
+    this->MPanel->ToggleButton_Ajouter      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_CreerFacette ->SetBackgroundColour(Back);
+    this->MPanel->ToggleButton_CreerFacette ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Diviser      ->SetBackgroundColour(Back);
+    this->MPanel->ToggleButton_Diviser      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Souder       ->SetBackgroundColour(Back);
+    this->MPanel->ToggleButton_Souder       ->SetForegroundColour(Forg);
+    this->MPanel->Button_Annuler            ->SetBackgroundColour(Back);
+    this->MPanel->Button_Annuler            ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserNormale    ->SetBackgroundColour(Back);
+    this->MPanel->Button_InverserNormale    ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserTout       ->SetBackgroundColour(Back);
+    this->MPanel->Button_InverserTout       ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerAretes   ->SetBackgroundColour(Back);
+    this->MPanel->Button_RecalculerAretes   ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerNormales ->SetBackgroundColour(Back);
+    this->MPanel->Button_RecalculerNormales ->SetForegroundColour(Forg);
+    this->MPanel->Button_Simplification     ->SetBackgroundColour(Back);
+    this->MPanel->Button_Simplification     ->SetForegroundColour(Forg);
+    this->MPanel->Button_SupprimerFacette   ->SetBackgroundColour(Back);
+    this->MPanel->Button_SupprimerFacette   ->SetForegroundColour(Forg);
+    this->MPanel->Button_Trianguler         ->SetBackgroundColour(Back);
+    this->MPanel->Button_Trianguler         ->SetForegroundColour(Forg);
+    this->MPanel->Button_Undo               ->SetBackgroundColour(Back);
+    this->MPanel->Button_Undo               ->SetForegroundColour(Forg);
+    this->MPanel->Button_Quitter            ->SetBackgroundColour(Back);
+    this->MPanel->Button_Quitter            ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_Groupe           ->SetBackgroundColour(Back);
+    this->MPanel->SpinCtrl_Groupe           ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_Materiau         ->SetBackgroundColour(Back);
+    this->MPanel->SpinCtrl_Materiau         ->SetForegroundColour(Forg);
+    this->MPanel->SpinCtrl_NbSegments       ->SetBackgroundColour(Back);
+    this->MPanel->SpinCtrl_NbSegments       ->SetForegroundColour(Forg);
+
+// Boîte de dialogue Sélections et Déplacements
 
     this->MSelect->RadioButton_Selection_Points     ->SetForegroundColour(Forg);
     this->MSelect->RadioButton_Selection_Facettes   ->SetForegroundColour(Forg);
@@ -111,54 +356,43 @@ void BddInter::Switch_theme(bool darkmode)  // Plutôt que Switch_theme_wx33, do
     this->MSelect->RadioButton_Grp                  ->SetForegroundColour(Forg);
     this->MSelect->RadioButton_Mat                  ->SetForegroundColour(Forg);
 
-    this->MCone->CheckBox_FermerCone        ->SetForegroundColour(Forg);
-    this->MCylindre->CheckBox_FermerCylindre->SetForegroundColour(Forg);
-    this->MEllips->CheckBox_NewSphere       ->SetForegroundColour(Forg);
-    this->MSphere->CheckBox_NewSphere       ->SetForegroundColour(Forg);
-    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
-    this->MRepFacet->CheckBox_VisuNormale   ->SetForegroundColour(Forg);
-    this->MRepFacet->CheckBox_VisuNormale   ->SetBackgroundColour(Back);
-    this->MRepFacet->CheckBox_VisuSommets   ->SetForegroundColour(Forg);
+// Boîtes de dialogue des Primitives
+
+    this->MCone     ->CheckBox_FermerCone       ->SetForegroundColour(Forg);
+    this->MCylindre ->CheckBox_FermerCylindre   ->SetForegroundColour(Forg);
+    this->MEllips   ->CheckBox_NewSphere        ->SetForegroundColour(Forg);
+    this->MSphere   ->CheckBox_NewSphere        ->SetForegroundColour(Forg);
+
+// Boîte de dialogue Repérage Objets
+
+    this->MRepObj->CheckBox_masquer     ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_supprimer   ->SetForegroundColour(Forg);
+    this->MRepObj->CheckBox_renommer    ->SetForegroundColour(Forg);
+
+// Boîte de dialogue Repérage Points
+
+    this->MRepPoint->CheckBox_X         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Y         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Z         ->SetForegroundColour(Forg);
+    this->MRepPoint->CheckBox_Laisser   ->SetForegroundColour(Forg);
+
+// Boîte de dialogue Repérage Facettes
+
+    this->MRepFacet->CheckBox_Laisser               ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuNormale           ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_VisuSommets           ->SetForegroundColour(Forg);
     this->MRepFacet->CheckBox_VisuNormales_Sommets  ->SetForegroundColour(Forg);
-    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
-    this->MRepFacet->CheckBox_Laisser       ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser               ->SetForegroundColour(Forg);
+    this->MRepFacet->CheckBox_Laisser               ->SetForegroundColour(Forg);
 
-    this->MRepObj->CheckBox_masquer         ->SetForegroundColour(Forg);
-    this->MRepObj->CheckBox_supprimer       ->SetForegroundColour(Forg);
-    this->MRepObj->CheckBox_renommer        ->SetForegroundColour(Forg);
+// Autres
 
-    this->MRepPoint->CheckBox_X             ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_Y             ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_Z             ->SetForegroundColour(Forg);
-    this->MRepPoint->CheckBox_Laisser       ->SetForegroundColour(Forg);
+    this->MRotation->RadioBox_Centre    ->SetForegroundColour(Forg);
+    this->MScale->CheckBox_ScaleUnique  ->SetForegroundColour(Forg);
 
-    this->MRotation->RadioBox_Centre        ->SetForegroundColour(Forg);
-    this->MScale->CheckBox_ScaleUnique      ->SetForegroundColour(Forg);
+    Switch_theme_menus(darkmode);
 
-// Parcourir en boucle les menus fonctionne mais amène souvent un plantage si on active plusieurs fois de suite cette option
-// Parcourir 1 par 1 avec les noms n'a pas ce souci, mais pas beaucoup d'intérêt ici (et lourd à programmer).
-// Après le redémarrage d'Ovni, s'il est en Darkmode, ça se passera bien car fait dès le départ, avant création des différents items.
-
-//    int nb,num_menu,nb_menus;
-//    wxMenu*     menu;
-//    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
-//    wxMenuItem* item;
-//
-//    nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
-//    for (num_menu=0; num_menu<nb_menus; num_menu++) {
-//        menu = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
-//        for (nb=0, node = menu->GetMenuItems().GetFirst(); node; nb++,node = node->GetNext()) {
-//            item = node->GetData();
-//            if (item->IsSeparator()) continue;  // Si c'est un séparateur, passer au menu suivant, car les Set*Colour n'y fonctionnent pas bien
-//            item->SetTextColour(Forg);
-//            item->SetBackgroundColour(Back);
-//            if (nb == 0) {
-//                menu->Remove(item);             // Il suffit de le faire sur le 1er menu, mais il faut le UpdateUI ensuite (sinon faire chaque fois mais flicker)
-//                menu->Insert(nb,item);          // Prepend suffit pour nb == 0
-//            }
-//        }
-//        menu->UpdateUI();
-//    }
+#endif // 0 ou 1
 
 // Ajustement de la couleur Bleue utilisée par quelques éléments car elle est trop foncée sur fond sombre : remplacer par du Cyan
     wxColour New_blue;
@@ -167,29 +401,67 @@ void BddInter::Switch_theme(bool darkmode)  // Plutôt que Switch_theme_wx33, do
     else
         New_blue = *wxBLUE;
 
-    this->MAIN_b   ->Slider_z   ->SetForegroundColour(New_blue);
-    this->MPosCRot ->StaticText4->SetForegroundColour(New_blue);
-    this->MDeplacer->StaticText4->SetForegroundColour(New_blue);
-    this->MManip   ->CheckBox_Z ->SetForegroundColour(New_blue);
-    this->MPosLight->Pos_Z      ->SetForegroundColour(New_blue);
-    this->MTrans   ->StaticText7->SetForegroundColour(New_blue);
-    this->MTrans   ->StaticText8->SetForegroundColour(New_blue);
-//    this->MPrefs->SpinCtrlDouble_axes->SetForegroundColour(New_blue);
-//    this->MPrefs->SpinCtrlDouble_norm->SetForegroundColour(New_blue);
-//    this->MPrefs->SpinCtrlDouble_src ->SetForegroundColour(New_blue);
+    this->MAIN_b    ->Slider_z   ->SetForegroundColour(New_blue);
+    this->MPosCRot  ->StaticText4->SetForegroundColour(New_blue);
+    this->MDeplacer ->StaticText4->SetForegroundColour(New_blue);
+    this->MManip    ->CheckBox_Z ->SetForegroundColour(New_blue);
+    this->MPosLight ->Pos_Z      ->SetForegroundColour(New_blue);
+    this->MTrans    ->StaticText7->SetForegroundColour(New_blue);
+    this->MTrans    ->StaticText8->SetForegroundColour(New_blue);
 
-//    this->MAIN_b->Refresh();
+// Refresh des divers panels
+
+    this->MAIN_b    ->MenuBar_Globale->Refresh();   // Utile ?
+    this->MPanel    ->Refresh();
+    this->MPrefs    ->Refresh();
+    this->MPosCRot  ->Refresh();
+    this->MCone     ->Refresh();
+    this->MCube     ->Refresh();
+    this->MCylindre ->Refresh();
+    this->MEllips   ->Refresh();
+    this->MFacet    ->Refresh();
+    this->MSphere   ->Refresh();
+    this->MIcosa    ->Refresh();
+    this->MTore     ->Refresh();
+    this->MDeplacer ->Refresh();
+    this->MManip    ->Refresh();
+    this->MPosObs   ->Refresh();
+    this->MPosLight ->Refresh();
+    this->MRepFacet ->Refresh();
+    this->MRepObj   ->Refresh();
+    this->MRepPoint ->Refresh();
+    this->MRepGrp   ->Refresh();
+    this->MRepMat   ->Refresh();
+    this->MRotation ->Refresh();
+    this->MScale    ->Refresh();
+    this->MSelect   ->Refresh();
+    this->MSelFac   ->Refresh();
+    this->MSelObj   ->Refresh();
+    this->MTrans    ->Refresh();
+
+    this->MScale_0  ->Refresh();
+    this->MChoice_O ->Refresh();
+    this->MCGroup   ->Refresh();
+    this->MProps    ->Refresh();
+    this->MZoomSpec ->Refresh();
+    this->MHelp     ->Refresh();
+
+    this->MAIN_b    ->Refresh();
+
 }
 
 #else
-// Ci-dessous, devrait pouvoir être supprimé une fois la bascule vers wxWidgets 3.3 définitive...
+// Ci-dessous, devrait pouvoir être supprimé (ou à fusionner) une fois la bascule vers wxWidgets 3.3 définitive... MAIS GARDÉ por le moment car semble un peu mieux pour un fonctionnement au vol (mais si compliqué !!!!)
+// Peut-être conserver cette version Switch_theme_menus qui a l'avantage de pouvoir fonctionner de faon plus fiable, bien que plus complexe
 
 void BddInter::Switch_theme(bool darkmode)
 {
 // Pour basculer entre un thème clair et un thème foncé pendant l'exécution d'Ovni.
-// Version pour wxWidgets avant la 3.3
+// Version pour wxWidgets avant la 3.3 et > 3.0. Mais fonctionne aussi si > 3.3
 // Certains éléments, comme les separators dans les menus, la barre de menu principale,... restent sur fond clair !
 // Mieux géré avec wxWidgets 3.3 et +, mais avec d'autres soucis !
+
+// Note : comme pour la version ci-dessus, les SetBackGroundColour ne sont pas tous utiles. A vérifier éventuellement
 
 // Test pour Basculer du thème standard vers un thème sombre. Mais semble assez (oups, très) laborieux !
 
@@ -244,255 +516,6 @@ void BddInter::Switch_theme(bool darkmode)
 //    this->MAIN_b->MenuBar_Globale->Update();
 //    this->MAIN_b->MenuBar_Globale->UpdateMenus();
 //    this->MAIN_b->MenuBar_Globale->Refresh();
-
-// Tests pour explorer tous les items de MenuFile, Menu_Affichage,...!
-// Mieux avec des boucles, mais ça plante parfois et + de flicker ... De plus, ne colorise bien pas le séparateur (seulement une petite marge en haut) : dommage !
-
-    if (methode_boucle) {
-
-    int nb,num_menu;
-    wxMenu*     menu;
-    wxMenuItemList::compatibility_iterator node;// = menu->GetMenuItems().GetFirst(); // auto node = ... fonctionne aussi !
-    wxMenuItem* item;
-    int nb_menus = this->MAIN_b->MenuBar_Globale->GetMenuCount();
-//    printf("menus : %d\n",nb_menus);
-
-//    wxMenu* menu = this->MAIN_b->MenuFile;
-
-//    int nb_items  = menu->GetMenuItemCount();
-//    wxMenuItemList menu_liste=this->MAIN_b->MenuFile->GetMenuItems();
-//    printf("size = %d %d\n",nb_items,(int)menu_liste.size());
-
-    for (num_menu=0; num_menu<nb_menus; num_menu++) {
-        menu = this->MAIN_b->MenuBar_Globale->GetMenu(num_menu);
-        for (nb=0, node = menu->GetMenuItems().GetFirst(); node; nb++,node = node->GetNext()) {
-            item = node->GetData();
-            if (item->IsSeparator()) continue;  // ne faire la suite que si n'est pas un séparateur, car les Set*Colour n'y fonctionnent pas bien
-            item->SetTextColour(Forg);
-            item->SetBackgroundColour(Back);
-            if (nb == 0) {
-                menu->Remove(item);             // Il suffit de le faire sur le 1er menu, mais il faut le UpdateUI ensuite (sinon faire chaque fois mais flicker)
-                menu->Insert(nb,item);          // Prepend suffit pour nb == 0
-            }
-        }
-        menu->UpdateUI();
-    }
-
-//    menu = this->MAIN_b->Menu_Affichage;
-//...
-//    menu = this->MAIN_b->Menu_Primitive;
-//...
-//    menu = this->MAIN_b->Menu_Reperage;
-//...
-//    menu = this->MAIN_b->Menu_Image;
-//...
-//    menu = this->MAIN_b->Menu_Outils;
-//...
-//    menu = this->MAIN_b->Menu_Transformations;
-//...
-//    menu = this->MAIN_b->Menu_Options;
-//...
-//    menu = this->MAIN_b->Menu_Aide;
-//...
-
-    } else {
-
-// ça marche mais pénible à programmer car il faut revoir tous les éléments 1 par 1 ...
-
-    this->MAIN_b->Menu_Open         ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Open         ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuFile->Remove (this->MAIN_b->Menu_Open);       // Il en faut au moins 1 pour que UpdateUI() fonctionne
-    this->MAIN_b->MenuFile->Prepend(this->MAIN_b->Menu_Open);
-
-    this->MAIN_b->Menu_ReOpen       ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReOpen       ->SetBackgroundColour(Back);
-    if (this->MAIN_b->Menu_ReOpen3ds != nullptr) {
-        this->MAIN_b->Menu_ReOpen3ds->SetTextColour(Forg);
-        this->MAIN_b->Menu_ReOpen3ds->SetBackgroundColour(Back);
-    }
-    this->MAIN_b->Menu_AddFile      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AddFile      ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Enregistrer  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Enregistrer  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Enregistrer_Sous->SetTextColour(Forg);
-    this->MAIN_b->Menu_Enregistrer_Sous->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Proprietes   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Proprietes   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Preferences  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Preferences  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Hardware3D   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Hardware3D   ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_Quitter  ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_Quitter  ->SetBackgroundColour(Back);
-
-    this->MAIN_b->MenuFile->UpdateUI();
-
-    this->MAIN_b->Menu_Affichage_Points   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Points   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage->Remove (this->MAIN_b->Menu_Affichage_Points); // Il en faut au moins 1, sinon UpdateUI ne fait rien !
-    this->MAIN_b->Menu_Affichage->Prepend(this->MAIN_b->Menu_Affichage_Points);
-    this->MAIN_b->Menu_Affichage_Filaire  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Filaire  ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Plein    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Plein    ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Axes     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Axes     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Boite    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Boite    ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Affichage_Source   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Affichage_Source   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Origine            ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Origine            ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeFace          ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeFace          ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeProfil        ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeProfil        ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_VueDeDessus        ->SetTextColour(Forg);
-    this->MAIN_b->Menu_VueDeDessus        ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_PositionObservateur->SetTextColour(Forg);
-    this->MAIN_b->Menu_PositionObservateur->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ZoomSpecifique     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ZoomSpecifique     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_CentreRotation     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_CentreRotation     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_PositionSource     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_PositionSource     ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Affichage->UpdateUI();
-
-    this->MAIN_b->Menu_AjouteCone         ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCone         ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Primitive->Remove (this->MAIN_b->Menu_AjouteCone);
-    this->MAIN_b->Menu_Primitive->Prepend(this->MAIN_b->Menu_AjouteCone);
-    this->MAIN_b->Menu_AjouteCube         ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCube         ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteCylindre     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteCylindre     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteEllipsoide   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteEllipsoide   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteFacette      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteFacette      ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteSphere       ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteSphere       ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteTore         ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteTore         ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_AjouteIcosaedre    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_AjouteIcosaedre    ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_SupprimerDerniere  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_SupprimerDerniere  ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Primitive->UpdateUI();
-
-    this->MAIN_b->Menu_ReperagePoint                ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReperagePoint                ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Reperage->Remove (this->MAIN_b->Menu_ReperagePoint);
-    this->MAIN_b->Menu_Reperage->Prepend(this->MAIN_b->Menu_ReperagePoint);
-    this->MAIN_b->Menu_ReperageFacette              ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReperageFacette              ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ReperageGroupe               ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReperageGroupe               ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ReperageMateriau             ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReperageMateriau             ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ReperageObjet                ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ReperageObjet                ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_SensDesNormales              ->SetTextColour(Forg);
-    this->MAIN_b->Menu_SensDesNormales              ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Reperage_Couleurs_Facettes   ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Reperage_Couleurs_Facettes   ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Reperage_Couleurs_Groupes    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Reperage_Couleurs_Groupes    ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Reperage_Couleurs_Materiaux  ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Reperage_Couleurs_Materiaux  ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Reperage->UpdateUI();
-
-    this->MAIN_b->MenuItem_ImageJpeg->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_ImageJpeg->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Image->Remove (this->MAIN_b->MenuItem_ImageJpeg);
-    this->MAIN_b->Menu_Image->Prepend(this->MAIN_b->MenuItem_ImageJpeg);
-    this->MAIN_b->MenuItem_ImagePng ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_ImagePng ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_ImagePpm ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_ImagePpm ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Image->UpdateUI();
-
-    this->MAIN_b->Menu_RAZ_SelectionFacettes->SetTextColour(Forg);
-    this->MAIN_b->Menu_RAZ_SelectionFacettes->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Outils->Remove (this->MAIN_b->Menu_RAZ_SelectionFacettes);
-    this->MAIN_b->Menu_Outils->Prepend(this->MAIN_b->Menu_RAZ_SelectionFacettes);
-    this->MAIN_b->Menu_MasquerFacettes      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_MasquerFacettes      ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_SupprimerFacettes    ->SetTextColour(Forg);
-    this->MAIN_b->Menu_SupprimerFacettes    ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_Selec_Depl         ->SetTextColour(Forg);
-    this->MAIN_b->Outils_Selec_Depl         ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_Modifications      ->SetTextColour(Forg);
-    this->MAIN_b->Outils_Modifications      ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_choix_afficher     ->SetTextColour(Forg);
-    this->MAIN_b->Outils_choix_afficher     ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_Reafficher         ->SetTextColour(Forg);
-    this->MAIN_b->Outils_Reafficher         ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_Supprimer_Masques  ->SetTextColour(Forg);
-    this->MAIN_b->Outils_Supprimer_Masques  ->SetBackgroundColour(Back);
-    this->MAIN_b->Outils_UnDelete           ->SetTextColour(Forg);
-    this->MAIN_b->Outils_UnDelete           ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Retracer3D           ->SetTextColour(Forg);
-    this->MAIN_b->Menu_Retracer3D           ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Outils->UpdateUI();
-
-    this->MAIN_b->MenuItem_SigneX ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_SigneX ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Transformations->Remove (this->MAIN_b->MenuItem_SigneX);
-    this->MAIN_b->Menu_Transformations->Prepend(this->MAIN_b->MenuItem_SigneX);
-    this->MAIN_b->MenuItem_SigneY ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_SigneY ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_SigneZ ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_SigneZ ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_PermXY ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_PermXY ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_PermXZ ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_PermXZ ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_PermYZ ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_PermYZ ->SetBackgroundColour(Back);
-    this->MAIN_b->MenuItem_PermXYZ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_PermXYZ->SetBackgroundColour(Back);
-    this->MAIN_b->Inverser_Toutes_les_Normales  ->SetTextColour(Forg);
-    this->MAIN_b->Inverser_Toutes_les_Normales  ->SetBackgroundColour(Back);
-    this->MAIN_b->Inverse_All_Selected_Normales ->SetTextColour(Forg);
-    this->MAIN_b->Inverse_All_Selected_Normales ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_DeplacerBdd              ->SetTextColour(Forg);
-    this->MAIN_b->Menu_DeplacerBdd              ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_FacteurEchelleBdd        ->SetTextColour(Forg);
-    this->MAIN_b->Menu_FacteurEchelleBdd        ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Transformations->UpdateUI();
-
-    this->MAIN_b->Menu_CouleurDesGroupes ->SetTextColour(Forg);
-    this->MAIN_b->Menu_CouleurDesGroupes ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Options->Remove (this->MAIN_b->Menu_CouleurDesGroupes);
-    this->MAIN_b->Menu_Options->Prepend(this->MAIN_b->Menu_CouleurDesGroupes);
-    this->MAIN_b->Menu_RelirePalette     ->SetTextColour(Forg);
-    this->MAIN_b->Menu_RelirePalette     ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_EnregistrerPalette->SetTextColour(Forg);
-    this->MAIN_b->Menu_EnregistrerPalette->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_ZoomAuto          ->SetTextColour(Forg);
-    this->MAIN_b->Menu_ZoomAuto          ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_CentrageAuto      ->SetTextColour(Forg);
-    this->MAIN_b->Menu_CentrageAuto      ->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Options->UpdateUI();
-
-    this->MAIN_b->MenuItem_Aide ->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_Aide ->SetBackgroundColour(Back);
-    this->MAIN_b->Menu_Aide->Remove (this->MAIN_b->MenuItem_Aide);
-    this->MAIN_b->Menu_Aide->Prepend(this->MAIN_b->MenuItem_Aide);
-    this->MAIN_b->MenuItem_About->SetTextColour(Forg);
-    this->MAIN_b->MenuItem_About->SetBackgroundColour(Back);
-
-    this->MAIN_b->Menu_Aide->UpdateUI();
-    }
 
     if (darkmode)
         this->MAIN_b->Slider_z->SetForegroundColour(*wxCYAN);   // Bleu initial trop foncé, mettre plutôt Cyan pour darkmode
@@ -854,6 +877,10 @@ void BddInter::Switch_theme(bool darkmode)
 // ModificationPanel
     this->MPanel->SetForegroundColour(Forg);
     this->MPanel->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_FacettePlane ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_NotFlat      ->SetForegroundColour(Forg);
+    this->MPanel->CheckBox_Transparence ->SetForegroundColour(Forg);
+
     if (darkmode) {
         this->MPanel->StaticText1   ->SetForegroundColour(New_Back);
         this->MPanel->StaticText1   ->SetBackgroundColour(New_Forg);
@@ -875,70 +902,69 @@ void BddInter::Switch_theme(bool darkmode)
         this->MPanel->StaticText7   ->SetBackgroundColour(Noir);
         this->MPanel->Panel9        ->SetBackgroundColour(Noir);
     }
-    this->MPanel->ToggleButton_Ajouter      ->SetBackgroundColour(Gris);
-    this->MPanel->ToggleButton_Ajouter      ->SetForegroundColour(Forg);
-    this->MPanel->ToggleButton_Diviser      ->SetBackgroundColour(Gris);
-    this->MPanel->ToggleButton_Diviser      ->SetForegroundColour(Forg);
-    this->MPanel->ToggleButton_Souder       ->SetBackgroundColour(Gris);
-    this->MPanel->ToggleButton_Souder       ->SetForegroundColour(Forg);
-    this->MPanel->Button_Undo               ->SetBackgroundColour(Gris);
-    this->MPanel->Button_Undo               ->SetForegroundColour(Forg);
-    this->MPanel->ToggleButton_CreerFacette ->SetBackgroundColour(Gris);
-    this->MPanel->ToggleButton_CreerFacette ->SetForegroundColour(Forg);
-    this->MPanel->Button_Annuler            ->SetBackgroundColour(Gris);
-    this->MPanel->Button_Annuler            ->SetForegroundColour(Forg);
-    this->MPanel->Button_SupprimerFacette   ->SetBackgroundColour(Gris);
-    this->MPanel->Button_SupprimerFacette   ->SetForegroundColour(Forg);
-    this->MPanel->Button_InverserNormale    ->SetBackgroundColour(Gris);
-    this->MPanel->Button_InverserNormale    ->SetForegroundColour(Forg);
-    this->MPanel->Button_InverserTout       ->SetBackgroundColour(Gris);
-    this->MPanel->Button_InverserTout       ->SetForegroundColour(Forg);
-    this->MPanel->Button_Trianguler         ->SetBackgroundColour(Gris);
-    this->MPanel->Button_Trianguler         ->SetForegroundColour(Forg);
-    this->MPanel->Button_RecalculerNormales ->SetBackgroundColour(Gris);
-    this->MPanel->Button_RecalculerNormales ->SetForegroundColour(Forg);
-    this->MPanel->Button_Simplification     ->SetBackgroundColour(Gris);
-    this->MPanel->Button_Simplification     ->SetForegroundColour(Forg);
-    this->MPanel->Button_RecalculerAretes   ->SetBackgroundColour(Gris);
-    this->MPanel->Button_RecalculerAretes   ->SetForegroundColour(Forg);
-    this->MPanel->Button_Quitter            ->SetBackgroundColour(Gris);
-    this->MPanel->Button_Quitter            ->SetForegroundColour(Forg);
     this->MPanel->StaticText2               ->SetForegroundColour(Forg);
     this->MPanel->StaticText4               ->SetForegroundColour(Forg);
     this->MPanel->StaticText5               ->SetForegroundColour(Forg);
     this->MPanel->StaticText8               ->SetForegroundColour(Forg);
-    this->MPanel->CheckBox_FacettePlane     ->SetBackgroundColour(Back);
-    this->MPanel->CheckBox_FacettePlane     ->SetForegroundColour(Forg);
-    this->MPanel->CheckBox_NotFlat          ->SetBackgroundColour(Back);
-    this->MPanel->CheckBox_NotFlat          ->SetForegroundColour(Forg);
-    this->MPanel->CheckBox_Transparence     ->SetBackgroundColour(Back);
-    this->MPanel->CheckBox_Transparence     ->SetForegroundColour(Forg);
+    this->MPanel->TextCtrl_Tolerance        ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Ajouter      ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Ajouter      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_CreerFacette ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_CreerFacette ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Diviser      ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Diviser      ->SetForegroundColour(Forg);
+    this->MPanel->ToggleButton_Souder       ->SetBackgroundColour(Gris);
+    this->MPanel->ToggleButton_Souder       ->SetForegroundColour(Forg);
+    this->MPanel->Button_Annuler            ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Annuler            ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserNormale    ->SetBackgroundColour(Gris);
+    this->MPanel->Button_InverserNormale    ->SetForegroundColour(Forg);
+    this->MPanel->Button_InverserTout       ->SetBackgroundColour(Gris);
+    this->MPanel->Button_InverserTout       ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerAretes   ->SetBackgroundColour(Gris);
+    this->MPanel->Button_RecalculerAretes   ->SetForegroundColour(Forg);
+    this->MPanel->Button_RecalculerNormales ->SetBackgroundColour(Gris);
+    this->MPanel->Button_RecalculerNormales ->SetForegroundColour(Forg);
+    this->MPanel->Button_Simplification     ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Simplification     ->SetForegroundColour(Forg);
+    this->MPanel->Button_SupprimerFacette   ->SetBackgroundColour(Gris);
+    this->MPanel->Button_SupprimerFacette   ->SetForegroundColour(Forg);
+    this->MPanel->Button_Trianguler         ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Trianguler         ->SetForegroundColour(Forg);
+    this->MPanel->Button_Undo               ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Undo               ->SetForegroundColour(Forg);
+    this->MPanel->Button_Quitter            ->SetBackgroundColour(Gris);
+    this->MPanel->Button_Quitter            ->SetForegroundColour(Forg);
     this->MPanel->SpinCtrl_Groupe           ->SetBackgroundColour(Gris);
     this->MPanel->SpinCtrl_Groupe           ->SetForegroundColour(Forg);
     this->MPanel->SpinCtrl_Materiau         ->SetBackgroundColour(Gris);
     this->MPanel->SpinCtrl_Materiau         ->SetForegroundColour(Forg);
     this->MPanel->SpinCtrl_NbSegments       ->SetBackgroundColour(Gris);
     this->MPanel->SpinCtrl_NbSegments       ->SetForegroundColour(Forg);
-    this->MPanel->TextCtrl_Tolerance        ->SetBackgroundColour(Gris);
-    this->MPanel->TextCtrl_Tolerance        ->SetForegroundColour(Forg);
     this->MPanel->StaticLine1               ->SetForegroundColour(Forg);    // Pas d'effet ?
     this->MPanel->StaticLine1               ->SetBackgroundColour(Back);
+
+    this->MPanel->TextCtrl_Tolerance        ->SetBackgroundColour(Gris);
+    this->MPanel->CheckBox_FacettePlane     ->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_NotFlat          ->SetBackgroundColour(Back);
+    this->MPanel->CheckBox_Transparence     ->SetBackgroundColour(Back);
+
     this->MPanel->Refresh();
 
 // PositionObs_AzimutSite
     this->MPosObs->SetForegroundColour(Forg);
     this->MPosObs->SetBackgroundColour(Back);
-    this->MPosObs->StaticText1  ->SetForegroundColour(Forg);
-    this->MPosObs->StaticText2  ->SetForegroundColour(Forg);
-    this->MPosObs->StaticText3  ->SetForegroundColour(Forg);
-    this->MPosObs->StaticText4  ->SetForegroundColour(Forg);
-    this->MPosObs->StaticText5  ->SetForegroundColour(Forg);
-    this->MPosObs->SpinCtrl_LAZ ->SetBackgroundColour(Gris);
-    this->MPosObs->SpinCtrl_LAZ ->SetForegroundColour(Forg);
-    this->MPosObs->SpinCtrl_LSI ->SetBackgroundColour(Gris);
-    this->MPosObs->SpinCtrl_LSI ->SetForegroundColour(Forg);
-    this->MPosObs->Button_Quit  ->SetForegroundColour(Forg);
-    this->MPosObs->Button_Quit  ->SetBackgroundColour(Gris);
+    this->MPosObs->StaticText1      ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText2      ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText3      ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText4      ->SetForegroundColour(Forg);
+    this->MPosObs->StaticText5      ->SetForegroundColour(Forg);
+    this->MPosObs->SpinCtrl_LAZ     ->SetBackgroundColour(Gris);
+    this->MPosObs->SpinCtrl_LAZ     ->SetForegroundColour(Forg);
+    this->MPosObs->SpinCtrl_LSI     ->SetBackgroundColour(Gris);
+    this->MPosObs->SpinCtrl_LSI     ->SetForegroundColour(Forg);
+    this->MPosObs->Button_Quit      ->SetForegroundColour(Forg);
+    this->MPosObs->Button_Quit      ->SetBackgroundColour(Gris);
 //    this->MPosObs->StaticText_Warn->SetForegroundColour(Forg);    // Ne pas changer, reste en rouge
     this->MPosObs->Refresh();
 
@@ -969,65 +995,64 @@ void BddInter::Switch_theme(bool darkmode)
 // Prefs_Dialog
     this->MPrefs->SetForegroundColour(Forg);
     this->MPrefs->SetBackgroundColour(Back);
-    this->MPrefs->StaticText1->SetForegroundColour(Forg);
-    this->MPrefs->StaticText2->SetForegroundColour(Forg);
-    this->MPrefs->StaticText3->SetForegroundColour(Forg);
-    this->MPrefs->StaticText4->SetForegroundColour(Forg);
-    this->MPrefs->StaticText7->SetForegroundColour(Forg);
-    this->MPrefs->StaticText8->SetForegroundColour(Forg);
-    this->MPrefs->StaticText9->SetForegroundColour(Forg);
-    this->MPrefs->StaticText5->SetForegroundColour(Forg);
+    this->MPrefs->StaticText1           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText2           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText3           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText4           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText5           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText7           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText8           ->SetForegroundColour(Forg);
+    this->MPrefs->StaticText9           ->SetForegroundColour(Forg);
     this->MPrefs->StaticText_Gouraud    ->SetForegroundColour(Forg);
     this->MPrefs->StaticText_Gouraud2   ->SetForegroundColour(Forg);
+    this->MPrefs->TextCtrl_WorkDir      ->SetForegroundColour(Forg);
     this->MPrefs->SpinCtrlDouble_axes   ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrlDouble_axes   ->SetBackgroundColour(Gris);
     this->MPrefs->SpinCtrlDouble_norm   ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrlDouble_norm   ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_src            ->SetForegroundColour(Forg);
     this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetBackgroundColour(Gris);
     this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetBackgroundColour(Gris);
-    this->MPrefs->SpinCtrlDouble_src        ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrlDouble_src        ->SetBackgroundColour(Gris);
     this->MPrefs->SpinCtrl_PasSvg           ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrl_PasSvg           ->SetBackgroundColour(Gris);
     this->MPrefs->SpinCtrl_Threads          ->SetForegroundColour(Forg);
-    this->MPrefs->SpinCtrl_Threads          ->SetBackgroundColour(Gris);
     this->MPrefs->CheckBox_1SeulObjet3D     ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_1SeulObjet3D     ->SetBackgroundColour(Back);
-    this->MPrefs->CheckBox_AntialiasingSoft ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_AntialiasingSoft ->SetBackgroundColour(Back);
-    this->MPrefs->CheckBox_CalculNormales   ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_CalculNormales   ->SetBackgroundColour(Back);
-    this->MPrefs->CheckBox_CreerBackup      ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_DisplayFps       ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_LectureOptimisee ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_TestDecalage3DS  ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_Seuillage        ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_AntialiasingSoft ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_CalculNormales   ->SetForegroundColour(Forg);
+    this->MPrefs->CheckBox_DisplayFps       ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_NotFlat          ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_TraiterDoublonsAretes->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_RecNormales_Seuillees->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_Seuillage        ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_SupprBackup      ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_TestDecalage3DS  ->SetForegroundColour(Forg);
     this->MPrefs->CheckBox_CreerBackup      ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_CreerBackup      ->SetBackgroundColour(Back);
     this->MPrefs->CheckBox_SupprBackup      ->SetForegroundColour(Forg);
-    this->MPrefs->CheckBox_SupprBackup      ->SetBackgroundColour(Back);
     this->MPrefs->RadioBox_Trackball        ->SetForegroundColour(Forg);    // Les 2 choix restent en noir => On ne peut pas les lire ! BUG signalé
-    this->MPrefs->RadioBox_Trackball        ->SetBackgroundColour(Back);
     this->MPrefs->RadioBox_Triangulation    ->SetForegroundColour(Forg);    // Les 3 choix restent en noir => Idem
-    this->MPrefs->RadioBox_Triangulation    ->SetBackgroundColour(Back);
-    this->MPrefs->RadioBox_IconSize ->SetForegroundColour(Forg);
-    this->MPrefs->RadioBox_IconSize ->SetBackgroundColour(Back);
-    this->MPrefs->RadioBox_DarkMode ->SetForegroundColour(Forg);
-    this->MPrefs->RadioBox_DarkMode ->SetBackgroundColour(Back);
-    this->MPrefs->TextCtrl_WorkDir  ->SetForegroundColour(Forg);
-    this->MPrefs->TextCtrl_WorkDir  ->SetBackgroundColour(Gris);
-    this->MPrefs->Button_tmp_rep    ->SetForegroundColour(Forg);
-    this->MPrefs->Button_tmp_rep    ->SetBackgroundColour(Gris);
-    this->MPrefs->Button_OK         ->SetForegroundColour(Forg);
-    this->MPrefs->Button_OK         ->SetBackgroundColour(Gris);
-    this->MPrefs->Button_Reset      ->SetForegroundColour(Forg);
-    this->MPrefs->Button_Reset      ->SetBackgroundColour(Gris);
+    this->MPrefs->RadioBox_IconSize         ->SetForegroundColour(Forg);
+    this->MPrefs->RadioBox_DarkMode         ->SetForegroundColour(Forg);
+    this->MPrefs->Button_tmp_rep            ->SetForegroundColour(Forg);
+    this->MPrefs->Button_tmp_rep            ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_Reset              ->SetForegroundColour(Forg);
+    this->MPrefs->Button_Reset              ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_OK                 ->SetBackgroundColour(Gris);
+    this->MPrefs->Button_OK                 ->SetForegroundColour(Forg);
+
+    this->MPrefs->TextCtrl_WorkDir              ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_axes           ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_norm           ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_src            ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud   ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrlDouble_SeuilGouraud2  ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrl_PasSvg               ->SetBackgroundColour(Gris);
+    this->MPrefs->SpinCtrl_Threads              ->SetBackgroundColour(Gris);
+    this->MPrefs->CheckBox_1SeulObjet3D         ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_AntialiasingSoft     ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_CalculNormales       ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_CreerBackup          ->SetBackgroundColour(Back);
+    this->MPrefs->CheckBox_SupprBackup          ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_Trackball            ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_Triangulation        ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_IconSize             ->SetBackgroundColour(Back);
+    this->MPrefs->RadioBox_DarkMode             ->SetBackgroundColour(Back);
     this->MPrefs->Refresh();
 
 // PropertiesPanel
@@ -1529,5 +1554,11 @@ void BddInter::Switch_theme(bool darkmode)
 
 //    this->MAIN_b->Refresh();
 
+// Colorisation des menus
+
+//    Switch_theme_menus(darkmode);   // à utiliser seulement si methode_boucle sur false
+
 }
+
 #endif // wxCHECK_VERSION
+
